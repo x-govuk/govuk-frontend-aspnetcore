@@ -384,7 +384,9 @@ public class ErrorSummaryItemTagHelperTests
 
         var modelName = nameof(Model.Date);
         viewContext.ModelState.AddModelError(modelName, "ModelState error message");
-        dateInputParseErrorsProvider.SetErrorsForModel(modelName, DateInputParseErrors.InvalidMonth | DateInputParseErrors.MissingYear);
+        dateInputParseErrorsProvider.SetErrorsForModel(
+            viewContext.ModelState[modelName]!,
+            DateInputParseErrors.InvalidMonth | DateInputParseErrors.MissingYear);
 
         var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider)
         {
@@ -400,7 +402,7 @@ public class ErrorSummaryItemTagHelperTests
             errorSummaryContext.Items,
             item =>
             {
-                Assert.Equal("#Date.Month", item.Href);
+                Assert.Equal("#Date_Month", item.Href);
             });
     }
 

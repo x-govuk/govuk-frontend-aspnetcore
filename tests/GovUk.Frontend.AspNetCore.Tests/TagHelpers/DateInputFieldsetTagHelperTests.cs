@@ -4,72 +4,60 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class DateInputFieldsetTagHelperTests
+public class DateInputFieldsetTagHelperTests() : TagHelperTestBase(DateInputFieldsetTagHelper.TagName, parentTagName: DateInputTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_AddsFieldsetToContext()
     {
         // Arrange
-        var dateInputContext = new DateInputContext(haveExplicitValue: false, aspFor: null);
+        var legendContent = "Legend";
+        var isPageHeading = true;
 
-        var context = new TagHelperContext(
-            tagName: "govuk-date-input-fieldset",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(DateInputContext), dateInputContext }
-            },
-            uniqueId: "test");
+        var dateInputContext = new DateInputContext(haveExplicitValue: false, @for: null);
 
-        var output = new TagHelperOutput(
-            "govuk-date-input-fieldset",
-            attributes: new TagHelperAttributeList(),
+        var context = CreateTagHelperContext(contexts: dateInputContext);
+
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: null, content: new HtmlString("Legend"));
+                fieldsetContext.SetLegend(isPageHeading, attributes: new(), html: legendContent);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new DateInputFieldsetTagHelper();
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
         Assert.True(dateInputContext.Fieldset?.Legend?.IsPageHeading);
-        Assert.Equal("Legend", dateInputContext.Fieldset?.Legend?.Content?.ToHtmlString());
+        Assert.Equal(legendContent, dateInputContext.Fieldset?.Legend?.Html);
+        Assert.Equal(isPageHeading, dateInputContext.Fieldset?.Legend?.IsPageHeading);
     }
 
     [Fact]
     public async Task ProcessAsync_ParentAlreadyHasFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var dateInputContext = new DateInputContext(haveExplicitValue: false, aspFor: null);
+        var dateInputContext = new DateInputContext(haveExplicitValue: false, @for: null);
 
         dateInputContext.OpenFieldset();
-        var checkboxesFieldsetContext = new DateInputFieldsetContext(attributes: null, aspFor: null);
-        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Existing legend"));
+        var checkboxesFieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: new(), @for: null);
+        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new(), html: new HtmlString("Existing legend"));
         dateInputContext.CloseFieldset(checkboxesFieldsetContext);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-date-input-fieldset",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(DateInputContext), dateInputContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: dateInputContext);
 
-        var output = new TagHelperOutput(
-            "govuk-date-input-fieldset",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: null, content: new HtmlString("Legend"));
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new(), html: "New legend");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -77,11 +65,13 @@ public class DateInputFieldsetTagHelperTests
 
         var tagHelper = new DateInputFieldsetTagHelper();
 
+        tagHelper.Init(context);
+
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-date-input-fieldset> element is permitted within each <govuk-date-input>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 }

@@ -1,5 +1,4 @@
-using GovUk.Frontend.AspNetCore.ModelBinding;
-using Microsoft.AspNetCore.Html;
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -11,34 +10,34 @@ internal enum DateInputItemType
     Year = 2
 }
 
-internal class DateInputContext : FormGroupContext
+internal class DateInputContext : FormGroupContext3
 {
     private bool _fieldsetIsOpen;
     private readonly SortedDictionary<DateInputItemType, DateInputContextItem> _items;
     private readonly bool _haveValue;
 
-    public DateInputContext(bool haveExplicitValue, ModelExpression? aspFor)
+    public DateInputContext(bool haveExplicitValue, ModelExpression? @for)
     {
         _items = new SortedDictionary<DateInputItemType, DateInputContextItem>();
         _haveValue = haveExplicitValue;
-        AspFor = aspFor;
+        For = @for;
     }
 
-    public ModelExpression? AspFor { get; }
+    public ModelExpression? For { get; }
 
     public DateInputFieldsetContext? Fieldset { get; private set; }
 
     public IReadOnlyDictionary<DateInputItemType, DateInputContextItem> Items => _items;
 
-    public DateInputErrorComponents? ErrorComponents { get; private set; }
+    public DateInputItems? ErrorFields { get; private set; }
 
-    protected override string ErrorMessageTagName => DateInputTagHelper.ErrorMessageTagName;
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => [DateInputTagHelper.ErrorMessageTagName];
 
     protected string FieldsetTagName => DateInputFieldsetTagHelper.TagName;
 
-    protected override string HintTagName => DateInputTagHelper.HintTagName;
+    protected override IReadOnlyCollection<string> HintTagNames => [DateInputTagHelper.HintTagName];
 
-    protected override string LabelTagName => throw new NotSupportedException();
+    protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
     protected override string RootTagName => DateInputTagHelper.TagName;
 
@@ -73,27 +72,75 @@ internal class DateInputContext : FormGroupContext
         Fieldset = fieldsetContext;
     }
 
-    public void SetItem(DateInputItemType itemType, DateInputContextItem item)
+    public override void SetLabel(bool isPageHeading, AttributeCollection attributes, TemplateString? html, string tagName)
     {
-        Guard.ArgumentNotNull(nameof(item), item);
+        throw new NotSupportedException();
+    }
 
-        if (_haveValue && item.ValueSpecified)
-        {
-            throw new InvalidOperationException($"Value cannot be specified for both <{GetTagNameForItemType(itemType)}> and the parent <{RootTagName}>.");
-        }
-
-        var tagName = GetTagNameForItemType(itemType);
-
+    public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
+    {
         if (Fieldset is not null)
         {
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
+        }
+
+        if (Items.Count > 0)
+        {
+            var firstItemTagName = _items.First().Value.TagName;
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, firstItemTagName!);
+        }
+
+        base.SetHint(attributes, html, tagName);
+    }
+
+    public void SetErrorMessage(
+        DateInputItems? errorFields,
+        TemplateString? visuallyHiddenText,
+        AttributeCollection attributes,
+        TemplateString? html,
+        string tagName)
+    {
+        if (Fieldset is not null)
+        {
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
+        }
+
+        if (Items.Count > 0)
+        {
+            var firstItemTagName = _items.First().Value.TagName!;
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, firstItemTagName);
+        }
+
+        ErrorFields = errorFields;
+
+        base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
+    }
+
+    public override void SetErrorMessage(TemplateString? visuallyHiddenText, AttributeCollection attributes, TemplateString? html, string tagName)
+    {
+        throw new NotSupportedException($"Use the overload that takes a {nameof(DateInputItems)} argument too.");
+    }
+
+    public void SetItem(DateInputItemType itemType, DateInputContextItem item)
+    {
+        ArgumentNullException.ThrowIfNull(itemType);
+        ArgumentNullException.ThrowIfNull(item);
+
+        if (_haveValue && item.ValueSpecified)
+        {
+            throw new InvalidOperationException($"Value cannot be specified for both <{item.TagName}> and the parent <{RootTagName}>.");
+        }
+
+        if (Fieldset is not null)
+        {
+            throw new InvalidOperationException($"<{item.TagName}> must be inside <{FieldsetTagName}>.");
         }
 
         if (_items.Count != 0)
         {
             if (_items.ContainsKey(itemType))
             {
-                throw ExceptionHelper.OnlyOneElementIsPermittedIn(tagName, DateInputTagHelper.TagName);
+                throw ExceptionHelper.OnlyOneElementIsPermittedIn(item.TagName!, DateInputTagHelper.TagName);
             }
 
             var subsequentItems = _items.Where(kvp => kvp.Key > itemType).ToArray();
@@ -101,78 +148,11 @@ internal class DateInputContext : FormGroupContext
             if (subsequentItems.Length != 0)
             {
                 throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                    tagName,
-                    GetTagNameForItemType(subsequentItems[0].Key));
+                    item.TagName!,
+                    subsequentItems[0].Value.TagName!);
             }
         }
 
         _items.Add(itemType, item);
     }
-
-    public void SetErrorMessage(
-        DateInputErrorComponents? errorComponents,
-        string? visuallyHiddenText,
-        AttributeDictionary? attributes,
-        IHtmlContent? content)
-    {
-        if (Fieldset is not null)
-        {
-            throw new InvalidOperationException($"<{ErrorMessageTagName}> must be inside <{FieldsetTagName}>.");
-        }
-
-        if (Items.Count > 0)
-        {
-            var firstItemTagName = GetTagNameForItemType(_items.First().Key);
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(ErrorMessageTagName, firstItemTagName);
-        }
-
-        ErrorComponents = errorComponents;
-
-        base.SetErrorMessage(visuallyHiddenText, attributes, content);
-    }
-
-    public override void SetErrorMessage(string? visuallyHiddenText, AttributeDictionary? attributes, IHtmlContent? content)
-    {
-        throw new NotSupportedException($"Use the overload that takes a {nameof(DateInputErrorComponents)} argument too.");
-    }
-
-    public override void SetHint(AttributeDictionary? attributes, IHtmlContent? content)
-    {
-        if (Fieldset is not null)
-        {
-            throw new InvalidOperationException($"<{HintTagName}> must be inside <{FieldsetTagName}>.");
-        }
-
-        if (Items.Count > 0)
-        {
-            var firstItemTagName = GetTagNameForItemType(_items.First().Key);
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(HintTagName, firstItemTagName);
-        }
-
-        base.SetHint(attributes, content);
-    }
-
-    public override void SetLabel(
-        bool isPageHeading,
-        AttributeDictionary? attributes,
-        IHtmlContent? content)
-    {
-        throw new NotSupportedException();
-    }
-
-    internal static DateInputItemType GetItemTypeFromTagName(string tagName) => tagName switch
-    {
-        DateInputItemTagHelper.DayTagName => DateInputItemType.Day,
-        DateInputItemTagHelper.MonthTagName => DateInputItemType.Month,
-        DateInputItemTagHelper.YearTagName => DateInputItemType.Year,
-        _ => throw new ArgumentException($"Unknown tag name: '{tagName}'.", nameof(tagName))
-    };
-
-    internal static string GetTagNameForItemType(DateInputItemType itemType) => itemType switch
-    {
-        DateInputItemType.Day => DateInputItemTagHelper.DayTagName,
-        DateInputItemType.Month => DateInputItemTagHelper.MonthTagName,
-        DateInputItemType.Year => DateInputItemTagHelper.YearTagName,
-        _ => throw new ArgumentException($"Unknown item type: '{itemType}'.", nameof(itemType))
-    };
 }

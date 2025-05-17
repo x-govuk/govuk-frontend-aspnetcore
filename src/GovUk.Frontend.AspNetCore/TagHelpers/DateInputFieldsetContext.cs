@@ -1,11 +1,12 @@
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class DateInputFieldsetContext : FormGroupFieldsetContext
+internal class DateInputFieldsetContext : FormGroupFieldsetContext2
 {
-    public DateInputFieldsetContext(AttributeDictionary? attributes, ModelExpression? aspFor) :
-        base(DateInputFieldsetTagHelper.TagName, DateInputFieldsetLegendTagHelper.TagName, attributes, aspFor)
+    public DateInputFieldsetContext(string? describedBy, AttributeCollection attributes, ModelExpression? @for) :
+        base(DateInputFieldsetTagHelper.TagName, DateInputFieldsetLegendTagHelper.TagName, describedBy, legendClass: null, attributes, @for)
     {
     }
 }

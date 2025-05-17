@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore;
@@ -47,12 +46,6 @@ internal static class TagHelperContextExtensions
         ArgumentNullException.ThrowIfNull(key);
         ArgumentNullException.ThrowIfNull(value);
 
-        // FormGroupContext and FormGroupContext3 are mutually exclusive
-        if (key is Type keyType && (keyType == typeof(FormGroupContext) || keyType == typeof(FormGroupContext3)))
-        {
-            key = typeof(FormGroupContextKey);
-        }
-
         context.Items.TryGetValue(key, out var previousValue);
         context.Items[key] = value;
 
@@ -64,12 +57,6 @@ internal static class TagHelperContextExtensions
         ArgumentNullException.ThrowIfNull(context);
 
         var key = typeof(TItem);
-
-        // FormGroupContext and FormGroupContext2 are mutually exclusive
-        if (key == typeof(FormGroupContext) || key == typeof(FormGroupContext3))
-        {
-            key = typeof(FormGroupContextKey);
-        }
 
         if (context.Items.TryGetValue(key, out var itemObj) && itemObj is TItem typedItem)
         {

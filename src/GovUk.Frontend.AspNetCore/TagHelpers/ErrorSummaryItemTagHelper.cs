@@ -1,8 +1,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.Components;
 using GovUk.Frontend.AspNetCore.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -117,7 +117,7 @@ public class ErrorSummaryItemTagHelper : TagHelper
                 return;
             }
 
-            itemHtml = HtmlEncoder.Default.Encode(validationMessage);
+            itemHtml = validationMessage;
         }
 
         TemplateString? resolvedHref = null;
@@ -128,9 +128,9 @@ public class ErrorSummaryItemTagHelper : TagHelper
         }
         else if (For is not null)
         {
-            var errorFieldId = TagBuilder.CreateSanitizedId(
-                _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name),
-                Constants.IdAttributeDotReplacement);
+            static string CreateIdFromName(string name) => TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
+
+            var errorFieldId = CreateIdFromName(_modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name));
 
             // Date inputs are special; they don't have an element with ID which exactly corresponds to the name derived above;
             // the IDs are suffixed with .Day .Month and .Year for each of the components.
@@ -143,26 +143,32 @@ public class ErrorSummaryItemTagHelper : TagHelper
 
             if (IsModelExpressionForDate())
             {
-                var dateInputErrorComponents = DateInputErrorComponents.All;
+                var dateInputErrorComponents = DateInputItems.All;
 
-                if (_dateInputParseErrorsProvider.TryGetErrorsForModel(For.Name, out var dateInputParseErrors))
+                var fullName = _modelHelper.GetFullHtmlFieldName(ViewContext!, For.Name);
+
+                if (ViewContext!.ModelState.TryGetValue(fullName, out var modelState) &&
+                    _dateInputParseErrorsProvider.TryGetErrorsForModel(modelState, out var parseErrors))
                 {
-                    dateInputErrorComponents = dateInputParseErrors.GetErrorComponents();
+                    dateInputErrorComponents = parseErrors.GetFieldsWithErrors();
                 }
 
-                Debug.Assert(dateInputErrorComponents != DateInputErrorComponents.None);
+                Debug.Assert(dateInputErrorComponents != DateInputItems.None);
 
-                if (dateInputErrorComponents.HasFlag(DateInputErrorComponents.Day))
+                if (dateInputErrorComponents.HasFlag(DateInputItems.Day))
                 {
-                    errorFieldId += ".Day";
+                    errorFieldId = CreateIdFromName(
+                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelConverterModelBinder.DayInputName));
                 }
-                else if (dateInputErrorComponents.HasFlag(DateInputErrorComponents.Month))
+                else if (dateInputErrorComponents.HasFlag(DateInputItems.Month))
                 {
-                    errorFieldId += ".Month";
+                    errorFieldId = CreateIdFromName(
+                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelConverterModelBinder.MonthInputName));
                 }
                 else
                 {
-                    errorFieldId += ".Year";
+                    errorFieldId = CreateIdFromName(
+                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelConverterModelBinder.YearInputName));
                 }
             }
 

@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Components;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -29,7 +30,7 @@ public class DateInputFieldsetLegendTagHelper : TagHelper
         var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
 
         var content = output.TagMode == TagMode.StartTagAndEndTag ?
-            (await output.GetChildContentAsync()).Snapshot() :
+            await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
@@ -39,8 +40,8 @@ public class DateInputFieldsetLegendTagHelper : TagHelper
 
         fieldsetContext.SetLegend(
             IsPageHeading ?? ComponentGenerator.FieldsetLegendDefaultIsPageHeading,
-            output.Attributes.ToAttributeDictionary(),
-            content: content);
+            new AttributeCollection(output.Attributes),
+            html: content?.ToTemplateString());
 
         output.SuppressOutput();
     }

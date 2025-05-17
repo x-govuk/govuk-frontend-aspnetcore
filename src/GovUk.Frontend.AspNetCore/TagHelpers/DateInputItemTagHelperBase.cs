@@ -1,7 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
+using GovUk.Frontend.AspNetCore.Components;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -9,20 +7,8 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <summary>
 /// Represents an item in a GDS date input component.
 /// </summary>
-[HtmlTargetElement(DayTagName, ParentTag = DateInputTagHelper.TagName)]
-[HtmlTargetElement(DayTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-[HtmlTargetElement(MonthTagName, ParentTag = DateInputTagHelper.TagName)]
-[HtmlTargetElement(MonthTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-[HtmlTargetElement(YearTagName, ParentTag = DateInputTagHelper.TagName)]
-[HtmlTargetElement(YearTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.FormGroupElement)]
-[RestrictChildren(DateInputItemLabelTagHelper.DayTagName, DateInputItemLabelTagHelper.MonthTagName, DateInputItemLabelTagHelper.YearTagName)]
-public class DateInputItemTagHelper : TagHelper
+public abstract class DateInputItemTagHelperBase : TagHelper
 {
-    internal const string DayTagName = "govuk-date-input-day";
-    internal const string MonthTagName = "govuk-date-input-month";
-    internal const string YearTagName = "govuk-date-input-year";
-
     private const string AutoCompleteAttributeName = "autocomplete";
     private const string IdAttributeName = "id";
     private const string InputModeAttributeName = "inputmode";
@@ -30,14 +16,19 @@ public class DateInputItemTagHelper : TagHelper
     private const string PatternAttributeName = "pattern";
     private const string ValueAttributeName = "value";
 
-    private int? _value;
+    private readonly DateInputItemType _itemType;
+    private readonly string _labelTagName;
+    private string? _value;
     private bool _valueSpecified = false;
 
     /// <summary>
-    /// Creates a <see cref="DateInputItemTagHelper"/>.
+    /// Creates a <see cref="DateInputItemTagHelperBase"/>.
     /// </summary>
-    public DateInputItemTagHelper()
+    private protected DateInputItemTagHelperBase(DateInputItemType itemType, string labelTagName)
     {
+        ArgumentNullException.ThrowIfNull(labelTagName);
+        _itemType = itemType;
+        _labelTagName = labelTagName;
     }
 
     /// <summary>
@@ -89,7 +80,7 @@ public class DateInputItemTagHelper : TagHelper
     /// This cannot be specified if the <see cref="DateInputTagHelper.Value"/> property on the parent is also specified.
     /// </remarks>
     [HtmlAttributeName(ValueAttributeName)]
-    public int? Value
+    public string? Value
     {
         get => _value;
         set
@@ -99,34 +90,27 @@ public class DateInputItemTagHelper : TagHelper
         }
     }
 
-    /// <summary>
-    /// Gets the <see cref="ViewContext"/> of the executing view.
-    /// </summary>
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    [DisallowNull]
-    public ViewContext? ViewContext { get; set; }
-
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         var dateInputContext = context.GetContextItem<DateInputContext>();
-        var dateInputItemContext = new DateInputItemContext(output.TagName, labelTagName: output.TagName + "-label");
+        var dateInputItemContext = new DateInputItemContext(output.TagName, _labelTagName);
 
         using (context.SetScopedContextItem(dateInputItemContext))
         {
             await output.GetChildContentAsync();
         }
 
-        var itemType = DateInputContext.GetItemTypeFromTagName(output.TagName);
+        var attributes = new AttributeCollection(output.Attributes);
 
         var itemContext = new DateInputContextItem()
         {
-            Attributes = output.Attributes.ToAttributeDictionary(),
+            TagName = output.TagName,
+            Attributes = attributes,
             AutoComplete = AutoComplete,
             Id = Id,
             InputMode = InputMode,
-            LabelContent = dateInputItemContext.Label?.Content,
+            LabelHtml = dateInputItemContext.Label?.Html,
             LabelAttributes = dateInputItemContext.Label?.Attributes,
             Name = Name,
             Pattern = Pattern,
@@ -134,7 +118,7 @@ public class DateInputItemTagHelper : TagHelper
             ValueSpecified = _valueSpecified
         };
 
-        dateInputContext.SetItem(itemType, itemContext);
+        dateInputContext.SetItem(_itemType, itemContext);
 
         output.SuppressOutput();
     }

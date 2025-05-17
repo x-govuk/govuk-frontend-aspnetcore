@@ -37,8 +37,13 @@ internal class DefaultModelHelper : IModelHelper
         return displayName;
     }
 
-    public virtual string GetFullHtmlFieldName(ViewContext viewContext, string expression) =>
-        s_getFullHtmlFieldNameDelegate(viewContext, expression);
+    public virtual string GetFullHtmlFieldName(ViewContext viewContext, string expression)
+    {
+        ArgumentNullException.ThrowIfNull(viewContext);
+        ArgumentNullException.ThrowIfNull(expression);
+
+        return s_getFullHtmlFieldNameDelegate(viewContext, expression);
+    }
 
     public virtual string? GetModelValue(ViewContext viewContext, ModelExplorer modelExplorer, string expression)
     {

@@ -7,9 +7,9 @@ namespace GovUk.Frontend.AspNetCore.ModelBinding;
 
 internal class DateInputModelConverterModelBinder : IModelBinder
 {
-    private const string DayInputName = "Day";
-    private const string MonthInputName = "Month";
-    private const string YearInputName = "Year";
+    internal const string DayInputName = "Day";
+    internal const string MonthInputName = "Month";
+    internal const string YearInputName = "Year";
 
     private readonly DateInputModelConverter _dateInputModelConverter;
     private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
@@ -18,13 +18,15 @@ internal class DateInputModelConverterModelBinder : IModelBinder
         DateInputModelConverter dateInputModelConverter,
         IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
     {
-        _dateInputModelConverter = Guard.ArgumentNotNull(nameof(dateInputModelConverter), dateInputModelConverter);
-        _optionsAccessor = Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor);
+        ArgumentNullException.ThrowIfNull(dateInputModelConverter);
+        ArgumentNullException.ThrowIfNull(optionsAccessor);
+        _dateInputModelConverter = dateInputModelConverter;
+        _optionsAccessor = optionsAccessor;
     }
 
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
-        Guard.ArgumentNotNull(nameof(bindingContext), bindingContext);
+        ArgumentNullException.ThrowIfNull(bindingContext);
 
         var modelType = bindingContext.ModelMetadata.UnderlyingOrModelType;
         if (!_dateInputModelConverter.CanConvertModelType(modelType))
@@ -62,15 +64,15 @@ internal class DateInputModelConverterModelBinder : IModelBinder
         }
         else
         {
-            var parseErrorsProvider = bindingContext.HttpContext.RequestServices.GetRequiredService<DateInputParseErrorsProvider>();
-            parseErrorsProvider.SetErrorsForModel(bindingContext.ModelName, parseErrors);
-
             bindingContext.ModelState.SetModelValue(dayModelName, dayValueProviderResult);
             bindingContext.ModelState.SetModelValue(monthModelName, monthValueProviderResult);
             bindingContext.ModelState.SetModelValue(yearModelName, yearValueProviderResult);
 
             var errorMessage = GetModelStateErrorMessage(parseErrors, bindingContext.ModelMetadata);
             bindingContext.ModelState.AddModelError(bindingContext.ModelName, errorMessage);
+
+            var parseErrorsProvider = bindingContext.HttpContext.RequestServices.GetRequiredService<DateInputParseErrorsProvider>();
+            parseErrorsProvider.SetErrorsForModel(bindingContext.ModelState[bindingContext.ModelName]!, parseErrors);
 
             bindingContext.Result = ModelBindingResult.Failed();
         }

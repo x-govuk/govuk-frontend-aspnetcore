@@ -1,17 +1,18 @@
-using Microsoft.AspNetCore.Html;
+using GovUk.Frontend.AspNetCore.Components;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class DateInputContextItem
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public IHtmlContent? LabelContent { get; set; }
-    public IDictionary<string, string?>? LabelAttributes { get; set; }
-    public int? Value { get; set; }
+    public string? TagName { get; set; }
+    public TemplateString? Id { get; set; }
+    public TemplateString? Name { get; set; }
+    public TemplateString? LabelHtml { get; set; }
+    public AttributeCollection? LabelAttributes { get; set; }
+    public TemplateString? Value { get; set; }
     public bool ValueSpecified { get; set; }
     public string? AutoComplete { get; set; }
-    public string? InputMode { get; set; }
-    public string? Pattern { get; set; }
-    public IDictionary<string, string?>? Attributes { get; set; }
+    public TemplateString? InputMode { get; set; }
+    public TemplateString? Pattern { get; set; }
+    public AttributeCollection? Attributes { get; set; }
 }

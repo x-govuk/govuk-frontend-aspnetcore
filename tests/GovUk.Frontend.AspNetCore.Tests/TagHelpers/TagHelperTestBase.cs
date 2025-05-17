@@ -128,6 +128,19 @@ public abstract class TagHelperTestBase(string tagName, string? parentTagName = 
         }
     }
 
+    protected void AssertContainsAttributes(IDictionary<string, string?> expectedAttributes, AttributeCollection? actualAttributes) =>
+        AssertContainsAttributes(new AttributeCollection(expectedAttributes), actualAttributes);
+
+    protected void AssertContainsAttributes(AttributeCollection expectedAttributes, AttributeCollection? actualAttributes)
+    {
+        Assert.NotNull(actualAttributes);
+
+        foreach (var attr in expectedAttributes)
+        {
+            Assert.Contains(actualAttributes, a => a.Key == attr.Key && a.Value == attr.Value);
+        }
+    }
+
     protected (IComponentGenerator ComponentGenerator, Func<TOptions> GetActualOptions) CreateComponentGenerator<TOptions>(
         string generateMethodName)
         where TOptions : class

@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Components;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -11,9 +12,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     DateInputFieldsetLegendTagHelper.TagName,
     DateInputTagHelper.HintTagName,
     DateInputTagHelper.ErrorMessageTagName,
-    DateInputItemTagHelper.DayTagName,
-    DateInputItemTagHelper.MonthTagName,
-    DateInputItemTagHelper.YearTagName)]
+    DateInputDayTagHelper.TagName,
+    DateInputMonthTagHelper.TagName,
+    DateInputYearTagHelper.TagName)]
 [OutputElementHint(ComponentGenerator.FieldsetElement)]
 public class DateInputFieldsetTagHelper : TagHelper
 {
@@ -40,7 +41,10 @@ public class DateInputFieldsetTagHelper : TagHelper
         var dateInputContext = context.GetContextItem<DateInputContext>();
         dateInputContext.OpenFieldset();
 
-        var fieldsetContext = new DateInputFieldsetContext(output.Attributes.ToAttributeDictionary(), dateInputContext.AspFor);
+        var fieldsetContext = new DateInputFieldsetContext(
+            DescribedBy,
+            new AttributeCollection(output.Attributes),
+            dateInputContext.For);
 
         using (context.SetScopedContextItem(fieldsetContext))
         {

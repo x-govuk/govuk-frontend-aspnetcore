@@ -154,10 +154,10 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
 
         if (expectedErrorMessage is not null)
         {
-            var error = (await page.TextContentAsync(".govuk-error-message"))?.TrimStart("Error:".ToCharArray());
+            var error = (await page.TextContentAsync(".govuk-error-message"))?.Trim().TrimStart("Error: ".ToCharArray());
             Assert.Equal(expectedErrorMessage, error);
 
-            var errorSummaryError = await page.TextContentAsync(".govuk-error-summary__list>li>a");
+            var errorSummaryError = (await page.TextContentAsync(".govuk-error-summary__list>li>a"))?.Trim();
             Assert.Equal(expectedErrorMessage, errorSummaryError);
         }
 

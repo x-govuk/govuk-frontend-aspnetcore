@@ -26,9 +26,11 @@ The `asp-for` attribute is now obsolete; the `for` attribute should be used in i
 #### `is-current` on `<govuk-pagination-item>`
 `is-current` has been renamed to `current`.
 
-#### Date input model binding
-The `TryCreateModelFromErrors` method on `DateInputModelConverter` has been removed;
-model binding when there are parse errors is no longer supported.
+#### Date inputs
+- The `TryCreateModelFromErrors` method on `DateInputModelConverter` has been removed; model binding when there are parse errors is no longer supported.
+- `GovUk.Frontend.AspNetCore.ModelBinding.DateInputErrorComponents` has been renamed to `GovUk.Frontend.AspNetCore.DateInputItems`.
+- The `value` attribute on `<govuk-date-input-day>`, `<govuk-date-input-month>` and `<govuk-date-input-year>` has changed from `int?` to `string`.
+- Generated item `id`s now use `-` as a separator instead of `.` e.g. `DateOfBirth-Day` instead of `DateOfBirth.Day`.
 
 #### `appendVersion`
 The `appendVersion` parameter on the `GenerateScriptImports()` and `GenerateStyleImports()` methods on `PageTemplateHelper` has been removed.

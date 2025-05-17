@@ -1,10 +1,10 @@
-namespace GovUk.Frontend.AspNetCore.ModelBinding;
+namespace GovUk.Frontend.AspNetCore;
 
 /// <summary>
-/// Represents the components of a date input component that have errors.
+/// Represents the fields of a date input component.
 /// </summary>
 [Flags]
-public enum DateInputErrorComponents
+public enum DateInputItems
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     None = 0,

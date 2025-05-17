@@ -3,36 +3,32 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class DateInputFieldsetLegendTagHelperTests() :
-    TagHelperTestBase(DateInputFieldsetLegendTagHelper.TagName, parentTagName: DateInputFieldsetTagHelper.TagName)
+public abstract class DateInputItemLabelTagHelperBaseTests<T>(string tagName, string parentTagName) : TagHelperTestBase(tagName, parentTagName)
+    where T : DateInputItemLabelTagHelperBase, new()
 {
     [Fact]
-    public async Task ProcessAsync_AddsLegendToContext()
+    public async Task ProcessAsync_SetsLabelOnContext()
     {
         // Arrange
-        var legendContent = "Legend";
-        var isPageHeading = true;
+        var labelContent = "Label";
         var attributes = CreateDummyDataAttributes();
 
-        var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: new(), @for: null);
+        var itemContext = new DateInputItemContext(ParentTagName!, TagName);
 
         var context = CreateTagHelperContext(
             attributes: attributes,
-            contexts: fieldsetContext);
+            contexts: itemContext);
 
         var output = CreateTagHelperOutput(
             attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent(legendContent);
+                tagHelperContent.SetContent(labelContent);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new DateInputFieldsetLegendTagHelper()
-        {
-            IsPageHeading = isPageHeading
-        };
+        var tagHelper = new T();
 
         tagHelper.Init(context);
 
@@ -40,31 +36,29 @@ public class DateInputFieldsetLegendTagHelperTests() :
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(fieldsetContext.Legend);
-        Assert.Equal(legendContent, fieldsetContext.Legend.Html);
-        Assert.Equal(isPageHeading, fieldsetContext.Legend.IsPageHeading);
-        AssertContainsAttributes(attributes, fieldsetContext.Legend.Attributes);
+        Assert.NotNull(itemContext.Label);
+        Assert.Equal(labelContent, itemContext.Label?.Html);
+        AssertContainsAttributes(attributes, itemContext.Label?.Attributes);
     }
 
     [Fact]
-    public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
+    public async Task ProcessAsync_AlreadyGotLabel_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: new(), @for: null);
+        var itemContext = new DateInputItemContext(ParentTagName!, TagName);
+        itemContext.SetLabel(html: "Existing label", attributes: new(), TagName);
 
-        fieldsetContext.SetLegend(isPageHeading: false, attributes: new(), html: "Existing legend");
-
-        var context = CreateTagHelperContext(contexts: fieldsetContext);
+        var context = CreateTagHelperContext(contexts: itemContext);
 
         var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Legend content");
+                tagHelperContent.SetContent("New label");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new DateInputFieldsetLegendTagHelper();
+        var tagHelper = new T();
 
         tagHelper.Init(context);
 

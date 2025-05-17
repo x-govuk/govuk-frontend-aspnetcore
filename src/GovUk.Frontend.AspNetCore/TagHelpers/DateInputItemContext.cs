@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using GovUk.Frontend.AspNetCore.Components;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -10,22 +9,25 @@ internal class DateInputItemContext
 
     public DateInputItemContext(string itemTagName, string labelTagName)
     {
-        _itemTagName = Guard.ArgumentNotNull(nameof(itemTagName), itemTagName);
-        _labelTagName = Guard.ArgumentNotNull(nameof(labelTagName), labelTagName);
+        ArgumentNullException.ThrowIfNull(itemTagName);
+        ArgumentNullException.ThrowIfNull(labelTagName);
+        _itemTagName = itemTagName;
+        _labelTagName = labelTagName;
     }
 
-    public (IHtmlContent Content, AttributeDictionary Attributes)? Label { get; private set; }
+    public (TemplateString Html, AttributeCollection Attributes, string TagName)? Label { get; private set; }
 
-    public void SetLabel(IHtmlContent content, AttributeDictionary attributes)
+    public void SetLabel(TemplateString html, AttributeCollection attributes, string tagName)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
+        ArgumentNullException.ThrowIfNull(html);
+        ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(tagName);
 
         if (Label is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(_labelTagName, _itemTagName);
         }
 
-        Label = (content, attributes);
+        Label = (html, attributes, tagName);
     }
 }

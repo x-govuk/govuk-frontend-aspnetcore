@@ -56,9 +56,9 @@ public class FormGroupErrorMessageTagHelper : TagHelper
         var formGroupContext = context.GetContextItem<FormGroupContext>();
 
         formGroupContext.SetErrorMessage(
-                VisuallyHiddenText,
-                output.Attributes.ToAttributeDictionary(),
-                childContent?.Snapshot());
+            VisuallyHiddenText,
+            output.Attributes.ToAttributeDictionary(),
+            childContent?.Snapshot());
     }
 }
 

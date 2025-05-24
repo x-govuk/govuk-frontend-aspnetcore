@@ -20,7 +20,7 @@ public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelper3
     /// then <see cref="ErrorItems"/> will be computed from model binding errors.
     /// </remarks>
     [HtmlAttributeName(ErrorItemsAttributeName)]
-    public DateInputItems? ErrorItems { get; set; }
+    public DateInputItemTypes? ErrorItems { get; set; }
 
     private protected override void SetErrorMessage(TagHelperContent? childContent, TagHelperContext context, TagHelperOutput output)
     {

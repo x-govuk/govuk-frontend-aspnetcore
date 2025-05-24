@@ -1,6 +1,6 @@
 ﻿@model GovUk.Frontend.AspNetCore.IntegrationTests.DateInputsTestsModel
 
-<form asp-action="PostItemValues" novalidate>
+<form asp-action="PostItemValues">
     <govuk-date-input id="Date" name-prefix="Date">
         <govuk-date-input-day value="@Model.Date?.Day" />
         <govuk-date-input-month value="@Model.Date?.Month" />

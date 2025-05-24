@@ -1,0 +1,15 @@
+﻿@page
+@model PartialDateModel
+@{
+    ViewData["Title"] = @Html.DisplayNameFor(m => m.BirthMonth);
+}
+
+<form asp-page="PartialDate">
+    <govuk-date-input for="BirthMonth">
+        <govuk-date-input-fieldset>
+            <govuk-date-input-fieldset-legend is-page-heading="false" class="govuk-fieldset__legend--l" />
+        </govuk-date-input-fieldset>
+    </govuk-date-input>
+
+    <govuk-button type="submit">Save</govuk-button>
+</form>

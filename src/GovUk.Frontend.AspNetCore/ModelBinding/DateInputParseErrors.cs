@@ -50,9 +50,9 @@ public static class DateInputParseErrorsExtensions
     /// <summary>
     /// Groups the specified <see cref="DateInputParseErrors"/> by the affected date input components.
     /// </summary>
-    public static DateInputItems GetFieldsWithErrors(this DateInputParseErrors parseErrors) =>
-        DateInputItems.None |
-        ((parseErrors & (DateInputParseErrors.MissingDay | DateInputParseErrors.InvalidDay)) != 0 ? DateInputItems.Day : 0) |
-        ((parseErrors & (DateInputParseErrors.MissingMonth | DateInputParseErrors.InvalidMonth)) != 0 ? DateInputItems.Month : 0) |
-        ((parseErrors & (DateInputParseErrors.MissingYear | DateInputParseErrors.InvalidYear)) != 0 ? DateInputItems.Year : 0);
+    public static DateInputItemTypes GetItemsWithError(this DateInputParseErrors parseErrors) =>
+        DateInputItemTypes.None |
+        ((parseErrors & (DateInputParseErrors.MissingDay | DateInputParseErrors.InvalidDay)) != 0 ? DateInputItemTypes.Day : 0) |
+        ((parseErrors & (DateInputParseErrors.MissingMonth | DateInputParseErrors.InvalidMonth)) != 0 ? DateInputItemTypes.Month : 0) |
+        ((parseErrors & (DateInputParseErrors.MissingYear | DateInputParseErrors.InvalidYear)) != 0 ? DateInputItemTypes.Year : 0);
 }

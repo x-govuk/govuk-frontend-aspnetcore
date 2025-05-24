@@ -48,7 +48,7 @@ public static class GovUkFrontendExtensions
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
         services.AddSingleton<IStartupFilter, GovUkFrontendStartupFilter>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
-        services.AddScoped<DateInputParseErrorsProvider>();
+        services.AddScoped<BindingResultInfoProvider>();
         services.AddTransient<PageTemplateHelper>();
         services.AddSingleton<ITagHelperInitializer<ButtonTagHelper>, ButtonTagHelperInitializer>();
 
@@ -70,7 +70,7 @@ public static class GovUkFrontendExtensions
         public void Configure(MvcOptions options)
         {
             options.ModelBinderProviders.Insert(2, new DateInputModelBinderProvider(_optionsAccessor));
-            options.ModelMetadataDetailsProviders.Add(new GovUkFrontendAspNetCoreMetadataDetailsProvider());
+            options.ModelMetadataDetailsProviders.Add(new GovUkFrontendMetadataDetailsProvider());
         }
     }
 }

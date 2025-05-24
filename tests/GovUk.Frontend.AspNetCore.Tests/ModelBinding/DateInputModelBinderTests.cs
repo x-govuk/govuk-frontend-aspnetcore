@@ -2,36 +2,36 @@ using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.Tests.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Moq.Protected;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ModelBinding;
 
 public class DateInputModelBinderTests
 {
     [Fact]
-    public async Task BindModelAsync_AllComponentsEmpty_DoesNotBind()
+    public async Task BindModelAsync_CompleteDate_AllComponentsEmpty_DoesNotBind()
     {
         // Arrange
         var modelType = typeof(DateOnly);
+        var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType));
 
         ModelBindingContext bindingContext = new DefaultModelBindingContext()
         {
             ActionContext = CreateActionContextWithServices(),
-            ModelMetadata = new EmptyModelMetadataProvider().GetMetadataForType(modelType),
+            ModelMetadata = modelMetadata,
             ModelName = "TheModelName",
             ModelState = new ModelStateDictionary(),
             ValueProvider = new SimpleValueProvider()
         };
 
         var converterMock = new Mock<DateInputModelConverter>();
-        converterMock.Setup(mock => mock.CanConvertModelType(modelType)).Returns(true);
 
-        var gfaOptions = Options.Create(new GovUkFrontendOptions());
-
-        var modelBinder = new DateInputModelConverterModelBinder(converterMock.Object, gfaOptions);
+        var modelBinder = new DateInputModelBinder(converterMock.Object);
 
         // Act
         await modelBinder.BindModelAsync(bindingContext);
@@ -41,15 +41,16 @@ public class DateInputModelBinderTests
     }
 
     [Fact]
-    public async Task BindModelAsync_AllComponentsProvided_PassesValuesToConverterAndBindsResult()
+    public async Task BindModelAsync_CompleteDate_AllComponentsProvided_PassesValuesToConverterAndBindsResult()
     {
         // Arrange
         var modelType = typeof(DateOnly);
+        var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType));
 
         ModelBindingContext bindingContext = new DefaultModelBindingContext()
         {
             ActionContext = CreateActionContextWithServices(),
-            ModelMetadata = new EmptyModelMetadataProvider().GetMetadataForType(modelType),
+            ModelMetadata = modelMetadata,
             ModelName = "TheModelName",
             ModelState = new ModelStateDictionary(),
             ValueProvider = new SimpleValueProvider()
@@ -61,16 +62,14 @@ public class DateInputModelBinderTests
         };
 
         var converterMock = new Mock<DateInputModelConverter>();
-        converterMock.Setup(mock => mock.CanConvertModelType(modelType)).Returns(true);
 
         converterMock
-            .Setup(mock => mock.CreateModelFromDate(modelType, new DateOnly(2020, 4, 1)))
+            .Protected()
+            .Setup<object>("ConvertToModelCore", ItExpr.IsAny<DateInputConvertToModelContext>())
             .Returns(new DateOnly(2020, 4, 1))
             .Verifiable();
 
-        var gfaOptions = Options.Create(new GovUkFrontendOptions());
-
-        var modelBinder = new DateInputModelConverterModelBinder(converterMock.Object, gfaOptions);
+        var modelBinder = new DateInputModelBinder(converterMock.Object);
 
         // Act
         await modelBinder.BindModelAsync(bindingContext);
@@ -92,6 +91,102 @@ public class DateInputModelBinderTests
         Assert.Equal(0, bindingContext.ModelState.ErrorCount);
     }
 
+    [Fact]
+    public async Task BindModelAsync_DayAndMonth_AllComponentsProvided_PassesValuesToConverterAndBindsResult()
+    {
+        // Arrange
+        var modelType = typeof(ValueTuple<int, int>);
+        var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType), DateInputItemTypes.DayAndMonth);
+
+        ModelBindingContext bindingContext = new DefaultModelBindingContext()
+        {
+            ActionContext = CreateActionContextWithServices(),
+            ModelMetadata = modelMetadata,
+            ModelName = "TheModelName",
+            ModelState = new ModelStateDictionary(),
+            ValueProvider = new SimpleValueProvider()
+            {
+                { "TheModelName.Day", "1" },
+                { "TheModelName.Month", "4" }
+            }
+        };
+
+        var converterMock = new Mock<DateInputModelConverter>();
+
+        converterMock
+            .Protected()
+            .Setup<object>("ConvertToModelCore", ItExpr.IsAny<DateInputConvertToModelContext>())
+            .Returns((1, 4))
+            .Verifiable();
+
+        var modelBinder = new DateInputModelBinder(converterMock.Object);
+
+        // Act
+        await modelBinder.BindModelAsync(bindingContext);
+
+        // Assert
+        converterMock.Verify();
+
+        Assert.True(bindingContext.Result.IsModelSet);
+
+        var date = Assert.IsType<(int, int)>(bindingContext.Result.Model);
+        Assert.Equal(1, date.Item1);
+        Assert.Equal(4, date.Item2);
+
+        Assert.Null(bindingContext.ModelState["TheModelName.Day"]?.AttemptedValue);
+        Assert.Null(bindingContext.ModelState["TheModelName.Month"]?.AttemptedValue);
+
+        Assert.Equal(0, bindingContext.ModelState.ErrorCount);
+    }
+
+    [Fact]
+    public async Task BindModelAsync_MonthAndYear_AllComponentsProvided_PassesValuesToConverterAndBindsResult()
+    {
+        // Arrange
+        var modelType = typeof(ValueTuple<int, int>);
+        var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType), DateInputItemTypes.MonthAndYear);
+
+        ModelBindingContext bindingContext = new DefaultModelBindingContext()
+        {
+            ActionContext = CreateActionContextWithServices(),
+            ModelMetadata = modelMetadata,
+            ModelName = "TheModelName",
+            ModelState = new ModelStateDictionary(),
+            ValueProvider = new SimpleValueProvider()
+            {
+                { "TheModelName.Month", "4" },
+                { "TheModelName.Year", "2000" }
+            }
+        };
+
+        var converterMock = new Mock<DateInputModelConverter>();
+
+        converterMock
+            .Protected()
+            .Setup<object>("ConvertToModelCore", ItExpr.IsAny<DateInputConvertToModelContext>())
+            .Returns((4, 2000))
+            .Verifiable();
+
+        var modelBinder = new DateInputModelBinder(converterMock.Object);
+
+        // Act
+        await modelBinder.BindModelAsync(bindingContext);
+
+        // Assert
+        converterMock.Verify();
+
+        Assert.True(bindingContext.Result.IsModelSet);
+
+        var date = Assert.IsType<(int, int)>(bindingContext.Result.Model);
+        Assert.Equal(4, date.Item1);
+        Assert.Equal(2000, date.Item2);
+
+        Assert.Null(bindingContext.ModelState["TheModelName.Month"]?.AttemptedValue);
+        Assert.Null(bindingContext.ModelState["TheModelName.Year"]?.AttemptedValue);
+
+        Assert.Equal(0, bindingContext.ModelState.ErrorCount);
+    }
+
     [Theory]
     [InlineData("", "4", "2020")]
     [InlineData("1", "", "2020")]
@@ -106,43 +201,29 @@ public class DateInputModelBinderTests
     [InlineData("1", "4", "-1")]
     [InlineData("1", "4", "15")]
     [InlineData("1", "4", "10000")]
-    public async Task BindModelAsync_MissingOrInvalidComponents_FailsBinding(string day, string month, string year)
+    public async Task BindModelAsync_CompleteDate_MissingOrInvalidComponents_FailsBinding(string day, string month, string year)
     {
         // Arrange
         var modelType = typeof(DateOnly);
+        var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType));
 
         var valueProvider = new SimpleValueProvider();
-
-        if (day is not null)
-        {
-            valueProvider.Add("TheModelName.Day", day);
-        }
-
-        if (month is not null)
-        {
-            valueProvider.Add("TheModelName.Month", month);
-        }
-
-        if (year is not null)
-        {
-            valueProvider.Add("TheModelName.Year", year);
-        }
+        valueProvider.Add("TheModelName.Day", day);
+        valueProvider.Add("TheModelName.Month", month);
+        valueProvider.Add("TheModelName.Year", year);
 
         ModelBindingContext bindingContext = new DefaultModelBindingContext()
         {
             ActionContext = CreateActionContextWithServices(),
-            ModelMetadata = new EmptyModelMetadataProvider().GetMetadataForType(modelType),
+            ModelMetadata = modelMetadata,
             ModelName = "TheModelName",
             ModelState = new ModelStateDictionary(),
             ValueProvider = valueProvider
         };
 
         var converterMock = new Mock<DateInputModelConverter>();
-        converterMock.Setup(mock => mock.CanConvertModelType(modelType)).Returns(true);
 
-        var gfaOptions = Options.Create(new GovUkFrontendOptions());
-
-        var modelBinder = new DateInputModelConverterModelBinder(converterMock.Object, gfaOptions);
+        var modelBinder = new DateInputModelBinder(converterMock.Object);
 
         // Act
         await modelBinder.BindModelAsync(bindingContext);
@@ -151,6 +232,91 @@ public class DateInputModelBinderTests
         Assert.Equal(ModelBindingResult.Failed(), bindingContext.Result);
 
         Assert.Equal(day, bindingContext.ModelState["TheModelName.Day"]?.AttemptedValue);
+        Assert.Equal(month, bindingContext.ModelState["TheModelName.Month"]?.AttemptedValue);
+        Assert.Equal(year, bindingContext.ModelState["TheModelName.Year"]?.AttemptedValue);
+    }
+
+    [Theory]
+    [InlineData("", "4")]
+    [InlineData("1", "")]
+    [InlineData("0", "4")]
+    [InlineData("-1", "4")]
+    [InlineData("32", "4")]
+    [InlineData("1", "0")]
+    [InlineData("1", "-1")]
+    [InlineData("1", "13")]
+    public async Task BindModelAsync_DayAndMonth_MissingOrInvalidComponents_FailsBinding(string day, string month)
+    {
+        // Arrange
+        var modelType = typeof(DateOnly);
+        var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType), DateInputItemTypes.DayAndMonth);
+
+        var valueProvider = new SimpleValueProvider();
+        valueProvider.Add("TheModelName.Day", day);
+        valueProvider.Add("TheModelName.Month", month);
+
+        ModelBindingContext bindingContext = new DefaultModelBindingContext()
+        {
+            ActionContext = CreateActionContextWithServices(),
+            ModelMetadata = modelMetadata,
+            ModelName = "TheModelName",
+            ModelState = new ModelStateDictionary(),
+            ValueProvider = valueProvider
+        };
+
+        var converterMock = new Mock<DateInputModelConverter>();
+
+        var modelBinder = new DateInputModelBinder(converterMock.Object);
+
+        // Act
+        await modelBinder.BindModelAsync(bindingContext);
+
+        // Assert
+        Assert.Equal(ModelBindingResult.Failed(), bindingContext.Result);
+
+        Assert.Equal(day, bindingContext.ModelState["TheModelName.Day"]?.AttemptedValue);
+        Assert.Equal(month, bindingContext.ModelState["TheModelName.Month"]?.AttemptedValue);
+    }
+
+    [Theory]
+    [InlineData("", "2020")]
+    [InlineData("4", "")]
+    [InlineData("0", "2020")]
+    [InlineData("-1", "2020")]
+    [InlineData("13", "2020")]
+    [InlineData("4", "0")]
+    [InlineData("4", "-1")]
+    [InlineData("4", "15")]
+    [InlineData("4", "10000")]
+    public async Task BindModelAsync_MonthAndYear_MissingOrInvalidComponents_FailsBinding(string month, string year)
+    {
+        // Arrange
+        var modelType = typeof(DateOnly);
+        var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType), DateInputItemTypes.MonthAndYear);
+
+        var valueProvider = new SimpleValueProvider();
+        valueProvider.Add("TheModelName.Month", month);
+        valueProvider.Add("TheModelName.Year", year);
+
+        ModelBindingContext bindingContext = new DefaultModelBindingContext()
+        {
+            ActionContext = CreateActionContextWithServices(),
+            ModelMetadata = modelMetadata,
+            ModelName = "TheModelName",
+            ModelState = new ModelStateDictionary(),
+            ValueProvider = valueProvider
+        };
+
+        var converterMock = new Mock<DateInputModelConverter>();
+
+        var modelBinder = new DateInputModelBinder(converterMock.Object);
+
+        // Act
+        await modelBinder.BindModelAsync(bindingContext);
+
+        // Assert
+        Assert.Equal(ModelBindingResult.Failed(), bindingContext.Result);
+
         Assert.Equal(month, bindingContext.ModelState["TheModelName.Month"]?.AttemptedValue);
         Assert.Equal(year, bindingContext.ModelState["TheModelName.Year"]?.AttemptedValue);
     }
@@ -174,7 +340,7 @@ public class DateInputModelBinderTests
         var modelMetadata = new DisplayNameModelMetadata("Date of birth");
 
         // Act
-        var result = DateInputModelConverterModelBinder.GetModelStateErrorMessage(parseErrors, modelMetadata);
+        var result = DateInputModelBinder.GetModelStateErrorMessage(parseErrors, modelMetadata);
 
         // Assert
         Assert.Equal(expectedMessage, result);
@@ -209,7 +375,7 @@ public class DateInputModelBinderTests
             });
 
         // Act
-        var result = DateInputModelConverterModelBinder.GetModelStateErrorMessage(parseErrors, modelMetadata);
+        var result = DateInputModelBinder.GetModelStateErrorMessage(parseErrors, modelMetadata);
 
         // Assert
         Assert.Equal(expectedMessage, result);
@@ -231,14 +397,64 @@ public class DateInputModelBinderTests
     [InlineData("1", "4", "-1", DateInputParseErrors.InvalidYear)]
     [InlineData("1", "4", "10000", DateInputParseErrors.InvalidYear)]
     [InlineData("1", "4", "x", DateInputParseErrors.InvalidYear)]
-    public void Parse_InvalidDate_ComputesExpectedParseErrors(
+    public void Parse_CompleteDate_InvalidDate_ComputesExpectedParseErrors(
         string day, string month, string year, DateInputParseErrors expectedParseErrors)
     {
         // Arrange
         var acceptMonthNames = false;
 
         // Act
-        var result = DateInputModelConverterModelBinder.Parse(day, month, year, acceptMonthNames, out var dateComponents);
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames, out var dateComponents);
+
+        // Assert
+        Assert.Equal(default, dateComponents);
+        Assert.Equal(expectedParseErrors, result);
+    }
+
+    [Theory]
+    [InlineData("", "4", DateInputParseErrors.MissingDay)]
+    [InlineData("1", "", DateInputParseErrors.MissingMonth)]
+    [InlineData("0", "4", DateInputParseErrors.InvalidDay)]
+    [InlineData("-1", "4", DateInputParseErrors.InvalidDay)]
+    [InlineData("32", "4", DateInputParseErrors.InvalidDay)]
+    [InlineData("x", "4", DateInputParseErrors.InvalidDay)]
+    [InlineData("1", "0", DateInputParseErrors.InvalidMonth)]
+    [InlineData("1", "-1", DateInputParseErrors.InvalidMonth)]
+    [InlineData("1", "13", DateInputParseErrors.InvalidMonth)]
+    [InlineData("1", "x", DateInputParseErrors.InvalidMonth)]
+    public void Parse_DayAndMonth_InvalidDate_ComputesExpectedParseErrors(
+        string day, string month, DateInputParseErrors expectedParseErrors)
+    {
+        // Arrange
+        var acceptMonthNames = false;
+
+        // Act
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.DayAndMonth, day, month, year: "", acceptMonthNames, out var dateComponents);
+
+        // Assert
+        Assert.Equal(default, dateComponents);
+        Assert.Equal(expectedParseErrors, result);
+    }
+
+    [Theory]
+    [InlineData("", "2020", DateInputParseErrors.MissingMonth)]
+    [InlineData("4", "", DateInputParseErrors.MissingYear)]
+    [InlineData("0", "2020", DateInputParseErrors.InvalidMonth)]
+    [InlineData("-1", "2020", DateInputParseErrors.InvalidMonth)]
+    [InlineData("13", "2020", DateInputParseErrors.InvalidMonth)]
+    [InlineData("x", "2020", DateInputParseErrors.InvalidMonth)]
+    [InlineData("4", "0", DateInputParseErrors.InvalidYear)]
+    [InlineData("4", "-1", DateInputParseErrors.InvalidYear)]
+    [InlineData("4", "10000", DateInputParseErrors.InvalidYear)]
+    [InlineData("4", "x", DateInputParseErrors.InvalidYear)]
+    public void Parse_MonthAndYear_InvalidDate_ComputesExpectedParseErrors(
+        string month, string year, DateInputParseErrors expectedParseErrors)
+    {
+        // Arrange
+        var acceptMonthNames = false;
+
+        // Act
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.MonthAndYear, day: "", month, year, acceptMonthNames, out var dateComponents);
 
         // Assert
         Assert.Equal(default, dateComponents);
@@ -255,7 +471,7 @@ public class DateInputModelBinderTests
         var acceptMonthNames = true;
 
         // Act
-        var result = DateInputModelConverterModelBinder.Parse(day, monthName, year, acceptMonthNames, out var dateComponents);
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, monthName, year, acceptMonthNames, out var dateComponents);
 
         // Assert
         Assert.NotEqual(default, dateComponents);
@@ -272,50 +488,96 @@ public class DateInputModelBinderTests
         var acceptMonthNames = false;
 
         // Act
-        var result = DateInputModelConverterModelBinder.Parse(day, monthName, year, acceptMonthNames, out var dateComponents);
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, monthName, year, acceptMonthNames, out var dateComponents);
 
         // Assert
         Assert.Equal(default, dateComponents);
         Assert.Equal(DateInputParseErrors.InvalidMonth, result);
     }
 
-    public static TheoryData<string> ValidMonthNamesData { get; } = new TheoryData<string>()
+    [Fact]
+    public void Parse_CompleteDate_WithFeb29thAndUnknownYear_DoesNotReturnDayError()
     {
-        { "jan" },
-        { "january" },
-        { "feb" },
-        { "february" },
-        { "mar" },
-        { "march" },
-        { "apr" },
-        { "april" },
-        { "may" },
-        { "jun" },
-        { "june" },
-        { "jul" },
-        { "july" },
-        { "aug" },
-        { "august" },
-        { "sep" },
-        { "september" },
-        { "oct" },
-        { "october" },
-        { "nov" },
-        { "november" },
-        { "dec" },
-        { "december" }
+        // Arrange
+        var day = "29";
+        var month = "2";
+        var year = "";
+
+        // Act
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out var dateComponents);
+
+        // Assert
+        Assert.False(result.HasFlag(DateInputParseErrors.InvalidDay));
+    }
+
+    [Fact]
+    public void Parse_CompleteDate_WithFeb29thAndNonLeapYear_ReturnsDayError()
+    {
+        // Arrange
+        var day = "29";
+        var month = "2";
+        var year = "2001";
+
+        // Act
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out var dateComponents);
+
+        // Assert
+        Assert.True(result.HasFlag(DateInputParseErrors.InvalidDay));
+    }
+
+    [Fact]
+    public void Parse_CompleteDate_WithFeb29thAndLeapYear_DoesNotReturnDayError()
+    {
+        // Arrange
+        var day = "29";
+        var month = "2";
+        var year = "2000";
+
+        // Act
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out var dateComponents);
+
+        // Assert
+        Assert.False(result.HasFlag(DateInputParseErrors.InvalidDay));
+    }
+
+    public static TheoryData<string> ValidMonthNamesData { get; } = new()
+    {
+        "jan",
+        "january",
+        "feb",
+        "february",
+        "mar",
+        "march",
+        "apr",
+        "april",
+        "may",
+        "jun",
+        "june",
+        "jul",
+        "july",
+        "aug",
+        "august",
+        "sep",
+        "september",
+        "oct",
+        "october",
+        "nov",
+        "november",
+        "dec",
+        "december"
     };
 
     private static ActionContext CreateActionContextWithServices()
     {
         var services = new ServiceCollection();
-        services.AddScoped<DateInputParseErrorsProvider>();
+        services.AddScoped<BindingResultInfoProvider>();
+        services.AddOptions<GovUkFrontendOptions>();
         var serviceProvider = services.BuildServiceProvider();
 
         var httpContext = new DefaultHttpContext();
         httpContext.RequestServices = serviceProvider;
 
-        return new ActionContext(httpContext, new Microsoft.AspNetCore.Routing.RouteData(), new Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor());
+        return new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
     }
 
     private class DisplayNameModelMetadata : ModelMetadata
@@ -403,5 +665,14 @@ public class DateInputModelBinderTests
     private class CustomDateType
     {
         public DateInputParseErrors ParseErrors { get; set; }
+    }
+
+    private ModelMetadata CreateModelMetadata(
+        ModelMetadataIdentity identity,
+        DateInputItemTypes itemTypes = DateInputItemTypes.DayMonthAndYear)
+    {
+        var metadata = new TestModelMetadata(identity) { DateInputData = new() { ItemTypes = itemTypes } };
+        metadata.SetDisplayName(identity.Name);
+        return metadata;
     }
 }

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 
-namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
+namespace GovUk.Frontend.AspNetCore.Tests;
 
 public class TestCompositeMetadataDetailsProvider(
     string name,

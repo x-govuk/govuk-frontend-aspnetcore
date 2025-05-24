@@ -1,7 +1,7 @@
 ﻿@model GovUk.Frontend.AspNetCore.IntegrationTests.DateInputsTestsModel
 
-<form asp-action="PostCustomDate">
-    <govuk-date-input value="@Model.CustomDate" id="Date" name-prefix="CustomDate" />
+<form asp-action="PostForCustomDateParts">
+    <govuk-date-input for="CustomMonthAndYear" />
 
     <govuk-button type="submit">Save</govuk-button>
 </form>

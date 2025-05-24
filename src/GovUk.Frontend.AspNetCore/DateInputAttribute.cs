@@ -9,6 +9,22 @@ namespace GovUk.Frontend.AspNetCore;
 public sealed class DateInputAttribute : Attribute
 {
     /// <summary>
+    /// Initializes a new instance of <see cref="DateInputAttribute"/>.
+    /// </summary>
+    public DateInputAttribute()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="DateInputAttribute"/> with <see cref="DateInputItemTypes"/>.
+    /// </summary>
+    /// <param name="itemTypes">The <see cref="DateInputItemTypes"/>.</param>
+    public DateInputAttribute(DateInputItemTypes itemTypes)
+    {
+        ItemTypes = itemTypes;
+    }
+
+    /// <summary>
     /// Gets or sets the prefix used in error messages.
     /// </summary>
     /// <remarks>
@@ -16,4 +32,9 @@ public sealed class DateInputAttribute : Attribute
     /// e.g. <c>{ErrorMessagePrefix} must be a real date</c>
     /// </remarks>
     public string? ErrorMessagePrefix { get; set; }
+
+    /// <summary>
+    /// Gets the <see cref="DateInputItemTypes"/> that should be created on the date input for this property.
+    /// </summary>
+    public DateInputItemTypes? ItemTypes { get; }
 }

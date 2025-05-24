@@ -2,9 +2,17 @@ namespace GovUk.Frontend.AspNetCore.ModelBinding;
 
 internal class DateOnlyDateInputModelConverter : DateInputModelConverter
 {
-    public override bool CanConvertModelType(Type modelType) => modelType == typeof(DateOnly);
+    public static Type ModelType => typeof(DateOnly);
 
-    public override object CreateModelFromDate(Type modelType, DateOnly date) => date;
+    protected override object ConvertToModelCore(DateInputConvertToModelContext context)
+    {
+        var values = context.ItemValues;
+        return new DateOnly(values.Year!.Value, values.Month!.Value, values.Day!.Value);
+    }
 
-    public override DateOnly? GetDateFromModel(Type modelType, object model) => (DateOnly?)model;
+    protected override DateInputItemValues? ConvertFromModelCore(DateInputConvertFromModelContext context)
+    {
+        var dateOnly = (DateOnly)context.Model;
+        return new DateInputItemValues(dateOnly.Day, dateOnly.Month, dateOnly.Year);
+    }
 }

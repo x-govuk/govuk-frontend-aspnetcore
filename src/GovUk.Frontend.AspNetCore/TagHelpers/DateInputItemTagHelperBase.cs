@@ -16,7 +16,7 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     private const string PatternAttributeName = "pattern";
     private const string ValueAttributeName = "value";
 
-    private readonly DateInputItemType _itemType;
+    private readonly DateInputItemTypes _itemType;
     private readonly string _labelTagName;
     private string? _value;
     private bool _valueSpecified = false;
@@ -24,7 +24,7 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     /// <summary>
     /// Creates a <see cref="DateInputItemTagHelperBase"/>.
     /// </summary>
-    private protected DateInputItemTagHelperBase(DateInputItemType itemType, string labelTagName)
+    private protected DateInputItemTagHelperBase(DateInputItemTypes itemType, string labelTagName)
     {
         ArgumentNullException.ThrowIfNull(labelTagName);
         _itemType = itemType;

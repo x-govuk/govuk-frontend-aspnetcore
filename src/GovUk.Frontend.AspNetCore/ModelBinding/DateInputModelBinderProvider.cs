@@ -11,28 +11,26 @@ public class DateInputModelBinderProvider : IModelBinderProvider
     private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DateInputModelBinderProvider"/> class.
+    /// Initializes a new instance of the <see cref="DateInputModelBinderProvider"/>.
     /// </summary>
+    /// <param name="optionsAccessor">The options.</param>
     public DateInputModelBinderProvider(IOptions<GovUkFrontendOptions> optionsAccessor)
     {
-        Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor);
-
+        ArgumentNullException.ThrowIfNull(optionsAccessor);
         _optionsAccessor = optionsAccessor;
     }
 
     /// <inheritdoc/>
     public IModelBinder? GetBinder(ModelBinderProviderContext context)
     {
-        Guard.ArgumentNotNull(nameof(context), context);
+        ArgumentNullException.ThrowIfNull(context);
 
         var modelType = context.Metadata.UnderlyingOrModelType;
+        var converter = _optionsAccessor.Value.FindDateInputModelConverterForType(modelType);
 
-        foreach (var converter in _optionsAccessor.Value.DateInputModelConverters)
+        if (converter is not null)
         {
-            if (converter.CanConvertModelType(modelType))
-            {
-                return new DateInputModelConverterModelBinder(converter, _optionsAccessor);
-            }
+            return new DateInputModelBinder(converter);
         }
 
         return null;

@@ -1,30 +1,127 @@
 namespace GovUk.Frontend.AspNetCore.ModelBinding;
 
 /// <summary>
-/// Converts a <see cref="DateOnly"/> to and from an alternative model type.
+/// Converts date parts to and from a model type.
 /// </summary>
 public abstract class DateInputModelConverter
 {
     /// <summary>
-    /// Determines whether this converter can convert the specified model type.
+    /// The <see cref="DateInputItemTypes"/> supported by this <see cref="DateInputModelConverter"/>.
     /// </summary>
-    /// <param name="modelType">The model type.</param>
-    /// <returns><see langword="true"/> if this instance can convert the specified model type; otherwise <see langword="false"/>.</returns>
-    public abstract bool CanConvertModelType(Type modelType);
+    /// <remarks>
+    /// <para>If this converter can support multiple <see cref="DateInputItemTypes"/> combinations
+    /// then this property should be set to <see langword="null"/>.</para>
+    /// <para>The default is <c>DateInputItemTypes.DayMonthAndYear</c>.</para>
+    /// </remarks>
+    public virtual DateInputItemTypes? DefaultItemTypes { get; } = DateInputItemTypes.DayMonthAndYear;
 
     /// <summary>
-    /// Converts <paramref name="date"/> to an instance of <paramref name="modelType"/>.
+    /// Converts a <see cref="DateInputItemValues"/> to a model value.
     /// </summary>
-    /// <param name="modelType">The model type to convert to.</param>
-    /// <param name="date">The <see cref="DateOnly"/> instance to convert.</param>
-    /// <returns>An instance of <paramref name="modelType"/> that represents the <paramref name="date"/> argument.</returns>
-    public abstract object CreateModelFromDate(Type modelType, DateOnly date);
+    public object ConvertToModel(DateInputConvertToModelContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        if (DefaultItemTypes is DateInputItemTypes itemTypes && context.ItemTypes != itemTypes)
+        {
+            throw new NotSupportedException($"Specified {nameof(DateInputItemTypes)} combination is not supported.");
+        }
+
+        return ConvertToModelCore(context);
+    }
 
     /// <summary>
-    /// Converts <paramref name="model"/> to instance of <see cref="DateOnly"/>.
+    /// Converts a model value to <see cref="DateInputItemValues"/>.
     /// </summary>
-    /// <param name="modelType">The model type to convert from.</param>
-    /// <param name="model">The model instance to convert.</param>
-    /// <returns>The converted model instance.</returns>
-    public abstract DateOnly? GetDateFromModel(Type modelType, object model);
+    public DateInputItemValues? ConvertFromModel(DateInputConvertFromModelContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        if (DefaultItemTypes is DateInputItemTypes itemTypes && context.ItemTypes != itemTypes)
+        {
+            throw new NotSupportedException($"Specified {nameof(DateInputItemTypes)} combination is not supported.");
+        }
+
+        return ConvertFromModelCore(context);
+    }
+
+    /// <summary>
+    /// Converts a <see cref="DateInputItemValues"/> to a model value.
+    /// </summary>
+    protected abstract object ConvertToModelCore(DateInputConvertToModelContext context);
+
+    /// <summary>
+    /// Converts a model value to <see cref="DateInputItemValues"/>.
+    /// </summary>
+    protected abstract DateInputItemValues? ConvertFromModelCore(DateInputConvertFromModelContext context);
+}
+
+/// <summary>
+/// Contains information used for converting a date input's item values to a model.
+/// </summary>
+public class DateInputConvertToModelContext
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DateInputConvertToModelContext"/>.
+    /// </summary>
+    public DateInputConvertToModelContext(Type modelType, DateInputItemTypes itemTypes, DateInputItemValues itemValues)
+    {
+        ArgumentNullException.ThrowIfNull(modelType);
+        ArgumentNullException.ThrowIfNull(itemTypes);
+        ArgumentNullException.ThrowIfNull(itemValues);
+
+        ModelType = modelType;
+        ItemTypes = itemTypes;
+        ItemValues = itemValues;
+    }
+
+    /// <summary>
+    /// The <see cref="Type"/> to convert to.
+    /// </summary>
+    public Type ModelType { get; }
+
+    /// <summary>
+    /// The <see cref="DateInputItemTypes"/> in the date input.
+    /// </summary>
+    public DateInputItemTypes ItemTypes { get; }
+
+    /// <summary>
+    /// The values of the date input to convert.
+    /// </summary>
+    public DateInputItemValues ItemValues { get; }
+}
+
+/// <summary>
+/// Contains information used for converting a model to a date input's item values.
+/// </summary>
+public class DateInputConvertFromModelContext
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DateInputConvertFromModelContext"/>.
+    /// </summary>
+    public DateInputConvertFromModelContext(Type modelType, DateInputItemTypes itemTypes, object model)
+    {
+        ArgumentNullException.ThrowIfNull(modelType);
+        ArgumentNullException.ThrowIfNull(itemTypes);
+        ArgumentNullException.ThrowIfNull(model);
+
+        ModelType = modelType;
+        ItemTypes = itemTypes;
+        Model = model;
+    }
+
+    /// <summary>
+    /// The <see cref="Type"/> to convert from.
+    /// </summary>
+    public Type ModelType { get; }
+
+    /// <summary>
+    /// The <see cref="DateInputItemTypes"/> in the date input.
+    /// </summary>
+    public DateInputItemTypes ItemTypes { get; }
+
+    /// <summary>
+    /// The value to convert.
+    /// </summary>
+    public object Model { get; }
 }

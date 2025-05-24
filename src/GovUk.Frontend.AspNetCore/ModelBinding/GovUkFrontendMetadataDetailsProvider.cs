@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 
 namespace GovUk.Frontend.AspNetCore.ModelBinding;
 
-internal class GovUkFrontendAspNetCoreMetadataDetailsProvider : IMetadataDetailsProvider, IDisplayMetadataProvider
+internal class GovUkFrontendMetadataDetailsProvider : IDisplayMetadataProvider
 {
     public void CreateDisplayMetadata(DisplayMetadataProviderContext context)
     {
@@ -10,12 +10,13 @@ internal class GovUkFrontendAspNetCoreMetadataDetailsProvider : IMetadataDetails
 
         if (dateOnlyMetadataAttribute is not null)
         {
-            var dateOnlyMetadata = new DateInputModelMetadata()
+            var dateInputMetadata = new DateInputModelMetadata()
             {
-                ErrorMessagePrefix = dateOnlyMetadataAttribute.ErrorMessagePrefix
+                ErrorMessagePrefix = dateOnlyMetadataAttribute.ErrorMessagePrefix,
+                ItemTypes = dateOnlyMetadataAttribute.ItemTypes
             };
 
-            context.DisplayMetadata.AdditionalValues.Add(typeof(DateInputModelMetadata), dateOnlyMetadata);
+            context.DisplayMetadata.AdditionalValues.Add(typeof(DateInputModelMetadata), dateInputMetadata);
         }
     }
 }

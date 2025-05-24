@@ -46,7 +46,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             Id = id,
@@ -142,7 +142,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             Id = id,
@@ -199,7 +199,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -247,7 +247,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -281,7 +281,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -324,7 +324,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -375,7 +375,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             Id = id,
@@ -414,7 +414,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -465,7 +465,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -501,7 +501,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -557,7 +557,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -609,7 +609,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                dateInputContext.SetItem(DateInputItemType.Day, new DateInputContextItem()
+                dateInputContext.SetItem(DateInputItemTypes.Day, new DateInputContextItem()
                 {
                     TagName = DateInputDayTagHelper.TagName,
                     Id = dayId,
@@ -619,7 +619,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     ValueSpecified = true
                 });
 
-                dateInputContext.SetItem(DateInputItemType.Month, new DateInputContextItem()
+                dateInputContext.SetItem(DateInputItemTypes.Month, new DateInputContextItem()
                 {
                     TagName = DateInputMonthTagHelper.TagName,
                     Id = monthId,
@@ -629,7 +629,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     ValueSpecified = true
                 });
 
-                dateInputContext.SetItem(DateInputItemType.Year, new DateInputContextItem()
+                dateInputContext.SetItem(DateInputItemTypes.Year, new DateInputContextItem()
                 {
                     TagName = DateInputYearTagHelper.TagName,
                     Id = yearId,
@@ -648,7 +648,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             Id = id,
@@ -717,7 +717,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                dateInputContext.SetItem(DateInputItemType.Day, new DateInputContextItem()
+                dateInputContext.SetItem(DateInputItemTypes.Day, new DateInputContextItem()
                 {
                     TagName = DateInputDayTagHelper.TagName,
                     Id = dayId,
@@ -727,7 +727,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     ValueSpecified = true
                 });
 
-                dateInputContext.SetItem(DateInputItemType.Month, new DateInputContextItem()
+                dateInputContext.SetItem(DateInputItemTypes.Month, new DateInputContextItem()
                 {
                     TagName = DateInputMonthTagHelper.TagName,
                     Id = monthId,
@@ -737,7 +737,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     ValueSpecified = true
                 });
 
-                dateInputContext.SetItem(DateInputItemType.Year, new DateInputContextItem()
+                dateInputContext.SetItem(DateInputItemTypes.Year, new DateInputContextItem()
                 {
                     TagName = DateInputYearTagHelper.TagName,
                     Id = yearId,
@@ -756,7 +756,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -817,7 +817,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -860,8 +860,8 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
 
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
-            CreateOptions(options => options.DateInputModelConverters.Add(customDateTypeConverter)),
-            new DateInputParseErrorsProvider(),
+            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDateType), customDateTypeConverter)),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             Id = id,
@@ -903,8 +903,8 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
 
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
-            CreateOptions(options => options.DateInputModelConverters.Add(customDateTypeConverter)),
-            new DateInputParseErrorsProvider(),
+            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDateType), customDateTypeConverter)),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             For = @for,
@@ -928,15 +928,15 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
 
     [Theory]
     [InlineData(null, true, true, true)]
-    [InlineData(DateInputItems.All, true, true, true)]
-    [InlineData(DateInputItems.Day, true, false, false)]
-    [InlineData(DateInputItems.Month, false, true, false)]
-    [InlineData(DateInputItems.Year, false, false, true)]
-    [InlineData(DateInputItems.Day | DateInputItems.Month, true, true, false)]
-    [InlineData(DateInputItems.Day | DateInputItems.Year, true, false, true)]
-    [InlineData(DateInputItems.Month | DateInputItems.Year, false, true, true)]
+    [InlineData(DateInputItemTypes.All, true, true, true)]
+    [InlineData(DateInputItemTypes.Day, true, false, false)]
+    [InlineData(DateInputItemTypes.Month, false, true, false)]
+    [InlineData(DateInputItemTypes.Year, false, false, true)]
+    [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month, true, true, false)]
+    [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Year, true, false, true)]
+    [InlineData(DateInputItemTypes.Month | DateInputItemTypes.Year, false, true, true)]
     public async Task ProcessAsync_HaveErrorClassesWhenErrorSpecified(
-        DateInputItems? specifiedErrorFields,
+        DateInputItemTypes? specifiedErrorFields,
         bool expectDayError,
         bool expectMonthError,
         bool expectYearError)
@@ -969,7 +969,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            new DateInputParseErrorsProvider(),
+            new BindingResultInfoProvider(),
             HtmlEncoder.Default)
         {
             Id = id,
@@ -1039,13 +1039,13 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
-        SetModelErrors(nameof(Model.Date), parseErrors, dateInputParseErrorsProvider, viewContext);
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
+        SetModelErrors(nameof(Model.Date), parseErrors, bindingResultInfoProvider, viewContext);
 
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            dateInputParseErrorsProvider,
+            bindingResultInfoProvider,
             HtmlEncoder.Default)
         {
             For = @for,
@@ -1085,9 +1085,9 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                // Explictly set a different set of DateInputErrorComponents than we have in DateInputParseErrorsProvider
+                // Explictly set a different set of DateInputErrorComponents than we have in BindingResultInfoProvider
                 dateInputContext.SetErrorMessage(
-                    errorFields: DateInputItems.Month | DateInputItems.Year,
+                    errorFields: DateInputItemTypes.Month | DateInputItemTypes.Year,
                     visuallyHiddenText: null,
                     attributes: new(),
                     html: "Error",
@@ -1099,13 +1099,13 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
-        SetModelErrors(nameof(Model.Date), DateInputParseErrors.InvalidDay, dateInputParseErrorsProvider, viewContext);
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
+        SetModelErrors(nameof(Model.Date), DateInputParseErrors.InvalidDay, bindingResultInfoProvider, viewContext);
 
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            dateInputParseErrorsProvider,
+            bindingResultInfoProvider,
             HtmlEncoder.Default)
         {
             For = @for,
@@ -1130,14 +1130,14 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
     }
 
     [Theory]
-    [InlineData(DateInputItems.Day, "dateinput-id-Day")]
-    [InlineData(DateInputItems.Day | DateInputItems.Month, "dateinput-id-Day")]
-    [InlineData(DateInputItems.Day | DateInputItems.Month | DateInputItems.Year, "dateinput-id-Day")]
-    [InlineData(DateInputItems.Month, "dateinput-id-Month")]
-    [InlineData(DateInputItems.Month | DateInputItems.Year, "dateinput-id-Month")]
+    [InlineData(DateInputItemTypes.Day, "dateinput-id-Day")]
+    [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month, "dateinput-id-Day")]
+    [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month | DateInputItemTypes.Year, "dateinput-id-Day")]
+    [InlineData(DateInputItemTypes.Month, "dateinput-id-Month")]
+    [InlineData(DateInputItemTypes.Month | DateInputItemTypes.Year, "dateinput-id-Month")]
     [InlineData(null, "dateinput-id-Day")]
     public async Task ProcessAsync_WithError_AddsErrorWithCorrectFieldIdToFormErrorContext(
-        DateInputItems? errorFields,
+        DateInputItemTypes? errorFields,
         string expectedErrorFieldId)
     {
         // Arrange
@@ -1166,13 +1166,13 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
 
         var (componentGenerator, _) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
-        SetModelErrors(nameof(Model.Date), DateInputParseErrors.InvalidDay, dateInputParseErrorsProvider, viewContext);
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
+        SetModelErrors(nameof(Model.Date), DateInputParseErrors.InvalidDay, bindingResultInfoProvider, viewContext);
 
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
             CreateOptions(),
-            dateInputParseErrorsProvider,
+            bindingResultInfoProvider,
             HtmlEncoder.Default)
         {
             For = @for,
@@ -1196,16 +1196,193 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             });
     }
 
+    [Fact]
+    public async Task ProcessAsync_WithSpecifiedItemTypes_CreatesCorrectItems()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var @for = CreateModelExpressionForTuple(viewContext, dateParts: null);
+        var itemTypes = DateInputItemTypes.DayAndMonth;
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(
+            componentGenerator,
+            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDayAndMonthType), new CustomDayAndMonthTypeConverter())),
+            new BindingResultInfoProvider(),
+            HtmlEncoder.Default)
+        {
+            For = @for,
+            ItemTypes = itemTypes,
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.Items);
+        Assert.Collection(
+            actualOptions.Items,
+            item => Assert.Equal("Day", item.Label),
+            item => Assert.Equal("Month", item.Label));
+    }
+
+    [Fact(Skip = "Implement this when we more-easily create a ModelMetadataProvider with DateInputModelMetadata.")]
+    public Task ProcessAsync_WithItemTypesInMetadata_CreatesCorrectItems() =>
+        throw new NotImplementedException();
+
+    [Fact]
+    public async Task ProcessAsync_WithDefaultItemTypesOnConverter_CreatesCorrectItems()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var @for = CreateModelExpressionForModelWithCustomDayAndMonthType(viewContext, dateParts: null);
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(
+            componentGenerator,
+            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDayAndMonthType), new CustomDayAndMonthTypeConverter())),
+            new BindingResultInfoProvider(),
+            HtmlEncoder.Default)
+        {
+            For = @for,
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.Items);
+        Assert.Collection(
+            actualOptions.Items,
+            item => Assert.Equal("Day", item.Label),
+            item => Assert.Equal("Month", item.Label));
+    }
+
+    [Fact]
+    public async Task ProcessAsync_DayTagWhenDateInputItemTypesDoesNotContainDay_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var id = "dateinput-id";
+        var namePrefix = "dateinput";
+        var itemTypes = DateInputItemTypes.MonthAndYear;
+        var itemTagName = DateInputDayTagHelper.TagName;
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var dateInputContext = context.GetContextItem<DateInputContext>();
+
+                dateInputContext.SetItem(
+                    DateInputItemTypes.Day,
+                    new DateInputContextItem() { TagName = itemTagName });
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var (componentGenerator, _) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(
+            componentGenerator,
+            CreateOptions(),
+            new BindingResultInfoProvider(),
+            HtmlEncoder.Default)
+        {
+            Id = id,
+            ItemTypes = itemTypes,
+            NamePrefix = namePrefix,
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal($"Cannot declare a <{itemTagName}> when the parent's {nameof(DateInputItemTypes)} does not contain {DateInputItemTypes.Day}.", ex.Message);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_YearTagWhenDateInputItemTypesDoesNotContainYear_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var id = "dateinput-id";
+        var namePrefix = "dateinput";
+        var itemTypes = DateInputItemTypes.DayAndMonth;
+        var itemTagName = DateInputYearTagHelper.TagName;
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var dateInputContext = context.GetContextItem<DateInputContext>();
+
+                dateInputContext.SetItem(
+                    DateInputItemTypes.Year,
+                    new DateInputContextItem() { TagName = itemTagName });
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var (componentGenerator, _) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(
+            componentGenerator,
+            CreateOptions(),
+            new BindingResultInfoProvider(),
+            HtmlEncoder.Default)
+        {
+            Id = id,
+            ItemTypes = itemTypes,
+            NamePrefix = namePrefix,
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal($"Cannot declare a <{itemTagName}> when the parent's {nameof(DateInputItemTypes)} does not contain {DateInputItemTypes.Year}.", ex.Message);
+    }
+
     private static void SetModelErrors(
         string modelName,
         DateInputParseErrors dateInputParseErrors,
-        DateInputParseErrorsProvider dateInputParseErrorsProvider,
+        BindingResultInfoProvider bindingResultInfoProvider,
         ViewContext viewContext,
         string? modelStateError = null)
     {
         viewContext.ModelState.SetModelValue(modelName, new ValueProviderResult(""));
-        var propertyModelState = viewContext.ModelState[modelName]!;
-        dateInputParseErrorsProvider.SetErrorsForModel(propertyModelState, dateInputParseErrors);
+        bindingResultInfoProvider.SetDateInputParseErrors(modelName, dateInputParseErrors);
         viewContext.ModelState.AddModelError(modelName, modelStateError ?? $"{modelName} must be a real date.");
     }
 
@@ -1245,7 +1422,8 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var modelMetadataProvider = new DefaultModelMetadataProvider(
             new TestCompositeMetadataDetailsProvider(modelName, displayName, description));
 
-        var modelExplorer = modelMetadataProvider.GetModelExplorerForType(typeof(Model), new Model() { Date = date })
+        var modelExplorer = modelMetadataProvider.GetModelExplorerForType(
+                typeof(Model), new Model() { Date = date })
             .GetExplorerForProperty(modelName);
 
         if (errorMessage is not null)
@@ -1268,7 +1446,56 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         var modelMetadataProvider = new DefaultModelMetadataProvider(
             new TestCompositeMetadataDetailsProvider(modelName, displayName, description));
 
-        var modelExplorer = modelMetadataProvider.GetModelExplorerForType(typeof(ModelWithCustomDateType), new ModelWithCustomDateType() { Date = date })
+        var modelExplorer = modelMetadataProvider.GetModelExplorerForType(
+                typeof(ModelWithCustomDateType), new ModelWithCustomDateType() { Date = date })
+            .GetExplorerForProperty(modelName);
+
+        if (errorMessage is not null)
+        {
+            viewContext.ModelState.AddModelError(modelName, errorMessage);
+        }
+
+        return new ModelExpression(modelName, modelExplorer);
+    }
+
+    private ModelExpression CreateModelExpressionForTuple(
+        ViewContext viewContext,
+        (int Day, int Month)? dateParts,
+        string? displayName = null,
+        string? description = null,
+        string? errorMessage = null)
+    {
+        var modelName = nameof(ModelWithTupleDate.Date);
+
+        var modelMetadataProvider = new DefaultModelMetadataProvider(
+            new TestCompositeMetadataDetailsProvider(modelName, displayName, description));
+
+        var modelExplorer = modelMetadataProvider.GetModelExplorerForType(
+                typeof(ModelWithCustomDateType), new ModelWithTupleDate() { Date = dateParts })
+            .GetExplorerForProperty(modelName);
+
+        if (errorMessage is not null)
+        {
+            viewContext.ModelState.AddModelError(modelName, errorMessage);
+        }
+
+        return new ModelExpression(modelName, modelExplorer);
+    }
+
+    private ModelExpression CreateModelExpressionForModelWithCustomDayAndMonthType(
+        ViewContext viewContext,
+        CustomDayAndMonthType? dateParts,
+        string? displayName = null,
+        string? description = null,
+        string? errorMessage = null)
+    {
+        var modelName = nameof(ModelWithCustomDayAndMonthType.Date);
+
+        var modelMetadataProvider = new DefaultModelMetadataProvider(
+            new TestCompositeMetadataDetailsProvider(modelName, displayName, description));
+
+        var modelExplorer = modelMetadataProvider.GetModelExplorerForType(
+                typeof(ModelWithCustomDayAndMonthType), new ModelWithCustomDayAndMonthType() { Date = dateParts })
             .GetExplorerForProperty(modelName);
 
         if (errorMessage is not null)
@@ -1289,23 +1516,52 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         public CustomDateType? Date { get; set; }
     }
 
-    private class CustomDateType(int year, int month, int day)
+    private class ModelWithTupleDate
     {
-        public int D { get; } = day;
-        public int M { get; } = month;
-        public int Y { get; } = year;
+        public (int, int)? Date { get; set; }
+    }
+
+    private class ModelWithCustomDayAndMonthType
+    {
+        public CustomDayAndMonthType? Date { get; set; }
+    }
+
+    private record CustomDateType(int year, int month, int day)
+    {
+        public int D => day;
+        public int M => month;
+        public int Y => year;
     }
 
     private class CustomDateTypeConverter : DateInputModelConverter
     {
-        public override bool CanConvertModelType(Type modelType) => modelType == typeof(CustomDateType);
+        protected override object ConvertToModelCore(DateInputConvertToModelContext context) =>
+            new CustomDateType(context.ItemValues.Year!.Value, context.ItemValues.Month!.Value, context.ItemValues.Day!.Value);
 
-        public override object CreateModelFromDate(Type modelType, DateOnly date) => new CustomDateType(date.Year, date.Month, date.Day);
-
-        public override DateOnly? GetDateFromModel(Type modelType, object model)
+        protected override DateInputItemValues? ConvertFromModelCore(DateInputConvertFromModelContext context)
         {
-            var cdt = (CustomDateType)model;
-            return new DateOnly(cdt.Y, cdt.M, cdt.D);
+            var cdt = (CustomDateType)context.Model;
+            return new(cdt.D, cdt.M, cdt.Y);
+        }
+    }
+
+    private record CustomDayAndMonthType(int day, int month)
+    {
+        public int D => day;
+        public int M => month;
+    }
+
+    private class CustomDayAndMonthTypeConverter : DateInputModelConverter
+    {
+        public override DateInputItemTypes? DefaultItemTypes => DateInputItemTypes.DayAndMonth;
+
+        protected override object ConvertToModelCore(DateInputConvertToModelContext context) =>
+            new CustomDayAndMonthType(context.ItemValues.Day!.Value, context.ItemValues.Month!.Value);
+
+        protected override DateInputItemValues? ConvertFromModelCore(DateInputConvertFromModelContext context)
+        {
+            var cdt = (CustomDayAndMonthType)context.Model;
+            return new(cdt.D, cdt.M, null);
         }
     }
 }

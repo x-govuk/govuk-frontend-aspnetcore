@@ -17,7 +17,7 @@ public class DateInputDayTagHelper : DateInputItemTagHelperBase
     /// <summary>
     /// Creates a <see cref="DateInputDayTagHelper"/>.
     /// </summary>
-    public DateInputDayTagHelper() : base(DateInputItemType.Day, labelTagName: DateInputDayLabelTagHelper.TagName)
+    public DateInputDayTagHelper() : base(DateInputItemTypes.Day, labelTagName: DateInputDayLabelTagHelper.TagName)
     {
     }
 }

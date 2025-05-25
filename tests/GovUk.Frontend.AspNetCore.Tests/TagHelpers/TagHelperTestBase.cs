@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Options;
 using Xunit.Sdk;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -40,6 +41,32 @@ public abstract class TagHelperTestBase(string tagName)
 
     protected ViewContext CreateViewContext() =>
         new ViewContext() { HttpContext = new DefaultHttpContext() };
+
+    protected IOptions<GovUkFrontendAspNetCoreOptions> CreateOptions(Action<GovUkFrontendAspNetCoreOptions>? configure = null)
+    {
+        var options = new GovUkFrontendAspNetCoreOptions();
+        configure?.Invoke(options);
+        return Options.Create(options);
+    }
+
+    protected IDictionary<string, string?> CreateDummyDataAttributes() =>
+        new Dictionary<string, string?>()
+        {
+            { "data-foo", Random.Shared.Next().ToString() }
+        };
+
+    protected void AssertContainsAttributes(IDictionary<string, string?> expectedAttributes, AttributeCollection? actualAttributes) =>
+        AssertContainsAttributes(new AttributeCollection(expectedAttributes), actualAttributes);
+
+    protected void AssertContainsAttributes(AttributeCollection expectedAttributes, AttributeCollection? actualAttributes)
+    {
+        Assert.NotNull(actualAttributes);
+
+        foreach (var attr in expectedAttributes)
+        {
+            Assert.Contains(actualAttributes, a => a.Key == attr.Key && a.Value == attr.Value);
+        }
+    }
 
     protected (IComponentGenerator ComponentGenerator, Func<TOptions> GetActualOptions) CreateComponentGenerator<TOptions>(
         string generateMethodName)

@@ -8,7 +8,7 @@ namespace GovUk.Frontend.AspNetCore.Components;
 /// <summary>
 /// Represents a collection of HTML attributes.
 /// </summary>
-public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, string?>>
+public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, TemplateString?>>
 {
     private readonly Dictionary<string, Attribute> _attributes;
 
@@ -146,7 +146,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, strin
     }
 
     /// <inheritdoc cref="IEnumerable{T}.GetEnumerator"/>
-    public IEnumerator<KeyValuePair<string, string?>> GetEnumerator()
+    public IEnumerator<KeyValuePair<string, TemplateString?>> GetEnumerator()
     {
         foreach (var attribute in _attributes.Values)
         {
@@ -154,13 +154,15 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, strin
             {
                 if (attribute.Value is true)
                 {
-                    yield return KeyValuePair.Create(attribute.Name, (string?)null);
+                    yield return KeyValuePair.Create(attribute.Name, (TemplateString?)null);
                 }
 
                 continue;
             }
 
-            yield return KeyValuePair.Create(attribute.Name, attribute.Value?.ToString());
+            yield return KeyValuePair.Create(
+                attribute.Name,
+                attribute.Value as TemplateString ?? attribute.Value?.ToString());
         }
     }
 

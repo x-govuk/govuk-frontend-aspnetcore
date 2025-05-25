@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,9 +7,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the title in the GDS summary card component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryCardTagHelper.TagName)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryCardTitle)]
 public class SummaryCardTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card-title";
+
+    private const int MinHeadingLevel = 1;
+    private const int MaxHeadingLevel = 6;
 
     private int? _headingLevel;
 
@@ -25,12 +29,11 @@ public class SummaryCardTitleTagHelper : TagHelper
         get => _headingLevel;
         set
         {
-            if (value < ComponentGenerator.SummaryCardMinHeadingLevel ||
-                value > ComponentGenerator.SummaryCardMaxHeadingLevel)
+            if (value is < MinHeadingLevel or > MaxHeadingLevel)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),
-                    $"{nameof(HeadingLevel)} must be between {ComponentGenerator.SummaryCardMinHeadingLevel} and {ComponentGenerator.SummaryCardMaxHeadingLevel}.");
+                    $"{nameof(HeadingLevel)} must be between {MinHeadingLevel} and {MaxHeadingLevel}.");
             }
 
             _headingLevel = value;
@@ -49,7 +52,17 @@ public class SummaryCardTitleTagHelper : TagHelper
             childContent = output.Content;
         }
 
-        cardContext.SetTitle(childContent.Snapshot(), HeadingLevel, output.Attributes.ToAttributeDictionary());
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
+
+        cardContext.SetTitle(new SummaryListOptionsCardTitle()
+        {
+            Text = null,
+            Html = childContent.ToTemplateString(),
+            HeadingLevel = HeadingLevel,
+            Classes = classes,
+            Attributes = attributes
+        });
 
         output.SuppressOutput();
     }

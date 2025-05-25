@@ -1,31 +1,78 @@
+using GovUk.Frontend.AspNetCore.Components;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryCardActionsTagHelperTests
+public class SummaryCardActionsTagHelperTests() : TagHelperTestBase(SummaryCardActionsTagHelper.TagName)
 {
     [Fact]
-    public async Task ProcessAsync_AddsAttributesToContext()
+    public async Task ProcessAsync_AddsActionsToContext()
+    {
+        // Arrange
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
+
+        var item1Href = "href";
+        var item1Content = "First item";
+        var item1Vht = "vht";
+        var item1Class = CreateDummyClassName();
+        var item1Attributes = CreateDummyDataAttributes();
+
+        var item1 = new SummaryListOptionsCardActionsItem()
+        {
+            Href = item1Href,
+            Text = null,
+            Html = item1Content,
+            VisuallyHiddenText = item1Vht,
+            Classes = item1Class,
+            Attributes = new(item1Attributes)
+        };
+
+        var summaryCardContext = new SummaryCardContext();
+
+        var context = CreateTagHelperContext(className: className, attributes: attributes, contexts: summaryCardContext);
+
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var actionsContext = context.GetContextItem<SummaryCardActionsContext>();
+                actionsContext.AddItem(item1);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var tagHelper = new SummaryCardActionsTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.NotNull(summaryCardContext.Actions);
+
+        Assert.Equal(className, summaryCardContext.Actions.Classes);
+        AssertContainsAttributes(attributes, summaryCardContext.Actions.Attributes);
+        Assert.NotNull(summaryCardContext.Actions.Items);
+        Assert.Collection(
+            summaryCardContext.Actions.Items,
+            item => Assert.Same(item1, item));
+    }
+
+    [Fact]
+    public async Task ProcessAsync_ParentAlreadyHasActions_ThrowsInvalidOperationException()
     {
         // Arrange
         var summaryCardContext = new SummaryCardContext();
+        summaryCardContext.SetActions(new());
 
-        var context = new TagHelperContext(
-            tagName: "govuk-summary-card-actions",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SummaryCardContext), summaryCardContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: summaryCardContext);
 
-        var output = new TagHelperOutput(
-            "govuk-summary-card-actions",
-            attributes: new TagHelperAttributeList()
-            {
-                { "class", "additional-class" }
-            },
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -34,18 +81,41 @@ public class SummaryCardActionsTagHelperTests
 
         var tagHelper = new SummaryCardActionsTagHelper();
 
+        tagHelper.Init(context);
+
         // Act
-        await tagHelper.ProcessAsync(context, output);
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
 
         // Assert
-        Assert.NotNull(summaryCardContext.ActionsAttributes);
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal("Only one <govuk-summary-card-actions> element is permitted within each <govuk-summary-card>.", ex.Message);
+    }
 
-        Assert.Collection(
-            summaryCardContext.ActionsAttributes,
-            kvp =>
+    [Fact]
+    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var summaryCardContext = new SummaryCardContext();
+        summaryCardContext.SetSummaryList(new());
+
+        var context = CreateTagHelperContext(contexts: summaryCardContext);
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
             {
-                Assert.Equal("class", kvp.Key);
-                Assert.Equal("additional-class", kvp.Value);
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
+
+        var tagHelper = new SummaryCardActionsTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal("<govuk-summary-card-actions> must be specified before <govuk-summary-list>.", ex.Message);
     }
 }

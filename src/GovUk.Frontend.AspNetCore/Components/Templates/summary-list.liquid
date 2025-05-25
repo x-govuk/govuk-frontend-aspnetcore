@@ -16,7 +16,7 @@
 
 <div class="govuk-summary-card {%- if params.classes %} {{ params.classes }}{% endif %}"
   {{- govukAttributes(params.attributes) }}>
-  <div class="govuk-summary-card__title-wrapper">
+  <div class="govuk-summary-card__title-wrapper" {{- govukAttributes(params.title.attributes) }}>
   {% if params.title %}
     <h{{ headingLevel }} class="govuk-summary-card__title {%- if params.title.classes %} {{ params.title.classes }}{% endif %}">
       {{ params.title.html | raw | strip | indent: 6 | default: params.title.text }}
@@ -24,7 +24,8 @@
   {% endif %}
   {% if params.actions.items.size %}
     {% if params.actions.items.size == 1 %}
-    <div class="govuk-summary-card__actions {%- if params.actions.classes %} {{ params.actions.classes }}{% endif %}">
+    <div class="govuk-summary-card__actions {%- if params.actions.classes %} {{ params.actions.classes }}{% endif %}"
+      {{- govukAttributes(params.actions.attributes) }}>
       {{ _actionLink(params.actions.items[0], params.title) | strip | indent: 4 }}
     </div>
     {% else %}
@@ -55,15 +56,17 @@
 <dl class="govuk-summary-list {%- if params.classes %} {{ params.classes }}{% endif %}" {{- govukAttributes(params.attributes) }}>
 {% for row in params.rows %}
   {% if row %}
-  <div class="govuk-summary-list__row {%- if anyRowHasActions and not(row.actions.items) %} govuk-summary-list__row--no-actions{% endif %} {%- if row.classes %} {{ row.classes }}{% endif %}">
-    <dt class="govuk-summary-list__key {%- if row.key.classes %} {{ row.key.classes }}{% endif %}">
+  <div class="govuk-summary-list__row {%- if anyRowHasActions and not(row.actions.items) %} govuk-summary-list__row--no-actions{% endif %} {%- if row.classes %} {{ row.classes }}{% endif %}"
+    {{- govukAttributes(row.attributes) }}>
+    <dt class="govuk-summary-list__key {%- if row.key.classes %} {{ row.key.classes }}{% endif %}" {{- govukAttributes(row.key.attributes) }}>
       {{ row.key.html | raw | strip | indent: 6 | default: row.key.text }}
     </dt>
-    <dd class="govuk-summary-list__value {%- if row.value.classes %} {{ row.value.classes }}{% endif %}">
+    <dd class="govuk-summary-list__value {%- if row.value.classes %} {{ row.value.classes }}{% endif %}" {{- govukAttributes(row.value.attributes) }}>
       {{ row.value.html | raw | strip | indent: 6 | default: row.value.text }}
     </dd>
     {% if row.actions.items.size > 0 %}
-    <dd class="govuk-summary-list__actions {%- if row.actions.classes %} {{ row.actions.classes }}{% endif %}">
+    <dd class="govuk-summary-list__actions {%- if row.actions.classes %} {{ row.actions.classes }}{% endif %}"
+      {{- govukAttributes(row.actions.attributes) }}>
       {% if row.actions.items.size == 1 %}
       {{ _actionLink(row.actions.items[0], params.card.title) | strip | indent: 6 }}
       {% else %}

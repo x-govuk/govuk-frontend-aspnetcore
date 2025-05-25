@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an action in a GDS summary list row.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryListRowActionsTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.SummaryListRowActionElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryListRowAction)]
 public class SummaryListRowActionTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-list-row-action";
@@ -23,7 +23,7 @@ public class SummaryListRowActionTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var summaryListRowContext = context.GetContextItem<SummaryListRowContext>();
+        var actionsContext = context.GetContextItem<SummaryListRowActionsContext>();
 
         var childContent = await output.GetChildContentAsync();
 
@@ -32,11 +32,19 @@ public class SummaryListRowActionTagHelper : TagHelper
             childContent = output.Content;
         }
 
-        summaryListRowContext.AddAction(new SummaryListAction()
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
+        attributes.Remove("href", out _);
+        var href = output.GetUrlAttribute("href");
+
+        actionsContext.AddItem(new SummaryListOptionsRowActionsItem()
         {
-            Attributes = output.Attributes.ToAttributeDictionary(),
-            Content = childContent.Snapshot(),
-            VisuallyHiddenText = VisuallyHiddenText
+            Href = href,
+            Text = null,
+            Html = childContent.ToTemplateString(),
+            VisuallyHiddenText = VisuallyHiddenText,
+            Classes = classes,
+            Attributes = attributes
         });
 
         output.SuppressOutput();

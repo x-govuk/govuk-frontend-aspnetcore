@@ -1,58 +1,32 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using GovUk.Frontend.AspNetCore.Components;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class SummaryListRowContext
 {
-    private readonly List<SummaryListAction> _actions;
+    public SummaryListOptionsRowKey? Key { get; private set; }
 
-    public SummaryListRowContext()
+    public SummaryListOptionsRowValue? Value { get; private set; }
+
+    public SummaryListOptionsRowActions? Actions { get; private set; }
+
+    public void SetActions(SummaryListOptionsRowActions actions)
     {
-        _actions = new List<SummaryListAction>();
-    }
+        ArgumentNullException.ThrowIfNull(actions);
 
-    public IReadOnlyList<SummaryListAction> Actions => _actions;
-
-    public AttributeDictionary? ActionsAttributes { get; private set; }
-
-    public (AttributeDictionary Attributes, IHtmlContent Content)? Key { get; private set; }
-
-    public (AttributeDictionary Attributes, IHtmlContent Content)? Value { get; private set; }
-
-    public void AddAction(SummaryListAction action)
-    {
-        Guard.ArgumentNotNull(nameof(action), action);
-
-        _actions.Add(action);
-    }
-
-    public void SetActionsAttributes(AttributeDictionary attributes)
-    {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-
-        if (ActionsAttributes is not null)
+        if (Actions is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
                 SummaryListRowActionsTagHelper.TagName,
                 SummaryListRowTagHelper.TagName);
         }
 
-        if (_actions.Count > 0)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryListRowActionsTagHelper.TagName,
-                SummaryListRowActionTagHelper.TagName);
-        }
-
-        ActionsAttributes = attributes;
+        Actions = actions;
     }
 
-    public void SetKey(AttributeDictionary attributes, IHtmlContent content)
+    public void SetKey(SummaryListOptionsRowKey key)
     {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(key);
 
         if (Key is not null)
         {
@@ -68,27 +42,19 @@ internal class SummaryListRowContext
                 SummaryListRowValueTagHelper.TagName);
         }
 
-        if (ActionsAttributes is not null)
+        if (Actions is not null)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
                 SummaryListRowKeyTagHelper.TagName,
                 SummaryListRowActionsTagHelper.TagName);
         }
 
-        if (_actions.Count > 0)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryListRowKeyTagHelper.TagName,
-                SummaryListRowActionTagHelper.TagName);
-        }
-
-        Key = (attributes, content);
+        Key = key;
     }
 
-    public void SetValue(AttributeDictionary attributes, IHtmlContent content)
+    public void SetValue(SummaryListOptionsRowValue value)
     {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(value);
 
         if (Value is not null)
         {
@@ -97,21 +63,14 @@ internal class SummaryListRowContext
                 SummaryListRowTagHelper.TagName);
         }
 
-        if (ActionsAttributes is not null)
+        if (Actions is not null)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
                 SummaryListRowValueTagHelper.TagName,
                 SummaryListRowActionsTagHelper.TagName);
         }
 
-        if (_actions.Count > 0)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryListRowValueTagHelper.TagName,
-                SummaryListRowActionTagHelper.TagName);
-        }
-
-        Value = (attributes, content);
+        Value = value;
     }
 
     public void ThrowIfIncomplete()

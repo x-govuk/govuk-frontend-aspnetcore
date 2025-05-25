@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using System.Text.Encodings.Web;
+using AngleSharp.Dom;
 using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
@@ -14,24 +15,68 @@ public abstract class TagHelperTestBase(string tagName)
 {
     protected string TagName { get; } = tagName;
 
-    protected TagHelperContext CreateTagHelperContext(string? tagName = null, params object[] contexts)
+    protected TagHelperContext CreateTagHelperContext(
+        string? tagName = null,
+        string? className = null,
+        IDictionary<string, string?>? attributes = null,
+        params object[] contexts)
     {
+        var tagHelperAttributes = new TagHelperAttributeList();
+
+        if (attributes is not null)
+        {
+            foreach (var attr in attributes)
+            {
+                tagHelperAttributes.Add(
+                    new TagHelperAttribute(
+                        attr.Key,
+                        attr.Value,
+                        attr.Value is not null ? HtmlAttributeValueStyle.DoubleQuotes : HtmlAttributeValueStyle.Minimized));
+            }
+        }
+
+        if (className is not null)
+        {
+            tagHelperAttributes.Add("class", className);
+        }
+
         var items = contexts.ToDictionary(object (c) => c.GetType(), c => c);
 
         return new TagHelperContext(
             tagName ?? TagName,
-            allAttributes: new TagHelperAttributeList(),
+            tagHelperAttributes,
             items,
             uniqueId: "test");
     }
 
     protected TagHelperOutput CreateTagHelperOutput(
         string? tagName = null,
+        string? className = null,
+        IDictionary<string, string?>? attributes = null,
         Func<bool, HtmlEncoder, Task<TagHelperContent>>? getChildContentAsync = null)
     {
+        var tagHelperAttributes = new TagHelperAttributeList();
+
+        if (attributes is not null)
+        {
+            foreach (var attr in attributes)
+            {
+                tagHelperAttributes.Add(
+                    new TagHelperAttribute(
+                        attr.Key,
+                        attr.Value,
+                        attr.Value is not null ? HtmlAttributeValueStyle.DoubleQuotes : HtmlAttributeValueStyle.Minimized));
+            }
+        }
+
+        if (className is not null)
+        {
+            tagHelperAttributes.Add("class", className);
+        }
+
         return new TagHelperOutput(
             tagName ?? TagName,
-            attributes: new TagHelperAttributeList(),
+            tagHelperAttributes,
             getChildContentAsync: getChildContentAsync ?? ((usedCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -55,15 +100,28 @@ public abstract class TagHelperTestBase(string tagName)
             { "data-foo", Random.Shared.Next().ToString() }
         };
 
-    protected void AssertContainsAttributes(IDictionary<string, string?> expectedAttributes, AttributeCollection? actualAttributes) =>
-        AssertContainsAttributes(new AttributeCollection(expectedAttributes), actualAttributes);
+    protected string CreateDummyClassName() => $"class-{Random.Shared.Next()}";
 
-    protected void AssertContainsAttributes(AttributeCollection expectedAttributes, AttributeCollection? actualAttributes)
+    protected void AssertContainsAttributes(
+        IDictionary<string, string?> expectedAttributes,
+        AttributeCollection? actualAttributes,
+        params string[] except) =>
+        AssertContainsAttributes(new AttributeCollection(expectedAttributes), actualAttributes, except);
+
+    protected void AssertContainsAttributes(
+        AttributeCollection expectedAttributes,
+        AttributeCollection? actualAttributes,
+        params string[] except)
     {
         Assert.NotNull(actualAttributes);
 
         foreach (var attr in expectedAttributes)
         {
+            if (except.Contains(attr.Key))
+            {
+                continue;
+            }
+
             Assert.Contains(actualAttributes, a => a.Key == attr.Key && a.Value == attr.Value);
         }
     }

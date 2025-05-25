@@ -13,7 +13,7 @@ public record SummaryListOptions
 public record SummaryListOptionsCard
 {
     public SummaryListOptionsCardTitle? Title { get; set; }
-    public SummaryListOptionsRowActions? Actions { get; set; }
+    public SummaryListOptionsCardActions? Actions { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
 }
@@ -24,6 +24,9 @@ public record SummaryListOptionsCardTitle
     public TemplateString? Html { get; set; }
     public int? HeadingLevel { get; set; }
     public TemplateString? Classes { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record SummaryListOptionsRow
@@ -32,6 +35,9 @@ public record SummaryListOptionsRow
     public SummaryListOptionsRowKey? Key { get; set; }
     public SummaryListOptionsRowValue? Value { get; set; }
     public SummaryListOptionsRowActions? Actions { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record SummaryListOptionsRowKey
@@ -39,6 +45,9 @@ public record SummaryListOptionsRowKey
     public string? Text { get; set; }
     public TemplateString? Html { get; set; }
     public TemplateString? Classes { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record SummaryListOptionsRowValue
@@ -46,15 +55,40 @@ public record SummaryListOptionsRowValue
     public string? Text { get; set; }
     public TemplateString? Html { get; set; }
     public TemplateString? Classes { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record SummaryListOptionsRowActions
 {
     public TemplateString? Classes { get; set; }
     public IReadOnlyCollection<SummaryListOptionsRowActionsItem>? Items { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record SummaryListOptionsRowActionsItem
+{
+    public TemplateString? Href { get; set; }
+    public string? Text { get; set; }
+    public TemplateString? Html { get; set; }
+    public TemplateString? VisuallyHiddenText { get; set; }
+    public TemplateString? Classes { get; set; }
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record SummaryListOptionsCardActions
+{
+    public TemplateString? Classes { get; set; }
+    public IReadOnlyCollection<SummaryListOptionsCardActionsItem>? Items { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record SummaryListOptionsCardActionsItem
 {
     public TemplateString? Href { get; set; }
     public string? Text { get; set; }

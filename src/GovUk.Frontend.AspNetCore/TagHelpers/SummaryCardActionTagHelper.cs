@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an action in a GDS summary card.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryCardActionsTagHelper.TagName)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryCardAction)]
 public class SummaryCardActionTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card-action";
@@ -22,7 +23,7 @@ public class SummaryCardActionTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var cardContext = context.GetContextItem<SummaryCardContext>();
+        var actionsContext = context.GetContextItem<SummaryCardActionsContext>();
 
         var childContent = await output.GetChildContentAsync();
 
@@ -31,11 +32,19 @@ public class SummaryCardActionTagHelper : TagHelper
             childContent = output.Content;
         }
 
-        cardContext.AddAction(new SummaryListAction()
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
+        attributes.Remove("href", out _);
+        var href = output.GetUrlAttribute("href");
+
+        actionsContext.AddItem(new SummaryListOptionsCardActionsItem()
         {
-            Attributes = output.Attributes.ToAttributeDictionary(),
-            Content = childContent.Snapshot(),
-            VisuallyHiddenText = VisuallyHiddenText
+            Href = href,
+            Text = null,
+            Html = childContent.ToTemplateString(),
+            VisuallyHiddenText = VisuallyHiddenText,
+            Classes = classes,
+            Attributes = attributes
         });
 
         output.SuppressOutput();

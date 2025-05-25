@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -8,7 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryListRowTagHelper.TagName)]
 [RestrictChildren(SummaryListRowActionTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.SummaryListRowActionsElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryListRowActions)]
 public class SummaryListRowActionsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-list-row-actions";
@@ -24,9 +24,22 @@ public class SummaryListRowActionsTagHelper : TagHelper
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         var rowContext = context.GetContextItem<SummaryListRowContext>();
-        rowContext.SetActionsAttributes(output.Attributes.ToAttributeDictionary());
+        var actionsContext = new SummaryListRowActionsContext();
 
-        await output.GetChildContentAsync();
+        using (context.SetScopedContextItem(actionsContext))
+        {
+            await output.GetChildContentAsync();
+        }
+
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
+
+        rowContext.SetActions(new SummaryListOptionsRowActions()
+        {
+            Classes = classes,
+            Items = actionsContext.Items,
+            Attributes = attributes
+        });
 
         output.SuppressOutput();
     }

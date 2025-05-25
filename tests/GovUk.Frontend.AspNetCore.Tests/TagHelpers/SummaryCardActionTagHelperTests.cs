@@ -3,60 +3,59 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryCardActionTagHelperTests
+public class SummaryCardActionTagHelperTests() : TagHelperTestBase(SummaryCardActionTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_AddsActionToContext()
     {
         // Arrange
+        var href = "#";
+        var content = "Change";
+        var visuallyHiddenText = "vht";
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
+        attributes.Add("href", href);
+
         var summaryCardContext = new SummaryCardContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-summary-card-action",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SummaryCardContext), summaryCardContext }
-            },
-            uniqueId: "test");
+        var actionsContext = new SummaryCardActionsContext();
 
-        var output = new TagHelperOutput(
-            "govuk-summary-card-action",
-            attributes: new TagHelperAttributeList()
-            {
-                { "href", "#" }
-            },
+        var context = CreateTagHelperContext(
+            className: className,
+            attributes: attributes,
+            contexts: [summaryCardContext, actionsContext]);
+
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Change");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new SummaryCardActionTagHelper()
         {
-            VisuallyHiddenText = "vht"
+            VisuallyHiddenText = visuallyHiddenText
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
+        Assert.NotNull(actionsContext.Items);
         Assert.Collection(
-            summaryCardContext.Actions,
+            actionsContext.Items,
             action =>
             {
-                Assert.Equal("Change", action.Content?.ToHtmlString());
-                Assert.Equal("vht", action.VisuallyHiddenText);
+                Assert.Equal(content, action.Html);
+                Assert.Equal(visuallyHiddenText, action.VisuallyHiddenText);
                 Assert.NotNull(action.Attributes);
-
-                Assert.Collection(
-                    action.Attributes,
-                    kvp =>
-                    {
-                        Assert.Equal("href", kvp.Key);
-                        Assert.Equal("#", kvp.Value);
-                    });
+                Assert.Equal(className, action.Classes);
+                AssertContainsAttributes(attributes, action.Attributes, except: "href");
             });
     }
 }

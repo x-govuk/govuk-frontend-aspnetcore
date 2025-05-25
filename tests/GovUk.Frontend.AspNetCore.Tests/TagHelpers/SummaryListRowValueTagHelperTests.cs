@@ -1,79 +1,75 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListRowValueTagHelperTests
+public class SummaryListRowValueTagHelperTests() : TagHelperTestBase(SummaryListRowValueTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_AddsValueToContext()
     {
         // Arrange
+        var content = "Value";
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
+
         var summaryListContext = new SummaryListContext();
 
         var rowContext = new SummaryListRowContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-summary-list-row-value",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SummaryListContext), summaryListContext },
-                { typeof(SummaryListRowContext), rowContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(
+            className: className,
+            attributes: attributes,
+            contexts: [summaryListContext, rowContext]);
 
-        var output = new TagHelperOutput(
-            "govuk-summary-list-row-value",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Value content");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new SummaryListRowValueTagHelper();
 
+        tagHelper.Init(context);
+
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Value content", rowContext.Value?.Content?.ToHtmlString());
+        Assert.NotNull(rowContext.Value);
+        Assert.Equal(content, rowContext.Value.Html);
+        Assert.Equal(className, rowContext.Value.Classes);
+        AssertContainsAttributes(attributes, rowContext.Value.Attributes);
     }
 
     [Fact]
     public async Task ProcessAsync_ParentAlreadyHasValue_ThrowsInvalidOperationException()
     {
         // Arrange
+        var content = "Value";
+
         var summaryListContext = new SummaryListContext();
 
         var rowContext = new SummaryListRowContext();
-        rowContext.SetValue(new AttributeDictionary(), new HtmlString("Value"));
+        rowContext.SetValue(new());
 
-        var context = new TagHelperContext(
-            tagName: "govuk-summary-list-row-value",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SummaryListContext), summaryListContext },
-                { typeof(SummaryListRowContext), rowContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 
-        var output = new TagHelperOutput(
-            "govuk-summary-list-row-value",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Value content");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new SummaryListRowValueTagHelper();
+
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
@@ -84,35 +80,29 @@ public class SummaryListRowValueTagHelperTests
     }
 
     [Fact]
-    public async Task ProcessAsync_ParentAlreadyHasActionsAttributes_ThrowsInvalidOperationException()
+    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException()
     {
         // Arrange
+        var content = "Value";
+
         var summaryListContext = new SummaryListContext();
 
         var rowContext = new SummaryListRowContext();
-        rowContext.SetActionsAttributes(new AttributeDictionary());
+        rowContext.SetActions(new());
 
-        var context = new TagHelperContext(
-            tagName: "govuk-summary-list-row-value",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SummaryListContext), summaryListContext },
-                { typeof(SummaryListRowContext), rowContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 
-        var output = new TagHelperOutput(
-            "govuk-summary-list-row-value",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Value content");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new SummaryListRowValueTagHelper();
+
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
@@ -120,47 +110,5 @@ public class SummaryListRowValueTagHelperTests
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal("<govuk-summary-list-row-value> must be specified before <govuk-summary-list-row-actions>.", ex.Message);
-    }
-
-    [Fact]
-    public async Task ProcessAsync_ParentAlreadyHasAction_ThrowsInvalidOperationException()
-    {
-        // Arrange
-        var summaryListContext = new SummaryListContext();
-
-        var rowContext = new SummaryListRowContext();
-        rowContext.AddAction(new HtmlGeneration.SummaryListAction()
-        {
-            Content = new HtmlString("Action")
-        });
-
-        var context = new TagHelperContext(
-            tagName: "govuk-summary-list-row-value",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SummaryListContext), summaryListContext },
-                { typeof(SummaryListRowContext), rowContext }
-            },
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "govuk-summary-list-row-value",
-            attributes: new TagHelperAttributeList(),
-            getChildContentAsync: (useCachedResult, encoder) =>
-            {
-                var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Value content");
-                return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-
-        var tagHelper = new SummaryListRowValueTagHelper();
-
-        // Act
-        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
-
-        // Assert
-        Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-summary-list-row-value> must be specified before <govuk-summary-list-row-action>.", ex.Message);
     }
 }

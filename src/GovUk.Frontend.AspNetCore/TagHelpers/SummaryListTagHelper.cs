@@ -1,5 +1,5 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+using System.Text.Encodings.Web;
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -9,53 +9,56 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [RestrictChildren(SummaryListRowTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.SummaryListElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryList)]
 public class SummaryListTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-list";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
 
     /// <summary>
     /// Creates a new <see cref="SummaryListTagHelper"/>.
     /// </summary>
-    public SummaryListTagHelper()
-        : this(htmlGenerator: null)
+    public SummaryListTagHelper(IComponentGenerator componentGenerator)
     {
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+        _componentGenerator = componentGenerator;
     }
 
-    internal SummaryListTagHelper(IGovUkHtmlGenerator? htmlGenerator)
+    /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
     {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
+        context.SetContextItem(new SummaryListContext());
     }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var summaryListContext = new SummaryListContext();
+        var summaryListContext = context.GetContextItem<SummaryListContext>();
 
-        using (context.SetScopedContextItem(summaryListContext))
+        await output.GetChildContentAsync();
+
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
+
+        var componentOptions = new SummaryListOptions()
         {
-            await output.GetChildContentAsync();
-        }
+            Rows = summaryListContext.Rows,
+            Card = null,
+            Classes = classes,
+            Attributes = attributes
+        };
 
-        var tagBuilder = _htmlGenerator.GenerateSummaryList(
-            summaryListContext.Rows,
-            output.Attributes.ToAttributeDictionary());
-
-        if (context.TryGetContextItem<SummaryCardContext>(out var cardContext))
+        if (summaryListContext.HaveCard)
         {
-            cardContext.SetSummaryList(tagBuilder);
+            var cardContext = context.GetContextItem<SummaryCardContext>();
+            cardContext.SetSummaryList(componentOptions);
             output.SuppressOutput();
+            return;
         }
-        else
-        {
-            output.TagName = tagBuilder.TagName;
-            output.TagMode = TagMode.StartTagAndEndTag;
 
-            output.Attributes.Clear();
-            output.MergeAttributes(tagBuilder);
-            output.Content.SetHtmlContent(tagBuilder.InnerHtml);
-        }
+        var component = await _componentGenerator.GenerateSummaryListAsync(componentOptions);
+
+        output.ApplyComponentHtml(component, HtmlEncoder.Default);
     }
 }

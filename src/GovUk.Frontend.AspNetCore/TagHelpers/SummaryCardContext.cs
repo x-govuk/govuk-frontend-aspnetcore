@@ -1,25 +1,18 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using GovUk.Frontend.AspNetCore.Components;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class SummaryCardContext
 {
-    private readonly List<SummaryListAction> _actions = new();
+    public SummaryListOptionsCardTitle? Title { get; private set; }
 
-    public (IHtmlContent Content, int? HeadingLevel, AttributeDictionary Attributes)? Title { get; private set; }
+    public SummaryListOptionsCardActions? Actions { get; private set; }
 
-    public IReadOnlyList<SummaryListAction> Actions => _actions;
+    public SummaryListOptions? SummaryList { get; private set; }
 
-    public AttributeDictionary? ActionsAttributes { get; private set; }
-
-    public IHtmlContent? SummaryList { get; internal set; }
-
-    public void SetTitle(IHtmlContent content, int? headingLevel, AttributeDictionary attributes)
+    public void SetTitle(SummaryListOptionsCardTitle title)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
+        ArgumentNullException.ThrowIfNull(title);
 
         if (Title is not null)
         {
@@ -28,7 +21,7 @@ internal class SummaryCardContext
                 SummaryCardTagHelper.TagName);
         }
 
-        if (ActionsAttributes is not null)
+        if (Actions is not null)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
                 SummaryCardTitleTagHelper.TagName,
@@ -42,41 +35,20 @@ internal class SummaryCardContext
                 SummaryListTagHelper.TagName);
         }
 
-        Title = (content, headingLevel, attributes);
+        Title = title;
     }
 
-    public void AddAction(SummaryListAction action)
+    public void SetActions(SummaryListOptionsCardActions actions)
     {
-        Guard.ArgumentNotNull(nameof(action), action);
+        ArgumentNullException.ThrowIfNull(actions);
 
-        if (SummaryList is not null)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryCardActionTagHelper.TagName,
-                SummaryListTagHelper.TagName);
-        }
-
-        _actions.Add(action);
-    }
-
-    public void SetActionsAttributes(AttributeDictionary attributes)
-    {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-
-        if (ActionsAttributes is not null)
+        if (Actions is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
                 SummaryCardActionsTagHelper.TagName,
                 SummaryCardTagHelper.TagName);
         }
 
-        if (_actions.Count > 0)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryCardActionsTagHelper.TagName,
-                SummaryCardActionTagHelper.TagName);
-        }
-
         if (SummaryList is not null)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
@@ -84,12 +56,12 @@ internal class SummaryCardContext
                 SummaryListTagHelper.TagName);
         }
 
-        ActionsAttributes = attributes;
+        Actions = actions;
     }
 
-    public void SetSummaryList(IHtmlContent content)
+    public void SetSummaryList(SummaryListOptions options)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(options);
 
         if (SummaryList is not null)
         {
@@ -98,7 +70,7 @@ internal class SummaryCardContext
                 SummaryCardTagHelper.TagName);
         }
 
-        SummaryList = content;
+        SummaryList = options;
     }
 
     public void ThrowIfNotComplete()

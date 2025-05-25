@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryCardTagHelper.TagName)]
 [RestrictChildren(SummaryCardActionTagHelper.TagName)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryCardRowActions)]
 public class SummaryCardActionsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card-actions";
@@ -15,9 +17,22 @@ public class SummaryCardActionsTagHelper : TagHelper
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         var cardContext = context.GetContextItem<SummaryCardContext>();
-        cardContext.SetActionsAttributes(output.Attributes.ToAttributeDictionary());
+        var actionsContext = new SummaryCardActionsContext();
 
-        await output.GetChildContentAsync();
+        using (context.SetScopedContextItem(actionsContext))
+        {
+            await output.GetChildContentAsync();
+        }
+
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
+
+        cardContext.SetActions(new SummaryListOptionsCardActions()
+        {
+            Classes = classes,
+            Items = actionsContext.Items,
+            Attributes = attributes
+        });
 
         output.SuppressOutput();
     }

@@ -1,21 +1,18 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.Components;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class SummaryListContext
 {
-    private readonly List<SummaryListRow> _rows;
+    private readonly List<SummaryListOptionsRow> _rows = new();
 
-    public SummaryListContext()
+    public bool HaveCard { get; set; }
+
+    public IReadOnlyList<SummaryListOptionsRow> Rows => _rows.AsReadOnly();
+
+    public void AddRow(SummaryListOptionsRow row)
     {
-        _rows = new List<SummaryListRow>();
-    }
-
-    public IReadOnlyList<SummaryListRow> Rows => _rows;
-
-    public void AddRow(SummaryListRow row)
-    {
-        Guard.ArgumentNotNull(nameof(row), row);
+        ArgumentNullException.ThrowIfNull(row);
 
         _rows.Add(row);
     }

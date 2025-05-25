@@ -1,5 +1,5 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+using System.Text.Encodings.Web;
+using GovUk.Frontend.AspNetCore.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -9,24 +9,20 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [RestrictChildren(SummaryCardTitleTagHelper.TagName, SummaryCardActionsTagHelper.TagName, SummaryListTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.SummaryCardElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryCard)]
 public class SummaryCardTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
 
     /// <summary>
     /// Creates a new <see cref="SummaryCardTagHelper"/>.
     /// </summary>
-    public SummaryCardTagHelper()
-        : this(htmlGenerator: null)
+    public SummaryCardTagHelper(IComponentGenerator componentGenerator)
     {
-    }
-
-    internal SummaryCardTagHelper(IGovUkHtmlGenerator? htmlGenerator)
-    {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+        _componentGenerator = componentGenerator;
     }
 
     /// <inheritdoc/>
@@ -41,26 +37,23 @@ public class SummaryCardTagHelper : TagHelper
 
         cardContext.ThrowIfNotComplete();
 
-        var tagBuilder = _htmlGenerator.GenerateSummaryCard(
-            new SummaryCardTitle()
-            {
-                Content = cardContext.Title?.Content,
-                HeadingLevel = cardContext.Title?.HeadingLevel,
-                Attributes = cardContext.Title?.Attributes,
-            },
-            new SummaryListActions()
-            {
-                Attributes = cardContext.ActionsAttributes,
-                Items = cardContext.Actions
-            },
-            cardContext.SummaryList,
-            output.Attributes.ToAttributeDictionary());
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
 
-        output.TagName = tagBuilder.TagName;
-        output.TagMode = TagMode.StartTagAndEndTag;
+        var component = await _componentGenerator.GenerateSummaryListAsync(new SummaryListOptions()
+        {
+            Rows = cardContext.SummaryList?.Rows,
+            Card = new SummaryListOptionsCard()
+            {
+                Title = cardContext.Title,
+                Actions = cardContext.Actions,
+                Classes = classes,
+                Attributes = attributes
+            },
+            Classes = cardContext.SummaryList?.Classes,
+            Attributes = cardContext.SummaryList?.Attributes
+        });
 
-        output.Attributes.Clear();
-        output.MergeAttributes(tagBuilder);
-        output.Content.SetHtmlContent(tagBuilder.InnerHtml);
+        output.ApplyComponentHtml(component, HtmlEncoder.Default);
     }
 }

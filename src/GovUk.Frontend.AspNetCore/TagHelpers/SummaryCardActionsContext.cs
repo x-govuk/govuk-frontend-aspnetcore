@@ -1,0 +1,17 @@
+using GovUk.Frontend.AspNetCore.Components;
+
+namespace GovUk.Frontend.AspNetCore.TagHelpers;
+
+internal class SummaryCardActionsContext
+{
+    private readonly List<SummaryListOptionsCardActionsItem> _items = new();
+
+    public IReadOnlyCollection<SummaryListOptionsCardActionsItem> Items => _items.AsReadOnly();
+
+    public void AddItem(SummaryListOptionsCardActionsItem item)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+
+        _items.Add(item);
+    }
+}

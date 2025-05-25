@@ -18,6 +18,16 @@ internal partial class DefaultComponentGenerator
         public const string PaginationNext = "div";
         public const string PaginationPrevious = "div";
         public const string SkipLink = "a";
+        public const string SummaryCard = "div";
+        public const string SummaryCardAction = "li";
+        public const string SummaryCardRowActions = "div";
+        public const string SummaryCardTitle = "div";
+        public const string SummaryList = "dl";
+        public const string SummaryListRow = "div";
+        public const string SummaryListRowActions = "dd";
+        public const string SummaryListRowAction = "li";
+        public const string SummaryListRowKey = "dt";
+        public const string SummaryListRowValue = "dd";
         public const string Tabs = "div";
         public const string TabsItemPanel = "div";
         public const string Tag = "strong";

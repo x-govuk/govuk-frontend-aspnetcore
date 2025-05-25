@@ -3,63 +3,61 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListRowActionTagHelperTests
+public class SummaryListRowActionTagHelperTests() : TagHelperTestBase(SummaryListRowActionTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_AddsActionToContext()
     {
         // Arrange
+        var content = "Change";
+        var href = "href";
+        var visuallyHiddenText = "vht";
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
+        attributes.Add("href", href);
+
         var summaryListContext = new SummaryListContext();
 
         var rowContext = new SummaryListRowContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-summary-list-row-action",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SummaryListContext), summaryListContext },
-                { typeof(SummaryListRowContext), rowContext }
-            },
-            uniqueId: "test");
+        var actionsContext = new SummaryListRowActionsContext();
 
-        var output = new TagHelperOutput(
-            "govuk-summary-list-row-actions",
-            attributes: new TagHelperAttributeList()
-            {
-                { "href", "#" }
-            },
+        var context = CreateTagHelperContext(
+            className: className,
+            attributes: attributes,
+            contexts: [summaryListContext, rowContext, actionsContext]);
+
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Change");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new SummaryListRowActionTagHelper()
         {
-            VisuallyHiddenText = "vht"
+            VisuallyHiddenText = visuallyHiddenText
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
+        Assert.NotNull(actionsContext.Items);
         Assert.Collection(
-            rowContext.Actions,
+            actionsContext.Items,
             action =>
             {
-                Assert.Equal("Change", action.Content?.ToHtmlString());
-                Assert.Equal("vht", action.VisuallyHiddenText);
-                Assert.NotNull(action.Attributes);
-
-                Assert.Collection(
-                    action.Attributes,
-                    kvp =>
-                    {
-                        Assert.Equal("href", kvp.Key);
-                        Assert.Equal("#", kvp.Value);
-                    });
+                Assert.Equal(content, action.Html);
+                Assert.Equal(visuallyHiddenText, action.VisuallyHiddenText);
+                Assert.Equal(href, action.Href);
+                AssertContainsAttributes(attributes, action.Attributes, except: href);
+                Assert.Equal(className, action.Classes);
             });
     }
 }

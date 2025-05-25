@@ -106,9 +106,6 @@ internal interface IGovUkHtmlGenerator
         IEnumerable<SelectItem> items,
         AttributeDictionary attributes);
 
-    TagBuilder GenerateSummaryCard(SummaryCardTitle title, SummaryListActions actions, IHtmlContent summaryList, AttributeDictionary attributes);
-
-    TagBuilder GenerateSummaryList(IEnumerable<SummaryListRow> rows, AttributeDictionary attributes);
 
     TagBuilder GenerateTextArea(
         bool haveError,

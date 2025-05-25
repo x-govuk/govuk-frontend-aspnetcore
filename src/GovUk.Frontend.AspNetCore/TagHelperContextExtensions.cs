@@ -21,6 +21,14 @@ internal static class TagHelperContextExtensions
         return item;
     }
 
+    public static void SetContextItem<TItem>(this TagHelperContext context, TItem item)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(item);
+
+        context.Items[typeof(TItem)] = item;
+    }
+
     public static IDisposable SetScopedContextItem<TItem>(this TagHelperContext context, TItem item)
         where TItem : class
     {

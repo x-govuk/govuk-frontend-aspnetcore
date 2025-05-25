@@ -11,7 +11,7 @@ namespace GovUk.Frontend.AspNetCore.Components;
 /// Contains either an unencoded <see cref="System.String" /> or an <see cref="IHtmlContent"/>.
 /// </summary>
 [DebuggerDisplay("{ToString()}")]
-public sealed class TemplateString
+public sealed class TemplateString : IEquatable<TemplateString>
 {
     private static readonly HtmlEncoder _defaultEncoder = HtmlEncoder.Default;
 
@@ -93,24 +93,37 @@ public sealed class TemplateString
     [return: NotNullIfNotNull(nameof(content))]
     public static implicit operator TemplateString?(HtmlString? content) => content is null ? null : new(content);
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public static bool operator ==(TemplateString? first, TemplateString? second) =>
+        first is null && second is null || (first is not null && second is not null && first.Equals(second));
+
+    public static bool operator !=(TemplateString? first, TemplateString? second) => !(first == second);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
     /// <inheritdoc/>
     public override string ToString() => ToHtmlString(_defaultEncoder);
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj)
+    public override bool Equals(object? obj) =>
+        ReferenceEquals(this, obj) || obj is TemplateString other && Equals(other);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => _value != null ? _value.GetHashCode() : 0;
+
+    /// <inheritdoc/>
+    public bool Equals(TemplateString? other)
     {
-        if (obj is not TemplateString otherTemplateString)
+        if (other is null)
         {
             return false;
         }
 
-        return otherTemplateString.ToHtmlString(_defaultEncoder).Equals(ToHtmlString(_defaultEncoder));
-    }
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
 
-    /// <inheritdoc/>
-    public override int GetHashCode()
-    {
-        return ToHtmlString(_defaultEncoder).GetHashCode();
+        return Equals(ToString(), other.ToString());
     }
 }
 

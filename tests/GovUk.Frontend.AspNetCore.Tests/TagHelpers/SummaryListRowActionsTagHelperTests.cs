@@ -2,7 +2,7 @@ using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListRowActionsTagHelperTests() : TagHelperTestBase(SummaryListRowActionsTagHelper.TagName)
+public class SummaryListRowActionsTagHelperTests() : TagHelperTestBase(SummaryListRowActionsTagHelper.TagName, parentTagName: SummaryListRowTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_AddsAttributesToContext()
@@ -59,6 +59,6 @@ public class SummaryListRowActionsTagHelperTests() : TagHelperTestBase(SummaryLi
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-summary-list-row-actions> element is permitted within each <govuk-summary-list-row>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListRowTagHelperTests() : TagHelperTestBase(SummaryListRowTagHelper.TagName)
+public class SummaryListRowTagHelperTests() : TagHelperTestBase(SummaryListRowTagHelper.TagName, parentTagName: SummaryListTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_AddsRowToContext()
@@ -78,6 +78,6 @@ public class SummaryListRowTagHelperTests() : TagHelperTestBase(SummaryListRowTa
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("A <govuk-summary-list-row-key> element must be provided.", ex.Message);
+        Assert.Equal($"A <{SummaryListRowKeyTagHelper.TagName}> element must be provided.", ex.Message);
     }
 }

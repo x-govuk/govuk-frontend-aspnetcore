@@ -94,6 +94,6 @@ public class SummaryListTagHelperTests() : TagHelperTestBase(SummaryListTagHelpe
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-summary-list> element is permitted within each <govuk-summary-card>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{SummaryCardTagHelper.TagName}>.", ex.Message);
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryCardActionsTagHelperTests() : TagHelperTestBase(SummaryCardActionsTagHelper.TagName)
+public class SummaryCardActionsTagHelperTests() : TagHelperTestBase(SummaryCardActionsTagHelper.TagName, parentTagName: SummaryCardTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_AddsActionsToContext()
@@ -88,11 +88,12 @@ public class SummaryCardActionsTagHelperTests() : TagHelperTestBase(SummaryCardA
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-summary-card-actions> element is permitted within each <govuk-summary-card>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
-    [Fact]
-    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException()
+    [Theory]
+    [InlineData(SummaryListTagHelper.TagName)]
+    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException(string summaryListTagName)
     {
         // Arrange
         var summaryCardContext = new SummaryCardContext();
@@ -116,6 +117,6 @@ public class SummaryCardActionsTagHelperTests() : TagHelperTestBase(SummaryCardA
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-summary-card-actions> must be specified before <govuk-summary-list>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{summaryListTagName}>.", ex.Message);
     }
 }

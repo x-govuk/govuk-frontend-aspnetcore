@@ -11,9 +11,11 @@ using Xunit.Sdk;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public abstract class TagHelperTestBase(string tagName)
+public abstract class TagHelperTestBase(string tagName, string? parentTagName = null)
 {
     protected string TagName { get; } = tagName;
+
+    protected string? ParentTagName { get; } = parentTagName;
 
     protected TagHelperContext CreateTagHelperContext(
         string? tagName = null,

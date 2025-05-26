@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListRowKeyTagHelperTests() : TagHelperTestBase(SummaryListRowKeyTagHelper.TagName)
+public class SummaryListRowKeyTagHelperTests() : TagHelperTestBase(SummaryListRowKeyTagHelper.TagName, parentTagName: SummaryListRowTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_AddsValueToContext()
@@ -76,11 +76,12 @@ public class SummaryListRowKeyTagHelperTests() : TagHelperTestBase(SummaryListRo
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-summary-list-row-key> element is permitted within each <govuk-summary-list-row>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
-    [Fact]
-    public async Task ProcessAsync_ParentHasValue_ThrowsInvalidOperationException()
+    [Theory]
+    [InlineData(SummaryListRowValueTagHelper.TagName)]
+    public async Task ProcessAsync_ParentHasValue_ThrowsInvalidOperationException(string valueTagName)
     {
         // Arrange
         var content = "Key";
@@ -109,11 +110,12 @@ public class SummaryListRowKeyTagHelperTests() : TagHelperTestBase(SummaryListRo
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-summary-list-row-key> must be specified before <govuk-summary-list-row-value>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{valueTagName}>.", ex.Message);
     }
 
-    [Fact]
-    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException()
+    [Theory]
+    [InlineData(SummaryListRowActionsTagHelper.TagName)]
+    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException(string actionsTagName)
     {
         // Arrange
         var content = "Key";
@@ -142,6 +144,6 @@ public class SummaryListRowKeyTagHelperTests() : TagHelperTestBase(SummaryListRo
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-summary-list-row-key> must be specified before <govuk-summary-list-row-actions>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{actionsTagName}>.", ex.Message);
     }
 }

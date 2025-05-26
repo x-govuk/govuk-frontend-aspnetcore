@@ -2,7 +2,7 @@ using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryCardSummaryListTagHelperTests() : TagHelperTestBase(SummaryCardSummaryListTagHelper.TagName)
+public class SummaryCardSummaryListTagHelperTests() : TagHelperTestBase(SummaryCardSummaryListTagHelper.TagName, SummaryCardTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_SetsHaveCardOnContext()

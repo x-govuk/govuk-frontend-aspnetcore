@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryCardTitleTagHelperTests() : TagHelperTestBase(SummaryCardTitleTagHelper.TagName)
+public class SummaryCardTitleTagHelperTests() : TagHelperTestBase(SummaryCardTitleTagHelper.TagName, parentTagName: SummaryCardTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_SetsTitleOnContext()
@@ -77,11 +77,12 @@ public class SummaryCardTitleTagHelperTests() : TagHelperTestBase(SummaryCardTit
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-summary-card-title> element is permitted within each <govuk-summary-card>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
-    [Fact]
-    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException()
+    [Theory]
+    [InlineData(SummaryCardActionsTagHelper.TagName)]
+    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException(string actionsTagName)
     {
         // Arrange
         var titleContent = "Title";
@@ -112,11 +113,12 @@ public class SummaryCardTitleTagHelperTests() : TagHelperTestBase(SummaryCardTit
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-summary-card-title> must be specified before <govuk-summary-card-actions>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{actionsTagName}>.", ex.Message);
     }
 
-    [Fact]
-    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException()
+    [Theory]
+    [InlineData(SummaryListTagHelper.TagName)]
+    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException(string summaryListTagName)
     {
         // Arrange
         var titleContent = "Title";
@@ -147,6 +149,6 @@ public class SummaryCardTitleTagHelperTests() : TagHelperTestBase(SummaryCardTit
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-summary-card-title> must be specified before <govuk-summary-list>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{summaryListTagName}>.", ex.Message);
     }
 }

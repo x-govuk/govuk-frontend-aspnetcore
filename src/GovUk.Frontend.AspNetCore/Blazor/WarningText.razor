@@ -1,0 +1,15 @@
+﻿@using System.Text.Encodings.Web
+@using GovUk.Frontend.AspNetCore.Components
+
+@code {
+  [Parameter, EditorRequired] public WarningTextOptions Options { get; set; } = null!;
+}
+
+<div class="govuk-warning-text @(Options.Classes)"
+  @*{{- govukAttributes(params.attributes) }}*@>
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">@(Options.IconFallbackText ?? "Warning")</span>
+    @(Options.Html is not null ? new MarkupString(Options.Html.ToHtmlString(HtmlEncoder.Default)) : Options.Text)
+  </strong>
+</div>

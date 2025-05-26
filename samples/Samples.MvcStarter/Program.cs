@@ -1,5 +1,7 @@
 using GovUk.Frontend.AspNetCore;
+using GovUk.Frontend.AspNetCore.Blazor;
 using Joonasw.AspNetCore.SecurityHeaders;
+using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,9 @@ builder.Services.AddGovUkFrontend(options =>
     //    return cspService.GetNonce();
     //};
 });
+
+builder.Services.AddScoped<HtmlRenderer>();
+builder.Services.AddScoped<BlazorComponentGenerator>();
 
 var app = builder.Build();
 

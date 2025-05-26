@@ -1,8 +1,8 @@
 # ASP.NET Core integration for GOV.UK Design System
 
 [![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-5.9.0-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v5.9.0)
-![CI](https://github.com/x-govuk/govuk-frontend-aspnetcore/workflows/ci/badge.svg)
-![NuGet Downloads](https://img.shields.io/nuget/dt/GovUk.Frontend.AspNetCore)
+[![CI](https://github.com/x-govuk/govuk-frontend-aspnetcore/workflows/ci/badge.svg)](https://github.com/x-govuk/govuk-frontend-aspnetcore/actions/workflows/ci.yml)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/GovUk.Frontend.AspNetCore)](https://www.nuget.org/packages/GovUk.Frontend.AspNetCore)
 
 This library simplifies setting up an ASP.NET Core application to use the [GOV.UK Design System](https://design-system.service.gov.uk/).
 It includes tag helpers to produce GDS components which integrate with ASP.NET Core's model binding system.

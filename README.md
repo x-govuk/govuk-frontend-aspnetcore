@@ -34,6 +34,7 @@ builder.Services.AddGovUkFrontend();
 In your `_ViewImports.cshtml` file:
 
 ```razor:
+@using GovUk.Frontend.AspNetCore
 @addTagHelper *, GovUk.Frontend.AspNetCore
 ```
 

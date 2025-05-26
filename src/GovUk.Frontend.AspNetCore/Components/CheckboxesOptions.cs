@@ -19,8 +19,24 @@ public record CheckboxesOptions
 
 public record CheckboxesOptionsFormGroup : FormGroupOptions
 {
-    public TextHtmlAndAttributesOptions? BeforeInputs { get; set; }
-    public TextHtmlAndAttributesOptions? AfterInputs { get; set; }
+    public CheckboxesOptionsBeforeInputs? BeforeInputs { get; set; }
+    public CheckboxesOptionsAfterInputs? AfterInputs { get; set; }
+}
+
+public record CheckboxesOptionsBeforeInputs
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record CheckboxesOptionsAfterInputs
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record CheckboxesOptionsItem

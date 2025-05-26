@@ -49,8 +49,24 @@ public record InputOptionsSuffix
 
 public record InputFormGroupOptions : FormGroupOptions
 {
-    public TextHtmlAndAttributesOptions? BeforeInput { get; set; }
-    public TextHtmlAndAttributesOptions? AfterInput { get; set; }
+    public InputOptionsBeforeInput? BeforeInput { get; set; }
+    public InputOptionsAfterInput? AfterInput { get; set; }
+}
+
+public record InputOptionsBeforeInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record InputOptionsAfterInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record InputOptionsInputWrapper

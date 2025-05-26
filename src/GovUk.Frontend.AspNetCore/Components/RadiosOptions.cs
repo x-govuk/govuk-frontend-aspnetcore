@@ -7,12 +7,34 @@ public record RadiosOptions
     public FieldsetOptions? Fieldset { get; set; }
     public HintOptions? Hint { get; set; }
     public ErrorMessageOptions? ErrorMessage { get; set; }
-    public FormGroupOptions? FormGroup { get; set; }
+    public RadiosOptionsFormGroup? FormGroup { get; set; }
     public TemplateString? IdPrefix { get; set; }
     public TemplateString? Name { get; set; }
     public IReadOnlyCollection<RadiosOptionsItem>? Items { get; set; }
     public TemplateString? Value { get; set; }
     public TemplateString? Classes { get; set; }
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record RadiosOptionsFormGroup : FormGroupOptions
+{
+    public RadiosOptionsBeforeInputs? BeforeInputs { get; set; }
+    public RadiosOptionsAfterInputs? AfterInputs { get; set; }
+}
+
+public record RadiosOptionsBeforeInputs
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record RadiosOptionsAfterInputs
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }
 

@@ -1,20 +1,22 @@
+using System.Diagnostics;
 using GovUk.Frontend.AspNetCore.Components;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class PaginationContext
 {
-    private readonly List<IPaginationOptionsItem> _items = new();
+    private readonly List<object> _items = new();
 
-    public IReadOnlyCollection<IPaginationOptionsItem> Items => _items.AsReadOnly();
+    public IReadOnlyCollection<object> Items => _items.AsReadOnly();
 
     public PaginationOptionsNext? Next { get; private set; }
 
     public PaginationOptionsPrevious? Previous { get; private set; }
 
-    public void AddItem(IPaginationOptionsItem item)
+    public void AddItem(object item)
     {
         ArgumentNullException.ThrowIfNull(item);
+        Debug.Assert(item is PaginationOptionsItem or PaginationOptionsNext or PaginationOptionsPrevious);
 
         if (Next is not null)
         {

@@ -24,12 +24,12 @@ public record CharacterCountOptions
     public AttributeCollection? Attributes { get; set; }
     public CharacterCountCountOptionsMessage? CountMessage { get; set; }
     public TemplateString? TextareaDescriptionText { get; set; }
-    public CharacterCountOptionsLocalizedText? CharactersUnderLimitText { get; set; }
+    public CharacterCountOptionsCharactersUnderLimitText? CharactersUnderLimitText { get; set; }
     public TemplateString? CharactersAtLimitText { get; set; }
-    public CharacterCountOptionsLocalizedText? CharactersOverLimitText { get; set; }
-    public CharacterCountOptionsLocalizedText? WordsUnderLimitText { get; set; }
+    public CharacterCountOptionsCharactersOverLimitText? CharactersOverLimitText { get; set; }
+    public CharacterCountOptionsWordsUnderLimitText? WordsUnderLimitText { get; set; }
     public TemplateString? WordsAtLimitText { get; set; }
-    public CharacterCountOptionsLocalizedText? WordsOverLimitText { get; set; }
+    public CharacterCountOptionsWordsOverLimitText? WordsOverLimitText { get; set; }
 }
 
 public record CharacterCountCountOptionsMessage
@@ -39,7 +39,26 @@ public record CharacterCountCountOptionsMessage
     public AttributeCollection? Attributes { get; set; }
 }
 
-public record CharacterCountOptionsLocalizedText
+public record CharacterCountOptionsCharactersUnderLimitText
+{
+    public TemplateString? Other { get; set; }
+    public TemplateString? One { get; set; }
+}
+
+public record CharacterCountOptionsCharactersOverLimitText
+{
+    public TemplateString? Other { get; set; }
+    public TemplateString? One { get; set; }
+
+}
+
+public record CharacterCountOptionsWordsUnderLimitText
+{
+    public TemplateString? Other { get; set; }
+    public TemplateString? One { get; set; }
+}
+
+public record CharacterCountOptionsWordsOverLimitText
 {
     public TemplateString? Other { get; set; }
     public TemplateString? One { get; set; }
@@ -47,6 +66,22 @@ public record CharacterCountOptionsLocalizedText
 
 public record CharacterCountOptionsFormGroup : FormGroupOptions
 {
-    public TextHtmlAndAttributesOptions? BeforeInput { get; set; }
-    public TextHtmlAndAttributesOptions? AfterInput { get; set; }
+    public CharacterCountOptionsBeforeInput? BeforeInput { get; set; }
+    public CharacterCountOptionsAfterInput? AfterInput { get; set; }
+}
+
+public record CharacterCountOptionsBeforeInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record CharacterCountOptionsAfterInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }

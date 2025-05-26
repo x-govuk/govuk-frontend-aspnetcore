@@ -14,8 +14,30 @@ public record SelectOptions
     public LabelOptions? Label { get; set; }
     public HintOptions? Hint { get; set; }
     public ErrorMessageOptions? ErrorMessage { get; set; }
-    public FormGroupOptions? FormGroup { get; set; }
+    public SelectFormGroupOptions? FormGroup { get; set; }
     public IHtmlContent? Classes { get; set; }
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record SelectFormGroupOptions : FormGroupOptions
+{
+    public SelectOptionsBeforeInput? BeforeInput { get; set; }
+    public SelectOptionsAfterInput? AfterInput { get; set; }
+}
+
+public record SelectOptionsBeforeInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record SelectOptionsAfterInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }
 

@@ -12,7 +12,7 @@ public record PaginationOptions
     public AttributeCollection? Attributes { get; set; }
 }
 
-public record PaginationOptionsItem : IPaginationOptionsItem
+public record PaginationOptionsItem
 {
     public TemplateString? Number { get; set; }
     public TemplateString? VisuallyHiddenText { get; set; }
@@ -22,7 +22,7 @@ public record PaginationOptionsItem : IPaginationOptionsItem
     public AttributeCollection? Attributes { get; set; }
 }
 
-public record PaginationOptionsPrevious : IPaginationOptionsItem
+public record PaginationOptionsPrevious
 {
     public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }
@@ -34,7 +34,7 @@ public record PaginationOptionsPrevious : IPaginationOptionsItem
     public AttributeCollection? ContainerAttributes { get; set; }
 }
 
-public record PaginationOptionsNext : IPaginationOptionsItem
+public record PaginationOptionsNext
 {
     public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }
@@ -44,8 +44,4 @@ public record PaginationOptionsNext : IPaginationOptionsItem
 
     [NonStandardParameter]
     public AttributeCollection? ContainerAttributes { get; set; }
-}
-
-internal interface IPaginationOptionsItem
-{
 }

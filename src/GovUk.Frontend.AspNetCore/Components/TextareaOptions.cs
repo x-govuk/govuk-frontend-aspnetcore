@@ -16,15 +16,31 @@ public record TextareaOptions
     public LabelOptions? Label { get; set; }
     public HintOptions? Hint { get; set; }
     public ErrorMessageOptions? ErrorMessage { get; set; }
-    public TextAreaOptionsFormGroup? FormGroup { get; set; }
+    public TextareaOptionsFormGroup? FormGroup { get; set; }
     public TemplateString? Classes { get; set; }
     [JsonPropertyName("autocomplete")]
     public TemplateString? AutoComplete { get; set; }
     public AttributeCollection? Attributes { get; set; }
 }
 
-public record TextAreaOptionsFormGroup : FormGroupOptions
+public record TextareaOptionsFormGroup : FormGroupOptions
 {
-    public TextHtmlAndAttributesOptions? BeforeInput { get; set; }
-    public TextHtmlAndAttributesOptions? AfterInput { get; set; }
+    public TextareaOptionsBeforeInput? BeforeInput { get; set; }
+    public TextareaOptionsAfterInput? AfterInput { get; set; }
+}
+
+public record TextareaOptionsBeforeInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record TextareaOptionsAfterInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }

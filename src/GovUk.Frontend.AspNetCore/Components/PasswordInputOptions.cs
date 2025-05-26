@@ -30,8 +30,24 @@ public record PasswordInputOptions
 
 public record PasswordInputOptionsFormGroup : FormGroupOptions
 {
-    public TextHtmlAndAttributesOptions? BeforeInput { get; set; }
-    public TextHtmlAndAttributesOptions? AfterInput { get; set; }
+    public PasswordInputOptionsBeforeInput? BeforeInput { get; set; }
+    public PasswordInputOptionsAfterInput? AfterInput { get; set; }
+}
+
+public record PasswordInputOptionsBeforeInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record PasswordInputOptionsAfterInput
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record PasswordInputOptionsButton

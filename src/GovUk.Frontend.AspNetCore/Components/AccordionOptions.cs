@@ -22,7 +22,7 @@ public record AccordionOptionsItem
 {
     public AccordionOptionsItemHeading? Heading { get; set; }
     public AccordionOptionsItemSummary? Summary { get; set; }
-    public AccordionOptions2ItemContent? Content { get; set; }
+    public AccordionOptionsItemContent? Content { get; set; }
     public bool? Expanded { get; set; }
 }
 
@@ -38,7 +38,7 @@ public record AccordionOptionsItemSummary
     public TemplateString? Html { get; set; }
 }
 
-public record AccordionOptions2ItemContent
+public record AccordionOptionsItemContent
 {
     public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }

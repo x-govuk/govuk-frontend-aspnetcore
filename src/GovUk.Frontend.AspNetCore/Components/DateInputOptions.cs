@@ -34,6 +34,22 @@ public record DateInputOptionsItem
 
 public record DateInputFormGroupOptions : FormGroupOptions
 {
-    public TextHtmlAndAttributesOptions? BeforeInputs { get; set; }
-    public TextHtmlAndAttributesOptions? AfterInputs { get; set; }
+    public DateInputOptionsBeforeInputs? BeforeInputs { get; set; }
+    public DateInputOptionsAfterInputs? AfterInputs { get; set; }
+}
+
+public record DateInputOptionsBeforeInputs
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+}
+
+public record DateInputOptionsAfterInputs
+{
+    public string? Text { get; set; }
+    public string? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }

@@ -24,6 +24,8 @@ public static class GovUkFrontendAspNetCoreExtensions
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
     public static IServiceCollection AddGovUkFrontend(this IServiceCollection services)
     {
+        ArgumentNullException.ThrowIfNull(services);
+
         return AddGovUkFrontend(services, _ => { });
     }
 
@@ -37,8 +39,8 @@ public static class GovUkFrontendAspNetCoreExtensions
         this IServiceCollection services,
         Action<GovUkFrontendAspNetCoreOptions> setupAction)
     {
-        Guard.ArgumentNotNull(nameof(services), services);
-        Guard.ArgumentNotNull(nameof(setupAction), setupAction);
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(setupAction);
 
         services.AddMvcCore();
 
@@ -56,44 +58,19 @@ public static class GovUkFrontendAspNetCoreExtensions
         return services;
     }
 
-    /// <summary>
-    /// Replaces the <see cref="IModelBinderProvider"/> of type <typeparamref name="T"/> with <paramref name="modelBinderProvider"/>.
-    /// </summary>
-    /// <typeparam name="T">The type of the <see cref="IModelBinderProvider"/> to replace.</typeparam>
-    /// <param name="mvcOptions">The <see cref="MvcOptions"/>.</param>
-    /// <param name="modelBinderProvider">The <see cref="IModelBinderProvider"/> to replace with.</param>
-    /// <returns><see langword="true"/> if a <see cref="IModelBinderProvider"/> was replaced otherwise <see langword="false"/>.</returns>
-    public static bool ReplaceModelBinderProvider<T>(this MvcOptions mvcOptions, IModelBinderProvider modelBinderProvider)
-        where T : IModelBinderProvider
-    {
-        Guard.ArgumentNotNull(nameof(mvcOptions), mvcOptions);
-
-        var modelBinderProviders = mvcOptions.ModelBinderProviders;
-
-        for (var i = 0; i < modelBinderProviders.Count; i++)
-        {
-            if (modelBinderProviders[i] is T)
-            {
-                modelBinderProviders[i] = modelBinderProvider;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private class ConfigureMvcOptions : IConfigureOptions<MvcOptions>
     {
-        private readonly IOptions<GovUkFrontendAspNetCoreOptions> _gfaOptionsAccessor;
+        private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
 
-        public ConfigureMvcOptions(IOptions<GovUkFrontendAspNetCoreOptions> gfaOptionsAccessor)
+        public ConfigureMvcOptions(IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
         {
-            _gfaOptionsAccessor = gfaOptionsAccessor;
+            ArgumentNullException.ThrowIfNull(optionsAccessor);
+            _optionsAccessor = optionsAccessor;
         }
 
         public void Configure(MvcOptions options)
         {
-            options.ModelBinderProviders.Insert(2, new DateInputModelBinderProvider(_gfaOptionsAccessor));
+            options.ModelBinderProviders.Insert(2, new DateInputModelBinderProvider(_optionsAccessor));
             options.ModelMetadataDetailsProviders.Add(new GovUkFrontendAspNetCoreMetadataDetailsProvider());
         }
     }

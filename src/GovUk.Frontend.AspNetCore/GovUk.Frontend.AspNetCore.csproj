@@ -77,8 +77,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Components\Templates\*.liquid" />
-    <EmbeddedResource Include="Components\Templates\*.liquid" />
+    <None Remove="ComponentGeneration\Templates\*.liquid" />
+    <EmbeddedResource Include="ComponentGeneration\Templates\*.liquid" />
   </ItemGroup>
 
   <ItemGroup>

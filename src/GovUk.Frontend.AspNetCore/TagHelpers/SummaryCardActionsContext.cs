@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.Components;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 

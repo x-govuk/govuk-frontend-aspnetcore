@@ -2,12 +2,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Encodings.Web;
-using GovUk.Frontend.AspNetCore.Components;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using AttributeCollection = GovUk.Frontend.AspNetCore.Components.AttributeCollection;
+using AttributeCollection = GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 

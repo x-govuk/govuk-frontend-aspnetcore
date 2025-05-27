@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using System.Text.Encodings.Web;
 using AngleSharp.Dom;
-using GovUk.Frontend.AspNetCore.Components;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using GovUk.Frontend.AspNetCore.Components;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;

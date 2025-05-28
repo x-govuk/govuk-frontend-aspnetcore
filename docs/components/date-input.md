@@ -140,7 +140,7 @@ Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 | `inputmode`      | `string` | The `inputmode` attribute for the item's generated `input` element. The default is `numeric`. |
 | `name`           | `string` | The `name` attribute for the item's generated `input` element.                                |
 | `pattern`        | `string` | The `pattern` attribute for the item's generated `input` element. The default is `[0-9]*`.    |
-| `value`          | `int?`   | The `value` attribute for the item's generated `input` element.                               |
+| `value`          | `string` | The `value` attribute for the item's generated `input` element.                               |
 
 ### `<govuk-date-input-day-label>`, `<govuk-date-input-month-label>`, `<govuk-date-input-year-label>`
 

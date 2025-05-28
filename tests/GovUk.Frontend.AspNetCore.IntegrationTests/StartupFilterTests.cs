@@ -12,7 +12,7 @@ public class StartupFilterTests
         // Arrange
         await using var fixture = new StartupFilterTestFixture(services =>
         {
-            services.Configure<GovUkFrontendAspNetCoreOptions>(
+            services.Configure<GovUkFrontendOptions>(
                 options => options.CompiledContentPath = "/non-standard-compiled");
         });
         await fixture.InitializeAsync();
@@ -38,7 +38,7 @@ public class StartupFilterTests
         // Arrange
         await using var fixture = new StartupFilterTestFixture(services =>
         {
-            services.Configure<GovUkFrontendAspNetCoreOptions>(
+            services.Configure<GovUkFrontendOptions>(
                 options => options.StaticAssetsContentPath = "/non-standard-asset-location");
         });
         await fixture.InitializeAsync();
@@ -60,7 +60,7 @@ public class StartupFilterTests
         // Arrange
         await using var fixture = new StartupFilterTestFixture(services =>
         {
-            services.Configure<GovUkFrontendAspNetCoreOptions>(options =>
+            services.Configure<GovUkFrontendOptions>(options =>
             {
                 options.CompiledContentPath = "/non-standard-compiled";
                 options.StaticAssetsContentPath = "/non-standard-assets";

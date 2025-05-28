@@ -6,9 +6,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class FileUploadTagHelperInitializer : ITagHelperInitializer<FileUploadTagHelper>
 {
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
-    public FileUploadTagHelperInitializer(IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+    public FileUploadTagHelperInitializer(IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         ArgumentNullException.ThrowIfNull(optionsAccessor);
         _optionsAccessor = optionsAccessor;

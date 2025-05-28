@@ -16,12 +16,12 @@ public class TitleTagHelper : TagHelper
     private const string DefaultErrorPrefix = "Error:";
     private const string ErrorPrefixAttributeName = "error-prefix";
 
-    private readonly GovUkFrontendAspNetCoreOptions _options;
+    private readonly GovUkFrontendOptions _options;
 
     /// <summary>
     /// Creates a new <see cref="TitleTagHelper"/>.
     /// </summary>
-    public TitleTagHelper(IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+    public TitleTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         _options = Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor).Value;
     }

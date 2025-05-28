@@ -23,7 +23,7 @@ public class ErrorSummaryItemTagHelper : TagHelper
     private const string ForAttributeName = "for";
     private const string LinkAttributesPrefix = "link-";
 
-    private readonly GovUkFrontendAspNetCoreOptions _options;
+    private readonly GovUkFrontendOptions _options;
     private readonly DateInputParseErrorsProvider _dateInputParseErrorsProvider;
     private readonly IModelHelper _modelHelper;
 
@@ -31,14 +31,14 @@ public class ErrorSummaryItemTagHelper : TagHelper
     /// Creates a new <see cref="ErrorSummaryItemTagHelper"/>.
     /// </summary>
     public ErrorSummaryItemTagHelper(
-        IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor,
+        IOptions<GovUkFrontendOptions> optionsAccessor,
         DateInputParseErrorsProvider dateInputParseErrorsProvider)
         : this(optionsAccessor, dateInputParseErrorsProvider, modelHelper: null)
     {
     }
 
     internal ErrorSummaryItemTagHelper(
-        IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor,
+        IOptions<GovUkFrontendOptions> optionsAccessor,
         DateInputParseErrorsProvider dateInputParseErrorsProvider,
         IModelHelper? modelHelper = null)
     {

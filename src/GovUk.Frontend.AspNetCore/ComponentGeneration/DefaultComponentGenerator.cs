@@ -34,7 +34,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         _templateOptions.Trimming = TrimmingFlags.TagLeft;
 
         _templateOptions.FileProvider = new ManifestEmbeddedFileProvider(
-            typeof(GovUkFrontendAspNetCoreStartupFilter).Assembly,
+            typeof(GovUkFrontendStartupFilter).Assembly,
             root: "ComponentGeneration/Templates");
 
         _templateOptions.Filters.AddFilter("nj_default", Filters.DefaultAsync);

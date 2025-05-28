@@ -89,9 +89,9 @@ public abstract class TagHelperTestBase(string tagName, string? parentTagName = 
     protected ViewContext CreateViewContext() =>
         new ViewContext() { HttpContext = new DefaultHttpContext() };
 
-    protected IOptions<GovUkFrontendAspNetCoreOptions> CreateOptions(Action<GovUkFrontendAspNetCoreOptions>? configure = null)
+    protected IOptions<GovUkFrontendOptions> CreateOptions(Action<GovUkFrontendOptions>? configure = null)
     {
-        var options = new GovUkFrontendAspNetCoreOptions();
+        var options = new GovUkFrontendOptions();
         configure?.Invoke(options);
         return Options.Create(options);
     }

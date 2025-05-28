@@ -14,7 +14,7 @@ namespace GovUk.Frontend.AspNetCore;
 /// <summary>
 /// Extension methods for setting up GovUk.Frontend.AspNetCore.
 /// </summary>
-public static class GovUkFrontendAspNetCoreExtensions
+public static class GovUkFrontendExtensions
 {
     /// <summary>
     /// Adds GovUk.Frontend.AspNetCore services to the specified <see cref="IServiceCollection"/>.
@@ -32,11 +32,11 @@ public static class GovUkFrontendAspNetCoreExtensions
     /// Adds GovUk.Frontend.AspNetCore services to the specified <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-    /// <param name="setupAction">An <see cref="Action{GovUkFrontendAspNetCoreOptions}"/> to configure the provided <see cref="GovUkFrontendAspNetCoreOptions"/>.</param>
+    /// <param name="setupAction">An <see cref="Action{GovUkFrontendOptions}"/> to configure the provided <see cref="GovUkFrontendOptions"/>.</param>
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
     public static IServiceCollection AddGovUkFrontend(
         this IServiceCollection services,
-        Action<GovUkFrontendAspNetCoreOptions> setupAction)
+        Action<GovUkFrontendOptions> setupAction)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(setupAction);
@@ -46,7 +46,7 @@ public static class GovUkFrontendAspNetCoreExtensions
         services.TryAddSingleton<IGovUkHtmlGenerator, ComponentGenerator>();
         services.TryAddSingleton<IComponentGenerator, DefaultComponentGenerator>();
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
-        services.AddSingleton<IStartupFilter, GovUkFrontendAspNetCoreStartupFilter>();
+        services.AddSingleton<IStartupFilter, GovUkFrontendStartupFilter>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
         services.AddScoped<DateInputParseErrorsProvider>();
         services.AddTransient<PageTemplateHelper>();
@@ -59,9 +59,9 @@ public static class GovUkFrontendAspNetCoreExtensions
 
     private class ConfigureMvcOptions : IConfigureOptions<MvcOptions>
     {
-        private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+        private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
-        public ConfigureMvcOptions(IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+        public ConfigureMvcOptions(IOptions<GovUkFrontendOptions> optionsAccessor)
         {
             ArgumentNullException.ThrowIfNull(optionsAccessor);
             _optionsAccessor = optionsAccessor;

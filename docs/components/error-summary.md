@@ -4,7 +4,7 @@
 
 > [!NOTE]
 > By default an Error summary will be added to the top of your `<main>` element containing links to all the errors on the page.
-You can disable this by setting the `GenerateErrorSummaries` property on `GovUkFrontendAspNetCoreOptions` to `GenerateErrorSummariesOptions.None`.
+You can disable this by setting the `GenerateErrorSummaries` property on `GovUkFrontendOptions` to `GenerateErrorSummariesOptions.None`.
 
 ## Example
 

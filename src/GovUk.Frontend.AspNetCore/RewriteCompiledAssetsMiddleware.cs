@@ -13,13 +13,13 @@ internal partial class RewriteCompiledAssetsMiddleware
 
     private readonly RequestDelegate _next;
     private readonly IFileProvider _fileProvider;
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
     private readonly ConcurrentDictionary<(PathString PathBase, PathString Path), string> _compiledAssetCache;
 
     public RewriteCompiledAssetsMiddleware(
         RequestDelegate next,
         IFileProvider fileProvider,
-        IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+        IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         ArgumentNullException.ThrowIfNull(next);
         ArgumentNullException.ThrowIfNull(fileProvider);

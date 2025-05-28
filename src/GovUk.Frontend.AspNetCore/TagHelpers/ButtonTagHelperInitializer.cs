@@ -6,9 +6,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class ButtonTagHelperInitializer : ITagHelperInitializer<ButtonTagHelper>
 {
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
-    public ButtonTagHelperInitializer(IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+    public ButtonTagHelperInitializer(IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         ArgumentNullException.ThrowIfNull(optionsAccessor);
         _optionsAccessor = optionsAccessor;

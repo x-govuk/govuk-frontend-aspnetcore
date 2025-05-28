@@ -42,7 +42,7 @@ public class DateInputTagHelper : TagHelper
     private const string ValueAttributeName = "value";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
     private readonly DateInputParseErrorsProvider _dateInputParseErrorsProvider;
     private readonly IModelHelper _modelHelper;
     private readonly HtmlEncoder _encoder;
@@ -55,7 +55,7 @@ public class DateInputTagHelper : TagHelper
     /// </summary>
     public DateInputTagHelper(
         IComponentGenerator componentGenerator,
-        IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor,
+        IOptions<GovUkFrontendOptions> optionsAccessor,
         DateInputParseErrorsProvider dateInputParseErrorsProvider,
         HtmlEncoder encoder)
         : this(componentGenerator, optionsAccessor, dateInputParseErrorsProvider, encoder, modelHelper: new DefaultModelHelper())
@@ -68,7 +68,7 @@ public class DateInputTagHelper : TagHelper
 
     internal DateInputTagHelper(
         IComponentGenerator componentGenerator,
-        IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor,
+        IOptions<GovUkFrontendOptions> optionsAccessor,
         DateInputParseErrorsProvider dateInputParseErrorsProvider,
         HtmlEncoder encoder,
         IModelHelper modelHelper)

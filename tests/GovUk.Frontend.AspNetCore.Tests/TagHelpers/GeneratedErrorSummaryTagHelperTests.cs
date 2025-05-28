@@ -20,7 +20,7 @@ public class GeneratedErrorSummaryTagHelperTests
         bool expectErrorSummary)
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions()
+        var options = Options.Create(new GovUkFrontendOptions()
         {
 #pragma warning disable GFA0005
             PrependErrorSummaryToForms = prepentErrorSummaryToFormsOption

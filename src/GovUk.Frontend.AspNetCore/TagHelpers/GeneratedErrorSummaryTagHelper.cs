@@ -19,12 +19,12 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
     private const string PrependErrorSummaryAttributeName = "prepend-error-summary";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
     /// <summary>
     /// Creates a <see cref="GeneratedErrorSummaryTagHelper"/>.
     /// </summary>
-    public GeneratedErrorSummaryTagHelper(IComponentGenerator componentGenerator, IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+    public GeneratedErrorSummaryTagHelper(IComponentGenerator componentGenerator, IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
@@ -36,7 +36,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
     /// Whether to prepend an error summary component to this form.
     /// </summary>
     /// <remarks>
-    /// The default is set for the application in <see cref="GovUkFrontendAspNetCoreOptions.PrependErrorSummaryToForms"/>.
+    /// The default is set for the application in <see cref="GovUkFrontendOptions.PrependErrorSummaryToForms"/>.
     /// </remarks>
     [HtmlAttributeName(PrependErrorSummaryAttributeName)]
     public bool? PrependErrorSummary { get; set; }
@@ -45,7 +45,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
     /// Whether to prepend an error summary component to this form.
     /// </summary>
     /// <remarks>
-    /// The default is set for the application in <see cref="GovUkFrontendAspNetCoreOptions.PrependErrorSummaryToForms"/>.
+    /// The default is set for the application in <see cref="GovUkFrontendOptions.PrependErrorSummaryToForms"/>.
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("Use the 'prepend-error-summary' attribute instead.", DiagnosticId = DiagnosticIds.UsePrependErrorSummaryAttributeInstead)]

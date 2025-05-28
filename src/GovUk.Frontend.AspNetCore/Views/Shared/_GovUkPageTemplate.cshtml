@@ -1,12 +1,12 @@
 ﻿@using GovUk.Frontend.AspNetCore
 @using Microsoft.Extensions.Options
-@inject IOptions<GovUkFrontendAspNetCoreOptions> OptionsAccessor
+@inject IOptions<GovUkFrontendOptions> OptionsAccessor
 @addTagHelper *, GovUk.Frontend.AspNetCore
 @{
     if (ViewBag.AssetPath is null && OptionsAccessor.Value.StaticAssetsContentPath is null)
     {
         throw new InvalidOperationException(
-            $"Asset path is not set. Ensure either {nameof(GovUkFrontendAspNetCoreOptions.StaticAssetsContentPath)} on {nameof(GovUkFrontendAspNetCoreOptions)} or ViewBag.AssetPath is set.");
+            $"Asset path is not set. Ensure either {nameof(GovUkFrontendOptions.StaticAssetsContentPath)} on {nameof(GovUkFrontendOptions)} or ViewBag.AssetPath is set.");
     }
 
     var assetPath = ViewBag.AssetPath ?? Context.Request.PathBase + OptionsAccessor.Value.StaticAssetsContentPath!.Value;

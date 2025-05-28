@@ -6,11 +6,11 @@ using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore;
 
-internal class GovUkFrontendAspNetCoreStartupFilter : IStartupFilter
+internal class GovUkFrontendStartupFilter : IStartupFilter
 {
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
-    public GovUkFrontendAspNetCoreStartupFilter(IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+    public GovUkFrontendStartupFilter(IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         ArgumentNullException.ThrowIfNull(optionsAccessor);
         _optionsAccessor = optionsAccessor;
@@ -25,7 +25,7 @@ internal class GovUkFrontendAspNetCoreStartupFilter : IStartupFilter
             if (_optionsAccessor.Value.CompiledContentPath is PathString compiledContentPath)
             {
                 var fileProvider = new ManifestEmbeddedFileProvider(
-                    typeof(GovUkFrontendAspNetCoreStartupFilter).Assembly,
+                    typeof(GovUkFrontendStartupFilter).Assembly,
                     root: "Content/Compiled");
 
                 app.UseMiddleware<RewriteCompiledAssetsMiddleware>(fileProvider);
@@ -40,7 +40,7 @@ internal class GovUkFrontendAspNetCoreStartupFilter : IStartupFilter
             if (_optionsAccessor.Value.StaticAssetsContentPath is PathString assetsContentPath)
             {
                 var fileProvider = new ManifestEmbeddedFileProvider(
-                    typeof(GovUkFrontendAspNetCoreStartupFilter).Assembly,
+                    typeof(GovUkFrontendStartupFilter).Assembly,
                     root: "Content/Assets");
 
                 app.UseStaticFiles(new StaticFileOptions()

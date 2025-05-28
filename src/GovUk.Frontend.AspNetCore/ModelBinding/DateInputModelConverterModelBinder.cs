@@ -12,11 +12,11 @@ internal class DateInputModelConverterModelBinder : IModelBinder
     internal const string YearInputName = "Year";
 
     private readonly DateInputModelConverter _dateInputModelConverter;
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
     public DateInputModelConverterModelBinder(
         DateInputModelConverter dateInputModelConverter,
-        IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+        IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         ArgumentNullException.ThrowIfNull(dateInputModelConverter);
         ArgumentNullException.ThrowIfNull(optionsAccessor);

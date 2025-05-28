@@ -17,7 +17,7 @@ public class TitleTagHelperTests
         bool expectErrorInTitle)
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions()
+        var options = Options.Create(new GovUkFrontendOptions()
         {
             PrependErrorToTitle = prependErrorToTitleOption
         });

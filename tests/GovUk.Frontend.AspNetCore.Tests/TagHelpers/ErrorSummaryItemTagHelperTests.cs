@@ -38,7 +38,7 @@ public class ErrorSummaryItemTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider);
@@ -81,7 +81,7 @@ public class ErrorSummaryItemTagHelperTests
             });
         output.TagMode = TagMode.SelfClosing;
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider);
@@ -126,7 +126,7 @@ public class ErrorSummaryItemTagHelperTests
 
         var viewContext = new ViewContext();
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         viewContext.ModelState.AddModelError(nameof(Model.Field), errorMessage);
@@ -179,7 +179,7 @@ public class ErrorSummaryItemTagHelperTests
 
         var viewContext = new ViewContext();
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider)
@@ -228,7 +228,7 @@ public class ErrorSummaryItemTagHelperTests
 
         var viewContext = new ViewContext();
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         viewContext.ModelState.AddModelError(nameof(Model.Field), modelStateErrorMessage);
@@ -279,7 +279,7 @@ public class ErrorSummaryItemTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider);
@@ -326,7 +326,7 @@ public class ErrorSummaryItemTagHelperTests
 
         var viewContext = new ViewContext();
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         viewContext.ModelState.AddModelError(nameof(Model.Field), "ModelState error message");
@@ -379,7 +379,7 @@ public class ErrorSummaryItemTagHelperTests
 
         var viewContext = new ViewContext();
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         var modelName = nameof(Model.Date);
@@ -439,7 +439,7 @@ public class ErrorSummaryItemTagHelperTests
 
         var viewContext = new ViewContext();
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         viewContext.ModelState.AddModelError(nameof(Model.Field), "ModelState error message");
@@ -487,7 +487,7 @@ public class ErrorSummaryItemTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var options = Options.Create(new GovUkFrontendOptions());
         var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
 
         var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider);

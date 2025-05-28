@@ -15,13 +15,13 @@ public class PageTemplateHelper
 {
     private const string JsEnabledScript = "document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');";
 
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PageTemplateHelper"/> class.
     /// </summary>
     /// <param name="optionsAccessor">The options.</param>
-    public PageTemplateHelper(IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+    public PageTemplateHelper(IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         ArgumentNullException.ThrowIfNull(optionsAccessor);
         _optionsAccessor = optionsAccessor;
@@ -95,7 +95,7 @@ public class PageTemplateHelper
         var compiledContentPath = _optionsAccessor.Value.CompiledContentPath;
         if (compiledContentPath is null)
         {
-            throw new InvalidOperationException($"Cannot generate script imports when {nameof(GovUkFrontendAspNetCoreOptions.CompiledContentPath)} is null.");
+            throw new InvalidOperationException($"Cannot generate script imports when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
         }
 
         var htmlContentBuilder = new HtmlContentBuilder();
@@ -153,7 +153,7 @@ public class PageTemplateHelper
         var compiledContentPath = _optionsAccessor.Value.CompiledContentPath;
         if (compiledContentPath is null)
         {
-            throw new InvalidOperationException($"Cannot generate style imports when {nameof(GovUkFrontendAspNetCoreOptions.CompiledContentPath)} is null.");
+            throw new InvalidOperationException($"Cannot generate style imports when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
         }
 
         var fileName = $"govuk-frontend-{GovUkFrontendVersion}.min.css";
@@ -199,7 +199,7 @@ public class PageTemplateHelper
     {
         if (_optionsAccessor.Value.CompiledContentPath is null)
         {
-            throw new InvalidOperationException($"Cannot generate scripts when {nameof(GovUkFrontendAspNetCoreOptions.CompiledContentPath)} is null.");
+            throw new InvalidOperationException($"Cannot generate scripts when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
         }
 
         var compiledContentPath = $"{pathBase}{_optionsAccessor.Value.CompiledContentPath}";

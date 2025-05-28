@@ -29,7 +29,7 @@ public class DateInputModelBinderTests
         var converterMock = new Mock<DateInputModelConverter>();
         converterMock.Setup(mock => mock.CanConvertModelType(modelType)).Returns(true);
 
-        var gfaOptions = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var gfaOptions = Options.Create(new GovUkFrontendOptions());
 
         var modelBinder = new DateInputModelConverterModelBinder(converterMock.Object, gfaOptions);
 
@@ -68,7 +68,7 @@ public class DateInputModelBinderTests
             .Returns(new DateOnly(2020, 4, 1))
             .Verifiable();
 
-        var gfaOptions = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var gfaOptions = Options.Create(new GovUkFrontendOptions());
 
         var modelBinder = new DateInputModelConverterModelBinder(converterMock.Object, gfaOptions);
 
@@ -140,7 +140,7 @@ public class DateInputModelBinderTests
         var converterMock = new Mock<DateInputModelConverter>();
         converterMock.Setup(mock => mock.CanConvertModelType(modelType)).Returns(true);
 
-        var gfaOptions = Options.Create(new GovUkFrontendAspNetCoreOptions());
+        var gfaOptions = Options.Create(new GovUkFrontendOptions());
 
         var modelBinder = new DateInputModelConverterModelBinder(converterMock.Object, gfaOptions);
 

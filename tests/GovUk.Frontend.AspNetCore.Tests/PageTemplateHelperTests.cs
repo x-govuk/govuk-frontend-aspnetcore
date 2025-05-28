@@ -8,7 +8,7 @@ public class PageTemplateHelperTests
     public void GenerateJsEnabledScript_WithNonce_AppendsNonceToScript()
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions() { CompiledContentPath = "/govuk" });
+        var options = Options.Create(new GovUkFrontendOptions() { CompiledContentPath = "/govuk" });
         var pageTemplateHelper = new PageTemplateHelper(options);
         var nonce = "nonce123";
 
@@ -24,7 +24,7 @@ public class PageTemplateHelperTests
     public void GenerateJsEnabledScript_WithoutNonce_DoesNotHaveNonceAttribute()
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions() { CompiledContentPath = "/govuk" });
+        var options = Options.Create(new GovUkFrontendOptions() { CompiledContentPath = "/govuk" });
         var pageTemplateHelper = new PageTemplateHelper(options);
 
         // Act
@@ -39,7 +39,7 @@ public class PageTemplateHelperTests
     public void GenerateScriptImports_WithNonce_AppendsNonceToScript()
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions() { CompiledContentPath = "/govuk" });
+        var options = Options.Create(new GovUkFrontendOptions() { CompiledContentPath = "/govuk" });
         var pageTemplateHelper = new PageTemplateHelper(options);
         var nonce = "nonce123";
 
@@ -55,7 +55,7 @@ public class PageTemplateHelperTests
     public void GenerateScriptImports_WithoutNonce_DoesNotHaveNonceAttribute()
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions() { CompiledContentPath = "/govuk" });
+        var options = Options.Create(new GovUkFrontendOptions() { CompiledContentPath = "/govuk" });
         var pageTemplateHelper = new PageTemplateHelper(options);
 
         // Act
@@ -70,7 +70,7 @@ public class PageTemplateHelperTests
     public void GetCspScriptHashes()
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions() { CompiledContentPath = "/govuk" });
+        var options = Options.Create(new GovUkFrontendOptions() { CompiledContentPath = "/govuk" });
         var pageTemplateHelper = new PageTemplateHelper(options);
 
         // Act
@@ -84,7 +84,7 @@ public class PageTemplateHelperTests
     public void GetJsEnabledScriptCspHash()
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions() { CompiledContentPath = "/govuk" });
+        var options = Options.Create(new GovUkFrontendOptions() { CompiledContentPath = "/govuk" });
         var pageTemplateHelper = new PageTemplateHelper(options);
 
         // Act
@@ -98,7 +98,7 @@ public class PageTemplateHelperTests
     public void GetInitScriptCspHash()
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendAspNetCoreOptions() { CompiledContentPath = "/govuk" });
+        var options = Options.Create(new GovUkFrontendOptions() { CompiledContentPath = "/govuk" });
         var pageTemplateHelper = new PageTemplateHelper(options);
 
         // Act

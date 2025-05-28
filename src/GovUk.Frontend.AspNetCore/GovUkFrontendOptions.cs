@@ -7,12 +7,12 @@ namespace GovUk.Frontend.AspNetCore;
 /// <summary>
 /// Options for configuring GovUk.Frontend.AspNetCore.
 /// </summary>
-public class GovUkFrontendAspNetCoreOptions
+public class GovUkFrontendOptions
 {
     /// <summary>
-    /// Creates a new <see cref="GovUkFrontendAspNetCoreOptions"/>.
+    /// Creates a new <see cref="GovUkFrontendOptions"/>.
     /// </summary>
-    public GovUkFrontendAspNetCoreOptions()
+    public GovUkFrontendOptions()
     {
         AcceptMonthNamesInDateInputs = true;
         AddNovalidateAttributeToForms = true;

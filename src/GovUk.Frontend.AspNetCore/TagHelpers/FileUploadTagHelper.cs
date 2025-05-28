@@ -118,7 +118,7 @@ public class FileUploadTagHelper : TagHelper
     /// Whether to enable JavaScript enhancements for the component.
     /// </summary>
     /// <remarks>
-    /// The default is set for the application in <see cref="GovUkFrontendAspNetCoreOptions.DefaultFileUploadJavaScriptEnhancements"/>.
+    /// The default is set for the application in <see cref="GovUkFrontendOptions.DefaultFileUploadJavaScriptEnhancements"/>.
     /// </remarks>
     [HtmlAttributeName(JavaScriptEnhancementsAttributeName)]
     public bool? JavaScriptEnhancements { get; set; }

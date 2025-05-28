@@ -8,12 +8,12 @@ namespace GovUk.Frontend.AspNetCore.ModelBinding;
 /// </summary>
 public class DateInputModelBinderProvider : IModelBinderProvider
 {
-    private readonly IOptions<GovUkFrontendAspNetCoreOptions> _optionsAccessor;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DateInputModelBinderProvider"/> class.
     /// </summary>
-    public DateInputModelBinderProvider(IOptions<GovUkFrontendAspNetCoreOptions> optionsAccessor)
+    public DateInputModelBinderProvider(IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor);
 

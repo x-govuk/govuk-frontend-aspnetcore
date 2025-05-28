@@ -12,7 +12,7 @@ public class DateInputModelBinder : IModelBinder
     /// <inheritdoc/>
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
-        var optionsAccessor = bindingContext.HttpContext.RequestServices.GetRequiredService<IOptions<GovUkFrontendAspNetCoreOptions>>();
+        var optionsAccessor = bindingContext.HttpContext.RequestServices.GetRequiredService<IOptions<GovUkFrontendOptions>>();
 
         var modelType = bindingContext.ModelMetadata.UnderlyingOrModelType;
 

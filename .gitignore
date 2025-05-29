@@ -331,3 +331,5 @@ ASALocalRun/
 
 # NPM packages
 lib
+
+.DS_Store

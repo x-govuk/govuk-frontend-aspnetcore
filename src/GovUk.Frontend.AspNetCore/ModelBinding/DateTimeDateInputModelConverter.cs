@@ -2,17 +2,17 @@ namespace GovUk.Frontend.AspNetCore.ModelBinding;
 
 internal class DateTimeDateInputModelConverter : DateInputModelConverter
 {
-    public override bool CanConvertModelType(Type modelType) => modelType == typeof(DateTime);
+    public static Type ModelType => typeof(DateTime);
 
-    public override object CreateModelFromDate(Type modelType, DateOnly date) => new DateTime(date.Year, date.Month, date.Day);
-
-    public override DateOnly? GetDateFromModel(Type modelType, object model)
+    protected override object ConvertToModelCore(DateInputConvertToModelContext context)
     {
-        if (model is null)
-        {
-            return null;
-        }
+        var values = context.ItemValues;
+        return new DateTime(values.Year!.Value, values.Month!.Value, values.Day!.Value);
+    }
 
-        return DateOnly.FromDateTime((DateTime)model);
+    protected override DateInputItemValues? ConvertFromModelCore(DateInputConvertFromModelContext context)
+    {
+        var dateTime = (DateTime)context.Model;
+        return new DateInputItemValues(dateTime.Day, dateTime.Month, dateTime.Year);
     }
 }

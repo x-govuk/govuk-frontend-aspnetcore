@@ -10,7 +10,7 @@ public class DateInputErrorMessageTagHelperTests() : TagHelperTestBase(DateInput
     {
         // Arrange
         var errorContent = "Error message";
-        var errorItems = DateInputItems.Day | DateInputItems.Month;
+        var errorItems = DateInputItemTypes.Day | DateInputItemTypes.Month;
         var attributes = CreateDummyDataAttributes();
 
         var dateInputContext = new DateInputContext(haveExplicitValue: false, @for: null);

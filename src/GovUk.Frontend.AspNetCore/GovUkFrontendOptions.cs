@@ -9,6 +9,8 @@ namespace GovUk.Frontend.AspNetCore;
 /// </summary>
 public class GovUkFrontendOptions
 {
+    private readonly DateInputConverterRegistry _dateInputConverterRegistry;
+
     /// <summary>
     /// Creates a new <see cref="GovUkFrontendOptions"/>.
     /// </summary>
@@ -17,11 +19,10 @@ public class GovUkFrontendOptions
         AcceptMonthNamesInDateInputs = true;
         AddNovalidateAttributeToForms = true;
 
-        DateInputModelConverters = new List<DateInputModelConverter>()
-        {
-            new DateTimeDateInputModelConverter(),
-            new DateOnlyDateInputModelConverter()
-        };
+        _dateInputConverterRegistry = new();
+        RegisterDateInputModelConverter(DateTimeDateInputModelConverter.ModelType, new DateTimeDateInputModelConverter());
+        RegisterDateInputModelConverter(DateOnlyDateInputModelConverter.ModelType, new DateOnlyDateInputModelConverter());
+        RegisterDateInputModelConverter(TupleDateInputModelConverter.ModelType, new TupleDateInputModelConverter());
 
         ErrorSummaryGeneration = ErrorSummaryGenerationOptions.PrependToMainElement;
         PrependErrorToTitle = true;
@@ -30,7 +31,7 @@ public class GovUkFrontendOptions
     }
 
     /// <summary>
-    /// Whether to accept full and abbreviated month names in Date Input components.
+    /// Whether to accept full and abbreviated month names in date input components.
     /// </summary>
     /// <remarks>
     /// The default is <c>true</c>.
@@ -82,11 +83,6 @@ public class GovUkFrontendOptions
     public Func<HttpContext, string?>? GetCspNonceForRequest { get; set; }
 
     /// <summary>
-    /// Gets a list of <see cref="DateInputModelConverter"/> used by the application.
-    /// </summary>
-    public List<DateInputModelConverter> DateInputModelConverters { get; }
-
-    /// <summary>
     /// Whether to prepend an error summary component to forms.
     /// </summary>
     /// <remarks>
@@ -116,10 +112,30 @@ public class GovUkFrontendOptions
     public ErrorSummaryGenerationOptions ErrorSummaryGeneration { get; set; }
 
     /// <summary>
-    /// Whether to prepend &quot;Error: &quot; to the &lt;title&gt; element when ModelState is not valid.
+    /// Whether to prepend &quot;Error: &quot; to the <c>&lt;title&gt;</c> element when an error summary has been created in the current view.
     /// </summary>
     /// <remarks>
     /// The default is <c>true</c>.
     /// </remarks>
     public bool PrependErrorToTitle { get; set; }
+
+    /// <summary>
+    /// Registers a <see cref="DateInputModelConverter"/> for the specified <see cref="Type"/>.
+    /// </summary>
+    /// <param name="modelType">The <see cref="DateInputModelConverter"/>.</param>
+    /// <param name="converter">The <see cref="Type"/>.</param>
+    public void RegisterDateInputModelConverter(Type modelType, DateInputModelConverter converter)
+    {
+        ArgumentNullException.ThrowIfNull(modelType);
+        ArgumentNullException.ThrowIfNull(converter);
+
+        _dateInputConverterRegistry.RegisterConverter(modelType, converter);
+    }
+
+    internal DateInputModelConverter? FindDateInputModelConverterForType(Type modelType)
+    {
+        ArgumentNullException.ThrowIfNull(modelType);
+
+        return _dateInputConverterRegistry.FindConverter(modelType);
+    }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NodaTime;
 
 namespace Samples.DateInput;
 
@@ -20,7 +21,8 @@ public class Startup
     {
         services.AddGovUkFrontend(options =>
         {
-            options.DateInputModelConverters.Add(new LocalDateDateInputModelConverter());
+            options.RegisterDateInputModelConverter(typeof(LocalDate), new LocalDateDateInputModelConverter());
+            options.RegisterDateInputModelConverter(typeof(YearMonth), new YearMonthDateInputModelConverter());
         });
 
         services.AddRazorPages()

@@ -32,18 +32,23 @@ public class DateInputTagHelper : TagHelper
     internal const string HintTagName = "govuk-date-input-hint";
     internal const string TagName = "govuk-date-input";
 
+    private const string DefaultDayLabel = "Day";
+    private const string DefaultMonthLabel = "Month";
+    private const string DefaultYearLabel = "Year";
+
     private const string AspForAttributeName = "asp-for";
     private const string DateInputAttributesPrefix = "date-input-";
     private const string DisabledAttributeName = "disabled";
     private const string ForAttributeName = "for";
     private const string IdAttributeName = "id";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
+    private const string ItemTypesAttributeName = "item-types";
     private const string NamePrefixAttributeName = "name-prefix";
     private const string ValueAttributeName = "value";
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
-    private readonly DateInputParseErrorsProvider _dateInputParseErrorsProvider;
+    private readonly BindingResultInfoProvider _bindingResultInfoProvider;
     private readonly IModelHelper _modelHelper;
     private readonly HtmlEncoder _encoder;
 
@@ -56,31 +61,32 @@ public class DateInputTagHelper : TagHelper
     public DateInputTagHelper(
         IComponentGenerator componentGenerator,
         IOptions<GovUkFrontendOptions> optionsAccessor,
-        DateInputParseErrorsProvider dateInputParseErrorsProvider,
+        BindingResultInfoProvider bindingResultInfoProvider,
         HtmlEncoder encoder)
-        : this(componentGenerator, optionsAccessor, dateInputParseErrorsProvider, encoder, modelHelper: new DefaultModelHelper())
+        : this(componentGenerator, optionsAccessor, bindingResultInfoProvider, encoder, modelHelper: new DefaultModelHelper())
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
-        ArgumentNullException.ThrowIfNull(dateInputParseErrorsProvider);
+        ArgumentNullException.ThrowIfNull(bindingResultInfoProvider);
         ArgumentNullException.ThrowIfNull(encoder);
     }
 
     internal DateInputTagHelper(
         IComponentGenerator componentGenerator,
         IOptions<GovUkFrontendOptions> optionsAccessor,
-        DateInputParseErrorsProvider dateInputParseErrorsProvider,
+        BindingResultInfoProvider bindingResultInfoProvider,
         HtmlEncoder encoder,
         IModelHelper modelHelper)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
-        ArgumentNullException.ThrowIfNull(dateInputParseErrorsProvider);
+        ArgumentNullException.ThrowIfNull(bindingResultInfoProvider);
         ArgumentNullException.ThrowIfNull(encoder);
         ArgumentNullException.ThrowIfNull(modelHelper);
+
         _componentGenerator = componentGenerator;
         _optionsAccessor = optionsAccessor;
-        _dateInputParseErrorsProvider = dateInputParseErrorsProvider;
+        _bindingResultInfoProvider = bindingResultInfoProvider;
         _encoder = encoder;
         _modelHelper = modelHelper;
     }
@@ -136,6 +142,16 @@ public class DateInputTagHelper : TagHelper
     public bool? IgnoreModelStateErrors { get; set; }
 
     /// <summary>
+    /// The <see cref="DateInputItemTypes"/> that this date input contains.
+    /// </summary>
+    /// <remarks>
+    /// This is required when creating a partial date input (e.g. a day and month only)
+    /// and the value is a <see cref="T:ValueTuple&lt;int, int&gt;"/>.
+    /// </remarks>
+    [HtmlAttributeName(ItemTypesAttributeName)]
+    public DateInputItemTypes? ItemTypes { get; set; }
+
+    /// <summary>
     /// Optional prefix for the <c>name</c> attribute on each item's <c>input</c>.
     /// </summary>
     [HtmlAttributeName(NamePrefixAttributeName)]
@@ -180,7 +196,8 @@ public class DateInputTagHelper : TagHelper
 
         var id = ResolveId();
         var namePrefix = ResolveNamePrefix();
-        var value = ResolveValue();
+        var itemTypes = ResolveItemTypes();
+        var value = ResolveValue(itemTypes);
         var hintOptions = dateInputContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = dateInputContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
@@ -196,31 +213,55 @@ public class DateInputTagHelper : TagHelper
 
         var errorItems = GetFieldsWithErrors(dateInputContext);
 
-        var day = CreateDateInputItem(
-            getComponentFromValue: date => date?.Day.ToString(),
-            defaultLabel: ComponentGenerator.DateInputDefaultDayLabel,
-            defaultName: DateInputModelConverterModelBinder.DayInputName,
-            defaultClass: "govuk-input--width-2",
-            DateInputItems.Day,
-            contextItem: dateInputContext.Items.GetValueOrDefault(DateInputItemType.Day));
+        List<DateInputOptionsItem> items = new();
 
-        var month = CreateDateInputItem(
-            getComponentFromValue: date => date?.Month.ToString(),
-            defaultLabel: ComponentGenerator.DateInputDefaultMonthLabel,
-            defaultName: DateInputModelConverterModelBinder.MonthInputName,
-            defaultClass: "govuk-input--width-2",
-            DateInputItems.Month,
-            contextItem: dateInputContext.Items.GetValueOrDefault(DateInputItemType.Month));
+        DateInputContextItem? GetContextItem(DateInputItemTypes itemType)
+        {
+            if (dateInputContext.Items.TryGetValue(itemType, out var contextItem) && !itemTypes.HasFlag(itemType))
+            {
+                throw new InvalidOperationException(
+                    $"Cannot declare a <{contextItem.TagName}> when the parent's {nameof(DateInputItemTypes)} does not contain {itemType}.");
+            }
 
-        var year = CreateDateInputItem(
-            getComponentFromValue: date => date?.Year.ToString(),
-            defaultLabel: ComponentGenerator.DateInputDefaultYearLabel,
-            defaultName: DateInputModelConverterModelBinder.YearInputName,
-            defaultClass: "govuk-input--width-4",
-            DateInputItems.Year,
-            contextItem: dateInputContext.Items.GetValueOrDefault(DateInputItemType.Year));
+            return contextItem;
+        }
 
-        IReadOnlyCollection<DateInputOptionsItem> items = [day, month, year];
+        var dayContextItem = GetContextItem(DateInputItemTypes.Day);
+        var monthContextItem = GetContextItem(DateInputItemTypes.Month);
+        var yearContextItem = GetContextItem(DateInputItemTypes.Year);
+
+        if (itemTypes.HasFlag(DateInputItemTypes.Day))
+        {
+            items.Add(CreateDateInputItem(
+                getComponentFromValue: date => date?.Day.ToString(),
+                defaultLabel: DefaultDayLabel,
+                defaultName: DateInputModelBinder.DayInputName,
+                defaultClass: "govuk-input--width-2",
+                DateInputItemTypes.Day,
+                dayContextItem));
+        }
+
+        if (itemTypes.HasFlag(DateInputItemTypes.Month))
+        {
+            items.Add(CreateDateInputItem(
+                getComponentFromValue: date => date?.Month.ToString(),
+                defaultLabel: DefaultMonthLabel,
+                defaultName: DateInputModelBinder.MonthInputName,
+                defaultClass: "govuk-input--width-2",
+                DateInputItemTypes.Month,
+                monthContextItem));
+        }
+
+        if (itemTypes.HasFlag(DateInputItemTypes.Year))
+        {
+            items.Add(CreateDateInputItem(
+                getComponentFromValue: date => date?.Year.ToString(),
+                defaultLabel: DefaultYearLabel,
+                defaultName: DateInputModelBinder.YearInputName,
+                defaultClass: "govuk-input--width-4",
+                DateInputItemTypes.Year,
+                yearContextItem));
+        }
 
         var attributes = new AttributeCollection(DateInputAttributes);
         attributes.Remove("class", out var classes);
@@ -255,11 +296,11 @@ public class DateInputTagHelper : TagHelper
         }
 
         DateInputOptionsItem CreateDateInputItem(
-            Func<DateOnly?, string?> getComponentFromValue,
+            Func<DateInputItemValues?, string?> getComponentFromValue,
             string defaultLabel,
             string defaultName,
             string defaultClass,
-            DateInputItems errorSource,
+            DateInputItemTypes errorSource,
             DateInputContextItem? contextItem)
         {
             var haveError = errorMessageOptions is not null;
@@ -294,7 +335,7 @@ public class DateInputTagHelper : TagHelper
                 resolvedAttributes.AddBoolean("disabled");
             }
 
-            return new DateInputOptionsItem
+            return new DateInputOptionsItem()
             {
                 Id = itemId,
                 Name = itemName,
@@ -341,61 +382,73 @@ public class DateInputTagHelper : TagHelper
         return NamePrefix ?? (resolvedName ?? string.Empty);
     }
 
-    private DateOnly? ResolveValue()
+    private DateInputItemTypes ResolveItemTypes()
     {
-        return _valueSpecified ? GetValueAsDate() : For is not null ? GetValueFromModel() : null;
-
-        static Exception GetInvalidDateTypeException(Type modelType) =>
-            new NotSupportedException($"Cannot convert '{modelType.FullName}' to a date.");
-
-        DateOnly? GetValueAsDate()
+        if (ItemTypes is not null)
         {
-            if (_value is null)
-            {
-                return null;
-            }
-
-            var valueType = _value.GetType();
-            var dateInputModelConverters = _optionsAccessor.Value.DateInputModelConverters;
-
-            foreach (var converter in dateInputModelConverters)
-            {
-                if (converter.CanConvertModelType(valueType))
-                {
-                    return converter.GetDateFromModel(valueType, _value);
-                }
-            }
-
-            throw GetInvalidDateTypeException(valueType);
+            return ItemTypes.Value;
         }
 
-        DateOnly? GetValueFromModel()
+        if (For?.Metadata.TryGetDateInputModelMetadata(out var dateInputModelMetadata) == true &&
+            dateInputModelMetadata.ItemTypes is DateInputItemTypes metadataTypes)
         {
-            Debug.Assert(For is not null);
+            return metadataTypes;
+        }
 
-            var modelValue = For!.Model;
-            var underlyingModelType = Nullable.GetUnderlyingType(For.ModelExplorer.ModelType) ?? For.ModelExplorer.ModelType;
+        var valueType = (_valueSpecified ? Value?.GetType() : null) ?? For?.Metadata.ModelType;
+        if (valueType is not null)
+        {
+            valueType = Nullable.GetUnderlyingType(valueType) ?? valueType;
+        }
 
-            if (modelValue is null)
+        if (valueType is not null &&
+            _optionsAccessor.Value.FindDateInputModelConverterForType(valueType)?.DefaultItemTypes is DateInputItemTypes converterDefaultTypes)
+        {
+            return converterDefaultTypes;
+        }
+
+        return DateInputItemTypes.DayMonthAndYear;
+    }
+
+    private DateInputItemValues? ResolveValue(DateInputItemTypes itemTypes)
+    {
+        return _valueSpecified ? GetValueAsDate(_value?.GetType(), _value) :
+            For is not null ? GetValueAsDate(For.ModelExplorer.ModelType, For!.Model) :
+            null;
+
+        DateInputItemValues? GetValueAsDate(Type? valueType, object? value)
+        {
+            if (valueType is null)
             {
                 return null;
             }
 
-            var dateInputModelConverters = _optionsAccessor.Value.DateInputModelConverters;
+            var underlyingType = Nullable.GetUnderlyingType(valueType) ?? valueType;
+            var converter = _optionsAccessor.Value.FindDateInputModelConverterForType(underlyingType);
 
-            foreach (var converter in dateInputModelConverters)
+            if (!DateInputModelBinder.SupportedItemTypes.Contains(itemTypes))
             {
-                if (converter.CanConvertModelType(underlyingModelType))
-                {
-                    return converter.GetDateFromModel(underlyingModelType, modelValue);
-                }
+                throw new InvalidOperationException($"{nameof(DateInputItemTypes)} combination is not supported.");
             }
 
-            throw GetInvalidDateTypeException(underlyingModelType);
+            if (value is null)
+            {
+                return null;
+            }
+
+            Debug.Assert(valueType is not null);
+
+            if (converter is not null)
+            {
+                return converter.ConvertFromModel(
+                    new DateInputConvertFromModelContext(underlyingType, itemTypes, value));
+            }
+
+            throw new NotSupportedException($"Cannot convert '{underlyingType.FullName}' to a date.");
         }
     }
 
-    private DateInputItems GetFieldsWithErrors(DateInputContext dateInputContext)
+    private DateInputItemTypes GetFieldsWithErrors(DateInputContext dateInputContext)
     {
         if (dateInputContext.ErrorFields is not null)
         {
@@ -404,7 +457,7 @@ public class DateInputTagHelper : TagHelper
 
         if (For is null)
         {
-            return DateInputItems.All;
+            return DateInputItemTypes.All;
         }
 
         Debug.Assert(For is not null);
@@ -412,12 +465,11 @@ public class DateInputTagHelper : TagHelper
 
         var fullName = _modelHelper.GetFullHtmlFieldName(ViewContext, For.Name);
 
-        if (ViewContext.ModelState.TryGetValue(fullName, out var modelState) &&
-            _dateInputParseErrorsProvider.TryGetErrorsForModel(modelState, out var parseErrors))
+        if (_bindingResultInfoProvider.TryGetDateInputParseErrorsForModel(fullName, out var parseErrors))
         {
-            return parseErrors.GetFieldsWithErrors();
+            return parseErrors.GetItemsWithError();
         }
 
-        return DateInputItems.All;
+        return DateInputItemTypes.All;
     }
 }

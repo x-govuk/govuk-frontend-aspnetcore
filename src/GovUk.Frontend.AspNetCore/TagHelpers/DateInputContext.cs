@@ -3,22 +3,15 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal enum DateInputItemType
-{
-    Day = 0,
-    Month = 1,
-    Year = 2
-}
-
 internal class DateInputContext : FormGroupContext3
 {
     private bool _fieldsetIsOpen;
-    private readonly SortedDictionary<DateInputItemType, DateInputContextItem> _items;
+    private readonly SortedDictionary<DateInputItemTypes, DateInputContextItem> _items;
     private readonly bool _haveValue;
 
     public DateInputContext(bool haveExplicitValue, ModelExpression? @for)
     {
-        _items = new SortedDictionary<DateInputItemType, DateInputContextItem>();
+        _items = new SortedDictionary<DateInputItemTypes, DateInputContextItem>();
         _haveValue = haveExplicitValue;
         For = @for;
     }
@@ -27,9 +20,9 @@ internal class DateInputContext : FormGroupContext3
 
     public DateInputFieldsetContext? Fieldset { get; private set; }
 
-    public IReadOnlyDictionary<DateInputItemType, DateInputContextItem> Items => _items;
+    public IReadOnlyDictionary<DateInputItemTypes, DateInputContextItem> Items => _items;
 
-    public DateInputItems? ErrorFields { get; private set; }
+    public DateInputItemTypes? ErrorFields { get; private set; }
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => [DateInputTagHelper.ErrorMessageTagName];
 
@@ -94,7 +87,7 @@ internal class DateInputContext : FormGroupContext3
     }
 
     public void SetErrorMessage(
-        DateInputItems? errorFields,
+        DateInputItemTypes? errorFields,
         TemplateString? visuallyHiddenText,
         AttributeCollection attributes,
         TemplateString? html,
@@ -118,10 +111,10 @@ internal class DateInputContext : FormGroupContext3
 
     public override void SetErrorMessage(TemplateString? visuallyHiddenText, AttributeCollection attributes, TemplateString? html, string tagName)
     {
-        throw new NotSupportedException($"Use the overload that takes a {nameof(DateInputItems)} argument too.");
+        throw new NotSupportedException($"Use the overload that takes a {nameof(DateInputItemTypes)} argument too.");
     }
 
-    public void SetItem(DateInputItemType itemType, DateInputContextItem item)
+    public void SetItem(DateInputItemTypes itemType, DateInputContextItem item)
     {
         ArgumentNullException.ThrowIfNull(itemType);
         ArgumentNullException.ThrowIfNull(item);

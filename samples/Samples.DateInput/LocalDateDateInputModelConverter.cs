@@ -1,4 +1,3 @@
-using System;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using NodaTime;
 
@@ -6,19 +5,14 @@ namespace Samples.DateInput;
 
 public class LocalDateDateInputModelConverter : DateInputModelConverter
 {
-    public override bool CanConvertModelType(Type modelType) => modelType == typeof(LocalDate);
-
-    public override object CreateModelFromDate(Type modelType, DateOnly date)
+    protected override object ConvertToModelCore(DateInputConvertToModelContext context)
     {
-        return new LocalDate(date.Year, date.Month, date.Day);
+        return new LocalDate(context.ItemValues.Year!.Value, context.ItemValues.Month!.Value, context.ItemValues.Day!.Value);
     }
 
-    public override DateOnly? GetDateFromModel(Type modelType, object model)
+    protected override DateInputItemValues? ConvertFromModelCore(DateInputConvertFromModelContext context)
     {
-        var localDate = (LocalDate?)model;
-
-        return localDate.HasValue ?
-            new DateOnly(localDate.Value.Year, localDate.Value.Month, localDate.Value.Day) :
-            null;
+        var localDate = (LocalDate)context.Model;
+        return new DateInputItemValues(localDate.Day, localDate.Month, localDate.Year);
     }
 }

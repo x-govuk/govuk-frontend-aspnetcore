@@ -21,7 +21,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
 
         // Initial values should come from For property
         await page.GotoAsync("/DateInputTests/ForDate");
-        await AssertFields(page, "1", "4", "2020");
+        await AssertFieldsForCompleteDate(page, "1", "4", "2020");
 
         // Change the values and POST them, including some invalid values
         var day = "x";
@@ -35,7 +35,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
         await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
 
         // Verify POSTed values have been round-tripped, including the invalid values
-        await AssertFields(page, day, month, year, expectDayToHaveError: true, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Date of birth must be a real date");
+        await AssertFieldsForCompleteDate(page, day, month, year, expectDayToHaveError: true, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Date of birth must be a real date");
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
 
         // Initial values should come from For property
         await page.GotoAsync("/DateInputTests/ForCustomDate");
-        await AssertFields(page, "1", "4", "2020");
+        await AssertFieldsForCompleteDate(page, "1", "4", "2020");
 
         // Change the values and POST them, including some invalid values
         var day = "x";
@@ -59,7 +59,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
         await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
 
         // Verify POSTed values have been round-tripped, including the invalid values
-        await AssertFields(page, day, month, year, expectDayToHaveError: true, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Date of birth must be a real date");
+        await AssertFieldsForCompleteDate(page, day, month, year, expectDayToHaveError: true, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Date of birth must be a real date");
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
 
         // Initial values should come from For property
         await page.GotoAsync("/DateInputTests/ValueDate");
-        await AssertFields(page, "1", "4", "2020");
+        await AssertFieldsForCompleteDate(page, "1", "4", "2020");
 
         // Change the values and POST them
         var day = "3";
@@ -83,7 +83,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
         await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
 
         // Verify POSTed values have been round-tripped
-        await AssertFields(page, day, month, year);
+        await AssertFieldsForCompleteDate(page, day, month, year);
     }
 
     [Fact]
@@ -93,7 +93,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
 
         // Initial values should come from For property
         await page.GotoAsync("/DateInputTests/ValueCustomDate");
-        await AssertFields(page, "1", "4", "2020");
+        await AssertFieldsForCompleteDate(page, "1", "4", "2020");
 
         // Change the values and POST them
         var day = "3";
@@ -107,7 +107,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
         await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
 
         // Verify POSTed values have been round-tripped
-        await AssertFields(page, day, month, year);
+        await AssertFieldsForCompleteDate(page, day, month, year);
     }
 
     [Fact]
@@ -117,7 +117,7 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
 
         // Initial values should come from item Value properties
         await page.GotoAsync("/DateInputTests/ItemValues");
-        await AssertFields(page, "1", "4", "2020");
+        await AssertFieldsForCompleteDate(page, "1", "4", "2020");
 
         // Change the values and POST them
         var day = "3";
@@ -131,10 +131,122 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
         await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
 
         // Verify POSTed values have been round-tripped
-        await AssertFields(page, day, month, year);
+        await AssertFieldsForCompleteDate(page, day, month, year);
     }
 
-    private async Task AssertFields(
+    //...
+
+    [Fact]
+    public async Task ForDatePartsProperty()
+    {
+        var page = await Browser.NewPageAsync(new BrowserNewPageOptions() { BaseURL = ServerFixture.BaseUrl });
+
+        // Initial values should come from For property
+        await page.GotoAsync("/DateInputTests/ForDateParts");
+        await AssertFieldsForMonthAndYearOnly(page, "4", "2020");
+
+        // Change the values and POST them, including some invalid values
+        var month = "y";
+        var year = "2022";
+
+        await page.FillAsync("[name='MonthAndYear.Month']", month);
+        await page.FillAsync("[name='MonthAndYear.Year']", year);
+
+        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+
+        // Verify POSTed values have been round-tripped, including the invalid values
+        await AssertFieldsForMonthAndYearOnly(page, month, year, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Month of birth must be a real date");
+    }
+
+    [Fact]
+    public async Task ForCustomDatePartsProperty()
+    {
+        var page = await Browser.NewPageAsync(new BrowserNewPageOptions() { BaseURL = ServerFixture.BaseUrl });
+
+        // Initial values should come from For property
+        await page.GotoAsync("/DateInputTests/ForCustomDateParts");
+        await AssertFieldsForMonthAndYearOnly(page, "4", "2020");
+
+        // Change the values and POST them, including some invalid values
+        var month = "y";
+        var year = "2022";
+
+        await page.FillAsync("[name='CustomMonthAndYear.Month']", month);
+        await page.FillAsync("[name='CustomMonthAndYear.Year']", year);
+
+        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+
+        // Verify POSTed values have been round-tripped, including the invalid values
+        await AssertFieldsForMonthAndYearOnly(page, month, year, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Month of birth must be a real date");
+    }
+
+    [Fact]
+    public async Task ValueDatePartsProperty()
+    {
+        var page = await Browser.NewPageAsync(new BrowserNewPageOptions() { BaseURL = ServerFixture.BaseUrl });
+
+        // Initial values should come from For property
+        await page.GotoAsync("/DateInputTests/ValueDateParts");
+        await AssertFieldsForMonthAndYearOnly(page, "4", "2020");
+
+        // Change the values and POST them
+        var month = "4";
+        var year = "2022";
+
+        await page.FillAsync("[name='MonthAndYear.Month']", month);
+        await page.FillAsync("[name='MonthAndYear.Year']", year);
+
+        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+
+        // Verify POSTed values have been round-tripped
+        await AssertFieldsForMonthAndYearOnly(page, month, year);
+    }
+
+    [Fact]
+    public async Task ValueCustomDatePartsProperty()
+    {
+        var page = await Browser.NewPageAsync(new BrowserNewPageOptions() { BaseURL = ServerFixture.BaseUrl });
+
+        // Initial values should come from For property
+        await page.GotoAsync("/DateInputTests/ValueCustomDateParts");
+        await AssertFieldsForMonthAndYearOnly(page, "4", "2020");
+
+        // Change the values and POST them
+        var month = "4";
+        var year = "2022";
+
+        await page.FillAsync("[name='CustomMonthAndYear.Month']", month);
+        await page.FillAsync("[name='CustomMonthAndYear.Year']", year);
+
+        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+
+        // Verify POSTed values have been round-tripped
+        await AssertFieldsForMonthAndYearOnly(page, month, year);
+    }
+
+    [Fact]
+    public async Task IndividualItemValuesForParts()
+    {
+        var page = await Browser.NewPageAsync(new BrowserNewPageOptions() { BaseURL = ServerFixture.BaseUrl });
+
+        // Initial values should come from item Value properties
+        await page.GotoAsync("/DateInputTests/ItemValuesForParts");
+        await AssertFieldsForMonthAndYearOnly(page, "4", "2020");
+
+        // Change the values and POST them
+        var month = "4";
+        var year = "2022";
+
+        await page.FillAsync("[name='MonthAndYear.Month']", month);
+        await page.FillAsync("[name='MonthAndYear.Year']", year);
+
+        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+
+        // Verify POSTed values have been round-tripped
+        await AssertFieldsForMonthAndYearOnly(page, month, year);
+    }
+
+    private async Task AssertFieldsForCompleteDate(
         IPage page,
         string expectedDay,
         string expectedMonth,
@@ -154,28 +266,54 @@ public class DateInputTests : IClassFixture<DateInputTestsFixture>
 
         if (expectedErrorMessage is not null)
         {
-            var error = (await page.TextContentAsync(".govuk-error-message"))?.Trim().TrimStart("Error: ".ToCharArray());
-            Assert.Equal(expectedErrorMessage, error);
-
-            var errorSummaryError = (await page.TextContentAsync(".govuk-error-summary__list>li>a"))?.Trim();
-            Assert.Equal(expectedErrorMessage, errorSummaryError);
+            await AssertErrorMessage(page, expectedErrorMessage);
         }
+    }
 
-        static async Task AssertInput(IElementHandle input, string expectedValue, bool? expectError)
+    private async Task AssertFieldsForMonthAndYearOnly(
+        IPage page,
+        string expectedMonth,
+        string expectedYear,
+        string? expectedErrorMessage = null,
+        bool? expectMonthToHaveError = null,
+        bool? expectYearToHaveError = null)
+    {
+        var inputs = await page.QuerySelectorAllAsync("input[type='text']");
+
+        await Assert.CollectionAsync(
+            inputs,
+            input => AssertInput(input, expectedMonth, expectMonthToHaveError),
+            input => AssertInput(input, expectedYear, expectYearToHaveError));
+
+        if (expectedErrorMessage is not null)
         {
-            var value = await input.GetAttributeAsync("value");
-            Assert.Equal(expectedValue, value);
+            await AssertErrorMessage(page, expectedErrorMessage);
+        }
+    }
 
-            var classes = await input.GetClassListAsync();
+    private async Task AssertErrorMessage(IPage page, string expectedErrorMessage)
+    {
+        var error = (await page.TextContentAsync(".govuk-error-message"))?.Trim().TrimStart("Error: ".ToCharArray());
+        Assert.Equal(expectedErrorMessage, error);
 
-            if (expectError == true)
-            {
-                Assert.Contains("govuk-input--error", classes);
-            }
-            else if (expectError == false)
-            {
-                Assert.DoesNotContain("govuk-input--error", classes);
-            }
+        var errorSummaryError = (await page.TextContentAsync(".govuk-error-summary__list>li>a"))?.Trim();
+        Assert.Equal(expectedErrorMessage, errorSummaryError);
+    }
+
+    private static async Task AssertInput(IElementHandle input, string expectedValue, bool? expectError)
+    {
+        var value = await input.GetAttributeAsync("value");
+        Assert.Equal(expectedValue, value);
+
+        var classes = await input.GetClassListAsync();
+
+        if (expectError == true)
+        {
+            Assert.Contains("govuk-input--error", classes);
+        }
+        else if (expectError == false)
+        {
+            Assert.DoesNotContain("govuk-input--error", classes);
         }
     }
 }
@@ -191,7 +329,11 @@ public class DateInputTestsFixture : ServerFixture
 
     protected override void ConfigureServices(IServiceCollection services)
     {
-        services.AddGovUkFrontend(options => options.DateInputModelConverters.Add(new CustomDateTypeConverter()));
+        services.AddGovUkFrontend(options =>
+        {
+            options.RegisterDateInputModelConverter(typeof(CustomDateType), new CustomDateTypeConverter());
+            options.RegisterDateInputModelConverter(typeof(MonthAndYear), new MonthAndYearConverter());
+        });
 
         services
             .AddMvc()
@@ -238,6 +380,40 @@ public class DateInputsTestController : Controller
 
     [HttpPost("ItemValues")]
     public IActionResult PostItemValues(DateInputsTestsModel model) => View("ItemValues", model);
+
+    [HttpGet("ForDateParts")]
+    public IActionResult GetForDateParts() => View("ForDateParts", new DateInputsTestsModel() { MonthAndYear = new(4, 2020) });
+
+    [HttpPost("ForDateParts")]
+    public IActionResult PostForDateParts(DateInputsTestsModel model) => View("ForDateParts", model);
+
+    [HttpGet("ValueDateParts")]
+    public IActionResult GetValueDateParts() => View("ValueDateParts", new DateInputsTestsModel() { MonthAndYear = new(4, 2020) });
+
+    [HttpPost("ValueDateParts")]
+    public IActionResult PostValueDateParts(DateInputsTestsModel model) => View("ValueDateParts", model);
+
+    [HttpGet("ForCustomDateParts")]
+    public IActionResult GetForCustomDateParts() => View(
+        "ForCustomDateParts",
+        new DateInputsTestsModel() { CustomMonthAndYear = new MonthAndYear(4, 2020) });
+
+    [HttpPost("ForCustomDateParts")]
+    public IActionResult PostForCustomDateParts(DateInputsTestsModel model) => View("ForCustomDateParts", model);
+
+    [HttpGet("ValueCustomDateParts")]
+    public IActionResult GetValueCustomDateParts() => View(
+        "ValueCustomDateParts",
+        new DateInputsTestsModel() { CustomMonthAndYear = new MonthAndYear(4, 2020) });
+
+    [HttpPost("ValueCustomDateParts")]
+    public IActionResult PostValueCustomDateParts(DateInputsTestsModel model) => View("ValueCustomDateParts", model);
+
+    [HttpGet("ItemValuesForParts")]
+    public IActionResult GetItemValuesForParts() => View("ItemValuesForParts", new DateInputsTestsModel() { MonthAndYear = new(4, 2020) });
+
+    [HttpPost("ItemValuesForParts")]
+    public IActionResult PostItemValuesForParts(DateInputsTestsModel model) => View("ItemValuesForParts", model);
 }
 
 public class DateInputsTestsModel
@@ -249,6 +425,15 @@ public class DateInputsTestsModel
     [Display(Name = "Date of birth")]
     [Required(ErrorMessage = "Enter your date of birth")]
     public CustomDateType? CustomDate { get; set; }
+
+    [Display(Name = "Month of birth")]
+    [Required(ErrorMessage = "Enter your month of birth")]
+    [DateInput(DateInputItemTypes.MonthAndYear)]
+    public (int, int)? MonthAndYear { get; set; }
+
+    [Display(Name = "Month of birth")]
+    [Required(ErrorMessage = "Enter your month of birth")]
+    public MonthAndYear? CustomMonthAndYear { get; set; }
 }
 
 public class CustomDateType
@@ -267,18 +452,30 @@ public class CustomDateType
 
 public class CustomDateTypeConverter : DateInputModelConverter
 {
-    public override bool CanConvertModelType(Type modelType) => modelType == typeof(CustomDateType);
+    protected override object ConvertToModelCore(DateInputConvertToModelContext context) =>
+        new CustomDateType(context.ItemValues.Year!.Value, context.ItemValues.Month!.Value, context.ItemValues.Day!.Value);
 
-    public override object CreateModelFromDate(Type modelType, DateOnly date) => new CustomDateType(date.Year, date.Month, date.Day);
-
-    public override DateOnly? GetDateFromModel(Type modelType, object model)
+    protected override DateInputItemValues? ConvertFromModelCore(DateInputConvertFromModelContext context)
     {
-        if (model is null)
-        {
-            return null;
-        }
+        var cdt = (CustomDateType)context.Model;
+        return new DateInputItemValues(cdt.D, cdt.M, cdt.Y);
+    }
+}
 
-        var cdt = (CustomDateType)model;
-        return new DateOnly(cdt.Y, cdt.M, cdt.D);
+public record struct MonthAndYear(int Month, int Year);
+
+public class MonthAndYearConverter : DateInputModelConverter
+{
+    public override DateInputItemTypes? DefaultItemTypes => DateInputItemTypes.MonthAndYear;
+
+    protected override object ConvertToModelCore(DateInputConvertToModelContext context)
+    {
+        return new MonthAndYear(context.ItemValues.Month!.Value, context.ItemValues.Year!.Value);
+    }
+
+    protected override DateInputItemValues? ConvertFromModelCore(DateInputConvertFromModelContext context)
+    {
+        var monthAndYear = (MonthAndYear)context.Model;
+        return new DateInputItemValues(Day: null, monthAndYear.Month, monthAndYear.Year);
     }
 }

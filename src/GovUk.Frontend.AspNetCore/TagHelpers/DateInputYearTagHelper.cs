@@ -17,7 +17,7 @@ public class DateInputYearTagHelper : DateInputItemTagHelperBase
     /// <summary>
     /// Creates a <see cref="DateInputYearTagHelper"/>.
     /// </summary>
-    public DateInputYearTagHelper() : base(DateInputItemType.Year, labelTagName: DateInputYearLabelTagHelper.TagName)
+    public DateInputYearTagHelper() : base(DateInputItemTypes.Year, labelTagName: DateInputYearLabelTagHelper.TagName)
     {
     }
 }

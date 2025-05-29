@@ -17,7 +17,7 @@ public class DateInputMonthTagHelper : DateInputItemTagHelperBase
     /// <summary>
     /// Creates a <see cref="DateInputMonthTagHelper"/>.
     /// </summary>
-    public DateInputMonthTagHelper() : base(DateInputItemType.Month, labelTagName: DateInputMonthLabelTagHelper.TagName)
+    public DateInputMonthTagHelper() : base(DateInputItemTypes.Month, labelTagName: DateInputMonthLabelTagHelper.TagName)
     {
     }
 }

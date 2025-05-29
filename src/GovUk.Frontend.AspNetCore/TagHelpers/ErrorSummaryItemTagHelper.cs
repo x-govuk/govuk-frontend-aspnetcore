@@ -24,7 +24,7 @@ public class ErrorSummaryItemTagHelper : TagHelper
     private const string LinkAttributesPrefix = "link-";
 
     private readonly GovUkFrontendOptions _options;
-    private readonly DateInputParseErrorsProvider _dateInputParseErrorsProvider;
+    private readonly BindingResultInfoProvider _parseErrorsProvider;
     private readonly IModelHelper _modelHelper;
 
     /// <summary>
@@ -32,18 +32,18 @@ public class ErrorSummaryItemTagHelper : TagHelper
     /// </summary>
     public ErrorSummaryItemTagHelper(
         IOptions<GovUkFrontendOptions> optionsAccessor,
-        DateInputParseErrorsProvider dateInputParseErrorsProvider)
-        : this(optionsAccessor, dateInputParseErrorsProvider, modelHelper: null)
+        BindingResultInfoProvider bindingResultInfoProvider)
+        : this(optionsAccessor, bindingResultInfoProvider, modelHelper: null)
     {
     }
 
     internal ErrorSummaryItemTagHelper(
         IOptions<GovUkFrontendOptions> optionsAccessor,
-        DateInputParseErrorsProvider dateInputParseErrorsProvider,
+        BindingResultInfoProvider bindingResultInfoProvider,
         IModelHelper? modelHelper = null)
     {
         _options = Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor).Value;
-        _dateInputParseErrorsProvider = Guard.ArgumentNotNull(nameof(dateInputParseErrorsProvider), dateInputParseErrorsProvider);
+        _parseErrorsProvider = Guard.ArgumentNotNull(nameof(bindingResultInfoProvider), bindingResultInfoProvider);
         _modelHelper = modelHelper ?? new DefaultModelHelper();
     }
 
@@ -143,32 +143,31 @@ public class ErrorSummaryItemTagHelper : TagHelper
 
             if (IsModelExpressionForDate())
             {
-                var dateInputErrorComponents = DateInputItems.All;
+                var dateInputErrorItems = DateInputItemTypes.All;
 
                 var fullName = _modelHelper.GetFullHtmlFieldName(ViewContext!, For.Name);
 
-                if (ViewContext!.ModelState.TryGetValue(fullName, out var modelState) &&
-                    _dateInputParseErrorsProvider.TryGetErrorsForModel(modelState, out var parseErrors))
+                if (_parseErrorsProvider.TryGetDateInputParseErrorsForModel(fullName, out var parseErrors))
                 {
-                    dateInputErrorComponents = parseErrors.GetFieldsWithErrors();
+                    dateInputErrorItems = parseErrors.GetItemsWithError();
                 }
 
-                Debug.Assert(dateInputErrorComponents != DateInputItems.None);
+                Debug.Assert(dateInputErrorItems != DateInputItemTypes.None);
 
-                if (dateInputErrorComponents.HasFlag(DateInputItems.Day))
+                if (dateInputErrorItems.HasFlag(DateInputItemTypes.Day))
                 {
                     errorFieldId = CreateIdFromName(
-                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelConverterModelBinder.DayInputName));
+                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.DayInputName));
                 }
-                else if (dateInputErrorComponents.HasFlag(DateInputItems.Month))
+                else if (dateInputErrorItems.HasFlag(DateInputItemTypes.Month))
                 {
                     errorFieldId = CreateIdFromName(
-                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelConverterModelBinder.MonthInputName));
+                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.MonthInputName));
                 }
                 else
                 {
                     errorFieldId = CreateIdFromName(
-                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelConverterModelBinder.YearInputName));
+                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.YearInputName));
                 }
             }
 
@@ -189,7 +188,7 @@ public class ErrorSummaryItemTagHelper : TagHelper
             Debug.Assert(For is not null);
 
             var modelType = Nullable.GetUnderlyingType(For!.Metadata.ModelType) ?? For!.Metadata.ModelType;
-            return _options.DateInputModelConverters.Any(c => c.CanConvertModelType(modelType));
+            return _options.FindDateInputModelConverterForType(modelType) is not null;
         }
     }
 }

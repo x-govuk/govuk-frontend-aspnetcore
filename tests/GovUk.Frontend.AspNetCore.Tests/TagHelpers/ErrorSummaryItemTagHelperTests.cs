@@ -39,9 +39,9 @@ public class ErrorSummaryItemTagHelperTests
             });
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider);
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -82,9 +82,9 @@ public class ErrorSummaryItemTagHelperTests
         output.TagMode = TagMode.SelfClosing;
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider);
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
@@ -127,11 +127,11 @@ public class ErrorSummaryItemTagHelperTests
         var viewContext = new ViewContext();
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
         viewContext.ModelState.AddModelError(nameof(Model.Field), errorMessage);
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider)
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider)
         {
             For = new ModelExpression(nameof(Model.Field), modelExplorer),
             ViewContext = viewContext
@@ -180,9 +180,9 @@ public class ErrorSummaryItemTagHelperTests
         var viewContext = new ViewContext();
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider)
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider)
         {
             For = new ModelExpression(nameof(Model.Field), modelExplorer),
             ViewContext = viewContext
@@ -229,11 +229,11 @@ public class ErrorSummaryItemTagHelperTests
         var viewContext = new ViewContext();
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
         viewContext.ModelState.AddModelError(nameof(Model.Field), modelStateErrorMessage);
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider)
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider)
         {
             For = new ModelExpression(nameof(Model.Field), modelExplorer),
             ViewContext = viewContext
@@ -280,9 +280,9 @@ public class ErrorSummaryItemTagHelperTests
             });
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider);
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -327,11 +327,11 @@ public class ErrorSummaryItemTagHelperTests
         var viewContext = new ViewContext();
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
         viewContext.ModelState.AddModelError(nameof(Model.Field), "ModelState error message");
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider)
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider)
         {
             For = new ModelExpression(nameof(Model.Field), modelExplorer),
             ViewContext = viewContext
@@ -380,15 +380,15 @@ public class ErrorSummaryItemTagHelperTests
         var viewContext = new ViewContext();
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
         var modelName = nameof(Model.Date);
         viewContext.ModelState.AddModelError(modelName, "ModelState error message");
-        dateInputParseErrorsProvider.SetErrorsForModel(
-            viewContext.ModelState[modelName]!,
+        bindingResultInfoProvider.SetDateInputParseErrors(
+            modelName,
             DateInputParseErrors.InvalidMonth | DateInputParseErrors.MissingYear);
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider)
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider)
         {
             For = new ModelExpression(nameof(Model.Date), modelExplorer),
             ViewContext = viewContext
@@ -440,11 +440,11 @@ public class ErrorSummaryItemTagHelperTests
         var viewContext = new ViewContext();
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
         viewContext.ModelState.AddModelError(nameof(Model.Field), "ModelState error message");
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider)
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider)
         {
             For = new ModelExpression(nameof(Model.Field), modelExplorer),
             ViewContext = viewContext
@@ -488,9 +488,9 @@ public class ErrorSummaryItemTagHelperTests
             });
 
         var options = Options.Create(new GovUkFrontendOptions());
-        var dateInputParseErrorsProvider = new DateInputParseErrorsProvider();
+        var bindingResultInfoProvider = new BindingResultInfoProvider();
 
-        var tagHelper = new ErrorSummaryItemTagHelper(options, dateInputParseErrorsProvider);
+        var tagHelper = new ErrorSummaryItemTagHelper(options, bindingResultInfoProvider);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

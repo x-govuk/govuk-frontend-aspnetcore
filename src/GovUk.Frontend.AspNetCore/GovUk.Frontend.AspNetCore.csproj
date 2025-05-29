@@ -5,6 +5,7 @@
     <Copyright>Copyright © James Gunn</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/x-govuk/govuk-frontend-aspnetcore</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <IconUrl>https://avatars.githubusercontent.com/u/60000384?s=200&amp;v=4</IconUrl>
     <RepositoryUrl>https://github.com/x-govuk/govuk-frontend-aspnetcore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
-using static GovUk.Frontend.AspNetCore.GenerateErrorSummariesOptions;
+using static GovUk.Frontend.AspNetCore.ErrorSummaryGenerationOptions;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -69,7 +69,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
     {
         await output.GetChildContentAsync();
 
-        var generateErrorSummariesOptions = _optionsAccessor.Value.GenerateErrorSummaries;
+        var generateErrorSummariesOptions = _optionsAccessor.Value.ErrorSummaryGeneration;
 
         var prependErrorSummary = PrependErrorSummary ??
             (output.TagName.Equals("form", StringComparison.OrdinalIgnoreCase) && generateErrorSummariesOptions.HasFlag(PrependToFormElements)) ||

@@ -6,7 +6,7 @@
 
 #### Error summary generation on `<form>`s
 Error summaries are no longer prepended to `<form>` elements by default; they are prepended to the `<main>` element instead.
-You can restore the old behaviour by setting `GenerateErrorSummaries` to `PrependToFormElements` on `GovUkFrontendOptions`.
+You can restore the old behaviour by setting `ErrorSummaryGeneration` to `PrependToFormElements` on `GovUkFrontendOptions`.
 
 ### New features
 

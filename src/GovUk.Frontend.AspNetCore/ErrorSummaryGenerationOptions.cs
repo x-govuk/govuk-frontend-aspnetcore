@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore;
 /// Options that control automatic error summary generation.
 /// </summary>
 [Flags]
-public enum GenerateErrorSummariesOptions
+public enum ErrorSummaryGenerationOptions
 {
     /// <summary>
     /// Don't automatically generate any error summaries.

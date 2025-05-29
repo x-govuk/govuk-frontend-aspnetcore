@@ -23,7 +23,7 @@ public class GovUkFrontendOptions
             new DateOnlyDateInputModelConverter()
         };
 
-        GenerateErrorSummaries = GenerateErrorSummariesOptions.PrependToMainElement;
+        ErrorSummaryGeneration = ErrorSummaryGenerationOptions.PrependToMainElement;
         PrependErrorToTitle = true;
         StaticAssetsContentPath = "/assets";
         CompiledContentPath = "";
@@ -96,16 +96,16 @@ public class GovUkFrontendOptions
     [Obsolete("Use GenerateErrorSummaries instead.", DiagnosticId = DiagnosticIds.UseGenerateErrorSummariesInstead)]
     public bool PrependErrorSummaryToForms
     {
-        get => GenerateErrorSummaries.HasFlag(GenerateErrorSummariesOptions.PrependToFormElements);
+        get => ErrorSummaryGeneration.HasFlag(ErrorSummaryGenerationOptions.PrependToFormElements);
         set
         {
             if (value)
             {
-                GenerateErrorSummaries |= GenerateErrorSummariesOptions.PrependToFormElements;
+                ErrorSummaryGeneration |= ErrorSummaryGenerationOptions.PrependToFormElements;
             }
             else
             {
-                GenerateErrorSummaries &= ~GenerateErrorSummariesOptions.PrependToFormElements;
+                ErrorSummaryGeneration &= ~ErrorSummaryGenerationOptions.PrependToFormElements;
             }
         }
     }
@@ -113,7 +113,7 @@ public class GovUkFrontendOptions
     /// <summary>
     /// Configures automatic error summary generation.
     /// </summary>
-    public GenerateErrorSummariesOptions GenerateErrorSummaries { get; set; }
+    public ErrorSummaryGenerationOptions ErrorSummaryGeneration { get; set; }
 
     /// <summary>
     /// Whether to prepend &quot;Error: &quot; to the &lt;title&gt; element when ModelState is not valid.

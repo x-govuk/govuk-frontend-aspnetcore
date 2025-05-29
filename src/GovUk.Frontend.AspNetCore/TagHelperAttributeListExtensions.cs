@@ -8,7 +8,7 @@ namespace GovUk.Frontend.AspNetCore;
 /// <summary>
 /// Utility extensions for <see cref="TagHelperAttributeList"/>.
 /// </summary>
-public static class TagHelperAttributeListExtensions
+internal static class TagHelperAttributeListExtensions
 {
     /// <summary>
     /// Creates an <see cref="AttributeDictionary"/> from a <see cref="TagHelperAttributeList"/>.

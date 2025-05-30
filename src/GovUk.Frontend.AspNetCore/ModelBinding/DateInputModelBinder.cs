@@ -81,15 +81,32 @@ public class DateInputModelBinder : IModelBinder
         }
         else
         {
-            bindingContext.ModelState.SetModelValue(dayModelName, dayValueProviderResult);
-            bindingContext.ModelState.SetModelValue(monthModelName, monthValueProviderResult);
-            bindingContext.ModelState.SetModelValue(yearModelName, yearValueProviderResult);
+            var overallAttemptedValueParts = new List<ValueProviderResult>();
+
+            if (itemTypes.HasFlag(DateInputItemTypes.Day))
+            {
+                bindingContext.ModelState.SetModelValue(dayModelName, dayValueProviderResult);
+                overallAttemptedValueParts.Add(dayValueProviderResult);
+            }
+
+            if (itemTypes.HasFlag(DateInputItemTypes.Month))
+            {
+                bindingContext.ModelState.SetModelValue(monthModelName, monthValueProviderResult);
+                overallAttemptedValueParts.Add(monthValueProviderResult);
+            }
+
+            if (itemTypes.HasFlag(DateInputItemTypes.Year))
+            {
+                bindingContext.ModelState.SetModelValue(yearModelName, yearValueProviderResult);
+                overallAttemptedValueParts.Add(yearValueProviderResult);
+            }
+
+            var overallAttemptedValue = string.Join(",", overallAttemptedValueParts.Select(vpr => vpr.FirstValue ?? ""));
 
             var errorMessage = GetModelStateErrorMessage(parseErrors, bindingContext.ModelMetadata);
-            bindingContext.ModelState.AddModelError(bindingContext.ModelName, errorMessage);
-
-            var bindingMetadataProvider = bindingContext.HttpContext.RequestServices.GetRequiredService<BindingResultInfoProvider>();
-            bindingMetadataProvider.SetDateInputParseErrors(bindingContext.ModelName, parseErrors);
+            bindingContext.ModelState.SetModelValue(bindingContext.ModelName, rawValue: null, attemptedValue: overallAttemptedValue);
+            var modelError = new ModelError(new DateInputParseException(errorMessage, parseErrors), errorMessage);
+            bindingContext.ModelState[bindingContext.ModelName]!.Errors.Add(modelError);
 
             bindingContext.Result = ModelBindingResult.Failed();
         }

@@ -570,7 +570,6 @@ public class DateInputModelBinderTests
     private static ActionContext CreateActionContextWithServices()
     {
         var services = new ServiceCollection();
-        services.AddScoped<BindingResultInfoProvider>();
         services.AddOptions<GovUkFrontendOptions>();
         var serviceProvider = services.BuildServiceProvider();
 

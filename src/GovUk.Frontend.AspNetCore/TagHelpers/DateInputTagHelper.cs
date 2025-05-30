@@ -48,7 +48,6 @@ public class DateInputTagHelper : TagHelper
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
-    private readonly BindingResultInfoProvider _bindingResultInfoProvider;
     private readonly IModelHelper _modelHelper;
     private readonly HtmlEncoder _encoder;
 
@@ -61,32 +60,27 @@ public class DateInputTagHelper : TagHelper
     public DateInputTagHelper(
         IComponentGenerator componentGenerator,
         IOptions<GovUkFrontendOptions> optionsAccessor,
-        BindingResultInfoProvider bindingResultInfoProvider,
         HtmlEncoder encoder)
-        : this(componentGenerator, optionsAccessor, bindingResultInfoProvider, encoder, modelHelper: new DefaultModelHelper())
+        : this(componentGenerator, optionsAccessor, encoder, modelHelper: new DefaultModelHelper())
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
-        ArgumentNullException.ThrowIfNull(bindingResultInfoProvider);
         ArgumentNullException.ThrowIfNull(encoder);
     }
 
     internal DateInputTagHelper(
         IComponentGenerator componentGenerator,
         IOptions<GovUkFrontendOptions> optionsAccessor,
-        BindingResultInfoProvider bindingResultInfoProvider,
         HtmlEncoder encoder,
         IModelHelper modelHelper)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
-        ArgumentNullException.ThrowIfNull(bindingResultInfoProvider);
         ArgumentNullException.ThrowIfNull(encoder);
         ArgumentNullException.ThrowIfNull(modelHelper);
 
         _componentGenerator = componentGenerator;
         _optionsAccessor = optionsAccessor;
-        _bindingResultInfoProvider = bindingResultInfoProvider;
         _encoder = encoder;
         _modelHelper = modelHelper;
     }
@@ -464,8 +458,10 @@ public class DateInputTagHelper : TagHelper
         Debug.Assert(ViewContext is not null);
 
         var fullName = _modelHelper.GetFullHtmlFieldName(ViewContext, For.Name);
+        var invalidDateException = ViewContext!.ModelState[fullName]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)
+            ?.Exception as DateInputParseException;
 
-        if (_bindingResultInfoProvider.TryGetDateInputParseErrorsForModel(fullName, out var parseErrors))
+        if (invalidDateException?.ParseErrors is DateInputParseErrors parseErrors)
         {
             return parseErrors.GetItemsWithError();
         }

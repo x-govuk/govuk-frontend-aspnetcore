@@ -2,8 +2,10 @@ using System.Linq.Expressions;
 using System.Text.Encodings.Web;
 using AngleSharp.Dom;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using GovUk.Frontend.AspNetCore.ModelBinding;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
@@ -169,5 +171,25 @@ public abstract class TagHelperTestBase(string tagName, string? parentTagName = 
         componentGenerator.Setup(CreateExpression()).Callback<TOptions>(o => actualOptions = o);
 
         return (componentGenerator.Object, () => actualOptions ?? throw new XunitException("ComponentGenerator method was not invoked."));
+    }
+
+    protected void AddDateInputParseException(ViewContext viewContext, string propertyName, DateInputParseErrors parseErrors)
+    {
+        ArgumentNullException.ThrowIfNull(viewContext);
+        ArgumentNullException.ThrowIfNull(propertyName);
+
+        var modelState = viewContext.ModelState;
+
+        var metadataProvider = new EmptyModelMetadataProvider();
+        var emptyMetadata = metadataProvider.GetMetadataForType(typeof(object));
+
+        var message = DateInputModelBinder.GetModelStateErrorMessage(parseErrors, emptyMetadata);
+        var exception = new DateInputParseException(message, parseErrors);
+
+        // Ensure ModelStateDictionary has an entry for property
+        modelState.SetModelValue(propertyName, rawValue: null, attemptedValue: null);
+
+        var modelError = new ModelError(exception, message);
+        modelState[propertyName]!.Errors.Add(modelError);
     }
 }

@@ -23,28 +23,27 @@ public class ErrorSummaryItemTagHelper : TagHelper
     private const string ForAttributeName = "for";
     private const string LinkAttributesPrefix = "link-";
 
-    private readonly GovUkFrontendOptions _options;
-    private readonly BindingResultInfoProvider _parseErrorsProvider;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
     private readonly IModelHelper _modelHelper;
 
     /// <summary>
     /// Creates a new <see cref="ErrorSummaryItemTagHelper"/>.
     /// </summary>
     public ErrorSummaryItemTagHelper(
-        IOptions<GovUkFrontendOptions> optionsAccessor,
-        BindingResultInfoProvider bindingResultInfoProvider)
-        : this(optionsAccessor, bindingResultInfoProvider, modelHelper: null)
+        IOptions<GovUkFrontendOptions> optionsAccessor)
+        : this(optionsAccessor, modelHelper: new DefaultModelHelper())
     {
     }
 
     internal ErrorSummaryItemTagHelper(
         IOptions<GovUkFrontendOptions> optionsAccessor,
-        BindingResultInfoProvider bindingResultInfoProvider,
-        IModelHelper? modelHelper = null)
+        IModelHelper modelHelper)
     {
-        _options = Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor).Value;
-        _parseErrorsProvider = Guard.ArgumentNotNull(nameof(bindingResultInfoProvider), bindingResultInfoProvider);
-        _modelHelper = modelHelper ?? new DefaultModelHelper();
+        ArgumentNullException.ThrowIfNull(optionsAccessor);
+        ArgumentNullException.ThrowIfNull(modelHelper);
+
+        _optionsAccessor = optionsAccessor;
+        _modelHelper = modelHelper;
     }
 
     /// <summary>
@@ -146,8 +145,10 @@ public class ErrorSummaryItemTagHelper : TagHelper
                 var dateInputErrorItems = DateInputItemTypes.All;
 
                 var fullName = _modelHelper.GetFullHtmlFieldName(ViewContext!, For.Name);
+                var invalidDateException = ViewContext!.ModelState[fullName]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)
+                    ?.Exception as DateInputParseException;
 
-                if (_parseErrorsProvider.TryGetDateInputParseErrorsForModel(fullName, out var parseErrors))
+                if (invalidDateException?.ParseErrors is DateInputParseErrors parseErrors)
                 {
                     dateInputErrorItems = parseErrors.GetItemsWithError();
                 }
@@ -188,7 +189,7 @@ public class ErrorSummaryItemTagHelper : TagHelper
             Debug.Assert(For is not null);
 
             var modelType = Nullable.GetUnderlyingType(For!.Metadata.ModelType) ?? For!.Metadata.ModelType;
-            return _options.FindDateInputModelConverterForType(modelType) is not null;
+            return _optionsAccessor.Value.FindDateInputModelConverterForType(modelType) is not null;
         }
     }
 }

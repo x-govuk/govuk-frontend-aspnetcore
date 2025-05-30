@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using Fluid.Values;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
@@ -32,6 +33,13 @@ public sealed class TemplateString : IEquatable<TemplateString>
     /// <param name="content">The <see cref="IHtmlContent"/>.</param>
     public TemplateString(IHtmlContent? content)
     {
+        // TagHelperContent instances get re-used after the tag helper has been rendered;
+        // we need to snapshot the current content to ensure we don't get the wrong value.
+        if (content is TagHelperContent tagHelperContent)
+        {
+            content = new HtmlString(tagHelperContent.GetContent());
+        }
+
         _value = (object?)content ?? string.Empty;
     }
 

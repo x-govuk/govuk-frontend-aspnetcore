@@ -509,19 +509,19 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             actualOptions.Items,
             item =>
             {
-                Assert.Equal($"{nameof(Model.Date)}-Day", item.Id);
+                Assert.Equal($"{nameof(Model.Date)}.Day", item.Id);
                 Assert.Equal($"{nameof(Model.Date)}.Day", item.Name);
                 Assert.Equal(value.Day.ToString(), item.Value);
             },
             item =>
             {
-                Assert.Equal($"{nameof(Model.Date)}-Month", item.Id);
+                Assert.Equal($"{nameof(Model.Date)}.Month", item.Id);
                 Assert.Equal($"{nameof(Model.Date)}.Month", item.Name);
                 Assert.Equal(value.Month.ToString(), item.Value);
             },
             item =>
             {
-                Assert.Equal($"{nameof(Model.Date)}-Year", item.Id);
+                Assert.Equal($"{nameof(Model.Date)}.Year", item.Id);
                 Assert.Equal($"{nameof(Model.Date)}.Year", item.Name);
                 Assert.Equal(value.Year.ToString(), item.Value);
             });
@@ -1108,12 +1108,12 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
     }
 
     [Theory]
-    [InlineData(DateInputItemTypes.Day, "dateinput-id-Day")]
-    [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month, "dateinput-id-Day")]
-    [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month | DateInputItemTypes.Year, "dateinput-id-Day")]
-    [InlineData(DateInputItemTypes.Month, "dateinput-id-Month")]
-    [InlineData(DateInputItemTypes.Month | DateInputItemTypes.Year, "dateinput-id-Month")]
-    [InlineData(null, "dateinput-id-Day")]
+    [InlineData(DateInputItemTypes.Day, "dateinput-id.Day")]
+    [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month, "dateinput-id.Day")]
+    [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month | DateInputItemTypes.Year, "dateinput-id.Day")]
+    [InlineData(DateInputItemTypes.Month, "dateinput-id.Month")]
+    [InlineData(DateInputItemTypes.Month | DateInputItemTypes.Year, "dateinput-id.Month")]
+    [InlineData(null, "dateinput-id.Day")]
     public async Task ProcessAsync_WithError_AddsErrorWithCorrectFieldIdToFormErrorContext(
         DateInputItemTypes? errorFields,
         string expectedErrorFieldId)

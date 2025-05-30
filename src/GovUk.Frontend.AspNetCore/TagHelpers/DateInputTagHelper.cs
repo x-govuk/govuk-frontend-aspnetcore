@@ -301,7 +301,9 @@ public class DateInputTagHelper : TagHelper
 
             var defaultFullName = ModelNames.CreatePropertyModelName(namePrefix, defaultName);
             var itemName = contextItem?.Name ?? defaultFullName;
-            var itemId = contextItem?.Id ?? TagBuilder.CreateSanitizedId($"{id}-{contextItem?.Name ?? defaultName}", Constants.IdAttributeDotReplacement);
+            var itemId = contextItem?.Id ??
+                contextItem?.Name?.ToHtmlString(_encoder) ??
+                $"{id}.{defaultName}";
             var itemLabel = contextItem?.LabelHtml ?? defaultLabel;
 
             // Value resolution hierarchy:

@@ -34,7 +34,7 @@
 
 <header class="govuk-header {%- if params.classes %} {{ params.classes }}{% endif %}" data-module="govuk-header"
   {{- govukAttributes(params.attributes) }}>
-  <div class="govuk-header__container {{ params.containerClasses | default: "govuk-width-container" }}">
+  <div class="govuk-header__container {{ params.containerClasses | default: "govuk-width-container" }}" {{- govukAttributes(params.containerAttributes) }}>
     <div class="govuk-header__logo">
       <a href="{{ params.homepageUrl | default: "/" }}" class="govuk-header__link govuk-header__link--homepage">
         {%- comment %} The SVG needs `focusable="false"` so that Internet Explorer does
@@ -65,7 +65,7 @@
       {% endif %}
     {% endif %}
     {% if params.navigation.size %}
-      <nav aria-label="{{ params.navigationLabel | default: menuButtonText }}" class="govuk-header__navigation {%- if params.navigationClasses %} {{ params.navigationClasses }}{% endif %}">
+      <nav aria-label="{{ params.navigationLabel | default: menuButtonText }}" class="govuk-header__navigation {%- if params.navigationClasses %} {{ params.navigationClasses }}{% endif %}" {{- govukAttributes(params.navigationAttributes) }}>
         <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" {%- if params.menuButtonLabel and params.menuButtonLabel != menuButtonText %} aria-label="{{ params.menuButtonLabel }}"{% endif %} hidden>
           {{ menuButtonText }}
         </button>

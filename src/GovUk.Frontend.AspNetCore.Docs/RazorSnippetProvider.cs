@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -87,7 +88,7 @@ public class RazorSnippetProvider
 
     private static string Dedent(string markup)
     {
-        markup = markup.Trim();
+        markup = markup.TrimStart(Environment.NewLine.ToCharArray());
         var indentLevel = markup.TakeWhile(c => c == ' ').Count();
 
         var output = new StringBuilder();
@@ -95,6 +96,13 @@ public class RazorSnippetProvider
         var reader = new StringReader(markup);
         while (reader.ReadLine() is string line)
         {
+            if (line.Length < indentLevel + 1)
+            {
+                Debug.Assert(line.Trim().Length == 0);
+                output.AppendLine();
+                continue;
+            }
+
             output.AppendLine(line[indentLevel..]);
         }
 

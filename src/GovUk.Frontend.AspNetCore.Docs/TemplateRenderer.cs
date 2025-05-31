@@ -1,6 +1,7 @@
 using System.Text;
 using Fluid;
 using Fluid.Values;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Docs;
 
@@ -77,7 +78,7 @@ public class TemplateRenderer
     private FluidValue TagHelperApiFunction(FunctionArguments args, TemplateContext context)
     {
         var tagHelperName = args.At(0).ToStringValue();
-        var contentDescription = args["content_description"].ToStringValue();
+        var contentDescription = args["content"].ToStringValue();
 
         var tagHelperApi = _tagHelperApiProvider.GetTagHelperApi(tagHelperName);
 
@@ -85,9 +86,8 @@ public class TemplateRenderer
 
         sb.Append($"#### `<{tagHelperApi.TagName}>`");
         sb.AppendLine();
-        sb.AppendLine();
 
-        if (string.IsNullOrEmpty(contentDescription))
+        if (tagHelperApi.TagStructure == TagStructure.WithoutEndTag)
         {
             contentDescription =
                 """
@@ -96,16 +96,29 @@ public class TemplateRenderer
                 """;
         }
 
-        sb.AppendLine(contentDescription);
-        sb.AppendLine();
-
-        sb.AppendLine("| Attribute | Type | Description |");
-        sb.AppendLine("| --- | --- | --- |");
-
-        foreach (var attribute in tagHelperApi.Attributes)
+        if (!string.IsNullOrEmpty(contentDescription))
         {
-            sb.Append($"| `{attribute.Name}` | {(!string.IsNullOrEmpty(attribute.Type) ? $"`{attribute.Type}`" : "")} | {attribute.Description} |");
             sb.AppendLine();
+            sb.AppendLine(contentDescription);
+        }
+
+        if (tagHelperApi.ParentTagNames is not [])
+        {
+            sb.AppendLine();
+            sb.AppendLine($"Must be inside a {string.Join(" or ", tagHelperApi.ParentTagNames.Select(t => $"`<{t}>`"))} element.");
+        }
+
+        if (tagHelperApi.Attributes.Count > 0)
+        {
+            sb.AppendLine();
+            sb.AppendLine("| Attribute | Type | Description |");
+            sb.AppendLine("| --- | --- | --- |");
+
+            foreach (var attribute in tagHelperApi.Attributes)
+            {
+                sb.Append($"| `{attribute.Name}` | {(!string.IsNullOrEmpty(attribute.Type) ? $"`{attribute.Type}`" : "")} | {attribute.Description} |");
+                sb.AppendLine();
+            }
         }
 
         return FluidValue.Create(sb.ToString(), context.Options);

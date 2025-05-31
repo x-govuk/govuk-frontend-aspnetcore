@@ -46,6 +46,7 @@
   </Target>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.Docs" />
     <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.Tests" />
     <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.ConformanceTests" />
     <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.IntegrationTests" />

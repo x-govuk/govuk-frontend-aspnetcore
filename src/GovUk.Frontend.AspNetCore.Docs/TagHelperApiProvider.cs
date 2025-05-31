@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Docs;
@@ -38,6 +39,8 @@ public class TagHelperApiProvider
         var tagName = htmlTargetElementAttr.Tag;
         var tagStructure = htmlTargetElementAttr.TagStructure;
 
+        var documentationAttr = tagHelperType.GetCustomAttribute<TagHelperDocumentationAttribute>();
+
         string[] parentTagNames = htmlTargetElementAttr.ParentTag is string parentTag ? [parentTag] : [];
 
         var tagHelperMembers = _docs.Root!
@@ -73,7 +76,7 @@ public class TagHelperApiProvider
             .OrderBy(m => m.Name)
             .ToArray();
 
-        return new TagHelperApi(tagName, properties, tagStructure, parentTagNames);
+        return new TagHelperApi(tagName, properties, tagStructure, parentTagNames, documentationAttr?.ContentDescription);
     }
 
     private static XDocument LoadDocs()
@@ -102,7 +105,8 @@ public record TagHelperApi(
     string TagName,
     IReadOnlyCollection<TagHelperApiAttribute> Attributes,
     TagStructure TagStructure,
-    string[] ParentTagNames);
+    string[] ParentTagNames,
+    string? ContentDescription);
 
 public record TagHelperApiAttribute(string Name, string Type, string Description);
 

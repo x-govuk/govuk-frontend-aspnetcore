@@ -11,7 +11,7 @@ public record HeaderOptions
     public TemplateString? ProductName { get; set; }
     public TemplateString? ServiceName { get; set; }
     public TemplateString? ServiceUrl { get; set; }
-    public IReadOnlyCollection<HeaderOptionsNavigation>? Navigation { get; set; }
+    public IReadOnlyCollection<HeaderOptionsNavigationItem>? Navigation { get; set; }
     public TemplateString? NavigationClasses { get; set; }
     public TemplateString? NavigationLabel { get; set; }
     public TemplateString? MenuButtonLabel { get; set; }
@@ -20,9 +20,15 @@ public record HeaderOptions
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
     public bool? UseTudorCrown { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? ContainerAttributes { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? NavigationAttributes { get; set; }
 }
 
-public record HeaderOptionsNavigation
+public record HeaderOptionsNavigationItem
 {
     public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }

@@ -9,6 +9,8 @@ internal partial class DefaultComponentGenerator
         public const string Breadcrumbs = "nav";
         public const string ErrorSummary = "div";
         public const string FormGroup = "div";
+        public const string Header = "header";
+        public const string HeaderNav = "nav";
         public const string InputPrefix = "div";
         public const string InputSuffix = "div";
         public const string InsetText = "div";

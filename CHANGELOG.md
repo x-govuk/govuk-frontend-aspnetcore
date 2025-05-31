@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### New features
+
+#### `<govuk-header>`
+A tag helper to create a GOV.UK header component has been added. [See the docs](docs/components/header.md) for usage guide.
+
 ## 3.0.1
 
 ### Fixes

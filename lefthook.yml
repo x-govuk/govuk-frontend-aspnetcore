@@ -1,7 +1,7 @@
 pre-commit:
   parallel: true
   jobs:
-    - run: just format
+    - run: just format --include {staged_files}
       glob: "*.cs"
       stage_fixed: true
 

@@ -34,7 +34,7 @@ builder.Services.AddGovUkFrontend();
 
 In your `_ViewImports.cshtml` file:
 
-```razor:
+```razor
 @using GovUk.Frontend.AspNetCore
 @addTagHelper *, GovUk.Frontend.AspNetCore
 ```
@@ -49,7 +49,7 @@ A Razor view is provided with the standard page template markup and Razor sectio
 
 In your `_Layout.cshtml` file:
 
-```razor:
+```razor
 @{
     Layout = "_GovUkPageTemplate";
 }

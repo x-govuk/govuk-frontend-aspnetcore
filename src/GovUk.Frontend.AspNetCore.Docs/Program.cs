@@ -68,6 +68,7 @@ async Task PublishDocsAsync()
     using var browser = await Puppeteer.LaunchAsync(new LaunchOptions()
     {
         Headless = true,
+        Args = ["--no-sandbox", "--disable-setuid-sandbox"],
         DefaultViewport = new ViewPortOptions()
         {
             DeviceScaleFactor = 2

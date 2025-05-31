@@ -1,0 +1,8 @@
+pre-commit:
+  parallel: false
+  jobs:
+    - run: just format
+      glob: "*.cs"
+      stage_fixed: true
+
+    - run: just test -c Release

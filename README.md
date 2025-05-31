@@ -55,7 +55,7 @@ In your `_Layout.cshtml` file:
 }
 
 @section Header {
-    @* your header markup goes here *@
+    <govuk-header home-page-url="https://gov.uk/" />
 }
 
 @RenderBody()

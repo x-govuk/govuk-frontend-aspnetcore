@@ -975,21 +975,8 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
     }
 
     [Theory]
-    [InlineData(DateInputParseErrors.MissingDay, true, false, false)]
-    [InlineData(DateInputParseErrors.MissingMonth, false, true, false)]
-    [InlineData(DateInputParseErrors.MissingYear, false, false, true)]
-    [InlineData(DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth, true, true, false)]
-    [InlineData(DateInputParseErrors.MissingDay | DateInputParseErrors.MissingYear, true, false, true)]
-    [InlineData(DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingYear, false, true, true)]
-    [InlineData(DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth | DateInputParseErrors.InvalidYear, true, true, true)]
-    [InlineData(DateInputParseErrors.InvalidDay, true, false, false)]
-    [InlineData(DateInputParseErrors.InvalidMonth, false, true, false)]
-    [InlineData(DateInputParseErrors.InvalidYear, false, false, true)]
-    [InlineData(DateInputParseErrors.InvalidDay | DateInputParseErrors.InvalidMonth, true, true, false)]
-    [InlineData(DateInputParseErrors.InvalidDay | DateInputParseErrors.InvalidYear, true, false, true)]
-    [InlineData(DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidYear, false, true, true)]
-    [InlineData(DateInputParseErrors.InvalidDay | DateInputParseErrors.MissingMonth | DateInputParseErrors.InvalidYear, true, true, true)]
-    public async Task ProcessAsync_ErrorItemsNotSpecifiedAndErrorsFromModelBinder_InfersErrorItems(
+    [MemberData(nameof(DateInputParseErrorsWithExpectedErrorItemsData))]
+    public async Task ProcessAsync_ErrorItemsNotSpecifiedAndErrorsFromModelBinderFromModelExpression_InfersErrorItems(
         DateInputParseErrors parseErrors,
         bool expectDayError,
         bool expectMonthError,
@@ -1029,6 +1016,66 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             HtmlEncoder.Default)
         {
             For = @for,
+            Id = id,
+            NamePrefix = namePrefix,
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.Items);
+        Assert.Collection(
+            actualOptions.Items,
+            day => AssertItemHasExpectedError(day, expectDayError),
+            month => AssertItemHasExpectedError(month, expectMonthError),
+            year => AssertItemHasExpectedError(year, expectYearError));
+    }
+
+    [Theory]
+    [MemberData(nameof(DateInputParseErrorsWithExpectedErrorItemsData))]
+    public async Task ProcessAsync_ErrorItemsNotSpecifiedAndErrorsFromModelBinderFromName_InfersErrorItems(
+        DateInputParseErrors parseErrors,
+        bool expectDayError,
+        bool expectMonthError,
+        bool expectYearError)
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var id = "dateinput-id";
+        var namePrefix = "dateinput";
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var dateInputContext = context.GetContextItem<DateInputContext>();
+
+                dateInputContext.SetErrorMessage(
+                    errorFields: null,
+                    visuallyHiddenText: null,
+                    attributes: new(),
+                    html: "Error",
+                    tagName: DateInputTagHelper.ErrorMessageTagName);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        AddDateInputParseException(viewContext, namePrefix, parseErrors);
+
+        var tagHelper = new DateInputTagHelper(
+            componentGenerator,
+            CreateOptions(),
+            HtmlEncoder.Default)
+        {
             Id = id,
             NamePrefix = namePrefix,
             ViewContext = viewContext
@@ -1211,7 +1258,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
     }
 
     [Fact]
-    public async Task ProcessAsync_WithItemTypesInMetadata_CreatesCorrectItems()
+    public async Task ProcessAsync_WithModelExpressionAndItemTypesInMetadata_CreatesCorrectItems()
     {
         // Arrange
         var viewContext = CreateViewContext();
@@ -1247,8 +1294,14 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             item => Assert.Equal("Month", item.Label));
     }
 
+    [Fact(Skip = "Skipped until we figure out how to do this")]
+    public Task ProcessAsync_WithNameAndItemTypesInMetadata_CreatesCorrectItems()
+    {
+        throw new NotImplementedException();
+    }
+
     [Fact]
-    public async Task ProcessAsync_WithDefaultItemTypesOnConverter_CreatesCorrectItems()
+    public async Task ProcessAsync_WithModelExpressionAndDefaultItemTypesOnConverter_CreatesCorrectItems()
     {
         // Arrange
         var viewContext = CreateViewContext();
@@ -1281,6 +1334,12 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             actualOptions.Items,
             item => Assert.Equal("Day", item.Label),
             item => Assert.Equal("Month", item.Label));
+    }
+
+    [Fact(Skip = "Skipped until we figure out how to do this")]
+    public Task ProcessAsync_WithNameAndDefaultItemTypesOnConverter_CreatesCorrectItems()
+    {
+        throw new NotImplementedException();
     }
 
     [Fact]
@@ -1378,6 +1437,24 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal($"Cannot declare a <{itemTagName}> when the parent's {nameof(DateInputItemTypes)} does not contain {DateInputItemTypes.Year}.", ex.Message);
     }
+
+    public static TheoryData<DateInputParseErrors, bool, bool, bool> DateInputParseErrorsWithExpectedErrorItemsData { get; } = new()
+    {
+        { DateInputParseErrors.MissingDay, true, false, false },
+        { DateInputParseErrors.MissingMonth, false, true, false },
+        { DateInputParseErrors.MissingYear, false, false, true },
+        { DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth, true, true, false },
+        { DateInputParseErrors.MissingDay | DateInputParseErrors.MissingYear, true, false, true },
+        { DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingYear, false, true, true },
+        { DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth | DateInputParseErrors.InvalidYear, true, true, true },
+        { DateInputParseErrors.InvalidDay, true, false, false },
+        { DateInputParseErrors.InvalidMonth, false, true, false },
+        { DateInputParseErrors.InvalidYear, false, false, true },
+        { DateInputParseErrors.InvalidDay | DateInputParseErrors.InvalidMonth, true, true, false },
+        { DateInputParseErrors.InvalidDay | DateInputParseErrors.InvalidYear, true, false, true },
+        { DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidYear, false, true, true },
+        { DateInputParseErrors.InvalidDay | DateInputParseErrors.MissingMonth | DateInputParseErrors.InvalidYear, true, true, true }
+    };
 
     private static void AssertItemHasExpectedError(DateInputOptionsItem item, bool expectError)
     {

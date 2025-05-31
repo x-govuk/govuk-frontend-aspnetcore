@@ -380,6 +380,8 @@ public class DateInputTagHelper : TagHelper
 
     private DateInputItemTypes ResolveItemTypes()
     {
+        Debug.Assert(ViewContext is not null);
+
         if (ItemTypes is not null)
         {
             return ItemTypes.Value;
@@ -451,16 +453,17 @@ public class DateInputTagHelper : TagHelper
             return dateInputContext.ErrorFields.Value;
         }
 
-        if (For is null)
+        var modelName = NamePrefix;
+
+        if (For is not null)
         {
-            return DateInputItemTypes.All;
+            Debug.Assert(ViewContext is not null);
+            modelName = _modelHelper.GetFullHtmlFieldName(ViewContext, For.Name);
         }
 
-        Debug.Assert(For is not null);
-        Debug.Assert(ViewContext is not null);
+        Debug.Assert(modelName is not null);
 
-        var fullName = _modelHelper.GetFullHtmlFieldName(ViewContext, For.Name);
-        var invalidDateException = ViewContext!.ModelState[fullName]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)
+        var invalidDateException = ViewContext!.ModelState[modelName]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)
             ?.Exception as DateInputParseException;
 
         if (invalidDateException?.ParseErrors is DateInputParseErrors parseErrors)

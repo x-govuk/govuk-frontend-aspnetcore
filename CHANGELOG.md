@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+#### Date input error items
+Fixes getting error item types when `name-prefix` is specified and `for` is not.
+
 ## 3.0.0
 
 ### Changes to defaults

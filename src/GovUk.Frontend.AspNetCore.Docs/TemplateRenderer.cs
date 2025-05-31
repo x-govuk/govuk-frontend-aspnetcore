@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text;
 using Fluid;
 using Fluid.Values;
@@ -78,9 +79,9 @@ public class TemplateRenderer
     private FluidValue TagHelperApiFunction(FunctionArguments args, TemplateContext context)
     {
         var tagHelperName = args.At(0).ToStringValue();
-        var contentDescription = args["content"].ToStringValue();
 
         var tagHelperApi = _tagHelperApiProvider.GetTagHelperApi(tagHelperName);
+        var contentDescription = tagHelperApi.ContentDescription;
 
         var sb = new StringBuilder();
 
@@ -89,6 +90,8 @@ public class TemplateRenderer
 
         if (tagHelperApi.TagStructure == TagStructure.WithoutEndTag)
         {
+            Debug.Assert(contentDescription is null);
+
             contentDescription =
                 """
                 > [!NOTE]

@@ -42,3 +42,11 @@ format *ARGS:
 # Package the library
 pack *ARGS:
   @dotnet pack src/GovUk.Frontend.AspNetCore/ {{ARGS}}
+
+# Run the docs app
+docs:
+  @dotnet run --project src/GovUk.Frontend.AspNetCore.Docs/GovUk.Frontend.AspNetCore.Docs.csproj
+
+# Publish the docs
+publish-docs:
+  @dotnet run --project src/GovUk.Frontend.AspNetCore.Docs/GovUk.Frontend.AspNetCore.Docs.csproj -- publish

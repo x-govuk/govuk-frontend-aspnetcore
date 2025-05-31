@@ -56,6 +56,14 @@ In your `_Layout.cshtml` file:
 
 @section Header {
     <govuk-header home-page-url="https://gov.uk/" />
+
+    <govuk-service-navigation service-name="Service name" service-url="#">
+        <govuk-service-navigation-nav>
+            <govuk-service-navigation-nav-item href="#">Navigation item 1</govuk-service-navigation-nav-item>
+            <govuk-service-navigation-nav-item href="#" active="true">Navigation item 2</govuk-service-navigation-nav-item>
+            <govuk-service-navigation-nav-item href="#">Navigation item 3</govuk-service-navigation-nav-item>
+        </govuk-service-navigation-nav>
+    </govuk-service-navigation>
 }
 
 @RenderBody()

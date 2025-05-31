@@ -1,4 +1,6 @@
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -27,7 +29,16 @@ public class TagHelperApiProvider
         var tagHelperClassName = $"{TagHelperNamespace}.{tagHelperName}";
         var tagHelperType = typeof(GovUkFrontendOptions).Assembly.GetType(tagHelperClassName)!;
 
-        var tagName = tagHelperType.GetCustomAttribute<HtmlTargetElementAttribute>()!.Tag;
+        if (tagHelperType is null)
+        {
+            throw new ArgumentException($"Could not find '{tagHelperClassName}'.", nameof(tagHelperName));
+        }
+
+        var htmlTargetElementAttr = tagHelperType.GetCustomAttribute<HtmlTargetElementAttribute>()!;
+        var tagName = htmlTargetElementAttr.Tag;
+        var tagStructure = htmlTargetElementAttr.TagStructure;
+
+        string[] parentTagNames = htmlTargetElementAttr.ParentTag is string parentTag ? [parentTag] : [];
 
         var tagHelperMembers = _docs.Root!
             .Element("members")!
@@ -50,15 +61,19 @@ public class TagHelperApiProvider
                     typeName = "";
                 }
 
-                var description = m.Element("summary")?.Value.Trim() ?? "";
-                // TODO format and add remarks
+                var description = m.Element("summary")?.GetElementValueAsMarkdown() ?? "";
+
+                if (m.Element("remarks")?.GetElementValueAsMarkdown() is string remarks)
+                {
+                    description += " " + remarks;
+                }
 
                 return new TagHelperApiAttribute(attributeName, typeName, description);
             })
             .OrderBy(m => m.Name)
             .ToArray();
 
-        return new TagHelperApi(tagName, properties);
+        return new TagHelperApi(tagName, properties, tagStructure, parentTagNames);
     }
 
     private static XDocument LoadDocs()
@@ -67,14 +82,61 @@ public class TagHelperApiProvider
         return XDocument.Load(fs);
     }
 
-    private static string GetNormalizedTypeName(Type type) =>
-        type.FullName switch
+    private static string GetNormalizedTypeName(Type type)
+    {
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
         {
+            return GetNormalizedTypeName(type.GetGenericArguments()[0]) + "?";
+        }
+
+        return type.FullName switch
+        {
+            "System.Boolean" => "bool",
             "System.String" => "string",
             _ => type.FullName ?? ""
         };
+    }
 }
 
-public record TagHelperApi(string TagName, IReadOnlyCollection<TagHelperApiAttribute> Attributes);
+public record TagHelperApi(
+    string TagName,
+    IReadOnlyCollection<TagHelperApiAttribute> Attributes,
+    TagStructure TagStructure,
+    string[] ParentTagNames);
 
 public record TagHelperApiAttribute(string Name, string Type, string Description);
+
+file static class Extensions
+{
+    private static readonly Regex _whitespace = new("\\s+");
+
+    public static string GetElementValueAsMarkdown(this XElement element)
+    {
+        var sb = new StringBuilder();
+
+        foreach (var node in element.Nodes())
+        {
+            if (node is XText text)
+            {
+                sb.Append(_whitespace.Replace(text.Value, " "));
+            }
+            else if (node is XElement e)
+            {
+                if (e.Name == "c")
+                {
+                    sb.Append($"`{e.Value}`");
+                }
+                else
+                {
+                    throw new NotSupportedException($"Cannot convert a {e.Name} element into markdown.");
+                }
+            }
+            else
+            {
+                throw new NotSupportedException($"Cannot convert a {node.NodeType} node into markdown.");
+            }
+        }
+
+        return sb.ToString().Trim();
+    }
+}

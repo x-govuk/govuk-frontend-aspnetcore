@@ -27,6 +27,6 @@
 | Attribute | Type | Description |
 | --- | --- | --- |
 | `container-*` |  | Additional attributes to add to the generated container element. |
-| `home-page-url` | `string` | The URL of the homepage. |
+| `home-page-url` | `string` | The URL of the homepage. If not specified, `/` will be used. |
 | `product-name` | `string` | Product name, used when the product name follows on directly from "GOV.UK". For example, GOV.UK Pay or GOV.UK Design System. |
 

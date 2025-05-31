@@ -16,6 +16,9 @@ public record ServiceNavigationOptions
     public TemplateString? ServiceUrl { get; set; }
     public IReadOnlyCollection<ServiceNavigationOptionsNavigationItem>? Navigation { get; set; }
     public ServiceNavigationOptionsSlots? Slots { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? NavigationAttributes { get; set; }
 }
 
 public record ServiceNavigationOptionsNavigationItem

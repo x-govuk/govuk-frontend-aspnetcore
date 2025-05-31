@@ -9,4 +9,8 @@
     <ProjectReference Include="..\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\ServiceNavigation\Default.cshtml" />
+  </ItemGroup>
+
 </Project>

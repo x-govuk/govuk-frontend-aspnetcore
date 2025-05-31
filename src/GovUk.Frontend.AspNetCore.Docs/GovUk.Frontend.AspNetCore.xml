@@ -2750,6 +2750,133 @@
             Additional attributes to add to the generated <c>select</c> element.
             </summary>
         </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationEndTagHelper">
+            <summary>
+            Represents the content at the end of the service header container in a GDS service navigation component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationEndTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavEndTagHelper">
+            <summary>
+            Represents the content after the last list item in the navigation list in a GDS service navigation component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavEndTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavItemTagHelper">
+            <summary>
+            Represents a navigation item in a GDS service navigation component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavItemTagHelper.Active">
+            <summary>
+            Whether the user is within this group of pages in the navigation hierarchy.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavItemTagHelper.Current">
+            <summary>
+            Whether the user is currently on this page.
+            </summary>
+            <remarks>
+            This takes precedence over the <c>active</c> attribute.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavStartTagHelper">
+            <summary>
+            Represents the content before the first list item in the navigation list in a GDS service navigation component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavStartTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper">
+            <summary>
+            Represents the navigation list in a GDS service navigation component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.AriaLabel">
+            <summary>
+            The text for the <c>aria-label</c> which labels the service navigation container when a service name is included.
+            </summary>
+            <remarks>
+            If not specified, &quot;Service information&quot; will be used.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.MenuButtonText">
+            <summary>
+            The text of the mobile navigation menu toggle.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.MenuButtonLabel">
+            <summary>
+            The screen reader label for the mobile navigation menu toggle.
+            </summary>
+            <remarks>
+            If not specified, the value of the <c>menu-button-text</c> attribute will be used.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.Label">
+            <summary>
+            The screen reader label for the mobile navigation menu.
+            </summary>
+            <remarks>
+            If not specified, the value of the <c>menu-button-text</c> attribute will be used.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.Id">
+            <summary>
+            The ID used to associate the mobile navigation toggle with the navigation menu.
+            </summary>
+            <remarks>
+            If not specified, <c>navigation</c> will be used.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationStartTagHelper">
+            <summary>
+            Represents the content at the start of the service header container in a GDS service navigation component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationStartTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationTagHelper">
+            <summary>
+            Generates a GDS service navigation component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationTagHelper.ServiceName">
+            <summary>
+            The name of your service.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationTagHelper.ServiceUrl">
+            <summary>
+            The homepage of your service.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SkipLinkTagHelper">
             <summary>
             Generates a GDS skip link component.

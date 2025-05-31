@@ -49,6 +49,9 @@ internal static class ExceptionHelper
         string tagName, IReadOnlyCollection<string> mustBeInsideTagNames) =>
             new($"A <{tagName}> must be inside a {JoinTagNamesWithConjunction(mustBeInsideTagNames)}.");
 
+    public static InvalidOperationException AttributesNotSupported() =>
+        new("Passing additional attributes is not supported.");
+
     private static string JoinTagNamesWithConjunction(IReadOnlyCollection<string> tagNames, string conjunction = " or ") =>
         tagNames.Count == 1 ?
             $"<{tagNames.Single()}>" :

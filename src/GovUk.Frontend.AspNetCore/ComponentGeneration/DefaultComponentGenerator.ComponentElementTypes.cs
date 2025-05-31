@@ -20,6 +20,7 @@ internal partial class DefaultComponentGenerator
         public const string PaginationNext = "div";
         public const string PaginationPrevious = "div";
         public const string SkipLink = "a";
+        public const string ServiceNavigationNav = "nav";
         public const string SummaryCard = "div";
         public const string SummaryCardAction = "li";
         public const string SummaryCardRowActions = "div";

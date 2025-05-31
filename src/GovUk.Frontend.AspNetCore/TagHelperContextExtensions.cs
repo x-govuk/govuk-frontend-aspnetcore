@@ -7,6 +7,19 @@ internal static class TagHelperContextExtensions
 {
     private sealed record FormGroupContextKey;
 
+    public static TItem GetRequiredContextItem<TItem>(this TagHelperContext context)
+        where TItem : class
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        if (context.Items.TryGetValue(typeof(TItem), out var obj) && obj is TItem item)
+        {
+            return item;
+        }
+
+        throw new InvalidOperationException($"No context item found for type: '{typeof(TItem).FullName}'.");
+    }
+
     public static TItem GetContextItem<TItem>(this TagHelperContext context)
         where TItem : class
     {

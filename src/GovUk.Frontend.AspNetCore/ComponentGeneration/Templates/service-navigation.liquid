@@ -32,7 +32,7 @@ data-module="govuk-service-navigation"
       {% comment %} Navigation {% endcomment %}
       {% assign navigationItems = params.navigation %}
       {% if navigationItems or params.slots.navigationStart or params.slots.navigationEnd %}
-        <nav aria-label="{{ params.navigationLabel | default: menuButtonText }}" class="govuk-service-navigation__wrapper {%- if params.navigationClasses %} {{ params.navigationClasses }}{% endif %}">
+        <nav aria-label="{{ params.navigationLabel | default: menuButtonText }}" class="govuk-service-navigation__wrapper {%- if params.navigationClasses %} {{ params.navigationClasses }}{% endif %} {{- govukAttributes(params.navigationAttributes) }}">
           <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="{{ navigationId }}" {%- if params.menuButtonLabel and params.menuButtonLabel != menuButtonText %} aria-label="{{ params.menuButtonLabel }}"{% endif %} hidden>
             {{ menuButtonText }}
           </button>

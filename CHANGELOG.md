@@ -4,8 +4,11 @@
 
 ### New features
 
-#### `<govuk-header>`
-A tag helper to create a GOV.UK header component has been added. [See the docs](docs/components/header.md) for usage guide.
+#### New tag helpers
+Tag helpers to create
+a [GOV.UK header component](docs/components/header.md) and
+a [service navigation component](docs/components/service-navigation.md)
+have been added.
 
 ## 3.0.1
 

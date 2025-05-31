@@ -1,8 +1,10 @@
 pre-commit:
-  parallel: false
+  parallel: true
   jobs:
     - run: just format
       glob: "*.cs"
       stage_fixed: true
 
     - run: just test -c Release
+
+    - run: just publish-docs

@@ -1,0 +1,3315 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GovUk.Frontend.AspNetCore</name>
+    </assembly>
+    <members>
+        <member name="T:GovUk.Frontend.AspNetCore.AttributeDictionaryExtensions">
+            <summary>
+            Utility extensions for <see cref="T:Microsoft.AspNetCore.Mvc.ViewFeatures.AttributeDictionary"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.AttributeDictionaryExtensions.MergeCssClass(Microsoft.AspNetCore.Mvc.ViewFeatures.AttributeDictionary,System.String)">
+            <summary>
+            Adds a CSS class to the list of CSS classes in the tag if it does not already specified.
+            If there are already CSS classes on the tag then a space character and the new class will be appended to
+            the existing list.
+            </summary>
+            <param name="attributeDictionary">The <see cref="T:Microsoft.AspNetCore.Mvc.ViewFeatures.AttributeDictionary"/> to add the CSS class name to.</param>
+            <param name="value">The CSS class name to add.</param>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.CheckboxesItemBehavior">
+            <summary>
+            Defines the selection behavior options for a checkbox item.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.CheckboxesItemBehavior.Default">
+            <summary>
+            The default behaviour.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.CheckboxesItemBehavior.Exclusive">
+            <summary>
+            Indicates that when this item is checked then no other items should be checked.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection">
+            <summary>
+            Represents a collection of HTML attributes.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection.#ctor">
+            <summary>
+            Initializes a new emty instance of the <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection"/> class.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection"/> class
+            with the attributes in the specified <paramref name="attributes"/>.
+            </summary>
+            <param name="attributes">The existing attributes.</param>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection.#ctor(System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute})">
+            <summary>
+            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection"/> class
+            with the attributes in the specified <paramref name="tagHelperAttributes"/>.
+            </summary>
+            <param name="tagHelperAttributes">The <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute" />s to copy attributes from.</param>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection.Clone">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection"/> with a copy of the attributes from this instance.
+            </summary>
+            <returns>A new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection"/>.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection.GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator">
+            <summary>
+            Generates GOV.UK Design System components.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateAccordionAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.AccordionOptions)">
+            <summary>
+            Generates an accordion component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateBackLinkAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.BackLinkOptions)">
+            <summary>
+            Generates a back link component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateBreadcrumbsAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.BreadcrumbsOptions)">
+            <summary>
+            Generates a breadcrumbs component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateButtonAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.ButtonOptions)">
+            <summary>
+            Generates a button component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateCharacterCountAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.CharacterCountOptions)">
+            <summary>
+            Generates a character count component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateCheckboxesAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.CheckboxesOptions)">
+            <summary>
+            Generates a checkboxes component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateCookieBannerAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.CookieBannerOptions)">
+            <summary>
+            Generates a cookie banner component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateDateInputAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.DateInputOptions)">
+            <summary>
+            Generates a date input component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateDetailsAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.DetailsOptions)">
+            <summary>
+            Generates a details component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateErrorMessageAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.ErrorMessageOptions)">
+            <summary>
+            Generates an error message component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateErrorSummaryAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.ErrorSummaryOptions)">
+            <summary>
+            Generates an error summary component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateExitThisPageAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.ExitThisPageOptions)">
+            <summary>
+            Generates an exit this page component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateFieldsetAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.FieldsetOptions)">
+            <summary>
+            Generates a fieldset component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateFileUploadAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.FileUploadOptions)">
+            <summary>
+            Generates a file upload component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateFooterAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.FooterOptions)">
+            <summary>
+            Generates a footer component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateHeaderAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.HeaderOptions)">
+            <summary>
+            Generates a header component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateHintAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.HintOptions)">
+            <summary>
+            Generates a hint component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateInputAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.InputOptions)">
+            <summary>
+            Generates an input component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateInsetTextAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.InsetTextOptions)">
+            <summary>
+            Generates an inset text component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateLabelAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.LabelOptions)">
+            <summary>
+            Generates a label component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateNotificationBannerAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.NotificationBannerOptions)">
+            <summary>
+            Generates a notification banner component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GeneratePaginationAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.PaginationOptions)">
+            <summary>
+            Generates a pagination component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GeneratePanelAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.PanelOptions)">
+            <summary>
+            Generates a panel component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GeneratePasswordInputAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.PasswordInputOptions)">
+            <summary>
+            Generates a password input component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GeneratePhaseBannerAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.PhaseBannerOptions)">
+            <summary>
+            Generates a phase banner component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateServiceNavigationAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.ServiceNavigationOptions)">
+            <summary>
+            Generates a service navigation component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateSkipLinkAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.SkipLinkOptions)">
+            <summary>
+            Generates a skip link component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateSummaryListAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.SummaryListOptions)">
+            <summary>
+            Generates a summary list component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateTableAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.TableOptions)">
+            <summary>
+            Generates a table component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateTabsAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.TabsOptions)">
+            <summary>
+            Generates a tabs component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateTaskListAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.TaskListOptions)">
+            <summary>
+            Generates a task list component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateTagAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.TagOptions)">
+            <summary>
+            Generates a tag component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator.GenerateWarningTextAsync(GovUk.Frontend.AspNetCore.ComponentGeneration.WarningTextOptions)">
+            <summary>
+            Generates a warning text component.
+            </summary>
+            <returns>A <see cref="T:System.String"/> with the component's HTML.</returns>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ComponentGeneration.NonStandardParameterAttribute">
+            <summary>
+            Indicates a component parameter that is not included in the reference Nunjucks implementation.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString">
+            <summary>
+            Contains either an unencoded <see cref="T:System.String" /> or an <see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.#ctor(System.String)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> from an unencoded <see cref="T:System.String"/>.
+            </summary>
+            <param name="value">The unencoded <see cref="T:System.String"/>.</param>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.#ctor(Microsoft.AspNetCore.Html.IHtmlContent)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> from an <see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/>.
+            </summary>
+            <param name="content">The <see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/>.</param>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.ToHtmlString(System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Gets an encoded HTML string for the current <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/>.
+            </summary>
+            <param name="encoder">The <see cref="T:System.Text.Encodings.Web.HtmlEncoder"/> to encoded unencoded values with.</param>
+            <returns>The encoded HTML.</returns>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.Empty">
+            <summary>
+            A <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> with no content.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.op_Implicit(System.String)~GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> from the specified unencoded <see cref="T:System.String"/>.
+            </summary>
+            <param name="value">The unencoded <see cref="T:System.String"/>.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.op_Implicit(Microsoft.AspNetCore.Html.HtmlString)~GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> from <see cref="T:Microsoft.AspNetCore.Html.HtmlString"/>.
+            </summary>
+            <param name="content">The <see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> to create the <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> from.</param>
+            <returns>A new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> wrapping the specified <see cref="T:Microsoft.AspNetCore.Html.HtmlString"/>.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString.Equals(GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateStringExtensions">
+            <summary>
+            Extensions for <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateStringExtensions.AppendCssClasses(GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString,System.Text.Encodings.Web.HtmlEncoder,GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString[])">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> with the contents of <paramref name="templateString"/> and the
+            specified <paramref name="classNames"/>.
+            </summary>
+            <param name="templateString">The initial set of CSS class names.</param>
+            <param name="encoder">The <see cref="T:System.Text.Encodings.Web.HtmlEncoder"/> to encode values with.</param>
+            <param name="classNames">The additional CSS class names to append.</param>
+            <returns>A new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/>.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateStringExtensions.ToTemplateString(Microsoft.AspNetCore.Html.IHtmlContent)">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> from <see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/>.
+            </summary>
+            <param name="content">The <see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> to create the <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> from.</param>
+            <returns>A new <see cref="T:GovUk.Frontend.AspNetCore.ComponentGeneration.TemplateString"/> wrapping the specified <see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/>.</returns>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.DateInputAttribute">
+            <summary>
+            An attribute that can specify the error message prefix to use in model binding from date input components.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.DateInputAttribute.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:GovUk.Frontend.AspNetCore.DateInputAttribute"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.DateInputAttribute.#ctor(GovUk.Frontend.AspNetCore.DateInputItemTypes)">
+            <summary>
+            Initializes a new instance of <see cref="T:GovUk.Frontend.AspNetCore.DateInputAttribute"/> with <see cref="T:GovUk.Frontend.AspNetCore.DateInputItemTypes"/>.
+            </summary>
+            <param name="itemTypes">The <see cref="T:GovUk.Frontend.AspNetCore.DateInputItemTypes"/>.</param>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.DateInputAttribute.ErrorMessagePrefix">
+            <summary>
+            Gets or sets the prefix used in error messages.
+            </summary>
+            <remarks>
+            This prefix is used at the start of error messages produced by <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinder"/>
+            e.g. <c>{ErrorMessagePrefix} must be a real date</c>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.DateInputAttribute.ItemTypes">
+            <summary>
+            Gets the <see cref="T:GovUk.Frontend.AspNetCore.DateInputItemTypes"/> that should be created on the date input for this property.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.DateInputItemTypes">
+            <summary>
+            Represents the item types of a date input component.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.DateInputParseException">
+            <summary>
+            Represents the errors that occured when parsing a date input's values.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.DateInputParseException.#ctor(System.String,GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.DateInputParseException"/>.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="parseErrors">The <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors"/>.</param>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.DateInputParseException.ParseErrors">
+            <summary>
+            Gets the <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ErrorSummaryGenerationOptions">
+            <summary>
+            Options that control automatic error summary generation.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ErrorSummaryGenerationOptions.None">
+            <summary>
+            Don't automatically generate any error summaries.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ErrorSummaryGenerationOptions.PrependToMainElement">
+            <summary>
+            Prepends an error summary to the main element if any components on the page have an error.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ErrorSummaryGenerationOptions.PrependToFormElements">
+            <summary>
+            Prepends an error summary to each form element where any of the components within the form have an error.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ErrorSummaryGenerationOptions.DisableAutoFocus">
+            <summary>
+            Disables the behavior that focuses the error summary when the page loads.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.GovUkFrontendExtensions">
+            <summary>
+            Extension methods for setting up GovUk.Frontend.AspNetCore.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.GovUkFrontendExtensions.AddGovUkFrontend(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds GovUk.Frontend.AspNetCore services to the specified <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" /> to add services to.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.GovUkFrontendExtensions.AddGovUkFrontend(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
+            <summary>
+            Adds GovUk.Frontend.AspNetCore services to the specified <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" /> to add services to.</param>
+            <param name="setupAction">An <see cref="T:System.Action`1"/> to configure the provided <see cref="T:GovUk.Frontend.AspNetCore.GovUkFrontendOptions"/>.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.GovUkFrontendInfo">
+            <summary>
+            Contains information about the target govuk-frontend library.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendInfo.Version">
+            <summary>
+            Gets the version of the GOV.UK Frontend library.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.GovUkFrontendOptions">
+            <summary>
+            Options for configuring GovUk.Frontend.AspNetCore.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.GovUkFrontendOptions"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.AcceptMonthNamesInDateInputs">
+            <summary>
+            Whether to accept full and abbreviated month names in date input components.
+            </summary>
+            <remarks>
+            The default is <c>true</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.AddNovalidateAttributeToForms">
+            <summary>
+            Whether to add a <c>novalidate</c> attribute to <c>form</c> elements.
+            </summary>
+            <remarks>
+            The default is <c>true</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.StaticAssetsContentPath">
+            <summary>
+            The path to serve GOV.UK Frontend static assets at.
+            </summary>
+            <remarks>
+            <para>If this is <c>null</c> the static assets will not be served.</para>
+            <para>The default is <c>/assets</c>.</para>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.CompiledContentPath">
+            <summary>
+            The path to serve GOV.UK Frontend compiled JavaScript and CSS at.
+            </summary>
+            <remarks>
+            <para>If this is <c>null</c> the compiled assets will not be served.</para>
+            <para>If the is <c></c> (the default) the compiled assets will be served at the root.</para>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.DefaultButtonPreventDoubleClick">
+            <summary>
+            The default value for <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.PreventDoubleClick"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.DefaultFileUploadJavaScriptEnhancements">
+            <summary>
+            The default value for <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.JavaScriptEnhancements"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.GetCspNonceForRequest">
+            <summary>
+            A delegate for retrieving a CSP nonce for the current request.
+            </summary>
+            <remarks>
+            This is invoked when the page template utilities generate style and script import tags to add a <c>nonce</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.PrependErrorSummaryToForms">
+            <summary>
+            Whether to prepend an error summary component to forms.
+            </summary>
+            <remarks>
+            <para>This can be overriden on a form-by-form basis by setting the <c>gfa-prepend-error-summary</c> attribute.</para>
+            <para>The default is <c>false</c>.</para>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.ErrorSummaryGeneration">
+            <summary>
+            Configures automatic error summary generation.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.PrependErrorToTitle">
+            <summary>
+            Whether to prepend &quot;Error: &quot; to the <c>&lt;title&gt;</c> element when an error summary has been created in the current view.
+            </summary>
+            <remarks>
+            The default is <c>true</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.RegisterDateInputModelConverter(System.Type,GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter)">
+            <summary>
+            Registers a <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter"/> for the specified <see cref="T:System.Type"/>.
+            </summary>
+            <param name="modelType">The <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter"/>.</param>
+            <param name="converter">The <see cref="T:System.Type"/>.</param>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.HtmlContentExtensions">
+            <summary>
+            Utility extensions for <see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.HtmlContentExtensions.ToHtmlString(Microsoft.AspNetCore.Html.IHtmlContent,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Returns a <see cref="T:System.String"/> of HTML with the contents of the <paramref name="content"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.HtmlHelperExtensions">
+            <summary>
+            GOV.UK Frontend extensions for <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.HtmlHelperExtensions.GetCspScriptHashes(Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper)">
+            <summary>
+            Gets all the CSP hashes for the inline scripts used in the page template.
+            </summary>
+            <param name="htmlHelper">The <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper"/>.</param>
+            <returns>A list of hashes to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.HtmlHelperExtensions.GetJsEnabledScriptCspHash(Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper)">
+            <summary>
+            Gets the CSP hash for the script that adds a <c>js-enabled</c> CSS class.
+            </summary>
+            <param name="htmlHelper">The <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper"/>.</param>
+            <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.HtmlHelperExtensions.GovUkFrontendJsEnabledScript(Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper,System.String)">
+            <summary>
+            Generates the script that adds a <c>js-enabled</c> CSS class.
+            </summary>
+            <remarks>
+            <para>
+            The contents of this property should be inserted at the beginning of the <c>body</c> tag.
+            </para>
+            <para>
+            Use the <see cref="M:GovUk.Frontend.AspNetCore.HtmlHelperExtensions.GetJsEnabledScriptCspHash(Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper)"/> method to retrieve a CSP hash if you are not specifying <paramref name="cspNonce"/>.
+            </para>
+            </remarks>
+            <param name="htmlHelper">The <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper"/>.</param>
+            <param name="cspNonce">The CSP nonce attribute to be added to the generated <c>script</c> tag.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> containing the <c>script</c> tag.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.HtmlHelperExtensions.GovUkFrontendScriptImports(Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper,System.String)">
+            <summary>
+            Generates the script that adds a <c>js-enabled</c> CSS class.
+            </summary>
+            <remarks>
+            <para>
+            The contents of this property should be inserted at the beginning of the <c>body</c> tag.
+            </para>
+            <para>
+            Use the <see cref="M:GovUk.Frontend.AspNetCore.HtmlHelperExtensions.GetJsEnabledScriptCspHash(Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper)"/> method to retrieve a CSP hash if you are not specifying <paramref name="cspNonce"/>.
+            </para>
+            </remarks>
+            <param name="htmlHelper">The <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper"/>.</param>
+            <param name="cspNonce">The CSP nonce attribute to be added to the generated <c>script</c> tag.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> containing the <c>script</c> tag.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.HtmlHelperExtensions.GovUkFrontendStyleImports(Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper)">
+            <summary>
+            Generates the HTML that imports the GOV.UK Frontend library styles.
+            </summary>
+            <remarks>
+            The contents of this property should be inserted in the <c>head</c> tag.
+            </remarks>
+            <param name="htmlHelper">The <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper"/>.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> containing the <c>link</c> tags.</returns>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues">
+            <summary>
+            Represents the day, month and year of a date.
+            </summary>
+            <param name="Day">The day.</param>
+            <param name="Month">The month.</param>
+            <param name="Year">The year.</param>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues.#ctor(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Represents the day, month and year of a date.
+            </summary>
+            <param name="Day">The day.</param>
+            <param name="Month">The month.</param>
+            <param name="Year">The year.</param>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues.Day">
+            <summary>The day.</summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues.Month">
+            <summary>The month.</summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues.Year">
+            <summary>The year.</summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinder">
+            <summary>
+            An <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder"/> for binding Date input components.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinder.#ctor(GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinder"/> class.
+            </summary>
+            <param name="modelConverter">The <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter"/>.</param>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinder.BindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinderProvider">
+            <summary>
+            An <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderProvider"/> for binding Date input components.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinderProvider.#ctor(Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
+            <summary>
+            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinderProvider"/>.
+            </summary>
+            <param name="optionsAccessor">The options.</param>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelBinderProvider.GetBinder(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderProviderContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter">
+            <summary>
+            Converts date parts to and from a model type.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter.DefaultItemTypes">
+            <summary>
+            The <see cref="T:GovUk.Frontend.AspNetCore.DateInputItemTypes"/> supported by this <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter"/>.
+            </summary>
+            <remarks>
+            <para>If this converter can support multiple <see cref="T:GovUk.Frontend.AspNetCore.DateInputItemTypes"/> combinations
+            then this property should be set to <see langword="null"/>.</para>
+            <para>The default is <c>DateInputItemTypes.DayMonthAndYear</c>.</para>
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter.ConvertToModel(GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertToModelContext)">
+            <summary>
+            Converts a <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues"/> to a model value.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter.ConvertFromModel(GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertFromModelContext)">
+            <summary>
+            Converts a model value to <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter.ConvertToModelCore(GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertToModelContext)">
+            <summary>
+            Converts a <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues"/> to a model value.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter.ConvertFromModelCore(GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertFromModelContext)">
+            <summary>
+            Converts a model value to <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertToModelContext">
+            <summary>
+            Contains information used for converting a date input's item values to a model.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertToModelContext.#ctor(System.Type,GovUk.Frontend.AspNetCore.DateInputItemTypes,GovUk.Frontend.AspNetCore.ModelBinding.DateInputItemValues)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertToModelContext"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertToModelContext.ModelType">
+            <summary>
+            The <see cref="T:System.Type"/> to convert to.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertToModelContext.ItemTypes">
+            <summary>
+            The <see cref="T:GovUk.Frontend.AspNetCore.DateInputItemTypes"/> in the date input.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertToModelContext.ItemValues">
+            <summary>
+            The values of the date input to convert.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertFromModelContext">
+            <summary>
+            Contains information used for converting a model to a date input's item values.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertFromModelContext.#ctor(System.Type,GovUk.Frontend.AspNetCore.DateInputItemTypes,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertFromModelContext"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertFromModelContext.ModelType">
+            <summary>
+            The <see cref="T:System.Type"/> to convert from.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertFromModelContext.ItemTypes">
+            <summary>
+            The <see cref="T:GovUk.Frontend.AspNetCore.DateInputItemTypes"/> in the date input.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.ModelBinding.DateInputConvertFromModelContext.Model">
+            <summary>
+            The value to convert.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors">
+            <summary>
+            The errors that occurred when parsing the fields of a date input component.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors.None">
+            <summary>
+            No errors.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors.MissingYear">
+            <summary>
+            The year field is missing.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors.InvalidYear">
+            <summary>
+            The year field is invalid.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors.MissingMonth">
+            <summary>
+            The month field is missing.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors.InvalidMonth">
+            <summary>
+            The month field is invalid.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors.MissingDay">
+            <summary>
+            The day field is missing.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors.InvalidDay">
+            <summary>
+            The day field is invalid.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrorsExtensions">
+            <summary>
+            Provides extension methods for working with <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrorsExtensions.GetItemsWithError(GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors)">
+            <summary>
+            Groups the specified <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputParseErrors"/> by the affected date input components.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.NotificationBannerType">
+            <summary>
+            Represents the type of notification to render in a GDS notification banner component.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.NotificationBannerType.Default">
+            <summary>
+            The default notification type.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.NotificationBannerType.Success">
+            <summary>
+            A success notification type.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.PageTemplateHelper">
+            <summary>
+            Contains methods for generating script and stylesheet imports for the GDS page template.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.#ctor(Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
+            <summary>
+            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.PageTemplateHelper"/> class.
+            </summary>
+            <param name="optionsAccessor">The options.</param>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.PageTemplateHelper.GovUkFrontendVersion">
+            <summary>
+            Gets the version of the GOV.UK Frontend library.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GenerateJsEnabledScript(System.String)">
+            <summary>
+            Generates the script that adds a <c>js-enabled</c> CSS class.
+            </summary>
+            <remarks>
+            <para>
+            The contents of this property should be inserted at the beginning of the <c>body</c> tag.
+            </para>
+            <para>
+            Use the <see cref="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GetJsEnabledScriptCspHash"/> method to retrieve a CSP hash if you are not specifying <paramref name="cspNonce"/>.
+            </para>
+            </remarks>
+            <param name="cspNonce">The CSP nonce attribute to be added to the generated <c>script</c> tag.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> containing the <c>script</c> tag.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GenerateScriptImports(System.String)">
+            <summary>
+            Generates the script that adds a <c>js-enabled</c> CSS class.
+            </summary>
+            <remarks>
+            <para>
+            The contents of this property should be inserted at the beginning of the <c>body</c> tag.
+            </para>
+            <para>
+            Use the <see cref="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GetJsEnabledScriptCspHash"/> method to retrieve a CSP hash if you are not specifying <paramref name="cspNonce"/>.
+            </para>
+            </remarks>
+            <param name="cspNonce">The CSP nonce attribute to be added to the generated <c>script</c> tag.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> containing the <c>script</c> tag.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GenerateScriptImports(Microsoft.AspNetCore.Http.PathString,System.String)">
+            <summary>
+            Generates the script that adds a <c>js-enabled</c> CSS class.
+            </summary>
+            <remarks>
+            <para>
+            The contents of this property should be inserted at the beginning of the <c>body</c> tag.
+            </para>
+            <para>
+            Use the <see cref="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GetJsEnabledScriptCspHash"/> method to retrieve a CSP hash if you are not specifying <paramref name="cspNonce"/>.
+            </para>
+            </remarks>
+            <param name="pathBase">The base path that the script is hosted under.</param>
+            <param name="cspNonce">The CSP nonce attribute to be added to the generated <c>script</c> tag.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> containing the <c>script</c> tag.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GenerateStyleImports">
+            <summary>
+            Generates the HTML that imports the GOV.UK Frontend library styles.
+            </summary>
+            <remarks>
+            The contents of this property should be inserted in the <c>head</c> tag.
+            </remarks>
+            <returns><see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> containing the <c>link</c> tags.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GenerateStyleImports(Microsoft.AspNetCore.Http.PathString)">
+            <summary>
+            Generates the HTML that imports the GOV.UK Frontend library styles.
+            </summary>
+            <remarks>
+            The contents of this property should be inserted in the <c>head</c> tag.
+            </remarks>
+            <param name="pathBase">The base path that the stylesheet is hosted under.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Html.IHtmlContent"/> containing the <c>link</c> tags.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GetCspScriptHashes">
+            <summary>
+            Gets all the CSP hashes for the inline scripts used in the page template.
+            </summary>
+            <returns>A list of hashes to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GetCspScriptHashes(Microsoft.AspNetCore.Http.PathString)">
+            <summary>
+            Gets all the CSP hashes for the inline scripts used in the page template.
+            </summary>
+            <param name="pathBase">The base path that the script is hosted under.</param>
+            <returns>A list of hashes to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GetJsEnabledScriptCspHash">
+            <summary>
+            Gets the CSP hash for the script that adds a <c>js-enabled</c> CSS class.
+            </summary>
+            <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GetInitScriptCspHash">
+            <summary>
+            Gets the CSP hash for the GOV.UK Frontend initialization script.
+            </summary>
+            <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.GetInitScriptCspHash(Microsoft.AspNetCore.Http.PathString)">
+            <summary>
+            Gets the CSP hash for the GOV.UK Frontend initialization script.
+            </summary>
+            <param name="pathBase">The base path that the script is hosted under.</param>
+            <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.RewriteCompiledAssetsMiddleware.GetCssAssetUrlReferencePattern">
+            <remarks>
+            Pattern:<br/>
+            <code>url\\(/assets/(.*?)\\)</code><br/>
+            Explanation:<br/>
+            <code>
+            ○ Match the string "url(/assets/".<br/>
+            ○ 1st capture group.<br/>
+                ○ Match a character other than '\n' lazily any number of times.<br/>
+            ○ Match ')'.<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagBuilderExtensions">
+            <summary>
+            Utility extensions for <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.TagBuilder"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagBuilderExtensions.MergeCssClass(Microsoft.AspNetCore.Mvc.Rendering.TagBuilder,System.String)">
+            <summary>
+            Adds a CSS class to the list of CSS classes in the tag if it does not already specified.
+            If there are already CSS classes on the tag then a space character and the new class will be appended to
+            the existing list.
+            </summary>
+            <param name="tagBuilder">The <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.TagBuilder"/> to add the CSS class name to.</param>
+            <param name="value">The CSS class name to add.</param>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelperAttributeListExtensions">
+            <summary>
+            Utility extensions for <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttributeList"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelperAttributeListExtensions.ToAttributeDictionary(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttributeList)">
+            <summary>
+            Creates an <see cref="T:Microsoft.AspNetCore.Mvc.ViewFeatures.AttributeDictionary"/> from a <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttributeList"/>.
+            </summary>
+            <param name="list">The <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttributeList"/> to retrieve attributes from.</param>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelperContentExtensions">
+            <summary>
+            Utility extensions for <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContent"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelperContentExtensions.Snapshot(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContent)">
+            <summary>
+            Creates a snapshot of the content in a specified <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContent"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemContentTagHelper">
+            <summary>
+            Represents the content in a GDS accordion component item.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemContentTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemHeadingTagHelper">
+            <summary>
+            Represents the heading in a GDS accordion component item.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemHeadingTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemSummaryTagHelper">
+            <summary>
+            Represents the summary in a GDS accordion component item.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemSummaryTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemTagHelper">
+            <summary>
+            Represents an item in a GDS accordion component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemTagHelper.Expanded">
+            <summary>
+            Whether the section should be expanded upon initial load.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.AccordionItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper">
+            <summary>
+            Generates a GDS accordion component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.HeadingLevel">
+            <summary>
+            The heading level.
+            </summary>
+            <remarks>
+            Must be between <c>1</c> and <c>6</c> (inclusive). The default is <c>2</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.HideAllSectionsText">
+            <summary>
+            The text content of the &quot;Hide all sections&quot; button at the top of the accordion when all sections
+            are expanded.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.HideSectionText">
+            <summary>
+            The text content of the &quot;Hide&quot; button within each section of the accordion, which is visible when the
+            section is expanded.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.HideSectionAriaLabelText">
+            <summary>
+            The text made available to assistive technologies, like screen-readers, as the final part of the toggle's
+            accessible name when the section is expanded.
+            </summary>
+            <remarks>
+            The default is <c>&quot;Hide this section&quot;</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the accordion.
+            </summary>
+            <remarks>
+            Must be unique across the domain of your service if <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.RememberExpanded"/> is <c>true</c>.
+            Cannot be <c>null</c> or empty.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.RememberExpanded">
+            <summary>
+            Whether the expanded/collapsed state of the accordion should be saved when a user leaves the page and restored when they return.
+            </summary>
+            <remarks>
+            The default is <c>true</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.ShowAllSectionsText">
+            <summary>
+            The text content of the &quot;Show all sections&quot; button at the top of the accordion, which is visible when the
+            section is collapsed.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.ShowSectionText">
+            <summary>
+            The text content of the &quot;Show&quot; button within each section of the accordion, which is visible when the
+            section is collapsed.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.ShowSectionAriaLabelText">
+            <summary>
+            The text made available to assistive technologies, like screen-readers, as the final part of the toggle's
+            accessible name when the section is collapsed.
+            </summary>
+            <remarks>
+            The defaults is <c>&quot;Show this section&quot;</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.AccordionTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.AnchorTagHelper">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper"/> implementation targeting &lt;a&gt; elements.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.AnchorTagHelper.#ctor(Microsoft.AspNetCore.Mvc.ViewFeatures.IHtmlGenerator)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.BackLinkTagHelper">
+            <summary>
+            Generates a GDS back link component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.BackLinkTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.BackLinkTagHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.BackLinkTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.BreadcrumbsItemTagHelper">
+            <summary>
+            Represents an item in a GDS breadcrumbs component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.BreadcrumbsItemTagHelper.LinkAttributes">
+            <summary>
+            Additional attributes for the generated <c>a</c> element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.BreadcrumbsItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.BreadcrumbsTagHelper">
+            <summary>
+            Generates a GDS breadcrumbs component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.BreadcrumbsTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.BreadcrumbsTagHelper.CollapseOnMobile">
+            <summary>
+            Whether to collapse to the first and last item only on tablet breakpoint and below.
+            </summary>
+            <remarks>
+            If not specified, <see langword="false"/> will be used.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.BreadcrumbsTagHelper.LabelText">
+            <summary>
+            The plain text label identifying the landmark to screen readers.
+            </summary>
+            <remarks>
+            Defaults to <c>Breadcrumb</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.BreadcrumbsTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ButtonLinkTagHelper">
+            <summary>
+            Generates a GDS button component that renders an &lt;a&gt; element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ButtonLinkTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.ButtonLinkTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonLinkTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>button</c> element..
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonLinkTagHelper.IsStartButton">
+            <summary>
+            Whether this button is the main call to action on your service's start page.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ButtonLinkTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper">
+            <summary>
+            Generates a GDS button component that renders a &lt;button&gt; element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.Disabled">
+            <summary>
+            Whether the button should be disabled.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>button</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>button</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.IsStartButton">
+            <summary>
+            Whether this button is the main call to action on your service's start page.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.PreventDoubleClick">
+            <summary>
+            Whether to prevent accidental double clicks on submit buttons from submitting forms multiple times.
+            </summary>
+            <remarks>
+            The default is set for the application in <see cref="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.DefaultButtonPreventDoubleClick"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.Type">
+            <summary>
+            The <c>type</c> attribute for the generated <c>button</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.Value">
+            <summary>
+            The <c>value</c> attribute for the generated <c>button</c> element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper">
+            <summary>
+            Generates a GDS character count component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates an <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.AspFor">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.For">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.AutoComplete">
+            <summary>
+            The <c>autocomplete</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.CountMessageAttributes">
+            <summary>
+            Additional attributes to add to the generated count message hint element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>textarea</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.FormGroupAttributes">
+            <summary>
+            Additional attributes to add to the generated form-group wrapper element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+            <remarks>
+            If not specified then a value is generated from the <c>name</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.IgnoreModelStateErrors">
+            <summary>
+            Whether the <see cref="P:Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateEntry.Errors"/> for the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.AspFor"/> expression should be used
+            to deduce an error message.
+            </summary>
+            <remarks>
+            <para>When there are multiple errors in the <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection"/> the first is used.</para>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.LabelClass">
+            <summary>
+            Additional classes for the generated <c>label</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.MaxLength">
+            <summary>
+            The maximum number of characters the generated <c>textarea</c> may contain.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.MaxWords"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.MaxWords">
+            <summary>
+            The maximum number of words the generated <c>textarea</c> may contain.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.MaxLength"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.Rows">
+            <summary>
+            The <c>rows</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+            <remarks>
+            The default is <c>5</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.Spellcheck">
+            <summary>
+            The <c>spellcheck</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.TextAreaAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>textarea</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.Threshold">
+            <summary>
+            The percentage value of the limit at which point the count message is displayed.
+            </summary>
+            <remarks>
+            If this is specified the count message will be hidden by default.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountValueTagHelper">
+            <summary>
+            Represents the value of a GDS character count component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountValueTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesFieldsetLegendTagHelper">
+            <summary>
+            Represents the legend in a GDS checkboxes component fieldset.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesFieldsetLegendTagHelper.IsPageHeading">
+            <summary>
+            Whether the legend also acts as the heading for the page.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesFieldsetLegendTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesFieldsetTagHelper">
+            <summary>
+            Represents the fieldset in a GDS checkboxes component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesFieldsetTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemConditionalTagHelper">
+            <summary>
+            Represents the conditional reveal of a checkbox item in a GDS checkboxes component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemConditionalTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemDividerTagHelper">
+            <summary>
+            Represents the divider text to separate items in a GDS checkboxes component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemDividerTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemHintTagHelper">
+            <summary>
+            Represents the hint of a checkbox item in a GDS checkboxes component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemHintTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper">
+            <summary>
+            Represents an item in a GDS checkboxes component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.Behavior">
+            <summary>
+            The behavior when the item is checked.
+            If set to <see cref="F:GovUk.Frontend.AspNetCore.CheckboxesItemBehavior.Exclusive"/> implements a 'None of these' type behaviour via JavaScript when checkboxes are clicked.
+            </summary>
+            <remarks>
+            The default is <see cref="F:GovUk.Frontend.AspNetCore.CheckboxesItemBehavior.Default"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.Checked">
+            <summary>
+            Whether the item should be checked.
+            </summary>
+            <remarks>
+            If <c>null</c> and <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is not <c>null</c> on the parent <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper"/> then the value
+            will be computed by comparing the specified model expression with <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.Value"/>.
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            If not specified then a value is generated from the <c>name</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.InputAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.LabelAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>label</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> or <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper.Name"/> is specified on the parent <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.Value">
+            <summary>
+            The <c>value</c> attribute for the item.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper">
+            <summary>
+            Generates a GDS checkboxes component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper.CheckboxesAttributes">
+            <summary>
+            Additional attributes for the container element that wraps the items.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper.IdPrefix">
+            <summary>
+            The prefix to use when generating IDs for the hint, error message and items.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> or <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper.Name"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>input</c> elements.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> or <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper.IdPrefix"/> is specified.
+            </remarks>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputDayLabelTagHelper">
+            <summary>
+            Represents the label in the day item of a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputDayLabelTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemLabelTagHelperBase"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputDayTagHelper">
+            <summary>
+            Represents the day item in a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputDayTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputDayTagHelper"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputErrorMessageTagHelper">
+            <inheritdoc/>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputErrorMessageTagHelper.ErrorItems">
+            <summary>
+            The components of the date that have errors (day, month and/or year).
+            </summary>
+            <remarks>
+            If the value for the parent <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper"/> was specified using <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.For"/>
+            then <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputErrorMessageTagHelper.ErrorItems"/> will be computed from model binding errors.
+            </remarks>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetLegendTagHelper">
+            <summary>
+            Represents the legend in a GDS date input component's fieldset.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetLegendTagHelper.IsPageHeading">
+            <summary>
+            Whether the legend also acts as the heading for the page.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetLegendTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetTagHelper">
+            <summary>
+            Represents the fieldset in a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetTagHelper.DescribedBy">
+            <summary>
+            One or more element IDs to add to the <c>aria-describedby</c> attribute.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemLabelTagHelperBase">
+            <summary>
+            Represents the label in a GDS date input component item.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemLabelTagHelperBase.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemLabelTagHelperBase"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemLabelTagHelperBase.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase">
+            <summary>
+            Represents an item in a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.#ctor(GovUk.Frontend.AspNetCore.DateInputItemTypes,System.String)">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.AutoComplete">
+            <summary>
+            The <c>autocomplete</c> attribute for the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            By default the value will be generated from the parent's <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.Id"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.InputMode">
+            <summary>
+            The <c>inputmode</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            The default is <c>numeric</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            By default the value will be generated from the parent's <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> and/or <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.NamePrefix"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.Pattern">
+            <summary>
+            The <c>pattern</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            The default is <c>[0-9]*</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.Value">
+            <summary>
+            The <c>value</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            This cannot be specified if the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.Value"/> property on the parent is also specified.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputMonthLabelTagHelper">
+            <summary>
+            Represents the label in the month item of a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputMonthLabelTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemLabelTagHelperBase"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputMonthTagHelper">
+            <summary>
+            Represents the month item in a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputMonthTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputMonthTagHelper"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper">
+            <summary>
+            Generates a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions},System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.AspFor">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.For">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.DateInputAttributes">
+            <summary>
+            Additional attributes for the container element that wraps the items.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>input</c> elements.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the main component.
+            </summary>
+            <remarks>
+            Also used to generate an <c>id</c> for each item's <c>input</c> when
+            the corresponding <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemTagHelperBase.Id"/> is not specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.IgnoreModelStateErrors">
+            <summary>
+            Whether the <see cref="P:Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateEntry.Errors"/> for the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.AspFor"/> expression should be used
+            to deduce an error message.
+            </summary>
+            <remarks>
+            <para>When there are multiple errors in the <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection"/> the first is used.</para>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.ItemTypes">
+            <summary>
+            The <see cref="T:GovUk.Frontend.AspNetCore.DateInputItemTypes"/> that this date input contains.
+            </summary>
+            <remarks>
+            This is required when creating a partial date input (e.g. a day and month only)
+            and the value is a <see cref="T:ValueTuple&lt;int, int&gt;"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.NamePrefix">
+            <summary>
+            Optional prefix for the <c>name</c> attribute on each item's <c>input</c>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.Value">
+            <summary>
+            The date to populate the item values with.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputYearLabelTagHelper">
+            <summary>
+            Represents the label in the year item of a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputYearLabelTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemLabelTagHelperBase"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputYearTagHelper">
+            <summary>
+            Represents the year item in a GDS date input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputYearTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputYearTagHelper"/>.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DetailsSummaryTagHelper">
+            <summary>
+            Represents the summary in a GDS details component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DetailsSummaryTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DetailsTagHelper">
+            <summary>
+            Generates a GDS details component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DetailsTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.DetailsTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.DetailsTagHelper.Open">
+            <summary>
+            Whether the details element should be expanded.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DetailsTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DetailsTextTagHelper">
+            <summary>
+            Represents the text in a GDS details component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DetailsTextTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper">
+            <summary>
+            Generates a GDS error message component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper.AspFor">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper.For">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper.VisuallyHiddenText">
+            <summary>
+            The visually hidden prefix used before the error message.
+            </summary>
+            <remarks>
+            The default is <c>&quot;Error&quot;</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ErrorMessageTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryDescriptionTagHelper">
+            <summary>
+            Represents the description in a GDS error summary component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryDescriptionTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper">
+            <summary>
+            Represents an error item in a GDS error summary component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper.#ctor(Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper.AspFor">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper.For">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper.LinkAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>a</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTagHelper">
+            <summary>
+            Generates a GDS error summary component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTagHelper.DisableAutoFocus">
+            <summary>
+            Whether to disable the behavior that focuses the error summary when the page loads.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTitleTagHelper">
+            <summary>
+            Represents the title in the GDS error summary component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ErrorSummaryTitleTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetLegendTagHelper">
+            <summary>
+            Represents the legend in a GDS fieldset component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetLegendTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetLegendTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetLegendTagHelper.IsPageHeading">
+            <summary>
+            Whether the legend also acts as the heading for the page.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetLegendTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetTagHelper">
+            <summary>
+            Generates a GDS fieldset component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetTagHelper.DescribedBy">
+            <summary>
+            One or more element IDs to add to the <c>aria-describedby</c> attribute.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetTagHelper.Role">
+            <summary>
+            The <c>role</c> attribute.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper">
+            <summary>
+            Generates a GDS File upload component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates an <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.AspFor">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.DescribedBy">
+            <summary>
+            One or more element IDs to add to the <c>aria-describedby</c> attribute of the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.For">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            If not specified then a value is generated from the <c>name</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.IgnoreModelStateErrors">
+            <summary>
+            Whether the <see cref="P:Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateEntry.Errors"/> for the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.AspFor"/> expression should be used
+            to deduce an error message.
+            </summary>
+            <remarks>
+            <para>When there are multiple errors in the <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection"/> the first is used.</para>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.InputAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.JavaScriptEnhancements">
+            <summary>
+            Whether to enable JavaScript enhancements for the component.
+            </summary>
+            <remarks>
+            The default is set for the application in <see cref="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.DefaultFileUploadJavaScriptEnhancements"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.LabelClass">
+            <summary>
+            Additional classes for the generated <c>label</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.Multiple">
+            <summary>
+            The <c>multiple</c> attribute for the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormActionTagHelper">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper"/> implementation targeting &lt;button&gt; elements.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormActionTagHelper.#ctor(Microsoft.AspNetCore.Mvc.Routing.IUrlHelperFactory)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper">
+            <summary>
+            Represents the error message in a GDS form group component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper.VisuallyHiddenText">
+            <summary>
+            A visually hidden prefix used before the error message.
+            </summary>
+            <remarks>
+            The default is <c>&quot;Error&quot;</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3">
+            <summary>
+            Represents the error message in a GDS form group component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3.VisuallyHiddenText">
+            <summary>
+            A visually hidden prefix used before the error message.
+            </summary>
+            <remarks>
+            The default is <c>&quot;Error&quot;</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper">
+            <summary>
+            Represents the hint in a GDS form group component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper3">
+            <summary>
+            Represents the hint in a GDS form group component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper3.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper3"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper3.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper">
+            <summary>
+            Represents the label in a GDS form group component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper.IsPageHeading">
+            <summary>
+            Whether the label also acts as the heading for the page.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3">
+            <summary>
+            Represents the label in a GDS form group component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3.IsPageHeading">
+            <summary>
+            Whether the label also acts as the heading for the page.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase">
+            <summary>
+            Base class for tag helpers that generate a form group.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.For">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.IgnoreModelStateErrors">
+            <summary>
+            Whether the <see cref="P:Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateEntry.Errors"/> for the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> expression should be used
+            to deduce an error message.
+            </summary>
+            <remarks>
+            <para>When there are multiple errors in the <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection"/> the first is used.</para>
+            <para>The default is <c>false</c>.</para>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormNovalidateTagHelper">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper"/> implementation targeting &lt;form&gt; elements that adds a <c>novalidate</c> attribute.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormNovalidateTagHelper.#ctor(Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormNovalidateTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormNovalidateTagHelper.Order">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormNovalidateTagHelper.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.GeneratedErrorSummaryTagHelper">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper"/> implementation targeting &lt;form&gt; elements and elements with a 'prepend-error-summary' attribute.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.GeneratedErrorSummaryTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.GeneratedErrorSummaryTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.GeneratedErrorSummaryTagHelper.PrependErrorSummary">
+            <summary>
+            Whether to prepend an error summary component to this form.
+            </summary>
+            <remarks>
+            The default is set for the application in <see cref="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.PrependErrorSummaryToForms"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.GeneratedErrorSummaryTagHelper.GfaPrependErrorSummary">
+            <summary>
+            Whether to prepend an error summary component to this form.
+            </summary>
+            <remarks>
+            The default is set for the application in <see cref="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.PrependErrorSummaryToForms"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.GeneratedErrorSummaryTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.GeneratedErrorSummaryTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.GeneratedErrorSummaryTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper">
+            <summary>
+            Generates a GDS header component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.HomePageUrl">
+            <summary>
+            The URL of the homepage.
+            </summary>
+            <remarks>
+            If not specified, <c>/</c> will be used.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.ContainerAttributes">
+            <summary>
+            Additional attributes to add to the generated container element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.ProductName">
+            <summary>
+            Product name, used when the product name follows on directly from &quot;GOV.UK&quot;. For example, GOV.UK Pay or GOV.UK Design System.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.InsetTextTagHelper">
+            <summary>
+            Generates a GDS inset text component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.InsetTextTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.InsetTextTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.InsetTextTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.InsetTextTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper">
+            <summary>
+            Generates a GDS notification banner component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper.DisableAutoFocus">
+            <summary>
+            Whether to disable the behavior that focuses the notification banner when the page loads.
+            </summary>
+            <remarks>
+            Only applies when <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper.Type"/> is <see cref="F:GovUk.Frontend.AspNetCore.NotificationBannerType.Success"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper.Role">
+            <summary>
+            The <c>role</c> attribute for the notification banner.
+            </summary>
+            <remarks>
+            If <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper.Type"/> is <see cref="F:GovUk.Frontend.AspNetCore.NotificationBannerType.Success"/> then the default is
+            <c>&quot;alert&quot;</c> otherwise <c>&quot;region&quot;</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper.Type">
+            <summary>
+            The type of notification.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTitleTagHelper">
+            <summary>
+            Represents the title in a GDS notification banner component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTitleTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTitleTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTitleTagHelper.HeadingLevel">
+            <summary>
+            The heading level for the notification banner title.
+            </summary>
+            <remarks>
+            Must be between <c>1</c> and <c>6</c> (inclusive). The default is <c>2</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTitleTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the notification banner title.
+            </summary>
+            <remarks>
+            The default is <c>&quot;govuk-notification-banner-title&quot;</c>.
+            Cannot be <c>null</c> or empty.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.NotificationBannerTitleTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PaginationEllipsisItemTagHelper">
+            <summary>
+            Represents an ellipsis item in a GDS pagination component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PaginationEllipsisItemTagHelper.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper">
+            <summary>
+            Represents an item in a GDS pagination component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper.Current">
+            <summary>
+            Whether this item is the current page the user is on.
+            </summary>
+            <remarks>
+            By default this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper.IsCurrent">
+            <summary>
+            Whether this item is the current page the user is on.
+            </summary>
+            <remarks>
+            By default this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper.VisuallyHiddenText">
+            <summary>
+            The visually hidden text for the pagination item.
+            </summary>
+            <remarks>
+            This should include the page number.
+            The default is <c>Page &lt;number&gt;</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PaginationNextTagHelper">
+            <summary>
+            Represents the link to the next page in a GDS pagination component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationNextTagHelper.LabelText">
+            <summary>
+            The optional label that goes underneath the link to the next page, providing further context for the user about where the link goes.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationNextTagHelper.LinkAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>a</c> element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PaginationNextTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PaginationPreviousTagHelper">
+            <summary>
+            Represents the link to the previous page in a GDS pagination component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationPreviousTagHelper.LabelText">
+            <summary>
+            The optional label that goes underneath the link to the previous page, providing further context for the user about where the link goes.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationPreviousTagHelper.LinkAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>a</c> element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PaginationPreviousTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PaginationTagHelper">
+            <summary>
+            Generates a GDS pagination component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PaginationTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.PaginationTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationTagHelper.LandmarkLabel">
+            <summary>
+            The label for the navigation landmark that wraps the pagination.
+            </summary>
+            <remarks>
+            The default is <c>results</c>.
+            Cannot be <c>null</c> or empty.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PaginationTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PanelBodyTagHelper">
+            <summary>
+            Represents the body in a GDS panel component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PanelBodyTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PanelTagHelper">
+            <summary>
+            Generates a GDS panel component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PanelTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.PanelTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PanelTagHelper.HeadingLevel">
+            <summary>
+            The heading level.
+            </summary>
+            <remarks>
+            Must be between <c>1</c> and <c>6</c> (inclusive). The default is <c>1</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PanelTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PanelTitleTagHelper">
+            <summary>
+            Represents the title in a GDS panel component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PanelTitleTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper">
+            <summary>
+            Generates a GDS phase banner component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagTagHelper">
+            <summary>
+            Represents the tag in a GDS phase banner component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagTagHelper.#ctor">
+            <summary>
+            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagTagHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosFieldsetLegendTagHelper">
+            <summary>
+            Represents the legend in a GDS radios component fieldset.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosFieldsetLegendTagHelper.IsPageHeading">
+            <summary>
+            Whether the legend also acts as the heading for the page.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.RadiosFieldsetLegendTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosFieldsetTagHelper">
+            <summary>
+            Represents the fieldset in a GDS radios component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.RadiosFieldsetTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemConditionalTagHelper">
+            <summary>
+            Represents the conditional reveal of a radios item in a GDS radios component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemConditionalTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemDividerTagHelper">
+            <summary>
+            Represents the divider text to separate items in a GDS radios component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemDividerTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemHintTagHelper">
+            <summary>
+            Represents the hint of a radios item in a GDS radios component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemHintTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper">
+            <summary>
+            Represents an item in a GDS radios component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesItemTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.Checked">
+            <summary>
+            Whether the item should be checked.
+            </summary>
+            <remarks>
+            If <c>null</c> and <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is not <c>null</c> on the parent <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper"/> then the value
+            will be computed by comparing the specified model expression with <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.Value"/>.
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            The default is <c>false</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            If not specified then a value is generated from the <c>name</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.InputAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.LabelAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>label</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.Value">
+            <summary>
+            The <c>value</c> attribute for the item.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.RadiosItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper">
+            <summary>
+            Generates a GDS checkboxes component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper.IdPrefix">
+            <summary>
+            The prefix to use when generating IDs for the hint, error message and items.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> or <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper.Name"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>input</c> elements.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> or <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper.IdPrefix"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.RadiosTagHelper.RadiosAttributes">
+            <summary>
+            Additional attributes for the container element that wraps the items.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper">
+            <summary>
+            Represents an item in a GDS select component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>option</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper.Selected">
+            <summary>
+            Whether the item should be selected.
+            </summary>
+            <remarks>
+            If not specified and <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is not <c>null</c> on the parent
+            <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper"/> then this value will be computed by comparing the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper.Value"/>
+            attribute with the model expression's value.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper.Value">
+            <summary>
+            The <c>value</c> attribute for the item.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SelectItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper">
+            <summary>
+            Generates a GDS select component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper.DescribedBy">
+            <summary>
+            One or more element IDs to add to the <c>aria-describedby</c> attribute of the generated <c>select</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>select</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>select</c> element.
+            </summary>
+            <remarks>
+            If not specified then a value is generated from the <c>name</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper.LabelClass">
+            <summary>
+            Additional classes for the generated <c>label</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>select</c> element.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SelectTagHelper.SelectAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>select</c> element.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SkipLinkTagHelper">
+            <summary>
+            Generates a GDS skip link component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SkipLinkTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.BackLinkTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SkipLinkTagHelper.Href">
+            <summary>
+            The <c>href</c> attribute for the link.
+            </summary>
+            <remarks>
+            The default is <c>&quot;#content&quot;</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SkipLinkTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardActionsTagHelper">
+            <summary>
+            Represents the actions wrapper in a GDS summary card.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardActionsTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardActionTagHelper">
+            <summary>
+            Represents an action in a GDS summary card.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardActionTagHelper.VisuallyHiddenText">
+            <summary>
+            The visually hidden text for the action link.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardActionTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardSummaryListTagHelper">
+            <summary>
+            Represents the summary list within a GDS summary card component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardSummaryListTagHelper.Order">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardSummaryListTagHelper.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardTagHelper">
+            <summary>
+            Generates a GOV.UK summary card component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardTagHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardTitleTagHelper">
+            <summary>
+            Represents the title in the GDS summary card component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardTitleTagHelper.HeadingLevel">
+            <summary>
+            The heading level.
+            </summary>
+            <remarks>
+            Must be between <c>1</c> and <c>6</c> (inclusive). The default is <c>2</c>.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryCardTitleTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowActionsTagHelper">
+            <summary>
+            Represents the actions wrapper in a GDS summary list component row.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowActionsTagHelper.#ctor">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowActionsTagHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowActionsTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowActionTagHelper">
+            <summary>
+            Represents an action in a GDS summary list row.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowActionTagHelper.VisuallyHiddenText">
+            <summary>
+            The visually hidden text for the action link.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowActionTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowKeyTagHelper">
+            <summary>
+            Represents the value in a GDS summary list component row.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowKeyTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowTagHelper">
+            <summary>
+            Represents a row in a GDS summary list component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowValueTagHelper">
+            <summary>
+            Represents the value in a GDS summary list component row.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListRowValueTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListTagHelper">
+            <summary>
+            Generates a GDS summary list component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListTagHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.SummaryListTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TabsItemTagHelper">
+            <summary>
+            Represents an item in a GDS tabs component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TabsItemTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the tab.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper.IdPrefix"/> is specified on the parent <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TabsItemTagHelper.Label">
+            <summary>
+            The text label of the tab.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TabsItemTagHelper.LinkAttributes">
+            <summary>
+            Additional attributes to add to the generated link to this tab.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TabsItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper">
+            <summary>
+            Generates a GDS tabs component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the main tabs component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper.IdPrefix">
+            <summary>
+            The prefix to use when generating IDs for the items.
+            </summary>
+            <remarks>
+            Required unless every item specifies the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.TabsItemTagHelper.Id"/>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper.Title">
+            <summary>
+            The title for the tabs table of contents.
+            </summary>
+            <remarks>
+            The default is 'Contents'.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TabsTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TagTagHelper">
+            <summary>
+            Generates a GDS tag component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TagTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.TagTagHelper"/>.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TagTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper">
+            <summary>
+            Generates a GDS textarea component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.#ctor">
+            <summary>
+            Creates an <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.AutoComplete">
+            <summary>
+            The <c>autocomplete</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>textarea</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+            <remarks>
+            If not specified then a value is generated from the <c>name</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.LabelClass">
+            <summary>
+            Additional classes for the generated <c>label</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.Rows">
+            <summary>
+            The <c>rows</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+            <remarks>
+            The default is <c>5</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.Spellcheck">
+            <summary>
+            The <c>spellcheck</c> attribute for the generated <c>textarea</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaTagHelper.TextAreaAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>textarea</c> element.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaValueTagHelper">
+            <summary>
+            Represents the value of a GDS character count component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaValueTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputPrefixTagHelper">
+            <summary>
+            Represents the prefix element in a GDS input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TextInputPrefixTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputSuffixTagHelper">
+            <summary>
+            Represents the suffix element in a GDS input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TextInputSuffixTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper">
+            <summary>
+            Generates a GDS input component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates an <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.AspFor">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.For">
+            <summary>
+            An expression to be evaluated against the current model.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.Autocapitalize">
+            <summary>
+            The <c>autocapitalize</c> attribute for the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.AutoComplete">
+            <summary>
+            The <c>autocomplete</c> attribute for the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.DescribedBy">
+            <summary>
+            One or more element IDs to add to the <c>aria-describedby</c> attribute of the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.Disabled">
+            <summary>
+            Whether the <c>disabled</c> attribute should be added to the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.Id">
+            <summary>
+            The <c>id</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            If not specified then a value is generated from the <c>name</c> attribute.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.IgnoreModelStateErrors">
+            <summary>
+            Whether the <see cref="P:Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateEntry.Errors"/> for the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.AspFor"/> expression should be used
+            to deduce an error message.
+            </summary>
+            <remarks>
+            <para>When there are multiple errors in the <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection"/> the first is used.</para>
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.InputAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.InputWrapperAttributes">
+            <summary>
+            Additional attributes to add to the element that wraps the <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.LabelClass">
+            <summary>
+            Additional classes for the generated <c>label</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is specified.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.InputMode">
+            <summary>
+            The <c>inputmode</c> attribute for the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.Pattern">
+            <summary>
+            The <c>pattern</c> attribute for the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.Spellcheck">
+            <summary>
+            The <c>spellcheck</c> attribute for the generated <c>input</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.Type">
+            <summary>
+            The <c>type</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            The default is <c>&quot;text&quot;</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.Value">
+            <summary>
+            The <c>value</c> attribute for the generated <c>input</c> element.
+            </summary>
+            <remarks>
+            If not specified and <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> is not <c>null</c> then the value
+            for the specified model expression will be used.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TextInputTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper"/> implementation targeting &lt;title&gt; elements.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.#ctor(Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.ErrorPrefix">
+            <summary>
+            The prefix to add to the <c>title</c> when the page has errors.
+            </summary>
+            <remarks>
+             The default is <c>Error:</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.GfaErrorPrefix">
+            <summary>
+            The prefix to add to the <c>title</c> when the page has errors.
+            </summary>
+            <remarks>
+             The default is <c>Error:</c>.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.ViewContext"/> of the executing view.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.WarningTextTagHelper">
+            <summary>
+            Generates a GDS warning text component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.WarningTextTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.WarningTextTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.WarningTextTagHelper.IconFallbackText">
+            <summary>
+            The fallback text for the icon.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.WarningTextTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.Validation.MaxWordsAttribute">
+            <summary>
+            Specifies the maximum number of words allowed in a property.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.Validation.MaxWordsAttribute.#ctor(System.Int32)">
+            <summary>
+            Validation attribute to assert a string property does not exceed a maximum number of words.
+            </summary>
+            <param name="words">The maximum allowable number of words.</param>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.Validation.MaxWordsAttribute.Words">
+            <summary>
+            Gets the maximum allowable number of words.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.Validation.MaxWordsAttribute.IsValid(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.Validation.MaxWordsValidator">
+            <summary>
+            Helper class to validate strings are no larger than a specified number of words.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.Validation.MaxWordsValidator.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.Validation.MaxWordsValidator"/> class.
+            </summary>
+            <param name="maxWords">The maximum allowable number of words</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="maxWords"/> argument is not a positive integer.</exception>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.Validation.MaxWordsValidator.MaxWords">
+            <summary>
+            Gets the maximum allowable number of words.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.Validation.MaxWordsValidator.IsValid(System.String)">
+            <summary>
+            Validates the specified value.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <returns>A value indicating whether validation was successful.</returns>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="value"/> argument is null.</exception>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the GetCssAssetUrlReferencePattern method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.GetCssAssetUrlReferencePattern_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
+            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
+        </member>
+    </members>
+</doc>

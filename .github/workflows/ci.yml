@@ -20,17 +20,16 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-
-    name: "Build ${{ matrix.os }}"
-    runs-on: ${{ matrix.os }}
+    name: "Build & package"
+    runs-on: ubuntu-latest
     env:
       DOTNET_CLI_WORKLOAD_UPDATE_NOTIFY_DISABLE: true
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # required for minver to create the right version number
+          filter: tree:0
 
       - uses: extractions/setup-just@v2
 
@@ -60,27 +59,6 @@ jobs:
           just conformance-tests --configuration Release --no-build
           just integration-tests --configuration Release --no-build
 
-  package:
-    name: "Package"
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # required for minver to create the right version number
-          filter: tree:0
-
-      - uses: extractions/setup-just@v2
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            8.0.x
-
-      - name: Install tools
-        run: just install-tools
-
       - name: Pack
         id: package
         run: just pack --configuration Release
@@ -96,7 +74,7 @@ jobs:
   release:
     name: "Release"
     runs-on: ubuntu-latest
-    needs: package
+    needs: build
     if: startsWith(github.ref, 'refs/tags/v')
 
     steps:

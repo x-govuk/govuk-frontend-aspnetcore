@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNavigationNavTagHelper.TagName)
+public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNavigationNavTagHelper.TagName, ServiceNavigationTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_SetsNavOnContext()
@@ -70,5 +70,51 @@ public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNav
         AssertContainsAttributes(attributes, serviceNavigationContext.Nav.Attributes);
         Assert.Equal(navStartSlotContent, serviceNavigationContext.Nav.NavigationStartSlot?.Html);
         Assert.Equal(navEndSlotContent, serviceNavigationContext.Nav.NavigationEndSlot?.Html);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_ParentAlreadyHasNav_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var serviceNavigationContext = new ServiceNavigationContext();
+        serviceNavigationContext.Nav = new ServiceNavigationNavContext();
+
+        var context = CreateTagHelperContext(contexts: serviceNavigationContext);
+
+        var output = CreateTagHelperOutput();
+
+        var tagHelper = new ServiceNavigationNavTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_ParentHasEndSlot_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var serviceNavigationContext = new ServiceNavigationContext();
+        serviceNavigationContext.EndSlot = new("End slot", ServiceNavigationEndTagHelper.TagName);
+
+        var context = CreateTagHelperContext(contexts: serviceNavigationContext);
+
+        var output = CreateTagHelperOutput();
+
+        var tagHelper = new ServiceNavigationNavTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal($"<{TagName}> must be specified before <{ServiceNavigationEndTagHelper.TagName}>.", ex.Message);
     }
 }

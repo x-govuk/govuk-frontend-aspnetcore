@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ServiceNavigationEndTagHelperTests() : TagHelperTestBase(ServiceNavigationEndTagHelper.TagName)
+public class ServiceNavigationEndTagHelperTests() : TagHelperTestBase(ServiceNavigationEndTagHelper.TagName, ServiceNavigationTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_SetsEndSlotOnContext()
@@ -32,5 +32,36 @@ public class ServiceNavigationEndTagHelperTests() : TagHelperTestBase(ServiceNav
 
         // Assert
         Assert.Equal(content, serviceNavigationContext.EndSlot?.Html);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_ParentAlreadyHasEndSlot_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var content = "Content";
+
+        var serviceNavigationContext = new ServiceNavigationContext();
+        serviceNavigationContext.EndSlot = new("Existing end slot", ServiceNavigationEndTagHelper.TagName);
+
+        var context = CreateTagHelperContext(contexts: serviceNavigationContext);
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                TagHelperContent tagHelperContent = new DefaultTagHelperContent();
+                tagHelperContent.SetContent(content);
+                return Task.FromResult(tagHelperContent);
+            });
+
+        var tagHelper = new ServiceNavigationEndTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Act
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 }

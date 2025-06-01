@@ -67,6 +67,7 @@ Must be inside a `<govuk-service-navigation-nav>` element.
 | --- | --- | --- |
 | `active` | `bool?` | Whether the user is within this group of pages in the navigation hierarchy. |
 | `current` | `bool?` | Whether the user is currently on this page. This takes precedence over the `active` attribute. |
+| (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
 #### `<govuk-service-navigation-nav-end>`

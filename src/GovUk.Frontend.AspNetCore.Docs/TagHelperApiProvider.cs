@@ -14,6 +14,7 @@ public class TagHelperApiProvider
 
     private readonly TemplatePublishOptions _publishOptions;
     private readonly XDocument _docs;
+    private readonly Type _anchorTagHelper;
 
     public TagHelperApiProvider(TemplatePublishOptions publishOptions)
     {
@@ -21,6 +22,8 @@ public class TagHelperApiProvider
 
         _publishOptions = publishOptions;
         _docs = LoadDocs();
+
+        _anchorTagHelper = typeof(GovUkFrontendOptions).Assembly.GetType($"{TagHelperNamespace}.AnchorTagHelper")!;
     }
 
     public TagHelperApi GetTagHelperApi(string tagHelperName)
@@ -48,7 +51,7 @@ public class TagHelperApiProvider
             .Elements("member")
             .Where(m => m.Attribute("name")!.Value.StartsWith($"P:{tagHelperClassName}"));
 
-        var properties = tagHelperMembers
+        var attributes = tagHelperMembers
             .Select(m =>
             {
                 var memberName = m.Attribute("name")!.Value[(tagHelperClassName.Length + 3)..];
@@ -74,9 +77,15 @@ public class TagHelperApiProvider
                 return new TagHelperApiAttribute(attributeName, typeName, description);
             })
             .OrderBy(m => m.Name)
-            .ToArray();
+            .ToList();
 
-        return new TagHelperApi(tagName, properties, tagStructure, parentTagNames, documentationAttr?.ContentDescription);
+        var canGenerateLinks = _anchorTagHelper.GetCustomAttributes<HtmlTargetElementAttribute>().Any(e => e.Tag == tagName);
+        if (canGenerateLinks)
+        {
+            attributes.Add(new("(link attributes)", "", "See [documentation on links](../links.md) for more information."));
+        }
+
+        return new TagHelperApi(tagName, attributes, tagStructure, parentTagNames, documentationAttr?.ContentDescription);
     }
 
     private static XDocument LoadDocs()
@@ -129,6 +138,10 @@ file static class Extensions
                 if (e.Name == "c")
                 {
                     sb.Append($"`{e.Value}`");
+                }
+                else if (e.Name == "see" && e.Attribute("langword")?.Value is string langword)
+                {
+                    sb.Append($"`{langword}`");
                 }
                 else
                 {

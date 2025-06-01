@@ -119,7 +119,11 @@ public class TemplateRenderer
 
             foreach (var attribute in tagHelperApi.Attributes)
             {
-                sb.Append($"| `{attribute.Name}` | {(!string.IsNullOrEmpty(attribute.Type) ? $"`{attribute.Type}`" : "")} | {attribute.Description} |");
+                var formattedAttributeName = attribute.Name.StartsWith("(") ? attribute.Name : $"`{attribute.Name}`";
+                var formattedType = !string.IsNullOrEmpty(attribute.Type) ? $"`{attribute.Type}`" : "";
+                var formattedDescription = attribute.Description;
+
+                sb.Append($"| {formattedAttributeName} | {formattedType} | {formattedDescription} |");
                 sb.AppendLine();
             }
         }

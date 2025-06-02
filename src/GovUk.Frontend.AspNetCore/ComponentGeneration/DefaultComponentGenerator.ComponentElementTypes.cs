@@ -6,11 +6,14 @@ internal partial class DefaultComponentGenerator
     {
         public const string BackLink = "a";
         public const string CharacterCount = "div";
+        public const string CookieBanner = "div";
+        public const string CookieBannerMessage = "div";
+        public const string CookieBannerMessageActions = "div";
+        public const string CookieBannerMessageContent = "div";
         public const string Breadcrumbs = "nav";
         public const string ErrorSummary = "div";
         public const string FormGroup = "div";
         public const string Header = "header";
-        public const string HeaderNav = "nav";
         public const string InputPrefix = "div";
         public const string InputSuffix = "div";
         public const string InsetText = "div";

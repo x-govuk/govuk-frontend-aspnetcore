@@ -18,11 +18,13 @@ See [the MVC documentation](https://learn.microsoft.com/en-us/aspnet/core/mvc/vi
 The following tag helpers support generating the `href` attribute using these attributes:
 - `<govuk-back-link>`
 - `<govuk-breadcrumbs-item>`
+- `<govuk-cookie-banner-message-action-link>`
 - `<govuk-button-link>`
 - `<govuk-error-summary-item>`
 - `<govuk-pagination-item>`
 - `<govuk-pagination-next>`
 - `<govuk-pagination-previous>`
+- `<govuk-service-navigation-nav-item>`
 - `<govuk-summary-list-row-action>`
 
 ### Example - MVC action

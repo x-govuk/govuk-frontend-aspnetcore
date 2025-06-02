@@ -1524,6 +1524,137 @@
             Required unless <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase.AspFor"/> or <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.CheckboxesTagHelper.IdPrefix"/> is specified.
             </remarks>
         </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionLinkTagHelper">
+            <summary>
+            Represents an action in the message in a GDS cookie banner component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionLinkTagHelper.Text">
+            <summary>
+            The link text.
+            </summary>
+            <remarks>
+            This attribute is required.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionLinkTagHelper.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionsTagHelper">
+            <summary>
+            Represents the actions in a message in a GDS cookie banner component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionsTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionsTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionTagHelper">
+            <summary>
+            Represents an action in the message in a GDS cookie banner component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionTagHelper.Name">
+            <summary>
+            The <c>name</c> attribute for the generated <c>button</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionTagHelper.Text">
+            <summary>
+            The button text.
+            </summary>
+            <remarks>
+            This attribute is required.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionTagHelper.Type">
+            <summary>
+            The <c>type</c> attribute for the generated <c>button</c> element.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionTagHelper.Value">
+            <summary>
+            The <c>value</c> attribute for the generated <c>button</c> element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageActionTagHelper.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageContentTagHelper">
+            <summary>
+            Represents the content in a message in a GDS cookie banner component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageContentTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageHeadingTagHelper">
+            <summary>
+            Represents the heading in a message in a GDS cookie banner component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageHeadingTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageTagHelper">
+            <summary>
+            Represents a message in a GDS cookie banner component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageTagHelper.Hidden">
+            <summary>
+            Whether the message should be hidden.
+            </summary>
+            <remarks>
+            If not specified, <see langword="false" /> is used.
+            </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageTagHelper.Role">
+            <summary>
+            The <c>role</c> attribute for the message.
+            </summary>
+            <remarks>
+            Set role to <c>alert</c> on confirmation messages to allow assistive tech to automatically read the message.
+            You will also need to move focus to the confirmation message using JavaScript you have written yourself.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerMessageTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerTagHelper">
+            <summary>
+            Generates a GDS cookie banner component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerTagHelper.AriaLabel">
+            <summary>
+            The text for the <c>aria-label</c> which labels the cookie banner region.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerTagHelper.Hidden">
+            <summary>
+            Whether the cookie banner should be hidden.
+            </summary>
+            <remarks>
+            If not specified, <see langword="false" /> is used.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.CookieBannerTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc/>
+        </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputDayLabelTagHelper">
             <summary>
             Represents the label in the day item of a GDS date input component.

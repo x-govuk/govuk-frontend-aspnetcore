@@ -2,6 +2,10 @@
     Layout = "_GovUkPageTemplate";
 }
 
+@section BodyStart {
+    @RenderSection("BodyStart", required: false)
+}
+
 @section Header {
     @RenderSection("Header", required: false)
 }

@@ -22,6 +22,12 @@ public record CookieBannerOptionsMessage
     public TemplateString? Role { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? HeadingAttributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ContentAttributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ActionsAttributes { get; set; }
 }
 
 public record CookieBannerOptionsMessageAction

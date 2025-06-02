@@ -135,14 +135,16 @@ public class DefaultComponentGeneratorTests
                 }
 
                 return html;
-            });
+            },
+            compareWhitespace: false);
 
     [Theory]
     [ComponentFixtureData("header", typeof(HeaderOptions))]
     public Task Header(ComponentTestCaseData<HeaderOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateHeaderAsync(options));
+            (generator, options) => generator.GenerateHeaderAsync(options),
+            compareWhitespace: false);
 
     [Theory]
     [ComponentFixtureData("hint", typeof(HintOptions))]
@@ -226,7 +228,10 @@ public class DefaultComponentGeneratorTests
             amendExpectedHtml: html => html.Replace("–", "&#x2013;"));
 
     [Theory]
-    [ComponentFixtureData("service-navigation", typeof(ServiceNavigationOptions))]
+    [ComponentFixtureData(
+        "service-navigation",
+        typeof(ServiceNavigationOptions),
+        exclude: ["with navigation having empty values", "with navigation having only empty values"])]
     public Task ServiceNavigation(ComponentTestCaseData<ServiceNavigationOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,

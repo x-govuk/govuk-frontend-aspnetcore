@@ -1,5 +1,5 @@
 
-[![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-5.9.0-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v5.9.0)
+[![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-5.10.2-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v5.10.2)
 [![CI](https://github.com/x-govuk/govuk-frontend-aspnetcore/workflows/ci/badge.svg)](https://github.com/x-govuk/govuk-frontend-aspnetcore/actions/workflows/ci.yml)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/GovUk.Frontend.AspNetCore)](https://www.nuget.org/packages/GovUk.Frontend.AspNetCore)
 

@@ -11,6 +11,7 @@ public record FooterOptions
     public TemplateString? ContainerClasses { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
+    public bool? Rebrand { get; set; }
 }
 
 public record FooterOptionsMeta

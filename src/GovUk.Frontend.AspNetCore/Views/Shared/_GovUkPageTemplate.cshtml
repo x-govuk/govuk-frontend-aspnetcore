@@ -9,6 +9,8 @@
             $"Asset path is not set. Ensure either {nameof(GovUkFrontendOptions.StaticAssetsContentPath)} on {nameof(GovUkFrontendOptions)} or ViewBag.AssetPath is set.");
     }
 
+    var rebrand = OptionsAccessor.Value.Rebrand;
+
     var assetPath = ViewBag.AssetPath ?? Context.Request.PathBase + OptionsAccessor.Value.StaticAssetsContentPath!.Value;
     var assetVersionQueryParam = $"{RewriteCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendInfo.Version}";
 
@@ -16,22 +18,39 @@
 
     var htmlLang = ViewBag.HtmlLang ?? "en";
     var themeColor = ViewBag.ThemeColor ?? "#0b0c0c";
-    var ogImage = ViewBag.OpengraphImageUrl ?? $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/images/govuk-opengraph-image.png?{assetVersionQueryParam}";
+    var ogImage = ViewBag.OpengraphImageUrl ??
+        rebrand ? $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/rebrand/images/govuk-opengraph-image.png?{assetVersionQueryParam}" :
+        $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/images/govuk-opengraph-image.png?{assetVersionQueryParam}";
 }
 <!DOCTYPE html>
-<html lang="@htmlLang" class="govuk-template @ViewBag.HtmlClasses">
+<html lang="@htmlLang" class="govuk-template @(rebrand ? "govuk-template--rebranded" : "") @ViewBag.HtmlClasses">
 
 <head>
     <meta charset="utf-8">
     <title lang="@ViewBag.TitleLang">@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="@themeColor">
+    @if (rebrand)
+    {
+        <meta name="theme-color" content="#1d70b8">
+    }
+    else
+    {
+        <meta name="theme-color" content="@themeColor">
+    }
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     @if (IsSectionDefined("HeadIcons"))
     {
         @RenderSection("HeadIcons")
+    }
+    else if (rebrand)
+    {
+        <link rel="icon" sizes="48x48" href="@(assetPath)/rebrand/images/favicon.ico">
+        <link rel="icon" sizes="any" href="@(assetPath)/rebrand/images/favicon.svg" type="image/svg+xml">
+        <link rel="mask-icon" href="@(assetPath)/rebrand/images/govuk-icon-mask.svg" color="#1d70b8">
+        <link rel="apple-touch-icon" href="@(assetPath)/rebrand/images/govuk-icon-180.png">
+        <link rel="manifest" href="@(assetPath)/rebrand/manifest.json">
     }
     else
     {

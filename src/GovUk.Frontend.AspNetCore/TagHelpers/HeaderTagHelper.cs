@@ -1,6 +1,7 @@
 using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -18,17 +19,23 @@ public class HeaderTagHelper : TagHelper
     private const string ProductNameAttributeName = "product-name";
 
     private readonly IComponentGenerator _componentGenerator;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
     private readonly HtmlEncoder _encoder;
 
     /// <summary>
     /// Creates a new <see cref="HeaderTagHelper"/>.
     /// </summary>
-    public HeaderTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
+    public HeaderTagHelper(
+        IComponentGenerator componentGenerator,
+        IOptions<GovUkFrontendOptions> optionsAccessor,
+        HtmlEncoder encoder)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
+        ArgumentNullException.ThrowIfNull(optionsAccessor);
         ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
+        _optionsAccessor = optionsAccessor;
         _encoder = encoder;
     }
 
@@ -80,7 +87,8 @@ public class HeaderTagHelper : TagHelper
             ContainerAttributes = containerAttributes,
             Classes = classes,
             Attributes = attributes,
-            UseTudorCrown = true
+            UseTudorCrown = true,
+            Rebrand = _optionsAccessor.Value.Rebrand
         });
 
         output.ApplyComponentHtml(component, _encoder);

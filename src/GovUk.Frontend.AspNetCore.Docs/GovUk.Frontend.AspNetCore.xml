@@ -2388,7 +2388,7 @@
             Generates a GDS header component.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions},System.Text.Encodings.Web.HtmlEncoder)">
             <summary>
             Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper"/>.
             </summary>

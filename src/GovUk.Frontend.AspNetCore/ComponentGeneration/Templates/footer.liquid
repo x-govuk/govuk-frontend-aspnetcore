@@ -1,6 +1,17 @@
+{% from "logo.macro" import govukLogo %}
+
+{% assign _rebrand = params.rebrand | default: false, allow_false: true %}
+
 <footer class="govuk-footer {%- if params.classes %} {{ params.classes }}{% endif %}"
   {{- govukAttributes(params.attributes) }}>
   <div class="govuk-width-container {%- if params.containerClasses %} {{ params.containerClasses }}{% endif %}">
+    {% if _rebrand %}
+      {{- govukLogo(dict(
+        classes = 'govuk-footer__crown',
+        rebrand = true,
+        useLogotype = false
+      )) }}
+    {% endif %}
     {% if params.navigation.size > 0 %}
       <div class="govuk-footer__navigation">
         {% for nav in params.navigation %}

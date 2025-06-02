@@ -50,6 +50,7 @@ public static class GovUkFrontendExtensions
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
         services.AddTransient<PageTemplateHelper>();
         services.AddSingleton<ITagHelperInitializer<ButtonTagHelper>, ButtonTagHelperInitializer>();
+        services.AddSingleton<ITagHelperInitializer<FileUploadTagHelper>, FileUploadTagHelperInitializer>();
 
         services.Configure(setupAction);
 

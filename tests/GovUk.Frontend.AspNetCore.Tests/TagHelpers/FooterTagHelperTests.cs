@@ -36,9 +36,11 @@ public class FooterTagHelperTests() : TagHelperTestBase(FooterTagHelper.TagName)
                 return Task.FromResult(tagHelperContent);
             });
 
+        var options = CreateOptions();
+
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<FooterOptions>(nameof(IComponentGenerator.GenerateFooterAsync));
 
-        var tagHelper = new FooterTagHelper(componentGenerator, HtmlEncoder.Default)
+        var tagHelper = new FooterTagHelper(componentGenerator, options, HtmlEncoder.Default)
         {
             ContainerClass = containerClass
         };
@@ -59,5 +61,32 @@ public class FooterTagHelperTests() : TagHelperTestBase(FooterTagHelper.TagName)
         Assert.Equal(containerClass, actualOptions.ContainerClasses);
         Assert.Equal(className, actualOptions.Classes);
         AssertContainsAttributes(attributes, actualOptions.Attributes);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task ProcessAsync_PassesRebrandFromOptions(bool rebrand)
+    {
+        // Arrange
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var options = CreateOptions(options => options.Rebrand = rebrand);
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FooterOptions>(nameof(IComponentGenerator.GenerateFooterAsync));
+
+        var tagHelper = new FooterTagHelper(componentGenerator, options, HtmlEncoder.Default);
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions);
+        Assert.Equal(rebrand, actualOptions.Rebrand);
     }
 }

@@ -155,6 +155,11 @@ public class GovUkFrontendOptions
     public bool PrependErrorToTitle { get; set; }
 
     /// <summary>
+    /// Whether to use the updated styles for the 25th June 2025 rebrand.
+    /// </summary>
+    public bool Rebrand { get; set; }
+
+    /// <summary>
     /// Registers a <see cref="DateInputModelConverter"/> for the specified <see cref="Type"/>.
     /// </summary>
     /// <param name="modelType">The <see cref="DateInputModelConverter"/>.</param>

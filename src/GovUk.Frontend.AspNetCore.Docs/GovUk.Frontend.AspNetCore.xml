@@ -568,6 +568,11 @@
             The default is <c>true</c>.
             </remarks>
         </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.Rebrand">
+            <summary>
+            Whether to use the updated styles for the 25th June 2025 rebrand.
+            </summary>
+        </member>
         <member name="M:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.RegisterDateInputModelConverter(System.Type,GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter)">
             <summary>
             Registers a <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter"/> for the specified <see cref="T:System.Type"/>.
@@ -2337,7 +2342,7 @@
             Generates a GDS footer component.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions},System.Text.Encodings.Web.HtmlEncoder)">
             <summary>
             Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper"/>.
             </summary>
@@ -2559,7 +2564,7 @@
             Generates a GDS header component.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions},System.Text.Encodings.Web.HtmlEncoder)">
             <summary>
             Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.HeaderTagHelper"/>.
             </summary>

@@ -10,24 +10,32 @@
             $"Asset path is not set. Ensure either {nameof(GovUkFrontendOptions.StaticAssetsContentPath)} on {nameof(GovUkFrontendOptions)} or ViewBag.AssetPath is set.");
     }
 
-    var assetPath = ViewBag.AssetPath ?? Context.Request.PathBase + OptionsAccessor.Value.StaticAssetsContentPath!.Value;
+    var rebrand = OptionsAccessor.Value.Rebrand;
+
+    var assetPath = ViewBag.AssetPath ??
+        Context.Request.PathBase + OptionsAccessor.Value.StaticAssetsContentPath!.Value + (rebrand ? "/assets" : "");
     var assetVersionQueryParam = $"{RewriteCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendInfo.Version}";
 
     var cspNonce = ViewBag.CspNonce as string ?? OptionsAccessor.Value.GetCspNonceForRequest?.Invoke(ViewContext.HttpContext);
 
     var htmlLang = ViewBag.HtmlLang ?? "en";
-    var themeColor = ViewBag.ThemeColor ?? "#0b0c0c";
-    var ogImage = ViewBag.OpengraphImageUrl ?? $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/images/govuk-opengraph-image.png?{assetVersionQueryParam}";
+    var themeColor = ViewBag.ThemeColor ?? (rebrand ? "#1d70b8" : "#0b0c0c");
+    var ogImage = ViewBag.OpengraphImageUrl ??
+        rebrand ? $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/rebrand/images/govuk-opengraph-image.png?{assetVersionQueryParam}" :
+        $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/images/govuk-opengraph-image.png?{assetVersionQueryParam}";
 #pragma warning restore CS0618 // Type or member is obsolete
 }
 <!DOCTYPE html>
-<html lang="@htmlLang" class="govuk-template @ViewBag.HtmlClasses">
+<html lang="@htmlLang" class="govuk-template @(rebrand ? "govuk-template--rebranded" : "") @ViewBag.HtmlClasses">
 
 <head>
     <meta charset="utf-8">
     <title lang="@ViewBag.TitleLang">@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="@themeColor">
+    @if (rebrand)
+    {
+        <meta name="theme-color" content="">
+    }
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 

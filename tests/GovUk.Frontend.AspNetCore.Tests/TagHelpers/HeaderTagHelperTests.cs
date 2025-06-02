@@ -20,9 +20,11 @@ public class HeaderTagHelperTests() : TagHelperTestBase(HeaderTagHelper.TagName)
 
         var output = CreateTagHelperOutput(className: className, attributes: attributes);
 
+        var options = CreateOptions();
+
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<HeaderOptions>(nameof(IComponentGenerator.GenerateHeaderAsync));
 
-        var tagHelper = new HeaderTagHelper(componentGenerator, HtmlEncoder.Default)
+        var tagHelper = new HeaderTagHelper(componentGenerator, options, HtmlEncoder.Default)
         {
             HomePageUrl = homePageUrl,
             ProductName = productName,
@@ -43,5 +45,32 @@ public class HeaderTagHelperTests() : TagHelperTestBase(HeaderTagHelper.TagName)
         AssertContainsAttributes(attributes, actualOptions.Attributes);
         AssertContainsAttributes(containerAttributes, actualOptions.ContainerAttributes);
         Assert.True(actualOptions.UseTudorCrown);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task ProcessAsync_PassesRebrandFromOptions(bool rebrand)
+    {
+        // Arrange
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var options = CreateOptions(options => options.Rebrand = rebrand);
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<HeaderOptions>(nameof(IComponentGenerator.GenerateHeaderAsync));
+
+        var tagHelper = new HeaderTagHelper(componentGenerator, options, HtmlEncoder.Default);
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions);
+        Assert.Equal(rebrand, actualOptions.Rebrand);
     }
 }

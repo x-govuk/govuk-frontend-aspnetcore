@@ -1,5 +1,5 @@
 
-[![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-5.9.0-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v5.9.0)
+[![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-5.10.2-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v5.10.2)
 [![CI](https://github.com/x-govuk/govuk-frontend-aspnetcore/workflows/ci/badge.svg)](https://github.com/x-govuk/govuk-frontend-aspnetcore/actions/workflows/ci.yml)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/GovUk.Frontend.AspNetCore)](https://www.nuget.org/packages/GovUk.Frontend.AspNetCore)
 
@@ -171,6 +171,22 @@ services.AddGovUkFrontend(options =>
 ```
 
 See the `Samples.MvcStarter` project for an example of this working.
+
+
+## GOV.UK rebrand
+
+The 25 June 2025 rebrand can be enabled by setting `Rebrand` to `true` on `GovUkOptions`:
+```cs
+services.AddGovUkFrontend(options => options.Rebrand = true);
+```
+
+If you're using [GovUkPageTemplate](#using-the-_GovUkPageTemplate-razor-view),
+the [GOV.UK header](docs/components/header.md) and
+the [GOV.UK footer](docs/components/footer.md) tag helpers
+you don't need to do anything more.
+
+If not, reference (the GOV.UK Frontend release notes)[https://github.com/alphagov/govuk-frontend/releases/tag/v5.10.0]
+to see what needs to be changed.
 
 
 ## GOV.UK Frontend assets

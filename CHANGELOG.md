@@ -2,7 +2,12 @@
 
 ## Unreleased
 
+Targets GOV.UK Frontend v5.10.2.
+
 ### New features
+
+#### Rebrand support
+The `_GovUkPageTemplate` view and tag helpers for the GOV.UK header and footer components now support the GOV.UK rebrand.
 
 #### New tag helpers
 Tag helpers to create

@@ -1,5 +1,17 @@
-﻿@{
+﻿@using GovUk.Frontend.AspNetCore.Blazor
+@using GovUk.Frontend.AspNetCore.Components
+@inject BlazorComponentGenerator ComponentGenerator
+@{
     ViewBag.Title = "MVC Starter";
 }
 
 <h1 class="govuk-heading-xl">MVC Starter</h1>
+
+@await ComponentGenerator.GenerateWarningTextAsync(new WarningTextOptions()
+{
+    Text = null,
+    Html = "hello world",
+    IconFallbackText = null,
+    Classes = "classes",
+    Attributes = null
+})

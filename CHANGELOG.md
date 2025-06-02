@@ -10,6 +10,11 @@ a [GOV.UK header component](docs/components/header.md) and
 a [service navigation component](docs/components/service-navigation.md)
 have been added.
 
+### Fixes
+
+#### `DefaultFileUploadJavaScriptEnhancements`
+Setting the `DefaultFileUploadJavaScriptEnhancements` to `true` now actually does something.
+
 ## 3.0.1
 
 ### Fixes

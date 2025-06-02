@@ -11,11 +11,11 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         {% if message.headingHtml or message.headingText %}
-        <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m" {{- govukAttributes(message.headingAttributes) }}>
           {{ message.headingHtml | raw | strip | indent: 10 | default: message.headingText }}
         </h2>
         {% endif %}
-        <div class="govuk-cookie-banner__content">
+        <div class="govuk-cookie-banner__content" {{- govukAttributes(message.contentAttributes) }}>
           {% if message.html %}
           {{ message.html | raw | strip | indent: 10 }}
           {% elsif message.text %}
@@ -27,7 +27,7 @@
 
     {% if message.actions %}
 
-    <div class="govuk-button-group">
+    <div class="govuk-button-group" {{- govukAttributes(message.actionsAttributes) }}>
     {% for action in message.actions %}
       {% capture buttonHtml -%}
         {% if action.href == blank or action.type == "button" %}

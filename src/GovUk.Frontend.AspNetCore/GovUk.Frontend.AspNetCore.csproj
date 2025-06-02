@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net8.0</TargetFrameworks>
     <Copyright>Copyright © James Gunn</Copyright>
+    <PackageId>GovUk.Frontend.AspNetCore</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/x-govuk/govuk-frontend-aspnetcore</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -65,6 +66,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NuGetizer" Version="*" />
     <PackageReference Include="SoftCircuits.HtmlMonkey" Version="[3.0.0,]" />
   </ItemGroup>
 

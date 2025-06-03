@@ -71,7 +71,9 @@ async Task PublishDocsAsync()
         Args = ["--no-sandbox", "--disable-setuid-sandbox"],
         DefaultViewport = new ViewPortOptions()
         {
-            DeviceScaleFactor = 2
+            DeviceScaleFactor = 2,
+            Height = 768,
+            Width = 1024
         }
     });
 

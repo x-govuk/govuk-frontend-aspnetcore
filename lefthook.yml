@@ -7,5 +7,4 @@ pre-commit:
 
     - run: just test -c Release
 
-    - run: just publish-docs
-      stage_fixed: true
+    - run: just publish-docs && git add docs/

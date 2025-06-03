@@ -35,11 +35,15 @@ public class TemplateRenderer
 
     public async Task RenderTemplateAsync(string path)
     {
+        var templatePath = Path.GetFullPath(Path.Combine("Templates", path));
+
         var relativePath = Path.Combine(_publishOptions.DocsRepoRelativePath, path.Replace(".liquid", ".md"));
         var fullPath = Path.GetFullPath(relativePath, _publishOptions.RepoAbsolutePath);
-        await using var fs = File.CreateText(fullPath);
 
-        var source = await File.ReadAllTextAsync(Path.Combine("Templates", path));
+        await using var fs = File.CreateText(fullPath);
+        await fs.WriteLineAsync($"<!-- Generated from {Path.GetRelativePath(_publishOptions.RepoAbsolutePath, templatePath).Replace("\\", "/")} -->");
+
+        var source = await File.ReadAllTextAsync(templatePath);
 
         var template = _parser.Parse(source);
 

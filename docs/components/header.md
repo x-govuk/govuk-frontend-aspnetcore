@@ -1,3 +1,4 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/header.liquid -->
 # GOV.UK header
 
 [GOV.UK Design System GOV.UK header component](https://design-system.service.gov.uk/components/header/)

@@ -1,3 +1,4 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/cookie-banner.liquid -->
 # Cookie banner
 
 [GOV.UK Design System cookie banner component](https://design-system.service.gov.uk/components/cookie-banner/)

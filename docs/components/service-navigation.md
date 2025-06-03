@@ -1,3 +1,4 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/service-navigation.liquid -->
 # Service navigation
 
 [GOV.UK Design System service navigation component](https://design-system.service.gov.uk/components/service-navigation/)

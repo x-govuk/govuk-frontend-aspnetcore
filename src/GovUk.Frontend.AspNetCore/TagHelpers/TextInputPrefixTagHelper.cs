@@ -19,11 +19,11 @@ public class TextInputPrefixTagHelper : TagHelper
     {
         var inputContext = (TextInputContext)context.Items[typeof(TextInputContext)];
 
-        var childContent = (await output.GetChildContentAsync()).Snapshot();
+        var content = (await output.GetChildContentAsync()).Snapshot();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -33,7 +33,7 @@ public class TextInputPrefixTagHelper : TagHelper
             new InputOptionsPrefix()
             {
                 Text = null,
-                Html = childContent.ToTemplateString(),
+                Html = content.ToTemplateString(),
                 Classes = classes,
                 Attributes = attributes
             },

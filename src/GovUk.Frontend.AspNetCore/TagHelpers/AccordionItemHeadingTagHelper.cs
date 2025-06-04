@@ -15,14 +15,14 @@ public class AccordionItemHeadingTagHelper : TagHelper
     {
         var itemContext = context.GetContextItem<AccordionItemContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        itemContext.SetHeading(output.Attributes.ToAttributeDictionary(), childContent.Snapshot());
+        itemContext.SetHeading(output.Attributes.ToAttributeDictionary(), content.Snapshot());
 
         output.SuppressOutput();
     }

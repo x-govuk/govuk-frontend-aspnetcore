@@ -18,17 +18,17 @@ public class CheckboxesItemDividerTagHelper : TagHelper
     {
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         checkboxesContext.AddItem(new CheckboxesItemDivider()
         {
             Attributes = output.Attributes.ToAttributeDictionary(),
-            Content = childContent.Snapshot()
+            Content = content.Snapshot()
         });
 
         output.SuppressOutput();

@@ -27,11 +27,11 @@ public class BreadcrumbsItemTagHelper : TagHelper
     {
         var breadcrumbsContext = context.GetContextItem<BreadcrumbsContext>();
 
-        var childContent = (await output.GetChildContentAsync()).Snapshot();
+        var content = (await output.GetChildContentAsync()).Snapshot();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -43,7 +43,7 @@ public class BreadcrumbsItemTagHelper : TagHelper
             ItemAttributes = attributes,
             Href = href,
             Attributes = new AttributeCollection(LinkAttributes),
-            Html = childContent.ToTemplateString()
+            Html = content.ToTemplateString()
         });
 
         output.SuppressOutput();

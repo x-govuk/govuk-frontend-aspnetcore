@@ -15,14 +15,14 @@ public class PanelBodyTagHelper : TagHelper
     {
         var panelContext = context.GetContextItem<PanelContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        panelContext.SetBody(childContent.Snapshot());
+        panelContext.SetBody(content.Snapshot());
 
         output.SuppressOutput();
     }

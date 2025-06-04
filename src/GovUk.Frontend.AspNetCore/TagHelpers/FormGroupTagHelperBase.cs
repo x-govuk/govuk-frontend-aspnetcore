@@ -86,14 +86,14 @@ public abstract class FormGroupTagHelperBase : TagHelper
         using (context.SetScopedContextItem(formGroupContext))
         using (context.SetScopedContextItem(formGroupContext.GetType(), formGroupContext))
         {
-            var childContent = await output.GetChildContentAsync();
+            content = await output.GetChildContentAsync();
 
             if (output.Content.IsModified)
             {
-                childContent = output.Content;
+                content = output.Content;
             }
 
-            content = GenerateFormGroupContent(context, formGroupContext, output, childContent, out haveError);
+            content = GenerateFormGroupContent(context, formGroupContext, output, content, out haveError);
         }
 
         var tagBuilder = CreateTagBuilder(haveError, content, output);
@@ -250,7 +250,7 @@ public abstract class FormGroupTagHelperBase : TagHelper
         TagHelperContext tagHelperContext,
         FormGroupContext formGroupContext,
         TagHelperOutput tagHelperOutput,
-        IHtmlContent childContent,
+        IHtmlContent content,
         out bool haveError);
 
     private protected abstract string ResolveIdPrefix();

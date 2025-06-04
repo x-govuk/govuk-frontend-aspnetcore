@@ -37,28 +37,28 @@ public class FormGroupErrorMessageTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        SetErrorMessage(childContent, context, output);
+        SetErrorMessage(content, context, output);
 
         output.SuppressOutput();
     }
 
-    private protected virtual void SetErrorMessage(TagHelperContent? childContent, TagHelperContext context, TagHelperOutput output)
+    private protected virtual void SetErrorMessage(TagHelperContent? content, TagHelperContext context, TagHelperOutput output)
     {
         var formGroupContext = context.GetContextItem<FormGroupContext>();
 
         formGroupContext.SetErrorMessage(
             VisuallyHiddenText,
             output.Attributes.ToAttributeDictionary(),
-            childContent?.Snapshot());
+            content?.Snapshot());
     }
 }
 
@@ -92,28 +92,28 @@ public class FormGroupErrorMessageTagHelper3 : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        SetErrorMessage(childContent, context, output);
+        SetErrorMessage(content, context, output);
 
         output.SuppressOutput();
     }
 
-    private protected virtual void SetErrorMessage(TagHelperContent? childContent, TagHelperContext context, TagHelperOutput output)
+    private protected virtual void SetErrorMessage(TagHelperContent? content, TagHelperContext context, TagHelperOutput output)
     {
         var formGroupContext3 = context.GetContextItem<FormGroupContext3>();
 
         formGroupContext3.SetErrorMessage(
             VisuallyHiddenText,
             new AttributeCollection(output.Attributes),
-            childContent?.ToTemplateString(),
+            content?.ToTemplateString(),
             output.TagName);
     }
 }

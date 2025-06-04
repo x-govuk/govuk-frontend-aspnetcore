@@ -25,11 +25,11 @@ public class SummaryCardActionTagHelper : TagHelper
     {
         var actionsContext = context.GetContextItem<SummaryCardActionsContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -41,7 +41,7 @@ public class SummaryCardActionTagHelper : TagHelper
         {
             Href = href,
             Text = null,
-            Html = childContent.ToTemplateString(),
+            Html = content.ToTemplateString(),
             VisuallyHiddenText = VisuallyHiddenText,
             Classes = classes,
             Attributes = attributes

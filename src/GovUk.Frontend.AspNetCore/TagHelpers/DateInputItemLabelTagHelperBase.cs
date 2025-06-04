@@ -20,17 +20,17 @@ public abstract class DateInputItemLabelTagHelperBase : TagHelper
     {
         var dateInputItemContext = context.GetContextItem<DateInputItemContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
 
         dateInputItemContext.SetLabel(
-            childContent.ToTemplateString(),
+            content.ToTemplateString(),
             attributes,
             output.TagName);
 

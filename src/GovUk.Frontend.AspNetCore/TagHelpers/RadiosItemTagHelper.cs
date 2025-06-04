@@ -94,15 +94,16 @@ public class RadiosItemTagHelper : TagHelper
 
         var itemContext = new RadiosItemContext();
 
-        TagHelperContent childContent;
+        TagHelperContent content;
+
         using (context.SetScopedContextItem(itemContext))
         {
-            childContent = await output.GetChildContentAsync();
+            content = await output.GetChildContentAsync();
         }
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var resolvedChecked = Checked ??
@@ -131,7 +132,7 @@ public class RadiosItemTagHelper : TagHelper
             Id = Id,
             InputAttributes = InputAttributes.ToAttributeDictionary(),
             LabelAttributes = LabelAttributes.ToAttributeDictionary(),
-            LabelContent = childContent.Snapshot(),
+            LabelContent = content.Snapshot(),
             Value = Value
         });
 

@@ -16,16 +16,16 @@ public class ErrorSummaryDescriptionTagHelper : TagHelper
     {
         var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         errorSummaryContext.SetDescription(
             new AttributeCollection(output.Attributes),
-            childContent.ToTemplateString());
+            content.ToTemplateString());
 
         output.SuppressOutput();
     }

@@ -15,14 +15,14 @@ public class TextAreaValueTagHelper : TagHelper
     {
         var characterCountContext = context.GetContextItem<TextAreaContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        characterCountContext.SetValue(childContent.Snapshot());
+        characterCountContext.SetValue(content.Snapshot());
 
         output.SuppressOutput();
     }

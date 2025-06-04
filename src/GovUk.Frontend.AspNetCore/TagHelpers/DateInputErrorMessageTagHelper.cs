@@ -22,7 +22,7 @@ public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelper3
     [HtmlAttributeName(ErrorItemsAttributeName)]
     public DateInputItemTypes? ErrorItems { get; set; }
 
-    private protected override void SetErrorMessage(TagHelperContent? childContent, TagHelperContext context, TagHelperOutput output)
+    private protected override void SetErrorMessage(TagHelperContent? content, TagHelperContext context, TagHelperOutput output)
     {
         var dateInputContext = context.GetContextItem<DateInputContext>();
 
@@ -32,7 +32,7 @@ public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelper3
             ErrorItems,
             VisuallyHiddenText,
             attributes,
-            childContent?.ToTemplateString(),
+            content?.ToTemplateString(),
             output.TagName);
     }
 }

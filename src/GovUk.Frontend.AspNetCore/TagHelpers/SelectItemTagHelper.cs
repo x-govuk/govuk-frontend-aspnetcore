@@ -79,11 +79,11 @@ public class SelectItemTagHelper : TagHelper
     {
         var selectContext = context.GetContextItem<SelectContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var resolvedSelected = !_selectedSpecified && selectContext.HaveModelExpression ?
@@ -96,7 +96,7 @@ public class SelectItemTagHelper : TagHelper
         selectContext.AddItem(new SelectItem()
         {
             Attributes = output.Attributes.ToAttributeDictionary(),
-            Content = childContent.Snapshot(),
+            Content = content.Snapshot(),
             Disabled = Disabled ?? ComponentGenerator.SelectItemDefaultDisabled,
             Selected = resolvedSelected ?? ComponentGenerator.SelectItemDefaultSelected,
             Value = Value

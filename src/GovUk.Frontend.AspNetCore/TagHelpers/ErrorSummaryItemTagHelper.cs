@@ -89,18 +89,18 @@ public class ErrorSummaryItemTagHelper : TagHelper
         var errorSummaryContext = context.GetContextItem<ErrorSummaryContext>();
         errorSummaryContext.HaveExplicitItems = true;
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         TemplateString itemHtml;
 
         if (output.TagMode == TagMode.StartTagAndEndTag)
         {
-            itemHtml = childContent.ToTemplateString();
+            itemHtml = content.ToTemplateString();
         }
         else
         {

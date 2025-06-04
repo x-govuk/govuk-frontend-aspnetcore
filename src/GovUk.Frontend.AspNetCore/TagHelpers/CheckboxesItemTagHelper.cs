@@ -129,15 +129,15 @@ public class CheckboxesItemTagHelper : TagHelper
 
         var itemContext = new CheckboxesItemContext();
 
-        TagHelperContent childContent;
+        TagHelperContent content;
         using (context.SetScopedContextItem(itemContext))
         {
-            childContent = await output.GetChildContentAsync();
+            content = await output.GetChildContentAsync();
         }
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var resolvedChecked = Checked ??
@@ -167,7 +167,7 @@ public class CheckboxesItemTagHelper : TagHelper
             Id = Id,
             InputAttributes = InputAttributes.ToAttributeDictionary(),
             LabelAttributes = LabelAttributes.ToAttributeDictionary(),
-            LabelContent = childContent.Snapshot(),
+            LabelContent = content.Snapshot(),
             Name = Name,
             Value = Value
         });

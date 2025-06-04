@@ -16,11 +16,12 @@ public class SummaryListRowKeyTagHelper : TagHelper
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         var summaryListRowContext = context.GetContextItem<SummaryListRowContext>();
-        var childContent = await output.GetChildContentAsync();
+
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -29,7 +30,7 @@ public class SummaryListRowKeyTagHelper : TagHelper
         summaryListRowContext.SetKey(new SummaryListOptionsRowKey()
         {
             Text = null,
-            Html = childContent.ToTemplateString(),
+            Html = content.ToTemplateString(),
             Classes = classes,
             Attributes = attributes
         });

@@ -49,16 +49,16 @@ public class FieldsetTagHelper : TagHelper
     {
         var fieldsetContext = new FieldsetContext();
 
-        IHtmlContent childContent;
+        IHtmlContent content;
 
         using (context.SetScopedContextItem(fieldsetContext))
         {
-            childContent = await output.GetChildContentAsync();
+            content = await output.GetChildContentAsync();
         }
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         fieldsetContext.ThrowIfNotComplete();
@@ -69,7 +69,7 @@ public class FieldsetTagHelper : TagHelper
             fieldsetContext.Legend?.IsPageHeading,
             fieldsetContext.Legend?.Content,
             fieldsetContext.Legend?.Attributes,
-            childContent,
+            content,
             output.Attributes.ToAttributeDictionary());
 
         output.TagName = tagBuilder.TagName;

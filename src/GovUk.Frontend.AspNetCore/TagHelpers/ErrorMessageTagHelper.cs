@@ -79,22 +79,22 @@ public class ErrorMessageTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        if (childContent is null && For is null)
+        if (content is null && For is null)
         {
             throw new InvalidOperationException(
                 $"Cannot determine content. Element must contain content if the '{AspForAttributeName}' attribute is not specified.");
         }
 
-        IHtmlContent? resolvedContent = childContent;
+        IHtmlContent? resolvedContent = content;
         if (resolvedContent is null && For is not null)
         {
             var validationMessage = _modelHelper.GetValidationMessage(

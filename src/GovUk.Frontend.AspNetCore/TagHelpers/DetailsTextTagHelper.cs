@@ -17,14 +17,14 @@ public class DetailsTextTagHelper : TagHelper
     {
         var detailsContext = context.GetContextItem<DetailsContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        detailsContext.SetText(output.Attributes.ToAttributeDictionary(), childContent);
+        detailsContext.SetText(output.Attributes.ToAttributeDictionary(), content);
 
         output.SuppressOutput();
     }

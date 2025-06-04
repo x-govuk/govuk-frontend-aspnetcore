@@ -68,7 +68,7 @@ public class RadiosTagHelper : FormGroupTagHelperBase
         TagHelperContext tagHelperContext,
         FormGroupContext formGroupContext,
         TagHelperOutput tagHelperOutput,
-        IHtmlContent childContent,
+        IHtmlContent content,
         out bool haveError)
     {
         var radiosContext = tagHelperContext.GetContextItem<RadiosContext>();

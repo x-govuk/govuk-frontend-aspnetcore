@@ -26,18 +26,18 @@ public class FormGroupHintTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var formGroupContext = context.GetContextItem<FormGroupContext>();
 
-        formGroupContext.SetHint(output.Attributes.ToAttributeDictionary(), childContent?.Snapshot());
+        formGroupContext.SetHint(output.Attributes.ToAttributeDictionary(), content?.Snapshot());
 
         output.SuppressOutput();
     }
@@ -64,20 +64,20 @@ public class FormGroupHintTagHelper3 : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var formGroupContext = context.GetContextItem<FormGroupContext3>();
 
         formGroupContext.SetHint(
             new AttributeCollection(output.Attributes),
-            childContent?.ToTemplateString(),
+            content?.ToTemplateString(),
             output.TagName);
 
         output.SuppressOutput();

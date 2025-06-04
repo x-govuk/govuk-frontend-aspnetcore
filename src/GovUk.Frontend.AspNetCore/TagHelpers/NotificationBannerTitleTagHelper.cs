@@ -67,19 +67,19 @@ public class NotificationBannerTitleTagHelper : TagHelper
     {
         var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();
 
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         notificationBannerContext.SetTitle(
             Id ?? ComponentGenerator.NotificationBannerDefaultTitleId,
             HeadingLevel ?? ComponentGenerator.NotificationBannerDefaultTitleHeadingLevel,
-            childContent?.Snapshot());
+            content?.Snapshot());
 
         output.SuppressOutput();
     }

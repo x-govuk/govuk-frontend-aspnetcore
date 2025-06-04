@@ -15,14 +15,14 @@ public class CheckboxesItemConditionalTagHelper : TagHelper
     {
         var itemContext = context.GetContextItem<CheckboxesItemContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        itemContext.SetConditional(output.Attributes.ToAttributeDictionary(), childContent.Snapshot());
+        itemContext.SetConditional(output.Attributes.ToAttributeDictionary(), content.Snapshot());
 
         output.SuppressOutput();
     }

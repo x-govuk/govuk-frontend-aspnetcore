@@ -62,16 +62,16 @@ public class NotificationBannerTagHelper : TagHelper
     {
         var notificationBannerContext = new NotificationBannerContext();
 
-        TagHelperContent childContent;
+        TagHelperContent content;
 
         using (context.SetScopedContextItem(notificationBannerContext))
         {
-            childContent = await output.GetChildContentAsync();
+            content = await output.GetChildContentAsync();
         }
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var tagBuilder = _htmlGenerator.GenerateNotificationBanner(
@@ -81,7 +81,7 @@ public class NotificationBannerTagHelper : TagHelper
             notificationBannerContext.Title?.Id,
             notificationBannerContext.Title?.HeadingLevel,
             notificationBannerContext.Title?.Content,
-            childContent.Snapshot(),
+            content.Snapshot(),
             output.Attributes.ToAttributeDictionary());
 
         output.TagName = tagBuilder.TagName;

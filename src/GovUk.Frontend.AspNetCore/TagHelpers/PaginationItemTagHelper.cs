@@ -68,11 +68,11 @@ public class PaginationItemTagHelper : TagHelper
     {
         var paginationContext = context.GetContextItem<PaginationContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -86,7 +86,7 @@ public class PaginationItemTagHelper : TagHelper
             Attributes = attributes,
             Href = href,
             Current = current,
-            Number = childContent.ToTemplateString(),
+            Number = content.ToTemplateString(),
             VisuallyHiddenText = VisuallyHiddenText
         });
 

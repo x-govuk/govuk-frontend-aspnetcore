@@ -45,11 +45,11 @@ public class SummaryCardTitleTagHelper : TagHelper
     {
         var cardContext = context.GetContextItem<SummaryCardContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -58,7 +58,7 @@ public class SummaryCardTitleTagHelper : TagHelper
         cardContext.SetTitle(new SummaryListOptionsCardTitle()
         {
             Text = null,
-            Html = childContent.ToTemplateString(),
+            Html = content.ToTemplateString(),
             HeadingLevel = HeadingLevel,
             Classes = classes,
             Attributes = attributes

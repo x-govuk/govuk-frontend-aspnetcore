@@ -19,11 +19,11 @@ public class TextInputSuffixTagHelper : TagHelper
     {
         var inputContext = context.GetContextItem<TextInputContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -33,7 +33,7 @@ public class TextInputSuffixTagHelper : TagHelper
             new InputOptionsSuffix()
             {
                 Text = null,
-                Html = childContent.ToTemplateString(),
+                Html = content.ToTemplateString(),
                 Classes = classes,
                 Attributes = attributes
             },

@@ -17,14 +17,14 @@ public class DetailsSummaryTagHelper : TagHelper
     {
         var detailsContext = context.GetContextItem<DetailsContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        detailsContext.SetSummary(output.Attributes.ToAttributeDictionary(), childContent.Snapshot());
+        detailsContext.SetSummary(output.Attributes.ToAttributeDictionary(), content.Snapshot());
 
         output.SuppressOutput();
     }

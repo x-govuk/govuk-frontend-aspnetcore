@@ -33,13 +33,13 @@ public class FormGroupLabelTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var formGroupContext = context.GetContextItem<FormGroupContext>();
@@ -47,7 +47,7 @@ public class FormGroupLabelTagHelper : TagHelper
         formGroupContext.SetLabel(
             IsPageHeading,
             output.Attributes.ToAttributeDictionary(),
-            childContent?.Snapshot());
+            content?.Snapshot());
 
         output.SuppressOutput();
     }
@@ -83,13 +83,13 @@ public class FormGroupLabelTagHelper3 : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var formGroupContext = context.GetContextItem<FormGroupContext3>();
@@ -97,7 +97,7 @@ public class FormGroupLabelTagHelper3 : TagHelper
         formGroupContext.SetLabel(
             IsPageHeading,
             new AttributeCollection(output.Attributes),
-            childContent?.ToTemplateString(),
+            content?.ToTemplateString(),
             output.TagName);
 
         output.SuppressOutput();

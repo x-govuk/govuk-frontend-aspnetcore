@@ -34,16 +34,16 @@ public class PhaseBannerTagHelper : TagHelper
     {
         var phaseBannerContext = new PhaseBannerContext();
 
-        IHtmlContent childContent;
+        IHtmlContent content;
 
         using (context.SetScopedContextItem(phaseBannerContext))
         {
-            childContent = await output.GetChildContentAsync();
+            content = await output.GetChildContentAsync();
         }
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         phaseBannerContext.ThrowIfIncomplete();
@@ -51,7 +51,7 @@ public class PhaseBannerTagHelper : TagHelper
         var tagBuilder = _htmlGenerator.GeneratePhaseBanner(
             phaseBannerContext.Tag?.Content,
             phaseBannerContext.Tag?.Attributes,
-            childContent,
+            content,
             output.Attributes.ToAttributeDictionary());
 
         output.TagName = tagBuilder.TagName;

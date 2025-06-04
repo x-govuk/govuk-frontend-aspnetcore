@@ -24,14 +24,14 @@ public class PhaseBannerTagTagHelper : TagHelper
     {
         var phaseBannerContext = (PhaseBannerContext)context.Items[typeof(PhaseBannerContext)];
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
-        phaseBannerContext.SetTag(output.Attributes.ToAttributeDictionary(), childContent.Snapshot());
+        phaseBannerContext.SetTag(output.Attributes.ToAttributeDictionary(), content.Snapshot());
 
         output.SuppressOutput();
     }

@@ -738,7 +738,7 @@ public class FormGroupTagHelperBaseTests
             TagHelperContext tagHelperContext,
             FormGroupContext formGroupContext,
             TagHelperOutput tagHelperOutput,
-            IHtmlContent childContent,
+            IHtmlContent content,
             out bool haveError)
         {
             var contentBuilder = new HtmlContentBuilder();

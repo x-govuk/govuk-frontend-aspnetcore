@@ -32,13 +32,13 @@ public class PaginationPreviousTagHelper : TagHelper
     {
         var paginationContext = context.GetContextItem<PaginationContext>();
 
-        var childContent = output.TagMode == TagMode.StartTagAndEndTag ?
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -51,7 +51,7 @@ public class PaginationPreviousTagHelper : TagHelper
             ContainerAttributes = attributes,
             Href = href,
             LabelText = LabelText,
-            Html = childContent?.ToTemplateString(),
+            Html = content?.ToTemplateString(),
             Text = null
         });
 

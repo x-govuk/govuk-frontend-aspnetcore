@@ -32,17 +32,17 @@ public class FieldsetLegendTagHelper : TagHelper
     {
         var fieldsetContext = context.GetContextItem<FieldsetContext>();
 
-        var childContent = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
-            childContent = output.Content;
+            content = output.Content;
         }
 
         fieldsetContext.SetLegend(
             IsPageHeading ?? ComponentGenerator.FieldsetLegendDefaultIsPageHeading,
             output.Attributes.ToAttributeDictionary(),
-            childContent.Snapshot());
+            content.Snapshot());
 
         output.SuppressOutput();
     }

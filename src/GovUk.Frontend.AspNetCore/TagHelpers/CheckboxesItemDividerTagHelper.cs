@@ -8,7 +8,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.CheckboxesDividerItemElement)]
 public class CheckboxesItemDividerTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes-divider";

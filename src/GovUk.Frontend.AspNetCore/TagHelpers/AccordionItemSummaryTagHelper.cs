@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,7 +6,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the summary in a GDS accordion component item.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = AccordionItemTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.AccordionItemSummaryElement)]
 public class AccordionItemSummaryTagHelper : TagHelper
 {
     internal const string TagName = "govuk-accordion-item-summary";

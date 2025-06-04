@@ -7,7 +7,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the legend in a GDS radios component fieldset.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.FieldsetLegendElement)]
 public class RadiosFieldsetLegendTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-fieldset-legend";

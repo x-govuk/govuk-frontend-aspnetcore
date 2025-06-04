@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -15,7 +14,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     DateInputDayTagHelper.TagName,
     DateInputMonthTagHelper.TagName,
     DateInputYearTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.FieldsetElement)]
 public class DateInputFieldsetTagHelper : TagHelper
 {
     internal const string TagName = "govuk-date-input-fieldset";

@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -8,7 +7,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
 [RestrictChildren(RadiosFieldsetLegendTagHelper.TagName, RadiosItemTagHelper.TagName, RadiosItemDividerTagHelper.TagName, RadiosTagHelper.HintTagName, RadiosTagHelper.ErrorMessageTagName)]
-[OutputElementHint(ComponentGenerator.FieldsetElement)]
 public class RadiosFieldsetTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-fieldset";

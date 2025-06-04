@@ -8,7 +8,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryListTagHelper.TagName)]
 [RestrictChildren(SummaryListRowKeyTagHelper.TagName, SummaryListRowValueTagHelper.TagName, SummaryListRowActionsTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryListRow)]
 public class SummaryListRowTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-list-row";

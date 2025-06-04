@@ -9,7 +9,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(SelectTagHelper.LabelTagName, ParentTag = SelectTagHelper.TagName)]
 [HtmlTargetElement(TextAreaTagHelper.LabelTagName, ParentTag = TextAreaTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.LabelElement)]
 public class FormGroupLabelTagHelper : TagHelper
 {
     private const string IsPageHeadingAttributeName = "is-page-heading";
@@ -59,7 +58,6 @@ public class FormGroupLabelTagHelper : TagHelper
 [HtmlTargetElement(CharacterCountTagHelper.LabelTagName, ParentTag = CharacterCountTagHelper.TagName)]
 [HtmlTargetElement(FileUploadTagHelper.LabelTagName, ParentTag = FileUploadTagHelper.TagName)]
 [HtmlTargetElement(TextInputTagHelper.LabelTagName, ParentTag = TextInputTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.LabelElement)]
 public class FormGroupLabelTagHelper3 : TagHelper
 {
     private const string IsPageHeadingAttributeName = "is-page-heading";

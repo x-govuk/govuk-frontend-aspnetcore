@@ -11,7 +11,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     CookieBannerMessageHeadingTagHelper.TagName,
     CookieBannerMessageContentTagHelper.TagName,
     CookieBannerMessageActionsTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.CookieBannerMessage)]
 public class CookieBannerMessageTagHelper : TagHelper
 {
     internal const string TagName = "govuk-cookie-banner-message";

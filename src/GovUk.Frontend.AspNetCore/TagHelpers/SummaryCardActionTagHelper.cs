@@ -7,7 +7,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an action in a GDS summary card.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryCardActionsTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryCardAction)]
 public class SummaryCardActionTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card-action";

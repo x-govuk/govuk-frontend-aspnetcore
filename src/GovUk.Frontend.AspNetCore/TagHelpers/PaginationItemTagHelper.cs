@@ -14,7 +14,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a GDS pagination component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PaginationTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.PaginationItem)]
 public class PaginationItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-pagination-item";

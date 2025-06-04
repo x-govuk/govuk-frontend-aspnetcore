@@ -7,7 +7,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an ellipsis item in a GDS pagination component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PaginationTagHelper.TagName, TagStructure = TagStructure.WithoutEndTag)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.PaginationEllipsis)]
 public class PaginationEllipsisItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-pagination-ellipsis";

@@ -7,7 +7,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the link to the previous page in a GDS pagination component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PaginationTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.PaginationPrevious)]
 public class PaginationPreviousTagHelper : TagHelper
 {
     internal const string TagName = "govuk-pagination-previous";

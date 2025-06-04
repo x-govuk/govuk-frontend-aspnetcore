@@ -7,7 +7,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the heading in a message in a GDS cookie banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CookieBannerMessageTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.CookieBannerMessageContent)]
 public class CookieBannerMessageHeadingTagHelper : TagHelper
 {
     internal const string TagName = "govuk-cookie-banner-message-heading";

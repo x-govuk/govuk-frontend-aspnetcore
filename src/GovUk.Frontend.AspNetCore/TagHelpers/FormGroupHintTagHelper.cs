@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -13,7 +12,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(RadiosTagHelper.HintTagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 [HtmlTargetElement(SelectTagHelper.HintTagName, ParentTag = SelectTagHelper.TagName)]
 [HtmlTargetElement(TextAreaTagHelper.HintTagName, ParentTag = TextAreaTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.HintElement)]
 public class FormGroupHintTagHelper : TagHelper
 {
     /// <summary>
@@ -51,7 +49,6 @@ public class FormGroupHintTagHelper : TagHelper
 [HtmlTargetElement(DateInputTagHelper.HintTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
 [HtmlTargetElement(FileUploadTagHelper.HintTagName, ParentTag = FileUploadTagHelper.TagName)]
 [HtmlTargetElement(TextInputTagHelper.HintTagName, ParentTag = TextInputTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.HintElement)]
 public class FormGroupHintTagHelper3 : TagHelper
 {
     /// <summary>

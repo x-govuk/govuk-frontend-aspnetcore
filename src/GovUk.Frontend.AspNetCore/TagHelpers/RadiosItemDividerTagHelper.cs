@@ -8,7 +8,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.RadiosDividerItemElement)]
 public class RadiosItemDividerTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-divider";

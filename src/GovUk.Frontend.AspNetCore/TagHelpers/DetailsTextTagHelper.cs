@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,7 +6,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the text in a GDS details component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DetailsTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.DetailsTextElement)]
 public class DetailsTextTagHelper : TagHelper
 {
     internal const string TagName = "govuk-details-text";

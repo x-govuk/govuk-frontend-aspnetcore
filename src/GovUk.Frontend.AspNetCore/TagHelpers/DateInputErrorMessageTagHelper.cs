@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,7 +6,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <inheritdoc/>
 [HtmlTargetElement(DateInputTagHelper.ErrorMessageTagName, ParentTag = DateInputTagHelper.TagName)]
 [HtmlTargetElement(DateInputTagHelper.ErrorMessageTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.ErrorMessageElement)]
 public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelper3
 {
     private const string ErrorItemsAttributeName = "error-items";

@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,7 +6,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the tag in a GDS phase banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PhaseBannerTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.TagElement)]
 public class PhaseBannerTagTagHelper : TagHelper
 {
     internal const string TagName = "govuk-phase-banner-tag";

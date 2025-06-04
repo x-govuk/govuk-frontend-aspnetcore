@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -9,7 +8,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
 [RestrictChildren(DateInputDayLabelTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class DateInputDayTagHelper : DateInputItemTagHelperBase
 {
     internal const string TagName = "govuk-date-input-day";

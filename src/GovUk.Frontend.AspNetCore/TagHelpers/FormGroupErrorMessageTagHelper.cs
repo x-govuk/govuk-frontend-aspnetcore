@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -13,7 +12,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(RadiosTagHelper.ErrorMessageTagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 [HtmlTargetElement(SelectTagHelper.ErrorMessageTagName, ParentTag = SelectTagHelper.TagName)]
 [HtmlTargetElement(TextAreaTagHelper.ErrorMessageTagName, ParentTag = TextAreaTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.ErrorMessageElement)]
 public class FormGroupErrorMessageTagHelper : TagHelper
 {
     private const string VisuallyHiddenTextAttributeName = "visually-hidden-text";
@@ -68,7 +66,6 @@ public class FormGroupErrorMessageTagHelper : TagHelper
 [HtmlTargetElement(CharacterCountTagHelper.ErrorMessageTagName, ParentTag = CharacterCountTagHelper.TagName)]
 [HtmlTargetElement(FileUploadTagHelper.ErrorMessageTagName, ParentTag = FileUploadTagHelper.TagName)]
 [HtmlTargetElement(TextInputTagHelper.ErrorMessageTagName, ParentTag = TextInputTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.ErrorMessageElement)]
 public class FormGroupErrorMessageTagHelper3 : TagHelper
 {
     private const string VisuallyHiddenTextAttributeName = "visually-hidden-text";

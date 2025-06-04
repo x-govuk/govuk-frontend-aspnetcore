@@ -15,7 +15,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     //ServiceNavigationNavItemTagHelper.ShortTagName,
     ServiceNavigationNavEndTagHelper.TagName/*,
     ServiceNavigationNavEndTagHelper.ShortTagName*/)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.ServiceNavigationNav)]
 public class ServiceNavigationNavTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-nav";

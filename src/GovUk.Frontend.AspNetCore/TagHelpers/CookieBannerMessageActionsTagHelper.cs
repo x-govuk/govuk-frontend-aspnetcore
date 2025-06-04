@@ -8,7 +8,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CookieBannerMessageTagHelper.TagName)]
 [RestrictChildren(CookieBannerMessageActionTagHelper.TagName, CookieBannerMessageActionLinkTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.CookieBannerMessageActions)]
 public class CookieBannerMessageActionsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-cookie-banner-message-actions";

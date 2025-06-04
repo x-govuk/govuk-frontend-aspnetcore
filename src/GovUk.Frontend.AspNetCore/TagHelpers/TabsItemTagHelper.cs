@@ -8,7 +8,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a GDS tabs component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TabsTagHelper.TagName)]
-[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.TabsItemPanel)]
 public class TabsItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-tabs-item";

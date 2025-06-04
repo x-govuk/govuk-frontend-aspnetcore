@@ -7,7 +7,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a GDS accordion component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = AccordionTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.AccordionItemElement)]
 [RestrictChildren(AccordionItemHeadingTagHelper.TagName, AccordionItemSummaryTagHelper.TagName, AccordionItemContentTagHelper.TagName)]
 public class AccordionItemTagHelper : TagHelper
 {

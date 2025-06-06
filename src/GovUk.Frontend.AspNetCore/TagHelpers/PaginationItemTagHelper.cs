@@ -78,7 +78,7 @@ public class PaginationItemTagHelper : TagHelper
         attributes.Remove("href", out _);
         var href = output.GetUrlAttribute("href");
 
-        var current = Current == true || ItemIsCurrentPage();
+        var current = Current ?? ItemIsCurrentPage();
 
         paginationContext.AddItem(new PaginationOptionsItem()
         {

@@ -23,7 +23,7 @@ There are two tag helpers for the button component. `<govuk-button>` generates a
 ## Example - start button
 
 ```razor
-<govuk-button-link is-start-button="true" href="/start">Start</govuk-button>
+<govuk-button-link is-start-button="true" href="/start">Start</govuk-button-link>
 ```
 
 ![Button](../images/button-start.png)
@@ -39,13 +39,13 @@ There are two tag helpers for the button component. `<govuk-button>` generates a
 ## Example - link
 
 ```razor
-<govuk-button-link href="/">Confirm</govuk-button>
+<govuk-button-link href="/">Confirm</govuk-button-link>
 ```
 
 ## Example - generated link
 
 ```razor
-<govuk-button-link asp-controller="Home" asp-action="Confirm">Confirm</govuk-button>
+<govuk-button-link asp-controller="Home" asp-action="Confirm">Confirm</govuk-button-link>
 ```
 
 ## Example - generated formaction

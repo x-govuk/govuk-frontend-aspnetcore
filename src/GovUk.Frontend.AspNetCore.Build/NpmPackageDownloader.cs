@@ -20,8 +20,8 @@ public sealed class NpmPackageDownloader : IDisposable
     public async Task DownloadPackage(
         string package,
         string version,
-        string destinationDirectory,
         string packageBaseDirectory,
+        string destinationDirectory,
         IEnumerable<string> includePatterns)
     {
         ArgumentNullException.ThrowIfNull(package);

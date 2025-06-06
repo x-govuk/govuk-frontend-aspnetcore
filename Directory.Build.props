@@ -9,7 +9,7 @@
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('Tests'))">true</IsTestProject>
 
     <_NpmLibDirectory>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'lib', 'govuk-frontend-$(GovUkFrontendVersion)'))</_NpmLibDirectory>
-    <GovUkFrontendLibrary>$([MSBuild]::NormalizeDirectory('$(_NpmLibDirectory)', 'dist', 'govuk'))</GovUkFrontendLibrary>
+    <GovUkFrontendLibrary>$([MSBuild]::NormalizeDirectory('$(_NpmLibDirectory)'))</GovUkFrontendLibrary>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">

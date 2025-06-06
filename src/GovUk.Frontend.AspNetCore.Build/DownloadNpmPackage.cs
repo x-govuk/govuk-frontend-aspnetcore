@@ -4,7 +4,7 @@ using MsBuildTask = Microsoft.Build.Utilities.Task;
 
 namespace GovUk.Frontend.AspNetCore.Build;
 
-public class DownloadNpmPackageTask : MsBuildTask
+public class DownloadNpmPackage : MsBuildTask
 {
     [Required]
     public string Package { get; set; }
@@ -12,13 +12,11 @@ public class DownloadNpmPackageTask : MsBuildTask
     [Required]
     public string Version { get; set; }
 
-    [Required]
     public string PackageBaseDirectory { get; set; }
 
     [Required]
     public string DestinationDirectory { get; set; }
 
-    [Required]
     public string Include { get; set; }
 
     public override bool Execute()
@@ -36,10 +34,10 @@ public class DownloadNpmPackageTask : MsBuildTask
 
         async Task ExecuteAsync()
         {
-            var includePatterns = Include?.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ?? ["*"];
+            var includePatterns = Include?.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ?? ["**"];
 
             var downloader = new NpmPackageDownloader();
-            await downloader.DownloadPackage(Package, Version, PackageBaseDirectory, DestinationDirectory, includePatterns);
+            await downloader.DownloadPackage(Package, Version, PackageBaseDirectory ?? "", DestinationDirectory, includePatterns);
         }
     }
 }

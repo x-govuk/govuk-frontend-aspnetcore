@@ -27,12 +27,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <UsingTask TaskName="GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage"
+    AssemblyFile="../GovUk.Frontend.AspNetCore.Build/bin/net8.0/GovUk.Frontend.AspNetCore.Build.dll" />
+  
   <Target Name="InstallGovUkFrontendPackage" Condition="!Exists('$(GovUkFrontendLibrary)')">
-    <Message Text="Restoring govuk-frontend@$(GovUkFrontendVersion)" />
-    <RemoveDir Directories="$(_NpmLibDirectory)" />
-    <MakeDir Directories="$(_NpmLibDirectory)" />
-    <Exec Command="dotnet libman init -p jsdelivr -d $(_NpmLibDirectory)" WorkingDirectory="$(_NpmLibDirectory)" LogStandardErrorAsError="true" />
-    <Exec Command="dotnet libman install govuk-frontend@$(GovUkFrontendVersion) --files dist/govuk/**" WorkingDirectory="$(_NpmLibDirectory)" LogStandardErrorAsError="true" />
+    <MSBuild Projects="../GovUk.Frontend.AspNetCore.Build/GovUk.Frontend.AspNetCore.Build.csproj" Targets="Restore;Build" />
+    
+    <GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage
+      Package="govuk-frontend"
+      Version="$(GovUkFrontendVersion)"
+      PackageBaseDirectory="/dist/govuk"
+      DestinationDirectory="$(_NpmLibDirectory)" />
   </Target>
 
   <Target Name="CopyXmlDocToDocsProject" AfterTargets="Build">
@@ -73,6 +78,10 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.*" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\GovUk.Frontend.AspNetCore.Build\GovUk.Frontend.AspNetCore.Build.csproj" Pack="true" />
+  </ItemGroup>
 
   <ItemGroup>
     <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.css">
@@ -98,7 +107,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\" />
     <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 

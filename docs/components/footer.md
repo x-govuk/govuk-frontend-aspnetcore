@@ -4,8 +4,7 @@
 [GOV.UK Design System GOV.UK footer component](https://design-system.service.gov.uk/components/footer/)
 
 
-### Example
-
+### Example without links
 <img alt="Footer without links example" src="../images/footer-without-links-example.png" />
 
 ```razor
@@ -13,6 +12,7 @@
 ```
 
 
+### Example with links
 <img alt="Footer with links example" src="../images/footer-with-links-example.png" />
 
 ```razor
@@ -28,6 +28,7 @@
 ```
 
 
+### Example with secondary navigation
 <img alt="Footer with secondary navigation example" src="../images/footer-with-secondary-navigation-example.png" />
 
 ```razor
@@ -55,6 +56,7 @@
 ```
 
 
+### Example with links and secondary navigation
 <img alt="Footer with links and secondary navigation example" src="../images/footer-with-links-and-secondary-navigation-example.png" />
 
 ```razor

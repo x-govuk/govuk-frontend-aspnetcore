@@ -7,7 +7,6 @@
 ## Tag helpers
 
 ### Example
-
 <img alt="Cookie banner example" src="../images/cookie-banner-example.png" />
 
 ```razor

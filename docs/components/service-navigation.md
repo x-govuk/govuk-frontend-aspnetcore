@@ -7,7 +7,6 @@
 ## Tag helpers
 
 ### Example
-
 <img alt="Service navigation example" src="../images/service-navigation-example.png" />
 
 ```razor

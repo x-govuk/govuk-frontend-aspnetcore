@@ -10,7 +10,6 @@
 > The GOV.UK header variants that includes a service name and navigation are deprecated and are not supported by this tag helpers.
 
 ### Example
-
 <img alt="Header example" src="../images/header-example.png" />
 
 ```razor

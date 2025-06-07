@@ -37,7 +37,7 @@
       Package="govuk-frontend"
       Version="$(GovUkFrontendVersion)"
       PackageBaseDirectory="/dist/govuk"
-      DestinationDirectory="$(_NpmLibDirectory)" />
+      DestinationDirectory="$(GovUkFrontendLibrary)" />
   </Target>
 
   <Target Name="CopyXmlDocToDocsProject" AfterTargets="Build">

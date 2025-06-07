@@ -6,7 +6,8 @@
 
 #### New tag helpers
 Tag helpers to create
-a [GOV.UK header component](docs/components/header.md) and
+a [GOV.UK header component](docs/components/header.md),
+a [GOV.UK footer component](docs/components/footer.md) and
 a [service navigation component](docs/components/service-navigation.md)
 have been added.
 

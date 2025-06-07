@@ -9,6 +9,7 @@ internal partial class DefaultComponentGenerator
         public const string CookieBanner = "div";
         public const string Breadcrumbs = "nav";
         public const string ErrorSummary = "div";
+        public const string Footer = "footer";
         public const string FormGroup = "div";
         public const string Header = "header";
         public const string InsetText = "div";

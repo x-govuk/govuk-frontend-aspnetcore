@@ -86,7 +86,15 @@ In your `_Layout.cshtml` file:
 @RenderBody()
 
 @section Footer {
-    @* your footer markup goes here *@
+    <govuk-footer>
+        <govuk-footer-meta>
+            <govuk-footer-meta-items>
+                <govuk-footer-meta-item href="#">Item 1</govuk-footer-meta-item>
+                <govuk-footer-meta-item href="#">Item 2</govuk-footer-meta-item>
+                <govuk-footer-meta-item href="#">Item 3</govuk-footer-meta-item>
+            </govuk-footer-meta-items>
+        </govuk-footer-meta>
+    </govuk-footer>
 }
 ```
 
@@ -199,6 +207,7 @@ services.AddGovUkFrontend(options =>
 - [Fieldset](docs/components/fieldset.md)
 - [File upload](docs/components/file-upload.md)
 - [GOV.UK header](docs/components/header.md)
+- [GOV.UK footer](docs/components/footer.md)
 - [Inset text](docs/components/inset-text.md)
 - [Notification banner](docs/components/notification-banner.md)
 - [Pagination](docs/components/pagination.md)

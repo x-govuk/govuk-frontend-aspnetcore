@@ -129,6 +129,13 @@ file static class Extensions
 
         foreach (var node in element.Nodes())
         {
+            VisitNode(node);
+        }
+
+        return sb.ToString().Trim();
+
+        void VisitNode(XNode node)
+        {
             if (node is XText text)
             {
                 sb.Append(_whitespace.Replace(text.Value, " "));
@@ -143,6 +150,14 @@ file static class Extensions
                 {
                     sb.Append($"`{langword}`");
                 }
+                else if (e.Name == "para")
+                {
+                    sb.Append(' ');
+                    foreach (var child in e.Nodes())
+                    {
+                        VisitNode(child);
+                    }
+                }
                 else
                 {
                     throw new NotSupportedException($"Cannot convert a {e.Name} element into markdown.");
@@ -153,7 +168,5 @@ file static class Extensions
                 throw new NotSupportedException($"Cannot convert a {node.NodeType} node into markdown.");
             }
         }
-
-        return sb.ToString().Trim();
     }
 }

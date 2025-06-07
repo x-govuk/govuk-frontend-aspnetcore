@@ -2208,6 +2208,151 @@
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterContentLicenceTagHelper">
+            <summary>
+            Represents the content licence information of a GDS footer component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterContentLicenceTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterCopyrightTagHelper">
+            <summary>
+            Represents the copyright information in a GDS footer component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterCopyrightTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaContentTagHelper">
+            <summary>
+            Represents the meta section of a GDS footer component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaContentTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaItemsTagHelper">
+            <summary>
+            Represents the items with the meta section of a GDS footer component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaItemsTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaItemsTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaItemTagHelper">
+            <summary>
+            Represents an item in the meta section of a GDS footer component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaItemTagHelper.LinkAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>&lt;a&gt;</c> element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaTagHelper">
+            <summary>
+            Represents the meta section of a GDS footer component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaTagHelper.VisuallyHiddenTitle">
+            <summary>
+            The title of the meta item section.
+            </summary>
+            <remarks>
+            If not specified, <c>&quot;Support links&quot;</c> will be used.
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterMetaTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavItemsTagHelper">
+            <summary>
+            Represents the items in a navigation section of a GDS footer component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavItemsTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavItemsTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavItemTagHelper">
+            <summary>
+            Represents an item in a navigation section of a GDS footer component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavItemTagHelper.LinkAttributes">
+            <summary>
+            Additional attributes to add to the generated <c>&lt;a&gt;</c> element.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavTagHelper">
+            <summary>
+            Represents the navigation section of a GDS footer component.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavTagHelper.Columns">
+            <summary>
+            The number of columns to display items in.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavTagHelper.Width">
+            <summary>
+            The width of this navigation section.
+            </summary>
+            <remarks>
+            <para>For example, <c>one-third</c>, <c>two-thirds</c> or <c>one-half</c>.</para>
+            <para>If not specified, <c>full</c> will be used.</para>
+            </remarks>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavTitleTagHelper">
+            <summary>
+            Represents the title of a navigation section of a GDS footer component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterNavTitleTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper">
+            <summary>
+            Generates a GDS footer component.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Creates a new <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper"/>.
+            </summary>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper.ContainerClass">
+            <summary>
+            Classes to add to the inner container.
+            </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FooterTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+            <inheritdoc />
+        </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormActionTagHelper">
             <summary>
             <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper"/> implementation targeting &lt;button&gt; elements.

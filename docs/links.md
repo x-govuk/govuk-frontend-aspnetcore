@@ -21,6 +21,8 @@ The following tag helpers support generating the `href` attribute using these at
 - `<govuk-cookie-banner-message-action-link>`
 - `<govuk-button-link>`
 - `<govuk-error-summary-item>`
+- `<govuk-footer-meta-item>`
+- `<govuk-footer-nav-item>`
 - `<govuk-pagination-item>`
 - `<govuk-pagination-next>`
 - `<govuk-pagination-previous>`

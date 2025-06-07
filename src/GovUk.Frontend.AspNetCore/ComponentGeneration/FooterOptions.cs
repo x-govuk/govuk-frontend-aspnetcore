@@ -19,13 +19,23 @@ public record FooterOptionsMeta
     public TemplateString? Html { get; set; }
     public TemplateString? Text { get; set; }
     public IReadOnlyCollection<FooterOptionsMetaItem>? Items { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ContentAttributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ItemsAttributes { get; set; }
 }
 
 public record FooterOptionsMetaItem
 {
     public TemplateString? Text { get; set; }
+    [NonStandardParameter]
+    public TemplateString? Html { get; set; }
     public TemplateString? Href { get; set; }
     public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ItemAttributes { get; set; }
 }
 
 public record FooterOptionsNavigation
@@ -34,23 +44,37 @@ public record FooterOptionsNavigation
     public int? Columns { get; set; }
     public TemplateString? Width { get; set; }
     public IReadOnlyCollection<FooterOptionsNavigationItem>? Items { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ItemsAttributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? TitleAttributes { get; set; }
 }
 
 public record FooterOptionsNavigationItem
 {
     public TemplateString? Text { get; set; }
+    [NonStandardParameter]
+    public TemplateString? Html { get; set; }
     public TemplateString? Href { get; set; }
     public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ItemAttributes { get; set; }
 }
 
 public record FooterOptionsContentLicence
 {
     public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record FooterOptionsCopyright
 {
     public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }

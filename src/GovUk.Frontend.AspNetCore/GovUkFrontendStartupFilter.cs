@@ -18,6 +18,7 @@ internal class GovUkFrontendStartupFilter : IStartupFilter
 
     public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         ArgumentNullException.ThrowIfNull(next);
 
         return app =>
@@ -61,6 +62,7 @@ internal class GovUkFrontendStartupFilter : IStartupFilter
             }
 
             next(app);
+#pragma warning restore CS0618 // Type or member is obsolete
         };
     }
 }

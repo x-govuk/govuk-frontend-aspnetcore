@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +11,7 @@ namespace GovUk.Frontend.AspNetCore;
 public class GovUkFrontendOptions
 {
     private readonly DateInputConverterRegistry _dateInputConverterRegistry;
+    private FrontendPackageHostingOptions _frontendPackageHostingOptions;
 
     /// <summary>
     /// Creates a new <see cref="GovUkFrontendOptions"/>.
@@ -26,8 +28,7 @@ public class GovUkFrontendOptions
 
         ErrorSummaryGeneration = ErrorSummaryGenerationOptions.PrependToMainElement;
         PrependErrorToTitle = true;
-        StaticAssetsContentPath = "/assets";
-        CompiledContentPath = "";
+        FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets | FrontendPackageHostingOptions.HostCompiledFiles;
     }
 
     /// <summary>
@@ -53,6 +54,8 @@ public class GovUkFrontendOptions
     /// <para>If this is <c>null</c> the static assets will not be served.</para>
     /// <para>The default is <c>/assets</c>.</para>
     /// </remarks>
+    [Obsolete($"Use {nameof(FrontendPackageHostingOptions)} instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public PathString? StaticAssetsContentPath { get; set; }
 
     /// <summary>
@@ -60,9 +63,41 @@ public class GovUkFrontendOptions
     /// </summary>
     /// <remarks>
     /// <para>If this is <c>null</c> the compiled assets will not be served.</para>
-    /// <para>If the is <c></c> (the default) the compiled assets will be served at the root.</para>
+    /// <para>If this is <c></c> (the default) the compiled assets will be served at the root.</para>
     /// </remarks>
+    [Obsolete($"Use {nameof(FrontendPackageHostingOptions)} instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public PathString? CompiledContentPath { get; set; }
+
+    /// <inheritdoc cref="GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions"/>
+    public FrontendPackageHostingOptions FrontendPackageHostingOptions
+    {
+        get => _frontendPackageHostingOptions;
+        set
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (value.HasFlag(FrontendPackageHostingOptions.HostAssets))
+            {
+                StaticAssetsContentPath ??= "/assets";
+            }
+            else
+            {
+                StaticAssetsContentPath = null;
+            }
+
+            if (value.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles))
+            {
+                CompiledContentPath ??= "";
+            }
+            else
+            {
+                CompiledContentPath = null;
+            }
+
+            _frontendPackageHostingOptions = value;
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+    }
 
     /// <summary>
     /// The default value for <see cref="ButtonTagHelper.PreventDoubleClick"/>.

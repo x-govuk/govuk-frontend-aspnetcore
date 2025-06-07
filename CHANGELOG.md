@@ -10,6 +10,9 @@ a [GOV.UK header component](docs/components/header.md) and
 a [service navigation component](docs/components/service-navigation.md)
 have been added.
 
+#### `FrontendPackageHostingOptions`
+The `CompiledContentPath` and `StaticAssetsContentPath` properties on `GovUkFrontendOptions` have been deprecated and replaced by `FrontendPackageHostingOptions`.
+
 ### Fixes
 
 #### `DefaultFileUploadJavaScriptEnhancements`

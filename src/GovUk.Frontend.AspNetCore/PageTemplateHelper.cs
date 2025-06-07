@@ -92,11 +92,13 @@ public class PageTemplateHelper
     /// <returns><see cref="IHtmlContent"/> containing the <c>script</c> tag.</returns>
     public IHtmlContent GenerateScriptImports(PathString pathBase, string? cspNonce)
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         var compiledContentPath = _optionsAccessor.Value.CompiledContentPath;
         if (compiledContentPath is null)
         {
             throw new InvalidOperationException($"Cannot generate script imports when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         var htmlContentBuilder = new HtmlContentBuilder();
         htmlContentBuilder.AppendHtml(GenerateImportScript());
@@ -150,7 +152,9 @@ public class PageTemplateHelper
     /// <returns><see cref="IHtmlContent"/> containing the <c>link</c> tags.</returns>
     public IHtmlContent GenerateStyleImports(PathString pathBase)
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         var compiledContentPath = _optionsAccessor.Value.CompiledContentPath;
+
         if (compiledContentPath is null)
         {
             throw new InvalidOperationException($"Cannot generate style imports when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
@@ -160,6 +164,7 @@ public class PageTemplateHelper
         var href = $"{pathBase}{compiledContentPath}/{fileName}";
 
         return new HtmlString($"<link href=\"{href}\" rel=\"stylesheet\">");
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 
     /// <summary>
@@ -197,6 +202,7 @@ public class PageTemplateHelper
 
     private string GetInitScriptContents(PathString pathBase)
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         if (_optionsAccessor.Value.CompiledContentPath is null)
         {
             throw new InvalidOperationException($"Cannot generate scripts when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
@@ -206,6 +212,7 @@ public class PageTemplateHelper
 
         var fileName = GetScriptFileName();
         return $"\nimport {{ initAll }} from '{compiledContentPath}/{fileName}'\ninitAll()\n";
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 
     private static string GenerateCspHash(string value)

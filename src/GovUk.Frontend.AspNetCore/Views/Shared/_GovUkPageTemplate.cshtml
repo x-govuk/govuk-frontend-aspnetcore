@@ -3,6 +3,7 @@
 @inject IOptions<GovUkFrontendOptions> OptionsAccessor
 @addTagHelper *, GovUk.Frontend.AspNetCore
 @{
+#pragma warning disable CS0618 // Type or member is obsolete
     if (ViewBag.AssetPath is null && OptionsAccessor.Value.StaticAssetsContentPath is null)
     {
         throw new InvalidOperationException(
@@ -17,6 +18,7 @@
     var htmlLang = ViewBag.HtmlLang ?? "en";
     var themeColor = ViewBag.ThemeColor ?? "#0b0c0c";
     var ogImage = ViewBag.OpengraphImageUrl ?? $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/images/govuk-opengraph-image.png?{assetVersionQueryParam}";
+#pragma warning restore CS0618 // Type or member is obsolete
 }
 <!DOCTYPE html>
 <html lang="@htmlLang" class="govuk-template @ViewBag.HtmlClasses">

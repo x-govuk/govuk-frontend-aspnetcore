@@ -428,6 +428,29 @@
             Disables the behavior that focuses the error summary when the page loads.
             </summary>
         </member>
+        <member name="T:GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions">
+            <summary>
+            Options to control the files from the govuk-frontend NPM package to host.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions.None">
+            <summary>
+            Don't serve any files.
+            </summary>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions.HostAssets">
+            <summary>
+            Serve asset files (images, fonts etc.).
+            </summary>
+            <remarks>
+            Assets will be available under the <c>/assets</c> path.
+            </remarks>
+        </member>
+        <member name="F:GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions.HostCompiledFiles">
+            <summary>
+            Serve the compiled CSS and JavaScript files.
+            </summary>
+        </member>
         <member name="T:GovUk.Frontend.AspNetCore.GovUkFrontendExtensions">
             <summary>
             Extension methods for setting up GovUk.Frontend.AspNetCore.
@@ -499,8 +522,11 @@
             </summary>
             <remarks>
             <para>If this is <c>null</c> the compiled assets will not be served.</para>
-            <para>If the is <c></c> (the default) the compiled assets will be served at the root.</para>
+            <para>If this is <c></c> (the default) the compiled assets will be served at the root.</para>
             </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.FrontendPackageHostingOptions">
+            <inheritdoc cref="T:GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions"/>
         </member>
         <member name="P:GovUk.Frontend.AspNetCore.GovUkFrontendOptions.DefaultButtonPreventDoubleClick">
             <summary>

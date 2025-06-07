@@ -35,6 +35,7 @@ internal partial class RewriteCompiledAssetsMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         var version = PageTemplateHelper.GovUkFrontendVersion;
 
         if (_optionsAccessor.Value.CompiledContentPath is PathString compiledContentPath)
@@ -103,4 +104,5 @@ internal partial class RewriteCompiledAssetsMiddleware
         using var streamReader = new StreamReader(readStream);
         return streamReader.ReadToEnd();
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 }

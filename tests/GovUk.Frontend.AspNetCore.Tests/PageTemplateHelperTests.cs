@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+#pragma warning disable CS0618 // Type or member is obsolete
 
 namespace GovUk.Frontend.AspNetCore.Tests;
 

@@ -165,9 +165,24 @@ services.AddGovUkFrontend(options =>
 See the `Samples.MvcStarter` project for an example of this working.
 
 
-## GDS assets
+## GOV.UK Frontend assets
 
-This package serves the GDS Frontend assets (stylesheets, javascript, fonts) inside the host application so these do not need to be imported separately.
+By default, static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend package will be hosted automatically.
+
+To disable hosting of these assets or to only serve a subset of the assets, override `FrontendPackageHostingOptions`:
+```cs
+services.AddGovUkFrontend(options =>
+{
+    // Don't host anything
+    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.None;
+
+    // Only host static assets
+    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets;
+
+    // Only host compiled assets (JavaScript and CSS)
+    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostCompiledFiles;
+});
+```
 
 ## Components
 

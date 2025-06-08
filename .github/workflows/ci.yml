@@ -70,6 +70,9 @@ jobs:
             exit 1
           fi
 
+      - name: Build samples
+        run: just build-samples --configuration Release
+
       - name: Pack
         run: just pack --configuration Release
         env:

@@ -20,6 +20,10 @@ restore *ARGS:
 build *ARGS:
   @dotnet build {{ARGS}}
 
+# Build the samples
+build-samples *ARGS:
+  @cd samples && dotnet build {{ARGS}}
+
 # Run the tests
 test *ARGS: (unit-tests ARGS) (conformance-tests ARGS) (integration-tests ARGS)
 

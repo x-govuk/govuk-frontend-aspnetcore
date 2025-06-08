@@ -1,16 +1,9 @@
 <Project>
-  <PropertyGroup>
-    <BuildDependsOn>
-      CleanPackages;
-      $(BuildDependsOn)
-    </BuildDependsOn>
-  </PropertyGroup>
+  <ItemGroup>
+    <_OldPackages Include="$(PackageOutputPath)/$(PackageId)*" />
+  </ItemGroup>
 
-  <Target Name="CleanPackages" Condition="'$(PackageId)' != ''">
-    <ItemGroup>
-      <_OldPackages Include="$(PackageOutputPath)/$(PackageId)*" />
-    </ItemGroup>
-
+  <Target Name="CleanPackages" Condition="'$(PackageId)' != ''" AfterTargets="Pack">
     <Delete Files="@(_OldPackages)" />
   </Target>
 </Project>

@@ -48,9 +48,7 @@ jobs:
         run: just format --verify-no-changes
 
       - name: Build
-        run: just build --configuration Release --no-restore
-        env:
-          MINVERBUILDMETADATA: ${{ env.GITHUB_RUN_NUMBER }}
+        run: just build --configuration Release --no-restore /p:GeneratePackageOnBuild=false
 
       - name: Install Playwright
         run: just install-playwright
@@ -71,6 +69,11 @@ jobs:
             echo "::error ::Documentation is stale"
             exit 1
           fi
+
+      - name: Pack
+        run: just pack --configuration Release
+        env:
+          MINVERBUILDMETADATA: ${{ env.GITHUB_RUN_NUMBER }}
 
       - name: Publish package artifact
         uses: actions/upload-artifact@v4

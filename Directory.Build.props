@@ -9,6 +9,7 @@
 
     <CoreLibMinVerTagPrefix>v</CoreLibMinVerTagPrefix>
     <CoreLibMinVerMinimumMajorMinor>3.2</CoreLibMinVerMinimumMajorMinor>
+    <MinVerBuildMetadata Condition="'$(GITHUB_ACTIONS)' != 'true'">$([System.DateTimeOffset]::Now.ToUnixTimeSeconds())</MinVerBuildMetadata>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('Tests'))">true</IsTestProject>
 
@@ -17,5 +18,9 @@
 
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="GovUkFrontendVersion" Value="$(GovUkFrontendVersion)" />
   </ItemGroup>
 </Project>

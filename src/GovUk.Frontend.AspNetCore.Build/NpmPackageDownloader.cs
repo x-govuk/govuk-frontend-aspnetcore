@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
 using System.Text.Json;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
@@ -61,25 +62,42 @@ public sealed class NpmPackageDownloader : IDisposable
 
         await Parallel.ForEachAsync(
             results.Files,
-            async (r, ct) => await DownloadFileAsync(package, version, r.Path, packageBaseDirectory, destinationDirectory, ct));
+            async (r, ct) =>
+            {
+                var hash = ((NpmPackageFileInfo)contents.GetFile(r.Path)!).Hash;
+                await DownloadFileAsync(package, version, r.Path, hash, packageBaseDirectory, destinationDirectory, ct);
+            });
     }
 
     private async Task DownloadFileAsync(
         string package,
         string version,
         string fileName,
+        string hash,
         string packageBaseDirectory,
         string destinationRootDirectory,
         CancellationToken cancellationToken)
     {
+        var destinationPath = Path.Combine(destinationRootDirectory, fileName);
+        var destinationDirectory = Path.GetDirectoryName(destinationPath)!;
+
+        if (File.Exists(destinationPath))
+        {
+            await using var efs = File.OpenRead(destinationPath);
+            using var sha = SHA256.Create();
+            var currentFileHash = Convert.ToBase64String(await sha.ComputeHashAsync(efs, cancellationToken));
+
+            if (currentFileHash == hash)
+            {
+                return;
+            }
+        }
+
         var response = await _httpClient.GetAsync(
             $"https://cdn.jsdelivr.net/npm/{Uri.EscapeDataString(package)}@{Uri.EscapeDataString(version)}{packageBaseDirectory}{fileName}",
             cancellationToken);
 
         response.EnsureSuccessStatusCode();
-
-        var destinationPath = Path.Combine(destinationRootDirectory, fileName);
-        var destinationDirectory = Path.GetDirectoryName(destinationPath)!;
 
         Directory.CreateDirectory(destinationDirectory);
 
@@ -129,7 +147,8 @@ public sealed class NpmPackageDownloader : IDisposable
 
             if (type == "file")
             {
-                return new NpmPackageFileInfo(name, fullName, parent);
+                var hash = element.GetProperty("hash").GetString()!;
+                return new NpmPackageFileInfo(name, fullName, hash, parent);
             }
             else
             {
@@ -142,11 +161,13 @@ public sealed class NpmPackageDownloader : IDisposable
 
     public void Dispose() => _httpClient.Dispose();
 
-    private class NpmPackageFileInfo(string name, string fullName, DirectoryInfoBase? parentDirectory) : FileInfoBase
+    private class NpmPackageFileInfo(string name, string fullName, string hash, DirectoryInfoBase? parentDirectory) : FileInfoBase
     {
         public override string Name => name;
 
         public override string FullName => fullName;
+
+        public string Hash => hash;
 
         public override DirectoryInfoBase? ParentDirectory => parentDirectory;
     }
@@ -161,43 +182,30 @@ public sealed class NpmPackageDownloader : IDisposable
 
         public override IEnumerable<FileSystemInfoBase> EnumerateFileSystemInfos() => children;
 
-        public override DirectoryInfoBase? GetDirectory(string path)
+        public override DirectoryInfoBase? GetDirectory(string path) => Find(path) as DirectoryInfoBase;
+
+        public override FileInfoBase? GetFile(string path) => Find(path) as FileInfoBase;
+
+        private FileSystemInfoBase? Find(string path)
         {
             var parts = path.TrimStart(PathSeparator).TrimEnd(PathSeparator).Split(PathSeparator);
+            return Find(this, parts);
+        }
 
-            var firstPart = parts[0];
-            NpmPackageDirectoryInfo? result = null;
+        private static FileSystemInfoBase? Find(DirectoryInfoBase directory, string[] pathParts)
+        {
+            var head = pathParts.First();
+            var tail = pathParts[1..];
 
-            foreach (var child in children)
+            foreach (var child in directory.EnumerateFileSystemInfos())
             {
-                if (child.Name == firstPart)
+                if (child.Name == head)
                 {
-                    if (child is NpmPackageDirectoryInfo directoryInfo)
-                    {
-                        result = directoryInfo;
-                        break;
-                    }
-
-                    return null;
+                    return tail.Length == 0 ? child : Find((DirectoryInfoBase)child, tail);
                 }
             }
 
-            if (result is null)
-            {
-                return null;
-            }
-
-            if (parts.Length > 1)
-            {
-                return result.GetDirectory(string.Join(PathSeparator, parts.Skip(1)));
-            }
-
-            return result;
-        }
-
-        public override FileInfoBase? GetFile(string path)
-        {
-            throw new NotSupportedException();
+            return null;
         }
     }
 }

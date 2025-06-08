@@ -333,3 +333,6 @@ ASALocalRun/
 lib
 
 .DS_Store
+
+packages
+src/GovUk.Frontend.AspNetCore/govuk-frontend-version.txt

@@ -13,8 +13,8 @@
     <PackageTags>aspnetcore, taghelpers, gds, gov.uk</PackageTags>
     <Description>ASP.NET Core integration for GOV.UK Design system</Description>
     <Authors>James Gunn</Authors>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
-    <MinVerMinimumMajorMinor>3.2</MinVerMinimumMajorMinor>
+    <MinVerTagPrefix>$(CoreLibMinVerTagPrefix)</MinVerTagPrefix>
+    <MinVerMinimumMajorMinor>$(CoreLibMinVerMinimumMajorMinor)</MinVerMinimumMajorMinor>
     <MinVerDefaultPreReleaseIdentifiers>pre.0</MinVerDefaultPreReleaseIdentifiers>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>

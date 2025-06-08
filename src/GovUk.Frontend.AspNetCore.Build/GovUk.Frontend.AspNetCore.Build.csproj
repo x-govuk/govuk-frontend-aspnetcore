@@ -6,6 +6,8 @@
     <PackDependencies>false</PackDependencies>
     <PackFolder>tools</PackFolder>
     <OutputPath>bin\</OutputPath>
+    <MinVerTagPrefix>$(CoreLibMinVerTagPrefix)</MinVerTagPrefix>
+    <MinVerMinimumMajorMinor>$(CoreLibMinVerMinimumMajorMinor)</MinVerMinimumMajorMinor>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +16,10 @@
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.8.27"  />
     <!-- TODO Figure out how to get this out of the generated NuGet package's dependency list -->
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="8.0.0" Pack="true" PrivateAssets="all" />
+    <PackageReference Include="MinVer" Version="2.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NuGetizer" Version="*" />
   </ItemGroup>
 

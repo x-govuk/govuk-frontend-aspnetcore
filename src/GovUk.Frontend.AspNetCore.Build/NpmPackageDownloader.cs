@@ -13,8 +13,10 @@ public sealed class NpmPackageDownloader : IDisposable
 
     public NpmPackageDownloader()
     {
+        var version = typeof(NpmPackageDownloader).Assembly.GetName().Version!.ToString();
+
         _httpClient = new();
-        _httpClient.DefaultRequestHeaders.UserAgent.Add(new("GovUk.Frontend.AspNetCore.Build", "1.0.0"));
+        _httpClient.DefaultRequestHeaders.UserAgent.Add(new("GovUk.Frontend.AspNetCore.Build", version));
     }
 
     public async Task DownloadPackage(

@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GovUk.Frontend.AspNetCore" Version="3.2.*-*" />
     <PackageReference Include="NodaTime" Version="3.0.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj" />
   </ItemGroup>
 
 </Project>

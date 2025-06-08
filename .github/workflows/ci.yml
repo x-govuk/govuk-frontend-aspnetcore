@@ -70,13 +70,13 @@ jobs:
             exit 1
           fi
 
-      - name: Build samples
-        run: just build-samples --configuration Release
-
       - name: Pack
         run: just pack --configuration Release
         env:
           MINVERBUILDMETADATA: ${{ env.GITHUB_RUN_NUMBER }}
+
+      - name: Build samples
+        run: just build-samples --configuration Release
 
       - name: Publish package artifact
         uses: actions/upload-artifact@v4

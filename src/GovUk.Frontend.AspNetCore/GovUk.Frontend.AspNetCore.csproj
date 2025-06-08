@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor" InitialTargets="InstallGovUkFrontendPackage">
+<Project Sdk="Microsoft.NET.Sdk.Razor" InitialTargets="InstallGovUkFrontendPackage;WriteGovUkFrontendVersionFile">
 
   <PropertyGroup>
     <TargetFrameworks>net8.0</TargetFrameworks>
@@ -27,7 +27,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <UsingTask TaskName="GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage"
+  <UsingTask
+    TaskName="GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage"
     AssemblyFile="../GovUk.Frontend.AspNetCore.Build/bin/net8.0/GovUk.Frontend.AspNetCore.Build.dll" />
 
   <Target Name="InstallGovUkFrontendPackage" Condition="!Exists('$(GovUkFrontendLibrary)')">
@@ -36,8 +37,20 @@
     <GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage
       Package="govuk-frontend"
       Version="$(GovUkFrontendVersion)"
-      PackageBaseDirectory="/dist/govuk"
+      PackageBaseDirectory="dist/govuk"
       DestinationDirectory="$(GovUkFrontendLibrary)" />
+  </Target>
+
+  <Target Name="WriteGovUkFrontendVersionFile">
+    <ItemGroup>
+      <_VersionFileLines Include="$(GovUkFrontendVersion)" />
+    </ItemGroup>
+
+    <WriteLinesToFile File="govuk-frontend-version.txt" Lines="@(_VersionFileLines)" Overwrite="true" />
+
+    <ItemGroup>
+      <Content Include="govuk-frontend-version.txt" Pack="true" PackagePath="\" />
+    </ItemGroup>
   </Target>
 
   <Target Name="CopyXmlDocToDocsProject" AfterTargets="Build">
@@ -47,7 +60,7 @@
 
     <Copy
       SourceFiles="@(_XmlDocFile)"
-      DestinationFolder="$(RepoRoot)/src/GovUk.Frontend.AspNetCore.Docs"
+      DestinationFolder="$(RepoRoot)\src\GovUk.Frontend.AspNetCore.Docs"
       Condition="Exists('%(_XmlDocFile.Identity)')"/>
   </Target>
 
@@ -107,6 +120,11 @@
 
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="GovUk.Frontend.AspNetCore.props" Pack="true" PackFolder="build" />
+    <Content Include="GovUk.Frontend.AspNetCore.targets" Pack="true" PackFolder="build" />
   </ItemGroup>
 
 </Project>

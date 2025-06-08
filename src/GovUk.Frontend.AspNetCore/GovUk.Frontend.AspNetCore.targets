@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <BuildDependsOn>
+      RestoreGovUkFrontendNpmPackage;
+      $(BuildDependsOn)
+    </BuildDependsOn>
+
+    <CopyAllFilesToSingleFolderForPackageDependsOn>
+      RestoreGovUkFrontendNpmPackage;
+      $(CopyAllFilesToSingleFolderForPackageDependsOn)
+    </CopyAllFilesToSingleFolderForPackageDependsOn>
+
+    <CopyAllFilesToSingleFolderForMsdeployDependsOn>
+      RestoreGovUkFrontendNpmPackage;
+      $(CopyAllFilesToSingleFolderForMsdeployDependsOn)
+    </CopyAllFilesToSingleFolderForMsdeployDependsOn>
+
+    <CopyFilesToOutputDirectory>
+      RestoreGovUkFrontendNpmPackage;
+      $(CopyFilesToOutputDirectory)
+    </CopyFilesToOutputDirectory>
+  </PropertyGroup>
+
+  <UsingTask
+    TaskName="GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage"
+    AssemblyFile="$(MSBuildThisFileDirectory)..\tools\net8.0\any\GovUk.Frontend.AspNetCore.Build.dll" />
+
+  <Target Name="RestoreGovUkFrontendNpmPackage" Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
+    <ReadLinesFromFile File="$(MSBuildThisFileDirectory)..\govuk-frontend-version.txt">
+      <Output TaskParameter="Lines" ItemName="_GovUkFrontendVersionFileLines" />
+    </ReadLinesFromFile>
+
+    <PropertyGroup>
+      <GovUkFrontendVersion>@(_GovUkFrontendVersionFileLines)</GovUkFrontendVersion>
+    </PropertyGroup>
+
+    <GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage
+      Package="govuk-frontend"
+      Version="$(GovUkFrontendVersion)"
+      PackageBaseDirectory="/dist/govuk"
+      DestinationDirectory="$(GovUkFrontendNpmPackageLocation)" />
+
+    <ItemGroup>
+      <_AssetFiles Include="$(GovUkFrontendNpmPackageLocation)\assets\**\*" />
+    </ItemGroup>
+
+    <Copy
+      SourceFiles="@(_AssetFiles)"
+      DestinationFolder="wwwroot\assets\%(RecursiveDir)"
+      SkipUnchangedFiles="true"
+      Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'true'" />
+
+    <ItemGroup>
+      <Content Remove="$(GovUkFrontendNpmPackageLocation)\**\*" />
+      <None Include="$(GovUkFrontendNpmPackageLocation)\**\*" />
+    </ItemGroup>
+  </Target>
+</Project>

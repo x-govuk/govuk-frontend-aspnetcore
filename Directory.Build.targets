@@ -1,5 +1,16 @@
 <Project>
-  <ItemGroup>
-    <AssemblyMetadata Include="GovUkFrontendVersion" Value="$(GovUkFrontendVersion)" />
-  </ItemGroup>
+  <PropertyGroup>
+    <BuildDependsOn>
+      CleanPackages;
+      $(BuildDependsOn)
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="CleanPackages" Condition="'$(PackageId)' != ''">
+    <ItemGroup>
+      <_OldPackages Include="$(PackageOutputPath)/$(PackageId)*" />
+    </ItemGroup>
+
+    <Delete Files="@(_OldPackages)" />
+  </Target>
 </Project>

@@ -7,6 +7,9 @@
     <PackageOutputPath>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'packages'))</PackageOutputPath>
     <GovUkFrontendVersion>5.10.2</GovUkFrontendVersion>
 
+    <CoreLibMinVerTagPrefix>v</CoreLibMinVerTagPrefix>
+    <CoreLibMinVerMinimumMajorMinor>3.2</CoreLibMinVerMinimumMajorMinor>
+
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('Tests'))">true</IsTestProject>
 
     <GovUkFrontendLibrary>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'lib', 'govuk-frontend-$(GovUkFrontendVersion)'))</GovUkFrontendLibrary>

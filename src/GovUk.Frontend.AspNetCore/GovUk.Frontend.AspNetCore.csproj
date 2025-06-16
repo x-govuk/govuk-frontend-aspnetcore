@@ -15,6 +15,7 @@
     <Authors>James Gunn</Authors>
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <MinVerMinimumMajorMinor>3.1</MinVerMinimumMajorMinor>
+    <MinVerDefaultPreReleaseIdentifiers>pre.0</MinVerDefaultPreReleaseIdentifiers>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>

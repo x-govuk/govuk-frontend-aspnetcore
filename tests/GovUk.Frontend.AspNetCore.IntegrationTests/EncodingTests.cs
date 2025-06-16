@@ -108,11 +108,11 @@ public class EncodingTests(EncodingsTestFixture fixture) : IClassFixture<Encodin
     public static TheoryData<string, int> ComponentWithHrefData { get; } = new()
     {
         { "BackLink", 0 },
-        // { "Breadcrumbs", 0 },
-        // { "ButtonLink", 0 },
-        // //{ "ErrorSummary", 0 },  // skipping for now; we shouldn't need this as links are fragments and won't contain query params
-        // { "Pagination", 0 },
-        // { "SummaryList", 0 }
+        { "Breadcrumbs", 0 },
+        { "ButtonLink", 0 },
+        //{ "ErrorSummary", 0 },  // skipping for now; we shouldn't need this as links are fragments and won't contain query params
+        { "Pagination", 0 },
+        { "SummaryList", 0 }
     };
 
     public static TheoryData<string, int> ComponentWithFormActionData { get; } = new()

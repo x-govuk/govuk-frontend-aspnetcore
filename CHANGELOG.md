@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.1
+
+### Fixes
+
+Fixes rendering tag helpers that have a `<table>` element in their content.
+
 ## 3.1.0
 
 Targets GOV.UK Frontend v5.10.2.

@@ -2,21 +2,25 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <BuildDependsOn>
+      AddGovUkFrontendBuildInfoAttribute;
       RestoreGovUkFrontendNpmPackage;
       $(BuildDependsOn)
     </BuildDependsOn>
 
     <CopyAllFilesToSingleFolderForPackageDependsOn>
+      AddGovUkFrontendBuildInfoAttribute;
       RestoreGovUkFrontendNpmPackage;
       $(CopyAllFilesToSingleFolderForPackageDependsOn)
     </CopyAllFilesToSingleFolderForPackageDependsOn>
 
     <CopyAllFilesToSingleFolderForMsdeployDependsOn>
+      AddGovUkFrontendBuildInfoAttribute;
       RestoreGovUkFrontendNpmPackage;
       $(CopyAllFilesToSingleFolderForMsdeployDependsOn)
     </CopyAllFilesToSingleFolderForMsdeployDependsOn>
 
     <CopyFilesToOutputDirectory>
+      AddGovUkFrontendBuildInfoAttribute;
       RestoreGovUkFrontendNpmPackage;
       $(CopyFilesToOutputDirectory)
     </CopyFilesToOutputDirectory>
@@ -25,6 +29,20 @@
   <UsingTask
     TaskName="GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage"
     AssemblyFile="$(MSBuildThisFileDirectory)..\tools\net8.0\any\GovUk.Frontend.AspNetCore.Build.dll" />
+
+  <Target Name="AddGovUkFrontendBuildInfoAttribute">
+    <PropertyGroup>
+      <_frontendNpmPackageRestored>false</_frontendNpmPackageRestored>
+      <_frontendNpmPackageRestored Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">true</_frontendNpmPackageRestored>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <AssemblyAttribute Include="GovUk.Frontend.AspNetCore.GovUkFrontendBuildInfoAttribute">
+        <_Parameter1>$(_frontendNpmPackageRestored)</_Parameter1>
+        <_Parameter1_IsLiteral>true</_Parameter1_IsLiteral>
+      </AssemblyAttribute>
+    </ItemGroup>
+  </Target>
 
   <Target Name="RestoreGovUkFrontendNpmPackage" Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
     <ReadLinesFromFile File="$(MSBuildThisFileDirectory)..\govuk-frontend-version.txt">

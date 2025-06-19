@@ -13,7 +13,7 @@
     var rebrand = OptionsAccessor.Value.Rebrand;
 
     var assetPath = ViewBag.AssetPath ??
-        Context.Request.PathBase + OptionsAccessor.Value.StaticAssetsContentPath!.Value + (rebrand ? "/assets" : "");
+        Context.Request.PathBase + OptionsAccessor.Value.StaticAssetsContentPath!.Value + (rebrand ? "/rebrand" : "");
     var assetVersionQueryParam = $"{RewriteCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendInfo.Version}";
 
     var cspNonce = ViewBag.CspNonce as string ?? OptionsAccessor.Value.GetCspNonceForRequest?.Invoke(ViewContext.HttpContext);
@@ -21,7 +21,6 @@
     var htmlLang = ViewBag.HtmlLang ?? "en";
     var themeColor = ViewBag.ThemeColor ?? (rebrand ? "#1d70b8" : "#0b0c0c");
     var ogImage = ViewBag.OpengraphImageUrl ??
-        rebrand ? $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/rebrand/images/govuk-opengraph-image.png?{assetVersionQueryParam}" :
         $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/images/govuk-opengraph-image.png?{assetVersionQueryParam}";
 #pragma warning restore CS0618 // Type or member is obsolete
 }

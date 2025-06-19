@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.2
+
+### Fixes
+
+Fixes asset path in `_GovUkPageTemplate` when Rebrand is `true`.
+
 ## 3.1.1
 
 ### Fixes

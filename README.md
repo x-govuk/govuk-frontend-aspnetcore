@@ -197,6 +197,9 @@ To disable hosting of these assets or to only serve a subset of the assets, over
 ```cs
 services.AddGovUkFrontend(options =>
 {
+    // Host both static assets and compiled assets (the default)
+    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets | FrontendPackageHostingOptions.HostCompiledFiles;
+
     // Don't host anything
     options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.None;
 

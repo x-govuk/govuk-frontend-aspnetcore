@@ -48,6 +48,7 @@ public static class GovUkFrontendExtensions
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
         services.AddSingleton<IStartupFilter, GovUkFrontendStartupFilter>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
+        services.AddSingleton<IConfigureOptions<GovUkFrontendOptions>, ConfigureGovUkFrontendOptions>();
         services.AddTransient<PageTemplateHelper>();
         services.AddSingleton<ITagHelperInitializer<ButtonTagHelper>, ButtonTagHelperInitializer>();
         services.AddSingleton<ITagHelperInitializer<FileUploadTagHelper>, FileUploadTagHelperInitializer>();

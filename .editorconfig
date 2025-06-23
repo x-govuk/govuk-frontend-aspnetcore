@@ -36,5 +36,8 @@ charset = utf-8-bom
 [*.liquid]
 indent_size = 2
 
+[*.razor]
+indent_size = 2
+
 [justfile]
 indent_size = 2

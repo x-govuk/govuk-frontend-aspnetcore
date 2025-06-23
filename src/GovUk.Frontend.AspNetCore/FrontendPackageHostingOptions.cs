@@ -22,5 +22,10 @@ public enum FrontendPackageHostingOptions
     /// <summary>
     /// Serve the compiled CSS and JavaScript files.
     /// </summary>
-    HostCompiledFiles = 1 << 1
+    HostCompiledFiles = 1 << 1,
+
+    /// <summary>
+    /// Whether source map references should be removed from the compiled CSS and JavaScript files.
+    /// </summary>
+    RemoveSourceMapReferences = 1 << 2
 }

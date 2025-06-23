@@ -20,7 +20,7 @@ Or via the .NET Core command line interface:
 
 ### 2. Configure your ASP.NET Core application
 
-Add services to your application:
+Add services and middleware to your application:
 
 ```cs
 using GovUk.Frontend.AspNetCore;
@@ -28,6 +28,10 @@ using GovUk.Frontend.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 //...
 builder.Services.AddGovUkFrontend();
+
+var app = builder.Build();
+app.UseGovUkFrontend();
+//...
 ```
 
 ### 3. Register tag helpers

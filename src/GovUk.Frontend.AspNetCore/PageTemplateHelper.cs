@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore;
 
@@ -15,23 +14,15 @@ public class PageTemplateHelper
 {
     private const string JsEnabledScript = "document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');";
 
-    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PageTemplateHelper"/> class.
-    /// </summary>
-    /// <param name="optionsAccessor">The options.</param>
-    public PageTemplateHelper(IOptions<GovUkFrontendOptions> optionsAccessor)
-    {
-        ArgumentNullException.ThrowIfNull(optionsAccessor);
-        _optionsAccessor = optionsAccessor;
-    }
-
     /// <summary>
     /// Gets the version of the GOV.UK Frontend library.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static string GovUkFrontendVersion => GovUkFrontendInfo.Version;
+
+    internal static PathString DefaultAssetsPath => new("/assets");
+
+    internal static PathString DefaultCompiledContentPath => new("");
 
     /// <summary>
     /// Generates the script that adds a <c>js-enabled</c> CSS class.
@@ -74,7 +65,7 @@ public class PageTemplateHelper
     /// <param name="cspNonce">The CSP nonce attribute to be added to the generated <c>script</c> tag.</param>
     /// <returns><see cref="IHtmlContent"/> containing the <c>script</c> tag.</returns>
     public IHtmlContent GenerateScriptImports(string? cspNonce = null) =>
-        GenerateScriptImports(pathBase: "", cspNonce);
+        GenerateScriptImports(pathBase: DefaultCompiledContentPath, cspNonce);
 
     /// <summary>
     /// Generates the script that adds a <c>js-enabled</c> CSS class.
@@ -92,14 +83,6 @@ public class PageTemplateHelper
     /// <returns><see cref="IHtmlContent"/> containing the <c>script</c> tag.</returns>
     public IHtmlContent GenerateScriptImports(PathString pathBase, string? cspNonce)
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        var compiledContentPath = _optionsAccessor.Value.CompiledContentPath;
-        if (compiledContentPath is null)
-        {
-            throw new InvalidOperationException($"Cannot generate script imports when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
-
         var htmlContentBuilder = new HtmlContentBuilder();
         htmlContentBuilder.AppendHtml(GenerateImportScript());
         htmlContentBuilder.AppendLine();
@@ -109,7 +92,7 @@ public class PageTemplateHelper
 
         TagBuilder GenerateImportScript()
         {
-            var src = GetScriptSrc(pathBase, compiledContentPath);
+            var src = $"{pathBase}/{GetScriptFileName()}";
 
             var tagBuilder = new TagBuilder("script");
             tagBuilder.MergeAttribute("type", "module");
@@ -140,7 +123,7 @@ public class PageTemplateHelper
     /// The contents of this property should be inserted in the <c>head</c> tag.
     /// </remarks>
     /// <returns><see cref="IHtmlContent"/> containing the <c>link</c> tags.</returns>
-    public IHtmlContent GenerateStyleImports() => GenerateStyleImports(pathBase: "");
+    public IHtmlContent GenerateStyleImports() => GenerateStyleImports(pathBase: DefaultCompiledContentPath);
 
     /// <summary>
     /// Generates the HTML that imports the GOV.UK Frontend library styles.
@@ -152,19 +135,8 @@ public class PageTemplateHelper
     /// <returns><see cref="IHtmlContent"/> containing the <c>link</c> tags.</returns>
     public IHtmlContent GenerateStyleImports(PathString pathBase)
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        var compiledContentPath = _optionsAccessor.Value.CompiledContentPath;
-
-        if (compiledContentPath is null)
-        {
-            throw new InvalidOperationException($"Cannot generate style imports when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
-        }
-
-        var fileName = $"govuk-frontend-{GovUkFrontendVersion}.min.css";
-        var href = $"{pathBase}{compiledContentPath}/{fileName}";
-
-        return new HtmlString($"<link href=\"{href}\" rel=\"stylesheet\">");
-#pragma warning restore CS0618 // Type or member is obsolete
+        var fileName = GetStylesheetFileName();
+        return new HtmlString($"<link href=\"{pathBase}/{fileName}\" rel=\"stylesheet\">");
     }
 
     /// <summary>
@@ -202,17 +174,8 @@ public class PageTemplateHelper
 
     private string GetInitScriptContents(PathString pathBase)
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        if (_optionsAccessor.Value.CompiledContentPath is null)
-        {
-            throw new InvalidOperationException($"Cannot generate scripts when {nameof(GovUkFrontendOptions.CompiledContentPath)} is null.");
-        }
-
-        var compiledContentPath = $"{pathBase}{_optionsAccessor.Value.CompiledContentPath}";
-
         var fileName = GetScriptFileName();
-        return $"\nimport {{ initAll }} from '{compiledContentPath}/{fileName}'\ninitAll()\n";
-#pragma warning restore CS0618 // Type or member is obsolete
+        return $"\nimport {{ initAll }} from '{pathBase}/{fileName}'\ninitAll()\n";
     }
 
     private static string GenerateCspHash(string value)
@@ -222,11 +185,9 @@ public class PageTemplateHelper
         return $"'sha256-{Convert.ToBase64String(hash)}'";
     }
 
-    private static string GetScriptFileName() => $"govuk-frontend-{GovUkFrontendVersion}.min.js";
+    private static string GetScriptFileName() =>
+        $"govuk-frontend.min.js?{HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendVersion}";
 
-    private static string GetScriptSrc(PathString pathBase, PathString? compiledContentPath)
-    {
-        var fileName = GetScriptFileName();
-        return $"{pathBase}{compiledContentPath}/{fileName}";
-    }
+    private static string GetStylesheetFileName() =>
+        $"govuk-frontend.min.css?{HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendVersion}";
 }

@@ -2,11 +2,13 @@ using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.TagHelpers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore;
@@ -46,7 +48,6 @@ public static class GovUkFrontendExtensions
         services.TryAddSingleton<IGovUkHtmlGenerator, ComponentGenerator>();
         services.TryAddSingleton<IComponentGenerator, DefaultComponentGenerator>();
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
-        services.AddSingleton<IStartupFilter, GovUkFrontendStartupFilter>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
         services.AddSingleton<IConfigureOptions<GovUkFrontendOptions>, ConfigureGovUkFrontendOptions>();
         services.AddTransient<PageTemplateHelper>();
@@ -56,6 +57,50 @@ public static class GovUkFrontendExtensions
         services.Configure(setupAction);
 
         return services;
+    }
+
+    /// <summary>
+    /// Adds middleware to the request pipeline that serves the static assets and compiled files of the govuk-frontend NPM package.
+    /// </summary>
+    public static IApplicationBuilder UseGovUkFrontend(this IApplicationBuilder app)
+    {
+        ArgumentNullException.ThrowIfNull(app);
+
+        var options = app.ApplicationServices.GetRequiredService<IOptions<GovUkFrontendOptions>>();
+
+        if (options.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
+        {
+            var fileProvider = new ManifestEmbeddedFileProvider(
+                typeof(GovUkFrontendExtensions).Assembly,
+                root: "Content/Assets");
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = fileProvider,
+                RequestPath = PageTemplateHelper.DefaultAssetsPath,
+                OnPrepareResponse = ctx =>
+                {
+                    var hasVersionQueryParam =
+                        ctx.Context.Request.Query[HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName].Count != 0;
+
+                    if (hasVersionQueryParam)
+                    {
+                        ctx.Context.Response.Headers.CacheControl = "Cache-Control: public, max-age=31536000, immutable";
+                    }
+                }
+            });
+        }
+
+        if (options.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles))
+        {
+            var fileProvider = new ManifestEmbeddedFileProvider(
+                typeof(GovUkFrontendExtensions).Assembly,
+                root: "Content/Compiled");
+
+            app.UseMiddleware<HostCompiledAssetsMiddleware>(fileProvider);
+        }
+
+        return app;
     }
 
     private class ConfigureMvcOptions : IConfigureOptions<MvcOptions>

@@ -15,7 +15,7 @@ public class ServerFixture : IAsyncLifetime
 
     public IServiceProvider Services => _host!.Services;
 
-    public async virtual Task DisposeAsync()
+    public virtual async Task DisposeAsync()
     {
         if (_disposed)
         {
@@ -38,7 +38,7 @@ public class ServerFixture : IAsyncLifetime
         }
     }
 
-    public async virtual Task InitializeAsync()
+    public virtual async Task InitializeAsync()
     {
         _host = CreateHost();
         await _host.StartAsync();
@@ -51,6 +51,8 @@ public class ServerFixture : IAsyncLifetime
     {
         app.UseDeveloperExceptionPage();
 
+        app.UseGovUkFrontend();
+
         app.UseRouting();
     }
 
@@ -59,7 +61,7 @@ public class ServerFixture : IAsyncLifetime
         services.AddGovUkFrontend();
     }
 
-    private IHost CreateHost() => Host.CreateDefaultBuilder(args: Array.Empty<string>())
+    private IHost CreateHost() => Host.CreateDefaultBuilder(args: [])
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder

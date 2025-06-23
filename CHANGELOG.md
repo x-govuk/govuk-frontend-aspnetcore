@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Asset hosting changes
+An additional call is now required to add the middleware that hosts the govuk-frontend assets.
+In your `Program.cs` file, add the following line after `var app = builder.Build();`:
+```csharp
+app.UseGovUkFrontend();
+```
+
 ## 3.1.2
 
 ### Fixes

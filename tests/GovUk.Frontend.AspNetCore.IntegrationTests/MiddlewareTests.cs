@@ -1,24 +1,23 @@
 using System.Net;
-#pragma warning disable CS0618 // Type or member is obsolete
 
 namespace GovUk.Frontend.AspNetCore.IntegrationTests;
 
-public class StartupFilterTests
+public class MiddlewareTests
 {
     [Theory]
-    [InlineData("govuk-frontend-%version%.min.css")]
-    [InlineData("govuk-frontend-%version%.min.js")]
+    [InlineData("govuk-frontend.min.css")]
+    [InlineData("govuk-frontend.min.js")]
     public async Task HostsCompiledAssets(string fileName)
     {
         // Arrange
-        await using var fixture = new StartupFilterTestFixture(services =>
+        await using var fixture = new MiddlewareTestFixture(services =>
         {
             services.Configure<GovUkFrontendOptions>(
-                options => options.CompiledContentPath = "/non-standard-compiled");
+                options => options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostCompiledFiles);
         });
         await fixture.InitializeAsync();
 
-        var resolvedPath = $"/non-standard-compiled/{fileName.Replace("%version%", GovUkFrontendInfo.Version)}";
+        var resolvedPath = $"{fixture.PathBase}/{fileName}?v={GovUkFrontendInfo.Version}";
 
         var request = new HttpRequestMessage(HttpMethod.Get, resolvedPath);
 
@@ -40,14 +39,14 @@ public class StartupFilterTests
     public async Task HostsStaticAssets(string fileName)
     {
         // Arrange
-        await using var fixture = new StartupFilterTestFixture(services =>
+        await using var fixture = new MiddlewareTestFixture(services =>
         {
             services.Configure<GovUkFrontendOptions>(
-                options => options.StaticAssetsContentPath = "/non-standard-asset-location");
+                options => options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets);
         });
         await fixture.InitializeAsync();
 
-        var resolvedPath = $"/non-standard-asset-location/{fileName}";
+        var resolvedPath = $"{fixture.PathBase}{PageTemplateHelper.DefaultAssetsPath}/{fileName}";
 
         var request = new HttpRequestMessage(HttpMethod.Get, resolvedPath);
 
@@ -62,17 +61,14 @@ public class StartupFilterTests
     public async Task RewritesAssetPathInCssFile()
     {
         // Arrange
-        await using var fixture = new StartupFilterTestFixture(services =>
+        await using var fixture = new MiddlewareTestFixture(services =>
         {
             services.Configure<GovUkFrontendOptions>(options =>
-            {
-                options.CompiledContentPath = "/non-standard-compiled";
-                options.StaticAssetsContentPath = "/non-standard-assets";
-            });
+                options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets | FrontendPackageHostingOptions.HostCompiledFiles);
         });
         await fixture.InitializeAsync();
 
-        var resolvedPath = $"/non-standard-compiled/govuk-frontend-{GovUkFrontendInfo.Version}.min.css";
+        var resolvedPath = $"{fixture.PathBase}/govuk-frontend.min.css";
 
         var request = new HttpRequestMessage(HttpMethod.Get, resolvedPath);
 
@@ -81,16 +77,15 @@ public class StartupFilterTests
 
         // Assert
         var css = await response.Content.ReadAsStringAsync();
-        Assert.Contains("/non-standard-assets/", css);
-        Assert.DoesNotContain("/assets", css);
+        Assert.Contains($"{fixture.PathBase}{PageTemplateHelper.DefaultAssetsPath}", css);
     }
 }
 
-public class StartupFilterTestFixture : ServerFixture
+public class MiddlewareTestFixture : ServerFixture
 {
     private readonly Action<IServiceCollection> _configureServices;
 
-    public StartupFilterTestFixture(Action<IServiceCollection> configureServices)
+    public MiddlewareTestFixture(Action<IServiceCollection> configureServices)
     {
         _configureServices = configureServices;
 
@@ -102,6 +97,8 @@ public class StartupFilterTestFixture : ServerFixture
 
     public HttpClient HttpClient { get; }
 
+    public PathString PathBase { get; } = new("/pathbase");
+
     public override Task DisposeAsync()
     {
         HttpClient.Dispose();
@@ -110,7 +107,13 @@ public class StartupFilterTestFixture : ServerFixture
 
     protected override void Configure(IApplicationBuilder app)
     {
-        base.Configure(app);
+        app.UsePathBase(PathBase);
+
+        app.UseDeveloperExceptionPage();
+
+        app.UseGovUkFrontend();
+
+        app.UseRouting();
 
         app.UseEndpoints(endpoints =>
         {
@@ -124,6 +127,6 @@ public class StartupFilterTestFixture : ServerFixture
 
         services.AddRazorPages();
 
-        _configureServices?.Invoke(services);
+        _configureServices.Invoke(services);
     }
 }

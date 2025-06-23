@@ -29,6 +29,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseGovUkFrontend();
+
 app.UseRouting();
 
 app.UseAuthorization();

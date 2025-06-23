@@ -23,6 +23,8 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseGovUkFrontend();
+
         app.UseStaticFiles();
 
         app.UseRouting();

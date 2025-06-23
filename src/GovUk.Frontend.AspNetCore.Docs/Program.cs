@@ -22,6 +22,8 @@ var app = builder.Build();
 
 app.UseDeveloperExceptionPage();
 
+app.UseGovUkFrontend();
+
 app.UseRouting();
 
 app.MapRazorPages();

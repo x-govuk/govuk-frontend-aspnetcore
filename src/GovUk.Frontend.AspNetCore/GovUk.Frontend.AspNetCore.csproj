@@ -97,10 +97,10 @@
 
   <ItemGroup>
     <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.css">
-      <LinkedName>govuk-frontend-$(GovUkFrontendVersion).min.css</LinkedName>
+      <LinkedName>govuk-frontend.min.css</LinkedName>
     </_CompiledAssets>
     <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.js">
-      <LinkedName>govuk-frontend-$(GovUkFrontendVersion).min.js</LinkedName>
+      <LinkedName>govuk-frontend.min.js</LinkedName>
     </_CompiledAssets>
 
     <EmbeddedResource Include="$(GovUkFrontendLibrary)assets\**\*">

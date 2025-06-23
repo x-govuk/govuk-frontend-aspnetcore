@@ -451,6 +451,11 @@
             Serve the compiled CSS and JavaScript files.
             </summary>
         </member>
+        <member name="F:GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions.RemoveSourceMapReferences">
+            <summary>
+            Whether source map references should be removed from the compiled CSS and JavaScript files.
+            </summary>
+        </member>
         <member name="T:GovUk.Frontend.AspNetCore.GovUkFrontendExtensions">
             <summary>
             Extension methods for setting up GovUk.Frontend.AspNetCore.
@@ -470,6 +475,11 @@
             <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" /> to add services to.</param>
             <param name="setupAction">An <see cref="T:System.Action`1"/> to configure the provided <see cref="T:GovUk.Frontend.AspNetCore.GovUkFrontendOptions"/>.</param>
             <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.GovUkFrontendExtensions.UseGovUkFrontend(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds middleware to the request pipeline that serves the static assets and compiled files of the govuk-frontend NPM package.
+            </summary>
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.GovUkFrontendInfo">
             <summary>
@@ -579,6 +589,19 @@
             </summary>
             <param name="modelType">The <see cref="T:GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter"/>.</param>
             <param name="converter">The <see cref="T:System.Type"/>.</param>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.HostCompiledAssetsMiddleware.GetCssAssetUrlReferencePattern">
+            <remarks>
+            Pattern:<br/>
+            <code>url\\(/assets/(.*?)\\)</code><br/>
+            Explanation:<br/>
+            <code>
+            ○ Match the string "url(/assets/".<br/>
+            ○ 1st capture group.<br/>
+                ○ Match a character other than '\n' lazily any number of times.<br/>
+            ○ Match ')'.<br/>
+            </code>
+            </remarks>
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.HtmlContentExtensions">
             <summary>
@@ -859,12 +882,6 @@
             Contains methods for generating script and stylesheet imports for the GDS page template.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.PageTemplateHelper.#ctor(Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
-            <summary>
-            Initializes a new instance of the <see cref="T:GovUk.Frontend.AspNetCore.PageTemplateHelper"/> class.
-            </summary>
-            <param name="optionsAccessor">The options.</param>
-        </member>
         <member name="P:GovUk.Frontend.AspNetCore.PageTemplateHelper.GovUkFrontendVersion">
             <summary>
             Gets the version of the GOV.UK Frontend library.
@@ -966,19 +983,6 @@
             </summary>
             <param name="pathBase">The base path that the script is hosted under.</param>
             <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
-        </member>
-        <member name="M:GovUk.Frontend.AspNetCore.RewriteCompiledAssetsMiddleware.GetCssAssetUrlReferencePattern">
-            <remarks>
-            Pattern:<br/>
-            <code>url\\(/assets/(.*?)\\)</code><br/>
-            Explanation:<br/>
-            <code>
-            ○ Match the string "url(/assets/".<br/>
-            ○ 1st capture group.<br/>
-                ○ Match a character other than '\n' lazily any number of times.<br/>
-            ○ Match ')'.<br/>
-            </code>
-            </remarks>
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagBuilderExtensions">
             <summary>

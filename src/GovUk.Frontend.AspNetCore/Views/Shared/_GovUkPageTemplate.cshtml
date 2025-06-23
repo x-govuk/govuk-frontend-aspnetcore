@@ -1,31 +1,41 @@
 ﻿@using GovUk.Frontend.AspNetCore
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.WebUtilities
 @using Microsoft.Extensions.Options
 @inject IOptions<GovUkFrontendOptions> OptionsAccessor
 @addTagHelper *, GovUk.Frontend.AspNetCore
 @{
-#pragma warning disable CS0618 // Type or member is obsolete
-    if (ViewBag.AssetPath is null && OptionsAccessor.Value.StaticAssetsContentPath is null)
-    {
-        throw new InvalidOperationException(
-            $"Asset path is not set. Ensure either {nameof(GovUkFrontendOptions.StaticAssetsContentPath)} on {nameof(GovUkFrontendOptions)} or ViewBag.AssetPath is set.");
-    }
-
     var rebrand = OptionsAccessor.Value.Rebrand;
 
-    var assetPath = ViewBag.AssetPath ??
-        Context.Request.PathBase + OptionsAccessor.Value.StaticAssetsContentPath!.Value + (rebrand ? "/rebrand" : "");
-    var assetVersionQueryParam = $"{RewriteCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendInfo.Version}";
+    PathString assetPath = ViewBag.AssetPath ??
+        Context.Request.PathBase + PageTemplateHelper.DefaultAssetsPath + (rebrand ? "/rebrand" : "");
 
     var cspNonce = ViewBag.CspNonce as string ?? OptionsAccessor.Value.GetCspNonceForRequest?.Invoke(ViewContext.HttpContext);
 
     var htmlLang = ViewBag.HtmlLang ?? "en";
     var themeColor = ViewBag.ThemeColor ?? (rebrand ? "#1d70b8" : "#0b0c0c");
     var ogImage = ViewBag.OpengraphImageUrl ??
-        $"{Context.Request.Scheme}://{Context.Request.Host}{assetPath}/images/govuk-opengraph-image.png?{assetVersionQueryParam}";
-#pragma warning restore CS0618 // Type or member is obsolete
+        $"{Context.Request.Scheme}://{Context.Request.Host}{GetStaticAssetUrl("images/govuk-opengraph-image.png")}";
+
+    static string Classes(params string[] classes)
+    {
+        return string.Join(" ", classes.Where(c => !string.IsNullOrWhiteSpace(c)));
+    }
+
+    string GetStaticAssetUrl(string url)
+    {
+        var result = assetPath + "/" + url;
+
+        if (OptionsAccessor.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
+        {
+            result = QueryHelpers.AddQueryString(result, HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName, GovUkFrontendInfo.Version);
+        }
+
+        return result;
+    }
 }
 <!DOCTYPE html>
-<html lang="@htmlLang" class="govuk-template @(rebrand ? "govuk-template--rebranded" : "") @ViewBag.HtmlClasses">
+<html lang="@htmlLang" class="@Classes("govuk-template", rebrand ? "govuk-template--rebranded" : string.Empty, ViewBag.HtmlClasses)">
 
 <head>
     <meta charset="utf-8">
@@ -44,11 +54,11 @@
     }
     else
     {
-        <link rel="icon" sizes="48x48" href="@(assetPath)/images/favicon.ico?@assetVersionQueryParam">
-        <link rel="icon" sizes="any" href="@(assetPath)/images/favicon.svg?@assetVersionQueryParam" type="image/svg+xml">
-        <link rel="mask-icon" href="@(assetPath)/images/govuk-icon-mask.svg?@assetVersionQueryParam" color="@themeColor">
-        <link rel="apple-touch-icon" href="@(assetPath)/images/govuk-icon-180.png?@assetVersionQueryParam">
-        <link rel="manifest" href="@(assetPath)/manifest.json?@assetVersionQueryParam">
+        <link rel="icon" sizes="48x48" href="@(GetStaticAssetUrl("images/favicon.ico"))">
+        <link rel="icon" sizes="any" href="@(GetStaticAssetUrl("images/favicon.svg"))" type="image/svg+xml">
+        <link rel="mask-icon" href="@(GetStaticAssetUrl("images/govuk-icon-mask.svg"))" color="@themeColor">
+        <link rel="apple-touch-icon" href="@(GetStaticAssetUrl("images/govuk-icon-180.png"))">
+        <link rel="manifest" href="@(GetStaticAssetUrl("manifest.json"))">
     }
 
     @if (IsSectionDefined("Head"))
@@ -63,7 +73,7 @@
     <meta property="og:image" content="@(ogImage)">
 </head>
 
-<body class="govuk-template__body @ViewBag.BodyClasses">
+<body class="@Classes("govuk-template__body", ViewBag.BodyClasses)">
     @Html.GovUkFrontendJsEnabledScript(cspNonce)
     @RenderSection("BodyStart", required: false)
 
@@ -78,12 +88,12 @@
 
     @RenderSection("Header", required: false)
 
-    <div class="govuk-width-container @ViewBag.ContainerClasses">
+    <div class="@Classes("govuk-width-container", ViewBag.ContainerClasses)">
         @RenderSection("BeforeContent", required: false)
-        <main class="govuk-main-wrapper @ViewBag.MainClasses" id="main-content" role="main" lang="@ViewBag.MainLang" prepend-error-summary="false">
+        <main class="@Classes("govuk-main-wrapper", ViewBag.MainClasses)" id="main-content" role="main" lang="@ViewBag.MainLang" prepend-error-summary="false">
             @if (!Context.GetContainerErrorContext().ErrorSummaryHasBeenRendered)
             {
-                <govuk-error-summary/>
+                <govuk-error-summary />
             }
 
             @RenderBody()

@@ -40,6 +40,8 @@ public class Startup
             app.UseExceptionHandler("/Error");
         }
 
+        app.UseGovUkFrontend();
+
         app.UseStaticFiles();
 
         app.UseRouting();

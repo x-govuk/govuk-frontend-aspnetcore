@@ -11,7 +11,6 @@ namespace GovUk.Frontend.AspNetCore;
 public class GovUkFrontendOptions
 {
     private readonly DateInputConverterRegistry _dateInputConverterRegistry;
-    private FrontendPackageHostingOptions _frontendPackageHostingOptions;
 
     /// <summary>
     /// Creates a new <see cref="GovUkFrontendOptions"/>.
@@ -28,7 +27,9 @@ public class GovUkFrontendOptions
 
         ErrorSummaryGeneration = ErrorSummaryGenerationOptions.PrependToMainElement;
         PrependErrorToTitle = true;
-        FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets | FrontendPackageHostingOptions.HostCompiledFiles;
+        FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets |
+            FrontendPackageHostingOptions.HostCompiledFiles |
+            FrontendPackageHostingOptions.RemoveSourceMapReferences;
     }
 
     /// <summary>
@@ -56,7 +57,26 @@ public class GovUkFrontendOptions
     /// </remarks>
     [Obsolete($"Use {nameof(FrontendPackageHostingOptions)} instead.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public PathString? StaticAssetsContentPath { get; set; }
+    public PathString? StaticAssetsContentPath
+    {
+        get => FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets) ? PageTemplateHelper.DefaultAssetsPath : null;
+        set
+        {
+            if (value is not null && value != PageTemplateHelper.DefaultAssetsPath)
+            {
+                throw new ArgumentException($"Value must be {PageTemplateHelper.DefaultAssetsPath} or null.", nameof(value));
+            }
+
+            if (value is null)
+            {
+                FrontendPackageHostingOptions &= ~FrontendPackageHostingOptions.HostAssets;
+            }
+            else
+            {
+                FrontendPackageHostingOptions |= FrontendPackageHostingOptions.HostAssets;
+            }
+        }
+    }
 
     /// <summary>
     /// The path to serve GOV.UK Frontend compiled JavaScript and CSS at.
@@ -67,37 +87,29 @@ public class GovUkFrontendOptions
     /// </remarks>
     [Obsolete($"Use {nameof(FrontendPackageHostingOptions)} instead.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public PathString? CompiledContentPath { get; set; }
-
-    /// <inheritdoc cref="GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions"/>
-    public FrontendPackageHostingOptions FrontendPackageHostingOptions
+    public PathString? CompiledContentPath
     {
-        get => _frontendPackageHostingOptions;
+        get => FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles) ? PageTemplateHelper.DefaultCompiledContentPath : null;
         set
         {
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (value.HasFlag(FrontendPackageHostingOptions.HostAssets))
+            if (value is not null && value != PageTemplateHelper.DefaultCompiledContentPath)
             {
-                StaticAssetsContentPath ??= "/assets";
+                throw new ArgumentException($"Value must be empty or null.", nameof(value));
+            }
+
+            if (value is null)
+            {
+                FrontendPackageHostingOptions &= ~FrontendPackageHostingOptions.HostCompiledFiles;
             }
             else
             {
-                StaticAssetsContentPath = null;
+                FrontendPackageHostingOptions |= FrontendPackageHostingOptions.HostCompiledFiles;
             }
-
-            if (value.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles))
-            {
-                CompiledContentPath ??= "";
-            }
-            else
-            {
-                CompiledContentPath = null;
-            }
-
-            _frontendPackageHostingOptions = value;
-#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
+
+    /// <inheritdoc cref="GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions"/>
+    public FrontendPackageHostingOptions FrontendPackageHostingOptions { get; set; }
 
     /// <summary>
     /// The default value for <see cref="ButtonTagHelper.PreventDoubleClick"/>.

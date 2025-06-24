@@ -12,6 +12,10 @@ In your `Program.cs` file, add the following line after `var app = builder.Build
 app.UseGovUkFrontend();
 ```
 
+A new mechanism is available to copy assets from the `govuk-frontend` package into your application.
+This is particularly useful for applications that are using SASS and want to reference scss files from the `govuk-frontend` package.
+See [the SASS sample](samples/Samples.Sass) for an example of how to use this.
+
 ### Tag helper changes
 
 #### `<govuk-service-navigation-nav>` tag helper

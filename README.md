@@ -215,6 +215,9 @@ services.AddGovUkFrontend(options =>
 });
 ```
 
+If you're using SASS and want to be able to reference the `govuk-frontend` SASS variables, mixins and functions in your own SASS files,
+see the [SASS sample](samples/Samples.Sass) for an example of how to set up your project.
+
 ## Components
 
 - [Accordion](docs/components/accordion.md)

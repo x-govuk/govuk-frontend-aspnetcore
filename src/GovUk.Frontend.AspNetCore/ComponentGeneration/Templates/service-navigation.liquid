@@ -31,11 +31,14 @@ data-module="govuk-service-navigation"
 
       {% comment %} Navigation {% endcomment %}
       {% assign navigationItems = params.navigation %}
+      {% assign collapseNavigationOnMobile = params.collapseNavigationOnMobile | default: (navigationItems.size > 1), allow_false: true %}
       {% if navigationItems.size > 0 or params.slots.navigationStart or params.slots.navigationEnd %}
         <nav aria-label="{{ params.navigationLabel | default: menuButtonText }}" class="govuk-service-navigation__wrapper {%- if params.navigationClasses %} {{ params.navigationClasses }}{% endif %} {{- govukAttributes(params.navigationAttributes) }}">
+          {% if collapseNavigationOnMobile %}
           <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="{{ navigationId }}" {%- if params.menuButtonLabel and params.menuButtonLabel != menuButtonText %} aria-label="{{ params.menuButtonLabel }}"{% endif %} hidden>
             {{ menuButtonText }}
           </button>
+          {% endif %}
 
           <ul class="govuk-service-navigation__list" id="{{ navigationId }}" >
 

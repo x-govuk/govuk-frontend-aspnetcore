@@ -2,12 +2,20 @@
 
 ## Unreleased
 
+Targets GOV.UK Frontend v5.11.0.
+
 ### Asset hosting changes
+
 An additional call is now required to add the middleware that hosts the govuk-frontend assets.
 In your `Program.cs` file, add the following line after `var app = builder.Build();`:
 ```csharp
 app.UseGovUkFrontend();
 ```
+
+### Tag helper changes
+
+#### `<govuk-service-navigation-nav>` tag helper
+A `collapse-navigation-on-mobile` attribute has been added to control whether the service navigation is collapsed on mobile devices.
 
 ## 3.1.2
 

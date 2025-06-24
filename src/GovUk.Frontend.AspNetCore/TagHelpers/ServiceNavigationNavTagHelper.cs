@@ -21,6 +21,7 @@ public class ServiceNavigationNavTagHelper : TagHelper
     //internal const string ShortTagName = ShortTagNames.Nav;
 
     private const string AriaLabelAttributeName = "aria-label";
+    private const string CollapseNavigationOnMobileAttributeName = "collapse-navigation-on-mobile";
     private const string MenuButtonTextAttributeName = "menu-button-text";
     private const string MenuButtonLabelAttributeName = "menu-button-label";
     private const string LabelAttributeName = "label";
@@ -34,6 +35,15 @@ public class ServiceNavigationNavTagHelper : TagHelper
     /// </remarks>
     [HtmlAttributeName(AriaLabelAttributeName)]
     public string? AriaLabel { get; set; }
+
+    /// <summary>
+    /// Whether the navigation should be collapsed inside a menu on mobile.
+    /// </summary>
+    /// <remarks>
+    /// If not specified, the navigation will be collapsed on mobile if there is more than one navigation item.
+    /// </remarks>
+    [HtmlAttributeName(CollapseNavigationOnMobileAttributeName)]
+    public bool? CollapseNavigationOnMobile { get; set; }
 
     /// <summary>
     /// The text of the mobile navigation menu toggle.
@@ -101,6 +111,7 @@ public class ServiceNavigationNavTagHelper : TagHelper
         navContext.MenuButtonLabel = MenuButtonLabel;
         navContext.Label = Label;
         navContext.Id = Id;
+        navContext.CollapseNavigationOnMobile = CollapseNavigationOnMobile;
         navContext.Attributes = attributes;
 
         serviceNavigationContext.Nav = navContext;

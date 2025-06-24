@@ -15,6 +15,7 @@ public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNav
         var menuButtonLabel = "Menu button label";
         var label = "Navigation label";
         var id = "navigation-id";
+        var collapseNavigationOnMobile = true;
         var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
         var navStartSlotContent = "Start nav";
@@ -49,6 +50,7 @@ public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNav
         var tagHelper = new ServiceNavigationNavTagHelper()
         {
             AriaLabel = ariaLabel,
+            CollapseNavigationOnMobile = collapseNavigationOnMobile,
             MenuButtonText = menuButtonText,
             MenuButtonLabel = menuButtonLabel,
             Label = label,
@@ -67,6 +69,7 @@ public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNav
         Assert.Equal(menuButtonLabel, serviceNavigationContext.Nav.MenuButtonLabel);
         Assert.Equal(label, serviceNavigationContext.Nav.Label);
         Assert.Equal(id, serviceNavigationContext.Nav.Id);
+        Assert.Equal(collapseNavigationOnMobile, serviceNavigationContext.Nav.CollapseNavigationOnMobile);
         AssertContainsAttributes(attributes, serviceNavigationContext.Nav.Attributes);
         Assert.Equal(navStartSlotContent, serviceNavigationContext.Nav.NavigationStartSlot?.Html);
         Assert.Equal(navEndSlotContent, serviceNavigationContext.Nav.NavigationEndSlot?.Html);

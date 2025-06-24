@@ -78,6 +78,7 @@ public class ServiceNavigationTagHelper : TagHelper
             NavigationLabel = serviceNavigationContext.Nav?.Label,
             NavigationId = serviceNavigationContext.Nav?.Id,
             NavigationClasses = navigationClasses,
+            CollapseNavigationOnMobile = serviceNavigationContext.Nav?.CollapseNavigationOnMobile,
             ServiceName = ServiceName,
             ServiceUrl = ServiceUrl,
             Navigation = serviceNavigationContext.Nav?.Items,

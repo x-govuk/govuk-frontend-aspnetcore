@@ -44,6 +44,7 @@ Must be inside a `<govuk-service-navigation>` element.
 | Attribute | Type | Description |
 | --- | --- | --- |
 | `aria-label` | `string` | The text for the `aria-label` which labels the service navigation container when a service name is included. If not specified, "Service information" will be used. |
+| `collapse-navigation-on-mobile` | `bool?` | Whether the navigation should be collapsed inside a menu on mobile. If not specified, the navigation will be collapsed on mobile if there is more than one navigation item. |
 | `id` | `string` | The ID used to associate the mobile navigation toggle with the navigation menu. If not specified, `navigation` will be used. |
 | `label` | `string` | The screen reader label for the mobile navigation menu. If not specified, the value of the `menu-button-text` attribute will be used. |
 | `menu-button-label` | `string` | The screen reader label for the mobile navigation menu toggle. If not specified, the value of the `menu-button-text` attribute will be used. |

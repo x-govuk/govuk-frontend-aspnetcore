@@ -5,7 +5,7 @@
     <RepoRoot>$([MSBuild]::EnsureTrailingSlash('$(MSBuildThisFileDirectory)'))</RepoRoot>
     <Nullable>enable</Nullable>
     <PackageOutputPath>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'packages'))</PackageOutputPath>
-    <GovUkFrontendVersion>5.10.2</GovUkFrontendVersion>
+    <GovUkFrontendVersion>5.11.0</GovUkFrontendVersion>
 
     <CoreLibMinVerTagPrefix>v</CoreLibMinVerTagPrefix>
     <CoreLibMinVerMinimumMajorMinor>3.2</CoreLibMinVerMinimumMajorMinor>

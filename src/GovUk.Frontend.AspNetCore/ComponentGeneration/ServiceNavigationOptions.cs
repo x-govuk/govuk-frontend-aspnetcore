@@ -12,6 +12,7 @@ public record ServiceNavigationOptions
     public TemplateString? NavigationLabel { get; set; }
     public TemplateString? NavigationId { get; set; }
     public TemplateString? NavigationClasses { get; set; }
+    public bool? CollapseNavigationOnMobile { get; set; }
     public TemplateString? ServiceName { get; set; }
     public TemplateString? ServiceUrl { get; set; }
     public IReadOnlyCollection<ServiceNavigationOptionsNavigationItem>? Navigation { get; set; }

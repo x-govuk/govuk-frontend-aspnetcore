@@ -3119,6 +3119,14 @@
             If not specified, &quot;Service information&quot; will be used.
             </remarks>
         </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.CollapseNavigationOnMobile">
+            <summary>
+            Whether the navigation should be collapsed inside a menu on mobile.
+            </summary>
+            <remarks>
+            If not specified, the navigation will be collapsed on mobile if there is more than one navigation item.
+            </remarks>
+        </member>
         <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavTagHelper.MenuButtonText">
             <summary>
             The text of the mobile navigation menu toggle.

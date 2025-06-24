@@ -10,6 +10,7 @@ internal class ServiceNavigationNavContext
     public string? MenuButtonLabel { get; set; }
     public string? Label { get; set; }
     public string? Id { get; set; }
+    public bool? CollapseNavigationOnMobile { get; set; }
     public AttributeCollection? Attributes { get; set; }
     public List<ServiceNavigationOptionsNavigationItem> Items { get; } = new();
     public string? FirstItemTagName { get; set; }

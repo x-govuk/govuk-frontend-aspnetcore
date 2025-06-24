@@ -8,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddGovUkFrontend(options =>
 {
-    options.Rebrand = false;
+    options.Rebrand = true;
 
     // Un-comment this block if you want to use a CSP nonce instead of hashes
     //options.GetCspNonceForRequest = context =>

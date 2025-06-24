@@ -21,6 +21,7 @@ public class Startup
     {
         services.AddGovUkFrontend(options =>
         {
+            options.Rebrand = true;
             options.RegisterDateInputModelConverter(typeof(LocalDate), new LocalDateDateInputModelConverter());
             options.RegisterDateInputModelConverter(typeof(YearMonth), new YearMonthDateInputModelConverter());
         });

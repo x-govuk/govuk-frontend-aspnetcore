@@ -15,7 +15,7 @@ if (publish)
     builder.Logging.SetMinimumLevel(LogLevel.Warning);
 }
 
-builder.Services.AddGovUkFrontend();
+builder.Services.AddGovUkFrontend(options => options.Rebrand = true);
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

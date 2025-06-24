@@ -58,7 +58,7 @@ public class ServerFixture : IAsyncLifetime
 
     protected virtual void ConfigureServices(IServiceCollection services)
     {
-        services.AddGovUkFrontend();
+        services.AddGovUkFrontend(options => options.Rebrand = true);
     }
 
     private IHost CreateHost() => Host.CreateDefaultBuilder(args: [])

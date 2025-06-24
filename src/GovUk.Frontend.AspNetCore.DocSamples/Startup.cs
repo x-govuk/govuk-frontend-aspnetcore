@@ -13,7 +13,7 @@ public class Startup
     {
         services.AddRazorPages();
 
-        services.AddGovUkFrontend();
+        services.AddGovUkFrontend(options => options.Rebrand = true);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

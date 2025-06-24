@@ -25,7 +25,7 @@ public class PaginationItemTagHelper : TagHelper
     /// Whether this item is the current page the user is on.
     /// </summary>
     /// <remarks>
-    /// By default this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
+    /// By default, this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
     /// </remarks>
     [HtmlAttributeName(CurrentAttributeName)]
     public bool? Current { get; set; }
@@ -34,9 +34,10 @@ public class PaginationItemTagHelper : TagHelper
     /// Whether this item is the current page the user is on.
     /// </summary>
     /// <remarks>
-    /// By default this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
+    /// By default, this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [HtmlAttributeName("is-current")]
     [Obsolete("Use the 'current' attribute instead.", DiagnosticId = DiagnosticIds.UseCurrentAttributeInstead)]
     public bool? IsCurrent
     {

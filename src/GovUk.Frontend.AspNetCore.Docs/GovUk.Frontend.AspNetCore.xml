@@ -2695,7 +2695,7 @@
             Whether this item is the current page the user is on.
             </summary>
             <remarks>
-            By default this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
+            By default, this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
             </remarks>
         </member>
         <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper.IsCurrent">
@@ -2703,7 +2703,7 @@
             Whether this item is the current page the user is on.
             </summary>
             <remarks>
-            By default this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
+            By default, this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
             </remarks>
         </member>
         <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.PaginationItemTagHelper.VisuallyHiddenText">
@@ -3093,7 +3093,13 @@
             </summary>
             <remarks>
             This takes precedence over the <c>active</c> attribute.
+            By default, this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
             </remarks>
+        </member>
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavItemTagHelper.ViewContext">
+            <summary>
+            Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavItemTagHelper.ViewContext"/> of the executing view.
+            </summary>
         </member>
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ServiceNavigationNavItemTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>

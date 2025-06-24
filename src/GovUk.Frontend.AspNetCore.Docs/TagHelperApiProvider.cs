@@ -1,8 +1,10 @@
+using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using GovUk.Frontend.AspNetCore.TagHelpers;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Docs;
@@ -57,10 +59,26 @@ public class TagHelperApiProvider
                 var memberName = m.Attribute("name")!.Value[(tagHelperClassName.Length + 3)..];
                 var member = tagHelperType.GetProperty(memberName)!;
 
+                if (member.GetCustomAttribute<ViewContextAttribute>() is not null)
+                {
+                    return null!;
+                }
+
+                if (member.GetCustomAttribute<ObsoleteAttribute>() is not null)
+                {
+                    return null!;
+                }
+
+                if (member.GetCustomAttribute<EditorBrowsableAttribute>() is { State: EditorBrowsableState.Never })
+                {
+                    return null!;
+                }
+
                 var typeName = GetNormalizedTypeName(member.PropertyType);
 
                 var htmlAttributeName = member.GetCustomAttribute<HtmlAttributeNameAttribute>()!;
                 var attributeName = htmlAttributeName.Name;
+
                 if (attributeName is null)
                 {
                     attributeName = htmlAttributeName.DictionaryAttributePrefix + "*";
@@ -76,7 +94,8 @@ public class TagHelperApiProvider
 
                 return new TagHelperApiAttribute(attributeName, typeName, description);
             })
-            .OrderBy(m => m.Name)
+            .Where(m => m is not null)
+            .OrderBy(m => m!.Name)
             .ToList();
 
         var canGenerateLinks = _anchorTagHelper.GetCustomAttributes<HtmlTargetElementAttribute>().Any(e => e.Tag == tagName);

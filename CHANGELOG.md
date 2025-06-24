@@ -21,6 +21,9 @@ See [the SASS sample](samples/Samples.Sass) for an example of how to use this.
 #### `<govuk-service-navigation-nav>` tag helper
 A `collapse-navigation-on-mobile` attribute has been added to control whether the service navigation is collapsed on mobile devices.
 
+#### `<govuk-service-navigation-nav-item>` tag helper
+If not specified, the `current` attribute will be deduced by comparing the `href` attribute to the current request path.
+
 ## 3.1.2
 
 ### Fixes

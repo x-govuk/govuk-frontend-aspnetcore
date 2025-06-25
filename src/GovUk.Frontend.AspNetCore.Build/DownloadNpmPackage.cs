@@ -34,7 +34,7 @@ public class DownloadNpmPackage : MsBuildTask
 
         async Task ExecuteAsync()
         {
-            var includePatterns = Include?.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ?? ["**"];
+            var includePatterns = Include?.Split(['\n'], StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()) ?? ["**"];
 
             var downloader = new NpmPackageDownloader();
             await downloader.DownloadPackage(Package, Version, PackageBaseDirectory ?? "", DestinationDirectory, includePatterns);

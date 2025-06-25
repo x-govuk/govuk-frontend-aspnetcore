@@ -27,20 +27,29 @@ public sealed class NpmPackageDownloader : IDisposable
         string destinationDirectory,
         IEnumerable<string> includePatterns)
     {
-        ArgumentNullException.ThrowIfNull(package);
-        ArgumentNullException.ThrowIfNull(version);
-        ArgumentNullException.ThrowIfNull(destinationDirectory);
+        if (package is null)
+        {
+            throw new ArgumentNullException(nameof(package));
+        }
+        if (version is null)
+        {
+            throw new ArgumentNullException(nameof(version));
+        }
+        if (destinationDirectory is null)
+        {
+            throw new ArgumentNullException(nameof(destinationDirectory));
+        }
 
         Directory.CreateDirectory(destinationDirectory);
 
         var contents = await GetPackageContentsAsync(package, version);
 
         packageBaseDirectory = packageBaseDirectory.TrimStart('/').TrimEnd('/');
-        if (!packageBaseDirectory.StartsWith(PathSeparator))
+        if (packageBaseDirectory.First() != PathSeparator)
         {
             packageBaseDirectory = PathSeparator + packageBaseDirectory;
         }
-        if (!packageBaseDirectory.EndsWith(PathSeparator))
+        if (packageBaseDirectory.Last() != PathSeparator)
         {
             packageBaseDirectory = packageBaseDirectory + PathSeparator;
         }
@@ -60,13 +69,13 @@ public sealed class NpmPackageDownloader : IDisposable
 
         var results = matcher.Execute(contents);
 
-        await Parallel.ForEachAsync(
-            results.Files,
-            async (r, ct) =>
-            {
-                var hash = ((NpmPackageFileInfo)contents.GetFile(r.Path)!).Hash;
-                await DownloadFileAsync(package, version, r.Path, hash, packageBaseDirectory, destinationDirectory, ct);
-            });
+        var tasks = results.Files.Select(r =>
+        {
+            var hash = ((NpmPackageFileInfo)contents.GetFile(r.Path)!).Hash;
+            return DownloadFileAsync(package, version, r.Path, hash, packageBaseDirectory, destinationDirectory, CancellationToken.None);
+        });
+
+        await Task.WhenAll(tasks);
     }
 
     private async Task DownloadFileAsync(
@@ -83,9 +92,9 @@ public sealed class NpmPackageDownloader : IDisposable
 
         if (File.Exists(destinationPath))
         {
-            await using var efs = File.OpenRead(destinationPath);
+            using var efs = File.OpenRead(destinationPath);
             using var sha = SHA256.Create();
-            var currentFileHash = Convert.ToBase64String(await sha.ComputeHashAsync(efs, cancellationToken));
+            var currentFileHash = Convert.ToBase64String(sha.ComputeHash(efs));
 
             if (currentFileHash == hash)
             {
@@ -101,8 +110,8 @@ public sealed class NpmPackageDownloader : IDisposable
 
         Directory.CreateDirectory(destinationDirectory);
 
-        await using var fs = File.Create(destinationPath);
-        await response.Content.CopyToAsync(fs, cancellationToken);
+        using var fs = File.Create(destinationPath);
+        await response.Content.CopyToAsync(fs);
     }
 
     private async Task<DirectoryInfoBase> GetPackageContentsAsync(string package, string version)
@@ -195,7 +204,7 @@ public sealed class NpmPackageDownloader : IDisposable
         private static FileSystemInfoBase? Find(DirectoryInfoBase directory, string[] pathParts)
         {
             var head = pathParts.First();
-            var tail = pathParts[1..];
+            var tail = pathParts.Skip(1).ToArray();
 
             foreach (var child in directory.EnumerateFileSystemInfos())
             {

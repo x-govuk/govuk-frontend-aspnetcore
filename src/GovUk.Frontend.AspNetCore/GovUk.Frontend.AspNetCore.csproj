@@ -27,18 +27,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <UsingTask
-    TaskName="GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage"
-    AssemblyFile="../GovUk.Frontend.AspNetCore.Build/bin/net8.0/GovUk.Frontend.AspNetCore.Build.dll" />
-
   <Target Name="InstallGovUkFrontendPackage" Condition="!Exists('$(GovUkFrontendLibrary)')">
-    <MSBuild Projects="../GovUk.Frontend.AspNetCore.Build/GovUk.Frontend.AspNetCore.Build.csproj" Targets="Restore;Build" />
-
-    <GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage
-      Package="govuk-frontend"
-      Version="$(GovUkFrontendVersion)"
-      PackageBaseDirectory="dist/govuk"
-      DestinationDirectory="$(GovUkFrontendLibrary)" />
+    <Message Text="Restoring govuk-frontend@$(GovUkFrontendVersion)" />
+    <RemoveDir Directories="$(_NpmLibDirectory)" />
+    <MakeDir Directories="$(_NpmLibDirectory)" />
+    <Exec Command="dotnet libman init -p jsdelivr -d $(_NpmLibDirectory)" WorkingDirectory="$(_NpmLibDirectory)" LogStandardErrorAsError="true" />
+    <Exec Command="dotnet libman install govuk-frontend@$(GovUkFrontendVersion) --files dist/govuk/**" WorkingDirectory="$(_NpmLibDirectory)" LogStandardErrorAsError="true" />
   </Target>
 
   <Target Name="WriteGovUkFrontendVersionFile">
@@ -46,11 +40,7 @@
       <_VersionFileLines Include="$(GovUkFrontendVersion)" />
     </ItemGroup>
 
-    <WriteLinesToFile File="govuk-frontend-version.txt" Lines="@(_VersionFileLines)" Overwrite="true" />
-
-    <ItemGroup>
-      <Content Include="govuk-frontend-version.txt" Pack="true" PackagePath="\" />
-    </ItemGroup>
+    <WriteLinesToFile File="Package/govuk-frontend-version.txt" Lines="@(_VersionFileLines)" Overwrite="true" />
   </Target>
 
   <Target Name="CopyXmlDocToDocsProject" AfterTargets="Build">
@@ -84,7 +74,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NuGetizer" Version="*" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
@@ -92,7 +81,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GovUk.Frontend.AspNetCore.Build\GovUk.Frontend.AspNetCore.Build.csproj" Pack="true" />
+    <ProjectReference Include="..\GovUk.Frontend.AspNetCore.Build\GovUk.Frontend.AspNetCore.Build.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
@@ -119,12 +108,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <Content Update="Package\README.md" Pack="true" PackagePath="" />
+    <Content Update="Package\icon.png" Pack="true" PackagePath="" />
+    <Content Update="Package\GovUk.Frontend.AspNetCore.props" Pack="true" PackagePath="build" />
+    <Content Update="Package\GovUk.Frontend.AspNetCore.targets" Pack="true" PackagePath="build" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="GovUk.Frontend.AspNetCore.props" Pack="true" PackFolder="build" />
-    <Content Include="GovUk.Frontend.AspNetCore.targets" Pack="true" PackFolder="build" />
-  </ItemGroup>
+  
+  <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
+    <!--
+        The include needs to happen after output has been copied to build output folder
+        but before NuGet generates a nuspec. See https://github.com/NuGet/Home/issues/4704.
+        -->
+    <ItemGroup>
+      <_PackageFiles Include="Package\**">
+        <PackagePath>%(RecursiveDir)</PackagePath>
+        <Visible>false</Visible>
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+  </Target>
 
 </Project>

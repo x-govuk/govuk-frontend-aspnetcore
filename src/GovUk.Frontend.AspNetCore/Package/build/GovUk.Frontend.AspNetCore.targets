@@ -28,7 +28,7 @@
 
   <UsingTask
     TaskName="GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage"
-    AssemblyFile="$(MSBuildThisFileDirectory)..\tools\net8.0\any\GovUk.Frontend.AspNetCore.Build.dll" />
+    AssemblyFile="$(_BuildAssembly)" />
 
   <Target Name="AddGovUkFrontendBuildInfoAttribute">
     <PropertyGroup>

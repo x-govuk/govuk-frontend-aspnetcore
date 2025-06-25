@@ -1,2 +1,4 @@
 govuk-frontend
 wwwroot/assets
+wwwroot/site.css
+wwwroot/govuk-frontend.min.js

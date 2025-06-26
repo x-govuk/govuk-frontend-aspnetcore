@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.1
+
+### Fixes
+
+Fixes GOV.UK Frontend NPM package restore when using Visual Studio.
+
 ## 3.2.0
 
 Targets GOV.UK Frontend v5.11.0.

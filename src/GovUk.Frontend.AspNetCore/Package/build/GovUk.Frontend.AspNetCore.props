@@ -4,8 +4,5 @@
     <RestoreGovUkFrontendNpmPackage Condition="'$(RestoreGovUkFrontendNpmPackage)' == ''">false</RestoreGovUkFrontendNpmPackage>
     <GovUkFrontendNpmPackageLocation Condition="'$(GovUkFrontendNpmPackageLocation)' == ''">govuk-frontend</GovUkFrontendNpmPackageLocation>
     <CopyGovUkFrontendAssetsToWebRoot Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == ''">true</CopyGovUkFrontendAssetsToWebRoot>
-
-    <_BuildAssembly Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)..\tools\net8.0\GovUk.Frontend.AspNetCore.Build.dll</_BuildAssembly>
-    <_BuildAssembly Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)..\tools\netstandard2.0\GovUk.Frontend.AspNetCore.Build.dll</_BuildAssembly>
   </PropertyGroup>
 </Project>

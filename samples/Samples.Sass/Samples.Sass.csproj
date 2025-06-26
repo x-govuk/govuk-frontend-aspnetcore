@@ -12,14 +12,14 @@
     <PackageReference Include="DartSassBuilder" Version="1.1.0" />
     <PackageReference Include="GovUk.Frontend.AspNetCore" Version="3.2.*-*" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <SassFile Include="wwwroot/site.scss" Exclude="govuk-frontend/**/*.css" />
   </ItemGroup>
-  
+
   <Target Name="CopyJavaScriptToWwwroot" BeforeTargets="Build">
-    <Copy SourceFiles="govuk-frontend/govuk-frontend.min.js" 
-          DestinationFolder="wwwroot" 
+    <Copy SourceFiles="govuk-frontend/govuk-frontend.min.js"
+          DestinationFolder="wwwroot"
           SkipUnchangedFiles="true" />
   </Target>
 

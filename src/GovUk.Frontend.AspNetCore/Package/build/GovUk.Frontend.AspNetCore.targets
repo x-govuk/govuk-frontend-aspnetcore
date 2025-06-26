@@ -1,36 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <BuildDependsOn>
-      AddGovUkFrontendBuildInfoAttribute;
-      RestoreGovUkFrontendNpmPackage;
-      $(BuildDependsOn)
-    </BuildDependsOn>
-
-    <CopyAllFilesToSingleFolderForPackageDependsOn>
-      AddGovUkFrontendBuildInfoAttribute;
-      RestoreGovUkFrontendNpmPackage;
-      $(CopyAllFilesToSingleFolderForPackageDependsOn)
-    </CopyAllFilesToSingleFolderForPackageDependsOn>
-
-    <CopyAllFilesToSingleFolderForMsdeployDependsOn>
-      AddGovUkFrontendBuildInfoAttribute;
-      RestoreGovUkFrontendNpmPackage;
-      $(CopyAllFilesToSingleFolderForMsdeployDependsOn)
-    </CopyAllFilesToSingleFolderForMsdeployDependsOn>
-
-    <CopyFilesToOutputDirectory>
-      AddGovUkFrontendBuildInfoAttribute;
-      RestoreGovUkFrontendNpmPackage;
-      $(CopyFilesToOutputDirectory)
-    </CopyFilesToOutputDirectory>
-  </PropertyGroup>
-
-  <UsingTask
-    TaskName="GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage"
-    AssemblyFile="$(_BuildAssembly)" />
-
-  <Target Name="AddGovUkFrontendBuildInfoAttribute">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="RestoreGovUkFrontendNpmPackage">
+  <Target Name="AddGovUkFrontendBuildInfoAttribute" BeforeTargets="BeforeBuild">
     <PropertyGroup>
       <_frontendNpmPackageRestored>false</_frontendNpmPackageRestored>
       <_frontendNpmPackageRestored Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">true</_frontendNpmPackageRestored>
@@ -44,30 +14,25 @@
     </ItemGroup>
   </Target>
 
+  <Target Name="CleanGovUkFrontendNpmPackage" BeforeTargets="Clean" Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
+    <RemoveDir Directories="$(GovUkFrontendNpmPackageLocation)" />
+    <RemoveDir Directories="wwwroot\assets" Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'true'" />
+  </Target>
+
   <Target Name="RestoreGovUkFrontendNpmPackage" Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
-    <ReadLinesFromFile File="$(MSBuildThisFileDirectory)..\govuk-frontend-version.txt">
-      <Output TaskParameter="Lines" ItemName="_GovUkFrontendVersionFileLines" />
-    </ReadLinesFromFile>
-
-    <PropertyGroup>
-      <GovUkFrontendVersion>@(_GovUkFrontendVersionFileLines)</GovUkFrontendVersion>
-    </PropertyGroup>
-
-    <GovUk.Frontend.AspNetCore.Build.DownloadNpmPackage
-      Package="govuk-frontend"
-      Version="$(GovUkFrontendVersion)"
-      PackageBaseDirectory="/dist/govuk"
-      DestinationDirectory="$(GovUkFrontendNpmPackageLocation)" />
-
     <ItemGroup>
-      <_AssetFiles Include="$(GovUkFrontendNpmPackageLocation)\assets\**\*" />
+      <_PackageFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\**\*" />
+      <_AssetFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\assets\**\*" />
     </ItemGroup>
 
-    <Copy
-      SourceFiles="@(_AssetFiles)"
-      DestinationFolder="wwwroot\assets\%(RecursiveDir)"
-      SkipUnchangedFiles="true"
-      Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'true'" />
+    <Copy SourceFiles="@(_PackageFiles)"
+          DestinationFolder="$(GovUkFrontendNpmPackageLocation)\%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="@(_AssetFiles)"
+          DestinationFolder="wwwroot\assets\%(RecursiveDir)"
+          SkipUnchangedFiles="true"
+          Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'true'" />
 
     <ItemGroup>
       <Content Remove="$(GovUkFrontendNpmPackageLocation)\**\*" />

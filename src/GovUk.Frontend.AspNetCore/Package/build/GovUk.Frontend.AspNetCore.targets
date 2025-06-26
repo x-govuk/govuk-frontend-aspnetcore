@@ -14,11 +14,6 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="CleanGovUkFrontendNpmPackage" BeforeTargets="Clean" Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
-    <RemoveDir Directories="$(GovUkFrontendNpmPackageLocation)" />
-    <RemoveDir Directories="wwwroot\assets" Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'true'" />
-  </Target>
-
   <Target Name="RestoreGovUkFrontendNpmPackage" Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
     <ItemGroup>
       <_PackageFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\**\*" />

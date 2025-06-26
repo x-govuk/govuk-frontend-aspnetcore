@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.2
+
+Further improvements for build-time GOV.UK Frontend NPM package restore.
+
 ## 3.2.1
 
 ### Fixes

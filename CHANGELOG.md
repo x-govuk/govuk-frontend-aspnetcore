@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+Don't add 'Error: ' to the `<title>` element inside the header `<svg>`.
+
 ## 3.2.2
 
 Further improvements for build-time GOV.UK Frontend NPM package restore.

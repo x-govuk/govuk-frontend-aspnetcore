@@ -8,9 +8,9 @@ using Microsoft.Extensions.Options;
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// <see cref="ITagHelper"/> implementation targeting &lt;title&gt; elements.
+/// <see cref="ITagHelper"/> that adds 'Error:' to the page's title if there are errors.
 /// </summary>
-[HtmlTargetElement("title")]
+[HtmlTargetElement("title", ParentTag = "head")]
 public class TitleTagHelper : TagHelper
 {
     private const string DefaultErrorPrefix = "Error:";
@@ -59,10 +59,8 @@ public class TitleTagHelper : TagHelper
     public ViewContext? ViewContext { get; set; }
 
     /// <inheritdoc/>
-    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+    public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        await base.ProcessAsync(context, output);
-
         var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
 
         if (_options.PrependErrorToTitle && containerErrorContext.ErrorSummaryHasBeenRendered)

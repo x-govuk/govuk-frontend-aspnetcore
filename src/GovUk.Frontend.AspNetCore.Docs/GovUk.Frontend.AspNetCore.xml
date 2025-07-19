@@ -3628,7 +3628,7 @@
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper">
             <summary>
-            <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper"/> implementation targeting &lt;title&gt; elements.
+            <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper"/> that adds 'Error:' to the page's title if there are errors.
             </summary>
         </member>
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.#ctor(Microsoft.Extensions.Options.IOptions{GovUk.Frontend.AspNetCore.GovUkFrontendOptions})">
@@ -3657,7 +3657,7 @@
             Gets the <see cref="P:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.ViewContext"/> of the executing view.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TitleTagHelper.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.WarningTextTagHelper">

@@ -1,24 +1,22 @@
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class PhaseBannerContext
 {
-    public (AttributeDictionary? Attributes, IHtmlContent Content)? Tag { get; private set; }
+    public (TagOptions Options, string TagName)? Tag { get; private set; }
 
-    public void SetTag(AttributeDictionary? attributes, IHtmlContent content)
+    public void SetTag(TagOptions options, string tagName)
     {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(tagName);
 
         if (Tag is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                PhaseBannerTagTagHelper.TagName, PhaseBannerTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(tagName, PhaseBannerTagHelper.TagName);
         }
 
-        Tag = (attributes, content);
+        Tag = (options, tagName);
     }
 
     public void ThrowIfIncomplete()

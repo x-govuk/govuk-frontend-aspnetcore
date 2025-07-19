@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -6,21 +7,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the tag in a GDS phase banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PhaseBannerTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use for the tag in the phase banner.")]
 public class PhaseBannerTagTagHelper : TagHelper
 {
     internal const string TagName = "govuk-phase-banner-tag";
 
-    /// <summary>
-    /// Creates a <see cref="PhaseBannerTagTagHelper"/>.
-    /// </summary>
-    public PhaseBannerTagTagHelper()
-    {
-    }
-
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var phaseBannerContext = (PhaseBannerContext)context.Items[typeof(PhaseBannerContext)];
+        var phaseBannerContext = context.GetContextItem<PhaseBannerContext>();
 
         var content = await output.GetChildContentAsync();
 
@@ -29,7 +24,18 @@ public class PhaseBannerTagTagHelper : TagHelper
             content = output.Content;
         }
 
-        phaseBannerContext.SetTag(output.Attributes.ToAttributeDictionary(), content.Snapshot());
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
+
+        phaseBannerContext.SetTag(
+            new TagOptions()
+            {
+                Text = null,
+                Html = content.ToTemplateString(),
+                Classes = classes,
+                Attributes = attributes
+            },
+            output.TagName);
 
         output.SuppressOutput();
     }

@@ -14,6 +14,7 @@ internal partial class DefaultComponentGenerator
         public const string Header = "header";
         public const string InsetText = "div";
         public const string Pagination = "nav";
+        public const string PhaseBanner = "div";
         public const string SkipLink = "a";
         public const string SummaryCard = "div";
         public const string SummaryList = "dl";

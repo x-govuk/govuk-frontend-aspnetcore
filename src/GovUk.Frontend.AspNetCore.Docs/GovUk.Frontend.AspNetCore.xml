@@ -2823,10 +2823,13 @@
             Generates a GDS phase banner component.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper.#ctor">
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper.#ctor(GovUk.Frontend.AspNetCore.ComponentGeneration.IComponentGenerator,System.Text.Encodings.Web.HtmlEncoder)">
             <summary>
             Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper"/>.
             </summary>
+        </member>
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper.Init(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext)">
+            <inheritdoc/>
         </member>
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
@@ -2834,11 +2837,6 @@
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagTagHelper">
             <summary>
             Represents the tag in a GDS phase banner component.
-            </summary>
-        </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagTagHelper.#ctor">
-            <summary>
-            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagTagHelper"/>.
             </summary>
         </member>
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.PhaseBannerTagTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">

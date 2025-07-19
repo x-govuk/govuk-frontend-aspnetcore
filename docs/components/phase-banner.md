@@ -1,8 +1,11 @@
-# Phase banner
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/phase-banner.liquid -->
+# GOV.UK phase banner
 
-[GDS Phase banner component](https://design-system.service.gov.uk/components/phase-banner/)
+[GOV.UK Design System GOV.UK phase banner component](https://design-system.service.gov.uk/components/phase-banner/)
 
-## Example
+
+### Example
+<img alt="Phase banner example" src="../images/phase-banner-example.png" />
 
 ```razor
 <govuk-phase-banner>
@@ -11,16 +14,17 @@
 </govuk-phase-banner>
 ```
 
-![Phase banner](../images/phase-banner.png)
 
-## API
+### API
 
-### `<govuk-phase-banner>`
+#### `<govuk-phase-banner>`
 
-The content is the HTML to use within the generated component.
+The content is the HTML to use in the phase banner.
 
-### `<govuk-phase-banner-tag>`
 
-*Required*\
-The content is the HTML to use within the phase banner tag.\
+#### `<govuk-phase-banner-tag>`
+
+The content is the HTML to use for the tag in the phase banner.
+
 Must be inside a `<govuk-phase-banner>` element.
+

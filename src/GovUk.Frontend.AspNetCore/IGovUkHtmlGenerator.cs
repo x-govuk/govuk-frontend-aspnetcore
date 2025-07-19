@@ -77,12 +77,6 @@ internal interface IGovUkHtmlGenerator
         IHtmlContent bodyContent,
         AttributeDictionary attributes);
 
-    TagBuilder GeneratePhaseBanner(
-        IHtmlContent tagContent,
-        AttributeDictionary tabAttributes,
-        IHtmlContent content,
-        AttributeDictionary attributes);
-
     TagBuilder GenerateRadios(
         string idPrefix,
         string name,

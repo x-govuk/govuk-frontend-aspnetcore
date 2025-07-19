@@ -81,7 +81,6 @@ class Program
             ("SummaryList/SummaryListWithActions", "summary-list-with-actions.png"),
             ("SummaryList/SummaryListWithCard", "summary-list-with-card.png"),
             ("SummaryList/SummaryListWithoutActions", "summary-list-without-actions.png"),
-            ("PhaseBanner/PhaseBanner", "phase-banner.png"),
             ("Tabs/Tabs", "tabs.png"),
             ("Tag/DefaultTag", "tag-default.png"),
             ("Tag/TagWithClass", "tag-with-class.png"),

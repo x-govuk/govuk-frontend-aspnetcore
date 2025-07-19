@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+Targets GOV.UK Frontend v5.11.1.
+
 ### Fixes
 
 Don't add 'Error: ' to the `<title>` element inside the header `<svg>`.

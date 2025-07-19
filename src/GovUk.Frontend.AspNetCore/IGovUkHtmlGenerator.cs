@@ -29,14 +29,6 @@ internal interface IGovUkHtmlGenerator
         IEnumerable<CheckboxesItemBase> items,
         AttributeDictionary attributes);
 
-    TagBuilder GenerateDateInput(
-        string id,
-        bool disabled,
-        DateInputItem day,
-        DateInputItem month,
-        DateInputItem year,
-        AttributeDictionary attributes);
-
     TagBuilder GenerateDetails(
         bool open,
         IHtmlContent summaryContent,
@@ -105,7 +97,6 @@ internal interface IGovUkHtmlGenerator
         bool disabled,
         IEnumerable<SelectItem> items,
         AttributeDictionary attributes);
-
 
     TagBuilder GenerateTextArea(
         bool haveError,

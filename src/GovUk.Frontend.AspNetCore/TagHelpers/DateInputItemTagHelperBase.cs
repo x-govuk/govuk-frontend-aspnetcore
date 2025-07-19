@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -53,7 +52,7 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     /// The default is <c>numeric</c>.
     /// </remarks>
     [HtmlAttributeName(InputModeAttributeName)]
-    public string? InputMode { get; set; } = ComponentGenerator.DateInputDefaultInputMode;
+    public string? InputMode { get; set; }
 
     /// <summary>
     /// The <c>name</c> attribute for the generated <c>input</c> element.

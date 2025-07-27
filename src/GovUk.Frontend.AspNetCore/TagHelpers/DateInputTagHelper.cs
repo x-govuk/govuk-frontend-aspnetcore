@@ -20,16 +20,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     DateInputFieldsetTagHelper.TagName,
-    HintTagName,
-    ErrorMessageTagName,
+    DateInputHintTagHelper.TagName,
+    //DateInputHintTagHelper.ShortTagName,
+    DateInputErrorMessageTagHelper.TagName,
+    //DateInputErrorMessageTagHelper.ShortTagName,
     DateInputDayTagHelper.TagName,
     DateInputMonthTagHelper.TagName,
     DateInputYearTagHelper.TagName)]
 [OutputElementHint(ComponentGenerator.FormGroupElement)]
 public class DateInputTagHelper : TagHelper
 {
-    internal const string ErrorMessageTagName = "govuk-date-input-error-message";
-    internal const string HintTagName = "govuk-date-input-hint";
     internal const string TagName = "govuk-date-input";
 
     private const string DefaultDayLabel = "Day";

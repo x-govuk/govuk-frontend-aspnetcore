@@ -1276,6 +1276,21 @@
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.ButtonTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountErrorMessageTagHelper">
+            <summary>
+            Represents the error message in a GDS character count component.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountHintTagHelper">
+            <summary>
+            Represents the hint in a GDS character count component.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountLabelTagHelper">
+            <summary>
+            Represents the label in a GDS character count component.
+            </summary>
+        </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.CharacterCountTagHelper">
             <summary>
             Generates a GDS character count component.
@@ -1756,6 +1771,11 @@
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.DateInputFieldsetTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputHintTagHelper">
+            <summary>
+            Represents the hint in a GDS date input component.
+            </summary>
+        </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.DateInputItemLabelTagHelperBase">
             <summary>
             Represents the label in a GDS date input component item.
@@ -2131,6 +2151,21 @@
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FieldsetTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadErrorMessageTagHelper">
+            <summary>
+            Represents the error message in a GDS file upload component.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadHintTagHelper">
+            <summary>
+            Represents the hint in a GDS file upload component.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadLabelTagHelper">
+            <summary>
+            Represents the label in a GDS file upload component.
+            </summary>
+        </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FileUploadTagHelper">
             <summary>
             Generates a GDS File upload component.
@@ -2391,17 +2426,12 @@
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
-        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3">
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelperBase">
             <summary>
-            Represents the error message in a GDS form group component.
+            Represents the error message in a GDS form component.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3.#ctor">
-            <summary>
-            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3"/>.
-            </summary>
-        </member>
-        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3.VisuallyHiddenText">
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelperBase.VisuallyHiddenText">
             <summary>
             A visually hidden prefix used before the error message.
             </summary>
@@ -2409,7 +2439,7 @@
             The default is <c>&quot;Error&quot;</c>.
             </remarks>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelper3.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupErrorMessageTagHelperBase.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper">
@@ -2425,17 +2455,12 @@
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
-        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper3">
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelperBase">
             <summary>
-            Represents the hint in a GDS form group component.
+            Represents the hint in a GDS form component.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper3.#ctor">
-            <summary>
-            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper3"/>.
-            </summary>
-        </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelper3.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupHintTagHelperBase.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper">
@@ -2459,17 +2484,12 @@
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
-        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3">
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelperBase">
             <summary>
-            Represents the label in a GDS form group component.
+            Represents the label in a form component.
             </summary>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3.#ctor">
-            <summary>
-            Creates a <see cref="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3"/>.
-            </summary>
-        </member>
-        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3.IsPageHeading">
+        <member name="P:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelperBase.IsPageHeading">
             <summary>
             Whether the label also acts as the heading for the page.
             </summary>
@@ -2477,7 +2497,7 @@
             The default is <c>false</c>.
             </remarks>
         </member>
-        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelper3.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
+        <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupLabelTagHelperBase.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.FormGroupTagHelperBase">
@@ -3487,6 +3507,21 @@
         </member>
         <member name="M:GovUk.Frontend.AspNetCore.TagHelpers.TextAreaValueTagHelper.ProcessAsync(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)">
             <inheritdoc/>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputErrorMessageTagHelper">
+            <summary>
+            Represents the error message in a GDS text input component.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputHintTagHelper">
+            <summary>
+            Represents the hint in a GDS input component.
+            </summary>
+        </member>
+        <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputLabelTagHelper">
+            <summary>
+            Represents the label in a GDS input component.
+            </summary>
         </member>
         <member name="T:GovUk.Frontend.AspNetCore.TagHelpers.TextInputPrefixTagHelper">
             <summary>

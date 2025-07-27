@@ -14,7 +14,7 @@ public class CharacterCountContextTests
         context.SetValue("Value", CharacterCountValueTagHelper.TagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, new AttributeCollection(), "Error", CharacterCountTagHelper.ErrorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, new AttributeCollection(), "Error", CharacterCountErrorMessageTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -30,7 +30,7 @@ public class CharacterCountContextTests
         context.SetValue("Value", CharacterCountValueTagHelper.TagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(new AttributeCollection(), "Error", CharacterCountTagHelper.HintTagName));
+        var ex = Record.Exception(() => context.SetHint(new AttributeCollection(), "Error", CharacterCountHintTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -46,7 +46,7 @@ public class CharacterCountContextTests
         context.SetValue("Value", CharacterCountValueTagHelper.TagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, new AttributeCollection(), "Error", CharacterCountTagHelper.LabelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, new AttributeCollection(), "Error", CharacterCountLabelTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

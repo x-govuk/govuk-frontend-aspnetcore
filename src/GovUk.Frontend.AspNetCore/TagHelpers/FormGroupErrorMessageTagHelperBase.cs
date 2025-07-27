@@ -1,24 +1,18 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Represents the error message in a GDS form group component.
+/// Represents the error message in a GDS form component.
 /// </summary>
-[HtmlTargetElement(CheckboxesTagHelper.ErrorMessageTagName, ParentTag = CheckboxesTagHelper.TagName)]
-[HtmlTargetElement(CheckboxesTagHelper.ErrorMessageTagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
-[HtmlTargetElement(RadiosTagHelper.ErrorMessageTagName, ParentTag = RadiosTagHelper.TagName)]
-[HtmlTargetElement(RadiosTagHelper.ErrorMessageTagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
-[HtmlTargetElement(SelectTagHelper.ErrorMessageTagName, ParentTag = SelectTagHelper.TagName)]
-[HtmlTargetElement(TextAreaTagHelper.ErrorMessageTagName, ParentTag = TextAreaTagHelper.TagName)]
-public class FormGroupErrorMessageTagHelper : TagHelper
+public abstract class FormGroupErrorMessageTagHelperBase : TagHelper
 {
+    //private protected const string ShortTagName = ShortTagNames.ErrorMessage;
+
     private const string VisuallyHiddenTextAttributeName = "visually-hidden-text";
 
-    /// <summary>
-    /// Creates a <see cref="FormGroupErrorMessageTagHelper"/>.
-    /// </summary>
-    public FormGroupErrorMessageTagHelper()
+    private protected FormGroupErrorMessageTagHelperBase()
     {
     }
 
@@ -50,11 +44,12 @@ public class FormGroupErrorMessageTagHelper : TagHelper
 
     private protected virtual void SetErrorMessage(TagHelperContent? content, TagHelperContext context, TagHelperOutput output)
     {
-        var formGroupContext = context.GetContextItem<FormGroupContext>();
+        var formGroupContext3 = context.GetContextItem<FormGroupContext3>();
 
-        formGroupContext.SetErrorMessage(
+        formGroupContext3.SetErrorMessage(
             VisuallyHiddenText,
-            output.Attributes.ToAttributeDictionary(),
-            content?.Snapshot());
+            new AttributeCollection(output.Attributes),
+            content?.ToTemplateString(),
+            output.TagName);
     }
 }

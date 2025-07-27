@@ -4,13 +4,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class CharacterCountContext : FormGroupContext3
 {
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames => [CharacterCountTagHelper.ErrorMessageTagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
+        [/*CharacterCountErrorMessageTagHelper.ShortTagName, */CharacterCountErrorMessageTagHelper.TagName];
 
-    protected override IReadOnlyCollection<string> HintTagNames => [CharacterCountTagHelper.HintTagName];
+    protected override IReadOnlyCollection<string> HintTagNames { get; } =
+        [/*CharacterCountHintTagHelper.ShortTagName, */CharacterCountHintTagHelper.TagName];
 
-    protected override IReadOnlyCollection<string> LabelTagNames => [CharacterCountTagHelper.LabelTagName];
+    protected override IReadOnlyCollection<string> LabelTagNames { get; } =
+        [/*CharacterCountLabelTagHelper.ShortTagName, */CharacterCountLabelTagHelper.TagName];
 
-    protected override string RootTagName => CharacterCountTagHelper.TagName;
+    protected override string RootTagName { get; } = CharacterCountTagHelper.TagName;
 
     public TemplateString? Value { get; private set; }
 

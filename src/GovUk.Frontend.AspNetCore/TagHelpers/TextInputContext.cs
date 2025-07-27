@@ -11,17 +11,22 @@ internal class TextInputContext : FormGroupContext3
 
     public InputOptionsSuffix? Suffix => _suffix?.Options;
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames => [/*TextInputTagHelper.ErrorMessageShortTagName, */TextInputTagHelper.ErrorMessageTagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
+        [/*TextInputTagHelper.ErrorMessageShortTagName, */TextInputErrorMessageTagHelper.TagName];
 
-    protected override IReadOnlyCollection<string> HintTagNames => [/*TextInputTagHelper.HintShortTagName, */TextInputTagHelper.HintTagName];
+    protected override IReadOnlyCollection<string> HintTagNames { get; } =
+        [/*TextInputTagHelper.HintShortTagName, */TextInputHintTagHelper.TagName];
 
-    protected override IReadOnlyCollection<string> LabelTagNames => [/*TextInputTagHelper.LabelShortTagName, */TextInputTagHelper.LabelTagName];
+    protected override IReadOnlyCollection<string> LabelTagNames { get; } =
+        [/*TextInputTagHelper.LabelShortTagName, */TextInputLabelTagHelper.TagName];
 
-    private IReadOnlyCollection<string> PrefixTagNames => [/*TextInputPrefixTagHelper.ShortTagName, */TextInputPrefixTagHelper.TagName];
+    private IReadOnlyCollection<string> PrefixTagNames { get; } =
+        [/*TextInputPrefixTagHelper.ShortTagName, */TextInputPrefixTagHelper.TagName];
 
-    private IReadOnlyCollection<string> SuffixTagNames => [/*TextInputSuffixTagHelper.ShortTagName, */TextInputSuffixTagHelper.TagName];
+    private IReadOnlyCollection<string> SuffixTagNames { get; } =
+        [/*TextInputSuffixTagHelper.ShortTagName, */TextInputSuffixTagHelper.TagName];
 
-    protected override string RootTagName => TextInputTagHelper.TagName;
+    protected override string RootTagName { get; } = TextInputTagHelper.TagName;
 
     public override void SetErrorMessage(
         TemplateString? visuallyHiddenText,

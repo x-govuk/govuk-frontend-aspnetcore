@@ -4,10 +4,16 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <inheritdoc/>
-[HtmlTargetElement(DateInputTagHelper.ErrorMessageTagName, ParentTag = DateInputTagHelper.TagName)]
-[HtmlTargetElement(DateInputTagHelper.ErrorMessageTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelper3
+[HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
+//[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
+[HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
+//[HtmlTargetElement(ShortTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
+//[HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
+//[HtmlTargetElement(ShortTagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
+public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
 {
+    internal const string TagName = "govuk-date-input-error-message";
+
     private const string ErrorItemsAttributeName = "error-items";
 
     /// <summary>

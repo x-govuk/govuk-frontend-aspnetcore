@@ -11,7 +11,7 @@ public class TextInputContextTests
         // Arrange
         var context = new TextInputContext();
         var prefixTagName = TextInputPrefixTagHelper.TagName;
-        var errorMessageTagName = TextInputTagHelper.ErrorMessageTagName;
+        var errorMessageTagName = TextInputErrorMessageTagHelper.TagName;
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
@@ -28,7 +28,7 @@ public class TextInputContextTests
         // Arrange
         var context = new TextInputContext();
         var suffixTagName = TextInputSuffixTagHelper.TagName;
-        var errorMessageTagName = TextInputTagHelper.ErrorMessageTagName;
+        var errorMessageTagName = TextInputErrorMessageTagHelper.TagName;
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
@@ -45,7 +45,7 @@ public class TextInputContextTests
         // Arrange
         var context = new TextInputContext();
         var prefixTagName = TextInputPrefixTagHelper.TagName;
-        var hintTagName = TextInputTagHelper.HintTagName;
+        var hintTagName = TextInputHintTagHelper.TagName;
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
@@ -62,7 +62,7 @@ public class TextInputContextTests
         // Arrange
         var context = new TextInputContext();
         var suffixTagName = TextInputSuffixTagHelper.TagName;
-        var hintTagName = TextInputTagHelper.ErrorMessageTagName;
+        var hintTagName = TextInputErrorMessageTagHelper.TagName;
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
@@ -79,7 +79,7 @@ public class TextInputContextTests
         // Arrange
         var context = new TextInputContext();
         var prefixTagName = TextInputPrefixTagHelper.TagName;
-        var labelTagName = TextInputTagHelper.LabelTagName;
+        var labelTagName = TextInputLabelTagHelper.TagName;
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
@@ -96,7 +96,7 @@ public class TextInputContextTests
         // Arrange
         var context = new TextInputContext();
         var suffixTagName = TextInputSuffixTagHelper.TagName;
-        var labelTagName = TextInputTagHelper.LabelTagName;
+        var labelTagName = TextInputLabelTagHelper.TagName;
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act

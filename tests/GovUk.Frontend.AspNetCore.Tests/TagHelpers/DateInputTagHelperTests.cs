@@ -34,7 +34,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                 dateInputContext.SetHint(
                     attributes: new(hintAttributes),
                     hintContent,
-                    DateInputTagHelper.HintTagName);
+                    DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -307,7 +307,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
-                dateInputContext.SetHint(attributes: new(), html: hintContent, tagName: DateInputTagHelper.HintTagName);
+                dateInputContext.SetHint(attributes: new(), html: hintContent, tagName: DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -357,7 +357,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     visuallyHiddenText: errorVht,
                     attributes: new(errorAttributes),
                     html: errorContent,
-                    DateInputTagHelper.HintTagName);
+                    DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -445,7 +445,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     visuallyHiddenText: null,
                     attributes: new(),
                     html: errorContent,
-                    DateInputTagHelper.HintTagName);
+                    DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -941,7 +941,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     visuallyHiddenText: null,
                     attributes: new(),
                     html: "Error",
-                    tagName: DateInputTagHelper.ErrorMessageTagName);
+                    tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -1000,7 +1000,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     visuallyHiddenText: null,
                     attributes: new(),
                     html: "Error",
-                    tagName: DateInputTagHelper.ErrorMessageTagName);
+                    tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -1061,7 +1061,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     visuallyHiddenText: null,
                     attributes: new(),
                     html: "Error",
-                    tagName: DateInputTagHelper.ErrorMessageTagName);
+                    tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -1118,7 +1118,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                     visuallyHiddenText: null,
                     attributes: new(),
                     html: "Error",
-                    tagName: DateInputTagHelper.ErrorMessageTagName);
+                    tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -1183,7 +1183,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                      visuallyHiddenText: null,
                      attributes: new(),
                      html: "Error",
-                     tagName: DateInputTagHelper.ErrorMessageTagName);
+                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                  var tagHelperContent = new DefaultTagHelperContent();
                  return Task.FromResult<TagHelperContent>(tagHelperContent);

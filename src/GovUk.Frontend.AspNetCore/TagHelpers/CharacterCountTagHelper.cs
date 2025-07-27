@@ -15,13 +15,17 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS character count component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(LabelTagName, HintTagName, ErrorMessageTagName, CharacterCountValueTagHelper.TagName)]
+[RestrictChildren(
+    CharacterCountLabelTagHelper.TagName,
+    //CharacterCountLabelTagHelper.ShortTagName,
+    CharacterCountHintTagHelper.TagName,
+    //CharacterCountHintTagHelper.ShortTagName,
+    CharacterCountErrorMessageTagHelper.TagName,
+    //CharacterCountErrorMessageTagHelper.ShortTagName,
+    CharacterCountValueTagHelper.TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.CharacterCount)]
 public class CharacterCountTagHelper : TagHelper
 {
-    internal const string ErrorMessageTagName = "govuk-character-count-error-message";
-    internal const string HintTagName = "govuk-character-count-hint";
-    internal const string LabelTagName = "govuk-character-count-label";
     internal const string TagName = "govuk-character-count";
 
     private const string AspForAttributeName = "asp-for";

@@ -15,12 +15,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS File upload component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(LabelTagName, HintTagName, ErrorMessageTagName)]
+[RestrictChildren(
+    FileUploadLabelTagHelper.TagName,
+    //FileUploadLabelTagHelper.ShortTagName,
+    FileUploadHintTagHelper.TagName,
+    //FileUploadHintTagHelper.ShortTagName,
+    FileUploadErrorMessageTagHelper.TagName/*,
+    FileUploadErrorMessageTagHelper.ShortTagName*/)]
 public class FileUploadTagHelper : TagHelper
 {
-    internal const string ErrorMessageTagName = "govuk-file-upload-error-message";
-    internal const string HintTagName = "govuk-file-upload-hint";
-    internal const string LabelTagName = "govuk-file-upload-label";
     internal const string TagName = "govuk-file-upload";
 
     private const string AspForAttributeName = "asp-for";

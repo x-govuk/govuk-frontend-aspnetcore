@@ -9,8 +9,10 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
 [RestrictChildren(
     DateInputFieldsetLegendTagHelper.TagName,
-    DateInputTagHelper.HintTagName,
-    DateInputTagHelper.ErrorMessageTagName,
+    DateInputHintTagHelper.TagName,
+    //DateInputHintTagHelper.ShortTagName,
+    DateInputErrorMessageTagHelper.TagName,
+    //DateInputErrorMessageTagHelper.ShortTagName,
     DateInputDayTagHelper.TagName,
     DateInputMonthTagHelper.TagName,
     DateInputYearTagHelper.TagName)]

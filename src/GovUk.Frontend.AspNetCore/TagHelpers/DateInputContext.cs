@@ -24,15 +24,17 @@ internal class DateInputContext : FormGroupContext3
 
     public DateInputItemTypes? ErrorFields { get; private set; }
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames => [DateInputTagHelper.ErrorMessageTagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
+        [/*, DateInputErrorMessageTagHelper.ShortTagName, */DateInputErrorMessageTagHelper.TagName];
 
-    protected string FieldsetTagName => DateInputFieldsetTagHelper.TagName;
+    protected string FieldsetTagName { get; } = DateInputFieldsetTagHelper.TagName;
 
-    protected override IReadOnlyCollection<string> HintTagNames => [DateInputTagHelper.HintTagName];
+    protected override IReadOnlyCollection<string> HintTagNames { get; } =
+        [/*DateInputHintTagHelper.ShortTagName, */DateInputHintTagHelper.TagName];
 
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
-    protected override string RootTagName => DateInputTagHelper.TagName;
+    protected override string RootTagName { get; } = DateInputTagHelper.TagName;
 
     public void OpenFieldset()
     {

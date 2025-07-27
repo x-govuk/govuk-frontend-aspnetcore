@@ -48,12 +48,12 @@ public class TextInputTagHelperTests
                     isPageHeading: false,
                     attributes: new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    TextInputTagHelper.LabelTagName);
+                    TextInputLabelTagHelper.TagName);
 
                 inputContext.SetHint(
                     attributes: new AttributeCollection(),
                     new HtmlString(hintHtml),
-                    TextInputTagHelper.HintTagName);
+                    TextInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -142,7 +142,7 @@ public class TextInputTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    TextInputTagHelper.LabelTagName);
+                    TextInputLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: new HtmlString(errorVht),
@@ -151,7 +151,7 @@ public class TextInputTagHelperTests
                         { "data-foo", errorDataFooAttribute }
                     },
                     new HtmlString(errorHtml),
-                    TextInputTagHelper.ErrorMessageTagName);
+                    TextInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -357,7 +357,7 @@ public class TextInputTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    TextInputTagHelper.LabelTagName);
+                    TextInputLabelTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -426,7 +426,7 @@ public class TextInputTagHelperTests
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
-                inputContext.SetHint(new AttributeCollection(), new HtmlString(hintHtml), TextInputTagHelper.HintTagName);
+                inputContext.SetHint(new AttributeCollection(), new HtmlString(hintHtml), TextInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -503,7 +503,7 @@ public class TextInputTagHelperTests
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     new HtmlString(errorHtml),
-                    TextInputTagHelper.ErrorMessageTagName);
+                    TextInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -655,7 +655,7 @@ public class TextInputTagHelperTests
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     new HtmlString(errorHtml),
-                    TextInputTagHelper.ErrorMessageTagName);
+                    TextInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -736,13 +736,13 @@ public class TextInputTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    TextInputTagHelper.LabelTagName);
+                    TextInputLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     new HtmlString(errorHtml),
-                    TextInputTagHelper.ErrorMessageTagName);
+                    TextInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

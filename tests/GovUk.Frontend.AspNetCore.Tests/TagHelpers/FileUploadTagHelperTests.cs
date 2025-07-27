@@ -42,12 +42,12 @@ public class FileUploadTagHelperTests
                     isPageHeading: false,
                     attributes: new AttributeCollection(),
                     labelHtml,
-                    FileUploadTagHelper.LabelTagName);
+                    FileUploadLabelTagHelper.TagName);
 
                 inputContext.SetHint(
                     attributes: new AttributeCollection(),
                     hintHtml,
-                    FileUploadTagHelper.HintTagName);
+                    FileUploadHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -126,14 +126,14 @@ public class FileUploadTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     labelHtml,
-                    FileUploadTagHelper.LabelTagName);
+                    FileUploadLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: errorVht,
                     attributes: new AttributeCollection(
                         new AttributeCollection.Attribute("data-foo", errorDataFooAttribute, Optional: false)),
                     errorHtml,
-                    FileUploadTagHelper.ErrorMessageTagName);
+                    FileUploadErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -273,7 +273,7 @@ public class FileUploadTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     labelHtml,
-                    FileUploadTagHelper.LabelTagName);
+                    FileUploadLabelTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -342,7 +342,7 @@ public class FileUploadTagHelperTests
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
-                inputContext.SetHint(new AttributeCollection(), hintHtml, FileUploadTagHelper.HintTagName);
+                inputContext.SetHint(new AttributeCollection(), hintHtml, FileUploadHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -419,7 +419,7 @@ public class FileUploadTagHelperTests
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     errorHtml,
-                    FileUploadTagHelper.ErrorMessageTagName);
+                    FileUploadErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -571,7 +571,7 @@ public class FileUploadTagHelperTests
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     errorHtml,
-                    FileUploadTagHelper.ErrorMessageTagName);
+                    FileUploadErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -652,13 +652,13 @@ public class FileUploadTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     labelHtml,
-                    FileUploadTagHelper.LabelTagName);
+                    FileUploadLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     errorHtml,
-                    FileUploadTagHelper.ErrorMessageTagName);
+                    FileUploadErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

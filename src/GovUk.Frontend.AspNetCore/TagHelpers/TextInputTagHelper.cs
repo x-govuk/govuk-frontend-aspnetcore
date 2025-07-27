@@ -16,12 +16,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
-    LabelTagName,
-    //LabelShortTagName,
-    HintTagName,
-    //HintShortTagName,
-    ErrorMessageTagName,
-    //ErrorMessageShortTagName,
+    TextInputLabelTagHelper.TagName,
+    //TextInputLabelTagHelper.ShortTagName,
+    TextInputHintTagHelper.TagName,
+    //TextInputHintTagHelper.ShortTagName,
+    TextInputErrorMessageTagHelper.TagName,
+    //TextInputErrorMessageTagHelper.ShortTagName,
     TextInputPrefixTagHelper.TagName,
     //TextInputPrefixTagHelper.ShortTagName,
     TextInputSuffixTagHelper.TagName/*,
@@ -29,12 +29,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class TextInputTagHelper : TagHelper
 {
-    internal const string ErrorMessageTagName = "govuk-input-error-message";
-    //internal const string ErrorMessageShortTagName = ShortTagNames.ErrorMessage;
-    internal const string HintTagName = "govuk-input-hint";
-    //internal const string HintShortTagName = ShortTagNames.Hint;
-    internal const string LabelTagName = "govuk-input-label";
-    //internal const string LabelShortTagName = ShortTagNames.Label;
     internal const string TagName = "govuk-input";
 
     private const string AspForAttributeName = "asp-for";

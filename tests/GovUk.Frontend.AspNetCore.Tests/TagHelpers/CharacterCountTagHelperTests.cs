@@ -51,12 +51,12 @@ public class CharacterCountTagHelperTests
                     isPageHeading: false,
                     attributes: new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    CharacterCountTagHelper.LabelTagName);
+                    CharacterCountLabelTagHelper.TagName);
 
                 characterCountContext.SetHint(
                     attributes: new AttributeCollection(),
                     new HtmlString(hintHtml),
-                    CharacterCountTagHelper.HintTagName);
+                    CharacterCountHintTagHelper.TagName);
 
                 characterCountContext.SetValue(new HtmlString(value), CharacterCountValueTagHelper.TagName);
 
@@ -157,7 +157,7 @@ public class CharacterCountTagHelperTests
                     isPageHeading: false,
                     attributes: new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    CharacterCountTagHelper.LabelTagName);
+                    CharacterCountLabelTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -212,7 +212,7 @@ public class CharacterCountTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    CharacterCountTagHelper.LabelTagName);
+                    CharacterCountLabelTagHelper.TagName);
 
                 characterCountContext.SetErrorMessage(
                     visuallyHiddenText: new HtmlString(errorVht),
@@ -221,7 +221,7 @@ public class CharacterCountTagHelperTests
                         { "data-foo", errorDataFooAttribute }
                     },
                     new HtmlString(errorHtml),
-                    CharacterCountTagHelper.ErrorMessageTagName);
+                    CharacterCountErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -430,7 +430,7 @@ public class CharacterCountTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    CharacterCountTagHelper.LabelTagName);
+                    CharacterCountLabelTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -499,7 +499,7 @@ public class CharacterCountTagHelperTests
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
-                characterCountContext.SetHint(new AttributeCollection(), new HtmlString(hintHtml), CharacterCountTagHelper.HintTagName);
+                characterCountContext.SetHint(new AttributeCollection(), new HtmlString(hintHtml), CharacterCountHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -576,7 +576,7 @@ public class CharacterCountTagHelperTests
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     new HtmlString(errorHtml),
-                    CharacterCountTagHelper.ErrorMessageTagName);
+                    CharacterCountErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -728,7 +728,7 @@ public class CharacterCountTagHelperTests
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     new HtmlString(errorHtml),
-                    CharacterCountTagHelper.ErrorMessageTagName);
+                    CharacterCountErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -809,13 +809,13 @@ public class CharacterCountTagHelperTests
                     isPageHeading: false,
                     new AttributeCollection(),
                     new HtmlString(labelHtml),
-                    CharacterCountTagHelper.LabelTagName);
+                    CharacterCountLabelTagHelper.TagName);
 
                 characterCountContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     new AttributeCollection(),
                     new HtmlString(errorHtml),
-                    CharacterCountTagHelper.ErrorMessageTagName);
+                    CharacterCountErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

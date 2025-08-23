@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ErrorSummaryTagHelperTests
+public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -16,15 +16,9 @@ public class ErrorSummaryTagHelperTests
         var secondErrorHref = "#SecondError";
         var disableAutoFocus = true;
 
-        var context = new TagHelperContext(
-            tagName: "govuk-error-summary",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-summary",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
@@ -89,15 +83,9 @@ public class ErrorSummaryTagHelperTests
     public async Task ProcessAsync_NoTitleSpecified_UsesDefaultTitle()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-error-summary",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-summary",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
@@ -133,22 +121,18 @@ public class ErrorSummaryTagHelperTests
     public async Task ProcessAsync_NoTitleDescriptionOrItems_RendersNothing()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-error-summary",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-summary",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new ErrorSummaryTagHelper(new DefaultComponentGenerator())
+        var (componentGenerator, _) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
+
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
         {
             ViewContext = TestUtils.CreateViewContext()
         };
@@ -170,15 +154,9 @@ public class ErrorSummaryTagHelperTests
         var itemErrorHtml = "Item error";
         var itemErrorHref = "#ItemError";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-error-summary",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-summary",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
@@ -233,15 +211,9 @@ public class ErrorSummaryTagHelperTests
         var containerErrorContextErrorHtml = "First error";
         var containerErrorContextErrorHref = "#FirstError";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-error-summary",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-summary",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
@@ -286,15 +258,9 @@ public class ErrorSummaryTagHelperTests
     public async Task ProcessAsync_DoesNotHaveTitleOrDescriptionOrItemsRendersNothing()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-error-summary",
-            allAttributes: new TagHelperAttributeList(),
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-summary",
-            attributes: new TagHelperAttributeList(),
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -304,7 +270,9 @@ public class ErrorSummaryTagHelperTests
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
 
-        var tagHelper = new ErrorSummaryTagHelper(new DefaultComponentGenerator())
+        var (componentGenerator, _) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
+
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
         {
             ViewContext = viewContext
         };

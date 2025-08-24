@@ -40,7 +40,7 @@ In your `_ViewImports.cshtml` file:
 
 ```razor
 @using GovUk.Frontend.AspNetCore
-@addTagHelper *, GovUk.Frontend.AspNetCore
+@addTagHelper GovUk.Frontend.AspNetCore.TagHelpers.*, GovUk.Frontend.AspNetCore
 ```
 
 ### 4. Configure your page template

@@ -1,0 +1,5 @@
+@inherits GovUkComponentView<BackLinkOptions>
+
+<a href="@(Model.Href ?? "#")" class="@Classes("govuk-back-link", Model.Classes)" _gfa-attributes="Model.Attributes" _gfa-trim-content>
+    @(HtmlOrText(Model.Html, Model.Text, "Back"))
+</a>

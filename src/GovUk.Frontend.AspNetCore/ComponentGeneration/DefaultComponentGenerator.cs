@@ -84,7 +84,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
     public virtual ValueTask<IHtmlContent> GenerateBackLinkAsync(BackLinkOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("back-link", options);
+        return RenderViewAsync("BackLink", options);
     }
 
     public virtual ValueTask<IHtmlContent> GenerateBreadcrumbsAsync(BreadcrumbsOptions options)

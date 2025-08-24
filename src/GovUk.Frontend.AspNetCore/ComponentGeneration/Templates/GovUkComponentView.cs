@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration.Templates;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 public abstract class GovUkComponentView<TModel> : RazorPage<TModel>
 {
     protected IHtmlContent? Classes(params object?[] classNames)

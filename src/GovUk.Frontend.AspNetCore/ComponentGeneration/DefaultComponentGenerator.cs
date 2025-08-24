@@ -75,205 +75,205 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         });
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateAccordionAsync(AccordionOptions options)
+    public virtual Task<IHtmlContent> GenerateAccordionAsync(AccordionOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("accordion", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateBackLinkAsync(BackLinkOptions options)
+    public virtual Task<IHtmlContent> GenerateBackLinkAsync(BackLinkOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderViewAsync("BackLink", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateBreadcrumbsAsync(BreadcrumbsOptions options)
+    public virtual Task<IHtmlContent> GenerateBreadcrumbsAsync(BreadcrumbsOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("breadcrumbs", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateButtonAsync(ButtonOptions options)
+    public virtual Task<IHtmlContent> GenerateButtonAsync(ButtonOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("button", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateCharacterCountAsync(CharacterCountOptions options)
+    public virtual Task<IHtmlContent> GenerateCharacterCountAsync(CharacterCountOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("character-count", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateCheckboxesAsync(CheckboxesOptions options)
+    public virtual Task<IHtmlContent> GenerateCheckboxesAsync(CheckboxesOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("checkboxes", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateCookieBannerAsync(CookieBannerOptions options)
+    public virtual Task<IHtmlContent> GenerateCookieBannerAsync(CookieBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("cookie-banner", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateDateInputAsync(DateInputOptions options)
+    public virtual Task<IHtmlContent> GenerateDateInputAsync(DateInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("date-input", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateDetailsAsync(DetailsOptions options)
+    public virtual Task<IHtmlContent> GenerateDetailsAsync(DetailsOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("details", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateErrorMessageAsync(ErrorMessageOptions options)
+    public virtual Task<IHtmlContent> GenerateErrorMessageAsync(ErrorMessageOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("error-message", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
+    public virtual Task<IHtmlContent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("error-summary", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateExitThisPageAsync(ExitThisPageOptions options)
+    public virtual Task<IHtmlContent> GenerateExitThisPageAsync(ExitThisPageOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("exit-this-page", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateFieldsetAsync(FieldsetOptions options)
+    public virtual Task<IHtmlContent> GenerateFieldsetAsync(FieldsetOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("fieldset", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateFileUploadAsync(FileUploadOptions options)
+    public virtual Task<IHtmlContent> GenerateFileUploadAsync(FileUploadOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("file-upload", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateFooterAsync(FooterOptions options)
+    public virtual Task<IHtmlContent> GenerateFooterAsync(FooterOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("footer", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateHeaderAsync(HeaderOptions options)
+    public virtual Task<IHtmlContent> GenerateHeaderAsync(HeaderOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("header", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateHintAsync(HintOptions options)
+    public virtual Task<IHtmlContent> GenerateHintAsync(HintOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("hint", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateInsetTextAsync(InsetTextOptions options)
+    public virtual Task<IHtmlContent> GenerateInsetTextAsync(InsetTextOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("inset-text", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateInputAsync(InputOptions options)
+    public virtual Task<IHtmlContent> GenerateInputAsync(InputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("input", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateLabelAsync(LabelOptions options)
+    public virtual Task<IHtmlContent> GenerateLabelAsync(LabelOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("label", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
+    public virtual Task<IHtmlContent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("notification-banner", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateServiceNavigationAsync(ServiceNavigationOptions options)
+    public virtual Task<IHtmlContent> GenerateServiceNavigationAsync(ServiceNavigationOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("service-navigation", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GeneratePanelAsync(PanelOptions options)
+    public virtual Task<IHtmlContent> GeneratePanelAsync(PanelOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("panel", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
+    public virtual Task<IHtmlContent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("phase-banner", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GeneratePaginationAsync(PaginationOptions options)
+    public virtual Task<IHtmlContent> GeneratePaginationAsync(PaginationOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("pagination", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GeneratePasswordInputAsync(PasswordInputOptions options)
+    public virtual Task<IHtmlContent> GeneratePasswordInputAsync(PasswordInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("password-input", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateSkipLinkAsync(SkipLinkOptions options)
+    public virtual Task<IHtmlContent> GenerateSkipLinkAsync(SkipLinkOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("skip-link", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateSummaryListAsync(SummaryListOptions options)
+    public virtual Task<IHtmlContent> GenerateSummaryListAsync(SummaryListOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("summary-list", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateTableAsync(TableOptions options)
+    public virtual Task<IHtmlContent> GenerateTableAsync(TableOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("table", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateTabsAsync(TabsOptions options)
+    public virtual Task<IHtmlContent> GenerateTabsAsync(TabsOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("tabs", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateTagAsync(TagOptions options)
+    public virtual Task<IHtmlContent> GenerateTagAsync(TagOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("tag", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateTaskListAsync(TaskListOptions options)
+    public virtual Task<IHtmlContent> GenerateTaskListAsync(TaskListOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("task-list", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateTextareaAsync(TextareaOptions options)
+    public virtual Task<IHtmlContent> GenerateTextareaAsync(TextareaOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("textarea", options);
     }
 
-    public virtual ValueTask<IHtmlContent> GenerateWarningTextAsync(WarningTextOptions options)
+    public virtual Task<IHtmlContent> GenerateWarningTextAsync(WarningTextOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("warning-text", options);
@@ -297,7 +297,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
             return template;
         });
 
-    private async ValueTask<IHtmlContent> RenderTemplateAsync(string templateName, object componentOptions)
+    private async Task<IHtmlContent> RenderTemplateAsync(string templateName, object componentOptions)
     {
         var context = new TemplateContext(_templateOptions);
         context.SetValue("array", new FunctionValue(Functions.Array));
@@ -315,7 +315,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return new HtmlString(result.TrimStart());
     }
 
-    private async ValueTask<IHtmlContent> RenderViewAsync(string viewName, object model)
+    private async Task<IHtmlContent> RenderViewAsync(string viewName, object model)
     {
         var httpContext = _httpContextAccessor.HttpContext ??
             throw new InvalidOperationException($"No {nameof(HttpContext)}.");

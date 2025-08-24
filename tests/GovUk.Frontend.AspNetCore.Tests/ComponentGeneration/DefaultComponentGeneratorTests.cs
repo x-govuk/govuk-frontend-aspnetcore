@@ -304,7 +304,7 @@ public class DefaultComponentGeneratorTests
 
     private async Task CheckComponentHtmlMatchesExpectedHtml<TOptions>(
         ComponentTestCaseData<TOptions> testCaseData,
-        Func<DefaultComponentGenerator, TOptions, ValueTask<IHtmlContent>> generateComponent,
+        Func<DefaultComponentGenerator, TOptions, Task<IHtmlContent>> generateComponent,
         bool compareWhitespace = true,
         Predicate<IDiff>? excludeDiff = null,
         Func<string, string>? amendExpectedHtml = null)

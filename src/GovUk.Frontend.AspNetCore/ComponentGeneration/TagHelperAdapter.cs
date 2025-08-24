@@ -41,7 +41,7 @@ internal static class TagHelperAdapter
         }
 
         var doc = HtmlDocument.FromHtml(html);
-        var root = (HtmlElementNode)doc.RootNodes.Single();
+        var root = (HtmlElementNode)doc.RootNodes.Single(n => n is HtmlElementNode);
 
         var tagName = root.TagName;
         var tagMode = root.IsSelfClosing ? TagMode.SelfClosing : TagMode.StartTagAndEndTag;

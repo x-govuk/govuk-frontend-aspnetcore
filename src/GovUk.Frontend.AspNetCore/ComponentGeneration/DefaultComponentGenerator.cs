@@ -3,6 +3,14 @@ using System.Text.Encodings.Web;
 using Fluid;
 using Fluid.Values;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.FileProviders;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -13,12 +21,21 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     private static readonly HtmlEncoder _encoder = HtmlEncoder.Default;
 
+    private readonly IRazorViewEngine _viewEngine;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
     private readonly FluidParser _parser;
     private readonly ConcurrentDictionary<string, IFluidTemplate> _templates;
     private readonly TemplateOptions _templateOptions;
 
-    public DefaultComponentGenerator()
+    public DefaultComponentGenerator(IRazorViewEngine viewEngine, IHttpContextAccessor httpContextAccessor)
     {
+        ArgumentNullException.ThrowIfNull(viewEngine);
+        ArgumentNullException.ThrowIfNull(httpContextAccessor);
+
+        _viewEngine = viewEngine;
+        _httpContextAccessor = httpContextAccessor;
+
         _parser = new FluidParser(new FluidParserOptions()
         {
             AllowFunctions = true,
@@ -296,5 +313,54 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         var template = GetTemplate(templateName);
         var result = await template.RenderAsync(context, _encoder);
         return new HtmlString(result.TrimStart());
+    }
+
+    private async ValueTask<IHtmlContent> RenderViewAsync(string viewName, object model)
+    {
+        var httpContext = _httpContextAccessor.HttpContext ??
+            throw new InvalidOperationException($"No {nameof(HttpContext)}.");
+
+        var endpoint = httpContext.GetEndpoint() ??
+            throw new InvalidOperationException($"No {nameof(Endpoint)}.");
+
+        var actionDescriptor = endpoint.Metadata.GetMetadata<ActionDescriptor>() ??
+            throw new InvalidOperationException($"No {nameof(ActionDescriptor)} in endpoint metadata.");
+
+        var actionContext = new ActionContext(httpContext, httpContext.GetRouteData(), actionDescriptor);
+
+        var fullViewName = $"/ComponentGeneration/Templates/{viewName}.cshtml";
+        var viewEngineResult = _viewEngine.GetView(executingFilePath: null, fullViewName, isMainPage: false);
+        if (!viewEngineResult.Success)
+        {
+            throw new InvalidOperationException($"Couldn't find view '{fullViewName}'.");
+        }
+
+        var view = viewEngineResult.View;
+        using (view as IDisposable)
+        {
+            await using var output = new StringWriter();
+            var viewContext = new ViewContext(
+                actionContext,
+                viewEngineResult.View,
+                new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                {
+                    Model = model
+                },
+                new TempDataDictionary(httpContext, new DummyTempDataProvider()),
+                output,
+                new HtmlHelperOptions());
+
+            await viewEngineResult.View.RenderAsync(viewContext);
+            return new HtmlString(output.ToString().Trim());
+        }
+    }
+
+    private class DummyTempDataProvider : ITempDataProvider
+    {
+        public IDictionary<string, object> LoadTempData(HttpContext context) =>
+            throw new NotSupportedException();
+
+        public void SaveTempData(HttpContext context, IDictionary<string, object> values) =>
+            throw new NotSupportedException();
     }
 }

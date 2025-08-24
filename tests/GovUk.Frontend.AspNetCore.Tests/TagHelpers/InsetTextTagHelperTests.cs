@@ -30,7 +30,7 @@ public class InsetTextTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InsetTextOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInsetTextAsync(It.IsAny<InsetTextOptions>())).Callback<InsetTextOptions>(o => actualOptions = o);
 

@@ -30,7 +30,7 @@ public class SkipLinkTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         SkipLinkOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateSkipLinkAsync(It.IsAny<SkipLinkOptions>())).Callback<SkipLinkOptions>(o => actualOptions = o);
 

@@ -66,7 +66,7 @@ public class CharacterCountTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -165,7 +165,7 @@ public class CharacterCountTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -229,7 +229,7 @@ public class CharacterCountTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -314,7 +314,7 @@ public class CharacterCountTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -388,7 +388,7 @@ public class CharacterCountTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -460,7 +460,7 @@ public class CharacterCountTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -533,7 +533,7 @@ public class CharacterCountTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -613,7 +613,7 @@ public class CharacterCountTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -684,7 +684,7 @@ public class CharacterCountTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -765,7 +765,7 @@ public class CharacterCountTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
@@ -823,7 +823,7 @@ public class CharacterCountTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 

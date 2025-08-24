@@ -42,7 +42,7 @@ public class ButtonTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ButtonOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateButtonAsync(It.IsAny<ButtonOptions>())).Callback<ButtonOptions>(o => actualOptions = o);
 

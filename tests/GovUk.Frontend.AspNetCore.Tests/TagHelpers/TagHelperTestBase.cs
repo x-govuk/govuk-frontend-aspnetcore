@@ -4,7 +4,6 @@ using AngleSharp.Dom;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -147,7 +146,7 @@ public abstract class TagHelperTestBase(string tagName, string? parentTagName = 
         string generateMethodName)
         where TOptions : class
     {
-        var componentGenerator = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGenerator = TestUtils.CreateComponentGeneratorMock();
 
         Expression<Func<DefaultComponentGenerator, ValueTask<IHtmlContent>>> CreateExpression()
         {

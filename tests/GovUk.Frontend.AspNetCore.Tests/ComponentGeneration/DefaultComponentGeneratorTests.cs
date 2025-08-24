@@ -10,7 +10,7 @@ public class DefaultComponentGeneratorTests
 {
     private static readonly Regex _decimalEncodedHtmlPattern = new("&#(\\d+);");
 
-    private readonly DefaultComponentGenerator _componentGenerator = new();
+    private readonly DefaultComponentGenerator _componentGenerator = TestUtils.CreateComponentGenerator();
 
     [Theory]
     [ComponentFixtureData("accordion", typeof(AccordionOptions), exclude: ["with falsy values"])]

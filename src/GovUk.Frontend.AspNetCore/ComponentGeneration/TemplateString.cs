@@ -12,10 +12,8 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 /// Contains either an unencoded <see cref="System.String" /> or an <see cref="IHtmlContent"/>.
 /// </summary>
 [DebuggerDisplay("{ToString()}")]
-public sealed class TemplateString : IEquatable<TemplateString>
+public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 {
-    private static readonly HtmlEncoder _defaultEncoder = HtmlEncoder.Default;
-
     private readonly object? _value;
 
     /// <summary>
@@ -44,23 +42,22 @@ public sealed class TemplateString : IEquatable<TemplateString>
     }
 
     /// <summary>
-    /// Gets an encoded HTML string for the current <see cref="TemplateString"/>.
+    /// Gets an HTML string for the current <see cref="TemplateString"/>.
     /// </summary>
     /// <param name="encoder">The <see cref="HtmlEncoder"/> to encoded unencoded values with.</param>
-    /// <returns>The encoded HTML.</returns>
-    public string ToHtmlString(HtmlEncoder encoder)
+    /// <param name="raw">Whether the raw, unencoded value should be returned for <see cref="String"/> values.</param>
+    /// <returns>A string containing the HTML.</returns>
+    public string ToHtmlString(HtmlEncoder encoder, bool raw = false)
     {
         ArgumentNullException.ThrowIfNull(encoder);
 
         if (_value is string str)
         {
-            return encoder.Encode(str);
+            return raw ? str : encoder.Encode(str);
         }
-        else
-        {
-            Debug.Assert(_value is IHtmlContent);
-            return ((IHtmlContent)_value).ToHtmlString(encoder);
-        }
+
+        Debug.Assert(_value is IHtmlContent);
+        return ((IHtmlContent)_value).ToHtmlString(encoder);
     }
 
     internal FluidValue ToFluidValue(HtmlEncoder encoder)
@@ -109,7 +106,23 @@ public sealed class TemplateString : IEquatable<TemplateString>
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     /// <inheritdoc/>
-    public override string ToString() => ToHtmlString(_defaultEncoder);
+    public override string ToString() => ToHtmlString(HtmlEncoder.Default);
+
+    /// <inheritdoc cref="IHtmlContent.WriteTo"/>
+    public void WriteTo(TextWriter writer, HtmlEncoder encoder)
+    {
+        ArgumentNullException.ThrowIfNull(writer);
+        ArgumentNullException.ThrowIfNull(encoder);
+
+        if (_value is string str)
+        {
+            writer.Write(encoder.Encode(str));
+            return;
+        }
+
+        Debug.Assert(_value is IHtmlContent);
+        ((IHtmlContent)_value).WriteTo(writer, encoder);
+    }
 
     /// <inheritdoc/>
     public override bool Equals(object? obj) =>

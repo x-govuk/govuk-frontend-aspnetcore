@@ -115,6 +115,21 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         return false;
     }
 
+    internal IEnumerable<TagHelperAttribute> ToTagHelperAttributes()
+    {
+        foreach (var attribute in _attributes.Values)
+        {
+            if (attribute is { Optional: true, Value: true })
+            {
+                yield return new TagHelperAttribute(attribute.Name, null, HtmlAttributeValueStyle.Minimized);
+            }
+            else if (attribute.Value is not null)
+            {
+                yield return new TagHelperAttribute(attribute.Name, attribute.Value, HtmlAttributeValueStyle.DoubleQuotes);
+            }
+        }
+    }
+
     internal sealed record Attribute(string Name, object? Value, bool Optional)
     {
         public string GetValueHtmlString(HtmlEncoder encoder)

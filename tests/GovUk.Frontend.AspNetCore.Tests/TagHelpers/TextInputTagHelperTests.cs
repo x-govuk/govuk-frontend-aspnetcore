@@ -61,7 +61,7 @@ public class TextInputTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -159,7 +159,7 @@ public class TextInputTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -244,7 +244,7 @@ public class TextInputTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -314,7 +314,7 @@ public class TextInputTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -387,7 +387,7 @@ public class TextInputTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -460,7 +460,7 @@ public class TextInputTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -540,7 +540,7 @@ public class TextInputTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -611,7 +611,7 @@ public class TextInputTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -692,7 +692,7 @@ public class TextInputTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
@@ -750,7 +750,7 @@ public class TextInputTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
 
         var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
         {

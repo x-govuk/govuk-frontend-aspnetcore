@@ -30,7 +30,7 @@ public class WarningTextTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         WarningTextOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateWarningTextAsync(It.IsAny<WarningTextOptions>())).Callback<WarningTextOptions>(o => actualOptions = o);
 

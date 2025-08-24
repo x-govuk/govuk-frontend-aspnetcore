@@ -45,7 +45,7 @@ public class GeneratedErrorSummaryTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ErrorSummaryOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
 

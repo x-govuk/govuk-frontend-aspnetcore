@@ -57,7 +57,7 @@ public class TabsTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         TabsOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateTabsAsync(It.IsAny<TabsOptions>())).Callback<TabsOptions>(o => actualOptions = o);
 

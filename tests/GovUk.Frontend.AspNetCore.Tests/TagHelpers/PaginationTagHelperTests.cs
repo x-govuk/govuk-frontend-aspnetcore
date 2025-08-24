@@ -71,7 +71,7 @@ public class PaginationTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         PaginationOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GeneratePaginationAsync(It.IsAny<PaginationOptions>())).Callback<PaginationOptions>(o => actualOptions = o);
 

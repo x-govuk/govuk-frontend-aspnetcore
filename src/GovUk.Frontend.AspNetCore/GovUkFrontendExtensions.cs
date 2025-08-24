@@ -3,7 +3,6 @@ using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,6 +52,7 @@ public static class GovUkFrontendExtensions
         services.AddTransient<PageTemplateHelper>();
         services.AddSingleton<ITagHelperInitializer<ButtonTagHelper>, ButtonTagHelperInitializer>();
         services.AddSingleton<ITagHelperInitializer<FileUploadTagHelper>, FileUploadTagHelperInitializer>();
+        services.AddHttpContextAccessor();
 
         services.Configure(setupAction);
 

@@ -47,7 +47,7 @@ public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHel
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ErrorSummaryOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
 
@@ -101,7 +101,7 @@ public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHel
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ErrorSummaryOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
 
@@ -179,7 +179,7 @@ public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHel
         var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
         containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ErrorSummaryOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
 
@@ -229,7 +229,7 @@ public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHel
         var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
         containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
 
-        var componentGeneratorMock = new Mock<DefaultComponentGenerator>() { CallBase = true };
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ErrorSummaryOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
 

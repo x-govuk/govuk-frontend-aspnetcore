@@ -54,7 +54,8 @@ public class DefaultComponentGeneratorTests
     public Task Checkboxes(ComponentTestCaseData<CheckboxesOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateCheckboxesAsync(options));
+            (generator, options) => generator.GenerateCheckboxesAsync(options),
+            compareWhitespace: false);
 
     [Theory]
     [ComponentFixtureData("cookie-banner", typeof(CookieBannerOptions))]

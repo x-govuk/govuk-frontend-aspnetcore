@@ -1,0 +1,89 @@
+@inherits GovUkComponentView<CharacterCountOptions>
+
+@{
+    var hasNoLimit = Model.MaxWords is null && Model.MaxLength is null;
+    var textareaDescriptionLength = Model.MaxWords ?? Model.MaxLength;
+    var textareaDescriptionText = Model.TextareaDescriptionText?.ToHtmlString(HtmlEncoder) ??
+        $"You can enter up to %{{count}} {(Model.MaxWords is not null ? "words" : "characters")}";
+    var textareaDescriptionTextNoLimit = !hasNoLimit ? new HtmlString(textareaDescriptionText.Replace("%{count}", textareaDescriptionLength.ToString())) : null;
+    var id = Model.Id ?? Model.Name;
+
+    var countMessageHtml = new HtmlContentBuilder()
+        .AppendHtml(
+            await Html.PartialAsync(
+                "./Hint.cshtml",
+                model: new HintOptions
+                {
+                    Text = textareaDescriptionTextNoLimit.ToTemplateString(),
+                    Id = id + "-info",
+                    Classes = Classes("govuk-character-count__message",  Model.CountMessage?.Classes).ToTemplateString(),
+                    Attributes = Model.CountMessage?.Attributes
+                }));
+
+    if (Model.FormGroup?.AfterInput is AfterInputOptions afterInput &&
+        HtmlOrText(afterInput.Html, afterInput.Text) is IHtmlContent afterInputContent)
+    {
+        countMessageHtml.AppendHtml(afterInputContent);
+    }
+
+    var attributes = new AttributeCollection
+    {
+        new AttributeCollection.Attribute("data-module", "govuk-character-count"),
+        new AttributeCollection.Attribute("data-maxlength", Model.MaxLength, Optional: true),
+        new AttributeCollection.Attribute("data-threshold", Model.Threshold, Optional: true),
+        new AttributeCollection.Attribute("data-maxwords", Model.MaxWords, Optional: true)
+    };
+
+    if (hasNoLimit && Model.TextareaDescriptionText is not null)
+    {
+        attributes.AddI18n("textarea-description", ("other", Model.TextareaDescriptionText));
+    }
+
+    attributes.AddI18n("characters-under-limit", ("one", Model.CharactersUnderLimitText?.One), ("other", Model.CharactersUnderLimitText?.Other));
+    attributes.AddI18n("characters-at-limit", Model.CharactersAtLimitText);
+    attributes.AddI18n("characters-over-limit", ("one", Model.CharactersOverLimitText?.One), ("other", Model.CharactersOverLimitText?.Other));
+    attributes.AddI18n("words-under-limit", ("one", Model.WordsUnderLimitText?.One), ("other", Model.WordsUnderLimitText?.Other));
+    attributes.AddI18n("words-at-limit", Model.WordsAtLimitText);
+    attributes.AddI18n("words-over-limit", ("one", Model.WordsOverLimitText?.One), ("other", Model.WordsOverLimitText?.Other));
+
+    await Html.RenderPartialAsync(
+        "./Textarea.cshtml",
+        new TextareaOptions
+        {
+            Id = id,
+            Name = Model.Name,
+            DescribedBy = id + "-info",
+            Rows = Model.Rows,
+            Spellcheck = Model.Spellcheck,
+            Value = Model.Value,
+            FormGroup = new TextareaOptionsFormGroup
+            {
+                Classes = Classes("govuk-character-count", Model.FormGroup?.Classes).ToTemplateString(),
+                Attributes = attributes,
+                BeforeInput = Model.FormGroup?.BeforeInput is not null
+                    ? new BeforeInputOptions()
+                    {
+                        Html = Model.FormGroup.BeforeInput.Html,
+                        Text = Model.FormGroup.BeforeInput.Text
+                    }
+                    : null,
+                AfterInput = new AfterInputOptions()
+                {
+                    Html = countMessageHtml.ToTemplateString()
+                }
+            },
+            Classes = Classes("govuk-js-character-count", Model.Classes).ToTemplateString(),
+            Label = new LabelOptions
+            {
+                Text = Model.Label?.Text,
+                Html = Model.Label?.Html,
+                Classes = Model.Label?.Classes,
+                IsPageHeading = Model.Label?.IsPageHeading,
+                Attributes = Model.Label?.Attributes,
+                For = id
+            },
+            Hint = Model.Hint,
+            ErrorMessage = Model.ErrorMessage,
+            Attributes = Model.Attributes
+        });
+}

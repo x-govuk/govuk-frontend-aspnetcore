@@ -1,0 +1,16 @@
+@inherits GovUkComponentView<ErrorMessageOptions>
+
+@{
+    var visuallyHiddenText = Model.VisuallyHiddenText ?? "Error";
+}
+
+<p id="@Model.Id" class="@Classes("govuk-error-message", Model.Classes)" _gfa-attributes="Model.Attributes">
+    @if (visuallyHiddenText != string.Empty)
+    {
+        <span class="govuk-visually-hidden">@visuallyHiddenText:</span>@HtmlOrText(Model.Html, Model.Text)
+    }
+    else
+    {
+        @HtmlOrText(Model.Html, Model.Text)
+    }
+</p>

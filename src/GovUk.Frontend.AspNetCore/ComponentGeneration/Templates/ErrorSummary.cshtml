@@ -1,0 +1,47 @@
+@inherits GovUkComponentView<ErrorSummaryOptions>
+
+@{
+    var dataAttributes = new AttributeCollection();
+    if (Model.DisableAutoFocus is not null)
+    {
+        dataAttributes.Add("data-disable-auto-focus", Model.DisableAutoFocus == true ? "true" : "false");
+    }
+}
+
+<div class="@Classes("govuk-error-summary", Model.Classes)"
+     _gfa-attributes="@AttributeCollection.Join(dataAttributes, Model.Attributes)"
+     data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title" _gfa-attributes="@Model.TitleAttributes">
+            @HtmlOrText(Model.TitleHtml, Model.TitleText)
+        </h2>
+        <div class="govuk-error-summary__body">
+            @if (HtmlOrText(Model.DescriptionHtml, Model.DescriptionText) is IHtmlContent descriptionContent)
+            {
+                <p _gfa-attributes="@Model.DescriptionAttributes">
+                    @descriptionContent
+                </p>
+            }
+            @if (Model.ErrorList?.Count > 0)
+            {
+                <ul class="govuk-list govuk-error-summary__list">
+                    @foreach (var item in Model.ErrorList)
+                    {
+                        <li _gfa-attributes="@item.ItemAttributes">
+                            @if (item.Href is not null)
+                            {
+                                <a href="@item.Href" _gfa-attributes="@item.Attributes">
+                                    @HtmlOrText(item.Html, item.Text)
+                                </a>
+                            }
+                            else
+                            {
+                                @HtmlOrText(item.Html, item.Text)
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

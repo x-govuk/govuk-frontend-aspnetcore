@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Encodings.Web;
-using Fluid.Values;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -60,23 +59,6 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 
         Debug.Assert(_value is IHtmlContent);
         return ((IHtmlContent)_value).ToHtmlString(encoder);
-    }
-
-    internal FluidValue ToFluidValue(HtmlEncoder encoder)
-    {
-        if (_value is null)
-        {
-            return NilValue.Instance;
-        }
-
-        if (_value is string str)
-        {
-            return new StringValue(str, encode: true);
-        }
-
-        Debug.Assert(_value is IHtmlContent);
-        var html = ((IHtmlContent)_value).ToHtmlString(encoder);
-        return new StringValue(html, encode: false);
     }
 
     /// <summary>

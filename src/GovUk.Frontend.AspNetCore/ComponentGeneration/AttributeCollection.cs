@@ -69,12 +69,36 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
     {
     }
 
-    internal void Add(string name, TemplateString templateString)
+    internal static AttributeCollection Join(params AttributeCollection?[] attributeCollections)
+    {
+        var result = new AttributeCollection();
+
+        foreach (var attributes in attributeCollections)
+        {
+            if (attributes is null)
+            {
+                continue;
+            }
+
+            result.AddRange(attributes);
+        }
+
+        return result;
+    }
+
+    internal void Add(Attribute attribute)
+    {
+        ArgumentNullException.ThrowIfNull(attribute);
+
+        _attributes.Add(attribute.Name, attribute);
+    }
+
+    internal void Add(string name, TemplateString templateString, bool optional = false)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(templateString);
 
-        var attribute = new Attribute(name, templateString, Optional: false);
+        var attribute = new Attribute(name, templateString, optional);
         _attributes.Add(name, attribute);
     }
 
@@ -84,6 +108,44 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
 
         var attribute = new Attribute(name, true, Optional: true);
         _attributes.Add(name, attribute);
+    }
+
+    // ReSharper disable once InconsistentNaming
+    internal void AddI18n(string key, TemplateString? message)
+    {
+        if (message is null)
+        {
+            return;
+        }
+
+        Add("data-i18n." + key, message);
+    }
+
+    // ReSharper disable once InconsistentNaming
+    internal void AddI18n(string key, params (string PluralRule, TemplateString? Message)[] messages)
+    {
+        foreach (var (pluralRule, message) in messages)
+        {
+            if (message is null)
+            {
+                continue;
+            }
+
+            Add("data-i18n." + key + "." + pluralRule, message);
+        }
+    }
+
+    internal void AddRange(AttributeCollection? attributes)
+    {
+        if (attributes is null)
+        {
+            return;
+        }
+
+        foreach (var attr in attributes._attributes)
+        {
+            _attributes.Add(attr.Key, attr.Value);
+        }
     }
 
     internal void Set(string name, TemplateString templateString)
@@ -122,16 +184,26 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         {
             if (attribute is { Optional: true, Value: true })
             {
-                yield return new TagHelperAttribute(attribute.Name, null, HtmlAttributeValueStyle.Minimized);
+                yield return new TagHelperAttribute(
+                    attribute.Name,
+                    null,
+                    HtmlAttributeValueStyle.Minimized);
             }
             else if (attribute.Value is not null)
             {
-                yield return new TagHelperAttribute(attribute.Name, attribute.Value, HtmlAttributeValueStyle.DoubleQuotes);
+                yield return new TagHelperAttribute(
+                    attribute.Name,
+                    attribute.Value switch
+                    {
+                        bool b => b ? "true" : "false",
+                        var obj => obj
+                    },
+                    HtmlAttributeValueStyle.DoubleQuotes);
             }
         }
     }
 
-    internal sealed record Attribute(string Name, object? Value, bool Optional)
+    internal sealed record Attribute(string Name, object? Value, bool Optional = false)
     {
         public string GetValueHtmlString(HtmlEncoder encoder)
         {

@@ -1,0 +1,5 @@
+@inherits GovUkComponentView<InsetTextOptions>
+
+<div id="@Model.Id" class="@Classes("govuk-inset-text", Model.Classes)" _gfa-attributes="Model.Attributes">
+    @(HtmlOrText(Model.Html, Model.Text))
+</div>

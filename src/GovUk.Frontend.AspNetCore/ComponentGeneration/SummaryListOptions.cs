@@ -69,7 +69,7 @@ public record SummaryListOptionsRowActions
     public AttributeCollection? Attributes { get; set; }
 }
 
-public record SummaryListOptionsRowActionsItem
+public record SummaryListOptionsRowActionsItem : ISummaryListOptionsActionItem
 {
     public TemplateString? Href { get; set; }
     public string? Text { get; set; }
@@ -88,7 +88,7 @@ public record SummaryListOptionsCardActions
     public AttributeCollection? Attributes { get; set; }
 }
 
-public record SummaryListOptionsCardActionsItem
+public record SummaryListOptionsCardActionsItem : ISummaryListOptionsActionItem
 {
     public TemplateString? Href { get; set; }
     public string? Text { get; set; }
@@ -96,4 +96,14 @@ public record SummaryListOptionsCardActionsItem
     public TemplateString? VisuallyHiddenText { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
+}
+
+internal interface ISummaryListOptionsActionItem
+{
+    TemplateString? Href { get; }
+    string? Text { get; }
+    TemplateString? Html { get; }
+    TemplateString? VisuallyHiddenText { get; }
+    TemplateString? Classes { get; }
+    AttributeCollection? Attributes { get; }
 }

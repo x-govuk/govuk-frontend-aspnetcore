@@ -1,0 +1,35 @@
+@inherits GovUkComponentView<TabsOptions>
+
+<div id="@Model.Id" class="@Classes("govuk-tabs", Model.Classes)" _gfa-attributes="Model.Attributes" data-module="govuk-tabs">
+    <h2 class="govuk-tabs__title">
+        @(Model.Title ?? "Contents")
+    </h2>
+    @if (Model.Items?.Count > 0)
+    {
+        <ul class="govuk-tabs__list">
+            @foreach (var (item, index) in Model.Items.Select((x, i) => (Item: x, Index: i + 1)))
+            {
+                var tabPanelId = item.Id ?? Model.IdPrefix + $"-{index}";
+                <li class="@(Classes("govuk-tabs__list-item", index == 1 ? "govuk-tabs__list-item--selected" : null))">
+                    <a class="govuk-tabs__tab" href="#@(tabPanelId)" _gfa-attributes="item.Attributes">
+                        @item.Label
+                    </a>
+                </li>
+            }
+        </ul>
+        @foreach (var (item, index) in Model.Items.Select((x, i) => (Item: x, Index: i + 1)))
+        {
+            var tabPanelId = item.Id ?? Model.IdPrefix + $"-{index}";
+            <div class="@Classes("govuk-tabs__panel", index > 1 ? "govuk-tabs__panel--hidden" : null)" id="@tabPanelId" _gfa-attributes="item.Panel?.Attributes">
+                @if (item.Panel?.Html is { } html)
+                {
+                    @Html.Raw(html.ToHtmlString(HtmlEncoder, raw: true))
+                }
+                else if (item.Panel?.Text is { } text)
+                {
+                    <p class="govuk-body">@text.ToHtmlString(HtmlEncoder, raw: true)</p>
+                }
+            </div>
+        }
+    }
+</div>

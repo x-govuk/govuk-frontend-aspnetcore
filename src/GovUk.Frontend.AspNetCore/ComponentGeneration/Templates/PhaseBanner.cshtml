@@ -1,0 +1,17 @@
+@inherits GovUkComponentView<PhaseBannerOptions>
+
+<div class="@Classes("govuk-phase-banner", Model.Classes)" _gfa-attributes="Model.Attributes">
+    <p class="govuk-phase-banner__content">
+        @{
+            await Html.RenderPartialAsync("./Tag.cshtml", new TagOptions
+            {
+                Text = Model.Tag?.Text,
+                Html = Model.Tag?.Html,
+                Classes = Classes("govuk-phase-banner__content__tag", Model.Tag?.Classes).ToTemplateString()
+            });
+        }
+        <span class="govuk-phase-banner__text">
+            @HtmlOrText(Model.Html, Model.Text)
+        </span>
+    </p>
+</div>

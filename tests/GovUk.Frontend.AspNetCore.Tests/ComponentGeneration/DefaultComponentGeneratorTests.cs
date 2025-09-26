@@ -1,15 +1,11 @@
-using System.Text.RegularExpressions;
 using AngleSharp.Diffing.Core;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Html;
-using Match = System.Text.RegularExpressions.Match;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ComponentGeneration;
 
 public class DefaultComponentGeneratorTests
 {
-    private static readonly Regex _decimalEncodedHtmlPattern = new("&#(\\d+);");
-
     private readonly DefaultComponentGenerator _componentGenerator = TestUtils.CreateComponentGenerator();
 
     [Theory]
@@ -17,8 +13,7 @@ public class DefaultComponentGeneratorTests
     public Task Accordion(ComponentTestCaseData<AccordionOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateAccordionAsync(options),
-            amendExpectedHtml: data.Name is "default" or "with translations" ? html => html.Replace("’", "&#x2019;") : null);
+            (generator, options) => generator.GenerateAccordionAsync(options));
 
     [Theory]
     [ComponentFixtureData("back-link", typeof(BackLinkOptions))]
@@ -46,24 +41,21 @@ public class DefaultComponentGeneratorTests
     public Task CharacterCount(ComponentTestCaseData<CharacterCountOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateCharacterCountAsync(options),
-            amendExpectedHtml: html => html.Replace("Street\nLondon\nNW1 6XE\n", "Street&#xA;London&#xA;NW1 6XE&#xA;"));
+            (generator, options) => generator.GenerateCharacterCountAsync(options));
 
     [Theory]
     [ComponentFixtureData("checkboxes", typeof(CheckboxesOptions), exclude: ["with falsy values"])]
     public Task Checkboxes(ComponentTestCaseData<CheckboxesOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateCheckboxesAsync(options),
-            compareWhitespace: false);
+            (generator, options) => generator.GenerateCheckboxesAsync(options));
 
     [Theory]
     [ComponentFixtureData("cookie-banner", typeof(CookieBannerOptions))]
     public Task CookieBanner(ComponentTestCaseData<CookieBannerOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateCookieBannerAsync(options),
-            amendExpectedHtml: html => Regex.Replace(html, "</div>\n\n\n  </div>\n</div>$", "</div>\n\n  </div>\n</div>"));
+            (generator, options) => generator.GenerateCookieBannerAsync(options));
 
     [Theory]
     [ComponentFixtureData("date-input", typeof(DateInputOptions))]
@@ -77,8 +69,7 @@ public class DefaultComponentGeneratorTests
     public Task Details(ComponentTestCaseData<DetailsOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateDetailsAsync(options),
-            amendExpectedHtml: html => html.Replace("’", "&#x2019;"));
+            (generator, options) => generator.GenerateDetailsAsync(options));
 
     [Theory]
     [ComponentFixtureData("error-message", typeof(ErrorMessageOptions))]
@@ -109,67 +100,39 @@ public class DefaultComponentGeneratorTests
             (generator, options) => generator.GenerateFieldsetAsync(options));
 
     [Theory]
-    [ComponentFixtureData("file-upload", typeof(FileUploadOptions), only: "translated")]
+    [ComponentFixtureData("file-upload", typeof(FileUploadOptions))]
     public Task FileUpload(ComponentTestCaseData<FileUploadOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateFileUploadAsync(options),
-            amendExpectedHtml: html => html.Replace("C:&#x5C;fakepath&#x5C;myphoto.jpg", "C:\\fakepath\\myphoto.jpg"));
+            (generator, options) => generator.GenerateFileUploadAsync(options));
 
     [Theory]
     [ComponentFixtureData("footer", typeof(FooterOptions))]
     public Task Footer(ComponentTestCaseData<FooterOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateFooterAsync(options),
-            amendExpectedHtml: html =>
-            {
-                html = html.Replace("©", "&#xA9;");
-
-                html = data.Name is "with custom HTML content licence and copyright notice"
-                    ? html.Replace("Mae&#x2019;r", "Mae’r")
-                    : html.Replace("Mae’r", "Mae&#x2019;r");
-
-                return html;
-            },
-            compareWhitespace: false);
+            (generator, options) => generator.GenerateFooterAsync(options));
 
     [Theory]
     [ComponentFixtureData("header", typeof(HeaderOptions))]
     public Task Header(ComponentTestCaseData<HeaderOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateHeaderAsync(options),
-            compareWhitespace: false);
+            (generator, options) => generator.GenerateHeaderAsync(options));
 
     [Theory]
     [ComponentFixtureData("hint", typeof(HintOptions))]
     public Task Hint(ComponentTestCaseData<HintOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateHintAsync(options),
-            amendExpectedHtml:
-                // Account for weird encoding differences
-                data.Name == "default" ?
-                    html => html.Replace(
-                    "\nFor example, &#x27;QQ 12 34 56 C&#x27;.\n",
-                    "&#xA;For example, &#x27;QQ 12 34 56 C&#x27;.&#xA;",
-                    StringComparison.OrdinalIgnoreCase) :
-                null);
+            (generator, options) => generator.GenerateHintAsync(options));
 
     [Theory]
     [ComponentFixtureData("input", typeof(InputOptions))]
     public Task Input(ComponentTestCaseData<InputOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateInputAsync(options),
-            amendExpectedHtml:
-                data.Name is not "with prefix with html" ?
-                    html => html
-                        .Replace("’", "&#x2019;")
-                        .Replace("‘", "&#x2018;")
-                        .Replace("£", "&#xA3;") :
-                    null);
+            (generator, options) => generator.GenerateInputAsync(options));
 
     [Theory]
     [ComponentFixtureData("inset-text", typeof(InsetTextOptions))]
@@ -197,8 +160,7 @@ public class DefaultComponentGeneratorTests
     public Task Pagination(ComponentTestCaseData<PaginationOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GeneratePaginationAsync(options),
-            amendExpectedHtml: html => html.Replace("précédente", "pr&#xE9;c&#xE9;dente"));
+            (generator, options) => generator.GeneratePaginationAsync(options));
 
     [Theory]
     [ComponentFixtureData("panel", typeof(PanelOptions))]
@@ -212,16 +174,28 @@ public class DefaultComponentGeneratorTests
     public Task PasswordInput(ComponentTestCaseData<PasswordInputOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GeneratePasswordInputAsync(options),
-            compareWhitespace: false);
+            (generator, options) => generator.GeneratePasswordInputAsync(options));
 
     [Theory]
     [ComponentFixtureData("phase-banner", typeof(PhaseBannerOptions))]
     public Task PhaseBanner(ComponentTestCaseData<PhaseBannerOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GeneratePhaseBannerAsync(options),
-            amendExpectedHtml: html => html.Replace("–", "&#x2013;"));
+            (generator, options) => generator.GeneratePhaseBannerAsync(options));
+
+    [Theory]
+    [ComponentFixtureData("radios", typeof(RadiosOptions), exclude: ["with falsy items"])]
+    public Task Radios(ComponentTestCaseData<RadiosOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateRadiosAsync(options));
+
+    [Theory]
+    [ComponentFixtureData("select", typeof(SelectOptions), exclude: ["with falsy items", "with falsy values"])]
+    public Task Select(ComponentTestCaseData<SelectOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateSelectAsync(options));
 
     [Theory]
     [ComponentFixtureData(
@@ -231,8 +205,7 @@ public class DefaultComponentGeneratorTests
     public Task ServiceNavigation(ComponentTestCaseData<ServiceNavigationOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateServiceNavigationAsync(options),
-            compareWhitespace: false);
+            (generator, options) => generator.GenerateServiceNavigationAsync(options));
 
     [Theory]
     [ComponentFixtureData("skip-link", typeof(SkipLinkOptions))]
@@ -246,16 +219,14 @@ public class DefaultComponentGeneratorTests
     public Task SummaryList(ComponentTestCaseData<SummaryListOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateSummaryListAsync(options),
-            amendExpectedHtml: html => html.Replace("Gatsby’s", "Gatsby&#x2019;s"));
+            (generator, options) => generator.GenerateSummaryListAsync(options));
 
     [Theory]
     [ComponentFixtureData("table", typeof(TableOptions), exclude: "with falsy items")]
     public Task Table(ComponentTestCaseData<TableOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateTableAsync(options),
-            amendExpectedHtml: html => html.Replace("£", "&#xA3;"));
+            (generator, options) => generator.GenerateTableAsync(options));
 
     [Theory]
     [ComponentFixtureData("tabs", typeof(TabsOptions), exclude: "with falsy values")]
@@ -276,60 +247,32 @@ public class DefaultComponentGeneratorTests
     public Task TaskList(ComponentTestCaseData<TaskListOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateTaskListAsync(options),
-            amendExpectedHtml: html => html.Replace("£", "&#xA3;"));
+            (generator, options) => generator.GenerateTaskListAsync(options));
 
     [Theory]
     [ComponentFixtureData("textarea", typeof(TextareaOptions))]
     public Task Textarea(ComponentTestCaseData<TextareaOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateTextareaAsync(options),
-            amendExpectedHtml: html => html
-                .Replace("’", "&#x2019;")
-                .Replace("‘", "&#x2018;")
-                .Replace("Street\nLondon\nNW1 6XE\n", "Street&#xA;London&#xA;NW1 6XE&#xA;"));
+            (generator, options) => generator.GenerateTextareaAsync(options));
 
     [Theory]
     [ComponentFixtureData("warning-text", typeof(WarningTextOptions))]
     public Task WarningText(ComponentTestCaseData<WarningTextOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateWarningTextAsync(options),
-            amendExpectedHtml: html => html.Replace("£", "&#xA3;").Replace("’", "&#x2019;"));
+            (generator, options) => generator.GenerateWarningTextAsync(options));
 
     private async Task CheckComponentHtmlMatchesExpectedHtml<TOptions>(
         ComponentTestCaseData<TOptions> testCaseData,
         Func<DefaultComponentGenerator, TOptions, Task<IHtmlContent>> generateComponent,
-        bool compareWhitespace = true,
-        Predicate<IDiff>? excludeDiff = null,
-        Func<string, string>? amendExpectedHtml = null)
+        Predicate<IDiff>? excludeDiff = null)
     {
         var html = (await generateComponent(_componentGenerator, testCaseData.Options)).ToHtmlString();
 
-        // Some of the fixtures have characters with different encodings to what we produce;
-        // normalize those before comparing:
-        var expectedHtml = _decimalEncodedHtmlPattern
-            .Replace(
-                testCaseData.ExpectedHtml,
-                (Match match) =>
-                {
-                    var encodedDecimal = int.Parse(match.Groups[1].Value);
-                    return $"&#x{encodedDecimal:X};";
-                });
-
-        if (amendExpectedHtml is not null)
-        {
-            expectedHtml = amendExpectedHtml(expectedHtml);
-        }
+        var expectedHtml = testCaseData.ExpectedHtml;
 
         // Semantic comparison
         AssertEx.HtmlEqual(expectedHtml, html, excludeDiff);
-
-        // For exact character-by-character equality
-        if (compareWhitespace)
-        {
-            Assert.Equal(expectedHtml.ReplaceLineEndings(), html.ReplaceLineEndings());
-        }
     }
 }

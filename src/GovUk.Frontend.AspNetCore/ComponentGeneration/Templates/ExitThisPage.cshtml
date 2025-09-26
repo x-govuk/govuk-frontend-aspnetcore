@@ -1,0 +1,40 @@
+@inherits GovUkComponentView<ExitThisPageOptions>
+
+@{
+    IHtmlContent defaultHtml = new HtmlString("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page");
+
+    var dataAttributes = new AttributeCollection();
+    if (Model.ActivatedText is not null)
+    {
+        dataAttributes.Add("data-i18n.activated", Model.ActivatedText);
+    }
+    if (Model.TimedOutText is not null)
+    {
+        dataAttributes.Add("data-i18n.timed-out", Model.TimedOutText);
+    }
+    if (Model.PressOneMoreTimeText is not null)
+    {
+        dataAttributes.Add("data-i18n.press-one-more-time", Model.PressOneMoreTimeText);
+    }
+    if (Model.PressTwoMoreTimesText is not null)
+    {
+        dataAttributes.Add("data-i18n.press-two-more-times", Model.PressTwoMoreTimesText);
+    }
+}
+
+<div id="@Model.Id" class="@Classes("govuk-exit-this-page", Model.Classes)" data-module="govuk-exit-this-page"
+     _gfa-attributes="@AttributeCollection.Join(dataAttributes, Model.Attributes)">
+    @await Html.PartialAsync(
+        "./Button.cshtml",
+        new ButtonOptions
+        {
+            Html = Model.Html is not null || Model.Text is not null ? Model.Html : defaultHtml.ToTemplateString(),
+            Text = Model.Text,
+            Classes = "govuk-button--warning govuk-exit-this-page__button govuk-js-exit-this-page-button",
+            Href = Model.RedirectUrl ?? "https://www.bbc.co.uk/weather",
+            Attributes = new AttributeCollection
+            {
+                new AttributeCollection.Attribute("rel", "nofollow noreferrer")
+            }
+        })
+</div>

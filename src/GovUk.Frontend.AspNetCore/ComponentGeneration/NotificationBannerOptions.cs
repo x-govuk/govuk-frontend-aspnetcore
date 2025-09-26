@@ -9,7 +9,7 @@ public record NotificationBannerOptions
     public TemplateString? TitleText { get; set; }
     public TemplateString? TitleHtml { get; set; }
     public int? TitleHeadingLevel { get; set; }
-    public TemplateString? Type { get; set; }
+    public string? Type { get; set; }
     public TemplateString? Role { get; set; }
     public TemplateString? TitleId { get; set; }
     public bool? DisableAutoFocus { get; set; }

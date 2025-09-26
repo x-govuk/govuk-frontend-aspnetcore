@@ -1,0 +1,5 @@
+@inherits GovUkComponentView<SkipLinkOptions>
+
+<a href="@(Model.Href ?? "#content")" class="@Classes("govuk-skip-link", Model.Classes)" _gfa-attributes="Model.Attributes" data-module="govuk-skip-link">
+    @(HtmlOrText(Model.Html, Model.Text, "Back"))
+</a>

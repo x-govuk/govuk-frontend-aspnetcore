@@ -1,0 +1,61 @@
+@inherits GovUkComponentView<TableOptions>
+
+<table class="@Classes("govuk-table", Model.Classes)" _gfa-attributes="Model.Attributes">
+    @if (Model.Caption is { } caption)
+    {
+        <caption class="@Classes("govuk-table__caption", Model.CaptionClasses)">
+            @caption
+        </caption>
+    }
+    @if (Model.Head is { } head)
+    {
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                @foreach (var item in head)
+                {
+                    <th scope="col"
+                        class="@Classes("govuk-table__header", item.Format is {} format ? $"govuk-table__header--{format}": null, item.Classes)"
+                        colspan="@item.ColSpan"
+                        rowspan="@item.RowSpan"
+                        _gfa-attributes="item.Attributes">
+                        @(HtmlOrText(item.Html, item.Text))
+                    </th>
+                }
+            </tr>
+        </thead>
+    }
+    <tbody class="govuk-table__body">
+        @foreach (var row in Model.Rows ?? [])
+        {
+            <tr class="govuk-table__row">
+                @foreach (var cell in row)
+                {
+                    var commonAttributes = new AttributeCollection();
+                    if (cell.ColSpan is { } colSpan)
+                    {
+                        commonAttributes.Add("colspan", colSpan.ToString());
+                    }
+                    if (cell.RowSpan is { } rowSpan)
+                    {
+                        commonAttributes.Add("rowspan", rowSpan.ToString());
+                    }
+
+                    @if (cell == row.First() && Model.FirstCellIsHeader == true)
+                    {
+                        <th scope="row"
+                            class="@Classes("govuk-table__header", cell.Classes)" _gfa-attributes="AttributeCollection.Join(commonAttributes, cell.Attributes)">
+                            @HtmlOrText(cell.Html, cell.Text)
+                        </th>
+                    }
+                    else
+                    {
+                        <td class="@Classes("govuk-table__cell", cell.Format is {} format ? $"govuk-table__cell--{format}": null, cell.Classes)"
+                            _gfa-attributes="AttributeCollection.Join(commonAttributes, cell.Attributes)">
+                            @HtmlOrText(cell.Html, cell.Text)
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>

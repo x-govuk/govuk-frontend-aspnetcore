@@ -49,20 +49,8 @@ public record InputOptionsSuffix
 
 public record InputFormGroupOptions : FormGroupOptions
 {
-    public InputOptionsBeforeInput? BeforeInput { get; set; }
-    public InputOptionsAfterInput? AfterInput { get; set; }
-}
-
-public record InputOptionsBeforeInput
-{
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
-}
-
-public record InputOptionsAfterInput
-{
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public BeforeInputOptions? BeforeInput { get; set; }
+    public AfterInputOptions? AfterInput { get; set; }
 }
 
 public record InputOptionsInputWrapper

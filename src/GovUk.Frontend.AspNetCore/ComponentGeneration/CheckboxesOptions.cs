@@ -12,31 +12,15 @@ public record CheckboxesOptions
     public TemplateString? IdPrefix { get; set; }
     public TemplateString? Name { get; set; }
     public IReadOnlyCollection<CheckboxesOptionsItem>? Items { get; set; }
-    public IReadOnlyCollection<string>? Values { get; set; }
+    public IReadOnlyCollection<TemplateString>? Values { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
 }
 
 public record CheckboxesOptionsFormGroup : FormGroupOptions
 {
-    public CheckboxesOptionsBeforeInputs? BeforeInputs { get; set; }
-    public CheckboxesOptionsAfterInputs? AfterInputs { get; set; }
-}
-
-public record CheckboxesOptionsBeforeInputs
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
-}
-
-public record CheckboxesOptionsAfterInputs
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
+    public BeforeInputOptions? BeforeInputs { get; set; }
+    public AfterInputOptions? AfterInputs { get; set; }
 }
 
 public record CheckboxesOptionsItem

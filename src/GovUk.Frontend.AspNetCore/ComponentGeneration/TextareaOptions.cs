@@ -25,22 +25,6 @@ public record TextareaOptions
 
 public record TextareaOptionsFormGroup : FormGroupOptions
 {
-    public TextareaOptionsBeforeInput? BeforeInput { get; set; }
-    public TextareaOptionsAfterInput? AfterInput { get; set; }
-}
-
-public record TextareaOptionsBeforeInput
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
-}
-
-public record TextareaOptionsAfterInput
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
+    public BeforeInputOptions? BeforeInput { get; set; }
+    public AfterInputOptions? AfterInput { get; set; }
 }

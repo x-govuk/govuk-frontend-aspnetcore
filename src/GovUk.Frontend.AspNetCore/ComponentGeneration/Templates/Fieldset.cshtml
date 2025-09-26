@@ -1,0 +1,20 @@
+@inherits GovUkComponentView<FieldsetOptions>
+
+<fieldset class="@Classes("govuk-fieldset", Model.Classes)" role="@Model.Role" aria-describedby="@Model.DescribedBy"
+          _gfa-attributes="@Model.Attributes"
+          _gfa-prune-empty-attributes="aria-describedby">
+    @if (HtmlOrText(Model.Legend?.Html, Model.Legend?.Text) is IHtmlContent legendContent)
+    {
+        <legend class="@Classes("govuk-fieldset__legend", Model.Legend!.Classes)" _gfa-attributes="@Model.Legend!.Attributes">
+            @if (Model.Legend!.IsPageHeading == true)
+            {
+                <h1 class="govuk-fieldset__heading">@legendContent</h1>
+            }
+            else
+            {
+                @legendContent
+            }
+        </legend>
+    }
+    @Html.Raw(Model.Html?.ToHtmlString(HtmlEncoder, raw: true))
+</fieldset>

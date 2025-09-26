@@ -1,0 +1,110 @@
+@inherits GovUkComponentView<SummaryListOptions>
+
+@{
+    async Task RenderActionLink(ISummaryListOptionsActionItem action, SummaryListOptionsCardTitle? cardTitle)
+    {
+        <a class="@Classes("govuk-link", action.Classes)" href="@action.Href" _gfa-attributes="@action.Attributes">
+            @HtmlOrText(action.Html, action.Text)
+            @if ((action.VisuallyHiddenText is not null && action.VisuallyHiddenText != string.Empty) || cardTitle is not null)
+            {
+                <span class="govuk-visually-hidden">
+                    @if (action.VisuallyHiddenText is { } visuallyHiddenText)
+                    {
+                        @visuallyHiddenText
+                    }
+                    @if (cardTitle is not null)
+                    {
+                        <text> (</text>@HtmlOrText(cardTitle.Html, cardTitle.Text)<text>)</text>
+                    }
+                </span>
+            }
+        </a>
+    }
+
+    async Task RenderSummaryCard(SummaryListOptionsCard card)
+    {
+        var headingLevel = card.Title?.HeadingLevel ?? 2;
+        <div class="@Classes("govuk-summary-card", card.Classes)" _gfa-attributes="@card.Attributes">
+            <div class="govuk-summary-card__title-wrapper">
+                @if (card.Title is { } title)
+                {
+                    <_gfa-heading level="@headingLevel" class="@Classes("govuk-summary-card__title", title.Classes)" _gfa-attributes="@card.Attributes">
+                        @HtmlOrText(title.Html, title.Text)
+                    </_gfa-heading>
+                }
+                @if (card.Actions?.Items?.Count is var itemsCount and > 0)
+                {
+                    if (itemsCount == 1)
+                    {
+                        <div class="@Classes("govuk-summary-card__actions", card.Actions.Classes)" _gfa-attributes="@card.Actions.Attributes">
+                            @{ await RenderActionLink(card.Actions.Items.Single(), card.Title); }
+                        </div>
+                    }
+                    else
+                    {
+                        <ul class="@Classes("govuk-summary-card__actions", card.Actions.Classes)" _gfa-attributes="@card.Actions.Attributes">
+                            @foreach (var action in card.Actions.Items)
+                            {
+                                <li class="govuk-summary-card__action">
+                                    @{ await RenderActionLink(action, card.Title); }
+                                </li>
+                            }
+                        </ul>
+                    }
+                }
+            </div>
+
+            <div class="govuk-summary-card__content">
+                @{ await RenderSummaryList(); }
+            </div>
+        </div>
+    }
+
+    var anyRowHasActions = Model.Rows?.Any(r => r.Actions?.Items?.Count > 0) == true;
+
+    async Task RenderSummaryList()
+    {
+        <dl class="@Classes("govuk-summary-list", Model.Classes)" _gfa-attributes="Model.Attributes">
+            @foreach (var row in Model.Rows ?? [])
+            {
+                <div class="@Classes("govuk-summary-list__row", anyRowHasActions && !(row.Actions?.Items?.Count > 0) ? "govuk-summary-list__row--no-actions" : null, row.Classes)" _gfa-attributes="@row.Attributes">
+                    <dt class="@Classes("govuk-summary-list__key", row.Key?.Classes)" _gfa-attributes="@row.Key?.Attributes">
+                        @HtmlOrText(row.Key?.Html, row.Key?.Text)
+                    </dt>
+                    <dd class="@Classes("govuk-summary-list__value", row.Value?.Classes)" _gfa-attributes="@row.Value?.Attributes">
+                        @HtmlOrText(row.Value?.Html, row.Value?.Text)
+                    </dd>
+                    @if (row.Actions?.Items?.Count > 0)
+                    {
+                        <dd class="@Classes("govuk-summary-list__actions", row.Actions.Classes)" _gfa-attributes="@row.Actions.Attributes">
+                            @if (row.Actions.Items.Count == 1)
+                            {
+                                await RenderActionLink(row.Actions.Items.Single(), Model.Card?.Title);
+                            }
+                            else
+                            {
+                                <ul class="govuk-summary-list__actions-list">
+                                    @foreach (var action in row.Actions.Items)
+                                    {
+                                        <li class="govuk-summary-list__actions-list-item">
+                                            @{ await RenderActionLink(action, Model.Card?.Title); }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </dd>
+                    }
+                </div>
+            }
+        </dl>
+    }
+}
+
+@if (Model.Card is { } card)
+{
+    await RenderSummaryCard(card);
+}
+else
+{
+    await RenderSummaryList();
+}

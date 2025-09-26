@@ -18,24 +18,8 @@ public record RadiosOptions
 
 public record RadiosOptionsFormGroup : FormGroupOptions
 {
-    public RadiosOptionsBeforeInputs? BeforeInputs { get; set; }
-    public RadiosOptionsAfterInputs? AfterInputs { get; set; }
-}
-
-public record RadiosOptionsBeforeInputs
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
-}
-
-public record RadiosOptionsAfterInputs
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
+    public BeforeInputOptions? BeforeInputs { get; set; }
+    public AfterInputOptions? AfterInputs { get; set; }
 }
 
 public record RadiosOptionsItem

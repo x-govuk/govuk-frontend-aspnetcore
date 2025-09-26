@@ -1,0 +1,51 @@
+@inherits GovUkComponentView<TaskListOptions>
+
+@{
+    var idPrefix = Model.IdPrefix ?? "task-list";
+
+    async Task RenderTaskListItem(TaskListOptionsItem item, int index)
+    {
+        var hintId = $"{idPrefix}-{index}-hint";
+        var statusId = $"{idPrefix}-{index}-status";
+
+        <li class="@Classes("govuk-task-list__item", item.Href is not null ? "govuk-task-list__item--with-link" : null, item.Classes)">
+            <div class="govuk-task-list__name-and-hint">
+                @if (item.Href is not null)
+                {
+                    <a class="@Classes("govuk-link govuk-task-list__link", item.Title?.Classes)" href="@item.Href" aria-describedby="@DescribedBy(item.Hint is not null ? hintId : null, statusId)">
+                        @HtmlOrText(item.Title?.Html, item.Title?.Text)
+                    </a>
+                }
+                else
+                {
+                    <div class="@Classes(item.Title?.Classes)">
+                        @HtmlOrText(item.Title?.Html, item.Title?.Text)
+                    </div>
+                }
+                @if (item.Hint is not null)
+                {
+                    <div id="@hintId" class="govuk-task-list__hint">
+                        @HtmlOrText(item.Hint.Html, item.Hint.Text)
+                    </div>
+                }
+            </div>
+            <div class="@Classes("govuk-task-list__status", item.Status?.Classes)" id="@statusId">
+                @if (item.Status?.Tag is not null)
+                {
+                    await Html.RenderPartialAsync("./Tag.cshtml", item.Status.Tag);
+                }
+                else
+                {
+                    @HtmlOrText(item.Status?.Html, item.Status?.Text)
+                }
+            </div>
+        </li>
+    }
+}
+
+<ul class="@Classes("govuk-task-list", Model.Classes)" _gfa-attributes="Model.Attributes">
+    @foreach (var (item, i) in (Model.Items ?? []).Select((item, i) => (item, i)))
+    {
+        await RenderTaskListItem(item, i + 1);
+    }
+</ul>

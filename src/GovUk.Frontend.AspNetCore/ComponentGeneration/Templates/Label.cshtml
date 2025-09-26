@@ -1,0 +1,22 @@
+@inherits GovUkComponentView<LabelOptions>
+
+@if (Model.Html is not null || Model.Text is not null)
+{
+    async Task RenderLabelTag()
+    {
+        <label class="@(Classes("govuk-label", Model.Classes))" _gfa-attributes="Model.Attributes" for="@Model.For">
+            @HtmlOrText(Model.Html, Model.Text)
+        </label>
+    }
+
+    if (Model.IsPageHeading == true)
+    {
+        <h1 class="govuk-label-wrapper">
+            @{ await RenderLabelTag(); }
+        </h1>
+    }
+    else
+    {
+        await RenderLabelTag();
+    }
+}

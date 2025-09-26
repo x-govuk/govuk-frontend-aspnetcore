@@ -1,0 +1,103 @@
+@inherits GovUkComponentView<DateInputOptions>
+
+@{
+    var describedBy = Model.Fieldset?.DescribedBy;
+
+    var hasFieldset = Model.Fieldset is not null;
+
+    var dateInputItems = Model.Items?.Count > 0 ?
+        Model.Items :
+        [
+            new DateInputOptionsItem
+            {
+                Name = "day",
+                Classes = "govuk-input--width-2"
+            },
+            new DateInputOptionsItem
+            {
+                Name = "month",
+                Classes = "govuk-input--width-2"
+            },
+            new DateInputOptionsItem
+            {
+                Name = "year",
+                Classes = "govuk-input--width-4"
+            }
+        ];
+
+    static TemplateString Capitalize(TemplateString? value) =>
+        value is null ? TemplateString.Empty :
+        char.ToUpperInvariant(value.ToString()[0]) + value.ToString()[1..];
+}
+
+<div class="@Classes("govuk-form-group", Model.ErrorMessage is not null ? "govuk-form-group--error" : null, Model.FormGroup?.Classes)"
+     _gfa-attributes="Model.FormGroup?.Attributes">
+    @{ var innerHtml = new HtmlContentBuilder(); }
+    <_gfa-capture to="innerHtml">
+        @if (Model.Hint is HintOptions hint)
+        {
+            var hintId = Model.Id + "-hint";
+            describedBy = DescribedBy(describedBy, hintId).ToTemplateString();
+
+            await Html.RenderPartialAsync("./Hint.cshtml", hint with { Id = hintId });
+        }
+        @if (Model.ErrorMessage is ErrorMessageOptions errorMessage)
+        {
+            var errorId = Model.Id + "-error";
+            describedBy = DescribedBy(describedBy, errorId).ToTemplateString();
+
+            await Html.RenderPartialAsync("./ErrorMessage.cshtml", errorMessage with { Id = errorId });
+        }
+        <div class="@Classes("govuk-date-input", Model.Classes)" _gfa-attributes="Model.Attributes" id="@Model.Id">
+        @if (Model.FormGroup?.BeforeInputs is BeforeInputOptions beforeInputs)
+        {
+            @HtmlOrText(beforeInputs.Html, beforeInputs.Text)
+        }
+        @foreach (var item in dateInputItems)
+        {
+            <div class="govuk-date-input__item">
+            @{
+                await Html.RenderPartialAsync("./Input.cshtml", new InputOptions
+                {
+                    Label = new LabelOptions
+                    {
+                        Text = item.Label ?? Capitalize(item.Name),
+                        Classes = "govuk-date-input__label"
+                    },
+                    Id = item.Id ?? $"{Model.Id}-{item.Name}",
+                    Classes = Classes("govuk-date-input__input", item.Classes).ToTemplateString(),
+                    Name = Model.NamePrefix is TemplateString namePrefix ? $"{namePrefix}-{item.Name}" : item.Name,
+                    Value = item.Value,
+                    Type = "text",
+                    InputMode = item.InputMode ?? "numeric",
+                    AutoComplete = item.AutoComplete,
+                    Pattern = item.Pattern,
+                    Attributes = item.Attributes
+                });
+            }
+            </div>
+        }
+        @if (Model.FormGroup?.AfterInputs is AfterInputOptions afterInputs)
+        {
+            @HtmlOrText(afterInputs.Html, afterInputs.Text)
+        }
+        </div>
+    </_gfa-capture>
+
+    @if (hasFieldset)
+    {
+        await Html.RenderPartialAsync("./Fieldset.cshtml", new FieldsetOptions
+        {
+            DescribedBy = describedBy,
+            Classes = Model.Fieldset!.Classes,
+            Role = "group",
+            Attributes = Model.Fieldset.Attributes,
+            Legend = Model.Fieldset.Legend,
+            Html = innerHtml.ToTemplateString()
+        });
+    }
+    else
+    {
+        @innerHtml
+    }
+</div>

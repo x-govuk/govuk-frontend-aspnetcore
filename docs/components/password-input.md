@@ -36,7 +36,7 @@
 | `value` | `string` | The `value` attribute for the generated `input` element. If not specified and `For` is not `null` then the value for the specified model expression will be used. |
 
 
-#### `<label>` / `<govuk-password-input-label>`
+#### `<govuk-password-input-label>`
 
 The content is the HTML to use within the component's label.
 
@@ -47,14 +47,14 @@ Must be inside a `<govuk-password-input>` element.
 | `is-page-heading` | `bool?` | Whether the label also acts as the heading for the page. |
 
 
-#### `<hint>` / `<govuk-password-input-hint>`
+#### `<govuk-password-input-hint>`
 
 The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-password-input>` element.
 
 
-#### `<error-message>` / `<govuk-password-input-error-message>`
+#### `<govuk-password-input-error-message>`
 
 The content is the HTML to use within the component's error message.
 
@@ -65,14 +65,14 @@ Must be inside a `<govuk-password-input>` element.
 | `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
 
-#### `<before-input>` / `<govuk-password-input-before-input>`
+#### `<govuk-password-input-before-input>`
 
 The content is the HTML to use before the generated <input> element.
 
 Must be inside a `<govuk-password-input>` element.
 
 
-#### `<after-input>` / `<govuk-password-input-after-input>`
+#### `<govuk-password-input-after-input>`
 
 The content is the HTML to use after the generated <input> element.
 

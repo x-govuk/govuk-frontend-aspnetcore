@@ -222,14 +222,14 @@ public class PasswordInputTagHelper : TagHelper
         var formGroupOptions = new PasswordInputOptionsFormGroup
         {
             BeforeInput = passwordInputContext.BeforeInput is TemplateString beforeInput ?
-                new PasswordInputOptionsBeforeInput()
+                new BeforeInputOptions()
                 {
                     Text = null,
                     Html = beforeInput
                 } :
                 null,
             AfterInput = passwordInputContext.AfterInput is TemplateString afterInput ?
-                new PasswordInputOptionsAfterInput()
+                new AfterInputOptions()
                 {
                     Text = null,
                     Html = afterInput

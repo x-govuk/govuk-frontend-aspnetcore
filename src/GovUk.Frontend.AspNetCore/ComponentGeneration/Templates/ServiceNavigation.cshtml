@@ -1,0 +1,112 @@
+@inherits GovUkComponentView<ServiceNavigationOptions>
+
+@{
+    var menuButtonText = Model.MenuButtonText ?? "Menu";
+    var navigationId = Model.NavigationId ?? "navigation";
+
+    var commonAttributes = new AttributeCollection()
+    {
+        { "class", Classes("govuk-service-navigation", Model.Classes).ToTemplateString() },
+        { "data-module", "govuk-service-navigation" }
+    };
+    commonAttributes.AddRange(Model.Attributes);
+
+    async Task RenderInnerContent()
+    {
+        <div class="govuk-width-container">
+            @HtmlOrText(Model.Slots?.Start, null)
+
+            <div class="govuk-service-navigation__container">
+                @if (Model.ServiceName is TemplateString serviceName)
+                {
+                  <span class="govuk-service-navigation__service-name">
+                      @if (Model.ServiceUrl is TemplateString serviceUrl)
+                      {
+                          <a href="@serviceUrl" class="govuk-service-navigation__link">
+                              @serviceName
+                          </a>
+                      }
+                      else
+                      {
+                          <span class="govuk-service-navigation__text">
+                              @serviceName
+                          </span>
+                      }
+                  </span>
+                }
+
+                @{
+                    var navigationItems = Model.Navigation ?? [];
+                    var collapseNavigationOnMobile = Model.CollapseNavigationOnMobile ?? navigationItems.Count > 1;
+                }
+
+                @if (navigationItems.Count > 0 || Model.Slots?.NavigationStart is not null || Model.Slots?.NavigationEnd is not null)
+                {
+                    <nav aria-label="@(Model.NavigationLabel ?? menuButtonText)" class="@Classes("govuk-service-navigation__wrapper", Model.NavigationClasses)"
+                         _gfa-attributes="Model.NavigationAttributes">
+                        @if (collapseNavigationOnMobile)
+                        {
+                            <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="@navigationId" aria-label="@(Model.MenuButtonLabel is not null && Model.MenuButtonLabel != menuButtonText ? Model.MenuButtonLabel : null)" hidden>
+                                @menuButtonText
+                            </button>
+                        }
+
+                        <ul class="govuk-service-navigation__list" id="@navigationId">
+                            @HtmlOrText(Model.Slots?.NavigationStart, null)
+
+                            @foreach (var item in navigationItems)
+                            {
+                                async Task RenderLinkInnerContent()
+                                {
+                                    if (item.Active is true || item.Current is true)
+                                    {
+                                        <strong class="govuk-service-navigation__active-fallback">@HtmlOrText(item.Html, item.Text)</strong>
+                                    }
+                                    else
+                                    {
+                                        <text>@HtmlOrText(item.Html, item.Text)</text>
+                                    }
+                                }
+
+                                <li class="@Classes("govuk-service-navigation__item", item.Active is true || item.Current is true ? "govuk-service-navigation__item--active" : null)">
+                                    @if (item.Href is TemplateString href)
+                                    {
+                                        <a class="govuk-service-navigation__link" href="@href"
+                                            aria-current="@(item.Current is true ? "page" : item.Active is true ? "true" : null)"
+                                            _gfa-attributes="item.Attributes">
+                                            @{ await RenderLinkInnerContent(); }
+                                        </a>
+                                    }
+                                    else if (item.Html is not null || item.Text is not null)
+                                    {
+                                        <span class="govuk-service-navigation__text"
+                                            aria-current="@(item.Current is true ? "page" : item.Active is true ? "true" : null)">
+                                            @{ await RenderLinkInnerContent(); }
+                                        </span>
+                                    }
+                                </li>
+                            }
+
+                            @HtmlOrText(Model.Slots?.NavigationEnd, null)
+                        </ul>
+                    </nav>
+                }
+            </div>
+
+            @HtmlOrText(Model.Slots?.End, null)
+        </div>
+    }
+}
+
+@if (Model.ServiceName is not null || Model.Slots?.Start is not null || Model.Slots?.End is not null)
+{
+    <section aria-label="@(Model.AriaLabel ?? "Service information")" _gfa-attributes="commonAttributes">
+        @{ await RenderInnerContent(); }
+    </section>
+}
+else
+{
+    <div _gfa-attributes="commonAttributes">
+        @{ await RenderInnerContent(); }
+    </div>
+}

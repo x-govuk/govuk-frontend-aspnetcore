@@ -1,0 +1,17 @@
+@inherits GovUkComponentView<PanelOptions>
+
+@{
+    var headingLevel = Model.HeadingLevel ?? 1;
+}
+
+<div class="@Classes("govuk-panel", "govuk-panel--confirmation", Model.Classes)" _gfa-attributes="Model.Attributes">
+    <_gfa-heading level="@headingLevel" class="@Classes("govuk-panel__title", Model.TitleAttributes)">
+        @HtmlOrText(Model.TitleHtml, Model.TitleText)
+    </_gfa-heading>
+    @if (Model.Html is not null || Model.Text is not null)
+    {
+        <div class="govuk-panel__body" _gfa-attributes="Model.BodyAttributes">
+            @(HtmlOrText(Model.Html, Model.Text))
+        </div>
+    }
+</div>

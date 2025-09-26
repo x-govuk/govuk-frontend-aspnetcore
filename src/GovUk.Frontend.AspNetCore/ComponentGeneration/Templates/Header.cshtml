@@ -1,0 +1,77 @@
+@inherits GovUkComponentView<HeaderOptions>
+
+@{
+    var _rebrand = Model.Rebrand ?? false;
+
+    var menuButtonText = Model.MenuButtonText ?? "Menu";
+}
+
+<header class="@Classes("govuk-header", Model.Classes)" data-module="govuk-header" _gfa-attributes="@Model.Attributes">
+    <div class="@Classes("govuk-header__container", Model.ContainerClasses ?? "govuk-width-container")" _gfa-attributes="@Model.ContainerAttributes">
+        <div class="govuk-header__logo">
+            <a href="@(Model.HomePageUrl ?? "/")" class="govuk-header__link govuk-header__link--homepage">
+                @{
+                    await Html.RenderPartialAsync("./Logo.cshtml", new LogoOptions
+                    {
+                        Classes = "govuk-header__logotype",
+                        AriaLabelText = "GOV.UK",
+                        UseTudorCrown = Model.UseTudorCrown,
+                        Rebrand = _rebrand
+                    });
+                }
+                @if (Model.ProductName is TemplateString productName)
+                {
+                    <span class="govuk-header__product-name">
+                        @productName
+                    </span>
+                }
+            </a>
+        </div>
+        @if (Model.ServiceName is not null || Model.Navigation?.Count > 0)
+        {
+            <div class="govuk-header__content">
+                @if (Model.ServiceName is not null)
+                {
+                    @if (Model.ServiceUrl is not null)
+                    {
+                        <a href="@Model.ServiceUrl" class="govuk-header__link govuk-header__service-name">
+                            @Model.ServiceName
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="govuk-header__service-name">
+                            @Model.ServiceName
+                        </span>
+                    }
+                }
+                @if (Model.Navigation?.Count > 0)
+                {
+                    <nav aria-label="@(Model.NavigationLabel ?? menuButtonText)" class="@Classes("govuk-header__navigation", Model.NavigationClasses)" _gfa-attributes="@Model.NavigationAttributes">
+                        <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="@(Model.MenuButtonLabel != menuButtonText ? Model.MenuButtonLabel : null)" hidden>
+                            @menuButtonText
+                        </button>
+
+                        <ul id="navigation" class="govuk-header__navigation-list">
+                            @foreach (var item in Model.Navigation)
+                            {
+                                <li class="@Classes("govuk-header__navigation-item", item.Active is true ? "govuk-header__navigation-item--active" : null)">
+                                    @if (item.Href is not null)
+                                    {
+                                        <a class="govuk-header__link" href="@item.Href" _gfa-attributes="item.Attributes">
+                                            @HtmlOrText(item.Html, item.Text)
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        @HtmlOrText(item.Html, item.Text)
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+        }
+    </div>
+</header>

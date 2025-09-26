@@ -1,0 +1,43 @@
+@inherits GovUkComponentView<SelectOptions>
+
+@{
+    var describedBy = Model.DescribedBy;
+    var id = Model.Id ?? Model.Name;
+}
+
+<div class="@Classes("govuk-form-group", Model.ErrorMessage is not null ? "govuk-form-group--error" : null, Model.FormGroup?.Classes)" _gfa-attributes="Model.FormGroup?.Attributes">
+    @{ await Html.RenderPartialAsync("./Label.cshtml", Model.Label! with { For = id }); }
+    @if (Model.Hint is HintOptions hint)
+    {
+        var hintId = id + "-hint";
+        describedBy = DescribedBy(describedBy, hintId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./Hint.cshtml", hint with { Id = hintId });
+    }
+    @if (Model.ErrorMessage is ErrorMessageOptions errorMessage)
+    {
+        var errorId = id + "-error";
+        describedBy = DescribedBy(describedBy, errorId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./ErrorMessage.cshtml", errorMessage with { Id = errorId });
+    }
+    @if (Model.FormGroup?.BeforeInput is BeforeInputOptions beforeInput)
+    {
+        @HtmlOrText(beforeInput.Html, beforeInput.Text)
+    }
+    <select class="@Classes("govuk-select", Model.Classes, Model.ErrorMessage is not null ? "govuk-select--error" : null)" id="@id" name="@Model.Name" disabled="@(Model.Disabled is true ? "" : null)" aria-describedby="@describedBy" _gfa-attributes="Model.Attributes">
+        @foreach (var item in Model.Items ?? [])
+        {
+            var effectiveValue = item.Value ?? item.Text;
+            <option value="@item.Value" selected="@(item.Selected is true || (effectiveValue == Model.Value && item.Selected is not false) ? "" : null)" disabled="@(item.Disabled is true ? "" : null)"
+                    _gfa-attributes="@item.Attributes"
+                    _gfa-prune-empty-attributes="value">
+                @item.Text
+            </option>
+        }
+    </select>
+    @if (Model.FormGroup?.AfterInput is AfterInputOptions afterInput)
+    {
+        @HtmlOrText(afterInput.Html, afterInput.Text)
+    }
+</div>

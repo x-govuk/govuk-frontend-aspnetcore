@@ -1,0 +1,63 @@
+@inherits GovUkComponentView<CookieBannerOptions>
+
+<div class="@Classes("govuk-cookie-banner", Model.Classes)" data-nosnippet role="region" aria-label="@(Model.AriaLabel ?? "Cookie banner")"
+     hidden="@(Model.Hidden == true ? "" : null)"
+     _gfa-attributes="@Model.Attributes">
+    @foreach (var message in Model.Messages ?? [])
+    {
+        <div class="@Classes("govuk-cookie-banner__message", message.Classes, "govuk-width-container")" role="@message.Role" _gfa-attributes="@message.Attributes"
+             hidden="@(message.Hidden == true ? "" : null)">
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    @if (HtmlOrText(message.HeadingHtml, message.HeadingText) is IHtmlContent headingContent)
+                    {
+                        <h2 class="govuk-cookie-banner__heading govuk-heading-m" _gfa-attributes="@message.HeadingAttributes">
+                            @headingContent
+                        </h2>
+                    }
+                    <div class="govuk-cookie-banner__content" _gfa-attributes="@message.ContentAttributes">
+                        @if (message.Html is not null)
+                        {
+                            @Html.Raw(message.Html.ToHtmlString(HtmlEncoder, raw: true))
+                        }
+                        else if (message.Text is not null)
+                        {
+                            <p class="govuk-body">@message.Text.ToHtmlString(HtmlEncoder, raw: true)</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @if (message.Actions is not null)
+            {
+                <div class="govuk-button-group" _gfa-attributes="@message.ActionsAttributes">
+                    @foreach (var action in message.Actions)
+                    {
+                        if (action.Href is null || action.Type == "button")
+                        {
+                            await Html.RenderPartialAsync(
+                                "./Button.cshtml",
+                                new ButtonOptions
+                                {
+                                    Text = action.Text,
+                                    Type = action.Type ?? "button",
+                                    Name = action.Name,
+                                    Value = action.Value,
+                                    Classes = action.Classes,
+                                    Href = action.Href,
+                                    Attributes = action.Attributes
+                                });
+                        }
+                        else
+                        {
+                            <a class="@Classes("govuk-link", action.Classes)" href="@action.Href" _gfa-attributes="@action.Attributes">
+                                @action.Text
+                            </a>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

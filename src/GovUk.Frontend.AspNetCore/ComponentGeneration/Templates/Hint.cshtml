@@ -1,0 +1,5 @@
+@inherits GovUkComponentView<HintOptions>
+
+<div id="@Model.Id" class="@(Classes("govuk-hint", Model.Classes))" _gfa-attributes="Model.Attributes">
+    @HtmlOrText(Model.Html, Model.Text)
+</div>

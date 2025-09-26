@@ -49,7 +49,6 @@ public record CharacterCountOptionsCharactersOverLimitText
 {
     public TemplateString? Other { get; set; }
     public TemplateString? One { get; set; }
-
 }
 
 public record CharacterCountOptionsWordsUnderLimitText
@@ -66,22 +65,6 @@ public record CharacterCountOptionsWordsOverLimitText
 
 public record CharacterCountOptionsFormGroup : FormGroupOptions
 {
-    public CharacterCountOptionsBeforeInput? BeforeInput { get; set; }
-    public CharacterCountOptionsAfterInput? AfterInput { get; set; }
-}
-
-public record CharacterCountOptionsBeforeInput
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
-}
-
-public record CharacterCountOptionsAfterInput
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
+    public BeforeInputOptions? BeforeInput { get; set; }
+    public AfterInputOptions? AfterInput { get; set; }
 }

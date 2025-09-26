@@ -1,0 +1,12 @@
+@inherits GovUkComponentView<DetailsOptions>
+
+<details id="@Model.Id" class="@Classes("govuk-details", Model.Classes)" _gfa-attributes="@Model.Attributes" open="@(Model.Open == true ? "" : null)">
+    <summary class="@Classes("govuk-details__summary", Model.SummaryAttributes)">
+        <span class="govuk-details__summary-text">
+            @HtmlOrText(Model.SummaryHtml, Model.SummaryText)
+        </span>
+    </summary>
+    <div class="govuk-details__text" _gfa-attributes="@Model.TextAttributes">
+        @HtmlOrText(Model.Html, Model.Text)
+    </div>
+</details>

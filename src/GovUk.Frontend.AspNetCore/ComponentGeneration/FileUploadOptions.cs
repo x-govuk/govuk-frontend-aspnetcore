@@ -30,24 +30,8 @@ public record FileUploadOptions
 
 public record FileUploadOptionsFormGroup : FormGroupOptions
 {
-    public FileUploadOptionsBeforeInput? BeforeInput { get; set; }
-    public FileUploadOptionsAfterInput? AfterInput { get; set; }
-}
-
-public record FileUploadOptionsBeforeInput
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
-}
-
-public record FileUploadOptionsAfterInput
-{
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
+    public BeforeInputOptions? BeforeInput { get; set; }
+    public AfterInputOptions? AfterInput { get; set; }
 }
 
 public record FileUploadOptionsMultipleFilesChosenText

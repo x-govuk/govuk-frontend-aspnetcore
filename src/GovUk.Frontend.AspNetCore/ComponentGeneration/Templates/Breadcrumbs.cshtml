@@ -1,0 +1,27 @@
+@inherits GovUkComponentView<BreadcrumbsOptions>
+
+@{
+    var classNames = Classes("govuk-breadcrumbs", Model.Classes, Model.CollapseOnMobile is true ? "govuk-breadcrumbs--collapse-on-mobile" : null);
+}
+
+<nav class="@classNames" _gfa-attributes="Model.Attributes" aria-label="@(Model.LabelText ?? "Breadcrumb")">
+    <ol class="govuk-breadcrumbs__list">
+        @foreach (var item in Model.Items ?? [])
+        {
+            @if (item.Href is TemplateString href)
+            {
+                <li class="govuk-breadcrumbs__list-item" _gfa-attributes="item.ItemAttributes">
+                    <a class="govuk-breadcrumbs__link" href="@href" _gfa-attributes="item.Attributes">
+                        @HtmlOrText(item.Html, item.Text)
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="govuk-breadcrumbs__list-item" aria-current="page" _gfa-attributes="item.ItemAttributes">
+                    @HtmlOrText(item.Html, item.Text)
+                </li>
+            }
+        }
+    </ol>
+</nav>

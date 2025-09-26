@@ -1,0 +1,39 @@
+@inherits GovUkComponentView<TextareaOptions>
+
+@{
+    var describedBy = Model.DescribedBy;
+    var id = Model.Id ?? Model.Name;
+}
+
+<div class="@Classes("govuk-form-group", Model.ErrorMessage is not null ? "govuk-form-group--error" : null, Model.FormGroup?.Classes)"
+     _gfa-attributes="Model.FormGroup?.Attributes">
+    @{ await Html.RenderPartialAsync("./Label.cshtml", Model.Label! with { For = id }); }
+    @if (Model.Hint is HintOptions hint)
+    {
+        var hintId = id + "-hint";
+        describedBy = DescribedBy(describedBy,  hintId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./Hint.cshtml", hint with { Id = hintId });
+    }
+    @if (Model.ErrorMessage is ErrorMessageOptions errorMessage)
+    {
+        var errorId = id + "-error";
+        describedBy = DescribedBy(describedBy, errorId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./ErrorMessage.cshtml", errorMessage with { Id = errorId });
+    }
+    @if (Model.FormGroup?.BeforeInput is BeforeInputOptions beforeInput)
+    {
+        @HtmlOrText(beforeInput.Html, beforeInput.Text)
+    }
+    <textarea class="@(Classes("govuk-textarea", Model.ErrorMessage is not null ? "govuk-textarea--error" : null, Model.Classes))" id="@id" name="@Model.Name" rows="@(Model.Rows ?? 5)"
+        spellcheck="@(Model.Spellcheck switch { true => "true", false => "false", null => null })"
+        disabled="@Model.Disabled"
+        aria-describedby="@describedBy"
+        autocomplete=@Model.AutoComplete
+        _gfa-attributes="Model.Attributes">@Model.Value</textarea>
+    @if (Model.FormGroup?.AfterInput is AfterInputOptions afterInput)
+    {
+        @HtmlOrText(afterInput.Html, afterInput.Text)
+    }
+</div>

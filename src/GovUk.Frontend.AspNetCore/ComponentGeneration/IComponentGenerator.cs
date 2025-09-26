@@ -158,6 +158,18 @@ public interface IComponentGenerator
     Task<IHtmlContent> GeneratePhaseBannerAsync(PhaseBannerOptions options);
 
     /// <summary>
+    /// Generates a radios component.
+    /// </summary>
+    /// <returns>A <see cref="string"/> with the component's HTML.</returns>
+    Task<IHtmlContent> GenerateRadiosAsync(RadiosOptions options);
+
+    /// <summary>
+    /// Generates a select component.
+    /// </summary>
+    /// <returns>A <see cref="string"/> with the component's HTML.</returns>
+    Task<IHtmlContent> GenerateSelectAsync(SelectOptions options);
+
+    /// <summary>
     /// Generates a service navigation component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>

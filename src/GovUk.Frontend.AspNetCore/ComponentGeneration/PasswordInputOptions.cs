@@ -30,20 +30,8 @@ public record PasswordInputOptions
 
 public record PasswordInputOptionsFormGroup : FormGroupOptions
 {
-    public PasswordInputOptionsBeforeInput? BeforeInput { get; set; }
-    public PasswordInputOptionsAfterInput? AfterInput { get; set; }
-}
-
-public record PasswordInputOptionsBeforeInput
-{
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
-}
-
-public record PasswordInputOptionsAfterInput
-{
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public BeforeInputOptions? BeforeInput { get; set; }
+    public AfterInputOptions? AfterInput { get; set; }
 }
 
 public record PasswordInputOptionsButton

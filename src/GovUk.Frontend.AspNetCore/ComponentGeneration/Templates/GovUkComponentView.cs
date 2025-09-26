@@ -7,19 +7,53 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration.Templates;
 
 public abstract class GovUkComponentView<TModel> : RazorPage<TModel>
 {
-    protected IHtmlContent? Classes(params object?[] classNames)
-    {
-        ArgumentNullException.ThrowIfNull(classNames);
+    protected IHtmlContent? Classes(params object?[] values) => CreateSpaceSeparatedAttributeValue(values);
 
-        if (classNames.Length == 0)
+    protected IHtmlContent? DescribedBy(params object?[] values) => CreateSpaceSeparatedAttributeValue(values);
+
+    protected IHtmlContent? HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
+    {
+        if (html is not null)
+        {
+            var value = html.ToHtmlString(HtmlEncoder, raw: true);
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                return new HtmlString(value);
+            }
+        }
+
+        if (text is not null)
+        {
+            var value = text.ToHtmlString(HtmlEncoder);
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                return new HtmlString(value);
+            }
+        }
+
+        if (fallback is not null)
+        {
+            return new HtmlString(HtmlEncoder.Encode(fallback));
+        }
+
+        return null;
+    }
+
+    private HtmlContentBuilder? CreateSpaceSeparatedAttributeValue(params object?[] values)
+    {
+        ArgumentNullException.ThrowIfNull(values);
+
+        if (values.Length == 0)
         {
             return null;
         }
 
         var builder = new HtmlContentBuilder();
-        var haveWrittenClass = false;
+        var haveWrittenValue = false;
 
-        foreach (var part in classNames)
+        foreach (var part in values)
         {
             if (part is null)
             {
@@ -35,13 +69,19 @@ public abstract class GovUkComponentView<TModel> : RazorPage<TModel>
 
                 WriteSpaceIfNeeded();
                 builder.Append(str);
-                haveWrittenClass = true;
+                haveWrittenValue = true;
             }
             else if (part is IHtmlContent htmlContent)
             {
                 WriteSpaceIfNeeded();
                 builder.AppendHtml(htmlContent);
-                haveWrittenClass = true;
+                haveWrittenValue = true;
+            }
+            else if (part is TemplateString templateString)
+            {
+                WriteSpaceIfNeeded();
+                builder.AppendHtml(templateString.ToHtmlString(HtmlEncoder, raw: false));
+                haveWrittenValue = true;
             }
             else
             {
@@ -49,31 +89,14 @@ public abstract class GovUkComponentView<TModel> : RazorPage<TModel>
             }
         }
 
-        return builder;
+        return haveWrittenValue ? builder : null;
 
         void WriteSpaceIfNeeded()
         {
-            if (haveWrittenClass)
+            if (haveWrittenValue)
             {
                 builder.Append(" ");
             }
         }
-    }
-
-    protected IHtmlContent? HtmlOrText(TemplateString? html, string? text, string? fallback = null)
-    {
-        if (html is not null)
-        {
-            var value = html.ToHtmlString(HtmlEncoder, raw: true);
-
-            if (!string.IsNullOrEmpty(value))
-            {
-                return new HtmlString(value);
-            }
-        }
-
-        return !string.IsNullOrEmpty(text)
-            ? new HtmlString(HtmlEncoder.Encode(text))
-            : fallback is not null ? new HtmlString(HtmlEncoder.Encode(fallback)) : (IHtmlContent?)null;
     }
 }

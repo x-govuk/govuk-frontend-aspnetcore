@@ -1,0 +1,9 @@
+@inherits GovUkComponentView<WarningTextOptions>
+
+<div class="@Classes("govuk-warning-text", Model.Classes)" _gfa-attributes="Model.Attributes">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">@(Model.IconFallbackText ?? "Warning")</span>
+        @HtmlOrText(Model.Html, Model.Text)
+    </strong>
+</div>

@@ -1,0 +1,67 @@
+@inherits GovUkComponentView<FileUploadOptions>
+
+@{
+    var describedBy = Model.DescribedBy;
+    var id = Model.Id ?? Model.Name;
+}
+
+<div class="@Classes("govuk-form-group", Model.ErrorMessage is not null ? "govuk-form-group--error" : null, Model.FormGroup?.Classes)"
+     _gfa-attributes="Model.FormGroup?.Attributes">
+    @{ await Html.RenderPartialAsync("./Label.cshtml", Model.Label! with { For = id }); }
+    @if (Model.Hint is HintOptions hint)
+    {
+        var hintId = id + "-hint";
+        describedBy = DescribedBy(describedBy, hintId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./Hint.cshtml", hint with { Id = hintId });
+    }
+    @if (Model.ErrorMessage is ErrorMessageOptions errorMessage)
+    {
+        var errorId = id + "-error";
+        describedBy = DescribedBy(describedBy, errorId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./ErrorMessage.cshtml", errorMessage with { Id = errorId });
+    }
+    @if (Model.FormGroup?.BeforeInput is BeforeInputOptions beforeInput)
+    {
+        @HtmlOrText(beforeInput.Html, beforeInput.Text)
+    }
+    @{ var input = new HtmlContentBuilder(); }
+    <_gfa-capture to="input">
+        <input
+            class="@Classes("govuk-file-upload", Model.ErrorMessage is not null ? "govuk-file-upload--error" : null, Model.Classes)"
+            id="@id"
+            name="@Model.Name"
+            type="file"
+            value="@Model.Value"
+            disabled="@(Model.Disabled is true ? "" : null)"
+            multiple="@Model.Multiple"
+            aria-describedby="@describedBy"
+            _gfa-attributes="Model.Attributes" />
+    </_gfa-capture>
+    @if (Model.JavaScript is true)
+    {
+        var attributes = new AttributeCollection();
+        attributes.AddI18n("choose-files-button", Model.ChooseFilesButtonText);
+        attributes.AddI18n("no-file-chosen", Model.NoFileChosenText);
+        attributes.AddI18n("multiple-files-chosen", ("one", Model.MultipleFilesChosenText?.One), ("other", Model.MultipleFilesChosenText?.Other));
+        attributes.AddI18n("drop-instruction", Model.DropInstructionText);
+        attributes.AddI18n("entered-drop-zone", Model.EnteredDropZoneText);
+        attributes.AddI18n("left-drop-zone", Model.LeftDropZoneText);
+
+        <div
+            class="govuk-drop-zone"
+            data-module="govuk-file-upload"
+            _gfa-attributes="attributes">
+            @input
+        </div>
+    }
+    else
+    {
+        @input
+    }
+    @if (Model.FormGroup?.AfterInput is AfterInputOptions afterInput)
+    {
+        @HtmlOrText(afterInput.Html, afterInput.Text)
+    }
+</div>

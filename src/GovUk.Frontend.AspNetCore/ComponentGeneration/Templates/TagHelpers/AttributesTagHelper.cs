@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration.Templates.TagHelpers;
@@ -5,6 +6,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration.Templates.TagHelpers;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 [HtmlTargetElement("*", Attributes = "_gfa-attributes")]
+[EditorBrowsable(EditorBrowsableState.Never)]
 public class AttributesTagHelper : TagHelper
 {
     [HtmlAttributeName("_gfa-attributes")]

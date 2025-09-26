@@ -1,0 +1,117 @@
+@inherits GovUkComponentView<CheckboxesOptions>
+
+@{
+    var idPrefix = Model.IdPrefix ?? Model.Name;
+
+    var describedBy = DescribedBy(Model.DescribedBy, Model.Fieldset?.DescribedBy).ToTemplateString();
+
+    var hasFieldset = Model.Fieldset is not null;
+
+    async Task RenderItem(CheckboxesOptionsItem item, int index)
+    {
+        var itemId = item.Id ?? (index > 1 ? $"{idPrefix}-{index}" : idPrefix);
+        var itemName = item.Name ?? Model.Name;
+        var conditionalId = $"conditional-{itemId}";
+        if (item.Divider is TemplateString divider)
+        {
+            <div class="govuk-checkboxes__divider">@divider</div>
+        }
+        else
+        {
+            var isChecked = item.Checked ?? (item.Value is not null && Model.Values is not null && Model.Values.Contains(item.Value) && item.Checked is not false);
+            var hasHint = (item.Hint?.Html ?? item.Hint?.Text) is not null;
+            var itemHintId = hasHint ? $"{itemId}-item-hint" : "";
+            var itemDescribedBy = DescribedBy(!hasFieldset ? describedBy : null, itemHintId);
+            var conditionalHtml = item.Conditional?.Html?.ToHtmlString(HtmlEncoder, raw: true) is string html && !string.IsNullOrEmpty(html) ? html : null;
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="@itemId" name="@itemName" type="checkbox" value="@item.Value"
+                       checked="@(isChecked ? "" : null)"
+                       disabled="@(item.Disabled is true ? "" : null)"
+                       data-aria-controls="@(conditionalHtml is not null ? conditionalId : null)"
+                       data-behaviour="@item.Behaviour"
+                       aria-describedby="@itemDescribedBy"
+                       _gfa-attributes="item.Attributes"
+                       _gfa-prune-empty-attributes="data-aria-controls,data-behaviour,aria-describedby"/>
+                @{
+                    await Html.RenderPartialAsync("./Label.cshtml", new LabelOptions
+                    {
+                        Text = item.Text,
+                        Html = item.Html,
+                        Classes = Classes("govuk-checkboxes__label", item.Label?.Classes).ToTemplateString(),
+                        Attributes = item.Label?.Attributes,
+                        For = itemId
+                    });
+                }
+                @if (hasHint)
+                {
+                    await Html.RenderPartialAsync("./Hint.cshtml", new HintOptions
+                    {
+                        Id = itemHintId,
+                        Classes = Classes("govuk-checkboxes__hint", item.Hint?.Classes).ToTemplateString(),
+                        Attributes = item.Hint?.Attributes,
+                        Html = item.Hint?.Html,
+                        Text = item.Hint?.Text
+                    });
+                }
+            </div>
+            @if (conditionalHtml is not null)
+            {
+                <div class="@(Classes("govuk-checkboxes__conditional", !isChecked ? "govuk-checkboxes__conditional--hidden" : null))" id="@conditionalId">
+                    @Html.Raw(conditionalHtml)
+                </div>
+            }
+        }
+    }
+
+    var innerHtml = new HtmlContentBuilder();
+}
+
+<_gfa-capture to="innerHtml">
+    @if (Model.Hint is HintOptions hint)
+    {
+        var hintId = idPrefix + "-hint";
+        describedBy = DescribedBy(describedBy, hintId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./Hint.cshtml", hint with { Id = hintId });
+    }
+    @if (Model.ErrorMessage is ErrorMessageOptions errorMessage)
+    {
+        var errorId = idPrefix + "-error";
+        describedBy = DescribedBy(describedBy, errorId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./ErrorMessage.cshtml", errorMessage with { Id = errorId });
+    }
+    <div class="@Classes("govuk-checkboxes", Model.Classes)" _gfa-attributes="Model.Attributes" data-module="govuk-checkboxes">
+        @if (Model.FormGroup?.BeforeInputs is BeforeInputOptions beforeInputs)
+        {
+            @HtmlOrText(beforeInputs.Html, beforeInputs.Text)
+        }
+        @foreach (var (item, index) in (Model.Items ?? []).Select((item, index) => (item, index)))
+        {
+            await RenderItem(item, index + 1);
+        }
+        @if (Model.FormGroup?.AfterInputs is AfterInputOptions afterInputs)
+        {
+            @HtmlOrText(afterInputs.Html, afterInputs.Text)
+        }
+    </div>
+</_gfa-capture>
+
+<div class="@Classes("govuk-form-group", Model.ErrorMessage is not null ? "govuk-form-group--error" : null, Model.FormGroup?.Classes)"
+     _gfa-attributes="Model.FormGroup?.Attributes">
+    @if (hasFieldset)
+    {
+        await Html.RenderPartialAsync("./Fieldset.cshtml", new FieldsetOptions
+        {
+            DescribedBy = describedBy,
+            Classes = Model.Fieldset?.Classes,
+            Attributes = Model.Fieldset?.Attributes,
+            Legend = Model.Fieldset?.Legend,
+            Html = innerHtml.ToTemplateString()
+        });
+    }
+    else
+    {
+        @innerHtml
+    }
+</div>

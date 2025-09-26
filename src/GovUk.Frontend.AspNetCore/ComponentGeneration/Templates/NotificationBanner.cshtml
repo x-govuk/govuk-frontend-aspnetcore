@@ -1,0 +1,36 @@
+@inherits GovUkComponentView<NotificationBannerOptions>
+
+@{
+    var successBanner = Model.Type == "success";
+
+    var typeClass = successBanner ? $"govuk-notification-banner--{Model.Type}" : null;
+
+    var role = Model.Role ?? (successBanner ? "alert" : "region");
+
+    var titleHtml = Model.TitleHtml?.ToHtmlString(HtmlEncoder, raw: true) ??
+        Model.TitleText?.ToHtmlString(HtmlEncoder, raw: false) ??
+        (successBanner ? "Success" : "Important");
+}
+
+<div class="@Classes("govuk-notification-banner", typeClass, Model.Classes)" role="@role" aria-labelledby="@(Model.TitleId ?? "govuk-notification-banner-title")" data-module="govuk-notification-banner"
+     data-disable-auto-focus="@Model.DisableAutoFocus?.ToString().ToLowerInvariant()"
+     _gfa-attributes="Model.Attributes"
+     _gfa-prune-empty-attributes="data-disable-auto-focus">
+    <div class="govuk-notification-banner__header">
+        <_gfa-heading level="@(Model.TitleHeadingLevel ?? 2)" class="govuk-notification-banner__title" id="@(Model.TitleId ?? "govuk-notification-banner-title")">
+            @Html.Raw(titleHtml)
+        </_gfa-heading>
+    </div>
+    <div class="govuk-notification-banner__content">
+        @if (Model.Html is TemplateString html)
+        {
+            @Html.Raw(html.ToHtmlString(HtmlEncoder, raw: true))
+        }
+        else if (Model.Text is TemplateString text)
+        {
+            <p class="govuk-notification-banner__heading">
+                @text
+            </p>
+        }
+    </div>
+</div>

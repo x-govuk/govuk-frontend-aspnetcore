@@ -1,0 +1,54 @@
+@inherits GovUkComponentView<AccordionOptions>
+
+@{
+    async Task RenderItem(AccordionOptionsItem item, int index)
+    {
+        var headingLevel = Model.HeadingLevel ?? 2;
+        <div class="govuk-accordion__section@(item.Expanded is true ? " govuk-accordion__section--expanded" : null)">
+            <div class="govuk-accordion__section-header">
+                <_gfa-heading level="headingLevel" class="govuk-accordion__section-heading">
+                    <span class="govuk-accordion__section-button" id="@(Model.Id)-heading-@(index)">
+                        @HtmlOrText(item.Heading?.Html, item.Heading?.Text)
+                    </span>
+                </_gfa-heading>
+                @if (HtmlOrText(item.Summary?.Html, item.Summary?.Text) is IHtmlContent summary)
+                {
+                    <div class="govuk-accordion__section-summary govuk-body" id="@(Model.Id)-summary-@(index)">
+                        @summary
+                    </div>
+                }
+            </div>
+            <div id="@(Model.Id)-content-@(index)" class="govuk-accordion__section-content">
+                @if (item.Content?.Html is not null)
+                {
+                    @Html.Raw(item.Content.Html.ToHtmlString(HtmlEncoder, raw: true))
+                }
+                else if (item.Content?.Text is not null)
+                {
+                    <p class="govuk-body">
+                        @item.Content.Text
+                    </p>
+                }
+            </div>
+        </div>
+    }
+
+    // ReSharper disable once InconsistentNaming
+    var i18nAttributes = new AttributeCollection();
+    i18nAttributes.AddI18n("hide-all-sections", Model.HideAllSectionsText);
+    i18nAttributes.AddI18n("hide-section", Model.HideSectionText);
+    i18nAttributes.AddI18n("hide-section-aria-label", Model.HideSectionAriaLabelText);
+    i18nAttributes.AddI18n("show-all-sections", Model.ShowAllSectionsText);
+    i18nAttributes.AddI18n("show-section", Model.ShowSectionText);
+    i18nAttributes.AddI18n("show-section-aria-label", Model.ShowSectionAriaLabelText);
+}
+
+<div class="@Classes("govuk-accordion", Model.Classes)" data-module="govuk-accordion" id="@Model.Id"
+     data-remember-expanded="@(Model.RememberExpanded is not null ? Model.RememberExpanded.ToString()!.ToLowerInvariant() : null)"
+     _gfa-attributes="AttributeCollection.Join(i18nAttributes, Model.Attributes)"
+     _gfa-prune-empty-attributes="data-remember-expanded">
+    @foreach (var (item, index) in (Model.Items ?? []).Select((item, index) => (item, index)))
+    {
+        await RenderItem(item, index + 1);
+    }
+</div>

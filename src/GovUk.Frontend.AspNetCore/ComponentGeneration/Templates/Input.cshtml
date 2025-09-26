@@ -1,0 +1,78 @@
+@inherits GovUkComponentView<InputOptions>
+
+@{
+    var classNames = Classes("govuk-input", Model.Classes, Model.ErrorMessage is not null ? "govuk-input--error" : null);
+
+    var describedBy = Model.DescribedBy;
+    var id = Model.Id ?? Model.Name;
+
+    var hasPrefix = (Model.Prefix?.Html ?? Model.Prefix?.Text) is not null;
+    var hasSuffix = (Model.Suffix?.Html ?? Model.Suffix?.Text) is not null;
+    var hasBeforeInput = (Model.FormGroup?.BeforeInput?.Html ?? Model.FormGroup?.BeforeInput?.Text) is not null;
+    var hasAfterInput = (Model.FormGroup?.AfterInput?.Html ?? Model.FormGroup?.AfterInput?.Text) is not null;
+
+    async Task RenderElement()
+    {
+        <input
+            class="@classNames"
+            id="@id"
+            name="@(Model.Name ?? "")"
+            type="@(Model.Type ?? "text")"
+            spellcheck="@(Model.Spellcheck?.ToString().ToLowerInvariant())"
+            value="@Model.Value"
+            disabled="@Model.Disabled"
+            aria-describedby="@describedBy"
+            autocomplete="@Model.AutoComplete"
+            autocapitalize="@Model.AutoCapitalize"
+            pattern="@Model.Pattern"
+            inputmode="@Model.InputMode"
+            _gfa-attributes="Model.Attributes" />
+    }
+
+    async Task RenderAffixItem(dynamic affix, string type)
+    {
+        <div class="@Classes($"govuk-input__{type}", affix.Classes)" aria-hidden="true" _gfa-attributes="affix.Attributes">
+            @HtmlOrText(affix.Html, affix.Text)
+        </div>
+    }
+}
+
+<div class="@Classes("govuk-form-group", Model.ErrorMessage is not null ? "govuk-form-group--error" : null, Model.FormGroup?.Classes)"
+     _gfa-attributes="Model.FormGroup?.Attributes">
+    @{ await Html.RenderPartialAsync("./Label.cshtml", Model.Label! with { For = id }); }
+    @if (Model.Hint is HintOptions hint)
+    {
+        var hintId = id + "-hint";
+        describedBy = DescribedBy(describedBy, hintId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./Hint.cshtml", hint with { Id = hintId });
+    }
+    @if (Model.ErrorMessage is ErrorMessageOptions errorMessage)
+    {
+        var errorId = id + "-error";
+        describedBy = DescribedBy(describedBy, errorId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./ErrorMessage.cshtml", errorMessage with { Id = errorId });
+    }
+
+    @if (hasPrefix || hasSuffix || hasBeforeInput || hasAfterInput)
+    {
+        <div class="@Classes("govuk-input__wrapper", Model.InputWrapper?.Classes)" _gfa-attributes="Model.InputWrapper?.Attributes">
+            @HtmlOrText(Model.FormGroup?.BeforeInput?.Html, Model.FormGroup?.BeforeInput?.Text)
+            @if (hasPrefix)
+            {
+                await RenderAffixItem(Model.Prefix!, "prefix");
+            }
+            @{ await RenderElement(); }
+            @if (hasSuffix)
+            {
+                await RenderAffixItem(Model.Suffix!, "suffix");
+            }
+            @HtmlOrText(Model.FormGroup?.AfterInput?.Html, Model.FormGroup?.AfterInput?.Text)
+        </div>
+    }
+    else
+    {
+        await RenderElement();
+    }
+</div>

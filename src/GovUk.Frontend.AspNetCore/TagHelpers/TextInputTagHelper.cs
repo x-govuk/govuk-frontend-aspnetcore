@@ -270,14 +270,14 @@ public class TextInputTagHelper : TagHelper
         var formGroupOptions = new InputFormGroupOptions
         {
             BeforeInput = textInputContext.BeforeInput is TemplateString beforeInput ?
-                new InputOptionsBeforeInput()
+                new BeforeInputOptions()
                 {
                     Text = null,
                     Html = beforeInput
                 } :
                 null,
             AfterInput = textInputContext.AfterInput is TemplateString afterInput ?
-                new InputOptionsAfterInput()
+                new AfterInputOptions()
                 {
                     Text = null,
                     Html = afterInput

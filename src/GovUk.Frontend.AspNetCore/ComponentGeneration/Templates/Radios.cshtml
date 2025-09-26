@@ -1,0 +1,118 @@
+@inherits GovUkComponentView<RadiosOptions>
+
+@{
+    var idPrefix = Model.IdPrefix ?? Model.Name;
+
+    var describedBy = Model.Fieldset?.DescribedBy;
+
+    var hasFieldset = Model.Fieldset is not null;
+
+    async Task RenderItem(RadiosOptionsItem item, int index)
+    {
+        var itemId = item.Id ?? (index > 1 ? $"{idPrefix}-{index}" : idPrefix);
+        var conditionalId = $"conditional-{itemId}";
+        if (item.Divider is TemplateString divider)
+        {
+            <div class="govuk-radios__divider">@divider</div>
+        }
+        else
+        {
+            var isChecked = item.Checked ?? (item.Value is not null && item.Value == Model.Value && item.Checked is not false);
+            var hasHint = (item.Hint?.Html ?? item.Hint?.Text) is not null;
+            var itemHintId = $"{itemId}-item-hint";
+            var conditionalHtml = item.Conditional?.Html?.ToHtmlString(HtmlEncoder, raw: true) is string html && !string.IsNullOrEmpty(html) ? html : null;
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input"
+                       id="@itemId"
+                       name="@Model.Name"
+                       type="radio"
+                       value="@item.Value"
+                       checked="@(isChecked ? "" : null)"
+                       disabled="@(item.Disabled is true ? "" : null)"
+                       data-aria-controls="@(conditionalHtml is not null ? conditionalId : null)"
+                       aria-describedby="@(hasHint ? itemHintId : null)"
+                       _gfa-attributes="@item.Attributes"
+                       _gfa-prune-empty-attributes="data-aria-controls" />
+                @{
+                    await Html.RenderPartialAsync("./Label.cshtml", new LabelOptions
+                    {
+                        Text = item.Text,
+                        Html = item.Html,
+                        Classes = Classes("govuk-radios__label", item.Label?.Classes).ToTemplateString(),
+                        Attributes = item.Label?.Attributes,
+                        For = itemId
+                    });
+                }
+                @if (hasHint)
+                {
+                    await Html.RenderPartialAsync("./Hint.cshtml", new HintOptions
+                    {
+                        Id = itemHintId,
+                        Classes = Classes("govuk-radios__hint", item.Hint?.Classes).ToTemplateString(),
+                        Attributes = item.Hint?.Attributes,
+                        Html = item.Hint?.Html,
+                        Text = item.Hint?.Text
+                    });
+                }
+            </div>
+            @if (conditionalHtml is not null)
+            {
+                <div class="@(Classes("govuk-radios__conditional", !isChecked ? "govuk-radios__conditional--hidden" : null))" id="@conditionalId">
+                    @Html.Raw(conditionalHtml)
+                </div>
+            }
+        }
+    }
+
+    var innerHtml = new HtmlContentBuilder();
+}
+
+<_gfa-capture to="innerHtml">
+    @if (Model.Hint is HintOptions hint)
+    {
+        var hintId = idPrefix + "-hint";
+        describedBy = DescribedBy(describedBy, hintId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./Hint.cshtml", hint with { Id = hintId });
+    }
+    @if (Model.ErrorMessage is ErrorMessageOptions errorMessage)
+    {
+        var errorId = idPrefix + "-error";
+        describedBy = DescribedBy(describedBy, errorId).ToTemplateString();
+
+        await Html.RenderPartialAsync("./ErrorMessage.cshtml", errorMessage with { Id = errorId });
+    }
+    <div class="@Classes("govuk-radios", Model.Classes)" _gfa-attributes="Model.Attributes" data-module="govuk-radios">
+        @if (Model.FormGroup?.BeforeInputs is BeforeInputOptions beforeInputs)
+        {
+            @HtmlOrText(beforeInputs.Html, beforeInputs.Text)
+        }
+        @foreach (var (item, index) in (Model.Items ?? []).Select((item, index) => (item, index)))
+        {
+            await RenderItem(item, index + 1);
+        }
+        @if (Model.FormGroup?.AfterInputs is AfterInputOptions afterInputs)
+        {
+            @HtmlOrText(afterInputs.Html, afterInputs.Text)
+        }
+    </div>
+</_gfa-capture>
+
+<div class="@Classes("govuk-form-group", Model.ErrorMessage is not null ? "govuk-form-group--error" : null, Model.FormGroup?.Classes)"
+     _gfa-attributes="Model.FormGroup?.Attributes">
+    @if (hasFieldset)
+    {
+        await Html.RenderPartialAsync("./Fieldset.cshtml", new FieldsetOptions
+        {
+            DescribedBy = describedBy,
+            Classes = Model.Fieldset?.Classes,
+            Attributes = Model.Fieldset?.Attributes,
+            Legend = Model.Fieldset?.Legend,
+            Html = innerHtml.ToTemplateString()
+        });
+    }
+    else
+    {
+        @innerHtml
+    }
+</div>

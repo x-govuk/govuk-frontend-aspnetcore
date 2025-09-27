@@ -1,6 +1,5 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -16,7 +15,7 @@ public class AccordionItemHeadingTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-accordion-item-heading",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(AccordionContext), accordionContext },
@@ -26,7 +25,7 @@ public class AccordionItemHeadingTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-accordion-item-heading",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -50,11 +49,11 @@ public class AccordionItemHeadingTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
         var itemContext = new AccordionItemContext();
-        itemContext.SetHeading(new AttributeDictionary(), content: new HtmlString("Existing heading"));
+        itemContext.SetHeading([], content: new HtmlString("Existing heading"));
 
         var context = new TagHelperContext(
             tagName: "govuk-accordion-item-heading",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(AccordionContext), accordionContext },
@@ -64,7 +63,7 @@ public class AccordionItemHeadingTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-accordion-item-heading",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -88,11 +87,11 @@ public class AccordionItemHeadingTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
         var itemContext = new AccordionItemContext();
-        itemContext.SetSummary(attributes: new AttributeDictionary(), content: new HtmlString("Summary"));
+        itemContext.SetSummary(attributes: [], content: new HtmlString("Summary"));
 
         var context = new TagHelperContext(
             tagName: "govuk-accordion-item-heading",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(AccordionContext), accordionContext },
@@ -102,7 +101,7 @@ public class AccordionItemHeadingTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-accordion-item-heading",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

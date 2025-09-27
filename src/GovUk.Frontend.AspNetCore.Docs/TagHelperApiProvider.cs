@@ -33,13 +33,7 @@ public class TagHelperApiProvider
         ArgumentNullException.ThrowIfNull(tagHelperName);
 
         var tagHelperClassName = $"{TagHelperNamespace}.{tagHelperName}";
-        var tagHelperType = typeof(GovUkFrontendOptions).Assembly.GetType(tagHelperClassName)!;
-
-        if (tagHelperType is null)
-        {
-            throw new ArgumentException($"Could not find '{tagHelperClassName}'.", nameof(tagHelperName));
-        }
-
+        var tagHelperType = typeof(GovUkFrontendOptions).Assembly.GetType(tagHelperClassName)! ?? throw new ArgumentException($"Could not find '{tagHelperClassName}'.", nameof(tagHelperName));
         var htmlTargetElementAttr = tagHelperType.GetCustomAttribute<HtmlTargetElementAttribute>()!;
         var tagName = htmlTargetElementAttr.Tag;
         var tagStructure = htmlTargetElementAttr.TagStructure;
@@ -115,17 +109,14 @@ public class TagHelperApiProvider
 
     private static string GetNormalizedTypeName(Type type)
     {
-        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-        {
-            return GetNormalizedTypeName(type.GetGenericArguments()[0]) + "?";
-        }
-
-        return type.FullName switch
-        {
-            "System.Boolean" => "bool",
-            "System.String" => "string",
-            _ => type.FullName ?? ""
-        };
+        return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)
+            ? GetNormalizedTypeName(type.GetGenericArguments()[0]) + "?"
+            : type.FullName switch
+            {
+                "System.Boolean" => "bool",
+                "System.String" => "string",
+                _ => type.FullName ?? ""
+            };
     }
 }
 

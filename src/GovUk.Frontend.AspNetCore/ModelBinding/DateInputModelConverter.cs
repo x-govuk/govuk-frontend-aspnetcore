@@ -22,12 +22,9 @@ public abstract class DateInputModelConverter
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        if (DefaultItemTypes is DateInputItemTypes itemTypes && context.ItemTypes != itemTypes)
-        {
-            throw new NotSupportedException($"Specified {nameof(DateInputItemTypes)} combination is not supported.");
-        }
-
-        return ConvertToModelCore(context);
+        return DefaultItemTypes is DateInputItemTypes itemTypes && context.ItemTypes != itemTypes
+            ? throw new NotSupportedException($"Specified {nameof(DateInputItemTypes)} combination is not supported.")
+            : ConvertToModelCore(context);
     }
 
     /// <summary>
@@ -37,12 +34,9 @@ public abstract class DateInputModelConverter
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        if (DefaultItemTypes is DateInputItemTypes itemTypes && context.ItemTypes != itemTypes)
-        {
-            throw new NotSupportedException($"Specified {nameof(DateInputItemTypes)} combination is not supported.");
-        }
-
-        return ConvertFromModelCore(context);
+        return DefaultItemTypes is DateInputItemTypes itemTypes && context.ItemTypes != itemTypes
+            ? throw new NotSupportedException($"Specified {nameof(DateInputItemTypes)} combination is not supported.")
+            : ConvertFromModelCore(context);
     }
 
     /// <summary>

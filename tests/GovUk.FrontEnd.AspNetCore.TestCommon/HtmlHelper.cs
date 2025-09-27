@@ -16,6 +16,6 @@ public static class HtmlHelper
     {
         var browsingContext = BrowsingContext.New();
         var doc = browsingContext.OpenAsync(req => req.Content(html)).GetAwaiter().GetResult();
-        return (doc.Body.Children.Length > 0 ? doc.Body.Children : doc.Head.Children).ToArray();
+        return [.. (doc.Body.Children.Length > 0 ? doc.Body.Children : doc.Head.Children)];
     }
 }

@@ -14,7 +14,7 @@ public class PanelTitleTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-panel-title",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PanelContext), panelContext }
@@ -23,7 +23,7 @@ public class PanelTitleTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-panel-title",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -49,7 +49,7 @@ public class PanelTitleTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-panel-title",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PanelContext), panelContext }
@@ -58,7 +58,7 @@ public class PanelTitleTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-panel-title",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -85,7 +85,7 @@ public class PanelTitleTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-panel-title",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PanelContext), panelContext }
@@ -94,7 +94,7 @@ public class PanelTitleTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-panel-title",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

@@ -24,7 +24,7 @@ public class ButtonTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-button",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 

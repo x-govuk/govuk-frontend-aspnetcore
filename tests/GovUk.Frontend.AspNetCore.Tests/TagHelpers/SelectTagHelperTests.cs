@@ -13,13 +13,13 @@ public class SelectTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-select",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-select",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var selectContext = context.GetContextItem<SelectContext>();
@@ -95,13 +95,13 @@ public class SelectTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-select",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-select",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var selectContext = context.GetContextItem<SelectContext>();

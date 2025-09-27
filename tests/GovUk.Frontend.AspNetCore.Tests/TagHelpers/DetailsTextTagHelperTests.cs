@@ -1,6 +1,5 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -12,11 +11,11 @@ public class DetailsTextTagHelperTests
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetSummary(new AttributeDictionary(), new HtmlString("The summary"));
+        detailsContext.SetSummary([], new HtmlString("The summary"));
 
         var context = new TagHelperContext(
             tagName: "govuk-details-text",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(DetailsContext), detailsContext }
@@ -25,7 +24,7 @@ public class DetailsTextTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-details-text",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -47,12 +46,12 @@ public class DetailsTextTagHelperTests
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetSummary(new AttributeDictionary(), new HtmlString("The summary"));
-        detailsContext.SetText(new AttributeDictionary(), new HtmlString("The text"));
+        detailsContext.SetSummary([], new HtmlString("The summary"));
+        detailsContext.SetText([], new HtmlString("The text"));
 
         var context = new TagHelperContext(
             tagName: "govuk-details-text",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(DetailsContext), detailsContext }
@@ -61,7 +60,7 @@ public class DetailsTextTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-details-text",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

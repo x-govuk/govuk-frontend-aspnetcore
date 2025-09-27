@@ -14,7 +14,7 @@ public class CheckboxesFieldsetTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -23,7 +23,7 @@ public class CheckboxesFieldsetTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-fieldset",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
@@ -56,7 +56,7 @@ public class CheckboxesFieldsetTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -65,7 +65,7 @@ public class CheckboxesFieldsetTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-fieldset",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();

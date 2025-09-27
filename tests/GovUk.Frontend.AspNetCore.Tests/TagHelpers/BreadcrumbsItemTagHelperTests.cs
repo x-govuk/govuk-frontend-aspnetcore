@@ -15,7 +15,7 @@ public class BreadcrumbsItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-breadcrumbs-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(BreadcrumbsContext), breadcrumbsContext }
@@ -24,7 +24,7 @@ public class BreadcrumbsItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-breadcrumbs-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -54,7 +54,7 @@ public class BreadcrumbsItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-breadcrumbs-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(BreadcrumbsContext), breadcrumbsContext }

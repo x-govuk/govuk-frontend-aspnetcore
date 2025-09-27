@@ -181,10 +181,10 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: new(), @for);
+                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for);
 
                 dateInputContext.OpenFieldset();
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: new(), html: null);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: null);
                 dateInputContext.CloseFieldset(fieldsetContext);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -228,10 +228,10 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: new(), @for);
+                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for);
 
                 dateInputContext.OpenFieldset();
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: new(), html: legendContent);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: legendContent);
                 dateInputContext.CloseFieldset(fieldsetContext);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -307,7 +307,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
-                dateInputContext.SetHint(attributes: new(), html: hintContent, tagName: DateInputHintTagHelper.TagName);
+                dateInputContext.SetHint(attributes: [], html: hintContent, tagName: DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -443,7 +443,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                 dateInputContext.SetErrorMessage(
                     errorFields: null,
                     visuallyHiddenText: null,
-                    attributes: new(),
+                    attributes: [],
                     html: errorContent,
                     DateInputHintTagHelper.TagName);
 
@@ -939,7 +939,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                 dateInputContext.SetErrorMessage(
                     specifiedErrorFields,
                     visuallyHiddenText: null,
-                    attributes: new(),
+                    attributes: [],
                     html: "Error",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
@@ -998,7 +998,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                 dateInputContext.SetErrorMessage(
                     errorFields: null,
                     visuallyHiddenText: null,
-                    attributes: new(),
+                    attributes: [],
                     html: "Error",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
@@ -1059,7 +1059,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                 dateInputContext.SetErrorMessage(
                     errorFields: null,
                     visuallyHiddenText: null,
-                    attributes: new(),
+                    attributes: [],
                     html: "Error",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
@@ -1116,7 +1116,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                 dateInputContext.SetErrorMessage(
                     errorFields: DateInputItemTypes.Month | DateInputItemTypes.Year,
                     visuallyHiddenText: null,
-                    attributes: new(),
+                    attributes: [],
                     html: "Error",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
@@ -1181,7 +1181,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
                  dateInputContext.SetErrorMessage(
                      errorFields,
                      visuallyHiddenText: null,
-                     attributes: new(),
+                     attributes: [],
                      html: "Error",
                      tagName: DateInputErrorMessageTagHelper.TagName);
 
@@ -1603,11 +1603,11 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         public CustomDayAndMonthType? Date { get; set; }
     }
 
-    private record CustomDateType(int year, int month, int day)
+    private record CustomDateType(int Year, int Month, int Day)
     {
-        public int D => day;
-        public int M => month;
-        public int Y => year;
+        public int D => Day;
+        public int M => Month;
+        public int Y => Year;
     }
 
     private class CustomDateTypeConverter : DateInputModelConverter
@@ -1622,10 +1622,10 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         }
     }
 
-    private record CustomDayAndMonthType(int day, int month)
+    private record CustomDayAndMonthType(int Day, int Month)
     {
-        public int D => day;
-        public int M => month;
+        public int D => Day;
+        public int M => Month;
     }
 
     private class CustomDayAndMonthTypeConverter : DateInputModelConverter

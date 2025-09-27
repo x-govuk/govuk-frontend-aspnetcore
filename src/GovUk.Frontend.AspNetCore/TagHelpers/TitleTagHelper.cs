@@ -10,21 +10,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <summary>
 /// <see cref="ITagHelper"/> that adds 'Error:' to the page's title if there are errors.
 /// </summary>
+/// <remarks>
+/// Creates a new <see cref="TitleTagHelper"/>.
+/// </remarks>
 [HtmlTargetElement("title", ParentTag = "head")]
-public class TitleTagHelper : TagHelper
+public class TitleTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor) : TagHelper
 {
     private const string DefaultErrorPrefix = "Error:";
     private const string ErrorPrefixAttributeName = "error-prefix";
 
-    private readonly GovUkFrontendOptions _options;
-
-    /// <summary>
-    /// Creates a new <see cref="TitleTagHelper"/>.
-    /// </summary>
-    public TitleTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor)
-    {
-        _options = Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor).Value;
-    }
+    private readonly GovUkFrontendOptions _options = Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor).Value;
 
     /// <summary>
     /// The prefix to add to the <c>title</c> when the page has errors.

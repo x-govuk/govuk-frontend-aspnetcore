@@ -15,7 +15,7 @@ public class TextInputPrefixTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input-prefix",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(TextInputContext), inputContext }
@@ -24,7 +24,7 @@ public class TextInputPrefixTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-input-prefix",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

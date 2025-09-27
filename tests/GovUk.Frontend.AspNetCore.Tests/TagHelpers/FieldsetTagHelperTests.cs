@@ -12,13 +12,13 @@ public class FieldsetTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-fieldset",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-fieldset",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FieldsetContext>();
@@ -60,13 +60,13 @@ public class FieldsetTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-fieldset",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-fieldset",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FieldsetContext>();
@@ -108,13 +108,13 @@ public class FieldsetTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-fieldset",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-fieldset",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FieldsetContext>();

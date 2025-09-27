@@ -4,20 +4,14 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class CheckboxesContext : FormGroupContext
+internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGroupContext
 {
     private bool _fieldsetIsOpen;
-    private readonly List<CheckboxesItemBase> _items = new List<CheckboxesItemBase>();
+    private readonly List<CheckboxesItemBase> _items = [];
 
-    public CheckboxesContext(string? name, ModelExpression? aspFor)
-    {
-        Name = name;
-        AspFor = aspFor;
-    }
+    public string? Name { get; } = name;
 
-    public string? Name { get; }
-
-    public ModelExpression? AspFor { get; }
+    public ModelExpression? AspFor { get; } = aspFor;
 
     public IReadOnlyCollection<CheckboxesItemBase> Items => _items;
 

@@ -13,7 +13,7 @@ public class NotificationBannerTitleTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-notification-banner-title",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(NotificationBannerContext), notificationBannerContext }
@@ -22,7 +22,7 @@ public class NotificationBannerTitleTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-notification-banner-title",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -57,7 +57,7 @@ public class NotificationBannerTitleTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-notification-banner-title",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(NotificationBannerContext), notificationBannerContext }
@@ -66,7 +66,7 @@ public class NotificationBannerTitleTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-notification-banner-title",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

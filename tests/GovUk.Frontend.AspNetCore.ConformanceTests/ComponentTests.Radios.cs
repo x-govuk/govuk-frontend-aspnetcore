@@ -20,7 +20,7 @@ public partial class ComponentTests
                 var items = options.Items
                     .Select((item, index) =>
                         item.Divider is not null ?
-                            (RadiosItemBase)new RadiosItemDivider() { Content = new HtmlString(item.Divider) } :
+                            new RadiosItemDivider() { Content = new HtmlString(item.Divider) } :
                             (RadiosItemBase)new RadiosItem()
                             {
                                 Conditional = item.Conditional?.Html is not null ?

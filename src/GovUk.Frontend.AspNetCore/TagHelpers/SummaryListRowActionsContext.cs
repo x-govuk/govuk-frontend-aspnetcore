@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class SummaryListRowActionsContext
 {
-    private readonly List<SummaryListOptionsRowActionsItem> _items = new();
+    private readonly List<SummaryListOptionsRowActionsItem> _items = [];
 
     public IReadOnlyCollection<SummaryListOptionsRowActionsItem> Items => _items.AsReadOnly();
 

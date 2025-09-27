@@ -5,14 +5,9 @@ using Microsoft.Playwright;
 
 namespace GovUk.Frontend.AspNetCore.IntegrationTests;
 
-public class DateInputTests : IClassFixture<DateInputTestsFixture>
+public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateInputTestsFixture>
 {
-    public DateInputTests(DateInputTestsFixture fixture)
-    {
-        Browser = fixture.Browser!;
-    }
-
-    public IBrowser Browser { get; }
+    public IBrowser Browser { get; } = fixture.Browser!;
 
     [Fact]
     public async Task ForDateProperty()
@@ -436,18 +431,11 @@ public class DateInputsTestsModel
     public MonthAndYear? CustomMonthAndYear { get; set; }
 }
 
-public class CustomDateType
+public class CustomDateType(int year, int month, int day)
 {
-    public CustomDateType(int year, int month, int day)
-    {
-        Y = year;
-        M = month;
-        D = day;
-    }
-
-    public int D { get; }
-    public int M { get; }
-    public int Y { get; }
+    public int D { get; } = day;
+    public int M { get; } = month;
+    public int Y { get; } = year;
 }
 
 public class CustomDateTypeConverter : DateInputModelConverter

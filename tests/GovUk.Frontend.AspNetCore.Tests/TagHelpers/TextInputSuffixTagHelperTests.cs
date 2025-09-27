@@ -15,7 +15,7 @@ public class TextInputSuffixTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input-suffix",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(TextInputContext), inputContext }
@@ -24,7 +24,7 @@ public class TextInputSuffixTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-input-suffix",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

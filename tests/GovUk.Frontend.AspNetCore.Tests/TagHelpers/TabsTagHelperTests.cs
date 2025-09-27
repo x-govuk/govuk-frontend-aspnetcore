@@ -22,13 +22,13 @@ public class TabsTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-tabs",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-tabs",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tabsContext = context.GetContextItem<TabsContext>();

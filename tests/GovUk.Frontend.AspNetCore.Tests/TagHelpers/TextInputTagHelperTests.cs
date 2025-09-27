@@ -33,25 +33,25 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
                 inputContext.SetLabel(
                     isPageHeading: false,
-                    attributes: new AttributeCollection(),
+                    attributes: [],
                     new HtmlString(labelHtml),
                     TextInputLabelTagHelper.TagName);
 
                 inputContext.SetHint(
-                    attributes: new AttributeCollection(),
+                    attributes: [],
                     new HtmlString(hintHtml),
                     TextInputHintTagHelper.TagName);
 
@@ -127,20 +127,20 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
                 inputContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(labelHtml),
                     TextInputLabelTagHelper.TagName);
 
@@ -196,13 +196,13 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -277,13 +277,13 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -342,20 +342,20 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
                 inputContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(labelHtml),
                     TextInputLabelTagHelper.TagName);
 
@@ -415,18 +415,18 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
-                inputContext.SetHint(new AttributeCollection(), new HtmlString(hintHtml), TextInputHintTagHelper.TagName);
+                inputContext.SetHint([], new HtmlString(hintHtml), TextInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -488,20 +488,20 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(errorHtml),
                     TextInputErrorMessageTagHelper.TagName);
 
@@ -567,13 +567,13 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -640,20 +640,20 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(errorHtml),
                     TextInputErrorMessageTagHelper.TagName);
 
@@ -721,26 +721,26 @@ public class TextInputTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
                 inputContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(labelHtml),
                     TextInputLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(errorHtml),
                     TextInputErrorMessageTagHelper.TagName);
 

@@ -45,8 +45,10 @@ public class FooterCopyrightTagHelperTests() : TagHelperTestBase(FooterCopyright
     public async Task ProcessAsync_ParentAlreadyHasCopyright_ThrowsInvalidOperationException()
     {
         // Arrange
-        var footerContext = new FooterContext();
-        footerContext.Copyright = new(new FooterOptionsCopyright(), TagName);
+        var footerContext = new FooterContext
+        {
+            Copyright = new(new FooterOptionsCopyright(), TagName)
+        };
 
         var context = CreateTagHelperContext(contexts: footerContext);
 

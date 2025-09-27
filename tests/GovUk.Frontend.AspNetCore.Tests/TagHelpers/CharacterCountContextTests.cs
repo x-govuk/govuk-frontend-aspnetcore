@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -14,7 +13,7 @@ public class CharacterCountContextTests
         context.SetValue("Value", CharacterCountValueTagHelper.TagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, new AttributeCollection(), "Error", CharacterCountErrorMessageTagHelper.TagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", CharacterCountErrorMessageTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -30,7 +29,7 @@ public class CharacterCountContextTests
         context.SetValue("Value", CharacterCountValueTagHelper.TagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(new AttributeCollection(), "Error", CharacterCountHintTagHelper.TagName));
+        var ex = Record.Exception(() => context.SetHint([], "Error", CharacterCountHintTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -46,7 +45,7 @@ public class CharacterCountContextTests
         context.SetValue("Value", CharacterCountValueTagHelper.TagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, new AttributeCollection(), "Error", CharacterCountLabelTagHelper.TagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", CharacterCountLabelTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

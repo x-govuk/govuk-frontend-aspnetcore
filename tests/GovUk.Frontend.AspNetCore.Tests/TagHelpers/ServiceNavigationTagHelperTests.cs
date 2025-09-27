@@ -38,8 +38,10 @@ public class ServiceNavigationTagHelperTests() : TagHelperTestBase(ServiceNaviga
             {
                 var serviceNavigationContext = context.GetContextItem<ServiceNavigationContext>();
 
-                var attributes = new AttributeCollection(navigationAttributes);
-                attributes.Add("class", navigationClassName);
+                var attributes = new AttributeCollection(navigationAttributes)
+                {
+                    { "class", navigationClassName }
+                };
 
                 serviceNavigationContext.StartSlot = new(startSlotContent, ServiceNavigationStartTagHelper.TagName);
 

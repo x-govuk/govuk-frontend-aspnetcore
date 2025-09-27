@@ -15,13 +15,13 @@ public class ErrorMessageTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-error-message",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-error-message",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -50,13 +50,13 @@ public class ErrorMessageTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-error-message",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-error-message",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -88,19 +88,21 @@ public class ErrorMessageTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-error-message",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-error-message",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var modelHelperMock = new Mock<IModelHelper>();
 
@@ -139,19 +141,21 @@ public class ErrorMessageTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-error-message",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-error-message",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var modelHelperMock = new Mock<IModelHelper>();
 
@@ -184,19 +188,21 @@ public class ErrorMessageTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-error-message",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-error-message",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var htmlHelper = new Mock<IHtmlHelper>();
 

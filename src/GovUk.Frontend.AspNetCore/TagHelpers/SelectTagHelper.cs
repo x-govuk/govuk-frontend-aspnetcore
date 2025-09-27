@@ -159,13 +159,10 @@ public class SelectTagHelper : FormGroupTagHelperBase
 
     private string ResolveName()
     {
-        if (Name is null && For is null)
-        {
-            throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
+        return Name is null && For is null
+            ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
-                AspForAttributeName);
-        }
-
-        return Name ?? ModelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
+                AspForAttributeName)
+            : Name ?? ModelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
     }
 }

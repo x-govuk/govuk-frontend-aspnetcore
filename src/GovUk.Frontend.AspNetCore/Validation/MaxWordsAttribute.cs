@@ -5,21 +5,17 @@ namespace GovUk.Frontend.AspNetCore.Validation;
 /// <summary>
 /// Specifies the maximum number of words allowed in a property.
 /// </summary>
-public sealed class MaxWordsAttribute : ValidationAttribute
+/// <remarks>
+/// Validation attribute to assert a string property does not exceed a maximum number of words.
+/// </remarks>
+/// <param name="words">The maximum allowable number of words.</param>
+public sealed class MaxWordsAttribute(int words) : ValidationAttribute
 {
-    /// <summary>
-    /// Validation attribute to assert a string property does not exceed a maximum number of words.
-    /// </summary>
-    /// <param name="words">The maximum allowable number of words.</param>
-    public MaxWordsAttribute(int words)
-    {
-        Words = words;
-    }
 
     /// <summary>
     /// Gets the maximum allowable number of words.
     /// </summary>
-    public int Words { get; }
+    public int Words { get; } = words;
 
     /// <inheritdoc/>
     public override bool IsValid(object? value)

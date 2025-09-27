@@ -4,14 +4,9 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace GovUk.Frontend.AspNetCore.TestCommon;
 
-public class SpecifiedControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
+public class SpecifiedControllerFeatureProvider(TypeInfo controllerType) : IApplicationFeatureProvider<ControllerFeature>
 {
-    private readonly TypeInfo _controllerType;
-
-    public SpecifiedControllerFeatureProvider(TypeInfo controllerType)
-    {
-        _controllerType = controllerType ?? throw new ArgumentNullException(nameof(controllerType));
-    }
+    private readonly TypeInfo _controllerType = controllerType ?? throw new ArgumentNullException(nameof(controllerType));
 
     public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
     {

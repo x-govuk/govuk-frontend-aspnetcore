@@ -13,7 +13,7 @@ public class CharacterCountValueTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count-value",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CharacterCountContext), characterCountContext }
@@ -22,7 +22,7 @@ public class CharacterCountValueTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-character-count-value",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

@@ -55,17 +55,21 @@ public class RazorSnippetProvider
         _baseUrl = baseUrl;
     }
 
-    public async Task<RazorSnippet> CreateSnippetAsync(string path, string screennshotName)
+    public async Task<RazorSnippet> CreateSnippetAsync(string path, string screenshotName)
     {
+        if (screenshotName == null)
+        {
+            throw new ArgumentNullException(nameof(screenshotName));
+        }
+
         ArgumentNullException.ThrowIfNull(path);
 
         var markupRelativePath = Path.Combine("Pages", path + ".cshtml");
         var markupFullPath = Path.GetFullPath(markupRelativePath);
         var markup = ExtractMarkupToCapture(await File.ReadAllTextAsync(markupFullPath), markupRelativePath);
+        var (Contents, _, _, _) = await ScreenshotAsync(path, screenshotName);
 
-        var screenshot = await ScreenshotAsync(path, screennshotName);
-
-        return new RazorSnippet(markup, screenshot.Contents);
+        return new RazorSnippet(markup, Contents);
     }
 
     private static string ExtractMarkupToCapture(string markup, string hintName)

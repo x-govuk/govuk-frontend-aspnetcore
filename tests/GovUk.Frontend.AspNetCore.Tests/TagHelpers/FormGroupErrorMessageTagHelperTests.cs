@@ -13,7 +13,7 @@ public class FormGroupErrorMessageTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "test-error-message",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -21,7 +21,7 @@ public class FormGroupErrorMessageTagHelperTests
 
         var output = new TagHelperOutput(
             "test-error-message",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

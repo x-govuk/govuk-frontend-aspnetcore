@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -17,8 +16,8 @@ public class ErrorSummaryContextTests
         var item = new ErrorSummaryContextItem(
             href,
             errorMessageHtml,
-            new AttributeCollection(),
-            new AttributeCollection());
+            [],
+            []);
 
         // Act
         context.AddItem(item);
@@ -42,7 +41,7 @@ public class ErrorSummaryContextTests
         var context = new ErrorSummaryContext();
 
         // Act
-        context.SetDescription(new AttributeCollection(), descriptionHtml);
+        context.SetDescription([], descriptionHtml);
 
         // Assert
         Assert.Equal(descriptionHtml, context.Description?.Html);
@@ -53,10 +52,10 @@ public class ErrorSummaryContextTests
     {
         // Arrange
         var context = new ErrorSummaryContext();
-        context.SetDescription(new AttributeCollection(), html: "Existing description");
+        context.SetDescription([], html: "Existing description");
 
         // Act
-        var ex = Record.Exception(() => context.SetDescription(new AttributeCollection(), html: "Description"));
+        var ex = Record.Exception(() => context.SetDescription([], html: "Description"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -72,7 +71,7 @@ public class ErrorSummaryContextTests
         var context = new ErrorSummaryContext();
 
         // Act
-        context.SetTitle(new AttributeCollection(), titleHtml);
+        context.SetTitle([], titleHtml);
 
         // Assert
         Assert.Equal(titleHtml, context.Title?.Html);
@@ -83,10 +82,10 @@ public class ErrorSummaryContextTests
     {
         // Arrange
         var context = new ErrorSummaryContext();
-        context.SetTitle(new AttributeCollection(), html: "Existing title");
+        context.SetTitle([], html: "Existing title");
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle(new AttributeCollection(), html: "Title"));
+        var ex = Record.Exception(() => context.SetTitle([], html: "Title"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

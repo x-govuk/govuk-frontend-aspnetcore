@@ -3,19 +3,13 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace GovUk.Frontend.AspNetCore.Tests.Infrastructure;
 
-public sealed class SimpleValueProvider : Dictionary<string, object>, IValueProvider
+public sealed class SimpleValueProvider(CultureInfo? culture) : Dictionary<string, object>(StringComparer.OrdinalIgnoreCase), IValueProvider
 {
-    private readonly CultureInfo _culture;
+    private readonly CultureInfo _culture = culture ?? CultureInfo.InvariantCulture;
 
     public SimpleValueProvider()
         : this(null)
     {
-    }
-
-    public SimpleValueProvider(CultureInfo? culture)
-        : base(StringComparer.OrdinalIgnoreCase)
-    {
-        _culture = culture ?? CultureInfo.InvariantCulture;
     }
 
     public bool ContainsPrefix(string prefix)

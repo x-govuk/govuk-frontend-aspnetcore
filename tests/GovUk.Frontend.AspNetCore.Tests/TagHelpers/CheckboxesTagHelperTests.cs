@@ -13,13 +13,13 @@ public class CheckboxesTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-checkboxes",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
@@ -82,13 +82,13 @@ public class CheckboxesTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-checkboxes",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
@@ -152,13 +152,13 @@ public class CheckboxesTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-checkboxes",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
@@ -208,13 +208,13 @@ public class CheckboxesTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-checkboxes",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
@@ -264,13 +264,13 @@ public class CheckboxesTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-checkboxes",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
@@ -321,13 +321,13 @@ public class CheckboxesTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-checkboxes",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();

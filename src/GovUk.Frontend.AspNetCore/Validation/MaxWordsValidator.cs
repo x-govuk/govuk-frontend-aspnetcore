@@ -8,7 +8,7 @@ namespace GovUk.Frontend.AspNetCore.Validation;
 public class MaxWordsValidator
 {
     // Must match https://github.com/alphagov/govuk-frontend/blob/v3.14.0/src/govuk/components/character-count/character-count.js#L91
-    private static readonly Regex _pattern = new Regex(@"\S+", RegexOptions.Compiled | RegexOptions.Multiline);
+    private static readonly Regex _pattern = new(@"\S+", RegexOptions.Compiled | RegexOptions.Multiline);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MaxWordsValidator"/> class.

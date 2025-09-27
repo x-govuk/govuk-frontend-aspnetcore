@@ -13,7 +13,7 @@ public class PaginationPreviousTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-pagination-previous",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PaginationContext), paginationContext }
@@ -22,7 +22,7 @@ public class PaginationPreviousTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-pagination-previous",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

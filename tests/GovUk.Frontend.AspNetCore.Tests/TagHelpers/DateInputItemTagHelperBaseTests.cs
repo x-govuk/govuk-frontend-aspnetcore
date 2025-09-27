@@ -26,7 +26,7 @@ public abstract class DateInputItemTagHelperBaseTests<T>(string tagName) : TagHe
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<DateInputItemContext>();
-                itemContext.SetLabel(html: labelContent, attributes: new(), tagName: TagName);
+                itemContext.SetLabel(html: labelContent, attributes: [], tagName: TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

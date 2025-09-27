@@ -344,33 +344,22 @@ public class CharacterCountTagHelper : TagHelper
 
     private string ResolveId(string name)
     {
-        if (Id is not null)
-        {
-            return Id;
-        }
-
-        return TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
+        return Id is not null ? Id : TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
     }
 
     private string ResolveName()
     {
-        if (Name is null && For is null)
-        {
-            throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
+        return Name is null && For is null
+            ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
-                AspForAttributeName);
-        }
-
-        return Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
+                AspForAttributeName)
+            : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
     }
 
     private TemplateString? ResolveValue(CharacterCountContext characterCountContext)
     {
-        if (characterCountContext.Value is not null)
-        {
-            return characterCountContext.Value;
-        }
-
-        return For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null;
+        return characterCountContext.Value is not null
+            ? characterCountContext.Value
+            : (TemplateString?)(For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null);
     }
 }

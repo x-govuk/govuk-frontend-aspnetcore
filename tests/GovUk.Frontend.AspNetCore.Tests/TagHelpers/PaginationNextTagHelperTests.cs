@@ -13,7 +13,7 @@ public class PaginationNextTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-pagination-next",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PaginationContext), paginationContext }
@@ -22,7 +22,7 @@ public class PaginationNextTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-pagination-next",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

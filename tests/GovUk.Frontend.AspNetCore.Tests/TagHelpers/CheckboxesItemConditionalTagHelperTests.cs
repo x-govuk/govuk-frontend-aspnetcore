@@ -13,7 +13,7 @@ public class CheckboxesItemConditionalTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item-Conditional",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesItemContext), checkboxesItemContext }
@@ -22,7 +22,7 @@ public class CheckboxesItemConditionalTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item-Conditional",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

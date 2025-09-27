@@ -36,25 +36,25 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
                 characterCountContext.SetLabel(
                     isPageHeading: false,
-                    attributes: new AttributeCollection(),
+                    attributes: [],
                     new HtmlString(labelHtml),
                     CharacterCountLabelTagHelper.TagName);
 
                 characterCountContext.SetHint(
-                    attributes: new AttributeCollection(),
+                    attributes: [],
                     new HtmlString(hintHtml),
                     CharacterCountHintTagHelper.TagName);
 
@@ -142,20 +142,20 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
                 characterCountContext.SetLabel(
                     isPageHeading: false,
-                    attributes: new AttributeCollection(),
+                    attributes: [],
                     new HtmlString(labelHtml),
                     CharacterCountLabelTagHelper.TagName);
 
@@ -197,20 +197,20 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
                 characterCountContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(labelHtml),
                     CharacterCountLabelTagHelper.TagName);
 
@@ -266,13 +266,13 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -347,13 +347,13 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -415,20 +415,20 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
                 characterCountContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(labelHtml),
                     CharacterCountLabelTagHelper.TagName);
 
@@ -488,18 +488,18 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
-                characterCountContext.SetHint(new AttributeCollection(), new HtmlString(hintHtml), CharacterCountHintTagHelper.TagName);
+                characterCountContext.SetHint([], new HtmlString(hintHtml), CharacterCountHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -561,20 +561,20 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
                 characterCountContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(errorHtml),
                     CharacterCountErrorMessageTagHelper.TagName);
 
@@ -640,13 +640,13 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -713,20 +713,20 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
                 characterCountContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(errorHtml),
                     CharacterCountErrorMessageTagHelper.TagName);
 
@@ -794,26 +794,26 @@ public class CharacterCountTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-character-count",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-character-count",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
                 characterCountContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(labelHtml),
                     CharacterCountLabelTagHelper.TagName);
 
                 characterCountContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     new HtmlString(errorHtml),
                     CharacterCountErrorMessageTagHelper.TagName);
 

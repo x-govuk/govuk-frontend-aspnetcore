@@ -8,7 +8,11 @@ using Xunit.Sdk;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ComponentGeneration;
 
-public class ComponentFixtureData : DataAttribute
+public class ComponentFixtureData(
+    string componentName,
+    Type optionsType,
+    string? only = null,
+    params string[] exclude) : DataAttribute
 {
     private static readonly JsonSerializerOptions _serializerOptions;
 
@@ -21,22 +25,10 @@ public class ComponentFixtureData : DataAttribute
         _serializerOptions.Converters.Add(new TemplateStringJsonConverter());
     }
 
-    private readonly string _componentName;
-    private readonly Type _optionsType;
-    private readonly string? _only;
-    private readonly HashSet<string> _exclude;
-
-    public ComponentFixtureData(
-        string componentName,
-        Type optionsType,
-        string? only = null,
-        params string[] exclude)
-    {
-        _componentName = componentName;
-        _optionsType = optionsType;
-        _only = only;
-        _exclude = new HashSet<string>(exclude ?? Array.Empty<string>());
-    }
+    private readonly string _componentName = componentName;
+    private readonly Type _optionsType = optionsType;
+    private readonly string? _only = only;
+    private readonly HashSet<string> _exclude = new(exclude ?? []);
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
@@ -50,20 +42,14 @@ public class ComponentFixtureData : DataAttribute
         }
 
         var fixturesJson = File.ReadAllText(fixturesFile);
-        var fixtures = JsonObject.Parse(fixturesJson)!["fixtures"]?.AsArray();
-
-        if (fixtures is null)
-        {
-            throw new InvalidOperationException($"Couldn't find fixtures in '{fixturesFile}'.");
-        }
-
+        var fixtures = (JsonNode.Parse(fixturesJson)!["fixtures"]?.AsArray()) ?? throw new InvalidOperationException($"Couldn't find fixtures in '{fixturesFile}'.");
         var testCaseDataType = typeof(ComponentTestCaseData<>).MakeGenericType(_optionsType);
 
         foreach (var fixture in fixtures)
         {
             var name = fixture!["name"]!.ToString();
 
-            if (_exclude.Contains(name) || _only is not null && name != _only)
+            if (_exclude.Contains(name) || (_only is not null && name != _only))
             {
                 continue;
             }
@@ -93,19 +79,22 @@ public class ComponentFixtureData : DataAttribute
     {
         public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            switch (reader.TokenType)
+            return reader.TokenType switch
             {
-                case JsonTokenType.String:
-                    return reader.GetString();
-                case JsonTokenType.Number:
-                    return reader.GetInt64().ToString();
-                case JsonTokenType.Null:
-                    return null;
-                case JsonTokenType.False:
-                    return string.Empty;
-                default:
-                    throw new JsonException($"Cannot convert {reader.TokenType} tokens to a string.");
-            }
+                JsonTokenType.String => reader.GetString(),
+                JsonTokenType.Number => reader.GetInt64().ToString(),
+                JsonTokenType.Null => null,
+                JsonTokenType.False => string.Empty,
+                JsonTokenType.None => throw new NotImplementedException(),
+                JsonTokenType.StartObject => throw new NotImplementedException(),
+                JsonTokenType.EndObject => throw new NotImplementedException(),
+                JsonTokenType.StartArray => throw new NotImplementedException(),
+                JsonTokenType.EndArray => throw new NotImplementedException(),
+                JsonTokenType.PropertyName => throw new NotImplementedException(),
+                JsonTokenType.Comment => throw new NotImplementedException(),
+                JsonTokenType.True => throw new NotImplementedException(),
+                _ => throw new JsonException($"Cannot convert {reader.TokenType} tokens to a string."),
+            };
         }
 
         public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options)

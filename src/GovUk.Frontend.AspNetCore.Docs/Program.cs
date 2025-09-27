@@ -49,15 +49,9 @@ async Task PublishDocsAsync()
 {
     string GetAssemblyMetadataAttributeValue(string name)
     {
-        var attrValue = typeof(Program).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
+        var attrValue = (typeof(Program).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
             .SingleOrDefault(a => a.Key == name)?
-            .Value;
-
-        if (attrValue is null)
-        {
-            throw new Exception($"{name} attribute not defined.");
-        }
-
+            .Value) ?? throw new Exception($"{name} attribute not defined.");
         return attrValue;
     }
 

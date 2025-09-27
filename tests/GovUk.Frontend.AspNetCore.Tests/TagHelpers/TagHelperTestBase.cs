@@ -88,7 +88,7 @@ public abstract class TagHelperTestBase(string tagName, string? parentTagName = 
     }
 
     protected ViewContext CreateViewContext() =>
-        new ViewContext() { HttpContext = new DefaultHttpContext() };
+        new() { HttpContext = new DefaultHttpContext() };
 
     protected IOptions<GovUkFrontendOptions> CreateOptions(Action<GovUkFrontendOptions>? configure = null)
     {

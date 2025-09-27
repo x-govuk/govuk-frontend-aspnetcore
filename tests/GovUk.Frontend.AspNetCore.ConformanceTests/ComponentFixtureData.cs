@@ -20,7 +20,7 @@ public class ComponentFixtureData : DataAttribute
         _fixtureFileName = fixtureFileName ?? throw new ArgumentNullException(nameof(fixtureFileName));
         _optionsType = optionsType ?? throw new ArgumentNullException(nameof(optionsType));
         _only = only;
-        _exclude = new HashSet<string>(exclude ?? Array.Empty<string>());
+        _exclude = new HashSet<string>(exclude ?? []);
 
         if (!_fixtureFileName.EndsWith(".json"))
         {
@@ -40,13 +40,7 @@ public class ComponentFixtureData : DataAttribute
         }
 
         var fixturesJson = File.ReadAllText(fixturesFile);
-        var fixtures = JObject.Parse(fixturesJson).SelectToken("fixtures");
-
-        if (fixtures is null)
-        {
-            throw new InvalidOperationException($"Couldn't find fixtures in '{fixturesFile}'.");
-        }
-
+        var fixtures = JObject.Parse(fixturesJson).SelectToken("fixtures") ?? throw new InvalidOperationException($"Couldn't find fixtures in '{fixturesFile}'.");
         var testCaseDataType = typeof(ComponentTestCaseData<>).MakeGenericType(_optionsType);
 
         foreach (var fixture in fixtures)

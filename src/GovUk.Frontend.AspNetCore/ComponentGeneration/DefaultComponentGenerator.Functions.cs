@@ -5,6 +5,7 @@ using Fluid.Values;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
+#pragma warning disable IDE0060
 internal partial class DefaultComponentGenerator
 {
     private static class Functions
@@ -112,13 +113,11 @@ internal partial class DefaultComponentGenerator
 
                 attributesHtml = sb.ToString();
             }
-            else if (attrsArg.Type == FluidValues.Nil)
-            {
-                attributesHtml = string.Empty;
-            }
             else
             {
-                throw new InvalidOperationException($"Cannot convert {attrsArg.Type} to attributes.");
+                attributesHtml = attrsArg.Type == FluidValues.Nil
+                    ? string.Empty
+                    : throw new InvalidOperationException($"Cannot convert {attrsArg.Type} to attributes.");
             }
 
             return new StringValue(attributesHtml, encode: false);

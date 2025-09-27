@@ -14,7 +14,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset-legend",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesFieldsetContext), fieldsetContext }
@@ -23,7 +23,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-fieldset-legend",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -57,7 +57,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset-legend",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesFieldsetContext), fieldsetContext }
@@ -66,7 +66,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-fieldset-legend",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

@@ -2,10 +2,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class RadiosFieldsetContext : FormGroupFieldsetContext
+internal class RadiosFieldsetContext(AttributeDictionary? attributes, ModelExpression? aspFor) : FormGroupFieldsetContext(RadiosFieldsetTagHelper.TagName, RadiosFieldsetLegendTagHelper.TagName, attributes, aspFor)
 {
-    public RadiosFieldsetContext(AttributeDictionary? attributes, ModelExpression? aspFor) :
-        base(RadiosFieldsetTagHelper.TagName, RadiosFieldsetLegendTagHelper.TagName, attributes, aspFor)
-    {
-    }
 }

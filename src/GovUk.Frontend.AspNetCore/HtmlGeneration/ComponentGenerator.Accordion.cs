@@ -29,7 +29,7 @@ internal partial class ComponentGenerator
     {
         Guard.ArgumentNotNullOrEmpty(nameof(id), id);
 
-        if (headingLevel < AccordionMinHeadingLevel || headingLevel > AccordionMaxHeadingLevel)
+        if (headingLevel is < AccordionMinHeadingLevel or > AccordionMaxHeadingLevel)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(headingLevel),

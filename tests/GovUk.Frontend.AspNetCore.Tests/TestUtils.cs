@@ -17,7 +17,7 @@ internal static class TestUtils
             .AddMvc()
             .AddApplicationPart(typeof(GovUkFrontendExtensions).Assembly);
         var listener = new DiagnosticListener("Microsoft.AspNetCore");
-        services.AddSingleton<DiagnosticListener>(listener);
+        services.AddSingleton(listener);
         services.AddSingleton<DiagnosticSource>(listener);
         _serviceProvider = services.BuildServiceProvider();
     }
@@ -45,8 +45,10 @@ internal static class TestUtils
 
         public DummyHttpContextAccessor(IServiceProvider services)
         {
-            _httpContext = new DefaultHttpContext();
-            _httpContext.RequestServices = services;
+            _httpContext = new DefaultHttpContext
+            {
+                RequestServices = services
+            };
             _httpContext.SetEndpoint(
                 new Endpoint(
                     _ => throw new NotImplementedException(),

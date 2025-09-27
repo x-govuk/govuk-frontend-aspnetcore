@@ -229,13 +229,10 @@ public class FileUploadTagHelper : TagHelper
 
     private string ResolveName()
     {
-        if (Name is null && For is null)
-        {
-            throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
+        return Name is null && For is null
+            ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
-                AspForAttributeName);
-        }
-
-        return Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
+                AspForAttributeName)
+            : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
     }
 }

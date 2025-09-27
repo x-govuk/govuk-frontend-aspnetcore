@@ -14,7 +14,7 @@ public class PaginationEllipsisItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-pagination-ellipsis",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PaginationContext), paginationContext }
@@ -23,7 +23,7 @@ public class PaginationEllipsisItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-pagination-ellipsis",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

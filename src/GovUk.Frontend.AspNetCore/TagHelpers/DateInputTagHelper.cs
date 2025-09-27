@@ -211,17 +211,14 @@ public class DateInputTagHelper : TagHelper
 
         var errorItems = GetFieldsWithErrors(dateInputContext);
 
-        List<DateInputOptionsItem> items = new();
+        List<DateInputOptionsItem> items = [];
 
         DateInputContextItem? GetContextItem(DateInputItemTypes itemType)
         {
-            if (dateInputContext.Items.TryGetValue(itemType, out var contextItem) && !itemTypes.HasFlag(itemType))
-            {
-                throw new InvalidOperationException(
-                    $"Cannot declare a <{contextItem.TagName}> when the parent's {nameof(DateInputItemTypes)} does not contain {itemType}.");
-            }
-
-            return contextItem;
+            return dateInputContext.Items.TryGetValue(itemType, out var contextItem) && !itemTypes.HasFlag(itemType)
+                ? throw new InvalidOperationException(
+                    $"Cannot declare a <{contextItem.TagName}> when the parent's {nameof(DateInputItemTypes)} does not contain {itemType}.")
+                : contextItem;
         }
 
         var dayContextItem = GetContextItem(DateInputItemTypes.Day);
@@ -321,7 +318,7 @@ public class DateInputTagHelper : TagHelper
                 For is not null ? GetValueFromModelState() :
                 null;
 
-            var resolvedAttributes = contextItem?.Attributes?.Clone() ?? new AttributeCollection();
+            var resolvedAttributes = contextItem?.Attributes?.Clone() ?? [];
             resolvedAttributes.Remove("class", out var itemClasses);
             itemClasses = itemClasses.AppendCssClasses(_encoder, defaultClass);
 
@@ -352,25 +349,19 @@ public class DateInputTagHelper : TagHelper
             {
                 var modelStateKey = _modelHelper.GetFullHtmlFieldName(ViewContext!, itemName.ToString());
 
-                if (ViewContext!.ModelState.TryGetValue(modelStateKey, out var modelStateEntry) &&
-                    modelStateEntry.AttemptedValue is not null)
-                {
-                    return modelStateEntry.AttemptedValue;
-                }
-
-                return getComponentFromValue(value);
+                return ViewContext!.ModelState.TryGetValue(modelStateKey, out var modelStateEntry) &&
+                    modelStateEntry.AttemptedValue is not null
+                    ? modelStateEntry.AttemptedValue
+                    : getComponentFromValue(value);
             }
         }
     }
 
     private string ResolveId()
     {
-        if (For is null && Id is null)
-        {
-            throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(ForAttributeName, IdAttributeName);
-        }
-
-        return Id ??
+        return For is null && Id is null
+            ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(ForAttributeName, IdAttributeName)
+            : Id ??
             TagBuilder.CreateSanitizedId(
                 _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name),
                 Constants.IdAttributeDotReplacement);
@@ -379,7 +370,7 @@ public class DateInputTagHelper : TagHelper
     private string ResolveNamePrefix()
     {
         var resolvedName = For is not null ? _modelHelper.GetFullHtmlFieldName(ViewContext!, For.Name) : null;
-        return NamePrefix ?? (resolvedName ?? string.Empty);
+        return NamePrefix ?? resolvedName ?? string.Empty;
     }
 
     private DateInputItemTypes ResolveItemTypes()
@@ -403,13 +394,10 @@ public class DateInputTagHelper : TagHelper
             valueType = Nullable.GetUnderlyingType(valueType) ?? valueType;
         }
 
-        if (valueType is not null &&
-            _optionsAccessor.Value.FindDateInputModelConverterForType(valueType)?.DefaultItemTypes is DateInputItemTypes converterDefaultTypes)
-        {
-            return converterDefaultTypes;
-        }
-
-        return DateInputItemTypes.DayMonthAndYear;
+        return valueType is not null &&
+            _optionsAccessor.Value.FindDateInputModelConverterForType(valueType)?.DefaultItemTypes is DateInputItemTypes converterDefaultTypes
+            ? converterDefaultTypes
+            : DateInputItemTypes.DayMonthAndYear;
     }
 
     private DateInputItemValues? ResolveValue(DateInputItemTypes itemTypes)
@@ -440,13 +428,10 @@ public class DateInputTagHelper : TagHelper
 
             Debug.Assert(valueType is not null);
 
-            if (converter is not null)
-            {
-                return converter.ConvertFromModel(
-                    new DateInputConvertFromModelContext(underlyingType, itemTypes, value));
-            }
-
-            throw new NotSupportedException($"Cannot convert '{underlyingType.FullName}' to a date.");
+            return converter is not null
+                ? converter.ConvertFromModel(
+                    new DateInputConvertFromModelContext(underlyingType, itemTypes, value))
+                : throw new NotSupportedException($"Cannot convert '{underlyingType.FullName}' to a date.");
         }
     }
 
@@ -470,11 +455,8 @@ public class DateInputTagHelper : TagHelper
         var invalidDateException = ViewContext!.ModelState[modelName]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)
             ?.Exception as DateInputParseException;
 
-        if (invalidDateException?.ParseErrors is DateInputParseErrors parseErrors)
-        {
-            return parseErrors.GetItemsWithError();
-        }
-
-        return DateInputItemTypes.All;
+        return invalidDateException?.ParseErrors is DateInputParseErrors parseErrors
+            ? parseErrors.GetItemsWithError()
+            : DateInputItemTypes.All;
     }
 }

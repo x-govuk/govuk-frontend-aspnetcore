@@ -13,13 +13,13 @@ public class AccordionTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-accordion",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-accordion",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var accordionContext = (AccordionContext)context.Items[typeof(AccordionContext)];
@@ -87,13 +87,13 @@ public class AccordionTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-accordion",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-accordion",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var accordionContext = (AccordionContext)context.Items[typeof(AccordionContext)];
@@ -166,13 +166,13 @@ public class AccordionTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-accordion",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-accordion",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var accordionContext = (AccordionContext)context.Items[typeof(AccordionContext)];
@@ -215,13 +215,13 @@ public class AccordionTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-accordion",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-accordion",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var accordionContext = (AccordionContext)context.Items[typeof(AccordionContext)];

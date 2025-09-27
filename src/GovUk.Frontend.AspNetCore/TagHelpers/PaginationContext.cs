@@ -5,7 +5,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class PaginationContext
 {
-    private readonly List<object> _items = new();
+    private readonly List<object> _items = [];
 
     public IReadOnlyCollection<object> Items => _items.AsReadOnly();
 

@@ -13,11 +13,11 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
     private readonly Dictionary<string, Attribute> _attributes;
 
     /// <summary>
-    /// Initializes a new emty instance of the <see cref="AttributeCollection"/> class.
+    /// Initializes a new empty instance of the <see cref="AttributeCollection"/> class.
     /// </summary>
     public AttributeCollection()
     {
-        _attributes = new();
+        _attributes = [];
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
     {
         if (attributes is null)
         {
-            _attributes = new();
+            _attributes = [];
             return;
         }
 
@@ -45,7 +45,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
     {
         ArgumentNullException.ThrowIfNull(tagHelperAttributes);
 
-        _attributes = new();
+        _attributes = [];
 
         foreach (var tagHelperAttribute in tagHelperAttributes)
         {
@@ -137,27 +137,14 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         {
             ArgumentNullException.ThrowIfNull(encoder);
 
-            if (Value is TemplateString templateString)
+            return Value switch
             {
-                return templateString.ToHtmlString(encoder);
-            }
-
-            if (Value is IHtmlContent htmlContent)
-            {
-                return htmlContent.ToHtmlString(encoder);
-            }
-
-            if (Value is true)
-            {
-                return "true";
-            }
-
-            if (Value is false)
-            {
-                return "false";
-            }
-
-            return Value?.ToString() ?? string.Empty;
+                TemplateString templateString => templateString.ToHtmlString(encoder),
+                IHtmlContent htmlContent => htmlContent.ToHtmlString(encoder),
+                true => "true",
+                false => "false",
+                var other => other?.ToString() ?? string.Empty
+            };
         }
     }
 

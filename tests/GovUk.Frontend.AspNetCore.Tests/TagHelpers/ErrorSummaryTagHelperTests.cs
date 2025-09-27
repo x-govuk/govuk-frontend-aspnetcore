@@ -23,22 +23,22 @@ public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHel
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle(new AttributeCollection(), "Title");
-                errorSummaryContext.SetDescription(new AttributeCollection(), "Description");
+                errorSummaryContext.SetTitle([], "Title");
+                errorSummaryContext.SetDescription([], "Description");
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         firstErrorHref,
                         firstErrorHtml,
-                        new AttributeCollection(),
-                        new AttributeCollection()));
+                        [],
+                        []));
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         secondErrorHref,
                         secondErrorHtml,
-                        new AttributeCollection(),
-                        new AttributeCollection()));
+                        [],
+                        []));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -94,8 +94,8 @@ public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHel
                     new ErrorSummaryContextItem(
                         "#Href",
                         "Content",
-                        new AttributeCollection(),
-                        new AttributeCollection()));
+                        [],
+                        []));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -161,15 +161,15 @@ public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHel
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle(new AttributeCollection(), "Title");
-                errorSummaryContext.SetDescription(new AttributeCollection(), "Description");
+                errorSummaryContext.SetTitle([], "Title");
+                errorSummaryContext.SetDescription([], "Description");
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         itemErrorHref,
                         itemErrorHtml,
-                        new AttributeCollection(),
-                        new AttributeCollection()));
+                        [],
+                        []));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -218,8 +218,8 @@ public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHel
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle(new AttributeCollection(), "Title");
-                errorSummaryContext.SetDescription(new AttributeCollection(), "Description");
+                errorSummaryContext.SetTitle([], "Title");
+                errorSummaryContext.SetDescription([], "Description");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

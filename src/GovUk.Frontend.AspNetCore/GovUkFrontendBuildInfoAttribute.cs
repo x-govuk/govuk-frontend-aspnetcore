@@ -6,12 +6,7 @@ namespace GovUk.Frontend.AspNetCore;
 
 [AttributeUsage(AttributeTargets.Assembly)]
 [EditorBrowsable(EditorBrowsableState.Never)]
-public sealed class GovUkFrontendBuildInfoAttribute : Attribute
+public sealed class GovUkFrontendBuildInfoAttribute(bool frontendNpmPackageRestored) : Attribute
 {
-    public GovUkFrontendBuildInfoAttribute(bool frontendNpmPackageRestored)
-    {
-        FrontendNpmPackageRestored = frontendNpmPackageRestored;
-    }
-
-    public bool FrontendNpmPackageRestored { get; }
+    public bool FrontendNpmPackageRestored { get; } = frontendNpmPackageRestored;
 }

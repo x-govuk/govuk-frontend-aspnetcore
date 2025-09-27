@@ -8,12 +8,7 @@ internal static class Guard
     public static T ArgumentNotNull<T>(string argName, [NotNull] T? argValue)
         where T : class
     {
-        if (argValue is null)
-        {
-            throw new ArgumentNullException(argName);
-        }
-
-        return argValue;
+        return argValue is null ? throw new ArgumentNullException(argName) : argValue;
     }
 
     public static T ArgumentNotNull<T>(
@@ -22,27 +17,14 @@ internal static class Guard
         [NotNull] T? testValue)
         where T : struct
     {
-        if (testValue is null)
-        {
-            throw new ArgumentException(message, argName);
-        }
-
-        return testValue.Value;
+        return testValue is null ? throw new ArgumentException(message, argName) : testValue.Value;
     }
 
     public static string ArgumentNotNullOrEmpty(string argName, [NotNull] string? argValue)
     {
-        if (argValue is null)
-        {
-            throw new ArgumentNullException(argName);
-        }
-
-        if (string.IsNullOrEmpty(argValue))
-        {
-            throw new ArgumentException("Argument was empty.", argName);
-        }
-
-        return argValue;
+        return argValue is null
+            ? throw new ArgumentNullException(argName)
+            : string.IsNullOrEmpty(argValue) ? throw new ArgumentException("Argument was empty.", argName) : argValue;
     }
 
     public static T ArgumentNotNullOrEmpty<T>(string argName, [NotNull] T? argValue)
@@ -50,12 +32,7 @@ internal static class Guard
     {
         ArgumentNotNull(argName, argValue);
 
-        if (!argValue.GetEnumerator().MoveNext())
-        {
-            throw new ArgumentException("Argument was empty.", argName);
-        }
-
-        return argValue;
+        return !argValue.GetEnumerator().MoveNext() ? throw new ArgumentException("Argument was empty.", argName) : argValue;
     }
 
     public static void ArgumentValid(
@@ -76,11 +53,6 @@ internal static class Guard
         bool test)
         where T : class
     {
-        if (testValue is null || !test)
-        {
-            throw new ArgumentException(message, argName);
-        }
-
-        return testValue;
+        return testValue is null || !test ? throw new ArgumentException(message, argName) : testValue;
     }
 }

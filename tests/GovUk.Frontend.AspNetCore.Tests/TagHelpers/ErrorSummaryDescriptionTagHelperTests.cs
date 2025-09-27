@@ -16,7 +16,7 @@ public class ErrorSummaryDescriptionTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-description",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -25,7 +25,7 @@ public class ErrorSummaryDescriptionTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-error-summary-description",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

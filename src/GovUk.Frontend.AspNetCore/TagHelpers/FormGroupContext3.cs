@@ -48,7 +48,7 @@ internal abstract class FormGroupContext3
             html = displayName;
         }
 
-        var attributes = Label?.Attributes.Clone() ?? new AttributeCollection();
+        var attributes = Label?.Attributes.Clone() ?? [];
         attributes.Remove("class", out var classes);
 
         return new LabelOptions()
@@ -78,15 +78,10 @@ internal abstract class FormGroupContext3
 
         if (html is null)
         {
-            if (Hint is not null)
-            {
-                throw new InvalidOperationException("Cannot deduce content for the hint.");
-            }
-
-            return null;
+            return Hint is not null ? throw new InvalidOperationException("Cannot deduce content for the hint.") : null;
         }
 
-        var attributes = Hint?.Attributes.Clone() ?? new AttributeCollection();
+        var attributes = Hint?.Attributes.Clone() ?? [];
         attributes.Remove("class", out var classes);
 
         return new HintOptions()
@@ -118,7 +113,7 @@ internal abstract class FormGroupContext3
             return null;
         }
 
-        var attributes = ErrorMessage?.Attributes.Clone() ?? new AttributeCollection();
+        var attributes = ErrorMessage?.Attributes.Clone() ?? [];
         attributes.Remove("class", out var classes);
 
         return new ErrorMessageOptions()

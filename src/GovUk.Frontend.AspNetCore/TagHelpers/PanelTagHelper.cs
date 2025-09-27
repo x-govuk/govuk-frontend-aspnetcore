@@ -44,8 +44,8 @@ public class PanelTagHelper : TagHelper
         get => _headingLevel;
         set
         {
-            if (value < ComponentGenerator.PanelMinHeadingLevel ||
-                value > ComponentGenerator.PanelMaxHeadingLevel)
+            if (value is < ComponentGenerator.PanelMinHeadingLevel or
+                > ComponentGenerator.PanelMaxHeadingLevel)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),

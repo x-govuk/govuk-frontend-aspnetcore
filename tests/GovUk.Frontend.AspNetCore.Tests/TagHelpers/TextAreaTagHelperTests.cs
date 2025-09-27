@@ -15,13 +15,13 @@ public class TextAreaTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-textarea",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-textarea",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var textAreaContext = context.GetContextItem<TextAreaContext>();
@@ -66,13 +66,13 @@ public class TextAreaTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-textarea",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-textarea",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var textAreaContext = context.GetContextItem<TextAreaContext>();
@@ -126,13 +126,13 @@ public class TextAreaTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-textarea",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-textarea",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var textAreaContext = context.GetContextItem<TextAreaContext>();
@@ -180,13 +180,13 @@ public class TextAreaTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-textarea",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-textarea",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var textAreaContext = context.GetContextItem<TextAreaContext>();
@@ -222,13 +222,13 @@ public class TextAreaTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-textarea",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-textarea",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var textAreaContext = context.GetContextItem<TextAreaContext>();
@@ -278,13 +278,13 @@ public class TextAreaTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-textarea",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-textarea",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var textAreaContext = context.GetContextItem<TextAreaContext>();

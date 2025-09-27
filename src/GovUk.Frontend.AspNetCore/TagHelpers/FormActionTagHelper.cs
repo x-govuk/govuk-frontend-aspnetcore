@@ -6,6 +6,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <summary>
 /// <see cref="ITagHelper"/> implementation targeting &lt;button&gt; elements.
 /// </summary>
+/// <inheritdoc />
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-action")]
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-controller")]
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-area")]
@@ -15,11 +16,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-route")]
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-all-route-data")]
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-route-*")]
-public class FormActionTagHelper : Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper
+public class FormActionTagHelper(IUrlHelperFactory urlHelperFactory) : Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper(urlHelperFactory)
 {
-    /// <inheritdoc />
-    public FormActionTagHelper(IUrlHelperFactory urlHelperFactory)
-        : base(urlHelperFactory)
-    {
-    }
 }

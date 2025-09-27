@@ -15,7 +15,7 @@ public class CheckboxesItemDividerTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-divider",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -24,7 +24,7 @@ public class CheckboxesItemDividerTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-divider",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

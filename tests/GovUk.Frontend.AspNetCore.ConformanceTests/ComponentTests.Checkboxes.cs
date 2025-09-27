@@ -20,7 +20,7 @@ public partial class ComponentTests
                 var items = options.Items
                     .Select((item, index) =>
                         item.Divider is not null ?
-                            (CheckboxesItemBase)new CheckboxesItemDivider() { Content = new HtmlString(item.Divider) } :
+                            new CheckboxesItemDivider() { Content = new HtmlString(item.Divider) } :
                             (CheckboxesItemBase)new CheckboxesItem()
                             {
                                 Behavior = item.Behaviour == "exclusive" ? CheckboxesItemBehavior.Exclusive : CheckboxesItemBehavior.Default,

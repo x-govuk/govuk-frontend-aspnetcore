@@ -4,20 +4,14 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class RadiosContext : FormGroupContext
+internal class RadiosContext(string? name, ModelExpression? aspFor) : FormGroupContext
 {
     private bool _fieldsetIsOpen;
-    private readonly List<RadiosItemBase> _items = new List<RadiosItemBase>();
+    private readonly List<RadiosItemBase> _items = [];
 
-    public RadiosContext(string? name, ModelExpression? aspFor)
-    {
-        Name = name;
-        AspFor = aspFor;
-    }
+    public string? Name { get; } = name;
 
-    public string? Name { get; }
-
-    public ModelExpression? AspFor { get; }
+    public ModelExpression? AspFor { get; } = aspFor;
 
     public IReadOnlyCollection<RadiosItemBase> Items => _items;
 

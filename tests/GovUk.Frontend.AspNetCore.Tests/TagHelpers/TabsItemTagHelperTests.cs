@@ -11,7 +11,7 @@ public class TabsItemTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-tabs-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -23,7 +23,7 @@ public class TabsItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-tabs-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 return Task.FromResult<TagHelperContent>(panelContent);
@@ -55,7 +55,7 @@ public class TabsItemTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-tabs-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -67,7 +67,7 @@ public class TabsItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-tabs-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 return Task.FromResult<TagHelperContent>(panelContent);
@@ -98,7 +98,7 @@ public class TabsItemTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-tabs-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -107,7 +107,7 @@ public class TabsItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-tabs-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -133,7 +133,7 @@ public class TabsItemTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-tabs-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -142,7 +142,7 @@ public class TabsItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-tabs-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

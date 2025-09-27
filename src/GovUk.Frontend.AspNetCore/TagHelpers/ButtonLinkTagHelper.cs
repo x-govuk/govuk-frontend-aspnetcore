@@ -7,9 +7,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <summary>
 /// Generates a GDS button component that renders an &lt;a&gt; element.
 /// </summary>
+/// <remarks>
+/// Creates a <see cref="ButtonLinkTagHelper"/>.
+/// </remarks>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(Element)]
-public class ButtonLinkTagHelper : TagHelper
+public class ButtonLinkTagHelper(IComponentGenerator componentGenerator) : TagHelper
 {
     internal const string TagName = "govuk-button-link";
     internal const string Element = "a";
@@ -17,15 +20,7 @@ public class ButtonLinkTagHelper : TagHelper
     private const string IdAttributeName = "id";
     private const string IsStartButtonAttributeName = "is-start-button";
 
-    private readonly IComponentGenerator _componentGenerator;
-
-    /// <summary>
-    /// Creates a <see cref="ButtonLinkTagHelper"/>.
-    /// </summary>
-    public ButtonLinkTagHelper(IComponentGenerator componentGenerator)
-    {
-        _componentGenerator = componentGenerator;
-    }
+    private readonly IComponentGenerator _componentGenerator = componentGenerator;
 
     /// <summary>
     /// The <c>id</c> attribute for the generated <c>button</c> element..

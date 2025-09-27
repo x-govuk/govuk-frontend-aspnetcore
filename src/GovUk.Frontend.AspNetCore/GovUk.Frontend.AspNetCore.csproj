@@ -27,7 +27,6 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageCopyToOutput>false</PackageCopyToOutput>
     <AnalysisMode>All</AnalysisMode>
-    <NoWarn>$(NoWarn);CA1032;CA1822;CA2007;CA2227</NoWarn>
   </PropertyGroup>
 
   <Target Name="InstallGovUkFrontendPackage" Condition="!Exists('$(GovUkFrontendLibrary)')">

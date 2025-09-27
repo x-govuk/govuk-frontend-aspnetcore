@@ -1,6 +1,5 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -16,7 +15,7 @@ public class AccordionItemSummaryTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-accordion-item-summary",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(AccordionContext), accordionContext },
@@ -26,7 +25,7 @@ public class AccordionItemSummaryTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-accordion-item-summary",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -50,11 +49,11 @@ public class AccordionItemSummaryTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
         var itemContext = new AccordionItemContext();
-        itemContext.SetSummary(new AttributeDictionary(), new HtmlString("Existing summary"));
+        itemContext.SetSummary([], new HtmlString("Existing summary"));
 
         var context = new TagHelperContext(
             tagName: "govuk-accordion-item-summary",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(AccordionContext), accordionContext },
@@ -64,7 +63,7 @@ public class AccordionItemSummaryTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-accordion-item-summary",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

@@ -27,13 +27,13 @@ public class PaginationTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-pagination",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-pagination",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var paginationContext = context.GetContextItem<PaginationContext>();

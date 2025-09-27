@@ -13,7 +13,7 @@ public class RadiosItemConditionalTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item-Conditional",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(RadiosItemContext), radiosItemContext }
@@ -22,7 +22,7 @@ public class RadiosItemConditionalTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-radios-item-Conditional",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

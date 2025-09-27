@@ -33,13 +33,13 @@ public class BreadcrumbsTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-breadcrumbs",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-breadcrumbs",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var breadcrumbsContext = context.GetContextItem<BreadcrumbsContext>();

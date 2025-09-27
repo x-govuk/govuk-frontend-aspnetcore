@@ -12,13 +12,13 @@ public class NotificationBannerTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-notification-banner",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-notification-banner",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -57,13 +57,13 @@ public class NotificationBannerTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-notification-banner",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-notification-banner",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -105,13 +105,13 @@ public class NotificationBannerTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-notification-banner",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-notification-banner",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -156,13 +156,13 @@ public class NotificationBannerTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-notification-banner",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-notification-banner",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -204,13 +204,13 @@ public class NotificationBannerTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-notification-banner",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-notification-banner",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();

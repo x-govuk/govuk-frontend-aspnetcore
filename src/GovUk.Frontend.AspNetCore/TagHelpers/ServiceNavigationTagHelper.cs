@@ -70,7 +70,7 @@ public class ServiceNavigationTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var navigationAttributes = serviceNavigationContext.Nav?.Attributes?.Clone() ?? new AttributeCollection();
+        var navigationAttributes = serviceNavigationContext.Nav?.Attributes?.Clone() ?? [];
         navigationAttributes.Remove("class", out var navigationClasses);
 
         var component = await _componentGenerator.GenerateServiceNavigationAsync(new ServiceNavigationOptions()

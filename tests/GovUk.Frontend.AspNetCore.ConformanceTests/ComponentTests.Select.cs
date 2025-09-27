@@ -9,12 +9,12 @@ public partial class ComponentTests
     [ComponentFixtureData(
         "select",
         typeof(OptionsJson.Select),
-        exclude: new[]
-        {
+        exclude:
+        [
             "with falsy items",
             "with falsy values",
             "item selected overrides value"  // Fixture doesn't have an 'id' :-(
-        })]
+        ])]
     public void Select(ComponentTestCaseData<OptionsJson.Select> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,

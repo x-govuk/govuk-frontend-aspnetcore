@@ -18,7 +18,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -27,7 +27,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -68,7 +68,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -77,7 +77,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -102,7 +102,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -111,7 +111,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -139,7 +139,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -148,7 +148,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -187,7 +187,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -196,7 +196,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -246,7 +246,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -255,7 +255,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -299,7 +299,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -308,7 +308,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -342,7 +342,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -351,11 +351,11 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<CheckboxesItemContext>();
-                itemContext.SetHint(new AttributeDictionary(), content: new HtmlString("Hint"));
+                itemContext.SetHint([], content: new HtmlString("Hint"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -388,7 +388,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -397,7 +397,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -431,7 +431,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -440,11 +440,11 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<CheckboxesItemContext>();
-                itemContext.SetConditional(new AttributeDictionary(), content: new HtmlString("Conditional"));
+                itemContext.SetConditional([], content: new HtmlString("Conditional"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -477,7 +477,7 @@ public class CheckboxesItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(CheckboxesContext), checkboxesContext }
@@ -486,7 +486,7 @@ public class CheckboxesItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-checkboxes-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

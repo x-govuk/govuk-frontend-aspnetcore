@@ -4,17 +4,11 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class SelectContext : FormGroupContext
+internal class SelectContext(ModelExpression? aspFor) : FormGroupContext
 {
-    private readonly List<SelectItem> _items;
+    private readonly List<SelectItem> _items = [];
 
-    public SelectContext(ModelExpression? aspFor)
-    {
-        _items = new List<SelectItem>();
-        AspFor = aspFor;
-    }
-
-    public ModelExpression? AspFor { get; }
+    public ModelExpression? AspFor { get; } = aspFor;
 
     public bool HaveModelExpression => AspFor is not null;
 

@@ -111,19 +111,7 @@ public abstract class FormGroupTagHelperBase : TagHelper
 
     internal static string? AppendToDescribedBy(string? describedBy, string? value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return describedBy;
-        }
-
-        if (string.IsNullOrWhiteSpace(describedBy))
-        {
-            return value;
-        }
-        else
-        {
-            return $"{describedBy} {value}";
-        }
+        return string.IsNullOrWhiteSpace(value) ? describedBy : string.IsNullOrWhiteSpace(describedBy) ? value : $"{describedBy} {value}";
     }
 
     private protected virtual TagBuilder CreateTagBuilder(bool haveError, IHtmlContent content, TagHelperOutput tagHelperOutput) =>
@@ -163,7 +151,7 @@ public abstract class FormGroupTagHelperBase : TagHelper
             var errorId = resolvedIdPrefix + "-error";
             DescribedBy = AppendToDescribedBy(DescribedBy, errorId);
 
-            attributes ??= new AttributeDictionary();
+            attributes ??= [];
             attributes["id"] = errorId;
 
             return Generator.GenerateErrorMessage(visuallyHiddenText, content, attributes);
@@ -182,7 +170,9 @@ public abstract class FormGroupTagHelperBase : TagHelper
         }
     }
 
+#pragma warning disable IDE0060
     internal IHtmlContent? GenerateHint(TagHelperContext tagHelperContext, FormGroupContext formGroupContext)
+#pragma warning restore IDE0060
     {
         var content = formGroupContext.Hint?.Content;
         var attributes = formGroupContext.Hint?.Attributes;
@@ -224,7 +214,7 @@ public abstract class FormGroupTagHelperBase : TagHelper
         var isPageHeading = formGroupContext.Label?.IsPageHeading ?? ComponentGenerator.LabelDefaultIsPageHeading;
         var content = formGroupContext.Label?.Content;
 
-        var attributes = formGroupContext.Label?.Attributes?.ToAttributeDictionary() ?? new();
+        var attributes = formGroupContext.Label?.Attributes?.ToAttributeDictionary() ?? [];
         attributes.MergeCssClass(labelClass);
 
         var resolvedContent = content ??
@@ -235,15 +225,9 @@ public abstract class FormGroupTagHelperBase : TagHelper
 
     internal IHtmlContent ResolveFieldsetLegendContent(FormGroupFieldsetContext fieldsetContext)
     {
-        var resolvedFieldsetLegendContent = fieldsetContext.Legend?.Content ??
-            (For is not null ? new HtmlString(HtmlEncoder.Default.Encode(ModelHelper.GetDisplayName(For.ModelExplorer, For.Name) ?? string.Empty)) : null);
-
-        if (resolvedFieldsetLegendContent is null)
-        {
-            throw new InvalidOperationException(
+        var resolvedFieldsetLegendContent = (fieldsetContext.Legend?.Content ??
+            (For is not null ? new HtmlString(HtmlEncoder.Default.Encode(ModelHelper.GetDisplayName(For.ModelExplorer, For.Name) ?? string.Empty)) : null)) ?? throw new InvalidOperationException(
                 $"Fieldset legend content must be specified the '{AspForAttributeName}' attribute is not specified.");
-        }
-
         return resolvedFieldsetLegendContent;
     }
 

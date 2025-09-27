@@ -87,11 +87,6 @@ internal class DefaultModelHelper : IModelHelper
             modelError = modelErrors.FirstOrDefault(m => !string.IsNullOrEmpty(m.ErrorMessage)) ?? modelErrors[0];
         }
 
-        if (modelError is null)
-        {
-            return null;
-        }
-
-        return modelError.ErrorMessage;
+        return modelError?.ErrorMessage;
     }
 }

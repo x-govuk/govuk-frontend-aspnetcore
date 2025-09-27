@@ -4,6 +4,7 @@ using Fluid.Values;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
+#pragma warning disable IDE0060
 internal partial class DefaultComponentGenerator
 {
     private static class Filters
@@ -13,12 +14,7 @@ internal partial class DefaultComponentGenerator
             // Mirror the nunjucks default filter (which looks for undefined only);
             // in our case we'll look for null.
 
-            if (input.IsNil())
-            {
-                return arguments.At(0);
-            }
-
-            return input;
+            return input.IsNil() ? (ValueTask<FluidValue>)arguments.At(0) : (ValueTask<FluidValue>)input;
         }
 
         public static ValueTask<FluidValue> IndentAsync(FluidValue input, FilterArguments arguments, TemplateContext context)

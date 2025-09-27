@@ -1,7 +1,6 @@
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -14,22 +13,22 @@ public class DetailsTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-details",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-details",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary(new AttributeDictionary(), summary);
+                detailsContext.SetSummary([], summary);
 
                 var text = new HtmlString("The text");
-                detailsContext.SetText(new AttributeDictionary(), text);
+                detailsContext.SetText([], text);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -58,22 +57,22 @@ public class DetailsTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-details",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-details",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary(new AttributeDictionary(), summary);
+                detailsContext.SetSummary([], summary);
 
                 var text = new HtmlString("The text");
-                detailsContext.SetText(new AttributeDictionary(), text);
+                detailsContext.SetText([], text);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -99,13 +98,13 @@ public class DetailsTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-details",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-details",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
@@ -133,19 +132,19 @@ public class DetailsTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-details",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-details",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary(new AttributeDictionary(), summary);
+                detailsContext.SetSummary([], summary);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

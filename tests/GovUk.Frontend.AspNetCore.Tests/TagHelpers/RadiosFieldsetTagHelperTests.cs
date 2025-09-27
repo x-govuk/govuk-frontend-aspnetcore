@@ -14,7 +14,7 @@ public class RadiosFieldsetTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(RadiosContext), radiosContext }
@@ -23,7 +23,7 @@ public class RadiosFieldsetTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-radios-fieldset",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
@@ -56,7 +56,7 @@ public class RadiosFieldsetTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(RadiosContext), radiosContext }
@@ -65,7 +65,7 @@ public class RadiosFieldsetTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-radios-fieldset",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();

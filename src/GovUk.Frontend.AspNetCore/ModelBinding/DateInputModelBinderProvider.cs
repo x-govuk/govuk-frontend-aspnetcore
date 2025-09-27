@@ -28,11 +28,6 @@ public class DateInputModelBinderProvider : IModelBinderProvider
         var modelType = context.Metadata.UnderlyingOrModelType;
         var converter = _optionsAccessor.Value.FindDateInputModelConverterForType(modelType);
 
-        if (converter is not null)
-        {
-            return new DateInputModelBinder(converter);
-        }
-
-        return null;
+        return converter is not null ? new DateInputModelBinder(converter) : (IModelBinder?)null;
     }
 }

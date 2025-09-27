@@ -15,24 +15,11 @@ public static class AttributeHelper
         }
 
         var newValue = AttributeValueToString(value);
-        string mergedValue;
-
-        if (attributes.ContainsKey(key))
-        {
-            if (key == "class" || key == "aria-describedby")
-            {
-                mergedValue = attributes[key] + " " + newValue;
-            }
-            else
-            {
-                throw new InvalidOperationException($"Don't know how to merge attributes with key '{key}'.");
-            }
-        }
-        else
-        {
-            mergedValue = newValue;
-        }
-
+        string mergedValue = attributes.ContainsKey(key)
+            ? key is "class" or "aria-describedby"
+                ? attributes[key] + " " + newValue
+                : throw new InvalidOperationException($"Don't know how to merge attributes with key '{key}'.")
+            : newValue;
         attributes[key] = mergedValue;
 
         return attributes;

@@ -46,13 +46,15 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
         _templates = new ConcurrentDictionary<string, IFluidTemplate>();
 
-        _templateOptions = new TemplateOptions();
-        _templateOptions.MemberAccessStrategy = new UnsafeMemberAccessStrategy();
-        _templateOptions.Trimming = TrimmingFlags.TagLeft;
+        _templateOptions = new TemplateOptions
+        {
+            MemberAccessStrategy = new UnsafeMemberAccessStrategy(),
+            Trimming = TrimmingFlags.TagLeft,
 
-        _templateOptions.FileProvider = new ManifestEmbeddedFileProvider(
+            FileProvider = new ManifestEmbeddedFileProvider(
             typeof(GovUkFrontendExtensions).Assembly,
-            root: "ComponentGeneration/Templates");
+            root: "ComponentGeneration/Templates")
+        };
 
         _templateOptions.Filters.AddFilter("nj_default", Filters.DefaultAsync);
         _templateOptions.Filters.AddFilter("indent", Filters.IndentAsync);
@@ -66,12 +68,9 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
             }
 
             // If the object is an Options class, convert its property names to camel case
-            if (v.GetType().Namespace?.StartsWith(GetType().Namespace!, StringComparison.Ordinal) == true && !v.GetType().IsArray)
-            {
-                return new ConvertNamesFromJsonTypeInfoObjectValue(v, optionsJsonSerializerOptions);
-            }
-
-            return null;
+            return v.GetType().Namespace?.StartsWith(GetType().Namespace!, StringComparison.Ordinal) == true && !v.GetType().IsArray
+                ? new ConvertNamesFromJsonTypeInfoObjectValue(v, optionsJsonSerializerOptions)
+                : (object?)null;
         });
     }
 

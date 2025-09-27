@@ -20,7 +20,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -29,7 +29,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var output = new TagHelperOutput(
             "govuk-error-summary-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -62,7 +62,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -71,13 +71,15 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var output = new TagHelperOutput(
             "govuk-error-summary-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var options = CreateOptions();
 
@@ -101,7 +103,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -110,13 +112,15 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var output = new TagHelperOutput(
             "govuk-error-summary-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.Field));
@@ -153,7 +157,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -162,13 +166,15 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var output = new TagHelperOutput(
             "govuk-error-summary-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.Field));
@@ -201,7 +207,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -210,7 +216,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var output = new TagHelperOutput(
             "govuk-error-summary-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -253,7 +259,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -297,7 +303,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -306,13 +312,15 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var output = new TagHelperOutput(
             "govuk-error-summary-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.Field));
@@ -351,7 +359,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -360,13 +368,15 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var output = new TagHelperOutput(
             "govuk-error-summary-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var modelMetadataProvider = new TestModelMetadataProvider();
 
@@ -404,7 +414,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -421,8 +431,10 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-        output.TagMode = TagMode.SelfClosing;
+            })
+        {
+            TagMode = TagMode.SelfClosing
+        };
 
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.Field));
@@ -459,7 +471,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var context = new TagHelperContext(
             tagName: "govuk-error-summary-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(ErrorSummaryContext), errorSummaryContext }
@@ -468,7 +480,7 @@ public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryIt
 
         var output = new TagHelperOutput(
             "govuk-error-summary-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

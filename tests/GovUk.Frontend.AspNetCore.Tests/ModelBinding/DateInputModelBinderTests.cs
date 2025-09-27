@@ -204,10 +204,12 @@ public class DateInputModelBinderTests
         var modelType = typeof(DateOnly);
         var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType));
 
-        var valueProvider = new SimpleValueProvider();
-        valueProvider.Add("TheModelName.Day", day);
-        valueProvider.Add("TheModelName.Month", month);
-        valueProvider.Add("TheModelName.Year", year);
+        var valueProvider = new SimpleValueProvider
+        {
+            { "TheModelName.Day", day },
+            { "TheModelName.Month", month },
+            { "TheModelName.Year", year }
+        };
 
         ModelBindingContext bindingContext = new DefaultModelBindingContext()
         {
@@ -248,9 +250,11 @@ public class DateInputModelBinderTests
         var modelType = typeof(DateOnly);
         var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType), DateInputItemTypes.DayAndMonth);
 
-        var valueProvider = new SimpleValueProvider();
-        valueProvider.Add("TheModelName.Day", day);
-        valueProvider.Add("TheModelName.Month", month);
+        var valueProvider = new SimpleValueProvider
+        {
+            { "TheModelName.Day", day },
+            { "TheModelName.Month", month }
+        };
 
         ModelBindingContext bindingContext = new DefaultModelBindingContext()
         {
@@ -291,9 +295,11 @@ public class DateInputModelBinderTests
         var modelType = typeof(DateOnly);
         var modelMetadata = CreateModelMetadata(ModelMetadataIdentity.ForType(modelType), DateInputItemTypes.MonthAndYear);
 
-        var valueProvider = new SimpleValueProvider();
-        valueProvider.Add("TheModelName.Month", month);
-        valueProvider.Add("TheModelName.Year", year);
+        var valueProvider = new SimpleValueProvider
+        {
+            { "TheModelName.Month", month },
+            { "TheModelName.Year", year }
+        };
 
         ModelBindingContext bindingContext = new DefaultModelBindingContext()
         {
@@ -501,7 +507,7 @@ public class DateInputModelBinderTests
         var year = "";
 
         // Act
-        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out var dateComponents);
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out _);
 
         // Assert
         Assert.False(result.HasFlag(DateInputParseErrors.InvalidDay));
@@ -516,7 +522,7 @@ public class DateInputModelBinderTests
         var year = "2001";
 
         // Act
-        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out var dateComponents);
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out _);
 
         // Assert
         Assert.True(result.HasFlag(DateInputParseErrors.InvalidDay));
@@ -531,14 +537,14 @@ public class DateInputModelBinderTests
         var year = "2000";
 
         // Act
-        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out var dateComponents);
+        var result = DateInputModelBinder.Parse(DateInputItemTypes.All, day, month, year, acceptMonthNames: false, out _);
 
         // Assert
         Assert.False(result.HasFlag(DateInputParseErrors.InvalidDay));
     }
 
-    public static TheoryData<string> ValidMonthNamesData { get; } = new()
-    {
+    public static TheoryData<string> ValidMonthNamesData { get; } =
+    [
         "jan",
         "january",
         "feb",
@@ -562,7 +568,7 @@ public class DateInputModelBinderTests
         "november",
         "dec",
         "december"
-    };
+    ];
 
     private static ActionContext CreateActionContextWithServices()
     {
@@ -570,22 +576,17 @@ public class DateInputModelBinderTests
         services.AddOptions<GovUkFrontendOptions>();
         var serviceProvider = services.BuildServiceProvider();
 
-        var httpContext = new DefaultHttpContext();
-        httpContext.RequestServices = serviceProvider;
+        var httpContext = new DefaultHttpContext
+        {
+            RequestServices = serviceProvider
+        };
 
         return new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
     }
 
-    private class DisplayNameModelMetadata : ModelMetadata
+    private class DisplayNameModelMetadata(string displayName, IReadOnlyDictionary<object, object>? additionalValues = null) : ModelMetadata(ModelMetadataIdentity.ForType(typeof(DateOnly?)))
     {
-        public DisplayNameModelMetadata(string displayName, IReadOnlyDictionary<object, object>? additionalValues = null)
-            : base(ModelMetadataIdentity.ForType(typeof(DateOnly?)))
-        {
-            DisplayName = displayName;
-            AdditionalValues = additionalValues ?? new Dictionary<object, object>();
-        }
-
-        public override IReadOnlyDictionary<object, object> AdditionalValues { get; }
+        public override IReadOnlyDictionary<object, object> AdditionalValues { get; } = additionalValues ?? new Dictionary<object, object>();
 
         public override ModelPropertyCollection Properties => throw new NotImplementedException();
 
@@ -603,7 +604,7 @@ public class DateInputModelBinderTests
 
         public override string DisplayFormatString => throw new NotImplementedException();
 
-        public override string DisplayName { get; }
+        public override string DisplayName { get; } = displayName;
 
         public override string EditFormatString => throw new NotImplementedException();
 

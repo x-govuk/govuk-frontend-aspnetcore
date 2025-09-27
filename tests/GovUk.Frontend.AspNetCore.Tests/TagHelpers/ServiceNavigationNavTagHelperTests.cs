@@ -79,8 +79,10 @@ public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNav
     public async Task ProcessAsync_ParentAlreadyHasNav_ThrowsInvalidOperationException()
     {
         // Arrange
-        var serviceNavigationContext = new ServiceNavigationContext();
-        serviceNavigationContext.Nav = new ServiceNavigationNavContext();
+        var serviceNavigationContext = new ServiceNavigationContext
+        {
+            Nav = new ServiceNavigationNavContext()
+        };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
 
@@ -102,8 +104,10 @@ public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNav
     public async Task ProcessAsync_ParentHasEndSlot_ThrowsInvalidOperationException()
     {
         // Arrange
-        var serviceNavigationContext = new ServiceNavigationContext();
-        serviceNavigationContext.EndSlot = new("End slot", ServiceNavigationEndTagHelper.TagName);
+        var serviceNavigationContext = new ServiceNavigationContext
+        {
+            EndSlot = new("End slot", ServiceNavigationEndTagHelper.TagName)
+        };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
 

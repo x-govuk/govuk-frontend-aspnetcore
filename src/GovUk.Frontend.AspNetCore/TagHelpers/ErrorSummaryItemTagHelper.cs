@@ -158,21 +158,14 @@ public class ErrorSummaryItemTagHelper : TagHelper
 
                 Debug.Assert(dateInputErrorItems != DateInputItemTypes.None);
 
-                if (dateInputErrorItems.HasFlag(DateInputItemTypes.Day))
-                {
-                    errorFieldId = CreateIdFromName(
-                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.DayInputName));
-                }
-                else if (dateInputErrorItems.HasFlag(DateInputItemTypes.Month))
-                {
-                    errorFieldId = CreateIdFromName(
-                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.MonthInputName));
-                }
-                else
-                {
-                    errorFieldId = CreateIdFromName(
-                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.YearInputName));
-                }
+                errorFieldId = dateInputErrorItems.HasFlag(DateInputItemTypes.Day)
+                    ? CreateIdFromName(
+                        ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.DayInputName))
+                    : dateInputErrorItems.HasFlag(DateInputItemTypes.Month)
+                        ? CreateIdFromName(
+                                            ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.MonthInputName))
+                        : CreateIdFromName(
+                                            ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.YearInputName));
             }
 
             resolvedHref = $"#{errorFieldId}";

@@ -47,12 +47,7 @@ public class RadiosItemConditionalHtmlJsonConverter : JsonConverter
 
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
-        if (reader.TokenType == JsonToken.String)
-        {
-            return (string)reader.Value;
-        }
-
-        return null;
+        return reader.TokenType == JsonToken.String ? (string)reader.Value : (object)null;
     }
 
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

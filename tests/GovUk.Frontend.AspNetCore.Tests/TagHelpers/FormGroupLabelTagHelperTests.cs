@@ -13,7 +13,7 @@ public class FormGroupLabelTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "test-label",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -21,7 +21,7 @@ public class FormGroupLabelTagHelperTests
 
         var output = new TagHelperOutput(
             "test-label",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

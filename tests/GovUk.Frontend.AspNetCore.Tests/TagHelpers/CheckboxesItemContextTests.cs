@@ -1,6 +1,5 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -13,7 +12,7 @@ public class CheckboxesItemContextTests
         var context = new CheckboxesItemContext();
 
         // Act
-        context.SetConditional(new AttributeDictionary(), content: new HtmlString("Conditional"));
+        context.SetConditional([], content: new HtmlString("Conditional"));
 
         // Assert
         Assert.Equal("Conditional", context.Conditional?.Content?.ToString());
@@ -24,10 +23,10 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetConditional(new AttributeDictionary(), content: new HtmlString("Existing conditional"));
+        context.SetConditional([], content: new HtmlString("Existing conditional"));
 
         // Act
-        var ex = Record.Exception(() => context.SetConditional(new AttributeDictionary(), content: new HtmlString("Conditional")));
+        var ex = Record.Exception(() => context.SetConditional([], content: new HtmlString("Conditional")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -41,7 +40,7 @@ public class CheckboxesItemContextTests
         var context = new CheckboxesItemContext();
 
         // Act
-        context.SetHint(new AttributeDictionary(), content: new HtmlString("Hint"));
+        context.SetHint([], content: new HtmlString("Hint"));
 
         // Assert
         Assert.Equal("Hint", context.Hint?.Content?.ToString());
@@ -52,10 +51,10 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetConditional(new AttributeDictionary(), content: new HtmlString("Existing conditional"));
+        context.SetConditional([], content: new HtmlString("Existing conditional"));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(new AttributeDictionary(), content: new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -67,10 +66,10 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetHint(new AttributeDictionary(), content: new HtmlString("Existing hint"));
+        context.SetHint([], content: new HtmlString("Existing hint"));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(new AttributeDictionary(), content: new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

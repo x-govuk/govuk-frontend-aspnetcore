@@ -17,7 +17,7 @@ internal partial class ComponentGenerator
         IHtmlContent? bodyContent,
         AttributeDictionary? attributes)
     {
-        if (headingLevel < PanelMinHeadingLevel || headingLevel > PanelMaxHeadingLevel)
+        if (headingLevel is < PanelMinHeadingLevel or > PanelMaxHeadingLevel)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(headingLevel),

@@ -14,7 +14,7 @@ public class PanelBodyTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-panel-body",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PanelContext), panelContext }
@@ -23,7 +23,7 @@ public class PanelBodyTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-panel-body",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -49,7 +49,7 @@ public class PanelBodyTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-panel-body",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PanelContext), panelContext }
@@ -58,7 +58,7 @@ public class PanelBodyTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-panel-body",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

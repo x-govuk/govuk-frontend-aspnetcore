@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -50,8 +49,10 @@ public class FooterNavTitleTagHelperTests() : TagHelperTestBase(FooterNavTitleTa
     {
         // Arrange
         var footerContext = new FooterContext();
-        var footerNavContext = new FooterNavContext();
-        footerNavContext.Title = new("Title", new AttributeCollection(), TagName);
+        var footerNavContext = new FooterNavContext
+        {
+            Title = new("Title", [], TagName)
+        };
 
         var context = CreateTagHelperContext(contexts: [footerContext, footerNavContext]);
 
@@ -82,7 +83,7 @@ public class FooterNavTitleTagHelperTests() : TagHelperTestBase(FooterNavTitleTa
         var footerContext = new FooterContext();
         var footerNavContext = new FooterNavContext();
         var itemsTagName = FooterNavItemsTagHelper.TagName;
-        footerNavContext.Items = new([], new AttributeCollection(), itemsTagName);
+        footerNavContext.Items = new([], [], itemsTagName);
 
         var context = CreateTagHelperContext(contexts: [footerContext, footerNavContext]);
 

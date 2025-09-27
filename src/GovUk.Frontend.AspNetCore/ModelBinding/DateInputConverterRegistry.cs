@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ModelBinding;
 
 internal class DateInputConverterRegistry
 {
-    private readonly Dictionary<Type, Entry> _entries = new();
+    private readonly Dictionary<Type, Entry> _entries = [];
 
     public DateInputModelConverter? FindConverter(Type modelType)
     {

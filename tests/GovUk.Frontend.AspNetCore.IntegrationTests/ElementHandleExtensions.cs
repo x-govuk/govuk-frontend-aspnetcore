@@ -7,6 +7,6 @@ public static class ElementHandleExtensions
     public static async Task<string[]> GetClassListAsync(this IElementHandle element)
     {
         var classes = await element.GetAttributeAsync("class") ?? string.Empty;
-        return classes.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+        return classes.Split(' ', StringSplitOptions.RemoveEmptyEntries);
     }
 }

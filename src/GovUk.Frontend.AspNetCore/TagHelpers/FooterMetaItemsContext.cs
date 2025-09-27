@@ -4,5 +4,5 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class FooterMetaItemsContext
 {
-    public List<FooterOptionsMetaItem> Items { get; } = new();
+    public List<FooterOptionsMetaItem> Items { get; } = [];
 }

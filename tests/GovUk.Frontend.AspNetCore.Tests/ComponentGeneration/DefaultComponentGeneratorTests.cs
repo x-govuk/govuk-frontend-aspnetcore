@@ -126,14 +126,9 @@ public class DefaultComponentGeneratorTests
             {
                 html = html.Replace("©", "&#xA9;");
 
-                if (data.Name is "with custom HTML content licence and copyright notice")
-                {
-                    html = html.Replace("Mae&#x2019;r", "Mae’r");
-                }
-                else
-                {
-                    html = html.Replace("Mae’r", "Mae&#x2019;r");
-                }
+                html = data.Name is "with custom HTML content licence and copyright notice"
+                    ? html.Replace("Mae&#x2019;r", "Mae’r")
+                    : html.Replace("Mae’r", "Mae&#x2019;r");
 
                 return html;
             },

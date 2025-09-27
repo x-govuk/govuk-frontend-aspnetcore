@@ -76,8 +76,8 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
         var generateErrorSummariesOptions = _optionsAccessor.Value.ErrorSummaryGeneration;
 
         var prependErrorSummary = PrependErrorSummary ??
-            (output.TagName.Equals("form", StringComparison.OrdinalIgnoreCase) && generateErrorSummariesOptions.HasFlag(PrependToFormElements)) ||
-            (output.TagName.Equals("main", StringComparison.OrdinalIgnoreCase) && generateErrorSummariesOptions.HasFlag(PrependToMainElement));
+            ((output.TagName.Equals("form", StringComparison.OrdinalIgnoreCase) && generateErrorSummariesOptions.HasFlag(PrependToFormElements)) ||
+            (output.TagName.Equals("main", StringComparison.OrdinalIgnoreCase) && generateErrorSummariesOptions.HasFlag(PrependToMainElement)));
 
         if (!prependErrorSummary)
         {

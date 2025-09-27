@@ -13,7 +13,7 @@ public class FormGroupHintTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "test-hint",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -21,7 +21,7 @@ public class FormGroupHintTagHelperTests
 
         var output = new TagHelperOutput(
             "test-hint",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

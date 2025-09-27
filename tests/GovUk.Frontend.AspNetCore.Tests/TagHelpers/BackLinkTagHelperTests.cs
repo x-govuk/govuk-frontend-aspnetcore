@@ -17,7 +17,7 @@ public class BackLinkTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-back-link",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 

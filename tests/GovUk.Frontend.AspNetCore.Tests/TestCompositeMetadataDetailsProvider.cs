@@ -5,7 +5,7 @@ namespace GovUk.Frontend.AspNetCore.Tests;
 
 public class TestCompositeMetadataDetailsProvider : ICompositeMetadataDetailsProvider
 {
-    private Dictionary<ModelMetadataIdentity, Entry> _entries = new();
+    private readonly Dictionary<ModelMetadataIdentity, Entry> _entries = [];
 
     public void SetDisplayNameForProperty(ModelMetadataIdentity identity, string? displayName)
     {

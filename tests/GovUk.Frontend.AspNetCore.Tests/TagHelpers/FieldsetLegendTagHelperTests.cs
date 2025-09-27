@@ -14,7 +14,7 @@ public class FieldsetLegendTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-fieldset-legend",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(FieldsetContext), fieldsetContext }
@@ -23,7 +23,7 @@ public class FieldsetLegendTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-fieldset-legend",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -57,7 +57,7 @@ public class FieldsetLegendTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-fieldset-legend",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(FieldsetContext), fieldsetContext }
@@ -66,7 +66,7 @@ public class FieldsetLegendTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-fieldset-legend",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

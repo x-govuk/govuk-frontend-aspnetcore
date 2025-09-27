@@ -15,7 +15,7 @@ public class PaginationItemTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-pagination-item",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(PaginationContext), paginationContext }
@@ -24,7 +24,7 @@ public class PaginationItemTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-pagination-item",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

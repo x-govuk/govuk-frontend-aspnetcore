@@ -10,7 +10,7 @@ public class StringFileProvider : IFileProvider
 
     public StringFileProvider()
     {
-        _values = new Dictionary<string, (string Value, DateTimeOffset Created)>();
+        _values = [];
     }
 
     public void Add(string path, string value)
@@ -37,40 +37,26 @@ public class StringFileProvider : IFileProvider
 
     public IFileInfo GetFileInfo(string subpath)
     {
-        if (_values.TryGetValue(subpath, out var entry))
-        {
-            return new StringFileInfo(subpath, subpath, entry.Value, entry.Created);
-        }
-        else
-        {
-            return new NotFoundFileInfo(subpath);
-        }
+        return _values.TryGetValue(subpath, out var entry)
+            ? new StringFileInfo(subpath, subpath, entry.Value, entry.Created)
+            : new NotFoundFileInfo(subpath);
     }
 
     public IChangeToken Watch(string filter) => NullChangeToken.Singleton;
 
-    private class StringFileInfo : IFileInfo
+    private class StringFileInfo(string name, string physicalPath, string value, DateTimeOffset created) : IFileInfo
     {
-        private readonly string _value;
-        private readonly DateTimeOffset _created;
-
-        public StringFileInfo(string name, string physicalPath, string value, DateTimeOffset created)
-        {
-            Name = name;
-            PhysicalPath = physicalPath;
-            _value = value;
-            _created = created;
-        }
+        private readonly string _value = value;
 
         public bool Exists => true;
 
         public long Length => _value.Length;
 
-        public string PhysicalPath { get; }
+        public string PhysicalPath { get; } = physicalPath;
 
-        public string Name { get; }
+        public string Name { get; } = name;
 
-        public DateTimeOffset LastModified => _created;
+        public DateTimeOffset LastModified { get; } = created;
 
         public bool IsDirectory => false;
 

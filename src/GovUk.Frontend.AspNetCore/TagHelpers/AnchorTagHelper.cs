@@ -6,6 +6,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <summary>
 /// <see cref="ITagHelper"/> implementation targeting &lt;a&gt; elements.
 /// </summary>
+/// <inheritdoc/>
 [HtmlTargetElement(BackLinkTagHelper.TagName, Attributes = "asp-action")]
 [HtmlTargetElement(BackLinkTagHelper.TagName, Attributes = "asp-controller")]
 [HtmlTargetElement(BackLinkTagHelper.TagName, Attributes = "asp-area")]
@@ -160,11 +161,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(SummaryListRowActionTagHelper.TagName, Attributes = "asp-route")]
 [HtmlTargetElement(SummaryListRowActionTagHelper.TagName, Attributes = "asp-all-route-data")]
 [HtmlTargetElement(SummaryListRowActionTagHelper.TagName, Attributes = "asp-route-*")]
-public class AnchorTagHelper : Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper
+public class AnchorTagHelper(IHtmlGenerator generator) : Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper(generator)
 {
-    /// <inheritdoc/>
-    public AnchorTagHelper(IHtmlGenerator generator)
-        : base(generator)
-    {
-    }
 }

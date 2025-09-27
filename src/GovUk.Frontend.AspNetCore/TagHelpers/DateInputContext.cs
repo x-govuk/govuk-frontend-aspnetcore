@@ -3,20 +3,13 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class DateInputContext : FormGroupContext3
+internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) : FormGroupContext3
 {
     private bool _fieldsetIsOpen;
-    private readonly SortedDictionary<DateInputItemTypes, DateInputContextItem> _items;
-    private readonly bool _haveValue;
+    private readonly SortedDictionary<DateInputItemTypes, DateInputContextItem> _items = [];
+    private readonly bool _haveValue = haveExplicitValue;
 
-    public DateInputContext(bool haveExplicitValue, ModelExpression? @for)
-    {
-        _items = new SortedDictionary<DateInputItemTypes, DateInputContextItem>();
-        _haveValue = haveExplicitValue;
-        For = @for;
-    }
-
-    public ModelExpression? For { get; }
+    public ModelExpression? For { get; } = @for;
 
     public DateInputFieldsetContext? Fieldset { get; private set; }
 

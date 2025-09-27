@@ -13,7 +13,7 @@ public class TextAreaValueTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-textarea-value",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(TextAreaContext), textAreaContext }
@@ -22,7 +22,7 @@ public class TextAreaValueTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-textarea-value",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

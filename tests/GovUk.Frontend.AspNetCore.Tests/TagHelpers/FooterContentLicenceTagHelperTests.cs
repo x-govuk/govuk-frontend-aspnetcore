@@ -45,8 +45,10 @@ public class FooterContentLicenceTagHelperTests() : TagHelperTestBase(FooterCont
     public async Task ProcessAsync_ParentAlreadyHasContentLicence_ThrowsInvalidOperationException()
     {
         // Arrange
-        var footerContext = new FooterContext();
-        footerContext.ContentLicence = new(new FooterOptionsContentLicence(), TagName);
+        var footerContext = new FooterContext
+        {
+            ContentLicence = new(new FooterOptionsContentLicence(), TagName)
+        };
 
         var context = CreateTagHelperContext(contexts: footerContext);
 

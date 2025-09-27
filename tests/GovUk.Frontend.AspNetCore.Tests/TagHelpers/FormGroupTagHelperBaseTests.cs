@@ -33,7 +33,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -61,7 +61,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -94,7 +94,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -128,7 +128,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -164,7 +164,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -199,7 +199,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -233,7 +233,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -259,7 +259,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -281,7 +281,7 @@ public class FormGroupTagHelperBaseTests
         Assert.NotNull(errorMessage);
         var element = errorMessage!.RenderToElement();
         Assert.Equal("test-error", element.GetAttribute("id"));
-        Assert.Contains("test-error", tagHelper.DescribedBy?.Split(' ') ?? Array.Empty<string>());
+        Assert.Contains("test-error", tagHelper.DescribedBy?.Split(' ') ?? []);
     }
 
     [Fact]
@@ -290,7 +290,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -307,7 +307,7 @@ public class FormGroupTagHelperBaseTests
         tagHelper.GenerateErrorMessage(tagHelperContext, formGroupContext);
 
         // Assert
-        Assert.DoesNotContain("test-error", tagHelper.DescribedBy?.Split(' ') ?? Array.Empty<string>());
+        Assert.DoesNotContain("test-error", tagHelper.DescribedBy?.Split(' ') ?? []);
     }
 
     [Fact]
@@ -316,7 +316,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -345,7 +345,7 @@ public class FormGroupTagHelperBaseTests
 
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -380,7 +380,7 @@ public class FormGroupTagHelperBaseTests
 
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -413,7 +413,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -439,7 +439,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -460,7 +460,7 @@ public class FormGroupTagHelperBaseTests
         Assert.NotNull(hint);
         var element = hint!.RenderToElement();
         Assert.Equal("test-hint", element.GetAttribute("id"));
-        Assert.Contains("test-hint", tagHelper.DescribedBy?.Split(' ') ?? Array.Empty<string>());
+        Assert.Contains("test-hint", tagHelper.DescribedBy?.Split(' ') ?? []);
     }
 
     [Fact]
@@ -469,7 +469,7 @@ public class FormGroupTagHelperBaseTests
         // Arrange
         var tagHelperContext = new TagHelperContext(
             tagName: "test",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
@@ -486,7 +486,7 @@ public class FormGroupTagHelperBaseTests
         tagHelper.GenerateHint(tagHelperContext, formGroupContext);
 
         // Assert
-        Assert.DoesNotContain("test-hint", tagHelper.DescribedBy?.Split(' ') ?? Array.Empty<string>());
+        Assert.DoesNotContain("test-hint", tagHelper.DescribedBy?.Split(' ') ?? []);
     }
 
     [Fact]
@@ -608,7 +608,7 @@ public class FormGroupTagHelperBaseTests
         var fieldsetContext = new TestFormGroupFieldsetContext(
             fieldsetTagName: "test-fieldset",
             legendTagName: "test-fieldset-legend",
-            attributes: new AttributeDictionary(),
+            attributes: [],
             @for);
 
         fieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Context name"));
@@ -644,7 +644,7 @@ public class FormGroupTagHelperBaseTests
         var fieldsetContext = new TestFormGroupFieldsetContext(
             fieldsetTagName: "test-fieldset",
             legendTagName: "test-fieldset-legend",
-            attributes: new AttributeDictionary(),
+            attributes: [],
             @for);
 
         // Act
@@ -678,7 +678,7 @@ public class FormGroupTagHelperBaseTests
         var fieldsetContext = new TestFormGroupFieldsetContext(
             fieldsetTagName: "test-fieldset",
             legendTagName: "test-fieldset-legend",
-            attributes: new AttributeDictionary(),
+            attributes: [],
             @for);
 
         fieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Context name"));
@@ -707,7 +707,7 @@ public class FormGroupTagHelperBaseTests
         var fieldsetContext = new TestFormGroupFieldsetContext(
             fieldsetTagName: "test-fieldset",
             legendTagName: "test-fieldset-legend",
-            attributes: new AttributeDictionary(),
+            attributes: [],
             @for);
 
         // Act
@@ -723,13 +723,8 @@ public class FormGroupTagHelperBaseTests
         public string? SimpleProperty { get; set; }
     }
 
-    private class TestFormGroupTagHelper : FormGroupTagHelperBase
+    private class TestFormGroupTagHelper(IGovUkHtmlGenerator htmlGenerator, IModelHelper modelHelper) : FormGroupTagHelperBase(htmlGenerator, modelHelper)
     {
-        public TestFormGroupTagHelper(IGovUkHtmlGenerator htmlGenerator, IModelHelper modelHelper) :
-            base(htmlGenerator, modelHelper)
-        {
-        }
-
         public string? Id { get; set; }
 
         private protected override FormGroupContext CreateFormGroupContext() => new TestFormGroupContext();
@@ -779,15 +774,11 @@ public class FormGroupTagHelperBaseTests
         protected override string RootTagName => "test";
     }
 
-    private class TestFormGroupFieldsetContext : FormGroupFieldsetContext
+    private class TestFormGroupFieldsetContext(
+        string fieldsetTagName,
+        string legendTagName,
+        AttributeDictionary attributes,
+        ModelExpression? @for) : FormGroupFieldsetContext(fieldsetTagName, legendTagName, attributes, @for)
     {
-        public TestFormGroupFieldsetContext(
-            string fieldsetTagName,
-            string legendTagName,
-            AttributeDictionary attributes,
-            ModelExpression? @for)
-            : base(fieldsetTagName, legendTagName, attributes, @for)
-        {
-        }
     }
 }

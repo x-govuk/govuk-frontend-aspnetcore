@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class PageErrorContext
 {
-    private readonly List<(TemplateString Html, TemplateString? Href)> _errors = new();
+    private readonly List<(TemplateString Html, TemplateString? Href)> _errors = [];
 
     public IReadOnlyCollection<(TemplateString Html, TemplateString? Href)> Errors => _errors.AsReadOnly();
 

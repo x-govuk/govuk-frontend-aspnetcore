@@ -13,13 +13,13 @@ public class PanelTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-panel",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-panel",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var panelContext = (PanelContext)context.Items[typeof(PanelContext)];
@@ -54,13 +54,13 @@ public class PanelTagHelperTests
         // Arrange
         var context = new TagHelperContext(
             tagName: "govuk-panel",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-panel",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var panelContext = (PanelContext)context.Items[typeof(PanelContext)];

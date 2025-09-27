@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -46,8 +45,10 @@ public class FooterMetaContentTagHelperTests() : TagHelperTestBase(FooterMetaCon
     {
         // Arrange
         var footerContext = new FooterContext();
-        var footerMetaContext = new FooterMetaContext();
-        footerMetaContext.Content = new("Content", new AttributeCollection(), TagName);
+        var footerMetaContext = new FooterMetaContext
+        {
+            Content = new("Content", [], TagName)
+        };
 
         var context = CreateTagHelperContext(contexts: [footerContext, footerMetaContext]);
 

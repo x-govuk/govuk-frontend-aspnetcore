@@ -8,7 +8,7 @@ internal class ErrorSummaryContext
 
     public ErrorSummaryContext()
     {
-        _items = new List<ErrorSummaryContextItem>();
+        _items = [];
     }
 
     public bool HaveExplicitItems { get; set; }

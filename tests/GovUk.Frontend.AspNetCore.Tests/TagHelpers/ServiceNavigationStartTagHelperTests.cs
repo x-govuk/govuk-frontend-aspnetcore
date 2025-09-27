@@ -40,8 +40,10 @@ public class ServiceNavigationStartTagHelperTests() : TagHelperTestBase(ServiceN
         // Arrange
         var content = "Content";
 
-        var serviceNavigationContext = new ServiceNavigationContext();
-        serviceNavigationContext.StartSlot = new("Existing start slot", TagName);
+        var serviceNavigationContext = new ServiceNavigationContext
+        {
+            StartSlot = new("Existing start slot", TagName)
+        };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
 
@@ -71,8 +73,10 @@ public class ServiceNavigationStartTagHelperTests() : TagHelperTestBase(ServiceN
         // Arrange
         var content = "Content";
 
-        var serviceNavigationContext = new ServiceNavigationContext();
-        serviceNavigationContext.Nav = new ServiceNavigationNavContext() { TagName = ServiceNavigationTagHelper.TagName };
+        var serviceNavigationContext = new ServiceNavigationContext
+        {
+            Nav = new ServiceNavigationNavContext() { TagName = ServiceNavigationTagHelper.TagName }
+        };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
 
@@ -102,8 +106,10 @@ public class ServiceNavigationStartTagHelperTests() : TagHelperTestBase(ServiceN
         // Arrange
         var content = "Content";
 
-        var serviceNavigationContext = new ServiceNavigationContext();
-        serviceNavigationContext.EndSlot = new("End slot", ServiceNavigationEndTagHelper.TagName);
+        var serviceNavigationContext = new ServiceNavigationContext
+        {
+            EndSlot = new("End slot", ServiceNavigationEndTagHelper.TagName)
+        };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
 

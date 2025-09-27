@@ -15,7 +15,7 @@ public class TextInputContextTests
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, new AttributeCollection(), "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -32,7 +32,7 @@ public class TextInputContextTests
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, new AttributeCollection(), "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -49,7 +49,7 @@ public class TextInputContextTests
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(new AttributeCollection(), "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -66,7 +66,7 @@ public class TextInputContextTests
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(new AttributeCollection(), "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -83,7 +83,7 @@ public class TextInputContextTests
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, new AttributeCollection(), "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -100,7 +100,7 @@ public class TextInputContextTests
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, new AttributeCollection(), "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

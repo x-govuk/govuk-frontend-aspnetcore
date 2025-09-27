@@ -27,25 +27,25 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
                 inputContext.SetLabel(
                     isPageHeading: false,
-                    attributes: new AttributeCollection(),
+                    attributes: [],
                     labelHtml,
                     FileUploadLabelTagHelper.TagName);
 
                 inputContext.SetHint(
-                    attributes: new AttributeCollection(),
+                    attributes: [],
                     hintHtml,
                     FileUploadHintTagHelper.TagName);
 
@@ -111,20 +111,20 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
                 inputContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     labelHtml,
                     FileUploadLabelTagHelper.TagName);
 
@@ -178,13 +178,13 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -258,20 +258,20 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
                 inputContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     labelHtml,
                     FileUploadLabelTagHelper.TagName);
 
@@ -331,18 +331,18 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
-                inputContext.SetHint(new AttributeCollection(), hintHtml, FileUploadHintTagHelper.TagName);
+                inputContext.SetHint([], hintHtml, FileUploadHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -404,20 +404,20 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     errorHtml,
                     FileUploadErrorMessageTagHelper.TagName);
 
@@ -483,13 +483,13 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -556,20 +556,20 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     errorHtml,
                     FileUploadErrorMessageTagHelper.TagName);
 
@@ -637,26 +637,26 @@ public class FileUploadTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
         var output = new TagHelperOutput(
             "govuk-input",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
                 inputContext.SetLabel(
                     isPageHeading: false,
-                    new AttributeCollection(),
+                    [],
                     labelHtml,
                     FileUploadLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
-                    new AttributeCollection(),
+                    [],
                     errorHtml,
                     FileUploadErrorMessageTagHelper.TagName);
 

@@ -88,6 +88,13 @@ public class AttributeCollectionJsonConverter : JsonConverter<AttributeCollectio
             JsonTokenType.Number => reader.GetDecimal(),
             JsonTokenType.False or JsonTokenType.True => reader.GetBoolean(),
             JsonTokenType.Null => null,
+            JsonTokenType.None => throw new NotImplementedException(),
+            JsonTokenType.StartObject => throw new NotImplementedException(),
+            JsonTokenType.EndObject => throw new NotImplementedException(),
+            JsonTokenType.StartArray => throw new NotImplementedException(),
+            JsonTokenType.EndArray => throw new NotImplementedException(),
+            JsonTokenType.PropertyName => throw new NotImplementedException(),
+            JsonTokenType.Comment => throw new NotImplementedException(),
             _ => throw new JsonException()
         };
     }

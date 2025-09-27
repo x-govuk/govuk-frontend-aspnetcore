@@ -59,11 +59,8 @@ public class ErrorSummaryTagHelper : TagHelper
 
         var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
 
-        IReadOnlyCollection<ErrorSummaryOptionsErrorItem> errorList;
-
-        if (errorSummaryContext.HaveExplicitItems)
-        {
-            errorList = errorSummaryContext.Items
+        IReadOnlyCollection<ErrorSummaryOptionsErrorItem> errorList = errorSummaryContext.HaveExplicitItems
+            ? errorSummaryContext.Items
                 .Select(i => new ErrorSummaryOptionsErrorItem
                 {
                     Href = i.Href,
@@ -72,13 +69,8 @@ public class ErrorSummaryTagHelper : TagHelper
                     Attributes = i.Attributes,
                     ItemAttributes = i.ItemAttributes
                 })
-                .ToArray();
-        }
-        else
-        {
-            errorList = containerErrorContext.GetErrorList();
-        }
-
+                .ToArray()
+            : containerErrorContext.GetErrorList();
         if (errorSummaryContext.Title is null &&
             errorSummaryContext.Description is null &&
             errorList.Count == 0)

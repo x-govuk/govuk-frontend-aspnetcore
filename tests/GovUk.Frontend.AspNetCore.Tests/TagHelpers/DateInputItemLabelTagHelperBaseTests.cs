@@ -46,7 +46,7 @@ public abstract class DateInputItemLabelTagHelperBaseTests<T>(string tagName, st
     {
         // Arrange
         var itemContext = new DateInputItemContext(ParentTagName!, TagName);
-        itemContext.SetLabel(html: "Existing label", attributes: new(), TagName);
+        itemContext.SetLabel(html: "Existing label", attributes: [], TagName);
 
         var context = CreateTagHelperContext(contexts: itemContext);
 

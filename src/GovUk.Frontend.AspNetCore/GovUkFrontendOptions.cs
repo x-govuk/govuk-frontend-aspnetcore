@@ -108,7 +108,7 @@ public class GovUkFrontendOptions
         }
     }
 
-    /// <inheritdoc cref="GovUk.Frontend.AspNetCore.FrontendPackageHostingOptions"/>
+    /// <inheritdoc cref="AspNetCore.FrontendPackageHostingOptions"/>
     public FrontendPackageHostingOptions FrontendPackageHostingOptions { get; set; }
 
     /// <summary>

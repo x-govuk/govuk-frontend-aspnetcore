@@ -2,17 +2,11 @@ using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class TabsContext
+internal class TabsContext(bool haveIdPrefix)
 {
-    private readonly List<TabsOptionsItem> _items;
+    private readonly List<TabsOptionsItem> _items = [];
 
-    public TabsContext(bool haveIdPrefix)
-    {
-        _items = new List<TabsOptionsItem>();
-        HaveIdPrefix = haveIdPrefix;
-    }
-
-    public bool HaveIdPrefix { get; }
+    public bool HaveIdPrefix { get; } = haveIdPrefix;
 
     public IReadOnlyList<TabsOptionsItem> Items => _items;
 

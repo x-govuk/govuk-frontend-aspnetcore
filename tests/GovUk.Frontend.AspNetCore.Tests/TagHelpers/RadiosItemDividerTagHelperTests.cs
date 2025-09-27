@@ -15,7 +15,7 @@ public class RadiosItemDividerTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-divider",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(RadiosContext), radiosContext }
@@ -24,7 +24,7 @@ public class RadiosItemDividerTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-radios-divider",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

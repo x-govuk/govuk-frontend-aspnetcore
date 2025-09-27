@@ -21,7 +21,7 @@ public class DateInputFieldsetTagHelperTests() : TagHelperTestBase(DateInputFiel
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading, attributes: new(), html: legendContent);
+                fieldsetContext.SetLegend(isPageHeading, attributes: [], html: legendContent);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -47,8 +47,8 @@ public class DateInputFieldsetTagHelperTests() : TagHelperTestBase(DateInputFiel
         var dateInputContext = new DateInputContext(haveExplicitValue: false, @for: null);
 
         dateInputContext.OpenFieldset();
-        var checkboxesFieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: new(), @for: null);
-        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new(), html: new HtmlString("Existing legend"));
+        var checkboxesFieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for: null);
+        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new HtmlString("Existing legend"));
         dateInputContext.CloseFieldset(checkboxesFieldsetContext);
 
         var context = CreateTagHelperContext(contexts: dateInputContext);
@@ -57,7 +57,7 @@ public class DateInputFieldsetTagHelperTests() : TagHelperTestBase(DateInputFiel
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: new(), html: "New legend");
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: [], html: "New legend");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

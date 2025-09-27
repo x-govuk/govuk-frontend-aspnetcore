@@ -29,18 +29,13 @@ internal static class DictionaryExtensions
     public static ImmutableDictionary<TKey, TValue> AddIf<TKey, TValue>(this ImmutableDictionary<TKey, TValue> dict, bool condition, TKey key, TValue value)
         where TKey : notnull
     {
-        if (condition)
-        {
-            return dict.Add(key, value);
-        }
-
-        return dict;
+        return condition ? dict.Add(key, value) : dict;
     }
 
     public static ImmutableDictionary<TKey, TValue> AddIfNotNull<TKey, TValue>(this ImmutableDictionary<TKey, TValue> dict, TKey key, TValue value)
         where TKey : notnull
     {
-        return AddIf<TKey, TValue>(dict, value is not null, key, value);
+        return AddIf(dict, value is not null, key, value);
     }
 
     public static ImmutableDictionary<TKey, TValue> Remove<TKey, TValue>(this ImmutableDictionary<TKey, TValue> dict, TKey key, out TValue? value)

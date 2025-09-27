@@ -59,7 +59,7 @@ public class RadiosContextTests
         context.OpenFieldset();
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset());
+        var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -76,7 +76,7 @@ public class RadiosContextTests
         context.CloseFieldset(new RadiosFieldsetContext(attributes: null, aspFor: null));
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset());
+        var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -98,7 +98,7 @@ public class RadiosContextTests
         context.AddItem(item);
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset());
+        var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -113,7 +113,7 @@ public class RadiosContextTests
         context.SetHint(attributes: null, content: new HtmlString("Hint"));
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset());
+        var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -128,7 +128,7 @@ public class RadiosContextTests
         context.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Error"));
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset());
+        var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

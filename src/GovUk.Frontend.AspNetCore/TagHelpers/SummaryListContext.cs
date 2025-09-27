@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class SummaryListContext
 {
-    private readonly List<SummaryListOptionsRow> _rows = new();
+    private readonly List<SummaryListOptionsRow> _rows = [];
 
     public bool HaveCard { get; set; }
 

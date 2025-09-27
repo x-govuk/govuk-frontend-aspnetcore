@@ -65,8 +65,10 @@ public class FooterMetaTagHelperTests() : TagHelperTestBase(FooterMetaTagHelper.
     public async Task ProcessAsync_ParentAlreadyHasMeta_ThrowsInvalidOperationException()
     {
         // Arrange
-        var footerContext = new FooterContext();
-        footerContext.Meta = new(new FooterOptionsMeta(), TagName);
+        var footerContext = new FooterContext
+        {
+            Meta = new(new FooterOptionsMeta(), TagName)
+        };
 
         var context = CreateTagHelperContext(contexts: footerContext);
 

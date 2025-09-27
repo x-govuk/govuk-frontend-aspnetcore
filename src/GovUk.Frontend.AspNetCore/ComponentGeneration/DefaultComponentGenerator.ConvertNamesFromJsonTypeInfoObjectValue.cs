@@ -50,18 +50,8 @@ internal partial class DefaultComponentGenerator
 
         private string GetMemberNamesFromJsonPath(string name)
         {
-            var property = _jsonTypeInfo.Properties.SingleOrDefault(p => p.Name == name);
-            if (property is null)
-            {
-                throw new InvalidOperationException($"Cannot find property with name '{name}' on {_jsonTypeInfo.Type.Name}.");
-            }
-
-            var memberName = (property.AttributeProvider as MemberInfo)?.Name;
-            if (memberName is null)
-            {
-                throw new InvalidOperationException($"Cannot get member name for property '{name}' on {_jsonTypeInfo.Type.Name}.");
-            }
-
+            var property = _jsonTypeInfo.Properties.SingleOrDefault(p => p.Name == name) ?? throw new InvalidOperationException($"Cannot find property with name '{name}' on {_jsonTypeInfo.Type.Name}.");
+            var memberName = ((property.AttributeProvider as MemberInfo)?.Name) ?? throw new InvalidOperationException($"Cannot get member name for property '{name}' on {_jsonTypeInfo.Type.Name}.");
             return memberName;
         }
     }

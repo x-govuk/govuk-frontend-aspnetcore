@@ -300,23 +300,15 @@ public class TextInputTagHelper : TagHelper
 
     private string ResolveName()
     {
-        if (Name is null && For is null)
-        {
-            throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
+        return Name is null && For is null
+            ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
-                AspForAttributeName);
-        }
-
-        return Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
+                AspForAttributeName)
+            : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
     }
 
     private string? ResolveValue()
     {
-        if (_valueSpecified)
-        {
-            return _value;
-        }
-
-        return For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null;
+        return _valueSpecified ? _value : For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null;
     }
 }

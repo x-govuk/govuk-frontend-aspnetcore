@@ -10,7 +10,7 @@ public class FormGroupFieldsetContextTests
     public void SetLegend_SetsLegendOnContext()
     {
         // Arrange
-        var context = new TestContext(new AttributeDictionary(), aspFor: null);
+        var context = new TestContext([], aspFor: null);
 
         // Act
         context.SetLegend(isPageHeading: true, null, new HtmlString("Legend"));
@@ -24,7 +24,7 @@ public class FormGroupFieldsetContextTests
     public void SetLegend_AlreadySet_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new TestContext(new AttributeDictionary(), aspFor: null);
+        var context = new TestContext([], aspFor: null);
 
         context.SetLegend(false, null, new HtmlString("Existing legend"));
 
@@ -36,11 +36,7 @@ public class FormGroupFieldsetContextTests
         Assert.Equal("Only one <test-fieldset-legend> element is permitted within each <test-fieldset>.", ex.Message);
     }
 
-    private class TestContext : FormGroupFieldsetContext
+    private class TestContext(AttributeDictionary attributes, ModelExpression? aspFor) : FormGroupFieldsetContext(fieldsetTagName: "test-fieldset", legendTagName: "test-fieldset-legend", attributes, aspFor)
     {
-        public TestContext(AttributeDictionary attributes, ModelExpression? aspFor) :
-            base(fieldsetTagName: "test-fieldset", legendTagName: "test-fieldset-legend", attributes, aspFor)
-        {
-        }
     }
 }

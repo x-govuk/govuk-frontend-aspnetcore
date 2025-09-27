@@ -64,8 +64,10 @@ internal partial class ComponentGenerator
             itemTagBuilder.MergeOptionalAttributes(item.Attributes);
             itemTagBuilder.MergeCssClass("govuk-radios__item");
 
-            var input = new TagBuilder("input");
-            input.TagRenderMode = TagRenderMode.SelfClosing;
+            var input = new TagBuilder("input")
+            {
+                TagRenderMode = TagRenderMode.SelfClosing
+            };
             input.MergeOptionalAttributes(item.InputAttributes);
             input.MergeCssClass("govuk-radios__input");
             input.Attributes.Add("id", itemId);

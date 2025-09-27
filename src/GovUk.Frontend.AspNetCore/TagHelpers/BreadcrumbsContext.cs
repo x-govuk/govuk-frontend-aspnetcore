@@ -8,7 +8,7 @@ internal class BreadcrumbsContext
 
     public BreadcrumbsContext()
     {
-        _items = new List<BreadcrumbsOptionsItem>();
+        _items = [];
     }
 
     public IReadOnlyCollection<BreadcrumbsOptionsItem> Items => _items;

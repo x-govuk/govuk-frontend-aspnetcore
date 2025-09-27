@@ -45,7 +45,7 @@ internal abstract class FormGroupFieldsetContext2
         var attributes = _attributes.Clone();
         attributes.Remove("class", out var classes);
 
-        var legendAttributes = Legend?.Attributes.Clone() ?? new AttributeCollection();
+        var legendAttributes = Legend?.Attributes.Clone() ?? [];
         legendAttributes.Remove("class", out var legendClasses);
 
         if (_legendClass is not null)

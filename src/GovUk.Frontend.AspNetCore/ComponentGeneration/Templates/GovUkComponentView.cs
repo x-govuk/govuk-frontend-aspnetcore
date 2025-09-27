@@ -72,16 +72,8 @@ public abstract class GovUkComponentView<TModel> : RazorPage<TModel>
             }
         }
 
-        if (!string.IsNullOrEmpty(text))
-        {
-            return new HtmlString(HtmlEncoder.Encode(text));
-        }
-
-        if (fallback is not null)
-        {
-            return new HtmlString(HtmlEncoder.Encode(fallback));
-        }
-
-        return null;
+        return !string.IsNullOrEmpty(text)
+            ? new HtmlString(HtmlEncoder.Encode(text))
+            : fallback is not null ? new HtmlString(HtmlEncoder.Encode(fallback)) : (IHtmlContent?)null;
     }
 }

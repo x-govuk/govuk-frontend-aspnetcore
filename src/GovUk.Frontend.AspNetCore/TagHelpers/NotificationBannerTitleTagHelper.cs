@@ -36,8 +36,8 @@ public class NotificationBannerTitleTagHelper : TagHelper
         get => _headingLevel;
         set
         {
-            if (value < ComponentGenerator.NotificationBannerMinHeadingLevel ||
-                value > ComponentGenerator.NotificationBannerMaxHeadingLevel)
+            if (value is < ComponentGenerator.NotificationBannerMinHeadingLevel or
+                > ComponentGenerator.NotificationBannerMaxHeadingLevel)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),

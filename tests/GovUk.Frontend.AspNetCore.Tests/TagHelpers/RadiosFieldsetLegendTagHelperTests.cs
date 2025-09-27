@@ -14,7 +14,7 @@ public class RadiosFieldsetLegendTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset-legend",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(RadiosFieldsetContext), fieldsetContext }
@@ -23,7 +23,7 @@ public class RadiosFieldsetLegendTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-radios-fieldset-legend",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -57,7 +57,7 @@ public class RadiosFieldsetLegendTagHelperTests
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset-legend",
-            allAttributes: new TagHelperAttributeList(),
+            allAttributes: [],
             items: new Dictionary<object, object>()
             {
                 { typeof(RadiosFieldsetContext), fieldsetContext }
@@ -66,7 +66,7 @@ public class RadiosFieldsetLegendTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-radios-fieldset-legend",
-            attributes: new TagHelperAttributeList(),
+            attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

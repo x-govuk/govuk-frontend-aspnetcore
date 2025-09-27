@@ -12,12 +12,9 @@ internal static class TagHelperContextExtensions
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        if (context.Items.TryGetValue(typeof(TItem), out var obj) && obj is TItem item)
-        {
-            return item;
-        }
-
-        throw new InvalidOperationException($"No context item found for type: '{typeof(TItem).FullName}'.");
+        return context.Items.TryGetValue(typeof(TItem), out var obj) && obj is TItem item
+            ? item
+            : throw new InvalidOperationException($"No context item found for type: '{typeof(TItem).FullName}'.");
     }
 
     public static TItem GetContextItem<TItem>(this TagHelperContext context)
@@ -25,12 +22,9 @@ internal static class TagHelperContextExtensions
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        if (!TryGetContextItem<TItem>(context, out var item))
-        {
-            throw new InvalidOperationException($"No context item found for type: '{typeof(TItem).FullName}'.");
-        }
-
-        return item;
+        return !TryGetContextItem<TItem>(context, out var item)
+            ? throw new InvalidOperationException($"No context item found for type: '{typeof(TItem).FullName}'.")
+            : item;
     }
 
     public static void SetContextItem<TItem>(this TagHelperContext context, TItem item)
@@ -83,21 +77,14 @@ internal static class TagHelperContextExtensions
         }
     }
 
-    internal class RestoreItemsOnDispose : IDisposable
+    internal class RestoreItemsOnDispose(
+        TagHelperContext context,
+        object key,
+        object? previousValue) : IDisposable
     {
-        private readonly TagHelperContext _context;
-        private readonly object _key;
-        private readonly object? _previousValue;
-
-        public RestoreItemsOnDispose(
-            TagHelperContext context,
-            object key,
-            object? previousValue)
-        {
-            _context = Guard.ArgumentNotNull(nameof(context), context);
-            _key = Guard.ArgumentNotNull(nameof(key), key);
-            _previousValue = previousValue;
-        }
+        private readonly TagHelperContext _context = Guard.ArgumentNotNull(nameof(context), context);
+        private readonly object _key = Guard.ArgumentNotNull(nameof(key), key);
+        private readonly object? _previousValue = previousValue;
 
         public void Dispose()
         {

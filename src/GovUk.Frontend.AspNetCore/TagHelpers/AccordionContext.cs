@@ -8,7 +8,7 @@ internal class AccordionContext
 
     public AccordionContext()
     {
-        _items = new List<AccordionItem>();
+        _items = [];
     }
 
     public IReadOnlyList<AccordionItem> Items => _items;

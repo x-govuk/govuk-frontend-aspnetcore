@@ -30,8 +30,8 @@ internal partial class ComponentGenerator
     {
         Guard.ArgumentNotNull(nameof(content), content);
 
-        if (titleHeadingLevel < NotificationBannerMinHeadingLevel ||
-            titleHeadingLevel > NotificationBannerMaxHeadingLevel)
+        if (titleHeadingLevel is < NotificationBannerMinHeadingLevel or
+            > NotificationBannerMaxHeadingLevel)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(titleHeadingLevel),

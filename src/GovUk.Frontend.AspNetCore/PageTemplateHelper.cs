@@ -181,7 +181,9 @@ public class PageTemplateHelper
     private static string GenerateCspHash(string value)
     {
         using var algo = SHA256.Create();
+#pragma warning disable CA1850
         var hash = algo.ComputeHash(Encoding.UTF8.GetBytes(value));
+#pragma warning restore CA1850
         return $"'sha256-{Convert.ToBase64String(hash)}'";
     }
 

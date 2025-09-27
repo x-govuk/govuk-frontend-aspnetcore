@@ -59,6 +59,9 @@ public class PanelTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var panelContext = new PanelContext();
 
         using (context.SetScopedContextItem(panelContext))

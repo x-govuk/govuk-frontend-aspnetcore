@@ -25,6 +25,9 @@ public class RadiosFieldsetLegendTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
 
         var content = output.TagMode == TagMode.StartTagAndEndTag ?

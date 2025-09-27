@@ -87,6 +87,9 @@ public class ServiceNavigationNavTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var serviceNavigationContext = context.GetContextItem<ServiceNavigationContext>();
         var navContext = context.GetContextItem<ServiceNavigationNavContext>();
 

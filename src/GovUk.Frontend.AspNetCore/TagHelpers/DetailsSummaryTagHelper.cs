@@ -13,6 +13,9 @@ public class DetailsSummaryTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var detailsContext = context.GetContextItem<DetailsContext>();
 
         var content = await output.GetChildContentAsync();

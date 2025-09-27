@@ -12,6 +12,9 @@ public class AttributesTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         if (Attributes is null)
         {
             return;

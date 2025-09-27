@@ -43,6 +43,9 @@ public class DetailsTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var detailsContext = new DetailsContext();
 
         using (context.SetScopedContextItem(detailsContext))

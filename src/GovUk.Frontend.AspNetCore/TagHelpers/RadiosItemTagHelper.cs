@@ -84,6 +84,9 @@ public class RadiosItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         if (Value is null)
         {
             throw ExceptionHelper.TheAttributeMustBeSpecified(ValueAttributeName);

@@ -29,6 +29,7 @@ public class PaginationTagHelper : TagHelper
     public PaginationTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
+
         _componentGenerator = componentGenerator;
     }
 
@@ -46,6 +47,9 @@ public class PaginationTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var paginationContext = new PaginationContext();
 
         using (context.SetScopedContextItem(paginationContext))

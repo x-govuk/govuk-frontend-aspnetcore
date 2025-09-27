@@ -61,6 +61,9 @@ public class TitleTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
 
         if (_options.PrependErrorToTitle && containerErrorContext.ErrorSummaryHasBeenRendered)

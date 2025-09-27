@@ -25,6 +25,9 @@ public class FormNovalidateTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         if (_optionsAccessor.Value.AddNovalidateAttributeToForms)
         {
             if (!output.Attributes.ContainsName("novalidate"))

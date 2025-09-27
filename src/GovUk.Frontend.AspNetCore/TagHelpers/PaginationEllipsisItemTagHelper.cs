@@ -14,6 +14,9 @@ public class PaginationEllipsisItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var paginationContext = context.GetContextItem<PaginationContext>();
 
         var attributes = new AttributeCollection(output.Attributes);

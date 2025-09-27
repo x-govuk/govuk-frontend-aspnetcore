@@ -20,13 +20,18 @@ public class TagTagHelper : TagHelper
     /// </summary>
     public TagTagHelper(IComponentGenerator componentGenerator)
     {
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+
         _componentGenerator = componentGenerator;
     }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var content = (await output.GetChildContentAsync()).Snapshot();
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

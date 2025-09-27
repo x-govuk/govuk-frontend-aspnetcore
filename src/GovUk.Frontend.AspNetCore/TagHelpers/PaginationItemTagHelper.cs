@@ -66,6 +66,9 @@ public class PaginationItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var paginationContext = context.GetContextItem<PaginationContext>();
 
         var content = await output.GetChildContentAsync();

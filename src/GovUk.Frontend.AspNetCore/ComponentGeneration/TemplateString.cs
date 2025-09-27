@@ -88,7 +88,9 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// <param name="value">The unencoded <see cref="String"/>.</param>
     /// <returns></returns>
     [return: NotNullIfNotNull(nameof(value))]
+#pragma warning disable CA2225
     public static implicit operator TemplateString?(string? value) => value is null ? null : new(value);
+#pragma warning restore CA2225
 
     /// <summary>
     /// Creates a <see cref="TemplateString"/> from <see cref="HtmlString"/>.
@@ -96,7 +98,9 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// <param name="content">The <see cref="IHtmlContent"/> to create the <see cref="TemplateString"/> from.</param>
     /// <returns>A new <see cref="TemplateString"/> wrapping the specified <see cref="HtmlString"/>.</returns>
     [return: NotNullIfNotNull(nameof(content))]
+#pragma warning disable CA2225
     public static implicit operator TemplateString?(HtmlString? content) => content is null ? null : new(content);
+#pragma warning restore CA2225
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static bool operator ==(TemplateString? first, TemplateString? second) =>
@@ -164,6 +168,7 @@ public static class TemplateStringExtensions
     public static TemplateString AppendCssClasses(this TemplateString? templateString, HtmlEncoder encoder, params TemplateString[] classNames)
     {
         ArgumentNullException.ThrowIfNull(encoder);
+        ArgumentNullException.ThrowIfNull(classNames);
 
         var original = templateString?.ToHtmlString(encoder).Trim() ?? "";
 

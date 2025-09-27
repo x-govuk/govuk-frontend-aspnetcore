@@ -66,7 +66,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
             }
 
             // If the object is an Options class, convert its property names to camel case
-            if (v.GetType().Namespace?.StartsWith(GetType().Namespace!) == true && !v.GetType().IsArray)
+            if (v.GetType().Namespace?.StartsWith(GetType().Namespace!, StringComparison.Ordinal) == true && !v.GetType().IsArray)
             {
                 return new ConvertNamesFromJsonTypeInfoObjectValue(v, optionsJsonSerializerOptions);
             }

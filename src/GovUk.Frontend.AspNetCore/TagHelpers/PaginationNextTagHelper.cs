@@ -29,6 +29,9 @@ public class PaginationNextTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var paginationContext = context.GetContextItem<PaginationContext>();
 
         var content = output.TagMode == TagMode.StartTagAndEndTag ?

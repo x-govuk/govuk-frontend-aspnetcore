@@ -41,6 +41,9 @@ public class TabsItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         if (Label is null)
         {
             throw ExceptionHelper.TheAttributeMustBeSpecified(LabelAttributeName);

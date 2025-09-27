@@ -16,6 +16,8 @@ internal class FileUploadTagHelperInitializer : ITagHelperInitializer<FileUpload
 
     public void Initialize(FileUploadTagHelper helper, ViewContext context)
     {
+        ArgumentNullException.ThrowIfNull(helper);
+
         helper.JavaScriptEnhancements ??= _optionsAccessor.Value.DefaultFileUploadJavaScriptEnhancements;
     }
 }

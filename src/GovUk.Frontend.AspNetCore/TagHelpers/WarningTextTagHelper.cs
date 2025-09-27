@@ -38,6 +38,8 @@ public class WarningTextTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(output);
+
         var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)

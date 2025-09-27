@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
@@ -52,7 +53,7 @@ public class DateInputTagHelper : TagHelper
     private readonly HtmlEncoder _encoder;
 
     private object? _value;
-    private bool _valueSpecified = false;
+    private bool _valueSpecified;
 
     /// <summary>
     /// Creates a <see cref="DateInputTagHelper"/>.
@@ -140,7 +141,7 @@ public class DateInputTagHelper : TagHelper
     /// </summary>
     /// <remarks>
     /// This is required when creating a partial date input (e.g. a day and month only)
-    /// and the value is a <see cref="T:ValueTuple&lt;int, int&gt;"/>.
+    /// and the value is a <see cref="ValueTuple{T1, T2}"/>.
     /// </remarks>
     [HtmlAttributeName(ItemTypesAttributeName)]
     public DateInputItemTypes? ItemTypes { get; set; }
@@ -184,6 +185,9 @@ public class DateInputTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var dateInputContext = context.GetContextItem<DateInputContext>();
 
         await output.GetChildContentAsync();
@@ -227,7 +231,7 @@ public class DateInputTagHelper : TagHelper
         if (itemTypes.HasFlag(DateInputItemTypes.Day))
         {
             items.Add(CreateDateInputItem(
-                getComponentFromValue: date => date?.Day.ToString(),
+                getComponentFromValue: date => date?.Day?.ToString(CultureInfo.InvariantCulture),
                 defaultLabel: DefaultDayLabel,
                 defaultName: DateInputModelBinder.DayInputName,
                 defaultClass: "govuk-input--width-2",
@@ -238,7 +242,7 @@ public class DateInputTagHelper : TagHelper
         if (itemTypes.HasFlag(DateInputItemTypes.Month))
         {
             items.Add(CreateDateInputItem(
-                getComponentFromValue: date => date?.Month.ToString(),
+                getComponentFromValue: date => date?.Month?.ToString(CultureInfo.InvariantCulture),
                 defaultLabel: DefaultMonthLabel,
                 defaultName: DateInputModelBinder.MonthInputName,
                 defaultClass: "govuk-input--width-2",
@@ -249,7 +253,7 @@ public class DateInputTagHelper : TagHelper
         if (itemTypes.HasFlag(DateInputItemTypes.Year))
         {
             items.Add(CreateDateInputItem(
-                getComponentFromValue: date => date?.Year.ToString(),
+                getComponentFromValue: date => date?.Year?.ToString(CultureInfo.InvariantCulture),
                 defaultLabel: DefaultYearLabel,
                 defaultName: DateInputModelBinder.YearInputName,
                 defaultClass: "govuk-input--width-4",
@@ -282,7 +286,7 @@ public class DateInputTagHelper : TagHelper
             Debug.Assert(errorMessageOptions.Html is not null);
 
             var firstFieldWithError = items
-                .First(i => i.Classes?.ToHtmlString(_encoder).Contains("govuk-input--error") == true)
+                .First(i => i.Classes?.ToHtmlString(_encoder).Contains("govuk-input--error", StringComparison.Ordinal) == true)
                 .Id;
 
             var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();

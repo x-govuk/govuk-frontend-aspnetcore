@@ -18,7 +18,7 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     private readonly DateInputItemTypes _itemType;
     private readonly string _labelTagName;
     private string? _value;
-    private bool _valueSpecified = false;
+    private bool _valueSpecified;
 
     /// <summary>
     /// Creates a <see cref="DateInputItemTagHelperBase"/>.
@@ -92,6 +92,9 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var dateInputContext = context.GetContextItem<DateInputContext>();
         var dateInputItemContext = new DateInputItemContext(output.TagName, _labelTagName);
 

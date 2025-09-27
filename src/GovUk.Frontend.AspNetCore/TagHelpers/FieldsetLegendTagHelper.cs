@@ -29,6 +29,9 @@ public class FieldsetLegendTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var fieldsetContext = context.GetContextItem<FieldsetContext>();
 
         var content = await output.GetChildContentAsync();

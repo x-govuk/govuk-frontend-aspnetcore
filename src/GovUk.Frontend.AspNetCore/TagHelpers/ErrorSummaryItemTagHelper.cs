@@ -80,6 +80,9 @@ public class ErrorSummaryItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         if (output.TagMode == TagMode.SelfClosing && For is null)
         {
             throw new InvalidOperationException(

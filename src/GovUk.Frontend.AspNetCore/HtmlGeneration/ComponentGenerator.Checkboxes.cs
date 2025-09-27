@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.HtmlGeneration;
 
+[SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
 internal partial class ComponentGenerator
 {
     internal const string CheckboxesElement = "div";
@@ -21,8 +23,6 @@ internal partial class ComponentGenerator
         AttributeDictionary? attributes)
     {
         Guard.ArgumentNotNull(nameof(items), items);
-
-        var isConditional = items.OfType<CheckboxesItem>().Any(i => i.Conditional is not null);
 
         var tagBuilder = new TagBuilder(CheckboxesElement);
         tagBuilder.MergeOptionalAttributes(attributes);

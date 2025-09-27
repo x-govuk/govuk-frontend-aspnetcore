@@ -18,6 +18,9 @@ public abstract class DateInputItemLabelTagHelperBase : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var dateInputItemContext = context.GetContextItem<DateInputItemContext>();
 
         var content = await output.GetChildContentAsync();

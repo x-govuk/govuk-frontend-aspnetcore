@@ -60,6 +60,9 @@ public class NotificationBannerTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var notificationBannerContext = new NotificationBannerContext();
 
         TagHelperContent content;

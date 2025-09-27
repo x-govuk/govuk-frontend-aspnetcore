@@ -81,6 +81,9 @@ public class ButtonTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var content = (await output.GetChildContentAsync()).Snapshot();
 
         if (output.Content.IsModified)

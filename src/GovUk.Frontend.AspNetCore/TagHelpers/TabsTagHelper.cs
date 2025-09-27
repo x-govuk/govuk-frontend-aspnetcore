@@ -28,6 +28,7 @@ public class TabsTagHelper : TagHelper
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(encoder);
+
         _componentGenerator = componentGenerator;
         _encoder = encoder;
     }
@@ -59,6 +60,9 @@ public class TabsTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var tabsContext = new TabsContext(haveIdPrefix: IdPrefix is not null);
 
         using (context.SetScopedContextItem(tabsContext))

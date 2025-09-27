@@ -25,6 +25,7 @@ public class InsetTextTagHelper : TagHelper
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(encoder);
+
         _componentGenerator = componentGenerator;
         _encoder = encoder;
     }
@@ -38,6 +39,9 @@ public class InsetTextTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)

@@ -28,6 +28,9 @@ public abstract class FormGroupErrorMessageTagHelperBase : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :
             null;

@@ -37,6 +37,8 @@ public class DateInputModelBinder : IModelBinder
     /// <inheritdoc/>
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
+        ArgumentNullException.ThrowIfNull(bindingContext);
+
         var optionsAccessor = bindingContext.HttpContext.RequestServices.GetRequiredService<IOptions<GovUkFrontendOptions>>();
 
         var modelType = bindingContext.ModelMetadata.UnderlyingOrModelType;
@@ -49,9 +51,11 @@ public class DateInputModelBinder : IModelBinder
         var monthValueProviderResult = bindingContext.ValueProvider.GetValue(monthModelName);
         var yearValueProviderResult = bindingContext.ValueProvider.GetValue(yearModelName);
 
+#pragma warning disable CA1820
         if ((dayValueProviderResult == ValueProviderResult.None || dayValueProviderResult.FirstValue == string.Empty) &&
             (monthValueProviderResult == ValueProviderResult.None || monthValueProviderResult.FirstValue == string.Empty) &&
             (yearValueProviderResult == ValueProviderResult.None || yearValueProviderResult.FirstValue == string.Empty))
+#pragma warning restore CA1820
         {
             return Task.CompletedTask;
         }
@@ -242,7 +246,9 @@ public class DateInputModelBinder : IModelBinder
 
             if (!int.TryParse(value, out result) && acceptMonthNames)
             {
+#pragma warning disable CA1308
                 result = value.ToLowerInvariant() switch
+#pragma warning restore CA1308
                 {
                     "jan" => 1,
                     "january" => 1,

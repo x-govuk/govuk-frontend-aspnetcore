@@ -28,6 +28,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
+
         _componentGenerator = componentGenerator;
         _optionsAccessor = optionsAccessor;
     }
@@ -67,6 +68,9 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         await output.GetChildContentAsync();
 
         var generateErrorSummariesOptions = _optionsAccessor.Value.ErrorSummaryGeneration;

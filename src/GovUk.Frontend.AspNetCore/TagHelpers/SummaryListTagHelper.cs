@@ -22,18 +22,24 @@ public class SummaryListTagHelper : TagHelper
     public SummaryListTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
+
         _componentGenerator = componentGenerator;
     }
 
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
+        ArgumentNullException.ThrowIfNull(context);
+
         context.SetContextItem(new SummaryListContext());
     }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var summaryListContext = context.GetContextItem<SummaryListContext>();
 
         await output.GetChildContentAsync();

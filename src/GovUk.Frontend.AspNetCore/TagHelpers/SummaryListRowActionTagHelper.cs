@@ -22,6 +22,9 @@ public class SummaryListRowActionTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var actionsContext = context.GetContextItem<SummaryListRowActionsContext>();
 
         var content = await output.GetChildContentAsync();

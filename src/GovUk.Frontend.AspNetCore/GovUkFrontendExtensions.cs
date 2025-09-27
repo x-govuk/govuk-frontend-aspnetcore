@@ -110,6 +110,7 @@ public static class GovUkFrontendExtensions
         public ConfigureMvcOptions(IOptions<GovUkFrontendOptions> optionsAccessor)
         {
             ArgumentNullException.ThrowIfNull(optionsAccessor);
+
             _optionsAccessor = optionsAccessor;
         }
 

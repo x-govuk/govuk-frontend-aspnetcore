@@ -32,8 +32,8 @@ internal partial class ComponentGenerator
         if (headingLevel < AccordionMinHeadingLevel || headingLevel > AccordionMaxHeadingLevel)
         {
             throw new ArgumentOutOfRangeException(
-                $"{nameof(headingLevel)} must be between {AccordionMinHeadingLevel} and {AccordionMaxHeadingLevel}.",
-                nameof(headingLevel));
+                nameof(headingLevel),
+                $"{nameof(headingLevel)} must be between {AccordionMinHeadingLevel} and {AccordionMaxHeadingLevel}.");
         }
 
         Guard.ArgumentNotNullOrEmpty(nameof(items), items);

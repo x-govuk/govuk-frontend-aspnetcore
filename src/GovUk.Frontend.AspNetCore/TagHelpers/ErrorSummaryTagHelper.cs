@@ -47,6 +47,9 @@ public class ErrorSummaryTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var errorSummaryContext = new ErrorSummaryContext();
 
         using (context.SetScopedContextItem(typeof(ErrorSummaryContext), errorSummaryContext))

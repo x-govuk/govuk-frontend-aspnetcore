@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using Fluid;
 using Fluid.Values;
@@ -137,7 +138,7 @@ internal partial class DefaultComponentGenerator
                     var pluralRule = pluralRuleParts[0].ToStringValue();
                     var message = pluralRuleParts[1].ToStringValue();
 
-                    sb.Append($" data-i18n.{key}.{pluralRule}=\"{_encoder.Encode(message)}\"");
+                    sb.Append(CultureInfo.InvariantCulture, $" data-i18n.{key}.{pluralRule}=\"{_encoder.Encode(message)}\"");
                 }
 
                 return new StringValue(sb.ToString(), encode: false);
@@ -172,7 +173,7 @@ internal partial class DefaultComponentGenerator
             return FluidValue.Create(!args.At(0).ToBooleanValue(), context.Options);
         }
 
-        public static FluidValue String(FunctionArguments args, TemplateContext context)
+        public static StringValue String(FunctionArguments args, TemplateContext context)
         {
             return StringValue.Create(args.At(0).ToStringValue());
         }

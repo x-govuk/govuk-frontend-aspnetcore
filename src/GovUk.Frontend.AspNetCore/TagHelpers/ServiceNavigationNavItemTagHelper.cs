@@ -51,6 +51,9 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var navContext = context.GetContextItem<ServiceNavigationNavContext>();
 
         if (navContext.NavigationEndSlot is var (_, navigationEndTagName))

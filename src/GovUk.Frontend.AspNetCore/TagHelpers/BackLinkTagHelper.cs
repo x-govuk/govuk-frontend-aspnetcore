@@ -28,6 +28,9 @@ public class BackLinkTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         IHtmlContent? content = null;
 
         if (output.TagMode == TagMode.StartTagAndEndTag)

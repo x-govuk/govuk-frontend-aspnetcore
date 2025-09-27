@@ -8,16 +8,11 @@ internal class DefaultModelHelper : IModelHelper
 {
     private delegate string GetFullHtmlFieldNameDelegate(ViewContext viewContext, string expression);
 
-    private static readonly GetFullHtmlFieldNameDelegate s_getFullHtmlFieldNameDelegate;
-
-    static DefaultModelHelper()
-    {
-        s_getFullHtmlFieldNameDelegate =
-            (GetFullHtmlFieldNameDelegate)typeof(IHtmlGenerator).Assembly
-                .GetType("Microsoft.AspNetCore.Mvc.ViewFeatures.NameAndIdProvider", throwOnError: true)!
-                .GetMethod("GetFullHtmlFieldName", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)!
-                .CreateDelegate(typeof(GetFullHtmlFieldNameDelegate));
-    }
+    private static readonly GetFullHtmlFieldNameDelegate _getFullHtmlFieldNameDelegate =
+        (GetFullHtmlFieldNameDelegate)typeof(IHtmlGenerator).Assembly
+            .GetType("Microsoft.AspNetCore.Mvc.ViewFeatures.NameAndIdProvider", throwOnError: true)!
+            .GetMethod("GetFullHtmlFieldName", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)!
+            .CreateDelegate(typeof(GetFullHtmlFieldNameDelegate));
 
     public virtual string? GetDescription(ModelExplorer modelExplorer) => modelExplorer.Metadata.Description;
 
@@ -42,7 +37,7 @@ internal class DefaultModelHelper : IModelHelper
         ArgumentNullException.ThrowIfNull(viewContext);
         ArgumentNullException.ThrowIfNull(expression);
 
-        return s_getFullHtmlFieldNameDelegate(viewContext, expression);
+        return _getFullHtmlFieldNameDelegate(viewContext, expression);
     }
 
     public virtual string? GetModelValue(ViewContext viewContext, ModelExplorer modelExplorer, string expression)

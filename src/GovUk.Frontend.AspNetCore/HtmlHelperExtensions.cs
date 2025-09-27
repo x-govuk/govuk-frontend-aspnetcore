@@ -17,6 +17,7 @@ public static class HtmlHelperExtensions
     public static string GetCspScriptHashes(this IHtmlHelper htmlHelper)
     {
         ArgumentNullException.ThrowIfNull(htmlHelper);
+
         var httpContext = htmlHelper.ViewContext.HttpContext;
         var pageTemplateHelper = httpContext.RequestServices.GetRequiredService<PageTemplateHelper>();
         return pageTemplateHelper.GetCspScriptHashes();
@@ -30,6 +31,7 @@ public static class HtmlHelperExtensions
     public static string GetJsEnabledScriptCspHash(this IHtmlHelper htmlHelper)
     {
         ArgumentNullException.ThrowIfNull(htmlHelper);
+
         var httpContext = htmlHelper.ViewContext.HttpContext;
         var pageTemplateHelper = httpContext.RequestServices.GetRequiredService<PageTemplateHelper>();
         return pageTemplateHelper.GetJsEnabledScriptCspHash();
@@ -52,6 +54,7 @@ public static class HtmlHelperExtensions
     public static IHtmlContent GovUkFrontendJsEnabledScript(this IHtmlHelper htmlHelper, string? cspNonce = null)
     {
         ArgumentNullException.ThrowIfNull(htmlHelper);
+
         var httpContext = htmlHelper.ViewContext.HttpContext;
         var pageTemplateHelper = httpContext.RequestServices.GetRequiredService<PageTemplateHelper>();
         return pageTemplateHelper.GenerateJsEnabledScript(cspNonce);
@@ -76,6 +79,7 @@ public static class HtmlHelperExtensions
         string? cspNonce = null)
     {
         ArgumentNullException.ThrowIfNull(htmlHelper);
+
         var httpContext = htmlHelper.ViewContext.HttpContext;
         var pageTemplateHelper = httpContext.RequestServices.GetRequiredService<PageTemplateHelper>();
         return pageTemplateHelper.GenerateScriptImports(httpContext.Request.PathBase, cspNonce);
@@ -92,6 +96,7 @@ public static class HtmlHelperExtensions
     public static IHtmlContent GovUkFrontendStyleImports(this IHtmlHelper htmlHelper)
     {
         ArgumentNullException.ThrowIfNull(htmlHelper);
+
         var httpContext = htmlHelper.ViewContext.HttpContext;
         var pageTemplateHelper = httpContext.RequestServices.GetRequiredService<PageTemplateHelper>();
         return pageTemplateHelper.GenerateStyleImports(httpContext.Request.PathBase);

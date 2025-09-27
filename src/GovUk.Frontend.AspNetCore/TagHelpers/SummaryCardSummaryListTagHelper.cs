@@ -16,6 +16,9 @@ public class SummaryCardSummaryListTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var summaryListContext = context.GetContextItem<SummaryListContext>();
         summaryListContext.HaveCard = true;
 

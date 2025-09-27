@@ -56,6 +56,9 @@ public class CookieBannerTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var cookieBannerContext = context.GetContextItem<CookieBannerContext>();
 
         await output.GetChildContentAsync();

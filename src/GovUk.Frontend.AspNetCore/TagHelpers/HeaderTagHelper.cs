@@ -46,7 +46,9 @@ public class HeaderTagHelper : TagHelper
     /// If not specified, <c>/</c> will be used.
     /// </remarks>
     [HtmlAttributeName(HomePageUrlAttributeName)]
+#pragma warning disable CA1056
     public string? HomePageUrl { get; set; }
+#pragma warning restore CA1056
 
     /// <summary>
     /// Additional attributes to add to the generated container element.
@@ -63,6 +65,9 @@ public class HeaderTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);

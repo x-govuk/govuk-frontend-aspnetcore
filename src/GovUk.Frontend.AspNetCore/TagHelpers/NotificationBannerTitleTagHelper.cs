@@ -65,6 +65,9 @@ public class NotificationBannerTitleTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();
 
         var content = output.TagMode == TagMode.StartTagAndEndTag ?

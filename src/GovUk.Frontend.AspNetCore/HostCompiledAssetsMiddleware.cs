@@ -24,6 +24,7 @@ internal partial class HostCompiledAssetsMiddleware
         ArgumentNullException.ThrowIfNull(next);
         ArgumentNullException.ThrowIfNull(fileProvider);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
+
         _next = next;
         _fileProvider = fileProvider;
         _optionsAccessor = optionsAccessor;
@@ -50,7 +51,7 @@ internal partial class HostCompiledAssetsMiddleware
 
                     if (_optionsAccessor.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.RemoveSourceMapReferences))
                     {
-                        css = css.Replace("/*# sourceMappingURL=govuk-frontend.min.css.map */", "");
+                        css = css.Replace("/*# sourceMappingURL=govuk-frontend.min.css.map */", "", StringComparison.Ordinal);
                     }
 
                     if (_optionsAccessor.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
@@ -92,7 +93,7 @@ internal partial class HostCompiledAssetsMiddleware
 
                     if (_optionsAccessor.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.RemoveSourceMapReferences))
                     {
-                        js = js.Replace("//# sourceMappingURL=govuk-frontend.min.js.map", "");
+                        js = js.Replace("//# sourceMappingURL=govuk-frontend.min.js.map", "", StringComparison.Ordinal);
                     }
 
                     return js;

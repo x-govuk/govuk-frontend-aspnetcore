@@ -32,12 +32,17 @@ public class PhaseBannerTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
+        ArgumentNullException.ThrowIfNull(context);
+
         context.SetContextItem(new PhaseBannerContext());
     }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var phaseBannerContext = context.GetContextItem<PhaseBannerContext>();
 
         var content = await output.GetChildContentAsync();

@@ -9,6 +9,8 @@ public abstract class GovUkComponentView<TModel> : RazorPage<TModel>
 {
     protected IHtmlContent? Classes(params object?[] classNames)
     {
+        ArgumentNullException.ThrowIfNull(classNames);
+
         if (classNames.Length == 0)
         {
             return null;

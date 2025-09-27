@@ -20,7 +20,7 @@ public class SelectItemTagHelper : TagHelper
 
     private readonly IModelHelper _modelHelper;
     private bool? _selected;
-    private bool _selectedSpecified = false;
+    private bool _selectedSpecified;
 
     /// <summary>
     /// Creates a new <see cref="SelectItemTagHelper"/>.
@@ -77,6 +77,9 @@ public class SelectItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var selectContext = context.GetContextItem<SelectContext>();
 
         var content = await output.GetChildContentAsync();

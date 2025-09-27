@@ -16,6 +16,8 @@ internal class ButtonTagHelperInitializer : ITagHelperInitializer<ButtonTagHelpe
 
     public void Initialize(ButtonTagHelper helper, ViewContext context)
     {
+        ArgumentNullException.ThrowIfNull(helper);
+
         helper.PreventDoubleClick ??= _optionsAccessor.Value.DefaultButtonPreventDoubleClick;
     }
 }

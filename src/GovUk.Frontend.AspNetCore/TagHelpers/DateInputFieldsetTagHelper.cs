@@ -38,6 +38,9 @@ public class DateInputFieldsetTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var dateInputContext = context.GetContextItem<DateInputContext>();
         dateInputContext.OpenFieldset();
 

@@ -22,12 +22,16 @@ public class SummaryCardTagHelper : TagHelper
     public SummaryCardTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
+
         _componentGenerator = componentGenerator;
     }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var cardContext = new SummaryCardContext();
 
         using (context.SetScopedContextItem(cardContext))

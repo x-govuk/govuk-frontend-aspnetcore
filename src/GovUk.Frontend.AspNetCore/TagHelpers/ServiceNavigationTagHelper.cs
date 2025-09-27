@@ -47,7 +47,9 @@ public class ServiceNavigationTagHelper : TagHelper
     /// The homepage of your service.
     /// </summary>
     [HtmlAttributeName(ServiceUrlAttributeName)]
+#pragma warning disable CA1056
     public string? ServiceUrl { get; set; }
+#pragma warning restore CA1056
 
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
@@ -58,6 +60,9 @@ public class ServiceNavigationTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var serviceNavigationContext = context.GetContextItem<ServiceNavigationContext>();
 
         await output.GetChildContentAsync();

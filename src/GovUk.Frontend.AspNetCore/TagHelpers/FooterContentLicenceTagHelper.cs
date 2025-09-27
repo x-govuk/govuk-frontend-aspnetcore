@@ -14,6 +14,9 @@ public class FooterContentLicenceTagHelper : TagHelper
     /// <inheritdoc />
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var footerContext = context.GetContextItem<FooterContext>();
 
         if (footerContext.ContentLicence is not null)

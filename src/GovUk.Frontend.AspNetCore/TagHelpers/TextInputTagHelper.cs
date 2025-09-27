@@ -220,6 +220,9 @@ public class TextInputTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var textInputContext = new TextInputContext();
 
         using (context.SetScopedContextItem(textInputContext))

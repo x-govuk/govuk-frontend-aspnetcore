@@ -20,8 +20,8 @@ internal partial class ComponentGenerator
         if (headingLevel < PanelMinHeadingLevel || headingLevel > PanelMaxHeadingLevel)
         {
             throw new ArgumentOutOfRangeException(
-                $"{nameof(headingLevel)} must be between {PanelMinHeadingLevel} and {PanelMaxHeadingLevel}.",
-                nameof(headingLevel));
+                nameof(headingLevel),
+                $"{nameof(headingLevel)} must be between {PanelMinHeadingLevel} and {PanelMaxHeadingLevel}.");
         }
 
         Guard.ArgumentNotNull(nameof(titleContent), titleContent);

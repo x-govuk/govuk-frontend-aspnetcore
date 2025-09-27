@@ -21,6 +21,9 @@ public class FooterNavItemsTagHelper : TagHelper
     /// <inheritdoc />
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var navContext = context.GetContextItem<FooterNavContext>();
         var itemsContext = context.GetContextItem<FooterNavItemsContext>();
 

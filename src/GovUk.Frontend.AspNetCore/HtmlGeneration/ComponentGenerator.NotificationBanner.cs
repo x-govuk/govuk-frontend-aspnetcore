@@ -34,8 +34,8 @@ internal partial class ComponentGenerator
             titleHeadingLevel > NotificationBannerMaxHeadingLevel)
         {
             throw new ArgumentOutOfRangeException(
-                $"{nameof(titleHeadingLevel)} must be between {NotificationBannerMinHeadingLevel} and {NotificationBannerMaxHeadingLevel}.",
-                nameof(titleHeadingLevel));
+                nameof(titleHeadingLevel),
+                $"{nameof(titleHeadingLevel)} must be between {NotificationBannerMinHeadingLevel} and {NotificationBannerMaxHeadingLevel}.");
         }
 
         role ??= type == NotificationBannerType.Success ?

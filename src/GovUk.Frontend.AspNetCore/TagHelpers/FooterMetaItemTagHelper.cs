@@ -22,6 +22,9 @@ public class FooterMetaItemTagHelper : TagHelper
     /// <inheritdoc />
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var metaItemsContext = context.GetContextItem<FooterMetaItemsContext>();
 
         var content = await output.GetChildContentAsync();

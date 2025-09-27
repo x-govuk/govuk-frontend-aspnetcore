@@ -26,6 +26,9 @@ public class AccordionItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var accordionContext = context.GetContextItem<AccordionContext>();
 
         var itemContext = new AccordionItemContext();

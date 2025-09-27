@@ -24,6 +24,9 @@ public class BreadcrumbsItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var breadcrumbsContext = context.GetContextItem<BreadcrumbsContext>();
 
         var content = (await output.GetChildContentAsync()).Snapshot();

@@ -13,6 +13,9 @@ public static class HtmlContentExtensions
     /// </summary>
     public static string ToHtmlString(this IHtmlContent content, HtmlEncoder encoder)
     {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(encoder);
+
         if (content is HtmlString htmlString)
         {
             return htmlString.Value ?? string.Empty;

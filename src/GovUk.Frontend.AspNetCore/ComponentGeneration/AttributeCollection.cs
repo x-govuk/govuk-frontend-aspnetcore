@@ -61,6 +61,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
     internal AttributeCollection(IEnumerable<Attribute> attributes)
     {
         ArgumentNullException.ThrowIfNull(attributes);
+
         _attributes = attributes.ToDictionary(a => a.Name, a => a);
     }
 

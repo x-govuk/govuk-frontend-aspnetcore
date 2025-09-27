@@ -7,6 +7,8 @@ namespace GovUk.Frontend.AspNetCore;
 /// </summary>
 internal static class AttributeDictionaryExtensions
 {
+    private static readonly char[] _classSeparator = [' '];
+
     /// <summary>
     /// Adds a CSS class to the list of CSS classes in the tag if it does not already specified.
     /// If there are already CSS classes on the tag then a space character and the new class will be appended to
@@ -25,7 +27,7 @@ internal static class AttributeDictionaryExtensions
 
         if (attributeDictionary.TryGetValue("class", out var currentValue))
         {
-            var classes = currentValue!.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var classes = currentValue!.Split(_classSeparator, StringSplitOptions.RemoveEmptyEntries);
 
             if (!classes.Contains(value, StringComparer.OrdinalIgnoreCase))
             {

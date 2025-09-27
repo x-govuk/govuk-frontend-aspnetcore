@@ -25,6 +25,7 @@ public class SkipLinkTagHelper : TagHelper
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(encoder);
+
         _componentGenerator = componentGenerator;
         _encoder = encoder;
     }
@@ -41,6 +42,9 @@ public class SkipLinkTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)

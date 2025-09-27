@@ -16,6 +16,8 @@ public class TextInputSuffixTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(output);
+
         var inputContext = context.GetContextItem<TextInputContext>();
 
         var content = await output.GetChildContentAsync();

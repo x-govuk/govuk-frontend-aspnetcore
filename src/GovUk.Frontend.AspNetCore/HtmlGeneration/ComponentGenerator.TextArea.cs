@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -38,7 +39,7 @@ internal partial class ComponentGenerator
 
         tagBuilder.Attributes.Add("id", id);
         tagBuilder.Attributes.Add("name", name);
-        tagBuilder.Attributes.Add("rows", rows.ToString());
+        tagBuilder.Attributes.Add("rows", rows.ToString(CultureInfo.InvariantCulture));
 
         if (!string.IsNullOrEmpty(describedBy))
         {

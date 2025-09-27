@@ -25,6 +25,9 @@ public class CookieBannerMessageActionLinkTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var actionsContext = context.GetContextItem<CookieBannerMessageActionsContext>();
 
         if (Text is null)

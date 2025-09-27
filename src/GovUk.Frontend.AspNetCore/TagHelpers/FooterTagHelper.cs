@@ -51,12 +51,17 @@ public class FooterTagHelper : TagHelper
     /// <inheritdoc />
     public override void Init(TagHelperContext context)
     {
+        ArgumentNullException.ThrowIfNull(context);
+
         context.SetContextItem(new FooterContext());
     }
 
     /// <inheritdoc />
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var footerContext = context.GetContextItem<FooterContext>();
 
         await output.GetChildContentAsync();

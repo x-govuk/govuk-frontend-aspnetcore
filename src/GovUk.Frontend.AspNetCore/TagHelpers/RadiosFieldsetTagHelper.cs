@@ -14,6 +14,9 @@ public class RadiosFieldsetTagHelper : TagHelper
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
         var radiosContext = context.GetContextItem<RadiosContext>();
         radiosContext.OpenFieldset();
 

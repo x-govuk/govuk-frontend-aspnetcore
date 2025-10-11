@@ -24,6 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOTNET_CLI_WORKLOAD_UPDATE_NOTIFY_DISABLE: true
+    permissions:
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -94,7 +96,11 @@ jobs:
         with:
           name: GovUk.Frontend.AspNetCore.nupkg
 
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
       - name: Publish package to NuGet
-        run: dotnet nuget push **/*.nupkg --api-key $NUGET_TOKEN --source https://api.nuget.org/v3/index.json --skip-duplicate
-        env:
-          NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+        run: dotnet nuget push **/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

@@ -1,3 +1,4 @@
+using System.Globalization;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 
 namespace GovUk.Frontend.AspNetCore;
@@ -7,15 +8,13 @@ namespace GovUk.Frontend.AspNetCore;
 /// </summary>
 public class DateInputParseException : Exception
 {
-    /// <summary>
-    /// Creates a new <see cref="DateInputParseException"/>.
-    /// </summary>
-    /// <param name="message">The error message.</param>
-    /// <param name="parseErrors">The <see cref="DateInputParseErrors"/>.</param>
-    public DateInputParseException(string message, DateInputParseErrors parseErrors)
-        : base(message)
+    private readonly string _messageTemplate;
+
+    internal DateInputParseException(string messageTemplate, string displayName, DateInputParseErrors parseErrors)
+        : base(GetMessage(messageTemplate, displayName))
     {
-        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(messageTemplate);
+        ArgumentNullException.ThrowIfNull(displayName);
 
         if (parseErrors is DateInputParseErrors.None)
         {
@@ -24,10 +23,16 @@ public class DateInputParseException : Exception
         }
 
         ParseErrors = parseErrors;
+        _messageTemplate = messageTemplate;
     }
 
     /// <summary>
     /// Gets the <see cref="DateInputParseErrors"/>.
     /// </summary>
     public DateInputParseErrors ParseErrors { get; }
+
+    internal string GetMessage(string errorMessagePrefix) => GetMessage(_messageTemplate, errorMessagePrefix);
+
+    private static string GetMessage(string messageTemplate, string errorMessagePrefix) =>
+        string.Format(CultureInfo.InvariantCulture, messageTemplate, errorMessagePrefix);
 }

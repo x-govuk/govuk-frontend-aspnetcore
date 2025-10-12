@@ -325,63 +325,51 @@ public class DateInputModelBinderTests
     }
 
     [Theory]
-    [InlineData(DateInputParseErrors.MissingYear, "Date of birth must include a year")]
-    [InlineData(DateInputParseErrors.InvalidYear, "Date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.MissingMonth, "Date of birth must include a month")]
-    [InlineData(DateInputParseErrors.InvalidMonth, "Date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.InvalidDay, "Date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.MissingDay, "Date of birth must include a day")]
-    [InlineData(DateInputParseErrors.MissingYear | DateInputParseErrors.MissingMonth, "Date of birth must include a month and year")]
-    [InlineData(DateInputParseErrors.MissingYear | DateInputParseErrors.MissingDay, "Date of birth must include a day and year")]
-    [InlineData(DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingDay, "Date of birth must include a day and month")]
-    [InlineData(DateInputParseErrors.InvalidYear | DateInputParseErrors.InvalidMonth, "Date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.InvalidYear | DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidDay, "Date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidDay, "Date of birth must be a real date")]
-    public void GetModelStateErrorMessage(DateInputParseErrors parseErrors, string expectedMessage)
+    [InlineData(DateInputParseErrors.MissingYear, "{0} must include a year")]
+    [InlineData(DateInputParseErrors.InvalidYear, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.MissingMonth, "{0} must include a month")]
+    [InlineData(DateInputParseErrors.InvalidMonth, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.InvalidDay, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.MissingDay, "{0} must include a day")]
+    [InlineData(DateInputParseErrors.MissingYear | DateInputParseErrors.MissingMonth, "{0} must include a month and year")]
+    [InlineData(DateInputParseErrors.MissingYear | DateInputParseErrors.MissingDay, "{0} must include a day and year")]
+    [InlineData(DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingDay, "{0} must include a day and month")]
+    [InlineData(DateInputParseErrors.InvalidYear | DateInputParseErrors.InvalidMonth, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.InvalidYear | DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidDay, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidDay, "{0} must be a real date")]
+    public void GetModelStateErrorMessage(DateInputParseErrors parseErrors, string expectedMessageTemplate)
     {
         // Arrange
-        var modelMetadata = new DisplayNameModelMetadata("Date of birth");
 
         // Act
-        var result = DateInputModelBinder.GetModelStateErrorMessage(parseErrors, modelMetadata);
+        var result = DateInputModelBinder.GetModelStateErrorMessageTemplate(parseErrors);
 
         // Assert
-        Assert.Equal(expectedMessage, result);
+        Assert.Equal(expectedMessageTemplate, result);
     }
 
     [Theory]
-    [InlineData(DateInputParseErrors.MissingYear, "Your date of birth must include a year")]
-    [InlineData(DateInputParseErrors.InvalidYear, "Your date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.MissingMonth, "Your date of birth must include a month")]
-    [InlineData(DateInputParseErrors.InvalidMonth, "Your date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.InvalidDay, "Your date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.MissingDay, "Your date of birth must include a day")]
-    [InlineData(DateInputParseErrors.MissingYear | DateInputParseErrors.MissingMonth, "Your date of birth must include a month and year")]
-    [InlineData(DateInputParseErrors.MissingYear | DateInputParseErrors.MissingDay, "Your date of birth must include a day and year")]
-    [InlineData(DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingDay, "Your date of birth must include a day and month")]
-    [InlineData(DateInputParseErrors.InvalidYear | DateInputParseErrors.InvalidMonth, "Your date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.InvalidYear | DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidDay, "Your date of birth must be a real date")]
-    [InlineData(DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidDay, "Your date of birth must be a real date")]
-    public void GetModelStateErrorMessageWithDateInputMetadata(DateInputParseErrors parseErrors, string expectedMessage)
+    [InlineData(DateInputParseErrors.MissingYear, "{0} must include a year")]
+    [InlineData(DateInputParseErrors.InvalidYear, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.MissingMonth, "{0} must include a month")]
+    [InlineData(DateInputParseErrors.InvalidMonth, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.InvalidDay, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.MissingDay, "{0} must include a day")]
+    [InlineData(DateInputParseErrors.MissingYear | DateInputParseErrors.MissingMonth, "{0} must include a month and year")]
+    [InlineData(DateInputParseErrors.MissingYear | DateInputParseErrors.MissingDay, "{0} must include a day and year")]
+    [InlineData(DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingDay, "{0} must include a day and month")]
+    [InlineData(DateInputParseErrors.InvalidYear | DateInputParseErrors.InvalidMonth, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.InvalidYear | DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidDay, "{0} must be a real date")]
+    [InlineData(DateInputParseErrors.InvalidMonth | DateInputParseErrors.InvalidDay, "{0} must be a real date")]
+    public void GetModelStateErrorMessageWithDateInputMetadata(DateInputParseErrors parseErrors, string expectedMessageTemplate)
     {
         // Arrange
-        var dateInputModelMetadata = new DateInputModelMetadata()
-        {
-            ErrorMessagePrefix = "Your date of birth"
-        };
-
-        var modelMetadata = new DisplayNameModelMetadata(
-            "Date of birth",
-            additionalValues: new Dictionary<object, object>()
-            {
-                { typeof(DateInputModelMetadata), dateInputModelMetadata }
-            });
 
         // Act
-        var result = DateInputModelBinder.GetModelStateErrorMessage(parseErrors, modelMetadata);
+        var result = DateInputModelBinder.GetModelStateErrorMessageTemplate(parseErrors);
 
         // Assert
-        Assert.Equal(expectedMessage, result);
+        Assert.Equal(expectedMessageTemplate, result);
     }
 
     [Theory]

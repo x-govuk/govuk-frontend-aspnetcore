@@ -40,6 +40,7 @@ public class DateInputTagHelper : TagHelper
     private const string AspForAttributeName = "asp-for";
     private const string DateInputAttributesPrefix = "date-input-";
     private const string DisabledAttributeName = "disabled";
+    private const string ErrorMessagePrefixAttributeName = "error-message-prefix";
     private const string ForAttributeName = "for";
     private const string IdAttributeName = "id";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
@@ -97,6 +98,12 @@ public class DateInputTagHelper : TagHelper
         get => For;
         set => For = value;
     }
+
+    /// <summary>
+    /// The prefix to use in generated error messages.
+    /// </summary>
+    [HtmlAttributeName(ErrorMessagePrefixAttributeName)]
+    public string? ErrorMessagePrefix { get; set; }
 
     /// <summary>
     /// An expression to be evaluated against the current model.
@@ -197,7 +204,13 @@ public class DateInputTagHelper : TagHelper
         var itemTypes = ResolveItemTypes();
         var value = ResolveValue(itemTypes);
         var hintOptions = dateInputContext.GetHintOptions(For, _modelHelper);
-        var errorMessageOptions = dateInputContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
+        var errorMessageOptions = dateInputContext.GetErrorMessageOptions(
+            namePrefix,
+            ErrorMessagePrefix,
+            For,
+            ViewContext!,
+            _modelHelper,
+            IgnoreModelStateErrors);
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);

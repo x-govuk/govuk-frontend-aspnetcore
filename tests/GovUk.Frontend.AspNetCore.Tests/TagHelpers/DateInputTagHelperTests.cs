@@ -1438,6 +1438,42 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         Assert.Equal($"Cannot declare a <{itemTagName}> when the parent's {nameof(DateInputItemTypes)} does not contain {DateInputItemTypes.Year}.", ex.Message);
     }
 
+    [Fact]
+    public async Task ProcessAsync_GeneratesErrorMessageHtmlFromErrorMessagePrefixAttribute()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var errorMessagePrefix = "XYZ";
+        var dateInputParseException = new DateInputParseException("{0} must contain a valid month", nameof(Model.Date), DateInputParseErrors.InvalidMonth);
+        var @for = CreateModelExpression(viewContext, date: null, dateInputParseException: dateInputParseException);
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(
+            componentGenerator,
+            CreateOptions(),
+            HtmlEncoder.Default)
+        {
+            For = @for,
+            ViewContext = viewContext,
+            ErrorMessagePrefix = errorMessagePrefix
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.ErrorMessage);
+        Assert.StartsWith(errorMessagePrefix, actualOptions.ErrorMessage.Html?.ToHtmlString(HtmlEncoder.Default));
+    }
+
     public static TheoryData<DateInputParseErrors, bool, bool, bool> DateInputParseErrorsWithExpectedErrorItemsData { get; } = new()
     {
         { DateInputParseErrors.MissingDay, true, false, false },
@@ -1485,7 +1521,8 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         DateOnly? date,
         string? displayName = null,
         string? description = null,
-        string? errorMessage = null)
+        string? errorMessage = null,
+        DateInputParseException? dateInputParseException = null)
     {
         return CreateModelExpression(
             viewContext,
@@ -1494,7 +1531,8 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             nameof(Model.Date),
             displayName,
             description,
-            errorMessage);
+            errorMessage,
+            dateInputParseException);
     }
 
     private ModelExpression CreateModelExpressionForCustomDateType(
@@ -1503,6 +1541,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         string? displayName = null,
         string? description = null,
         string? errorMessage = null,
+        DateInputParseException? dateInputParseException = null,
         DateInputItemTypes? itemTypes = null)
     {
         return CreateModelExpression(
@@ -1513,6 +1552,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             displayName,
             description,
             errorMessage,
+            dateInputParseException,
             itemTypes);
     }
 
@@ -1532,6 +1572,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             displayName,
             description,
             errorMessage,
+            dateInputParseException: null,
             itemTypes);
     }
 
@@ -1541,6 +1582,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         string? displayName = null,
         string? description = null,
         string? errorMessage = null,
+        DateInputParseException? dateInputParseException = null,
         DateInputItemTypes? itemTypes = null)
     {
         return CreateModelExpression(
@@ -1551,6 +1593,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
             displayName,
             description,
             errorMessage,
+            dateInputParseException,
             itemTypes);
     }
 
@@ -1562,6 +1605,7 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         string? displayName = null,
         string? description = null,
         string? errorMessage = null,
+        DateInputParseException? dateInputParseException = null,
         DateInputItemTypes? itemTypes = null)
     {
         var modelType = model.GetType();
@@ -1578,6 +1622,10 @@ public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
         if (errorMessage is not null)
         {
             viewContext.ModelState.AddModelError(modelPropertyName, errorMessage);
+        }
+        else if (dateInputParseException is not null)
+        {
+            AddDateInputParseException(viewContext, modelPropertyName, dateInputParseException);
         }
 
         return new ModelExpression(modelPropertyName, modelExplorer);

@@ -4,6 +4,10 @@
 
 Targets GOV.UK Frontend v5.12.0.
 
+### Date inputs
+The prefix used for generated error messages can now be specified by an `error-message-prefix` attribute on `<govuk-date-input>`
+instead of using `[DateInput(ErrorMessagePrefix = "...")]` on the model property.
+
 ## 3.3.0
 
 Targets GOV.UK Frontend v5.12.0.

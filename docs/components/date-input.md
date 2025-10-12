@@ -13,7 +13,7 @@
 ## Example - with error message
 
 ```razor
-<govuk-date-input id="passport-issued" name-prefix="passport-issued">
+<govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
     <govuk-date-input-error-message>
         The date your passport was issued must be in the past
     </govuk-date-input-error-message>
@@ -25,7 +25,7 @@
 ## Example - with fieldset
 
 ```razor
-<govuk-date-input id="passport-issued" name-prefix="passport-issued">
+<govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
     <govuk-date-input-fieldset>
         <govuk-date-input-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
             When was your passport issued?
@@ -63,7 +63,7 @@
 ## Example - with custom item values
 
 ```razor
-<govuk-date-input id="passport-issued" name-prefix="passport-issued">
+<govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
     <govuk-date-input-day value="1" />
     <govuk-date-input-month value="4" />
     <govuk-date-input-year value="2022" />
@@ -83,6 +83,7 @@ The content is the HTML to use within the generated component.
 |----------------------------|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `date-input-`*`            |                   | Additional attributes for the container element that wraps the items.                                                                                                                                                                                                                                                               |
 | `disabled`                 | `bool`            | Whether the inputs should be disabled. The default is `false`.                                                                                                                                                                                                                                                                      |
+| `error-message-prefix`     | `string`          | The prefix to use in generated error messages.                                                                                                                                                                                                                                                                                      |
 | `for`                      | `ModelExpression` | The model expression used to generate the `name-prefix`, `id` and `value` attributes as well as the error message content. The model type should be a `Date`, `DateTime` or a type that has a custom converter registered. See [custom date types](#custom-date-types) and [documentation on forms](forms.md) for more information. |
 | `id`                       | `string`          | The `id` attribute for the main component. Required unless the `for` attribute is specified.                                                                                                                                                                                                                                        |
 | `ignore-modelstate-errors` | `bool`            | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.                                                                                                                                                                       |

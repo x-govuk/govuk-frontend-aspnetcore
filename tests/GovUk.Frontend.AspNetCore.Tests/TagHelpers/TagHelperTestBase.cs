@@ -172,23 +172,28 @@ public abstract class TagHelperTestBase(string tagName, string? parentTagName = 
         return (componentGenerator.Object, () => actualOptions ?? throw new XunitException("ComponentGenerator method was not invoked."));
     }
 
-    protected void AddDateInputParseException(ViewContext viewContext, string propertyName, DateInputParseErrors parseErrors)
+    protected void AddDateInputParseException(ViewContext viewContext, string displayName, DateInputParseErrors parseErrors)
     {
         ArgumentNullException.ThrowIfNull(viewContext);
-        ArgumentNullException.ThrowIfNull(propertyName);
+        ArgumentNullException.ThrowIfNull(displayName);
+
+        var messageTemplate = DateInputModelBinder.GetModelStateErrorMessageTemplate(parseErrors);
+        var exception = new DateInputParseException(messageTemplate, displayName, parseErrors);
+
+        AddDateInputParseException(viewContext, displayName, exception);
+    }
+
+    protected void AddDateInputParseException(ViewContext viewContext, string displayName, DateInputParseException exception)
+    {
+        ArgumentNullException.ThrowIfNull(viewContext);
+        ArgumentNullException.ThrowIfNull(exception);
 
         var modelState = viewContext.ModelState;
 
-        var metadataProvider = new EmptyModelMetadataProvider();
-        var emptyMetadata = metadataProvider.GetMetadataForType(typeof(object));
-
-        var message = DateInputModelBinder.GetModelStateErrorMessage(parseErrors, emptyMetadata);
-        var exception = new DateInputParseException(message, parseErrors);
-
         // Ensure ModelStateDictionary has an entry for property
-        modelState.SetModelValue(propertyName, rawValue: null, attemptedValue: null);
+        modelState.SetModelValue(displayName, rawValue: null, attemptedValue: null);
 
-        var modelError = new ModelError(exception, message);
-        modelState[propertyName]!.Errors.Add(modelError);
+        var modelError = new ModelError(exception, exception.Message);
+        modelState[displayName]!.Errors.Add(modelError);
     }
 }

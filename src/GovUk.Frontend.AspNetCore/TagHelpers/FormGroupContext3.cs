@@ -94,37 +94,14 @@ internal abstract class FormGroupContext3
         };
     }
 
-    public ErrorMessageOptions? GetErrorMessageOptions(ModelExpression? @for, ViewContext viewContext, IModelHelper modelHelper, bool? ignoreModelStateErrors)
+    public virtual ErrorMessageOptions? GetErrorMessageOptions(
+        ModelExpression? @for,
+        ViewContext viewContext,
+        IModelHelper modelHelper,
+        bool? ignoreModelStateErrors)
     {
-        var html = ErrorMessage?.Html;
-
-        if (html is null && @for is not null && ignoreModelStateErrors != true)
-        {
-            var validationMessage = modelHelper.GetValidationMessage(viewContext, @for.ModelExplorer, @for.Name);
-
-            if (validationMessage is not null)
-            {
-                html = validationMessage;
-            }
-        }
-
-        if (html is null)
-        {
-            return null;
-        }
-
-        var attributes = ErrorMessage?.Attributes.Clone() ?? [];
-        attributes.Remove("class", out var classes);
-
-        return new ErrorMessageOptions()
-        {
-            Text = null,
-            Html = html,
-            Id = null,
-            VisuallyHiddenText = ErrorMessage?.VisuallyHiddenText,
-            Classes = classes,
-            Attributes = attributes
-        };
+        var html = GetErrorMessageHtml(@for, viewContext, modelHelper, ignoreModelStateErrors);
+        return CreateErrorMessageOptions(html);
     }
 
     public virtual void SetErrorMessage(
@@ -181,5 +158,38 @@ internal abstract class FormGroupContext3
         }
 
         Label = new LabelInfo(isPageHeading, attributes, html, tagName);
+    }
+
+    protected ErrorMessageOptions? CreateErrorMessageOptions(TemplateString? html)
+    {
+        if (html is null)
+        {
+            return null;
+        }
+
+        var attributes = ErrorMessage?.Attributes.Clone() ?? [];
+        attributes.Remove("class", out var classes);
+
+        return new ErrorMessageOptions()
+        {
+            Text = null,
+            Html = html,
+            Id = null,
+            VisuallyHiddenText = ErrorMessage?.VisuallyHiddenText,
+            Classes = classes,
+            Attributes = attributes
+        };
+    }
+
+    protected TemplateString? GetErrorMessageHtml(
+        ModelExpression? @for,
+        ViewContext viewContext,
+        IModelHelper modelHelper,
+        bool? ignoreModelStateErrors)
+    {
+        return ErrorMessage?.Html ??
+            (@for is not null && ignoreModelStateErrors != true
+                ? modelHelper.GetValidationMessage(viewContext, @for.ModelExplorer, @for.Name)
+                : null);
     }
 }

@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -58,6 +59,49 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
         _fieldsetIsOpen = false;
         Fieldset = fieldsetContext;
+    }
+
+    public override ErrorMessageOptions GetErrorMessageOptions(
+        ModelExpression? @for,
+        ViewContext viewContext,
+        IModelHelper modelHelper,
+        bool? ignoreModelStateErrors)
+    {
+        throw new NotSupportedException("Use the overload that takes an 'errorMessagePrefix' argument too.");
+    }
+
+    public ErrorMessageOptions? GetErrorMessageOptions(
+        string namePrefix,
+        string? errorMessagePrefix,
+        ModelExpression? @for,
+        ViewContext viewContext,
+        IModelHelper modelHelper,
+        bool? ignoreModelStateErrors)
+    {
+        TemplateString? html = null;
+
+        if (ErrorMessage?.Html is { } explicitHtml)
+        {
+            html = explicitHtml;
+        }
+        else if (ignoreModelStateErrors != true)
+        {
+            var modelName = @for?.Name ?? namePrefix;
+
+            var invalidDateException = viewContext.ModelState[modelName]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)
+                ?.Exception as DateInputParseException;
+
+            if (invalidDateException is not null && errorMessagePrefix is not null)
+            {
+                html = invalidDateException.GetMessage(errorMessagePrefix);
+            }
+            else if (@for is not null)
+            {
+                html = modelHelper.GetValidationMessage(viewContext, @for.ModelExplorer, @for.Name);
+            }
+        }
+
+        return CreateErrorMessageOptions(html);
     }
 
     public override void SetLabel(bool isPageHeading, AttributeCollection attributes, TemplateString? html, string tagName)

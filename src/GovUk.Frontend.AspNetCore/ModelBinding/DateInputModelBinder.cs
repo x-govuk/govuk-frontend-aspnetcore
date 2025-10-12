@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 namespace GovUk.Frontend.AspNetCore.ModelBinding;
 
 /// <summary>
-/// An <see cref="IModelBinder"/> for binding Date input components.
+/// An <see cref="IModelBinder"/> for binding Date input items.
 /// </summary>
 public class DateInputModelBinder : IModelBinder
 {
@@ -106,10 +106,14 @@ public class DateInputModelBinder : IModelBinder
             }
 
             var overallAttemptedValue = string.Join(",", overallAttemptedValueParts.Select(vpr => vpr.FirstValue ?? ""));
-
-            var errorMessage = GetModelStateErrorMessage(parseErrors, bindingContext.ModelMetadata);
             bindingContext.ModelState.SetModelValue(bindingContext.ModelName, rawValue: null, attemptedValue: overallAttemptedValue);
-            var modelError = new ModelError(new DateInputParseException(errorMessage, parseErrors), errorMessage);
+
+            var modelMetadata = bindingContext.ModelMetadata;
+            var displayName = dateInputModelMetadata?.ErrorMessagePrefix ?? modelMetadata.DisplayName ?? modelMetadata.PropertyName ?? string.Empty;
+
+            var errorMessageTemplate = GetModelStateErrorMessageTemplate(parseErrors);
+            var parseException = new DateInputParseException(errorMessageTemplate, displayName, parseErrors);
+            var modelError = new ModelError(parseException, parseException.Message);
             bindingContext.ModelState[bindingContext.ModelName]!.Errors.Add(modelError);
 
             bindingContext.Result = ModelBindingResult.Failed();
@@ -119,17 +123,13 @@ public class DateInputModelBinder : IModelBinder
     }
 
     // internal for testing
-    internal static string GetModelStateErrorMessage(DateInputParseErrors parseErrors, ModelMetadata modelMetadata)
+    internal static string GetModelStateErrorMessageTemplate(DateInputParseErrors parseErrors)
     {
         // TODO Make these messages configurable
         // (see Microsoft.AspNetCore.Mvc.ModelBinding.Metadata.ModelBindingMessageProvider)
 
         Debug.Assert(parseErrors != DateInputParseErrors.None);
         Debug.Assert(parseErrors != (DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingYear));
-
-        modelMetadata.TryGetDateInputModelMetadata(out var dateInputModelMetadata);
-
-        var displayName = dateInputModelMetadata?.ErrorMessagePrefix ?? modelMetadata.DisplayName ?? modelMetadata.PropertyName;
 
         var missingFields = new List<string>();
 
@@ -149,10 +149,10 @@ public class DateInputModelBinder : IModelBinder
         if (missingFields.Count > 0)
         {
             Debug.Assert(missingFields.Count <= 2);
-            return $"{displayName} must include a {string.Join(" and ", missingFields)}";
+            return $"{{0}} must include a {string.Join(" and ", missingFields)}";
         }
 
-        return $"{displayName} must be a real date";
+        return "{0} must be a real date";
     }
 
     // internal for testing

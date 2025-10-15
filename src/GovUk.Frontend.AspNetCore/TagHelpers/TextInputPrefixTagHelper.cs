@@ -19,9 +19,9 @@ public class TextInputPrefixTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var inputContext = (TextInputContext)context.Items[typeof(TextInputContext)];
+        var inputContext = context.GetContextItem<TextInputContext>();
 
-        var content = (await output.GetChildContentAsync()).Snapshot();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

@@ -4,41 +4,38 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextInputSuffixTagHelperTests
+public class TextInputSuffixTagHelperTests() : TagHelperTestBase(TextInputSuffixTagHelper.TagName, TextInputTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_SetsSuffixOnContext()
     {
         // Arrange
-        var suffix = "Suffix";
+        var content = "Suffix";
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
         var inputContext = new TextInputContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input-suffix",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(TextInputContext), inputContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(className: className, attributes: attributes, contexts: inputContext);
 
-        var output = new TagHelperOutput(
-            "govuk-input-suffix",
-            attributes: [],
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.AppendHtml(new HtmlString(suffix));
+                tagHelperContent.AppendHtml(new HtmlString(content));
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new TextInputSuffixTagHelper();
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
         Assert.NotNull(inputContext.Suffix);
-        Assert.Equal(suffix, inputContext.Suffix!.Html);
+        Assert.Equal(content, inputContext.Suffix!.Html);
     }
 }

@@ -1,16 +1,17 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextInputPrefixTagHelperTests() : TagHelperTestBase(TextInputPrefixTagHelper.TagName, TextInputTagHelper.TagName)
+public class TextInputBeforeInputTagHelperTests() : TagHelperTestBase(TextInputBeforeInputTagHelper.TagName, TextInputTagHelper.TagName)
 {
     [Fact]
-    public async Task ProcessAsync_SetsPrefixOnContext()
+    public async Task ProcessAsync_SetsBeforeInputOnContext()
     {
         // Arrange
-        var content = "Prefix";
+        var content = "BeforeInput";
         var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
         var inputContext = new TextInputContext();
@@ -27,7 +28,7 @@ public class TextInputPrefixTagHelperTests() : TagHelperTestBase(TextInputPrefix
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new TextInputPrefixTagHelper();
+        var tagHelper = new TextInputBeforeInputTagHelper(new NullLogger<TextInputBeforeInputTagHelper>());
 
         tagHelper.Init(context);
 
@@ -35,7 +36,7 @@ public class TextInputPrefixTagHelperTests() : TagHelperTestBase(TextInputPrefix
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(inputContext.Prefix);
-        Assert.Equal(content, inputContext.Prefix!.Html);
+        Assert.NotNull(inputContext.BeforeInput);
+        Assert.Equal(content, inputContext.BeforeInput);
     }
 }

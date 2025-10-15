@@ -95,6 +95,11 @@ If you want to retain the generated content and specify additional attributes th
 |------------------------|----------|-----------------------------------------------------------------------------------|
 | `visually-hidden-text` | `string` | The visually hidden prefix used before the error message. The default is `Error`. |
 
+### `<govuk-input-before-input>`
+
+The content is the HTML to use before the generated `input` element.\
+Must be inside a `<govuk-input>` element.
+
 ### `<govuk-input-prefix>`
 
 The content is the HTML to use within the component's prefix.\
@@ -103,4 +108,9 @@ Must be inside a `<govuk-input>` element.
 ### `<govuk-input-suffix>`
 
 The content is the HTML to use within the component's suffix.\
+Must be inside a `<govuk-input>` element.
+
+### `<govuk-input-after-input>`
+
+The content is the HTML to use after the generated `input` element.\
 Must be inside a `<govuk-input>` element.

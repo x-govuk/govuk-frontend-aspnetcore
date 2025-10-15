@@ -2,11 +2,17 @@
 
 ## Unreleased
 
-Targets GOV.UK Frontend v5.12.0.
+Targets GOV.UK Frontend v5.13.0.
 
-### Date inputs
+### New features
+
+#### `<govuk-date-input>`
 The prefix used for generated error messages can now be specified by an `error-message-prefix` attribute on `<govuk-date-input>`
 instead of using `[DateInput(ErrorMessagePrefix = "...")]` on the model property.
+
+#### `<govuk-input>`
+`<govuk-input-before-input>` and `<govuk-input-after-input>` tag helpers have been added that allow providing content to render before and after the generated
+`<input>` element for text input components, respectively.
 
 ## 3.3.0
 

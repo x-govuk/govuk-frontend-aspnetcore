@@ -22,10 +22,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     //TextInputHintTagHelper.ShortTagName,
     TextInputErrorMessageTagHelper.TagName,
     //TextInputErrorMessageTagHelper.ShortTagName,
+    TextInputBeforeInputTagHelper.TagName,
+    //TextInputBeforeInputTagHelper.ShortTagName,
     TextInputPrefixTagHelper.TagName,
     //TextInputPrefixTagHelper.ShortTagName,
-    TextInputSuffixTagHelper.TagName/*,
-    TextInputSuffixTagHelper.ShortTagName*/)]
+    TextInputSuffixTagHelper.TagName,
+    //TextInputSuffixTagHelper.ShortTagName
+    TextInputAfterInputTagHelper.TagName/*,
+    TextInputAfterInputTagHelper.ShortTagName*/)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class TextInputTagHelper : TagHelper
 {
@@ -57,7 +61,7 @@ public class TextInputTagHelper : TagHelper
     private bool _valueSpecified;
 
     /// <summary>
-    /// Creates an <see cref="TextInputTagHelper"/>.
+    /// Creates a new <see cref="TextInputTagHelper"/>.
     /// </summary>
     public TextInputTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
         : this(componentGenerator, new DefaultModelHelper(), encoder)
@@ -218,12 +222,18 @@ public class TextInputTagHelper : TagHelper
     public ViewContext? ViewContext { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new TextInputContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var textInputContext = new TextInputContext();
+        var textInputContext = context.GetContextItem<TextInputContext>();
 
         using (context.SetScopedContextItem(textInputContext))
         using (context.SetScopedContextItem(typeof(FormGroupContext3), textInputContext))
@@ -245,8 +255,22 @@ public class TextInputTagHelper : TagHelper
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);
-        var formGroupOptions = new InputFormGroupOptions()
+        var formGroupOptions = new InputFormGroupOptions
         {
+            BeforeInput = textInputContext.BeforeInput is TemplateString beforeInput ?
+                new InputOptionsBeforeInput()
+                {
+                    Text = null,
+                    Html = beforeInput
+                } :
+                null,
+            AfterInput = textInputContext.AfterInput is TemplateString afterInput ?
+                new InputOptionsAfterInput()
+                {
+                    Text = null,
+                    Html = afterInput
+                } :
+                null,
             Attributes = formGroupAttributes,
             Classes = formGroupClasses
         };

@@ -55,18 +55,14 @@ public record InputFormGroupOptions : FormGroupOptions
 
 public record InputOptionsBeforeInput
 {
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
+    public TemplateString? Text { get; set; }
+    public TemplateString? Html { get; set; }
 }
 
 public record InputOptionsAfterInput
 {
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
+    public TemplateString? Text { get; set; }
+    public TemplateString? Html { get; set; }
 }
 
 public record InputOptionsInputWrapper

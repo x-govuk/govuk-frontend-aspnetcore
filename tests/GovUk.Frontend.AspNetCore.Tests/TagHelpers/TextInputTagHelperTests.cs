@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextInputTagHelperTests
+public class TextInputTagHelperTests() : TagHelperTestBase(TextInputTagHelper.TagName)
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -26,20 +26,17 @@ public class TextInputTagHelperTests
         var value = "42";
         var disabled = true;
         var labelClass = "additional-label-class";
-        var classes = "custom-class";
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
         var dataFooAttrValue = "foo";
-        var labelHtml = "The label";
-        var hintHtml = "The hint";
+        var labelContent = "The label";
+        var hintContent = "The hint";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext(className: className, attributes: attributes);
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
@@ -47,12 +44,12 @@ public class TextInputTagHelperTests
                 inputContext.SetLabel(
                     isPageHeading: false,
                     attributes: [],
-                    new HtmlString(labelHtml),
+                    labelContent,
                     TextInputLabelTagHelper.TagName);
 
                 inputContext.SetHint(
                     attributes: [],
-                    new HtmlString(hintHtml),
+                    hintContent,
                     TextInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -81,10 +78,12 @@ public class TextInputTagHelperTests
             ViewContext = new ViewContext(),
             InputAttributes = new Dictionary<string, string?>()
             {
-                { "class", classes },
+                { "class", className },
                 { "data-foo", dataFooAttrValue },
             }
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -98,10 +97,10 @@ public class TextInputTagHelperTests
         Assert.Equal(value, actualOptions.Value);
         Assert.Equal(disabled, actualOptions.Disabled);
         Assert.Equal(describedBy, actualOptions.DescribedBy);
-        Assert.Equal(labelHtml, actualOptions.Label?.Html);
-        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
+        Assert.Equal(labelContent, actualOptions.Label?.Html);
+        Assert.Equal(hintContent, actualOptions.Hint?.Html);
         Assert.Null(actualOptions.ErrorMessage);
-        Assert.Equal(classes, actualOptions.Classes);
+        Assert.Equal(className, actualOptions.Classes);
         Assert.Equal(autocomplete, actualOptions.AutoComplete);
         Assert.Equal(pattern, actualOptions.Pattern);
         Assert.Equal(spellcheck, actualOptions.Spellcheck);
@@ -169,6 +168,8 @@ public class TextInputTagHelperTests
             Name = name,
             ViewContext = TestUtils.CreateViewContext()
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -254,6 +255,8 @@ public class TextInputTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
+        tagHelper.Init(context);
+
         // Act
         await tagHelper.ProcessAsync(context, output);
 
@@ -324,6 +327,8 @@ public class TextInputTagHelperTests
             ViewContext = new ViewContext(),
             Value = value
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -397,6 +402,8 @@ public class TextInputTagHelperTests
             ViewContext = new ViewContext(),
         };
 
+        tagHelper.Init(context);
+
         // Act
         await tagHelper.ProcessAsync(context, output);
 
@@ -469,6 +476,8 @@ public class TextInputTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -550,6 +559,8 @@ public class TextInputTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
+        tagHelper.Init(context);
+
         // Act
         await tagHelper.ProcessAsync(context, output);
 
@@ -621,6 +632,8 @@ public class TextInputTagHelperTests
             ViewContext = new ViewContext(),
             IgnoreModelStateErrors = true
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -703,6 +716,8 @@ public class TextInputTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
+        tagHelper.Init(context);
+
         // Act
         await tagHelper.ProcessAsync(context, output);
 
@@ -758,6 +773,8 @@ public class TextInputTagHelperTests
             Name = name,
             ViewContext = TestUtils.CreateViewContext()
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

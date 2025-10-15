@@ -58,7 +58,7 @@ public class PaginationTagHelper : TagHelper
         }
 
         var attributes = new AttributeCollection(output.Attributes);
-        attributes.Remove("classes", out var classes);
+        attributes.Remove("class", out var classes);
 
         var component = await _componentGenerator.GeneratePaginationAsync(new PaginationOptions()
         {

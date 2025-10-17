@@ -31,7 +31,7 @@ jobs:
           fetch-depth: 0 # required for minver to create the right version number
           filter: tree:0
 
-      - uses: extractions/setup-just@v2
+      - uses: extractions/setup-just@v3
 
       - uses: actions/setup-dotnet@v5
         with:

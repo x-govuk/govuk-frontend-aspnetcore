@@ -2,11 +2,13 @@ version: 2
 updates:
 
   - package-ecosystem: nuget
+    target-branch: dev
     directory: /
     schedule:
       interval: 'daily'
 
   - package-ecosystem: github-actions
+    target-branch: dev
     directory: /
     schedule:
       interval: 'daily'

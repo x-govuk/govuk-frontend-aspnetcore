@@ -8,7 +8,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS breadcrumbs component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(BreadcrumbsItemTagHelper.TagName/*, BreadcrumbsItemTagHelper.ShortTagName*/)]
+[RestrictChildren(
+    BreadcrumbsItemTagHelper.TagName
+#if SHORT_TAG_NAMES
+    , BreadcrumbsItemTagHelper.ShortTagName
+#endif
+    )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Breadcrumbs)]
 public class BreadcrumbsTagHelper : TagHelper
 {

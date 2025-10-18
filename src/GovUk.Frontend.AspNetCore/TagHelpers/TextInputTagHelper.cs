@@ -17,19 +17,23 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     TextInputLabelTagHelper.TagName,
-    //TextInputLabelTagHelper.ShortTagName,
     TextInputHintTagHelper.TagName,
-    //TextInputHintTagHelper.ShortTagName,
     TextInputErrorMessageTagHelper.TagName,
-    //TextInputErrorMessageTagHelper.ShortTagName,
     TextInputBeforeInputTagHelper.TagName,
-    //TextInputBeforeInputTagHelper.ShortTagName,
     TextInputPrefixTagHelper.TagName,
-    //TextInputPrefixTagHelper.ShortTagName,
     TextInputSuffixTagHelper.TagName,
-    //TextInputSuffixTagHelper.ShortTagName
-    TextInputAfterInputTagHelper.TagName/*,
-    TextInputAfterInputTagHelper.ShortTagName*/)]
+    TextInputAfterInputTagHelper.TagName
+#if SHORT_TAG_NAMES
+    ,
+    FormGroupLabelTagHelperBase.ShortTagName,
+    FormGroupHintTagHelperBase.ShortTagName,
+    FormGroupErrorMessageTagHelperBase.ShortTagName,
+    TextInputBeforeInputTagHelper.ShortTagName,
+    TextInputPrefixTagHelper.ShortTagName,
+    TextInputSuffixTagHelper.ShortTagName,
+    TextInputAfterInputTagHelper.ShortTagName
+#endif
+    )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class TextInputTagHelper : TagHelper
 {

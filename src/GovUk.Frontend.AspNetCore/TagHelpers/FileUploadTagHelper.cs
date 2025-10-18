@@ -17,11 +17,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     FileUploadLabelTagHelper.TagName,
-    //FileUploadLabelTagHelper.ShortTagName,
     FileUploadHintTagHelper.TagName,
-    //FileUploadHintTagHelper.ShortTagName,
-    FileUploadErrorMessageTagHelper.TagName/*,
-    FileUploadErrorMessageTagHelper.ShortTagName*/)]
+    FileUploadErrorMessageTagHelper.TagName
+#if SHORT_TAG_NAMES
+    ,
+    FormGroupLabelTagHelperBase.ShortTagName,
+    FormGroupHintTagHelperBase.ShortTagName,
+    FormGroupErrorMessageTagHelperBase.ShortTagName
+#endif
+    )]
 public class FileUploadTagHelper : TagHelper
 {
     internal const string TagName = "govuk-file-upload";

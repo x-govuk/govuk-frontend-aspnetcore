@@ -12,14 +12,18 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents a navigation item in a GDS service navigation component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ServiceNavigationNavTagHelper.TagName)]
-//[HtmlTargetElement(TagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(TagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
+#endif
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the generated service navigation item.")]
 public class ServiceNavigationNavItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-nav-item";
-    //internal const string ShortTagName = ShortTagNames.Item;
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = ShortTagNames.Item;
+#endif
 
     private const string ActiveAttributeName = "active";
     private const string CurrentAttributeName = "current";

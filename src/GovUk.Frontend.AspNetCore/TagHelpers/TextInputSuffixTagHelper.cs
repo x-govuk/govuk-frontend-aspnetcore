@@ -7,11 +7,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the suffix element in a GDS input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TextInputTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = TextInputTagHelper.TagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = TextInputTagHelper.TagName)]
+#endif
 public class TextInputSuffixTagHelper : TagHelper
 {
     internal const string TagName = "govuk-input-suffix";
-    //internal const string ShortTagName = ShortTagNames.Suffix;
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = ShortTagNames.Suffix;
+#endif
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

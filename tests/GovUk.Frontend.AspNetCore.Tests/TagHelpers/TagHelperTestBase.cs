@@ -9,14 +9,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
 using Xunit.Sdk;
+// ReSharper disable MemberCanBeProtected.Global
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
+// ReSharper disable once UnusedTypeParameter
 public abstract class TagHelperTestBase<T> where T : ITagHelper
 {
     public string TagName { get; set; } = null!;
 
+    public string PrimaryTagName { get; set; } = null!;
+
+    public string? ShortTagName { get; set; }
+
     public string? ParentTagName { get; set; }
+
+    public IReadOnlyCollection<string> AllTagNames { get; set; } = null!;
+
+    public IReadOnlyCollection<string> AllParentTagNames { get; set; } = null!;
 
     protected TagHelperContext CreateTagHelperContext(
         string? tagName = null,
@@ -196,4 +206,7 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
         var modelError = new ModelError(exception, exception.Message);
         modelState[displayName]!.Errors.Add(modelError);
     }
+
+    protected string GetAllTagNameElementsMessage(string conjunction) =>
+        AllTagNames.Select(t => $"<{t}>").Aggregate((a, b) => $"{a} {conjunction} {b}");
 }

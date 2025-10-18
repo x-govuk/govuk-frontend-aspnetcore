@@ -5,16 +5,28 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <inheritdoc/>
 [HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
+#endif
 [HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-//[HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
+[HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
+#endif
 public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
 {
     internal const string TagName = "govuk-date-input-error-message";
 
     private const string ErrorItemsAttributeName = "error-items";
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
+        TagName
+#if SHORT_TAG_NAMES
+        ,
+        ShortTagName
+#endif
+    ];
 
     /// <summary>
     /// The components of the date that have errors (day, month and/or year).

@@ -64,7 +64,7 @@ public class ServiceNavigationStartTagHelperTests : TagHelperTestBase<ServiceNav
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($"Only one {GetAllTagNameElementsMessage("or")} element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
     [Fact]

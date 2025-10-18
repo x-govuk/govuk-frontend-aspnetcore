@@ -57,6 +57,10 @@ jobs:
 
       - name: Test
         run: |
+          just unit-tests --configuration Debug --no-build
+          just conformance-tests --configuration Debug --no-build
+          just integration-tests --configuration Debug --no-build
+
           just unit-tests --configuration Release --no-build
           just conformance-tests --configuration Release --no-build
           just integration-tests --configuration Release --no-build

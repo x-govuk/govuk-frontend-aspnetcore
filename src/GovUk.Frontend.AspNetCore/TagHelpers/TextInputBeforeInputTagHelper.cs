@@ -8,13 +8,17 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content before the input in a GDS input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TextInputTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = TextInputTagHelper.TagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = TextInputTagHelper.TagName)]
+#endif
 public class TextInputBeforeInputTagHelper : TagHelper
 {
     private readonly ILogger<TextInputBeforeInputTagHelper> _logger;
 
     internal const string TagName = "govuk-input-before-input";
-    //internal const string ShortTagName = ShortTagNames.BeforeInput;
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = ShortTagNames.BeforeInput;
+#endif
 
     /// <summary>
     /// Creates a new <see cref="TextInputBeforeInputTagHelper"/>.

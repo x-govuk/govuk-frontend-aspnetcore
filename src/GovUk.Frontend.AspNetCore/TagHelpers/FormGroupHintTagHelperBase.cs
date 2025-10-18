@@ -8,7 +8,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 public class FormGroupHintTagHelperBase : TagHelper
 {
-    //private protected const string ShortTagName = ShortTagNames.Hint;
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = ShortTagNames.Hint;
+#endif
 
     private protected FormGroupHintTagHelperBase()
     {

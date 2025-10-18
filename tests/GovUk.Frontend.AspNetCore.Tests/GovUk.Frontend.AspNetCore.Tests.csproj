@@ -6,6 +6,8 @@
     <IsPackable>false</IsPackable>
     <ImplicitUsings>enable</ImplicitUsings>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+
+    <DefineConstants>$(DefineConstants);SHORT_TAG_NAMES</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

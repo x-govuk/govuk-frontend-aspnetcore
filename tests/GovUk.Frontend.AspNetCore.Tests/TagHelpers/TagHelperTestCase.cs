@@ -32,11 +32,10 @@ public class TagHelperFactDiscoverer : FactDiscoverer
         var baseType = testMethod.TestClass.Class.BaseType;
         while (baseType is not null)
         {
-            if (baseType is { IsGenericType: true } && baseType.GetGenericTypeDefinition() == typeof(TagHelperTestBase<>))
+            if (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(TagHelperTestBase<>))
             {
                 var tagHelperType = baseType.GetGenericArguments()[0];
-                var tagHelperInfo = TagHelperInfo.GetTagHelperInfo(tagHelperType);
-                return testCases.SelectMany(tc => tagHelperInfo.TagNames.Select(i => new TagHelperTestCase(i.TagName, i.ParentTagName, (XunitTestCase)tc))).ToArray();
+                return TagHelperInfo.CreateTestCasesForEveryTagName(tagHelperType, testCases);
             }
 
             baseType = baseType.BaseType;
@@ -58,11 +57,10 @@ public class TagHelperTheoryDiscoverer : TheoryDiscoverer
         var baseType = testMethod.TestClass.Class.BaseType;
         while (baseType is not null)
         {
-            if (baseType is { IsGenericType: true } && baseType.GetGenericTypeDefinition() == typeof(TagHelperTestBase<>))
+            if (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(TagHelperTestBase<>))
             {
                 var tagHelperType = baseType.GetGenericArguments()[0];
-                var tagHelperInfo = TagHelperInfo.GetTagHelperInfo(tagHelperType);
-                return testCases.SelectMany(tc => tagHelperInfo.TagNames.Select(i => new TagHelperTestCase(i.TagName, i.ParentTagName, (XunitTestCase)tc))).ToArray();
+                return TagHelperInfo.CreateTestCasesForEveryTagName(tagHelperType, testCases);
             }
 
             baseType = baseType.BaseType;
@@ -78,7 +76,9 @@ public class TagHelperTestCase : XunitTestCase, ISelfExecutingXunitTestCase
     [Obsolete("Called by the de-serializer; should only be called by deriving classes for de-serialization purposes")]
     public TagHelperTestCase() { }
 
-    public TagHelperTestCase(string tagName, string? parentTagName, XunitTestCase baseTestCase) :
+    public TagHelperTestCase(
+        TagHelperTestCaseInfo tagHelperTestCaseInfo,
+        XunitTestCase baseTestCase) :
         base(
             baseTestCase.TestMethod,
             baseTestCase.TestCaseDisplayName,
@@ -95,13 +95,10 @@ public class TagHelperTestCase : XunitTestCase, ISelfExecutingXunitTestCase
             baseTestCase.SourceLineNumber,
             baseTestCase.Timeout)
     {
-        TagName = tagName;
-        ParentTagName = parentTagName;
+        TagHelperTestCaseInfo = tagHelperTestCaseInfo;
     }
 
-    public string? TagName { get; private set; }
-
-    public string? ParentTagName { get; private set; }
+    public TagHelperTestCaseInfo? TagHelperTestCaseInfo { get; set; }
 
     public ValueTask<RunSummary> Run(
         ExplicitOption explicitOption,
@@ -110,8 +107,7 @@ public class TagHelperTestCase : XunitTestCase, ISelfExecutingXunitTestCase
         ExceptionAggregator aggregator,
         CancellationTokenSource cancellationTokenSource) =>
             TagHelperTestCaseRunner.Instance.Run(
-                TagName!,
-                ParentTagName,
+                TagHelperTestCaseInfo!,
                 this,
                 messageBus,
                 aggregator.Clone(),
@@ -125,22 +121,36 @@ public class TagHelperTestCase : XunitTestCase, ISelfExecutingXunitTestCase
     {
         base.Deserialize(info);
 
-        TagName = info.GetValue<string>(nameof(TagName))!;
-        ParentTagName = info.GetValue<string?>(nameof(ParentTagName));
+        var tagName = info.GetValue<string>(nameof(TagHelperTestCaseInfo.TagName))!;
+        var parentTagName = info.GetValue<string?>(nameof(TagHelperTestCaseInfo.ParentTagName));
+        var primaryTagName = info.GetValue<string>(nameof(TagHelperTestCaseInfo.PrimaryTagName))!;
+        var shortTagName = info.GetValue<string?>(nameof(TagHelperTestCaseInfo.ShortTagName));
+        var allTagNames = info.GetValue<string[]>(nameof(TagHelperTestCaseInfo.AllTagNames))!;
+        var allParentTagNames = info.GetValue<string[]>(nameof(TagHelperTestCaseInfo.AllParentTagNames))!;
+        TagHelperTestCaseInfo = new TagHelperTestCaseInfo(
+            tagName,
+            parentTagName,
+            primaryTagName,
+            shortTagName,
+            allTagNames,
+            allParentTagNames);
     }
 
     protected override void Serialize(IXunitSerializationInfo info)
     {
         base.Serialize(info);
 
-        info.AddValue(nameof(TagName), TagName);
-        info.AddValue(nameof(ParentTagName), ParentTagName);
+        info.AddValue(nameof(TagHelperTestCaseInfo.TagName), TagHelperTestCaseInfo!.TagName);
+        info.AddValue(nameof(TagHelperTestCaseInfo.ParentTagName), TagHelperTestCaseInfo.ParentTagName);
+        info.AddValue(nameof(TagHelperTestCaseInfo.PrimaryTagName), TagHelperTestCaseInfo.PrimaryTagName);
+        info.AddValue(nameof(TagHelperTestCaseInfo.ShortTagName), TagHelperTestCaseInfo.ShortTagName);
+        info.AddValue(nameof(TagHelperTestCaseInfo.AllTagNames), TagHelperTestCaseInfo.AllTagNames.ToArray());
+        info.AddValue(nameof(TagHelperTestCaseInfo.AllParentTagNames), TagHelperTestCaseInfo.AllParentTagNames.ToArray());
     }
 }
 
 public class TagHelperTestCaseRunnerContext(
-    string tagName,
-    string? parentTagName,
+    TagHelperTestCaseInfo tagHelperTestCaseInfo,
     IXunitTestCase testCase,
     IReadOnlyCollection<IXunitTest> tests,
     IMessageBus messageBus,
@@ -151,9 +161,7 @@ public class TagHelperTestCaseRunnerContext(
     ExplicitOption explicitOption,
     object?[] constructorArguments) : XunitTestCaseRunnerBaseContext<IXunitTestCase, IXunitTest>(testCase, tests, messageBus, aggregator, cancellationTokenSource, displayName, skipReason, explicitOption, constructorArguments)
 {
-    public string TagName { get; } = tagName;
-
-    public string? ParentTagName { get; } = parentTagName;
+    public TagHelperTestCaseInfo TagHelperTestCaseInfo => tagHelperTestCaseInfo;
 }
 
 public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCaseRunnerContext, IXunitTestCase, IXunitTest>
@@ -161,8 +169,7 @@ public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCase
     public static TagHelperTestCaseRunner Instance { get; } = new();
 
     public async ValueTask<RunSummary> Run(
-        string tagName,
-        string? parentTagName,
+        TagHelperTestCaseInfo tagHelperTestCaseInfo,
         IXunitTestCase testCase,
         IMessageBus messageBus,
         ExceptionAggregator aggregator,
@@ -211,8 +218,7 @@ public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCase
         }
 
         await using var ctxt = new TagHelperTestCaseRunnerContext(
-            tagName,
-            parentTagName,
+            tagHelperTestCaseInfo,
             testCase,
             tests,
             messageBus,
@@ -231,8 +237,7 @@ public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCase
     protected override ValueTask<RunSummary> RunTest(TagHelperTestCaseRunnerContext ctxt, IXunitTest test)
     {
         return TagHelperTestRunner.Instance.Run(
-            ctxt.TagName,
-            ctxt.ParentTagName,
+            ctxt.TagHelperTestCaseInfo,
             test,
             ctxt.MessageBus,
             ctxt.ConstructorArguments,
@@ -244,8 +249,7 @@ public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCase
 }
 
 public class TagHelperTestRunnerContext(
-    string tagName,
-    string? parentTagName,
+    TagHelperTestCaseInfo tagHelperTestCaseInfo,
     IXunitTest test,
     IMessageBus messageBus,
     ExplicitOption explicitOption,
@@ -254,9 +258,7 @@ public class TagHelperTestRunnerContext(
     IReadOnlyCollection<IBeforeAfterTestAttribute> beforeAfterAttributes,
     object?[] constructorArguments) : XunitTestRunnerContext(test, messageBus, explicitOption, aggregator, cancellationTokenSource, beforeAfterAttributes, constructorArguments)
 {
-    public string TagName { get; } = tagName;
-
-    public string? ParentTagName { get; } = parentTagName;
+    public TagHelperTestCaseInfo TagHelperTestCaseInfo => tagHelperTestCaseInfo;
 }
 
 public class TagHelperTestRunner : XunitTestRunnerBase<TagHelperTestRunnerContext, IXunitTest>
@@ -264,8 +266,7 @@ public class TagHelperTestRunner : XunitTestRunnerBase<TagHelperTestRunnerContex
     public static TagHelperTestRunner Instance { get; } = new();
 
     public async ValueTask<RunSummary> Run(
-        string tagName,
-        string? parentTagName,
+        TagHelperTestCaseInfo tagHelperTestCaseInfo,
         IXunitTest test,
         IMessageBus messageBus,
         object?[] constructorArguments,
@@ -275,8 +276,7 @@ public class TagHelperTestRunner : XunitTestRunnerBase<TagHelperTestRunnerContex
         IReadOnlyCollection<IBeforeAfterTestAttribute> beforeAfterAttributes)
     {
         await using var ctxt = new TagHelperTestRunnerContext(
-            tagName,
-            parentTagName,
+            tagHelperTestCaseInfo,
             test,
             messageBus,
             explicitOption,
@@ -296,16 +296,24 @@ public class TagHelperTestRunner : XunitTestRunnerBase<TagHelperTestRunnerContex
         var result = await base.CreateTestClassInstance(ctxt);
 
         var setTagNameMethod = result.Instance!.GetType().GetProperty("TagName", BindingFlags.Instance | BindingFlags.Public)!.SetMethod!;
+        var setPrimaryTagNameMethod = result.Instance!.GetType().GetProperty("PrimaryTagName", BindingFlags.Instance | BindingFlags.Public)!.SetMethod!;
+        var setShortTagNameMethod = result.Instance!.GetType().GetProperty("ShortTagName", BindingFlags.Instance | BindingFlags.Public)!.SetMethod!;
         var setParentTagNameMethod = result.Instance!.GetType().GetProperty("ParentTagName", BindingFlags.Instance | BindingFlags.Public)!.SetMethod!;
+        var setAllTagNamesMethod = result.Instance!.GetType().GetProperty("AllTagNames", BindingFlags.Instance | BindingFlags.Public)!.SetMethod!;
+        var setAllParentTagNamesMethod = result.Instance!.GetType().GetProperty("AllParentTagNames", BindingFlags.Instance | BindingFlags.Public)!.SetMethod!;
 
-        setTagNameMethod.Invoke(result.Instance, [ctxt.TagName]);
-        setParentTagNameMethod.Invoke(result.Instance, [ctxt.ParentTagName]);
+        setTagNameMethod.Invoke(result.Instance, [ctxt.TagHelperTestCaseInfo.TagName]);
+        setParentTagNameMethod.Invoke(result.Instance, [ctxt.TagHelperTestCaseInfo.ParentTagName]);
+        setPrimaryTagNameMethod.Invoke(result.Instance, [ctxt.TagHelperTestCaseInfo.PrimaryTagName]);
+        setShortTagNameMethod.Invoke(result.Instance, [ctxt.TagHelperTestCaseInfo.ShortTagName]);
+        setAllTagNamesMethod.Invoke(result.Instance, [ctxt.TagHelperTestCaseInfo.AllTagNames]);
+        setAllParentTagNamesMethod.Invoke(result.Instance, [ctxt.TagHelperTestCaseInfo.AllParentTagNames]);
 
         return result;
     }
 }
 
-file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames)
+file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames, string PrimaryTagName, string? ShortTagName)
 {
     private static readonly Dictionary<Type, TagHelperInfo> _tagInfoByType = [];
 
@@ -315,10 +323,55 @@ file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames)
         {
             var tagHelperAttributes = tagHelperType.GetCustomAttributes<HtmlTargetElementAttribute>(inherit: true).ToArray();
 
-            tagInfo = new(tagHelperAttributes.Select(attr => (attr.Tag, (string?)attr.ParentTag)).ToArray());
+            var primaryTagName = tagHelperType.GetField("TagName", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null) as string
+                ?? throw new InvalidOperationException($"Tag helper type '{tagHelperType.FullName}' does not have a public static field 'TagName'.");
+
+            var shortTagName = tagHelperType.GetField("ShortTagName", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null) as string;
+
+            tagInfo = new(tagHelperAttributes.Select(attr => (attr.Tag, (string?)attr.ParentTag)).ToArray(), primaryTagName, shortTagName);
             _tagInfoByType[tagHelperType] = tagInfo;
         }
 
         return tagInfo;
     }
+
+    public static IReadOnlyCollection<IXunitTestCase> CreateTestCasesForEveryTagName(
+        Type tagHelperType,
+        IEnumerable<IXunitTestCase> baseTestCases)
+    {
+        var tagHelperInfo = GetTagHelperInfo(tagHelperType);
+
+        var allTagNames = tagHelperInfo.TagNames.Select(t => t.TagName).Distinct().OrderByGovUkPrefixedFirst().ToArray();
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        var allParentTagNames = tagHelperInfo.TagNames.Select(t => t.ParentTagName!).Where(t => t is not null).Distinct().OrderByGovUkPrefixedFirst().ToArray();
+
+        return tagHelperInfo.TagNames
+            .SelectMany(i => baseTestCases.Select(tc =>
+            {
+                var tagHelperTestCaseInfo = new TagHelperTestCaseInfo(
+                    i.TagName,
+                    i.ParentTagName,
+                    PrimaryTagName: tagHelperInfo.PrimaryTagName,
+                    ShortTagName: tagHelperInfo.ShortTagName,
+                    AllTagNames: allTagNames,
+                    AllParentTagNames: allParentTagNames);
+
+                return new TagHelperTestCase(tagHelperTestCaseInfo, (XunitTestCase)tc);
+            }))
+            .ToArray();
+    }
+}
+
+public record TagHelperTestCaseInfo(
+    string TagName,
+    string? ParentTagName,
+    string PrimaryTagName,
+    string? ShortTagName,
+    IReadOnlyCollection<string> AllTagNames,
+    IReadOnlyCollection<string> AllParentTagNames);
+
+file static class Extensions
+{
+    public static IEnumerable<string> OrderByGovUkPrefixedFirst(this IEnumerable<string> source) =>
+        source.OrderBy(s => s.StartsWith("govuk-", StringComparison.Ordinal) ? 0 : 1).ThenBy(s => s, StringComparer.Ordinal);
 }

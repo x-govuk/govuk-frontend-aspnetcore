@@ -7,12 +7,24 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content at the start of the service header container in a GDS service navigation component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ServiceNavigationTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationTagHelper.TagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationTagHelper.TagName)]
+#endif
 [TagHelperDocumentation(ContentDescription = "The content is the HTML at the start of the service header container.")]
 public class ServiceNavigationStartTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-start";
-    //internal const string ShortTagName = ShortTagNames.Start;
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = ShortTagNames.Start;
+#endif
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
+        TagName
+#if SHORT_TAG_NAMES
+        ,
+        ShortTagName
+#endif
+    ];
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -24,7 +36,7 @@ public class ServiceNavigationStartTagHelper : TagHelper
 
         if (serviceNavigationContext.StartSlot is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn([TagName/*, ShortTagName*/], [ServiceNavigationTagHelper.TagName]);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, [ServiceNavigationTagHelper.TagName]);
         }
 
         if (serviceNavigationContext.Nav is not null)

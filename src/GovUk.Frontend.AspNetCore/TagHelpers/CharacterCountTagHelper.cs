@@ -17,12 +17,17 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     CharacterCountLabelTagHelper.TagName,
-    //CharacterCountLabelTagHelper.ShortTagName,
     CharacterCountHintTagHelper.TagName,
-    //CharacterCountHintTagHelper.ShortTagName,
     CharacterCountErrorMessageTagHelper.TagName,
-    //CharacterCountErrorMessageTagHelper.ShortTagName,
-    CharacterCountValueTagHelper.TagName)]
+    CharacterCountValueTagHelper.TagName
+#if SHORT_TAG_NAMES
+    ,
+    FormGroupLabelTagHelperBase.ShortTagName,
+    FormGroupHintTagHelperBase.ShortTagName,
+    FormGroupErrorMessageTagHelperBase.ShortTagName,
+    CharacterCountValueTagHelper.ShortTagName
+#endif
+    )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.CharacterCount)]
 public class CharacterCountTagHelper : TagHelper
 {

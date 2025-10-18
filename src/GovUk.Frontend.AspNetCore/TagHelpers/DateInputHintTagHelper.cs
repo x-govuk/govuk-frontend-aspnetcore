@@ -6,8 +6,18 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the hint in a GDS date input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
+#endif
 public class DateInputHintTagHelper : FormGroupHintTagHelperBase
 {
     internal const string TagName = "govuk-date-input-hint";
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
+        TagName
+#if SHORT_TAG_NAMES
+        ,
+        ShortTagName
+#endif
+    ];
 }

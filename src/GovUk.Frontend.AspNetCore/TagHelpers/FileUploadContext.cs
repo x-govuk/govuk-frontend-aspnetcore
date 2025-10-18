@@ -2,14 +2,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class FileUploadContext : FormGroupContext3
 {
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
-        [/*FileUploadErrorMessageTagHelper.ShortTagName, */FileUploadErrorMessageTagHelper.TagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => FileUploadErrorMessageTagHelper.AllTagNames;
 
-    protected override IReadOnlyCollection<string> HintTagNames { get; } =
-        [/*FileUploadHintTagHelper.ShortTagName, */FileUploadHintTagHelper.TagName];
+    protected override IReadOnlyCollection<string> HintTagNames => FileUploadHintTagHelper.AllTagNames;
 
-    protected override IReadOnlyCollection<string> LabelTagNames { get; } =
-        [/*FileUploadLabelTagHelper.ShortTagName, */FileUploadLabelTagHelper.TagName];
+    protected override IReadOnlyCollection<string> LabelTagNames => FileUploadLabelTagHelper.AllTagNames;
 
     protected override string RootTagName => FileUploadTagHelper.TagName;
 }

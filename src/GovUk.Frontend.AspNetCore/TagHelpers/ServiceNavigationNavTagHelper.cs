@@ -7,18 +7,26 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the navigation list in a GDS service navigation component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ServiceNavigationTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationTagHelper.TagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationTagHelper.TagName)]
+#endif
 [RestrictChildren(
     ServiceNavigationNavStartTagHelper.TagName,
-    //ServiceNavigationNavStartTagHelper.ShortTagName,
     ServiceNavigationNavItemTagHelper.TagName,
-    //ServiceNavigationNavItemTagHelper.ShortTagName,
-    ServiceNavigationNavEndTagHelper.TagName/*,
-    ServiceNavigationNavEndTagHelper.ShortTagName*/)]
+    ServiceNavigationNavEndTagHelper.TagName
+#if SHORT_TAG_NAMES
+    ,
+    ServiceNavigationNavStartTagHelper.ShortTagName,
+    ServiceNavigationNavItemTagHelper.ShortTagName,
+    ServiceNavigationNavEndTagHelper.ShortTagName
+#endif
+    )]
 public class ServiceNavigationNavTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-nav";
-    //internal const string ShortTagName = ShortTagNames.Nav;
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = ShortTagNames.Nav;
+#endif
 
     private const string AriaLabelAttributeName = "aria-label";
     private const string CollapseNavigationOnMobileAttributeName = "collapse-navigation-on-mobile";
@@ -26,6 +34,14 @@ public class ServiceNavigationNavTagHelper : TagHelper
     private const string MenuButtonLabelAttributeName = "menu-button-label";
     private const string LabelAttributeName = "label";
     private const string IdAttributeName = "id";
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
+        TagName
+#if SHORT_TAG_NAMES
+        ,
+        ShortTagName
+#endif
+    ];
 
     /// <summary>
     /// The text for the <c>aria-label</c> which labels the service navigation container when a service name is included.
@@ -95,7 +111,7 @@ public class ServiceNavigationNavTagHelper : TagHelper
 
         if (serviceNavigationContext.Nav is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn([TagName/*, ShortTagName*/], [ServiceNavigationTagHelper.TagName]);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, [ServiceNavigationTagHelper.TagName]);
         }
 
         if (serviceNavigationContext.EndSlot is var (_, endSlotTagName))

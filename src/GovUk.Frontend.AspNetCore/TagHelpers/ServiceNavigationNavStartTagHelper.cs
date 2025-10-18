@@ -7,14 +7,26 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content before the first list item in the navigation list in a GDS service navigation component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ServiceNavigationNavTagHelper.TagName)]
-//[HtmlTargetElement(TagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.TagName)]
-//[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(TagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
+#endif
 [TagHelperDocumentation(ContentDescription = "The content is the HTML before the first list item in the navigation list.")]
 public class ServiceNavigationNavStartTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-nav-start";
-    //internal const string ShortTagName = "start";
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = "start";
+#endif
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
+        TagName
+#if SHORT_TAG_NAMES
+        ,
+        ShortTagName
+#endif
+    ];
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -26,7 +38,7 @@ public class ServiceNavigationNavStartTagHelper : TagHelper
 
         if (navContext.NavigationStartSlot is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn([TagName/*, ShortTagName*/], [ServiceNavigationNavTagHelper.TagName]);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, [ServiceNavigationNavTagHelper.TagName]);
         }
 
         if (navContext.Items.Count > 0)

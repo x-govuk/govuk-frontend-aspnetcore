@@ -9,8 +9,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 public abstract class FormGroupLabelTagHelperBase : TagHelper
 {
-    //private protected const string ShortTagName = ShortTagNames.Label;
     private const string IsPageHeadingAttributeName = "is-page-heading";
+
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = ShortTagNames.Label;
+#endif
 
     private protected FormGroupLabelTagHelperBase()
     {

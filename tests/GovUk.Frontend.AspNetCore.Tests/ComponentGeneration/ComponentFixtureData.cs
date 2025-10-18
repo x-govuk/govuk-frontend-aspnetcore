@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Html;
 using Xunit.Sdk;
+using Xunit.v3;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ComponentGeneration;
 
@@ -25,55 +26,57 @@ public class ComponentFixtureData(
         _serializerOptions.Converters.Add(new TemplateStringJsonConverter());
     }
 
-    private readonly string _componentName = componentName;
-    private readonly Type _optionsType = optionsType;
-    private readonly string? _only = only;
-    private readonly HashSet<string> _exclude = new(exclude ?? []);
+    private readonly HashSet<string> _exclude = new(exclude);
 
-    public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+    public override ValueTask<IReadOnlyCollection<ITheoryDataRow>> GetData(MethodInfo testMethod, DisposalTracker disposalTracker)
     {
-        var fixturesFile = Path.Combine("ComponentGeneration", "Fixtures", $"{_componentName}.json");
+        return new ValueTask<IReadOnlyCollection<ITheoryDataRow>>(Impl().ToArray());
 
-        if (!File.Exists(fixturesFile))
+        IEnumerable<ITheoryDataRow> Impl()
         {
-            throw new FileNotFoundException(
-                $"Could not find fixtures file at: '{fixturesFile}'.",
-                fixturesFile);
-        }
+            var fixturesFile = Path.Combine("ComponentGeneration", "Fixtures", $"{componentName}.json");
 
-        var fixturesJson = File.ReadAllText(fixturesFile);
-        var fixtures = (JsonNode.Parse(fixturesJson)!["fixtures"]?.AsArray()) ?? throw new InvalidOperationException($"Couldn't find fixtures in '{fixturesFile}'.");
-        var testCaseDataType = typeof(ComponentTestCaseData<>).MakeGenericType(_optionsType);
-
-        foreach (var fixture in fixtures)
-        {
-            var name = fixture!["name"]!.ToString();
-
-            if (_exclude.Contains(name) || (_only is not null && name != _only))
+            if (!File.Exists(fixturesFile))
             {
-                continue;
+                throw new FileNotFoundException(
+                    $"Could not find fixtures file at: '{fixturesFile}'.",
+                    fixturesFile);
             }
 
-            object options;
-            try
+            var fixturesJson = File.ReadAllText(fixturesFile);
+            var fixtures = JsonNode.Parse(fixturesJson)!["fixtures"]?.AsArray() ??
+                throw new InvalidOperationException($"Couldn't find fixtures in '{fixturesFile}'.");
+            var testCaseDataType = typeof(ComponentTestCaseData<>).MakeGenericType(optionsType);
+
+            foreach (var fixture in fixtures)
             {
-                options = fixture["options"]!.Deserialize(_optionsType, _serializerOptions)!;
+                var name = fixture!["name"]!.ToString();
+
+                if (_exclude.Contains(name) || (only is not null && name != only))
+                {
+                    continue;
+                }
+
+                object options;
+                try
+                {
+                    options = fixture["options"]!.Deserialize(optionsType, _serializerOptions)!;
+                }
+                catch (JsonException e)
+                {
+                    throw new Exception($"Failed deserializing fixture options for '{name}'.", e);
+                }
+
+                var html = fixture["html"]!.ToString();
+
+                var testCaseData = Activator.CreateInstance(testCaseDataType, name, options, html)!;
+
+                yield return new TheoryDataRow(testCaseData);
             }
-            catch (JsonException e)
-            {
-                throw new Exception($"Failed deserializing fixture options for '{name}'.", e);
-            }
-
-            var html = fixture["html"]!.ToString();
-
-            var testCaseData = Activator.CreateInstance(testCaseDataType, name, options, html)!;
-
-            yield return new object[]
-            {
-                testCaseData
-            };
         }
     }
+
+    public override bool SupportsDiscoveryEnumeration() => true;
 
     private class PermissiveStringJsonConverter : JsonConverter<string>
     {

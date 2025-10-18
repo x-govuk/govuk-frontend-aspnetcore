@@ -15,7 +15,7 @@ public class ServerFixture : IAsyncLifetime
 
     public IServiceProvider Services => _host!.Services;
 
-    public virtual async Task DisposeAsync()
+    public virtual async ValueTask DisposeAsync()
     {
         if (_disposed)
         {
@@ -38,7 +38,7 @@ public class ServerFixture : IAsyncLifetime
         }
     }
 
-    public virtual async Task InitializeAsync()
+    public virtual async ValueTask InitializeAsync()
     {
         _host = CreateHost();
         await _host.StartAsync();

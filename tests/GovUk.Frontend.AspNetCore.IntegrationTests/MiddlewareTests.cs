@@ -99,7 +99,7 @@ public class MiddlewareTestFixture : ServerFixture
 
     public PathString PathBase { get; } = new("/pathbase");
 
-    public override Task DisposeAsync()
+    public override ValueTask DisposeAsync()
     {
         HttpClient.Dispose();
         return base.DisposeAsync();

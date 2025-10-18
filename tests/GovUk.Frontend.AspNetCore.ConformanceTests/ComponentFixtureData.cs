@@ -1,6 +1,7 @@
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using Xunit.Sdk;
+using Xunit.v3;
 
 namespace GovUk.Frontend.AspNetCore.ConformanceTests;
 
@@ -28,39 +29,43 @@ public class ComponentFixtureData : DataAttribute
         }
     }
 
-    public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+    public override ValueTask<IReadOnlyCollection<ITheoryDataRow>> GetData(MethodInfo testMethod, DisposalTracker disposalTracker)
     {
-        var fixturesFile = Path.Combine("Fixtures", _fixtureFileName);
+        return new ValueTask<IReadOnlyCollection<ITheoryDataRow>>(Impl().ToArray());
 
-        if (!File.Exists(fixturesFile))
+        IEnumerable<ITheoryDataRow> Impl()
         {
-            throw new FileNotFoundException(
-                $"Could not find fixtures file at: '{fixturesFile}'.",
-                fixturesFile);
-        }
+            var fixturesFile = Path.Combine("Fixtures", _fixtureFileName);
 
-        var fixturesJson = File.ReadAllText(fixturesFile);
-        var fixtures = JObject.Parse(fixturesJson).SelectToken("fixtures") ?? throw new InvalidOperationException($"Couldn't find fixtures in '{fixturesFile}'.");
-        var testCaseDataType = typeof(ComponentTestCaseData<>).MakeGenericType(_optionsType);
-
-        foreach (var fixture in fixtures)
-        {
-            var name = fixture["name"].ToString();
-
-            if (_exclude.Contains(name) || (_only is not null && name != _only))
+            if (!File.Exists(fixturesFile))
             {
-                continue;
+                throw new FileNotFoundException(
+                    $"Could not find fixtures file at: '{fixturesFile}'.",
+                    fixturesFile);
             }
 
-            var options = fixture["options"].ToObject(_optionsType);
-            var html = fixture["html"].ToString();
+            var fixturesJson = File.ReadAllText(fixturesFile);
+            var fixtures = JObject.Parse(fixturesJson).SelectToken("fixtures") ?? throw new InvalidOperationException($"Couldn't find fixtures in '{fixturesFile}'.");
+            var testCaseDataType = typeof(ComponentTestCaseData<>).MakeGenericType(_optionsType);
 
-            var testCaseData = Activator.CreateInstance(testCaseDataType, name, options, html);
-
-            yield return new object[]
+            foreach (var fixture in fixtures)
             {
-                testCaseData
-            };
+                var name = fixture["name"].ToString();
+
+                if (_exclude.Contains(name) || (_only is not null && name != _only))
+                {
+                    continue;
+                }
+
+                var options = fixture["options"].ToObject(_optionsType);
+                var html = fixture["html"].ToString();
+
+                var testCaseData = Activator.CreateInstance(testCaseDataType, name, options, html);
+
+                yield return new TheoryDataRow(testCaseData);
+            }
         }
     }
+
+    public override bool SupportsDiscoveryEnumeration() => true;
 }

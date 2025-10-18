@@ -2,7 +2,7 @@ using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CookieBannerMessageActionsTagHelperTests() : TagHelperTestBase(CookieBannerMessageActionsTagHelper.TagName, CookieBannerTagHelper.TagName)
+public class CookieBannerMessageActionsTagHelperTests : TagHelperTestBase<CookieBannerMessageActionsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsActionsOnContext()

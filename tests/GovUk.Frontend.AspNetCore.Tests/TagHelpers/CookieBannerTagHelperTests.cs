@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CookieBannerTagHelperTests() : TagHelperTestBase(CookieBannerTagHelper.TagName)
+public class CookieBannerTagHelperTests : TagHelperTestBase<CookieBannerTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()

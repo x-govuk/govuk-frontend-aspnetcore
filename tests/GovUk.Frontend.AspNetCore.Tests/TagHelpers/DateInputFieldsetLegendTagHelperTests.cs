@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class DateInputFieldsetLegendTagHelperTests() :
-    TagHelperTestBase(DateInputFieldsetLegendTagHelper.TagName, parentTagName: DateInputFieldsetTagHelper.TagName)
+public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInputFieldsetLegendTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsLegendToContext()

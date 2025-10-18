@@ -2,7 +2,7 @@ using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FooterMetaItemsTagHelperTests() : TagHelperTestBase(FooterMetaItemsTagHelper.TagName, FooterMetaTagHelper.TagName)
+public class FooterMetaItemsTagHelperTests : TagHelperTestBase<FooterMetaItemsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetItemsOnContext()

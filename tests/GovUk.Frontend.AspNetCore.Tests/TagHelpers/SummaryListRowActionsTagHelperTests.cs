@@ -2,7 +2,7 @@ using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListRowActionsTagHelperTests() : TagHelperTestBase(SummaryListRowActionsTagHelper.TagName, parentTagName: SummaryListRowTagHelper.TagName)
+public class SummaryListRowActionsTagHelperTests : TagHelperTestBase<SummaryListRowActionsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsAttributesToContext()

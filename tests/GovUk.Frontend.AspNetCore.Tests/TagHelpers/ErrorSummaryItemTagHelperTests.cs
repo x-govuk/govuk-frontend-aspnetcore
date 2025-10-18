@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ErrorSummaryItemTagHelperTests() : TagHelperTestBase(ErrorSummaryItemTagHelper.TagName)
+public class ErrorSummaryItemTagHelperTests : TagHelperTestBase<ErrorSummaryItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsItemToContext()

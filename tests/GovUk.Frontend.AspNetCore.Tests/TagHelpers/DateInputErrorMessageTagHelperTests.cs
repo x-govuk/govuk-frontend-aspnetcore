@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class DateInputErrorMessageTagHelperTests() : TagHelperTestBase(DateInputErrorMessageTagHelper.TagName, parentTagName: DateInputTagHelper.TagName)
+public class DateInputErrorMessageTagHelperTests : TagHelperTestBase<DateInputErrorMessageTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsErrorMessageAndErrorComponentsOnContext()

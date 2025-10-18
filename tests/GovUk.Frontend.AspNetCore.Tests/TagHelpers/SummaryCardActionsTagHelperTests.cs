@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryCardActionsTagHelperTests() : TagHelperTestBase(SummaryCardActionsTagHelper.TagName, parentTagName: SummaryCardTagHelper.TagName)
+public class SummaryCardActionsTagHelperTests : TagHelperTestBase<SummaryCardActionsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsActionsToContext()

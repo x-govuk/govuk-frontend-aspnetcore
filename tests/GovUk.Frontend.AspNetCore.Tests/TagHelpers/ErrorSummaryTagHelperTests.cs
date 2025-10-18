@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ErrorSummaryTagHelperTests() : TagHelperTestBase(ErrorSummaryTagHelper.TagName)
+public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()

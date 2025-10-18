@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ServiceNavigationTagHelperTests() : TagHelperTestBase(ServiceNavigationTagHelper.TagName)
+public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigationTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()

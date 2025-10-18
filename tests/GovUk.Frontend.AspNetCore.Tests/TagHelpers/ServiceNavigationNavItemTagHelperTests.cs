@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ServiceNavigationNavItemTagHelperTests() : TagHelperTestBase(ServiceNavigationNavItemTagHelper.TagName, ServiceNavigationNavTagHelper.TagName)
+public class ServiceNavigationNavItemTagHelperTests : TagHelperTestBase<ServiceNavigationNavItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsItemToContext()

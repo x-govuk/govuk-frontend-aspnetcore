@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ServiceNavigationNavTagHelperTests() : TagHelperTestBase(ServiceNavigationNavTagHelper.TagName, ServiceNavigationTagHelper.TagName)
+public class ServiceNavigationNavTagHelperTests : TagHelperTestBase<ServiceNavigationNavTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsNavOnContext()

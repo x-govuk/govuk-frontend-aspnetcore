@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListRowValueTagHelperTests() : TagHelperTestBase(SummaryListRowValueTagHelper.TagName, parentTagName: SummaryListRowTagHelper.TagName)
+public class SummaryListRowValueTagHelperTests : TagHelperTestBase<SummaryListRowValueTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsValueToContext()

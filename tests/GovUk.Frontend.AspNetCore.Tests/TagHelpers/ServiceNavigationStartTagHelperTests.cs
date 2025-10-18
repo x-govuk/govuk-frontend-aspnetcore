@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ServiceNavigationStartTagHelperTests() : TagHelperTestBase(ServiceNavigationStartTagHelper.TagName, ServiceNavigationTagHelper.TagName)
+public class ServiceNavigationStartTagHelperTests : TagHelperTestBase<ServiceNavigationStartTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsStartSlotOnContext()

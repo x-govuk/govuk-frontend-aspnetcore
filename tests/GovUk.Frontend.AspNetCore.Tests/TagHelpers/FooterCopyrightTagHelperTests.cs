@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FooterCopyrightTagHelperTests() : TagHelperTestBase(FooterCopyrightTagHelper.TagName, FooterTagHelper.TagName)
+public class FooterCopyrightTagHelperTests : TagHelperTestBase<FooterCopyrightTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsCopyrightOnContext()

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListRowTagHelperTests() : TagHelperTestBase(SummaryListRowTagHelper.TagName, parentTagName: SummaryListTagHelper.TagName)
+public class SummaryListRowTagHelperTests : TagHelperTestBase<SummaryListRowTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsRowToContext()

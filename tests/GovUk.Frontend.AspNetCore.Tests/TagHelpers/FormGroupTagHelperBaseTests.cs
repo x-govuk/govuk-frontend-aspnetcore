@@ -778,7 +778,5 @@ public class FormGroupTagHelperBaseTests
         string fieldsetTagName,
         string legendTagName,
         AttributeDictionary attributes,
-        ModelExpression? @for) : FormGroupFieldsetContext(fieldsetTagName, legendTagName, attributes, @for)
-    {
-    }
+        ModelExpression? @for) : FormGroupFieldsetContext(fieldsetTagName, legendTagName, attributes, @for);
 }

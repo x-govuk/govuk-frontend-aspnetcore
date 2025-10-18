@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FooterContentLicenceTagHelperTests() : TagHelperTestBase(FooterContentLicenceTagHelper.TagName, FooterTagHelper.TagName)
+public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterContentLicenceTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsContentLicenceOnContext()

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextInputTagHelperTests() : TagHelperTestBase(TextInputTagHelper.TagName)
+public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()

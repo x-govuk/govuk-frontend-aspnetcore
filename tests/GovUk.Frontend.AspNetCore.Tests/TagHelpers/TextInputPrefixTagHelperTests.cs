@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextInputPrefixTagHelperTests() : TagHelperTestBase(TextInputPrefixTagHelper.TagName, TextInputTagHelper.TagName)
+public class TextInputPrefixTagHelperTests : TagHelperTestBase<TextInputPrefixTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsPrefixOnContext()

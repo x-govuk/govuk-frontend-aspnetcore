@@ -36,7 +36,5 @@ public class FormGroupFieldsetContextTests
         Assert.Equal("Only one <test-fieldset-legend> element is permitted within each <test-fieldset>.", ex.Message);
     }
 
-    private class TestContext(AttributeDictionary attributes, ModelExpression? aspFor) : FormGroupFieldsetContext(fieldsetTagName: "test-fieldset", legendTagName: "test-fieldset-legend", attributes, aspFor)
-    {
-    }
+    private class TestContext(AttributeDictionary attributes, ModelExpression? aspFor) : FormGroupFieldsetContext(fieldsetTagName: "test-fieldset", legendTagName: "test-fieldset-legend", attributes, aspFor);
 }

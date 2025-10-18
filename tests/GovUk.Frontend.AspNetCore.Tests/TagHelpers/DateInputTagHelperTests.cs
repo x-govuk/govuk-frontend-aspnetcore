@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class DateInputTagHelperTests() : TagHelperTestBase("govuk-date-input")
+public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()

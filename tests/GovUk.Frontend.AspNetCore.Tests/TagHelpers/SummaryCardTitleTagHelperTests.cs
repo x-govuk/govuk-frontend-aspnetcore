@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryCardTitleTagHelperTests() : TagHelperTestBase(SummaryCardTitleTagHelper.TagName, parentTagName: SummaryCardTagHelper.TagName)
+public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitleTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsTitleOnContext()

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public abstract class DateInputItemLabelTagHelperBaseTests<T>(string tagName, string parentTagName) : TagHelperTestBase(tagName, parentTagName)
+public abstract class DateInputItemLabelTagHelperBaseTests<T> : TagHelperTestBase<T>
     where T : DateInputItemLabelTagHelperBase, new()
 {
     [Fact]

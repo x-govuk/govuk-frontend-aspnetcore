@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CookieBannerMessageTagHelperTests() : TagHelperTestBase(CookieBannerMessageTagHelper.TagName, CookieBannerTagHelper.TagName)
+public class CookieBannerMessageTagHelperTests : TagHelperTestBase<CookieBannerMessageTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsMessageToContext()

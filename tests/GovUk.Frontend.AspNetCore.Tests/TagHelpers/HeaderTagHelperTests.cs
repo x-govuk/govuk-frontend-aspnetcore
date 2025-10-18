@@ -4,7 +4,7 @@ using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class HeaderTagHelperTests() : TagHelperTestBase(HeaderTagHelper.TagName)
+public class HeaderTagHelperTests : TagHelperTestBase<HeaderTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()

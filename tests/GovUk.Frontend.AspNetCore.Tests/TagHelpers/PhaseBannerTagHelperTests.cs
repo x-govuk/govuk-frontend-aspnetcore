@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PhaseBannerTagHelperTests() : TagHelperTestBase(PhaseBannerTagHelper.TagName)
+public class PhaseBannerTagHelperTests : TagHelperTestBase<PhaseBannerTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()

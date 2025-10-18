@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextInputSuffixTagHelperTests() : TagHelperTestBase(TextInputSuffixTagHelper.TagName, TextInputTagHelper.TagName)
+public class TextInputSuffixTagHelperTests : TagHelperTestBase<TextInputSuffixTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsSuffixOnContext()

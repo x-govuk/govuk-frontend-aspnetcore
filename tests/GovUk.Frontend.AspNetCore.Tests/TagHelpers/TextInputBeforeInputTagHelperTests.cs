@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextInputBeforeInputTagHelperTests() : TagHelperTestBase(TextInputBeforeInputTagHelper.TagName, TextInputTagHelper.TagName)
+public class TextInputBeforeInputTagHelperTests : TagHelperTestBase<TextInputBeforeInputTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsBeforeInputOnContext()

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PhaseBannerTagTagHelperTests() : TagHelperTestBase(PhaseBannerTagTagHelper.TagName, PhaseBannerTagHelper.TagName)
+public class PhaseBannerTagTagHelperTests : TagHelperTestBase<PhaseBannerTagTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsToContext()

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SummaryListTagHelperTests() : TagHelperTestBase(SummaryListTagHelper.TagName)
+public class SummaryListTagHelperTests : TagHelperTestBase<SummaryListTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()

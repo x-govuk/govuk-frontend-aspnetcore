@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FooterNavItemTagHelperTests() : TagHelperTestBase(FooterNavItemTagHelper.TagName, FooterNavItemsTagHelper.TagName)
+public class FooterNavItemTagHelperTests : TagHelperTestBase<FooterNavItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsItemToContext()

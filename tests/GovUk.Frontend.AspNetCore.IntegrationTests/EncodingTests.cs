@@ -142,7 +142,7 @@ public class EncodingsTestFixture : ServerFixture
 
     public HttpClient HttpClient { get; }
 
-    public override Task DisposeAsync()
+    public override ValueTask DisposeAsync()
     {
         HttpClient.Dispose();
         return base.DisposeAsync();

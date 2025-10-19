@@ -67,7 +67,7 @@ jobs:
 
       - name: Check documentation
         run: |
-          just publish-docs
+          just publish-docs --configuration Release
 
           changes=$(git status --porcelain docs ':!docs/images' | cut -c 4-)
           if [ -n "$changes" ]

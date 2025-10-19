@@ -146,7 +146,7 @@ public class TextInputContextTests
     {
         // Arrange
         var context = new TextInputContext();
-        var beforeInputTagName = TextInputPrefixTagHelper.TagName;
+        var beforeInputTagName = TextInputBeforeInputTagHelper.TagName;
         var labelTagName = TextInputLabelTagHelper.TagName;
         context.SetBeforeInput("Content", beforeInputTagName);
 
@@ -197,7 +197,7 @@ public class TextInputContextTests
     {
         // Arrange
         var context = new TextInputContext();
-        var afterInputTagName = TextInputPrefixTagHelper.TagName;
+        var afterInputTagName = TextInputAfterInputTagHelper.TagName;
         var labelTagName = TextInputLabelTagHelper.TagName;
         context.SetAfterInput("Content", afterInputTagName);
 
@@ -273,7 +273,10 @@ public class TextInputContextTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{beforeInputTagName}> element is permitted within each <govuk-input>.", ex.Message);
+        Assert.Equal(
+            $"Only one {TestUtils.GetAllTagNameElementsMessage(TextInputBeforeInputTagHelper.AllTagNames, "or")} element" +
+                $" is permitted within each <{TextInputTagHelper.TagName}>.",
+            ex.Message);
     }
 
     [Fact]
@@ -289,7 +292,10 @@ public class TextInputContextTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <govuk-input-prefix> element is permitted within each <govuk-input>.", ex.Message);
+        Assert.Equal(
+            $"Only one {TestUtils.GetAllTagNameElementsMessage(TextInputPrefixTagHelper.AllTagNames, "or")} element" +
+                $" is permitted within each <{TextInputTagHelper.TagName}>.",
+            ex.Message);
     }
 
     [Fact]
@@ -314,7 +320,7 @@ public class TextInputContextTests
     {
         // Arrange
         var context = new TextInputContext();
-        var afterInputTagName = TextInputPrefixTagHelper.TagName;
+        var afterInputTagName = TextInputAfterInputTagHelper.TagName;
         var prefixTagName = TextInputSuffixTagHelper.TagName;
         context.SetAfterInput("Content", prefixTagName);
 
@@ -339,7 +345,10 @@ public class TextInputContextTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <govuk-input-suffix> element is permitted within each <govuk-input>.", ex.Message);
+        Assert.Equal(
+            $"Only one {TestUtils.GetAllTagNameElementsMessage(TextInputSuffixTagHelper.AllTagNames, "or")} element" +
+                $" is permitted within each <{TextInputTagHelper.TagName}>.",
+            ex.Message);
     }
 
     [Fact]
@@ -372,6 +381,9 @@ public class TextInputContextTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{afterInputTagName}> element is permitted within each <govuk-input>.", ex.Message);
+        Assert.Equal(
+            $"Only one {TestUtils.GetAllTagNameElementsMessage(TextInputAfterInputTagHelper.AllTagNames, "or")} element" +
+                $" is permitted within each <{TextInputTagHelper.TagName}>.",
+            ex.Message);
     }
 }

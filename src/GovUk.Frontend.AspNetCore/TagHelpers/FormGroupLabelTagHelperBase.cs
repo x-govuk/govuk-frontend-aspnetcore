@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -22,11 +21,8 @@ public abstract class FormGroupLabelTagHelperBase : TagHelper
     /// <summary>
     /// Whether the label also acts as the heading for the page.
     /// </summary>
-    /// <remarks>
-    /// The default is <c>false</c>.
-    /// </remarks>
     [HtmlAttributeName(IsPageHeadingAttributeName)]
-    public bool IsPageHeading { get; set; } = ComponentGenerator.LabelDefaultIsPageHeading;
+    public bool? IsPageHeading { get; set; }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

@@ -17,28 +17,21 @@ internal class TextInputContext : FormGroupContext3
 
     public TemplateString? AfterInput => _afterInput?.Content;
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
-        [/*TextInputTagHelper.ErrorMessageShortTagName, */TextInputErrorMessageTagHelper.TagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => TextInputErrorMessageTagHelper.AllTagNames;
 
-    protected override IReadOnlyCollection<string> HintTagNames { get; } =
-        [/*TextInputTagHelper.HintShortTagName, */TextInputHintTagHelper.TagName];
+    protected override IReadOnlyCollection<string> HintTagNames => TextInputHintTagHelper.AllTagNames;
 
-    protected override IReadOnlyCollection<string> LabelTagNames { get; } =
-        [/*TextInputTagHelper.LabelShortTagName, */TextInputLabelTagHelper.TagName];
+    protected override IReadOnlyCollection<string> LabelTagNames => TextInputLabelTagHelper.AllTagNames;
 
-    private IReadOnlyCollection<string> BeforeInputTagNames { get; } =
-        [/*TextInputBeforeInputTagHelper.ShortTagName, */TextInputBeforeInputTagHelper.TagName];
+    private IReadOnlyCollection<string> BeforeInputTagNames => TextInputBeforeInputTagHelper.AllTagNames;
 
-    private IReadOnlyCollection<string> PrefixTagNames { get; } =
-        [/*TextInputPrefixTagHelper.ShortTagName, */TextInputPrefixTagHelper.TagName];
+    private IReadOnlyCollection<string> PrefixTagNames => TextInputPrefixTagHelper.AllTagNames;
 
-    private IReadOnlyCollection<string> SuffixTagNames { get; } =
-        [/*TextInputSuffixTagHelper.ShortTagName, */TextInputSuffixTagHelper.TagName];
+    private IReadOnlyCollection<string> SuffixTagNames => TextInputSuffixTagHelper.AllTagNames;
 
-    private IReadOnlyCollection<string> AfterInputTagNames { get; } =
-        [/*TextInputAfterInputTagHelper.ShortTagName, */TextInputAfterInputTagHelper.TagName];
+    private IReadOnlyCollection<string> AfterInputTagNames => TextInputAfterInputTagHelper.AllTagNames;
 
-    protected override string RootTagName { get; } = TextInputTagHelper.TagName;
+    protected override string RootTagName => TextInputTagHelper.TagName;
 
     public override void SetErrorMessage(
         TemplateString? visuallyHiddenText,
@@ -114,7 +107,7 @@ internal class TextInputContext : FormGroupContext3
     }
 
     public override void SetLabel(
-        bool isPageHeading,
+        bool? isPageHeading,
         AttributeCollection attributes,
         TemplateString? html,
         string tagName)

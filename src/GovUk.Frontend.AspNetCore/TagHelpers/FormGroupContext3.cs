@@ -6,7 +6,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal abstract class FormGroupContext3
 {
-    internal record LabelInfo(bool IsPageHeading, AttributeCollection Attributes, TemplateString? Html, string TagName);
+    internal record LabelInfo(bool? IsPageHeading, AttributeCollection Attributes, TemplateString? Html, string TagName);
 
     internal record HintInfo(AttributeCollection Attributes, TemplateString? Html, string TagName);
 
@@ -137,7 +137,7 @@ internal abstract class FormGroupContext3
     }
 
     public virtual void SetLabel(
-        bool isPageHeading,
+        bool? isPageHeading,
         AttributeCollection attributes,
         TemplateString? html,
         string tagName)

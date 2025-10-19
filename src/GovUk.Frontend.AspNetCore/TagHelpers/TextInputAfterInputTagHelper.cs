@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Represents the content after the input in a GDS input component.
+/// Represents the content after the input in a GDS text input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TextInputTagHelper.TagName)]
 #if SHORT_TAG_NAMES
@@ -19,6 +19,15 @@ public class TextInputAfterInputTagHelper : TagHelper
 #if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.AfterInput;
 #endif
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = new[]
+    {
+        TagName
+#if SHORT_TAG_NAMES
+        ,
+        ShortTagName
+#endif
+    };
 
     /// <summary>
     /// Creates a new <see cref="TextInputAfterInputTagHelper"/>.
@@ -38,7 +47,7 @@ public class TextInputAfterInputTagHelper : TagHelper
 
         var inputContext = context.GetContextItem<TextInputContext>();
 
-        var content = (await output.GetChildContentAsync()).Snapshot();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

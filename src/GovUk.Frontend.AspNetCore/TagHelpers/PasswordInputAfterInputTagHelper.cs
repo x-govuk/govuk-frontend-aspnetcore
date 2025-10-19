@@ -5,19 +5,20 @@ using Microsoft.Extensions.Logging;
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Represents the content before the input in a GDS text input component.
+/// Represents the content after the input in a GDS password input component.
 /// </summary>
-[HtmlTargetElement(TagName, ParentTag = TextInputTagHelper.TagName)]
+[HtmlTargetElement(TagName, ParentTag = PasswordInputTagHelper.TagName)]
 #if SHORT_TAG_NAMES
-[HtmlTargetElement(ShortTagName, ParentTag = TextInputTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = PasswordInputTagHelper.TagName)]
 #endif
-public class TextInputBeforeInputTagHelper : TagHelper
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the generated <input> element.")]
+public class PasswordInputAfterInputTagHelper : TagHelper
 {
-    private readonly ILogger<TextInputBeforeInputTagHelper> _logger;
+    private readonly ILogger<PasswordInputAfterInputTagHelper> _logger;
 
-    internal const string TagName = "govuk-input-before-input";
+    internal const string TagName = "govuk-password-input-after-input";
 #if SHORT_TAG_NAMES
-    internal const string ShortTagName = ShortTagNames.BeforeInput;
+    internal const string ShortTagName = ShortTagNames.AfterInput;
 #endif
 
     internal static IReadOnlyCollection<string> AllTagNames { get; } = new[]
@@ -30,9 +31,9 @@ public class TextInputBeforeInputTagHelper : TagHelper
     };
 
     /// <summary>
-    /// Creates a new <see cref="TextInputBeforeInputTagHelper"/>.
+    /// Creates a new <see cref="PasswordInputAfterInputTagHelper"/>.
     /// </summary>
-    public TextInputBeforeInputTagHelper(ILogger<TextInputBeforeInputTagHelper> logger)
+    public PasswordInputAfterInputTagHelper(ILogger<PasswordInputAfterInputTagHelper> logger)
     {
         ArgumentNullException.ThrowIfNull(logger);
 
@@ -45,7 +46,7 @@ public class TextInputBeforeInputTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var inputContext = context.GetContextItem<TextInputContext>();
+        var inputContext = context.GetContextItem<PasswordInputContext>();
 
         var content = await output.GetChildContentAsync();
 
@@ -59,7 +60,7 @@ public class TextInputBeforeInputTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(output.TagName);
         }
 
-        inputContext.SetBeforeInput(content.ToTemplateString(), output.TagName);
+        inputContext.SetAfterInput(content.ToTemplateString(), output.TagName);
 
         output.SuppressOutput();
     }

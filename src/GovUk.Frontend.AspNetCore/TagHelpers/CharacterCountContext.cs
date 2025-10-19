@@ -46,7 +46,7 @@ internal class CharacterCountContext : FormGroupContext3
     }
 
     public override void SetLabel(
-        bool isPageHeading,
+        bool? isPageHeading,
         AttributeCollection attributes,
         TemplateString? html,
         string tagName)

@@ -4,6 +4,9 @@
 
 ### New features
 
+#### Password input
+Tag helpers have been added to create a password input component.
+
 #### `readonly` attribute
 A `readonly` attribute has been added to the `<govuk-character-count>`, `<govuk-date-input>`, `<govuk-input>` and `<govuk-textarea>` tag helpers.
 

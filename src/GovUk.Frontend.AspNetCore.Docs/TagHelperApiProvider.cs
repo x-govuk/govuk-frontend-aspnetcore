@@ -33,7 +33,8 @@ public class TagHelperApiProvider
         ArgumentNullException.ThrowIfNull(tagHelperName);
 
         var tagHelperClassName = $"{TagHelperNamespace}.{tagHelperName}";
-        var tagHelperType = typeof(GovUkFrontendOptions).Assembly.GetType(tagHelperClassName)! ?? throw new ArgumentException($"Could not find '{tagHelperClassName}'.", nameof(tagHelperName));
+        var tagHelperType = typeof(GovUkFrontendOptions).Assembly.GetType(tagHelperClassName) ??
+            throw new ArgumentException($"Could not find '{tagHelperClassName}'.", nameof(tagHelperName));
         var htmlTargetElementAttr = tagHelperType.GetCustomAttribute<HtmlTargetElementAttribute>()!;
         var tagName = htmlTargetElementAttr.Tag;
         var tagStructure = htmlTargetElementAttr.TagStructure;
@@ -42,30 +43,33 @@ public class TagHelperApiProvider
 
         string[] parentTagNames = htmlTargetElementAttr.ParentTag is string parentTag ? [parentTag] : [];
 
-        var tagHelperMembers = _docs.Root!
-            .Element("members")!
-            .Elements("member")
-            .Where(m => m.Attribute("name")!.Value.StartsWith($"P:{tagHelperClassName}"));
+        IEnumerable<TagHelperApiAttribute> GetAttributesForType(Type type)
+        {
+            var className = type.FullName!;
 
-        var attributes = tagHelperMembers
-            .Select(m =>
+            var tagHelperMembers = _docs.Root!
+                .Element("members")!
+                .Elements("member")
+                .Where(m => m.Attribute("name")!.Value.StartsWith($"P:{className}"));
+
+            foreach (var m in tagHelperMembers)
             {
-                var memberName = m.Attribute("name")!.Value[(tagHelperClassName.Length + 3)..];
+                var memberName = m.Attribute("name")!.Value[(className.Length + 3)..];
                 var member = tagHelperType.GetProperty(memberName)!;
 
                 if (member.GetCustomAttribute<ViewContextAttribute>() is not null)
                 {
-                    return null!;
+                    continue;
                 }
 
                 if (member.GetCustomAttribute<ObsoleteAttribute>() is not null)
                 {
-                    return null!;
+                    continue;
                 }
 
                 if (member.GetCustomAttribute<EditorBrowsableAttribute>() is { State: EditorBrowsableState.Never })
                 {
-                    return null!;
+                    continue;
                 }
 
                 var typeName = GetNormalizedTypeName(member.PropertyType);
@@ -86,10 +90,20 @@ public class TagHelperApiProvider
                     description += " " + remarks;
                 }
 
-                return new TagHelperApiAttribute(attributeName, typeName, description);
-            })
-            .Where(m => m is not null)
-            .OrderBy(m => m!.Name)
+                yield return new TagHelperApiAttribute(attributeName, typeName, description);
+            }
+
+            if (type.BaseType is not null)
+            {
+                foreach (var baseAttribute in GetAttributesForType(type.BaseType))
+                {
+                    yield return baseAttribute;
+                }
+            }
+        }
+
+        var attributes = GetAttributesForType(tagHelperType)
+            .OrderBy(a => a.Name)
             .ToList();
 
         var canGenerateLinks = _anchorTagHelper.GetCustomAttributes<HtmlTargetElementAttribute>().Any(e => e.Tag == tagName);
@@ -159,6 +173,12 @@ file static class Extensions
                 else if (e.Name == "see" && e.Attribute("langword")?.Value is string langword)
                 {
                     sb.Append($"`{langword}`");
+                }
+                else if (e.Name == "see" && e.Attribute("cref")?.Value is string cref)
+                {
+                    var typeName = cref.StartsWith("T:") ? cref[2..] : cref;
+                    var shortTypeName = typeName.Split('.').Last();
+                    sb.Append($"`{shortTypeName}`");
                 }
                 else if (e.Name == "para")
                 {

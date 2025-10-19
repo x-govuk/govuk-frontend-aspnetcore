@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Represents the prefix element in a GDS input component.
+/// Represents the prefix element in a GDS text input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TextInputTagHelper.TagName)]
 #if SHORT_TAG_NAMES
@@ -16,6 +16,15 @@ public class TextInputPrefixTagHelper : TagHelper
 #if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.Prefix;
 #endif
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = new[]
+    {
+        TagName
+#if SHORT_TAG_NAMES
+        ,
+        ShortTagName
+#endif
+    };
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

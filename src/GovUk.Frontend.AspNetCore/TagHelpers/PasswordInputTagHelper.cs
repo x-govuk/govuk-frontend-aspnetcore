@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Encodings.Web;
@@ -7,55 +6,46 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using AttributeCollection = GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Generates a GDS text input component.
+/// Generates a GDS password input component.
 /// </summary>
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
-    TextInputLabelTagHelper.TagName,
-    TextInputHintTagHelper.TagName,
-    TextInputErrorMessageTagHelper.TagName,
-    TextInputBeforeInputTagHelper.TagName,
-    TextInputPrefixTagHelper.TagName,
-    TextInputSuffixTagHelper.TagName,
-    TextInputAfterInputTagHelper.TagName
+    PasswordInputLabelTagHelper.TagName,
+    PasswordInputHintTagHelper.TagName,
+    PasswordInputErrorMessageTagHelper.TagName,
+    PasswordInputBeforeInputTagHelper.TagName,
+    PasswordInputAfterInputTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupLabelTagHelperBase.ShortTagName,
     FormGroupHintTagHelperBase.ShortTagName,
     FormGroupErrorMessageTagHelperBase.ShortTagName,
-    TextInputBeforeInputTagHelper.ShortTagName,
-    TextInputPrefixTagHelper.ShortTagName,
-    TextInputSuffixTagHelper.ShortTagName,
-    TextInputAfterInputTagHelper.ShortTagName
+    PasswordInputBeforeInputTagHelper.ShortTagName,
+    PasswordInputAfterInputTagHelper.ShortTagName
 #endif
     )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
-public class TextInputTagHelper : TagHelper
+public class PasswordInputTagHelper : TagHelper
 {
-    internal const string TagName = "govuk-input";
+    internal const string TagName = "govuk-password-input";
 
-    private const string AspForAttributeName = "asp-for";
+    internal IReadOnlyCollection<string> AllTagNames => [TagName];
+
     private const string AttributesPrefix = "input-";
     private const string AutoCompleteAttributeName = "autocomplete";
-    private const string AutocapitalizeAttributeName = "autocapitalize";
+    private const string ButtonClassAttributeName = "button-class";
     private const string DescribedByAttributeName = "described-by";
     private const string DisabledAttributeName = "disabled";
     private const string ForAttributeName = "for";
     private const string IdAttributeName = "id";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
-    private const string InputModeAttributeName = "inputmode";
-    private const string InputWrapperAttributesPrefix = "input-wrapper-";
     private const string LabelClassAttributeName = "label-class";
     private const string NameAttributeName = "name";
-    private const string PatternAttributeName = "pattern";
     private const string ReadOnlyAttributeName = "readonly";
-    private const string SpellcheckAttributeName = "spellcheck";
-    private const string TypeAttributeName = "type";
     private const string ValueAttributeName = "value";
 
     private readonly IComponentGenerator _componentGenerator;
@@ -66,16 +56,16 @@ public class TextInputTagHelper : TagHelper
     private bool _valueSpecified;
 
     /// <summary>
-    /// Creates a new <see cref="TextInputTagHelper"/>.
+    /// Creates a new <see cref="PasswordInputTagHelper"/>.
     /// </summary>
-    public TextInputTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
-        : this(componentGenerator, new DefaultModelHelper(), encoder)
+    public PasswordInputTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder) :
+        this(componentGenerator, new DefaultModelHelper(), encoder)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(encoder);
     }
 
-    internal TextInputTagHelper(IComponentGenerator componentGenerator, IModelHelper modelHelper, HtmlEncoder encoder)
+    internal PasswordInputTagHelper(IComponentGenerator componentGenerator, IModelHelper modelHelper, HtmlEncoder encoder)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(modelHelper);
@@ -87,28 +77,16 @@ public class TextInputTagHelper : TagHelper
     }
 
     /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
-    }
-
-    /// <summary>
-    /// The <c>autocapitalize</c> attribute for the generated <c>input</c> element.
-    /// </summary>
-    [HtmlAttributeName(AutocapitalizeAttributeName)]
-    public string? Autocapitalize { get; set; }
-
-    /// <summary>
     /// The <c>autocomplete</c> attribute for the generated <c>input</c> element.
     /// </summary>
     [HtmlAttributeName(AutoCompleteAttributeName)]
     public string? AutoComplete { get; set; }
+
+    /// <summary>
+    /// Additional classes for the generated <c>button</c> element.
+    /// </summary>
+    [HtmlAttributeName(ButtonClassAttributeName)]
+    public string? ButtonClass { get; set; }
 
     /// <summary>
     /// One or more element IDs to add to the <c>aria-describedby</c> attribute of the generated <c>input</c> element.
@@ -154,12 +132,6 @@ public class TextInputTagHelper : TagHelper
     public IDictionary<string, string?> InputAttributes { get; set; } = new Dictionary<string, string?>();
 
     /// <summary>
-    /// Additional attributes to add to the element that wraps the <c>input</c> element.
-    /// </summary>
-    [HtmlAttributeName(DictionaryAttributePrefix = InputWrapperAttributesPrefix)]
-    public IDictionary<string, string?> InputWrapperAttributes { get; set; } = new Dictionary<string, string?>();
-
-    /// <summary>
     /// Additional classes for the generated <c>label</c> element.
     /// </summary>
     [HtmlAttributeName(LabelClassAttributeName)]
@@ -169,22 +141,10 @@ public class TextInputTagHelper : TagHelper
     /// The <c>name</c> attribute for the generated <c>input</c> element.
     /// </summary>
     /// <remarks>
-    /// Required unless <see cref="FormGroupTagHelperBase.AspFor"/> is specified.
+    /// Required unless <see cref="FormGroupTagHelperBase.For"/> is specified.
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }
-
-    /// <summary>
-    /// The <c>inputmode</c> attribute for the generated <c>input</c> element.
-    /// </summary>
-    [HtmlAttributeName(InputModeAttributeName)]
-    public string? InputMode { get; set; }
-
-    /// <summary>
-    /// The <c>pattern</c> attribute for the generated <c>input</c> element.
-    /// </summary>
-    [HtmlAttributeName(PatternAttributeName)]
-    public string? Pattern { get; set; }
 
     /// <summary>
     /// Whether the <c>readonly</c> attribute should be added to the generated <c>input</c> element.
@@ -193,25 +153,10 @@ public class TextInputTagHelper : TagHelper
     public bool? ReadOnly { get; set; }
 
     /// <summary>
-    /// The <c>spellcheck</c> attribute for the generated <c>input</c> element.
-    /// </summary>
-    [HtmlAttributeName(SpellcheckAttributeName)]
-    public bool? Spellcheck { get; set; }
-
-    /// <summary>
-    /// The <c>type</c> attribute for the generated <c>input</c> element.
-    /// </summary>
-    /// <remarks>
-    /// The default is <c>&quot;text&quot;</c>.
-    /// </remarks>
-    [HtmlAttributeName(TypeAttributeName)]
-    public string? Type { get; set; }
-
-    /// <summary>
     /// The <c>value</c> attribute for the generated <c>input</c> element.
     /// </summary>
     /// <remarks>
-    /// If not specified and <see cref="FormGroupTagHelperBase.AspFor"/> is not <c>null</c> then the value
+    /// If not specified and <see cref="FormGroupTagHelperBase.For"/> is not <c>null</c> then the value
     /// for the specified model expression will be used.
     /// </remarks>
     [HtmlAttributeName(ValueAttributeName)]
@@ -236,7 +181,9 @@ public class TextInputTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new TextInputContext());
+        ArgumentNullException.ThrowIfNull(context);
+
+        context.SetContextItem(new PasswordInputContext());
     }
 
     /// <inheritdoc/>
@@ -245,10 +192,15 @@ public class TextInputTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var textInputContext = context.GetContextItem<TextInputContext>();
+        if (ViewContext is null)
+        {
+            throw new InvalidOperationException($"{nameof(ViewContext)} must be set.");
+        }
 
-        using (context.SetScopedContextItem(textInputContext))
-        using (context.SetScopedContextItem(typeof(FormGroupContext3), textInputContext))
+        var passwordInputContext = context.GetContextItem<PasswordInputContext>();
+
+        using (context.SetScopedContextItem(passwordInputContext))
+        using (context.SetScopedContextItem(typeof(FormGroupContext3), passwordInputContext))
         {
             await output.GetChildContentAsync();
         }
@@ -256,9 +208,9 @@ public class TextInputTagHelper : TagHelper
         var name = ResolveName();
         var id = ResolveId(name);
         var value = ResolveValue();
-        var labelOptions = textInputContext.GetLabelOptions(For, ViewContext!, _modelHelper, id, ForAttributeName);
-        var hintOptions = textInputContext.GetHintOptions(For, _modelHelper);
-        var errorMessageOptions = textInputContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
+        var labelOptions = passwordInputContext.GetLabelOptions(For, ViewContext!, _modelHelper, id, ForAttributeName);
+        var hintOptions = passwordInputContext.GetHintOptions(For, _modelHelper);
+        var errorMessageOptions = passwordInputContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
         if (LabelClass is not null)
         {
@@ -267,17 +219,17 @@ public class TextInputTagHelper : TagHelper
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);
-        var formGroupOptions = new InputFormGroupOptions
+        var formGroupOptions = new PasswordInputOptionsFormGroup
         {
-            BeforeInput = textInputContext.BeforeInput is TemplateString beforeInput ?
-                new InputOptionsBeforeInput()
+            BeforeInput = passwordInputContext.BeforeInput is TemplateString beforeInput ?
+                new PasswordInputOptionsBeforeInput()
                 {
                     Text = null,
                     Html = beforeInput
                 } :
                 null,
-            AfterInput = textInputContext.AfterInput is TemplateString afterInput ?
-                new InputOptionsAfterInput()
+            AfterInput = passwordInputContext.AfterInput is TemplateString afterInput ?
+                new PasswordInputOptionsAfterInput()
                 {
                     Text = null,
                     Html = afterInput
@@ -287,6 +239,8 @@ public class TextInputTagHelper : TagHelper
             Classes = formGroupClasses
         };
 
+        var buttonOptions = new PasswordInputOptionsButton { Classes = ButtonClass };
+
         var attributes = new AttributeCollection(InputAttributes);
         attributes.Remove("class", out var classes);
 
@@ -295,43 +249,35 @@ public class TextInputTagHelper : TagHelper
             attributes.AddBoolean("readonly");
         }
 
-        var inputWrapperAttributes = new AttributeCollection(InputWrapperAttributes);
-        inputWrapperAttributes.Remove("classes", out var inputWrapperClasses);
-
-        var component = await _componentGenerator.GenerateInputAsync(new InputOptions()
+        var component = await _componentGenerator.GeneratePasswordInputAsync(new PasswordInputOptions
         {
             Id = id,
             Name = name,
-            Type = Type,
-            InputMode = InputMode,
             Value = value,
             Disabled = Disabled,
             DescribedBy = DescribedBy,
             Label = labelOptions,
             Hint = hintOptions,
             ErrorMessage = errorMessageOptions,
-            Prefix = textInputContext.Prefix,
-            Suffix = textInputContext.Suffix,
             FormGroup = formGroupOptions,
             Classes = classes,
             AutoComplete = AutoComplete,
-            Pattern = Pattern,
-            Spellcheck = Spellcheck,
-            AutoCapitalize = Autocapitalize,
-            InputWrapper = new InputOptionsInputWrapper()
-            {
-                Classes = inputWrapperClasses,
-                Attributes = inputWrapperAttributes
-            },
-            Attributes = attributes
+            Attributes = attributes,
+            ShowPasswordText = null,  // TODO
+            HidePasswordText = null,  // TODO
+            ShowPasswordAriaLabelText = null,  // TODO
+            HidePasswordAriaLabelText = null,  // TODO
+            PasswordShownAnnouncementText = null,  // TODO
+            PasswordHiddenAnnouncementText = null,  // TODO
+            Button = buttonOptions
         });
 
-        output.ApplyComponentHtml(component, HtmlEncoder.Default);
+        output.ApplyComponentHtml(component, _encoder);
 
         if (errorMessageOptions is not null)
         {
             Debug.Assert(errorMessageOptions.Html is not null);
-            var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
+            var containerErrorContext = ViewContext.HttpContext.GetContainerErrorContext();
             containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
         }
     }

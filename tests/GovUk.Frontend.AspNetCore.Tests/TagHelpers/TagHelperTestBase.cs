@@ -208,5 +208,5 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
     }
 
     protected string GetAllTagNameElementsMessage(string conjunction) =>
-        AllTagNames.Select(t => $"<{t}>").Aggregate((a, b) => $"{a} {conjunction} {b}");
+        TestUtils.GetAllTagNameElementsMessage(AllTagNames, conjunction);
 }

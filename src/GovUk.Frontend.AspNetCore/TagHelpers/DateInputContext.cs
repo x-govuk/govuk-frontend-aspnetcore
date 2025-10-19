@@ -104,7 +104,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         return CreateErrorMessageOptions(html);
     }
 
-    public override void SetLabel(bool isPageHeading, AttributeCollection attributes, TemplateString? html, string tagName)
+    public override void SetLabel(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string tagName)
     {
         throw new NotSupportedException();
     }

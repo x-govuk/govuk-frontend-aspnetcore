@@ -5,17 +5,18 @@ using Microsoft.Extensions.Logging;
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Represents the content before the input in a GDS text input component.
+/// Represents the content before the input in a GDS password input component.
 /// </summary>
-[HtmlTargetElement(TagName, ParentTag = TextInputTagHelper.TagName)]
+[HtmlTargetElement(TagName, ParentTag = PasswordInputTagHelper.TagName)]
 #if SHORT_TAG_NAMES
-[HtmlTargetElement(ShortTagName, ParentTag = TextInputTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = PasswordInputTagHelper.TagName)]
 #endif
-public class TextInputBeforeInputTagHelper : TagHelper
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use before the generated <input> element.")]
+public class PasswordInputBeforeInputTagHelper : TagHelper
 {
-    private readonly ILogger<TextInputBeforeInputTagHelper> _logger;
+    private readonly ILogger<PasswordInputBeforeInputTagHelper> _logger;
 
-    internal const string TagName = "govuk-input-before-input";
+    internal const string TagName = "govuk-password-input-before-input";
 #if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.BeforeInput;
 #endif
@@ -30,9 +31,9 @@ public class TextInputBeforeInputTagHelper : TagHelper
     };
 
     /// <summary>
-    /// Creates a new <see cref="TextInputBeforeInputTagHelper"/>.
+    /// Creates a new <see cref="PasswordInputBeforeInputTagHelper"/>.
     /// </summary>
-    public TextInputBeforeInputTagHelper(ILogger<TextInputBeforeInputTagHelper> logger)
+    public PasswordInputBeforeInputTagHelper(ILogger<PasswordInputBeforeInputTagHelper> logger)
     {
         ArgumentNullException.ThrowIfNull(logger);
 
@@ -45,7 +46,7 @@ public class TextInputBeforeInputTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var inputContext = context.GetContextItem<TextInputContext>();
+        var inputContext = context.GetContextItem<PasswordInputContext>();
 
         var content = await output.GetChildContentAsync();
 

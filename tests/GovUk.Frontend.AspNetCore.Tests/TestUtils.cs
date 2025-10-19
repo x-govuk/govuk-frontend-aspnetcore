@@ -39,6 +39,9 @@ internal static class TestUtils
     public static ViewContext CreateViewContext() =>
         new() { HttpContext = new DefaultHttpContext() };
 
+    public static string GetAllTagNameElementsMessage(IEnumerable<string> allTagNames, string conjunction) =>
+        allTagNames.Select(t => $"<{t}>").Aggregate((a, b) => $"{a} {conjunction} {b}");
+
     private class DummyHttpContextAccessor : IHttpContextAccessor
     {
         private readonly HttpContext? _httpContext;

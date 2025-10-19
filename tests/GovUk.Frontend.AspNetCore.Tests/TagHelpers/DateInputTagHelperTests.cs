@@ -20,6 +20,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         var namePrefix = "dateinput";
         var value = new DateOnly(2025, 5, 25);
         var disabled = true;
+        var readOnly = true;
         var dateInputAttributes = CreateDummyDataAttributes();
         var hintContent = "Hint";
         var hintAttributes = CreateDummyDataAttributes();
@@ -52,6 +53,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             Value = value,
             Disabled = disabled,
             DateInputAttributes = dateInputAttributes,
+            ReadOnly = readOnly,
             ViewContext = viewContext
         };
 
@@ -82,6 +84,9 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 Assert.Contains(
                     item.Attributes,
                     attr => attr.Key == "disabled");
+                Assert.Contains(
+                    item.Attributes,
+                    attr => attr.Key == "readonly");
             },
             item =>
             {
@@ -92,6 +97,9 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 Assert.Contains(
                     item.Attributes,
                     attr => attr.Key == "disabled");
+                Assert.Contains(
+                    item.Attributes,
+                    attr => attr.Key == "readonly");
             },
             item =>
             {
@@ -102,6 +110,9 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 Assert.Contains(
                     item.Attributes,
                     attr => attr.Key == "disabled");
+                Assert.Contains(
+                    item.Attributes,
+                    attr => attr.Key == "readonly");
             });
     }
 

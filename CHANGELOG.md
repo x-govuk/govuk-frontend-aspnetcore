@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### New features
+
+#### `readonly` attribute
+A `readonly` attribute has been added to the `<govuk-character-count>`, `<govuk-date-input>`, `<govuk-input>` and `<govuk-textarea>` tag helpers.
+
 ## 3.4.0
 
 Targets GOV.UK Frontend v5.13.0.

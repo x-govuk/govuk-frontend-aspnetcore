@@ -50,6 +50,7 @@ public class DateInputTagHelper : TagHelper
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
     private const string ItemTypesAttributeName = "item-types";
     private const string NamePrefixAttributeName = "name-prefix";
+    private const string ReadOnlyAttributeName = "readonly";
     private const string ValueAttributeName = "value";
 
     private readonly IComponentGenerator _componentGenerator;
@@ -104,18 +105,6 @@ public class DateInputTagHelper : TagHelper
     }
 
     /// <summary>
-    /// The prefix to use in generated error messages.
-    /// </summary>
-    [HtmlAttributeName(ErrorMessagePrefixAttributeName)]
-    public string? ErrorMessagePrefix { get; set; }
-
-    /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(ForAttributeName)]
-    public ModelExpression? For { get; set; }
-
-    /// <summary>
     /// Additional attributes for the container element that wraps the items.
     /// </summary>
     [HtmlAttributeName(DictionaryAttributePrefix = DateInputAttributesPrefix)]
@@ -126,6 +115,18 @@ public class DateInputTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(DisabledAttributeName)]
     public bool? Disabled { get; set; }
+
+    /// <summary>
+    /// The prefix to use in generated error messages.
+    /// </summary>
+    [HtmlAttributeName(ErrorMessagePrefixAttributeName)]
+    public string? ErrorMessagePrefix { get; set; }
+
+    /// <summary>
+    /// An expression to be evaluated against the current model.
+    /// </summary>
+    [HtmlAttributeName(ForAttributeName)]
+    public ModelExpression? For { get; set; }
 
     /// <summary>
     /// The <c>id</c> attribute for the main component.
@@ -162,6 +163,12 @@ public class DateInputTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(NamePrefixAttributeName)]
     public string? NamePrefix { get; set; }
+
+    /// <summary>
+    /// Whether the <c>readonly</c> attribute should be added to the generated <c>input</c> elements.
+    /// </summary>
+    [HtmlAttributeName(ReadOnlyAttributeName)]
+    public bool? ReadOnly { get; set; }
 
     /// <summary>
     /// The date to populate the item values with.
@@ -347,6 +354,11 @@ public class DateInputTagHelper : TagHelper
             if (Disabled == true)
             {
                 resolvedAttributes.AddBoolean("disabled");
+            }
+
+            if (ReadOnly == true)
+            {
+                resolvedAttributes.AddBoolean("readonly");
             }
 
             return new DateInputOptionsItem()

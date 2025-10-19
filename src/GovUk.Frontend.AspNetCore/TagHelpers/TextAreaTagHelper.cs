@@ -23,6 +23,7 @@ public class TextAreaTagHelper : FormGroupTagHelperBase
     private const string IdAttributeName = "id";
     private const string LabelClassAttributeName = "label-class";
     private const string NameAttributeName = "name";
+    private const string ReadOnlyAttributeName = "readonly";
     private const string RowsAttributeName = "rows";
     private const string SpellcheckAttributeName = "spellcheck";
     private const string TextareaAttributesPrefix = "textarea-";
@@ -77,6 +78,12 @@ public class TextAreaTagHelper : FormGroupTagHelperBase
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }
+
+    /// <summary>
+    /// Whether the <c>readonly</c> attribute should be added to the generated <c>textarea</c> element.
+    /// </summary>
+    [HtmlAttributeName(ReadOnlyAttributeName)]
+    public bool? ReadOnly { get; set; }
 
     /// <summary>
     /// The <c>rows</c> attribute for the generated <c>textarea</c> element.
@@ -145,6 +152,11 @@ public class TextAreaTagHelper : FormGroupTagHelperBase
 
             var resolvedTextAreaAttributes = TextAreaAttributes.ToAttributeDictionary();
             resolvedTextAreaAttributes.MergeCssClass("govuk-js-textarea");
+
+            if (ReadOnly == true)
+            {
+                resolvedTextAreaAttributes.Add("readonly", string.Empty);
+            }
 
             return Generator.GenerateTextArea(
                 haveError,

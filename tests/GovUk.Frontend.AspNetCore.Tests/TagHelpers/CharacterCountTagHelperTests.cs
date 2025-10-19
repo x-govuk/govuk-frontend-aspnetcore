@@ -22,6 +22,7 @@ public class CharacterCountTagHelperTests
         var spellcheck = false;
         var value = "42";
         var disabled = true;
+        var readOnly = true;
         var threshold = 89m;
         var maxLength = 42;
         var labelClass = "additional-label-class";
@@ -83,6 +84,7 @@ public class CharacterCountTagHelperTests
             },
             Spellcheck = spellcheck,
             Disabled = disabled,
+            ReadOnly = readOnly,
             FormGroupAttributes = new Dictionary<string, string?>()
             {
                 { "class", formGroupClasses },
@@ -119,6 +121,7 @@ public class CharacterCountTagHelperTests
         Assert.Contains(actualOptions.Attributes, kvp => kvp.Key == "autocomplete" && kvp.Value == autocomplete);
         Assert.Contains(actualOptions.Attributes, kvp => kvp.Key == "data-foo" && kvp.Value == dataFooAttrValue);
         Assert.Contains(actualOptions.Attributes, kvp => kvp.Key == "disabled");
+        Assert.Contains(actualOptions.Attributes, kvp => kvp.Key == "readonly");
 
         Assert.NotNull(actualOptions.CountMessage);
         Assert.Equal(countMessageClasses, actualOptions.CountMessage.Classes);

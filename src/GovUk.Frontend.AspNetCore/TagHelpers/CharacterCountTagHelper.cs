@@ -45,6 +45,7 @@ public class CharacterCountTagHelper : TagHelper
     private const string MaxLengthAttributeName = "max-length";
     private const string MaxWordsLengthAttributeName = "max-words";
     private const string NameAttributeName = "name";
+    private const string ReadOnlyAttributeName = "readonly";
     private const string RowsAttributeName = "rows";
     private const string SpellcheckAttributeName = "spellcheck";
     private const string TextareaAttributesPrefix = "textarea-";
@@ -91,12 +92,6 @@ public class CharacterCountTagHelper : TagHelper
     }
 
     /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(ForAttributeName)]
-    public ModelExpression? For { get; set; }
-
-    /// <summary>
     /// The <c>autocomplete</c> attribute for the generated <c>textarea</c> element.
     /// </summary>
     [HtmlAttributeName(AutoCompleteAttributeName)]
@@ -113,6 +108,12 @@ public class CharacterCountTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(DisabledAttributeName)]
     public bool? Disabled { get; set; }
+
+    /// <summary>
+    /// An expression to be evaluated against the current model.
+    /// </summary>
+    [HtmlAttributeName(ForAttributeName)]
+    public ModelExpression? For { get; set; }
 
     /// <summary>
     /// Additional attributes to add to the generated form-group wrapper element.
@@ -199,6 +200,12 @@ public class CharacterCountTagHelper : TagHelper
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }
+
+    /// <summary>
+    /// Whether the <c>readonly</c> attribute should be added to the generated <c>textarea</c> element.
+    /// </summary>
+    [HtmlAttributeName(ReadOnlyAttributeName)]
+    public bool? ReadOnly { get; set; }
 
     /// <summary>
     /// The <c>rows</c> attribute for the generated <c>textarea</c> element.
@@ -304,6 +311,11 @@ public class CharacterCountTagHelper : TagHelper
             attributes.AddBoolean("disabled");
         }
 
+        if (ReadOnly == true)
+        {
+            attributes.AddBoolean("readonly");
+        }
+
         var countMessageAttributes = new AttributeCollection(CountMessageAttributes);
         countMessageAttributes.Remove("class", out var countMessageClasses);
 
@@ -349,7 +361,7 @@ public class CharacterCountTagHelper : TagHelper
 
     private string ResolveId(string name)
     {
-        return Id is not null ? Id : TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
+        return Id ?? TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
     }
 
     private string ResolveName()
@@ -365,6 +377,6 @@ public class CharacterCountTagHelper : TagHelper
     {
         return characterCountContext.Value is not null
             ? characterCountContext.Value
-            : (TemplateString?)(For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null);
+            : For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null;
     }
 }

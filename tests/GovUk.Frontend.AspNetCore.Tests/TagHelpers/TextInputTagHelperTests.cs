@@ -25,6 +25,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var type = "number";
         var value = "42";
         var disabled = true;
+        var readOnly = true;
         var labelClass = "additional-label-class";
         var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
@@ -74,6 +75,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             Type = type,
             Value = value,
             Disabled = disabled,
+            ReadOnly = readOnly,
             LabelClass = labelClass,
             ViewContext = new ViewContext(),
             InputAttributes = new Dictionary<string, string?>()
@@ -106,11 +108,13 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         Assert.Equal(spellcheck, actualOptions.Spellcheck);
 
         Assert.NotNull(actualOptions.Attributes);
-        Assert.Collection(actualOptions.Attributes, kvp =>
-        {
-            Assert.Equal("data-foo", kvp.Key);
-            Assert.Equal(dataFooAttrValue, kvp.Value);
-        });
+        Assert.Collection(actualOptions.Attributes,
+            kvp => Assert.Equal("readonly", kvp.Key),
+            kvp =>
+            {
+                Assert.Equal("data-foo", kvp.Key);
+                Assert.Equal(dataFooAttrValue, kvp.Value);
+            });
     }
 
     [Fact]

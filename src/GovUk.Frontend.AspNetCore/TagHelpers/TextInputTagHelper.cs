@@ -53,6 +53,7 @@ public class TextInputTagHelper : TagHelper
     private const string LabelClassAttributeName = "label-class";
     private const string NameAttributeName = "name";
     private const string PatternAttributeName = "pattern";
+    private const string ReadOnlyAttributeName = "readonly";
     private const string SpellcheckAttributeName = "spellcheck";
     private const string TypeAttributeName = "type";
     private const string ValueAttributeName = "value";
@@ -97,12 +98,6 @@ public class TextInputTagHelper : TagHelper
     }
 
     /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(ForAttributeName)]
-    public ModelExpression? For { get; set; }
-
-    /// <summary>
     /// The <c>autocapitalize</c> attribute for the generated <c>input</c> element.
     /// </summary>
     [HtmlAttributeName(AutocapitalizeAttributeName)]
@@ -125,6 +120,12 @@ public class TextInputTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(DisabledAttributeName)]
     public bool? Disabled { get; set; }
+
+    /// <summary>
+    /// An expression to be evaluated against the current model.
+    /// </summary>
+    [HtmlAttributeName(ForAttributeName)]
+    public ModelExpression? For { get; set; }
 
     /// <summary>
     /// The <c>id</c> attribute for the generated <c>input</c> element.
@@ -183,6 +184,12 @@ public class TextInputTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(PatternAttributeName)]
     public string? Pattern { get; set; }
+
+    /// <summary>
+    /// Whether the <c>readonly</c> attribute should be added to the generated <c>input</c> element.
+    /// </summary>
+    [HtmlAttributeName(ReadOnlyAttributeName)]
+    public bool? ReadOnly { get; set; }
 
     /// <summary>
     /// The <c>spellcheck</c> attribute for the generated <c>input</c> element.
@@ -281,6 +288,11 @@ public class TextInputTagHelper : TagHelper
 
         var attributes = new AttributeCollection(InputAttributes);
         attributes.Remove("class", out var classes);
+
+        if (ReadOnly == true)
+        {
+            attributes.AddBoolean("readonly");
+        }
 
         var inputWrapperAttributes = new AttributeCollection(InputWrapperAttributes);
         inputWrapperAttributes.Remove("classes", out var inputWrapperClasses);

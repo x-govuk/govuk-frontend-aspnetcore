@@ -238,6 +238,7 @@ see the [SASS sample](samples/Samples.Sass) for an example of how to set up your
 - [Notification banner](docs/components/notification-banner.md)
 - [Pagination](docs/components/pagination.md)
 - [Panel](docs/components/panel.md)
+- [Password input](docs/components/password-input.md)
 - [Phase banner](docs/components/phase-banner.md)
 - [Radios](docs/components/radios.md)
 - [Select](docs/components/select.md)

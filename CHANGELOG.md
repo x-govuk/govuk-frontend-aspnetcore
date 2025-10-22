@@ -10,6 +10,10 @@ Tag helpers have been added to create a password input component.
 #### `readonly` attribute
 A `readonly` attribute has been added to the `<govuk-character-count>`, `<govuk-date-input>`, `<govuk-input>` and `<govuk-textarea>` tag helpers.
 
+### Fixes
+
+Fix `<govuk-date-input-hint>` when used inside a `<govuk-date-input-fieldset>`.
+
 ## 3.4.0
 
 Targets GOV.UK Frontend v5.13.0.

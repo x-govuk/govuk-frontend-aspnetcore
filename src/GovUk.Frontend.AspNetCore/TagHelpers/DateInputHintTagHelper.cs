@@ -9,6 +9,10 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
 #endif
+[HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
+#endif
 public class DateInputHintTagHelper : FormGroupHintTagHelperBase
 {
     internal const string TagName = "govuk-date-input-hint";

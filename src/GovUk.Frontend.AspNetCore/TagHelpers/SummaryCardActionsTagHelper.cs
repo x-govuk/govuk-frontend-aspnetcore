@@ -23,7 +23,7 @@ public class SummaryCardActionsTagHelper : TagHelper
 
         using (context.SetScopedContextItem(actionsContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         var attributes = new AttributeCollection(output.Attributes);

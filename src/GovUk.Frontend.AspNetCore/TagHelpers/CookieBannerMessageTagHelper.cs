@@ -52,7 +52,7 @@ public class CookieBannerMessageTagHelper : TagHelper
         var cookieBannerContext = context.GetContextItem<CookieBannerContext>();
         var messageContext = context.GetContextItem<CookieBannerMessageContext>();
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

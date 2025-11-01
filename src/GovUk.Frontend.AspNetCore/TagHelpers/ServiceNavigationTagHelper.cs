@@ -65,7 +65,7 @@ public class ServiceNavigationTagHelper : TagHelper
 
         var serviceNavigationContext = context.GetContextItem<ServiceNavigationContext>();
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

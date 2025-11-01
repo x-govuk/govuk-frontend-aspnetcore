@@ -23,7 +23,7 @@ public class SummaryListRowTagHelper : TagHelper
 
         using (context.SetScopedContextItem(rowContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         rowContext.ThrowIfIncomplete();

@@ -71,7 +71,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var generateErrorSummariesOptions = _optionsAccessor.Value.ErrorSummaryGeneration;
 

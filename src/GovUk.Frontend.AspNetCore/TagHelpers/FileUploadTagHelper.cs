@@ -170,7 +170,7 @@ public class FileUploadTagHelper : TagHelper
         using (context.SetScopedContextItem(fileUploadContext))
         using (context.SetScopedContextItem(typeof(FormGroupContext3), fileUploadContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         var name = ResolveName();

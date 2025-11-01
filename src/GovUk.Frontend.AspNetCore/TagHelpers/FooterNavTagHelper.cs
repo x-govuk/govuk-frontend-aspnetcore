@@ -61,7 +61,7 @@ public class FooterNavTagHelper : TagHelper
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, copyrightTagName);
         }
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
 

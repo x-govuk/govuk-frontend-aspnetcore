@@ -35,7 +35,7 @@ public class AccordionItemTagHelper : TagHelper
 
         using (context.SetScopedContextItem(itemContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         itemContext.ThrowIfIncomplete();

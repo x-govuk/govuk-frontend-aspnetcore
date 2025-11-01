@@ -8,7 +8,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS summary list component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(SummaryListRowTagHelper.TagName)]
+[RestrictChildren(
+    SummaryListRowTagHelper.TagName,
+    SummaryListRowTagHelper.ShortTagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryList)]
 public class SummaryListTagHelper : TagHelper
 {

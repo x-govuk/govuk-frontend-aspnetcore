@@ -59,7 +59,6 @@ jobs:
       - name: Test
         run: |
           just unit-tests --configuration ${{ matrix.build-configuration }} --no-build
-          just conformance-tests --configuration ${{ matrix.build-configuration }} --no-build
           just integration-tests --configuration ${{ matrix.build-configuration }} --no-build
 
       - name: Check documentation

@@ -153,7 +153,7 @@ public class AccordionTagHelper : TagHelper
 
         using (context.SetScopedContextItem(accordionContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         var tagBuilder = _htmlGenerator.GenerateAccordion(

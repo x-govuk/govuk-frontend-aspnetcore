@@ -202,7 +202,7 @@ public class PasswordInputTagHelper : TagHelper
         using (context.SetScopedContextItem(passwordInputContext))
         using (context.SetScopedContextItem(typeof(FormGroupContext3), passwordInputContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         var name = ResolveName();

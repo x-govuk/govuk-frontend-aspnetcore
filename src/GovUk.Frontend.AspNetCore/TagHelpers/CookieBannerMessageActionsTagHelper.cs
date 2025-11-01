@@ -27,7 +27,7 @@ public class CookieBannerMessageActionsTagHelper : TagHelper
         var messageContext = context.GetContextItem<CookieBannerMessageContext>();
         var actionsContext = context.GetContextItem<CookieBannerMessageActionsContext>();
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         if (messageContext.Actions is not null)
         {

@@ -61,7 +61,7 @@ public class BreadcrumbsTagHelper : TagHelper
 
         using (context.SetScopedContextItem(breadcrumbsContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         var attributes = new AttributeCollection(output.Attributes);

@@ -121,7 +121,7 @@ public class ServiceNavigationNavTagHelper : TagHelper
 
         navContext.TagName = output.TagName;
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
 

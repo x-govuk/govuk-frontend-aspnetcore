@@ -50,7 +50,7 @@ public class DetailsTagHelper : TagHelper
 
         using (context.SetScopedContextItem(detailsContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         detailsContext.ThrowIfNotComplete();

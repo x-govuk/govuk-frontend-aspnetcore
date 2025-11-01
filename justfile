@@ -25,15 +25,11 @@ build-samples *ARGS:
   @cd samples && dotnet build {{ARGS}}
 
 # Run the tests
-test *ARGS: (unit-tests ARGS) (conformance-tests ARGS) (integration-tests ARGS)
+test *ARGS: (unit-tests ARGS) (integration-tests ARGS)
 
 # Run the unit tests
 unit-tests *ARGS:
   @dotnet test tests/GovUk.Frontend.AspNetCore.Tests/ {{ARGS}}
-
-# Run the conformance tests
-conformance-tests *ARGS:
-  @dotnet test tests/GovUk.Frontend.AspNetCore.ConformanceTests/ {{ARGS}}
 
 # Run the integration tests
 integration-tests *ARGS:

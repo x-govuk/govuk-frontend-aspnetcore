@@ -208,7 +208,7 @@ public class DateInputTagHelper : TagHelper
 
         var dateInputContext = context.GetContextItem<DateInputContext>();
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var id = ResolveId();
         var namePrefix = ResolveNamePrefix();

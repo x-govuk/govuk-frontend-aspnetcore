@@ -24,7 +24,7 @@ public class RadiosFieldsetTagHelper : TagHelper
 
         using (context.SetScopedContextItem(fieldsetContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         fieldsetContext.ThrowIfNotComplete();

@@ -275,7 +275,7 @@ public class CharacterCountTagHelper : TagHelper
         using (context.SetScopedContextItem(characterCountContext))
         using (context.SetScopedContextItem<FormGroupContext3>(characterCountContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         var name = ResolveName();

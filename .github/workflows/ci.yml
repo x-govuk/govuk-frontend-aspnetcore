@@ -20,8 +20,11 @@ on:
 
 jobs:
   build:
-    name: "Build & package"
+    name: "Build, test & package"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build-configuration: [ Debug, Release ]
     env:
       DOTNET_CLI_WORKLOAD_UPDATE_NOTIFY_DISABLE: true
 
@@ -48,26 +51,21 @@ jobs:
         run: just format --verify-no-changes
 
       - name: Build
-        run: |
-          just build --configuration Debug --no-restore
-          just build --configuration Release --no-restore
+        run: just build --configuration ${{ matrix.build-configuration }} --no-restore
 
       - name: Install Playwright
         run: just install-playwright
 
       - name: Test
         run: |
-          just unit-tests --configuration Debug --no-build
-          just conformance-tests --configuration Debug --no-build
-          just integration-tests --configuration Debug --no-build
-
-          just unit-tests --configuration Release --no-build
-          just conformance-tests --configuration Release --no-build
-          just integration-tests --configuration Release --no-build
+          just unit-tests --configuration ${{ matrix.build-configuration }} --no-build
+          just conformance-tests --configuration ${{ matrix.build-configuration }} --no-build
+          just integration-tests --configuration ${{ matrix.build-configuration }} --no-build
 
       - name: Check documentation
+        if: matrix.build-configuration == 'Release'
         run: |
-          just publish-docs --configuration Release
+          just publish-docs --configuration ${{ matrix.build-configuration }}
 
           changes=$(git status --porcelain docs ':!docs/images' | cut -c 4-)
           if [ -n "$changes" ]
@@ -77,16 +75,20 @@ jobs:
           fi
 
       - name: Pack
-        run: just pack --configuration Release
-
-      - name: Build samples
-        run: just build-samples --configuration Release
+        run: just pack --configuration ${{ matrix.build-configuration }}
+        env:
+          MINVERBUILDMETADATA: build.${{ github.run_id }}.${{ github.run_attempt}}
 
       - name: Publish package artifact
+        if: matrix.build-configuration == 'Release'
         uses: actions/upload-artifact@v6
         with:
           name: GovUk.Frontend.AspNetCore.nupkg
           path: packages/*.nupkg
+
+      # The samples are dependent on the package being built, so build them last
+      - name: Build samples
+        run: just build-samples --configuration ${{ matrix.build-configuration }}
 
   release:
     name: "Release"

@@ -31,7 +31,7 @@ internal class RadiosContext(string? name, ModelExpression? aspFor) : FormGroupC
 
     public void AddItem(RadiosItemBase item)
     {
-        Guard.ArgumentNotNull(nameof(item), item);
+        ArgumentNullException.ThrowIfNull(item);
 
         if (Fieldset is not null)
         {

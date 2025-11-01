@@ -12,7 +12,7 @@ internal class FieldsetContext
         AttributeDictionary? attributes,
         IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Legend is not null)
         {

@@ -19,8 +19,8 @@ internal partial class ComponentGenerator
         AttributeDictionary? textAttributes,
         AttributeDictionary? attributes)
     {
-        Guard.ArgumentNotNull(nameof(summaryContent), summaryContent);
-        Guard.ArgumentNotNull(nameof(textContent), textContent);
+        ArgumentNullException.ThrowIfNull(summaryContent);
+        ArgumentNullException.ThrowIfNull(textContent);
 
         var tagBuilder = new TagBuilder(DetailsElement);
         tagBuilder.MergeOptionalAttributes(attributes);

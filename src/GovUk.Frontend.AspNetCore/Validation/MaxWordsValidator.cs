@@ -38,7 +38,7 @@ public class MaxWordsValidator
     /// <exception cref="ArgumentNullException">The <paramref name="value"/> argument is null.</exception>
     public bool IsValid(string? value)
     {
-        Guard.ArgumentNotNull(nameof(value), value);
+        ArgumentNullException.ThrowIfNull(value);
 
         var wordCount = _pattern.Matches(value).Count;
         return wordCount <= MaxWords;

@@ -25,8 +25,11 @@ public abstract class FormGroupTagHelperBase : TagHelper
         IGovUkHtmlGenerator htmlGenerator,
         IModelHelper modelHelper)
     {
-        Generator = Guard.ArgumentNotNull(nameof(htmlGenerator), htmlGenerator);
-        ModelHelper = Guard.ArgumentNotNull(nameof(modelHelper), modelHelper);
+        ArgumentNullException.ThrowIfNull(htmlGenerator);
+        ArgumentNullException.ThrowIfNull(modelHelper);
+
+        Generator = htmlGenerator;
+        ModelHelper = modelHelper;
     }
 
     /// <summary>

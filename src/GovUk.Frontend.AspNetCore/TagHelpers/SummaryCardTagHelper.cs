@@ -8,7 +8,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GOV.UK summary card component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(SummaryCardTitleTagHelper.TagName, SummaryCardActionsTagHelper.TagName, SummaryListTagHelper.TagName)]
+[RestrictChildren(
+    SummaryCardTitleTagHelper.TagName,
+    SummaryCardTitleTagHelper.ShortTagName,
+    SummaryCardActionsTagHelper.TagName,
+    SummaryCardActionsTagHelper.ShortTagName,
+    SummaryListTagHelper.TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryCard)]
 public class SummaryCardTagHelper : TagHelper
 {
@@ -27,17 +32,22 @@ public class SummaryCardTagHelper : TagHelper
     }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        context.SetContextItem(new SummaryCardContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var cardContext = new SummaryCardContext();
+        var cardContext = context.GetContextItem<SummaryCardContext>();
 
-        using (context.SetScopedContextItem(cardContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        _ = await output.GetChildContentAsync();
 
         cardContext.ThrowIfNotComplete();
 

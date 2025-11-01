@@ -66,6 +66,12 @@
       Condition="Exists('%(_XmlDocFile.Identity)')"/>
   </Target>
 
+  <Target Name="AppendCIBuildInfoToVersion" AfterTargets="MinVer" Condition="'$(GITHUB_RUN_NUMBER)' != ''">
+    <PropertyGroup>
+      <FileVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch).$(GITHUB_RUN_NUMBER)</FileVersion>
+    </PropertyGroup>
+  </Target>
+
   <ItemGroup>
     <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.Docs" />
     <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.Tests" />

@@ -15,7 +15,7 @@ internal class AccordionContext
 
     public void AddItem(AccordionItem item)
     {
-        Guard.ArgumentNotNull(nameof(item), item);
+        ArgumentNullException.ThrowIfNull(item);
 
         _items.Add(item);
     }

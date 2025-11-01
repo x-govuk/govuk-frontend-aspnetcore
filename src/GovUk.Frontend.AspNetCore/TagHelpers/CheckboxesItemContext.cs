@@ -10,7 +10,7 @@ internal class CheckboxesItemContext
 
     public void SetConditional(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
 
         if (Conditional is not null)
         {
@@ -24,7 +24,7 @@ internal class CheckboxesItemContext
 
     public void SetHint(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
 
         if (Hint is not null)
         {

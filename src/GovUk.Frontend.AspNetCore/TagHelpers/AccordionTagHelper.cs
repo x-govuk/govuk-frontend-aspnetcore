@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -26,8 +25,6 @@ public class AccordionTagHelper : TagHelper
     private const string ShowSectionAriaLabelTextAttributeName = "show-section-aria-label-text";
 
     private readonly IGovUkHtmlGenerator _htmlGenerator;
-    private string? _id;
-    private int _headingLevel = ComponentGenerator.AccordionDefaultHeadingLevel;
 
     /// <summary>
     /// Creates a new <see cref="AccordionTagHelper"/>.
@@ -49,22 +46,7 @@ public class AccordionTagHelper : TagHelper
     /// Must be between <c>1</c> and <c>6</c> (inclusive). The default is <c>2</c>.
     /// </remarks>
     [HtmlAttributeName(HeadingLevelAttributeName)]
-    public int HeadingLevel
-    {
-        get => _headingLevel;
-        set
-        {
-            if (value is < ComponentGenerator.AccordionMinHeadingLevel or
-                > ComponentGenerator.AccordionMaxHeadingLevel)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(value),
-                    $"{nameof(HeadingLevel)} must be between {ComponentGenerator.AccordionMinHeadingLevel} and {ComponentGenerator.AccordionMaxHeadingLevel}.");
-            }
-
-            _headingLevel = value;
-        }
-    }
+    public int? HeadingLevel { get; set; }
 
     /// <summary>
     /// The text content of the &quot;Hide all sections&quot; button at the top of the accordion when all sections
@@ -98,12 +80,7 @@ public class AccordionTagHelper : TagHelper
     /// Cannot be <c>null</c> or empty.
     /// </remarks>
     [HtmlAttributeName(IdAttributeName)]
-    [DisallowNull]
-    public string? Id
-    {
-        get => _id;
-        set => _id = Guard.ArgumentNotNullOrEmpty(nameof(value), value);
-    }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Whether the expanded/collapsed state of the accordion should be saved when a user leaves the page and restored when they return.
@@ -149,6 +126,12 @@ public class AccordionTagHelper : TagHelper
             throw ExceptionHelper.TheAttributeMustBeSpecified(IdAttributeName);
         }
 
+        if (HeadingLevel is not null and not (>= ComponentGenerator.AccordionMinHeadingLevel and <= ComponentGenerator.AccordionMaxHeadingLevel))
+        {
+            throw new InvalidOperationException(
+                $"The '{nameof(HeadingLevelAttributeName)}' attribute must be between {ComponentGenerator.AccordionMinHeadingLevel} and {ComponentGenerator.AccordionMaxHeadingLevel}.");
+        }
+
         var accordionContext = new AccordionContext();
 
         using (context.SetScopedContextItem(accordionContext))
@@ -158,7 +141,7 @@ public class AccordionTagHelper : TagHelper
 
         var tagBuilder = _htmlGenerator.GenerateAccordion(
             Id,
-            HeadingLevel,
+            HeadingLevel ?? ComponentGenerator.AccordionDefaultHeadingLevel,
             output.Attributes.ToAttributeDictionary(),
             RememberExpanded ?? ComponentGenerator.AccordionDefaultRememberExpanded,
             ShowAllSectionsText,

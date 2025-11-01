@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -19,8 +18,6 @@ public class RadiosItemTagHelper : TagHelper
     private const string InputAttributesPrefix = "input-";
     private const string LabelAttributesPrefix = "label-";
     private const string ValueAttributeName = "value";
-
-    private string? _value;
 
     /// <summary>
     /// Creates a new <see cref="CheckboxesItemTagHelper"/>.
@@ -74,12 +71,7 @@ public class RadiosItemTagHelper : TagHelper
     /// The <c>value</c> attribute for the item.
     /// </summary>
     [HtmlAttributeName(ValueAttributeName)]
-    [DisallowNull]
-    public string? Value
-    {
-        get => _value;
-        set => _value = Guard.ArgumentNotNull(nameof(value), value);
-    }
+    public string? Value { get; set; }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

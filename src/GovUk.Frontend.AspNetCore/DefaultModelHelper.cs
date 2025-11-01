@@ -42,9 +42,9 @@ internal class DefaultModelHelper : IModelHelper
 
     public virtual string? GetModelValue(ViewContext viewContext, ModelExplorer modelExplorer, string expression)
     {
-        Guard.ArgumentNotNull(nameof(viewContext), viewContext);
-        Guard.ArgumentNotNull(nameof(modelExplorer), modelExplorer);
-        Guard.ArgumentNotNull(nameof(expression), expression);
+        ArgumentNullException.ThrowIfNull(viewContext);
+        ArgumentNullException.ThrowIfNull(modelExplorer);
+        ArgumentNullException.ThrowIfNull(expression);
 
         var fullName = GetFullHtmlFieldName(viewContext, expression);
 

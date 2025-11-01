@@ -17,8 +17,8 @@ internal partial class ComponentGenerator
         IEnumerable<RadiosItemBase> items,
         AttributeDictionary attributes)
     {
-        Guard.ArgumentNotNull(nameof(name), name);
-        Guard.ArgumentNotNull(nameof(items), items);
+        ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(items);
 
         idPrefix ??= name;
 
@@ -50,12 +50,6 @@ internal partial class ComponentGenerator
 
         void AddItem(RadiosItem item)
         {
-            Guard.ArgumentValidNotNull(
-                nameof(items),
-                $"Item {itemIndex} is not valid; {nameof(CheckboxesItem.Value)} cannot be null.",
-                item.Value,
-                item.Value is not null);
-
             var itemId = item.Id ?? (itemIndex == 0 ? idPrefix : $"{idPrefix}-{itemIndex + 1}");
             var hintId = itemId + "-item-hint";
             var conditionalId = "conditional-" + itemId;
@@ -103,13 +97,7 @@ internal partial class ComponentGenerator
 
             if (item.Hint is not null)
             {
-                Guard.ArgumentValidNotNull(
-                    nameof(items),
-                    $"Item {itemIndex} is not valid; {nameof(RadiosItem.Hint)}.{nameof(RadiosItemHint.Content)} cannot be null.",
-                    item.Hint.Content,
-                    item.Hint.Content is not null);
-
-                var hint = GenerateHint(hintId, item.Hint.Content, item.Hint.Attributes);
+                var hint = GenerateHint(hintId, item.Hint.Content!, item.Hint.Attributes);
                 hint.MergeCssClass("govuk-radios__hint");
                 itemTagBuilder.InnerHtml.AppendHtml(hint);
             }
@@ -118,12 +106,6 @@ internal partial class ComponentGenerator
 
             if (item.Conditional is not null)
             {
-                Guard.ArgumentValidNotNull(
-                    nameof(items),
-                    $"Item {itemIndex} is not valid; {nameof(CheckboxesItem.Conditional.Content)} cannot be null.",
-                    item.Conditional.Content,
-                    item.Conditional.Content is not null);
-
                 var conditional = new TagBuilder("div");
                 conditional.MergeOptionalAttributes(item.Conditional.Attributes);
                 conditional.MergeCssClass("govuk-radios__conditional");
@@ -135,7 +117,7 @@ internal partial class ComponentGenerator
 
                 conditional.Attributes.Add("id", conditionalId);
 
-                conditional.InnerHtml.AppendHtml(item.Conditional.Content);
+                conditional.InnerHtml.AppendHtml(item.Conditional.Content!);
 
                 tagBuilder.InnerHtml.AppendHtml(conditional);
             }
@@ -143,16 +125,10 @@ internal partial class ComponentGenerator
 
         void AddDivider(RadiosItemDivider divider)
         {
-            Guard.ArgumentValidNotNull(
-                nameof(items),
-                $"Item {itemIndex} is not valid; {nameof(CheckboxesItemDivider.Content)} cannot be null.",
-                divider.Content,
-                divider.Content is not null);
-
             var dividerTagBuilder = new TagBuilder(RadiosDividerItemElement);
             dividerTagBuilder.MergeOptionalAttributes(divider.Attributes);
             dividerTagBuilder.MergeCssClass("govuk-radios__divider");
-            dividerTagBuilder.InnerHtml.AppendHtml(divider.Content);
+            dividerTagBuilder.InnerHtml.AppendHtml(divider.Content!);
 
             tagBuilder.InnerHtml.AppendHtml(dividerTagBuilder);
         }

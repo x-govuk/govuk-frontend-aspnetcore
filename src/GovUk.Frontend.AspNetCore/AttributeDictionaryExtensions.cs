@@ -18,7 +18,7 @@ internal static class AttributeDictionaryExtensions
     /// <param name="value">The CSS class name to add.</param>
     public static void MergeCssClass(this AttributeDictionary attributeDictionary, string? value)
     {
-        Guard.ArgumentNotNull(nameof(attributeDictionary), attributeDictionary);
+        ArgumentNullException.ThrowIfNull(attributeDictionary);
 
         if (string.IsNullOrEmpty(value))
         {

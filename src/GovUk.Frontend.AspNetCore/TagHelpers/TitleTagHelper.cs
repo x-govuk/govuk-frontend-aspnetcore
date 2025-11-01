@@ -14,12 +14,22 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Creates a new <see cref="TitleTagHelper"/>.
 /// </remarks>
 [HtmlTargetElement("title", ParentTag = "head")]
-public class TitleTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor) : TagHelper
+public class TitleTagHelper : TagHelper
 {
     private const string DefaultErrorPrefix = "Error:";
     private const string ErrorPrefixAttributeName = "error-prefix";
 
-    private readonly GovUkFrontendOptions _options = Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor).Value;
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
+
+    /// <summary>
+    /// Creates a new <see cref="TitleTagHelper"/>.
+    /// </summary>
+    public TitleTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor)
+    {
+        ArgumentNullException.ThrowIfNull(optionsAccessor);
+
+        _optionsAccessor = optionsAccessor;
+    }
 
     /// <summary>
     /// The prefix to add to the <c>title</c> when the page has errors.
@@ -61,7 +71,7 @@ public class TitleTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor) : Ta
 
         var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
 
-        if (_options.PrependErrorToTitle && containerErrorContext.ErrorSummaryHasBeenRendered)
+        if (_optionsAccessor.Value.PrependErrorToTitle && containerErrorContext.ErrorSummaryHasBeenRendered)
         {
             var errorPrefix = ErrorPrefix ?? DefaultErrorPrefix;
             output.PreContent.Append(errorPrefix + " ");

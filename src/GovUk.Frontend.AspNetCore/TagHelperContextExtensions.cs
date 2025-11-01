@@ -77,14 +77,24 @@ internal static class TagHelperContextExtensions
         }
     }
 
-    internal class RestoreItemsOnDispose(
-        TagHelperContext context,
-        object key,
-        object? previousValue) : IDisposable
+    internal class RestoreItemsOnDispose : IDisposable
     {
-        private readonly TagHelperContext _context = Guard.ArgumentNotNull(nameof(context), context);
-        private readonly object _key = Guard.ArgumentNotNull(nameof(key), key);
-        private readonly object? _previousValue = previousValue;
+        private readonly TagHelperContext _context;
+        private readonly object _key;
+        private readonly object? _previousValue;
+
+        public RestoreItemsOnDispose(
+            TagHelperContext context,
+            object key,
+            object? previousValue)
+        {
+            ArgumentNullException.ThrowIfNull(context);
+            ArgumentNullException.ThrowIfNull(key);
+
+            _context = context;
+            _key = key;
+            _previousValue = previousValue;
+        }
 
         public void Dispose()
         {

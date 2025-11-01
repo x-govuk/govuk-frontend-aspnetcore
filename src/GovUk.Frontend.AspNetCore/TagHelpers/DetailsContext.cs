@@ -11,8 +11,8 @@ internal class DetailsContext
 
     public void SetSummary(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Summary is not null)
         {
@@ -29,8 +29,8 @@ internal class DetailsContext
 
     public void SetText(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Text is not null)
         {

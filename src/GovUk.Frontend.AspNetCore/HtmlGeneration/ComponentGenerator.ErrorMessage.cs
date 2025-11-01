@@ -14,7 +14,7 @@ internal partial class ComponentGenerator
         IHtmlContent content,
         AttributeDictionary? attributes)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(content);
 
         var tagBuilder = new TagBuilder(ErrorMessageElement);
         tagBuilder.MergeOptionalAttributes(attributes);

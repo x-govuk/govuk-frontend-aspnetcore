@@ -53,7 +53,7 @@ internal class TextAreaContext : FormGroupContext
 
     public void SetValue(IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Value is not null)
         {

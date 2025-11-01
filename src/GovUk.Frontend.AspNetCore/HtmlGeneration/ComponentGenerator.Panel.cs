@@ -24,7 +24,7 @@ internal partial class ComponentGenerator
                 $"{nameof(headingLevel)} must be between {PanelMinHeadingLevel} and {PanelMaxHeadingLevel}.");
         }
 
-        Guard.ArgumentNotNull(nameof(titleContent), titleContent);
+        ArgumentNullException.ThrowIfNull(titleContent);
 
         var tagBuilder = new TagBuilder(PanelElement);
         tagBuilder.MergeOptionalAttributes(attributes);

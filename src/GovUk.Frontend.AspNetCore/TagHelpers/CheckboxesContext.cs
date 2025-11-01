@@ -31,7 +31,7 @@ internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGr
 
     public void AddItem(CheckboxesItemBase item)
     {
-        Guard.ArgumentNotNull(nameof(item), item);
+        ArgumentNullException.ThrowIfNull(item);
 
         if (Fieldset is not null)
         {

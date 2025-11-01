@@ -17,7 +17,7 @@ public static class TagBuilderExtensions
     /// <param name="value">The CSS class name to add.</param>
     public static void MergeCssClass(this TagBuilder tagBuilder, string value)
     {
-        Guard.ArgumentNotNull(nameof(tagBuilder), tagBuilder);
+        ArgumentNullException.ThrowIfNull(tagBuilder);
 
         tagBuilder.Attributes.MergeCssClass(value);
     }

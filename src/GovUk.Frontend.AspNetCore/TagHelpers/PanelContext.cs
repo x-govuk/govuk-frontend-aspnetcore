@@ -9,7 +9,7 @@ internal class PanelContext
 
     public void SetBody(IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Body is not null)
         {
@@ -21,7 +21,7 @@ internal class PanelContext
 
     public void SetTitle(IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Title is not null)
         {

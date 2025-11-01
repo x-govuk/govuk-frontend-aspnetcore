@@ -24,7 +24,7 @@ internal class SelectContext(ModelExpression? aspFor) : FormGroupContext
 
     public void AddItem(SelectItem item)
     {
-        Guard.ArgumentNotNull(nameof(item), item);
+        ArgumentNullException.ThrowIfNull(item);
 
         _items.Add(item);
     }

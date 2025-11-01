@@ -28,7 +28,7 @@ internal partial class ComponentGenerator
         IHtmlContent content,
         AttributeDictionary? attributes)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (titleHeadingLevel is < NotificationBannerMinHeadingLevel or
             > NotificationBannerMaxHeadingLevel)

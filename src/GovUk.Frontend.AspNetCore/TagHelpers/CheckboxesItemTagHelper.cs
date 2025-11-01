@@ -24,8 +24,6 @@ public class CheckboxesItemTagHelper : TagHelper
     private const string NameAttributeName = "name";
     private const string ValueAttributeName = "value";
 
-    private string? _value;
-
     /// <summary>
     /// Creates a new <see cref="CheckboxesItemTagHelper"/>.
     /// </summary>
@@ -96,12 +94,7 @@ public class CheckboxesItemTagHelper : TagHelper
     /// The <c>value</c> attribute for the item.
     /// </summary>
     [HtmlAttributeName(ValueAttributeName)]
-    [DisallowNull]
-    public string? Value
-    {
-        get => _value;
-        set => _value = Guard.ArgumentNotNull(nameof(value), value);
-    }
+    public string? Value { get; set; }
 
     /// <summary>
     /// Gets the <see cref="ViewContext"/> of the executing view.

@@ -14,16 +14,6 @@ public class NotificationBannerTitleTagHelper : TagHelper
     private const string HeadingLevelAttributeName = "heading-level";
     private const string IdAttributeName = "id";
 
-    private int? _headingLevel;
-    private string? _id;
-
-    /// <summary>
-    /// Creates a new <see cref="NotificationBannerTitleTagHelper"/>.
-    /// </summary>
-    public NotificationBannerTitleTagHelper()
-    {
-    }
-
     /// <summary>
     /// The heading level for the notification banner title.
     /// </summary>
@@ -31,42 +21,28 @@ public class NotificationBannerTitleTagHelper : TagHelper
     /// Must be between <c>1</c> and <c>6</c> (inclusive). The default is <c>2</c>.
     /// </remarks>
     [HtmlAttributeName(HeadingLevelAttributeName)]
-    public int? HeadingLevel
-    {
-        get => _headingLevel;
-        set
-        {
-            if (value is < ComponentGenerator.NotificationBannerMinHeadingLevel or
-                > ComponentGenerator.NotificationBannerMaxHeadingLevel)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(value),
-                    $"{nameof(HeadingLevel)} must be between {ComponentGenerator.NotificationBannerMinHeadingLevel} and {ComponentGenerator.NotificationBannerMaxHeadingLevel}.");
-            }
-
-            _headingLevel = value;
-        }
-    }
+    public int? HeadingLevel { get; set; }
 
     /// <summary>
     /// The <c>id</c> attribute for the notification banner title.
     /// </summary>
     /// <remarks>
     /// The default is <c>&quot;govuk-notification-banner-title&quot;</c>.
-    /// Cannot be <c>null</c> or empty.
     /// </remarks>
     [HtmlAttributeName(IdAttributeName)]
-    public string? Id
-    {
-        get => _id;
-        set => _id = Guard.ArgumentNotNullOrEmpty(nameof(value), value);
-    }
+    public string? Id { get; set; }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
+
+        if (HeadingLevel is not null and not (>= ComponentGenerator.NotificationBannerMinHeadingLevel and <= ComponentGenerator.NotificationBannerMaxHeadingLevel))
+        {
+            throw new InvalidOperationException(
+                $"The '{HeadingLevelAttributeName}' attribute must be between {ComponentGenerator.NotificationBannerMinHeadingLevel} and {ComponentGenerator.NotificationBannerMaxHeadingLevel} (inclusive).");
+        }
 
         var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();
 

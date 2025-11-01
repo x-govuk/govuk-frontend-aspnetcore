@@ -10,7 +10,7 @@ internal partial class ComponentGenerator
 
     public TagBuilder GenerateHint(string? id, IHtmlContent content, AttributeDictionary? attributes)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(content);
 
         var tagBuilder = new TagBuilder(HintElement);
         tagBuilder.MergeOptionalAttributes(attributes);

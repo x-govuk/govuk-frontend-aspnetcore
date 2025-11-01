@@ -8,7 +8,7 @@ internal class NotificationBannerContext
 
     public void SetTitle(string id, int headingLevel, IHtmlContent? content)
     {
-        Guard.ArgumentNotNullOrEmpty(nameof(id), id);
+        ArgumentNullException.ThrowIfNull(id);
 
         if (Title is not null)
         {

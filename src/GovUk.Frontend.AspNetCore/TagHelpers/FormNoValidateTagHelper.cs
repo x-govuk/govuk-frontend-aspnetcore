@@ -10,9 +10,19 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Creates a <see cref="FormNovalidateTagHelper"/>.
 /// </remarks>
 [HtmlTargetElement("form")]
-public class FormNovalidateTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor) : TagHelper
+public class FormNovalidateTagHelper : TagHelper
 {
-    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor = Guard.ArgumentNotNull(nameof(optionsAccessor), optionsAccessor);
+    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
+
+    /// <summary>
+    /// Creates a new <see cref="FormNovalidateTagHelper"/>.
+    /// </summary>
+    public FormNovalidateTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor)
+    {
+        ArgumentNullException.ThrowIfNull(optionsAccessor);
+
+        _optionsAccessor = optionsAccessor;
+    }
 
     /// <inheritdoc/>
     public override int Order => -1;

@@ -23,8 +23,8 @@ internal partial class ComponentGenerator
         IHtmlContent content,
         AttributeDictionary? attributes)
     {
-        Guard.ArgumentNotNull(nameof(name), name);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(content);
 
         id ??= name;
 

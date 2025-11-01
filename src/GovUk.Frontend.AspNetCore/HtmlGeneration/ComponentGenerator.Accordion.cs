@@ -27,7 +27,8 @@ internal partial class ComponentGenerator
         string? showSectionAriaLabelText,
         IEnumerable<AccordionItem> items)
     {
-        Guard.ArgumentNotNullOrEmpty(nameof(id), id);
+        ArgumentNullException.ThrowIfNull(id);
+        ArgumentNullException.ThrowIfNull(items);
 
         if (headingLevel is < AccordionMinHeadingLevel or > AccordionMaxHeadingLevel)
         {
@@ -35,8 +36,6 @@ internal partial class ComponentGenerator
                 nameof(headingLevel),
                 $"{nameof(headingLevel)} must be between {AccordionMinHeadingLevel} and {AccordionMaxHeadingLevel}.");
         }
-
-        Guard.ArgumentNotNullOrEmpty(nameof(items), items);
 
         var tagBuilder = new TagBuilder(AccordionElement);
         tagBuilder.MergeOptionalAttributes(attributes);
@@ -82,18 +81,6 @@ internal partial class ComponentGenerator
         var index = 0;
         foreach (var item in items)
         {
-            Guard.ArgumentValidNotNull(
-                nameof(items),
-                $"Item {index} is not valid; {nameof(AccordionItem.Content)} cannot be null.",
-                item.Content,
-                item.Content is not null);
-
-            Guard.ArgumentValidNotNull(
-                nameof(items),
-                $"Item {index} is not valid; {nameof(AccordionItem.HeadingContent)} cannot be null.",
-                item.HeadingContent,
-                item.HeadingContent is not null);
-
             var idSuffix = index + 1;
 
             var section = new TagBuilder(AccordionItemElement);
@@ -115,7 +102,7 @@ internal partial class ComponentGenerator
             var headingContent = new TagBuilder("span");
             headingContent.MergeCssClass("govuk-accordion__section-button");
             headingContent.Attributes.Add("id", headingId);
-            headingContent.InnerHtml.AppendHtml(item.HeadingContent);
+            headingContent.InnerHtml.AppendHtml(item.HeadingContent!);
             heading.InnerHtml.AppendHtml(headingContent);
             header.InnerHtml.AppendHtml(heading);
 
@@ -138,7 +125,7 @@ internal partial class ComponentGenerator
             contentDiv.MergeCssClass("govuk-accordion__section-content");
             contentDiv.Attributes.Add("id", contentId);
             contentDiv.MergeOptionalAttributes(item.ContentAttributes);
-            contentDiv.InnerHtml.AppendHtml(item.Content);
+            contentDiv.InnerHtml.AppendHtml(item.Content!);
             section.InnerHtml.AppendHtml(contentDiv);
 
             tagBuilder.InnerHtml.AppendHtml(section);

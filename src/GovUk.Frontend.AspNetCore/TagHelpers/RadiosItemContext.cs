@@ -10,7 +10,8 @@ internal class RadiosItemContext
 
     public void SetConditional(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Conditional is not null)
         {
@@ -24,7 +25,8 @@ internal class RadiosItemContext
 
     public void SetHint(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Hint is not null)
         {

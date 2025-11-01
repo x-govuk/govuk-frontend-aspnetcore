@@ -11,8 +11,8 @@ internal class AccordionItemContext
 
     public void SetHeading(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Heading is not null)
         {
@@ -37,8 +37,8 @@ internal class AccordionItemContext
 
     public void SetSummary(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Summary is not null)
         {
@@ -57,8 +57,8 @@ internal class AccordionItemContext
 
     public void SetContent(AttributeDictionary attributes, IHtmlContent content)
     {
-        Guard.ArgumentNotNull(nameof(attributes), attributes);
-        Guard.ArgumentNotNull(nameof(content), content);
+        ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(content);
 
         if (Content is not null)
         {

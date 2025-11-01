@@ -19,8 +19,8 @@ internal partial class ComponentGenerator
         IEnumerable<SelectItem> items,
         AttributeDictionary? attributes)
     {
-        Guard.ArgumentNotNull(nameof(name), name);
-        Guard.ArgumentNotNull(nameof(items), items);
+        ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(items);
 
         id ??= name;
 
@@ -49,12 +49,6 @@ internal partial class ComponentGenerator
         var index = 0;
         foreach (var item in items)
         {
-            Guard.ArgumentValidNotNull(
-                nameof(items),
-                $"Item {index} is not valid; {nameof(SelectItem.Content)} cannot be null.",
-                item.Content,
-                item.Content is not null);
-
             var option = new TagBuilder("option");
             option.MergeOptionalAttributes(item.Attributes);
 
@@ -73,7 +67,7 @@ internal partial class ComponentGenerator
                 option.Attributes.Add("disabled", "disabled");
             }
 
-            option.InnerHtml.AppendHtml(item.Content);
+            option.InnerHtml.AppendHtml(item.Content!);
 
             tagBuilder.InnerHtml.AppendHtml(option);
 

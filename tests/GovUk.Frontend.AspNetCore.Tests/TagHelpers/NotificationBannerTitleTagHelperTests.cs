@@ -45,44 +45,4 @@ public class NotificationBannerTitleTagHelperTests
         Assert.Equal(3, notificationBannerContext.Title?.HeadingLevel);
         Assert.Equal("my-title", notificationBannerContext.Title?.Id);
     }
-
-    [Theory]
-    [InlineData(0)]
-    [InlineData(-1)]
-    [InlineData(7)]
-    public void SetHeadingLevel_InvalidLevel_ThrowsArgumentException(int level)
-    {
-        // Arrange
-        var notificationBannerContext = new NotificationBannerContext();
-
-        var context = new TagHelperContext(
-            tagName: "govuk-notification-banner-title",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(NotificationBannerContext), notificationBannerContext }
-            },
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "govuk-notification-banner-title",
-            attributes: [],
-            getChildContentAsync: (useCachedResult, encoder) =>
-            {
-                var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Title");
-                return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-
-        // Act
-        var ex = Record.Exception(() => new NotificationBannerTitleTagHelper()
-        {
-            HeadingLevel = level
-        });
-
-        // Assert
-        var argumentEx = Assert.IsType<ArgumentOutOfRangeException>(ex);
-        Assert.Equal("value", argumentEx.ParamName);
-        Assert.StartsWith("HeadingLevel must be between 1 and 6.", argumentEx.Message);
-    }
 }

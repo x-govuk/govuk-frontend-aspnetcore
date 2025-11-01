@@ -8,7 +8,7 @@
     <GovUkFrontendVersion>5.13.0</GovUkFrontendVersion>
 
     <CoreLibMinVerTagPrefix>v</CoreLibMinVerTagPrefix>
-    <CoreLibMinVerMinimumMajorMinor>3.2</CoreLibMinVerMinimumMajorMinor>
+    <CoreLibMinVerMinimumMajorMinor>4.0</CoreLibMinVerMinimumMajorMinor>
     <MinVerBuildMetadata Condition="'$(GITHUB_ACTIONS)' != 'true'">$([System.DateTimeOffset]::Now.ToUnixTimeSeconds())</MinVerBuildMetadata>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('Tests'))">true</IsTestProject>

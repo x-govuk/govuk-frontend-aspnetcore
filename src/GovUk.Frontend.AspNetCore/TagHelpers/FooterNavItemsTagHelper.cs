@@ -32,7 +32,7 @@ public class FooterNavItemsTagHelper : TagHelper
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterNavTagHelper.TagName);
         }
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
 

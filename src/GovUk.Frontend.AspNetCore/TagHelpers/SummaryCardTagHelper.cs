@@ -36,7 +36,7 @@ public class SummaryCardTagHelper : TagHelper
 
         using (context.SetScopedContextItem(cardContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         cardContext.ThrowIfNotComplete();

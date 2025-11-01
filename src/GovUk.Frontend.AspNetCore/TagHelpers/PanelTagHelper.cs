@@ -66,7 +66,7 @@ public class PanelTagHelper : TagHelper
 
         using (context.SetScopedContextItem(panelContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         panelContext.ThrowIfNotComplete();

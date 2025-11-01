@@ -64,7 +64,7 @@ public class FooterTagHelper : TagHelper
 
         var footerContext = context.GetContextItem<FooterContext>();
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

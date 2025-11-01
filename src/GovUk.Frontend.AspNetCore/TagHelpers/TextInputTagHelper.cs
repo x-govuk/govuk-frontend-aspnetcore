@@ -250,7 +250,7 @@ public class TextInputTagHelper : TagHelper
         using (context.SetScopedContextItem(textInputContext))
         using (context.SetScopedContextItem(typeof(FormGroupContext3), textInputContext))
         {
-            await output.GetChildContentAsync();
+            _ = await output.GetChildContentAsync();
         }
 
         var name = ResolveName();

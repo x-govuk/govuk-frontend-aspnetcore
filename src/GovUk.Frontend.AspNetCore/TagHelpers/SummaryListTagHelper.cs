@@ -42,7 +42,7 @@ public class SummaryListTagHelper : TagHelper
 
         var summaryListContext = context.GetContextItem<SummaryListContext>();
 
-        await output.GetChildContentAsync();
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

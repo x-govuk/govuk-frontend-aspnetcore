@@ -12,7 +12,7 @@ public class NotificationBannerTitleTagHelper : TagHelper
     internal const string TagName = "govuk-notification-banner-title";
 
     private const string HeadingLevelAttributeName = "heading-level";
-    private const string IdAttributeName = "heading-level";
+    private const string IdAttributeName = "id";
 
     private int? _headingLevel;
     private string? _id;

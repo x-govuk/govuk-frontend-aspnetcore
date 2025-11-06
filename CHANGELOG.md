@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+Fix `id` attribute name on `<govuk-notification-banner>`.
+
 ## 3.4.1
 
 ### New features

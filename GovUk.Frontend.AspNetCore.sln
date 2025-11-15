@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nuget.config = nuget.config
 		lefthook.yml = lefthook.yml
 		.github\workflows\ci.yml = .github\workflows\ci.yml
+		global.json = global.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GovUk.FrontEnd.AspNetCore.TestCommon", "tests\GovUk.FrontEnd.AspNetCore.TestCommon\GovUk.FrontEnd.AspNetCore.TestCommon.csproj", "{C1A97F71-B436-4681-A611-D38C7B357897}"

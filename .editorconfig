@@ -37,7 +37,6 @@ indent_size = 4
 tab_width = 4
 
 # Diagnostics
-dotnet_analyzer_diagnostic.category-Style.severity = warning
 dotnet_diagnostic.CA1032.severity = none
 dotnet_diagnostic.CA1822.severity = none
 dotnet_diagnostic.CA2007.severity = none

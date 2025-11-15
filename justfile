@@ -1,5 +1,3 @@
-set shell := ["pwsh", "-nop", "-c"]
-
 default:
   @just --list
 

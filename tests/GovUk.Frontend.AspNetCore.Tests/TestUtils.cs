@@ -42,26 +42,34 @@ internal static class TestUtils
     public static string GetAllTagNameElementsMessage(IEnumerable<string> allTagNames, string conjunction) =>
         allTagNames.Select(t => $"<{t}>").Aggregate((a, b) => $"{a} {conjunction} {b}");
 
-    private class DummyHttpContextAccessor : IHttpContextAccessor
+    private class DummyHttpContextAccessor(IServiceProvider services) : IHttpContextAccessor
     {
-        private readonly HttpContext? _httpContext;
-
-        public DummyHttpContextAccessor(IServiceProvider services)
-        {
-            _httpContext = new DefaultHttpContext
-            {
-                RequestServices = services
-            };
-            _httpContext.SetEndpoint(
-                new Endpoint(
-                    _ => throw new NotImplementedException(),
-                    metadata: new EndpointMetadataCollection(new ActionDescriptor()),
-                    displayName: "Tests"));
-        }
+        private readonly AsyncLocal<HttpContext> _current = new();
 
         public HttpContext? HttpContext
         {
-            get => _httpContext;
+            get
+            {
+                if (_current.Value is null)
+                {
+                    var scope = services.CreateScope();  // TODO Figure out how to dispose this
+
+                    var httpContext = new DefaultHttpContext
+                    {
+                        RequestServices = scope.ServiceProvider
+                    };
+
+                    httpContext.SetEndpoint(
+                        new Endpoint(
+                            _ => throw new NotImplementedException(),
+                            metadata: new EndpointMetadataCollection(new ActionDescriptor()),
+                            displayName: "Tests"));
+
+                    _current.Value = httpContext;
+                }
+
+                return _current.Value;
+            }
             set => throw new NotSupportedException();
         }
     }

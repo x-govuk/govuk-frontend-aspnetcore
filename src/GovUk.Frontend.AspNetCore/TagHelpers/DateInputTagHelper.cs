@@ -311,7 +311,7 @@ public class DateInputTagHelper : TagHelper
                 .Id;
 
             var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + firstFieldWithError);
+            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + firstFieldWithError!);
         }
 
         DateInputOptionsItem CreateDateInputItem(

@@ -14,6 +14,8 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 [DebuggerDisplay("{ToString()}")]
 public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 {
+    internal static HtmlEncoder DefaultEncoder { get; } = HtmlEncoder.Default;
+
     private readonly object? _value;
 
     /// <summary>
@@ -47,9 +49,9 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// <param name="encoder">The <see cref="HtmlEncoder"/> to encoded unencoded values with.</param>
     /// <param name="raw">Whether the raw, unencoded value should be returned for <see cref="string"/> values.</param>
     /// <returns>A string containing the HTML.</returns>
-    public string ToHtmlString(HtmlEncoder encoder, bool raw = false)
+    public string ToHtmlString(HtmlEncoder? encoder = null, bool raw = false)
     {
-        ArgumentNullException.ThrowIfNull(encoder);
+        encoder ??= DefaultEncoder;
 
         if (_value is string str)
         {
@@ -83,10 +85,36 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     public static TemplateString Empty { get; } = new((string?)null);
 
     /// <summary>
+    /// Concatenates two <see cref="TemplateString"/> instances.
+    /// </summary>
+#pragma warning disable CA2225
+    public static TemplateString operator +(TemplateString first, TemplateString second)
+#pragma warning restore CA2225
+    {
+        ArgumentNullException.ThrowIfNull(first);
+        ArgumentNullException.ThrowIfNull(second);
+
+        return new TemplateString(new HtmlString(first.ToHtmlString(DefaultEncoder) + second.ToHtmlString(DefaultEncoder)));
+    }
+
+    /// <summary>
+    /// Concatenates a <see cref="TemplateString"/> and a <see cref="string"/>.
+    /// </summary>
+#pragma warning disable CA2225
+    public static TemplateString operator +(TemplateString first, string second)
+#pragma warning restore CA2225
+    {
+        ArgumentNullException.ThrowIfNull(first);
+        ArgumentNullException.ThrowIfNull(second);
+
+        return first + new TemplateString(second);
+    }
+
+    /// <summary>
     /// Creates a new <see cref="TemplateString"/> from the specified unencoded <see cref="string"/>.
     /// </summary>
     /// <param name="value">The unencoded <see cref="string"/>.</param>
-    /// <returns></returns>
+    /// <returns>A new <see cref="TemplateString"/> with the contents of the specified <see cref="string"/>.</returns>
     [return: NotNullIfNotNull(nameof(value))]
 #pragma warning disable CA2225
     public static implicit operator TemplateString?(string? value)
@@ -121,7 +149,7 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     /// <inheritdoc/>
-    public override string ToString() => ToHtmlString(HtmlEncoder.Default);
+    public override string ToString() => ToHtmlString(DefaultEncoder);
 
     /// <inheritdoc cref="IHtmlContent.WriteTo"/>
     public void WriteTo(TextWriter writer, HtmlEncoder encoder)
@@ -166,10 +194,11 @@ public static class TemplateStringExtensions
     /// <param name="encoder">The <see cref="HtmlEncoder"/> to encode values with.</param>
     /// <param name="classNames">The additional CSS class names to append.</param>
     /// <returns>A new <see cref="TemplateString"/>.</returns>
-    public static TemplateString AppendCssClasses(this TemplateString? templateString, HtmlEncoder encoder, params TemplateString[] classNames)
+    public static TemplateString AppendCssClasses(this TemplateString? templateString, HtmlEncoder? encoder, params TemplateString[] classNames)
     {
-        ArgumentNullException.ThrowIfNull(encoder);
         ArgumentNullException.ThrowIfNull(classNames);
+
+        encoder ??= TemplateString.DefaultEncoder;
 
         var original = templateString?.ToHtmlString(encoder).Trim() ?? "";
 

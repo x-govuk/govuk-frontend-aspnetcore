@@ -337,7 +337,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         var view = viewEngineResult.View;
         using (view as IDisposable)
         {
-            await using var output = new StringWriter();
+            using var writer = new StringWriter();
             var viewContext = new ViewContext(
                 actionContext,
                 viewEngineResult.View,
@@ -346,11 +346,11 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
                     Model = model
                 },
                 new TempDataDictionary(httpContext, new DummyTempDataProvider()),
-                output,
+                writer,
                 new HtmlHelperOptions());
 
             await viewEngineResult.View.RenderAsync(viewContext);
-            return new HtmlString(output.ToString().Trim());
+            return new HtmlString(writer.GetStringBuilder().ToString().Trim());
         }
     }
 

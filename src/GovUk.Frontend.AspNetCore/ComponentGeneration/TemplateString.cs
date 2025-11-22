@@ -88,25 +88,19 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// Concatenates two <see cref="TemplateString"/> instances.
     /// </summary>
 #pragma warning disable CA2225
-    public static TemplateString operator +(TemplateString first, TemplateString second)
+    public static TemplateString operator +(TemplateString? first, TemplateString? second)
 #pragma warning restore CA2225
     {
-        ArgumentNullException.ThrowIfNull(first);
-        ArgumentNullException.ThrowIfNull(second);
-
-        return new TemplateString(new HtmlString(first.ToHtmlString(DefaultEncoder) + second.ToHtmlString(DefaultEncoder)));
+        return new TemplateString(new HtmlString((first ?? Empty).ToHtmlString(DefaultEncoder) + (second ?? Empty).ToHtmlString(DefaultEncoder)));
     }
 
     /// <summary>
     /// Concatenates a <see cref="TemplateString"/> and a <see cref="string"/>.
     /// </summary>
 #pragma warning disable CA2225
-    public static TemplateString operator +(TemplateString first, string second)
+    public static TemplateString operator +(TemplateString? first, string? second)
 #pragma warning restore CA2225
     {
-        ArgumentNullException.ThrowIfNull(first);
-        ArgumentNullException.ThrowIfNull(second);
-
         return first + new TemplateString(second);
     }
 

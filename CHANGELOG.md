@@ -4,6 +4,8 @@
 
 ### Fixes
 
+Fix mangling non-conformant HTML blocks.
+
 Fix `id` attribute name on `<govuk-notification-banner>`.
 
 ## 3.4.1

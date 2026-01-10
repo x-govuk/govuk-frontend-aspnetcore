@@ -65,12 +65,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("accordion", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateBackLinkAsync(BackLinkOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("back-link", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateBreadcrumbsAsync(BreadcrumbsOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

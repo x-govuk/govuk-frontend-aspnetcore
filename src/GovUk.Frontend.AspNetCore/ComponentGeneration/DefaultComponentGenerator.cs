@@ -65,14 +65,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("accordion", options);
     }
 
-
-
-    public virtual Task<GovUkComponent> GenerateButtonAsync(ButtonOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("button", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateCharacterCountAsync(CharacterCountOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

@@ -167,7 +167,8 @@ public class RadiosItemTagHelperTests
         var tagHelper = new RadiosItemTagHelper()
         {
             Checked = null,
-            Value = "bar"
+            Value = "bar",
+            ViewContext = TestUtils.CreateViewContext()
         };
 
         // Act
@@ -219,7 +220,8 @@ public class RadiosItemTagHelperTests
 
         var tagHelper = new RadiosItemTagHelper()
         {
-            Value = "2"
+            Value = "2",
+            ViewContext = TestUtils.CreateViewContext()
         };
 
         // Act

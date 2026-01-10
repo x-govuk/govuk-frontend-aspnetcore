@@ -1,4 +1,8 @@
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -19,11 +23,19 @@ public class RadiosItemTagHelper : TagHelper
     private const string LabelAttributesPrefix = "label-";
     private const string ValueAttributeName = "value";
 
+    private readonly IModelHelper _modelHelper;
+
     /// <summary>
     /// Creates a new <see cref="CheckboxesItemTagHelper"/>.
     /// </summary>
     public RadiosItemTagHelper()
+        : this(modelHelper: null)
     {
+    }
+
+    internal RadiosItemTagHelper(IModelHelper? modelHelper = null)
+    {
+        _modelHelper = modelHelper ?? new DefaultModelHelper();
     }
 
     /// <summary>
@@ -72,6 +84,14 @@ public class RadiosItemTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(ValueAttributeName)]
     public string? Value { get; set; }
+
+    /// <summary>
+    /// Gets the <see cref="ViewContext"/> of the executing view.
+    /// </summary>
+    [HtmlAttributeNotBound]
+    [ViewContext]
+    [DisallowNull]
+    public ViewContext? ViewContext { get; set; }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -134,10 +154,15 @@ public class RadiosItemTagHelper : TagHelper
 
         bool DoesModelMatchItemValue()
         {
-            var modelExpression = radiosContext!.AspFor!;
-            object model = modelExpression.Model;
+            Debug.Assert(radiosContext.AspFor is not null);
+            Debug.Assert(ViewContext is not null);
 
-            return model?.ToString() == Value;
+            var modelValue = _modelHelper.GetModelValue(
+                ViewContext!,
+                radiosContext.AspFor.ModelExplorer,
+                radiosContext.AspFor.Name);
+
+            return modelValue == Value;
         }
     }
 }

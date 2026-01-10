@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -171,12 +172,19 @@ public class CheckboxesItemTagHelper : TagHelper
 
         bool DoesModelMatchItemValue()
         {
-            var modelExpression = checkboxesContext!.AspFor!;
+            Debug.Assert(checkboxesContext.AspFor is not null);
+            Debug.Assert(ViewContext is not null);
+
+            var modelExpression = checkboxesContext.AspFor!;
             object model = modelExpression.Model;
 
             if (modelExpression.Metadata.IsEnumerableType)
             {
-                var values = ((IEnumerable)model)?.Cast<object>();
+                var value = ViewContext!.ModelState.TryGetValue(modelExpression.Name, out var entry) ?
+                    entry.RawValue :
+                    model;
+
+                var values = (value as IEnumerable)?.Cast<object>();
                 return values?.Any(v => v?.ToString() == Value) == true;
             }
 

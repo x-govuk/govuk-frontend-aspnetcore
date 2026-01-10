@@ -33,6 +33,7 @@ internal partial class DefaultComponentGenerator
     {
         if (options.Element is not null)
         {
+            // HTML element names should be lowercase per HTML spec
 #pragma warning disable CA1308 // Element names should be lowercase
             return options.Element.ToHtmlString(raw: true).ToLower(System.Globalization.CultureInfo.InvariantCulture);
 #pragma warning restore CA1308
@@ -156,7 +157,7 @@ internal partial class DefaultComponentGenerator
         var path = new HtmlTag("path", attrs => attrs
             .With("fill", "currentColor")
             .With("d", "M0 0h13l20 20-20 20H0l20-20z"));
-        
+
         path.TagRenderMode = Microsoft.AspNetCore.Mvc.Rendering.TagRenderMode.SelfClosing;
 
         svg.InnerHtml.AppendHtml(path);

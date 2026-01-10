@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Html;
-
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -95,8 +93,9 @@ internal partial class DefaultComponentGenerator
 
             if (options.Disabled == true)
             {
-                attrs.WithBoolean("disabled");
-                attrs.With("aria-disabled", "true");
+                attrs
+                    .WithBoolean("disabled")
+                    .With("aria-disabled", "true");
             }
 
             if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)

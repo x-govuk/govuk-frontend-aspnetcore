@@ -71,16 +71,8 @@ internal partial class DefaultComponentGenerator
                 .With("type", options.Type ?? "submit")
                 .With("name", options.Name);
 
-            if (options.Disabled == true)
-            {
-                attrs.WithBoolean("disabled");
-                attrs.With("aria-disabled", "true");
-            }
-
-            if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)
-            {
-                attrs.With("data-prevent-double-click", options.PreventDoubleClick.Value ? "true" : "false");
-            }
+            AddDisabledAttributes(attrs, options);
+            AddPreventDoubleClickAttribute(attrs, options);
 
             attrs
                 .WithClasses("govuk-button", options.IsStartButton == true ? "govuk-button--start" : null, options.Classes)
@@ -94,7 +86,7 @@ internal partial class DefaultComponentGenerator
         return tag;
     }
 
-    private HtmlTag CreateInputButton(ButtonOptions options)
+    private static HtmlTag CreateInputButton(ButtonOptions options)
     {
         var tag = new HtmlTag("input", attrs =>
         {
@@ -103,16 +95,8 @@ internal partial class DefaultComponentGenerator
                 .With("type", options.Type ?? "submit")
                 .With("name", options.Name);
 
-            if (options.Disabled == true)
-            {
-                attrs.WithBoolean("disabled");
-                attrs.With("aria-disabled", "true");
-            }
-
-            if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)
-            {
-                attrs.With("data-prevent-double-click", options.PreventDoubleClick.Value ? "true" : "false");
-            }
+            AddDisabledAttributes(attrs, options);
+            AddPreventDoubleClickAttribute(attrs, options);
 
             attrs
                 .WithClasses("govuk-button", options.IsStartButton == true ? "govuk-button--start" : null, options.Classes)
@@ -124,6 +108,23 @@ internal partial class DefaultComponentGenerator
         tag.TagRenderMode = Microsoft.AspNetCore.Mvc.Rendering.TagRenderMode.SelfClosing;
 
         return tag;
+    }
+
+    private static void AddDisabledAttributes(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
+    {
+        if (options.Disabled == true)
+        {
+            attrs.WithBoolean("disabled");
+            attrs.With("aria-disabled", "true");
+        }
+    }
+
+    private static void AddPreventDoubleClickAttribute(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
+    {
+        if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)
+        {
+            attrs.With("data-prevent-double-click", options.PreventDoubleClick.Value ? "true" : "false");
+        }
     }
 
     private void AppendButtonContent(HtmlTag tag, ButtonOptions options)

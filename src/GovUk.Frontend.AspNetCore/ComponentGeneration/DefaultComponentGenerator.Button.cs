@@ -11,20 +11,12 @@ internal partial class DefaultComponentGenerator
         // Determine the element type
         var element = DetermineButtonElement(options);
 
-        HtmlTag tag;
-
-        if (element == "a")
+        HtmlTag tag = element switch
         {
-            tag = CreateLinkButton(options);
-        }
-        else if (element == "input")
-        {
-            tag = CreateInputButton(options);
-        }
-        else // button
-        {
-            tag = CreateButtonElement(options);
-        }
+            "a" => CreateLinkButton(options),
+            "input" => CreateInputButton(options),
+            _ => CreateButtonElement(options)
+        };
 
         return GenerateFromHtmlTagAsync(tag);
     }
@@ -49,14 +41,15 @@ internal partial class DefaultComponentGenerator
 
     private HtmlTag CreateLinkButton(ButtonOptions options)
     {
-        var tag = new HtmlTag("a", attrs => attrs
-            .With("href", options.Href ?? "#")
-            .With("role", "button")
-            .With("draggable", "false")
-            .WithClasses("govuk-button", options.IsStartButton == true ? "govuk-button--start" : null, options.Classes)
-            .With("data-module", "govuk-button")
-            .With("id", options.Id)
-            .With(options.Attributes));
+        var tag = new HtmlTag("a", attrs =>
+        {
+            attrs
+                .With("href", options.Href ?? "#")
+                .With("role", "button")
+                .With("draggable", "false");
+
+            AddCommonButtonAttributes(attrs, options);
+        });
 
         AppendButtonContent(tag, options);
 
@@ -68,18 +61,22 @@ internal partial class DefaultComponentGenerator
         var tag = new HtmlTag("button", attrs =>
         {
             attrs
-                .With("value", options.Value)
                 .With("type", options.Type ?? "submit")
+                .With("value", options.Value)
                 .With("name", options.Name);
 
-            AddDisabledAttributes(attrs, options);
-            AddPreventDoubleClickAttribute(attrs, options);
+            if (options.Disabled == true)
+            {
+                attrs.WithBoolean("disabled");
+                attrs.With("aria-disabled", "true");
+            }
 
-            attrs
-                .WithClasses("govuk-button", options.IsStartButton == true ? "govuk-button--start" : null, options.Classes)
-                .With("data-module", "govuk-button")
-                .With("id", options.Id)
-                .With(options.Attributes);
+            if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)
+            {
+                attrs.With("data-prevent-double-click", options.PreventDoubleClick.Value ? "true" : "false");
+            }
+
+            AddCommonButtonAttributes(attrs, options);
         });
 
         AppendButtonContent(tag, options);
@@ -96,14 +93,18 @@ internal partial class DefaultComponentGenerator
                 .With("type", options.Type ?? "submit")
                 .With("name", options.Name);
 
-            AddDisabledAttributes(attrs, options);
-            AddPreventDoubleClickAttribute(attrs, options);
+            if (options.Disabled == true)
+            {
+                attrs.WithBoolean("disabled");
+                attrs.With("aria-disabled", "true");
+            }
 
-            attrs
-                .WithClasses("govuk-button", options.IsStartButton == true ? "govuk-button--start" : null, options.Classes)
-                .With("data-module", "govuk-button")
-                .With("id", options.Id)
-                .With(options.Attributes);
+            if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)
+            {
+                attrs.With("data-prevent-double-click", options.PreventDoubleClick.Value ? "true" : "false");
+            }
+
+            AddCommonButtonAttributes(attrs, options);
         });
 
         tag.TagRenderMode = Microsoft.AspNetCore.Mvc.Rendering.TagRenderMode.SelfClosing;
@@ -111,21 +112,13 @@ internal partial class DefaultComponentGenerator
         return tag;
     }
 
-    private static void AddDisabledAttributes(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
+    private static void AddCommonButtonAttributes(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
     {
-        if (options.Disabled == true)
-        {
-            attrs.WithBoolean("disabled");
-            attrs.With("aria-disabled", "true");
-        }
-    }
-
-    private static void AddPreventDoubleClickAttribute(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
-    {
-        if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)
-        {
-            attrs.With("data-prevent-double-click", options.PreventDoubleClick.Value ? "true" : "false");
-        }
+        attrs
+            .WithClasses("govuk-button", options.IsStartButton == true ? "govuk-button--start" : null, options.Classes)
+            .With("data-module", "govuk-button")
+            .With("id", options.Id)
+            .With(options.Attributes);
     }
 
     private void AppendButtonContent(HtmlTag tag, ButtonOptions options)

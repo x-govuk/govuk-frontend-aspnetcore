@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.WebUtilities
 @using Microsoft.Extensions.Options
 @inject IOptions<GovUkFrontendOptions> OptionsAccessor
-@addTagHelper GovUk.Frontend.AspNetCore.TagHelpers.*, GovUk.Frontend.AspNetCore
+@addTagHelper *, GovUk.Frontend.AspNetCore
 @{
     var rebrand = OptionsAccessor.Value.Rebrand;
 

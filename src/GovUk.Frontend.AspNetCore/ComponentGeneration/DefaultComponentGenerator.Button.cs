@@ -19,136 +19,136 @@ internal partial class DefaultComponentGenerator
         };
 
         return GenerateFromHtmlTagAsync(tag);
-    }
 
-    private static string DetermineButtonElement(ButtonOptions options)
-    {
-        if (options.Element is not null)
+        static string DetermineButtonElement(ButtonOptions options)
         {
-            // HTML element names should be lowercase per HTML spec
+            if (options.Element is not null)
+            {
+                // HTML element names should be lowercase per HTML spec
 #pragma warning disable CA1308 // Element names should be lowercase
-            return options.Element.ToHtmlString(raw: true).ToLower(System.Globalization.CultureInfo.InvariantCulture);
+                return options.Element.ToHtmlString(raw: true).ToLower(System.Globalization.CultureInfo.InvariantCulture);
 #pragma warning restore CA1308
+            }
+
+            if (options.Href is not null)
+            {
+                return "a";
+            }
+
+            return "button";
         }
 
-        if (options.Href is not null)
+        HtmlTag CreateLinkButton(ButtonOptions options)
         {
-            return "a";
+            var tag = new HtmlTag("a", attrs =>
+            {
+                attrs
+                    .With("href", options.Href ?? "#")
+                    .With("role", "button")
+                    .With("draggable", "false");
+
+                AddCommonButtonAttributes(attrs, options);
+            });
+
+            AppendButtonContent(tag, options);
+
+            return tag;
         }
 
-        return "button";
-    }
+        HtmlTag CreateButtonElement(ButtonOptions options)
+        {
+            var tag = new HtmlTag("button", attrs =>
+            {
+                attrs
+                    .With("value", options.Value)
+                    .With("type", options.Type ?? "submit");
 
-    private HtmlTag CreateLinkButton(ButtonOptions options)
-    {
-        var tag = new HtmlTag("a", attrs =>
+                AddButtonSpecificAttributes(attrs, options);
+                AddCommonButtonAttributes(attrs, options);
+            });
+
+            AppendButtonContent(tag, options);
+
+            return tag;
+        }
+
+        static HtmlTag CreateInputButton(ButtonOptions options)
+        {
+            var tag = new HtmlTag("input", attrs =>
+            {
+                attrs
+                    .With("value", options.Text)
+                    .With("type", options.Type ?? "submit");
+
+                AddButtonSpecificAttributes(attrs, options);
+                AddCommonButtonAttributes(attrs, options);
+            });
+
+            tag.TagRenderMode = Microsoft.AspNetCore.Mvc.Rendering.TagRenderMode.SelfClosing;
+
+            return tag;
+        }
+
+        static void AddButtonSpecificAttributes(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
+        {
+            attrs.With("name", options.Name);
+
+            if (options.Disabled == true)
+            {
+                attrs.WithBoolean("disabled");
+                attrs.With("aria-disabled", "true");
+            }
+
+            if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)
+            {
+                attrs.With("data-prevent-double-click", options.PreventDoubleClick.Value ? "true" : "false");
+            }
+        }
+
+        static void AddCommonButtonAttributes(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
         {
             attrs
-                .With("href", options.Href ?? "#")
-                .With("role", "button")
-                .With("draggable", "false");
-
-            AddCommonButtonAttributes(attrs, options);
-        });
-
-        AppendButtonContent(tag, options);
-
-        return tag;
-    }
-
-    private HtmlTag CreateButtonElement(ButtonOptions options)
-    {
-        var tag = new HtmlTag("button", attrs =>
-        {
-            attrs
-                .With("value", options.Value)
-                .With("type", options.Type ?? "submit");
-
-            AddButtonSpecificAttributes(attrs, options);
-            AddCommonButtonAttributes(attrs, options);
-        });
-
-        AppendButtonContent(tag, options);
-
-        return tag;
-    }
-
-    private static HtmlTag CreateInputButton(ButtonOptions options)
-    {
-        var tag = new HtmlTag("input", attrs =>
-        {
-            attrs
-                .With("value", options.Text)
-                .With("type", options.Type ?? "submit");
-
-            AddButtonSpecificAttributes(attrs, options);
-            AddCommonButtonAttributes(attrs, options);
-        });
-
-        tag.TagRenderMode = Microsoft.AspNetCore.Mvc.Rendering.TagRenderMode.SelfClosing;
-
-        return tag;
-    }
-
-    private static void AddButtonSpecificAttributes(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
-    {
-        attrs.With("name", options.Name);
-
-        if (options.Disabled == true)
-        {
-            attrs.WithBoolean("disabled");
-            attrs.With("aria-disabled", "true");
+                .WithClasses("govuk-button", options.IsStartButton == true ? "govuk-button--start" : null, options.Classes)
+                .With("data-module", "govuk-button")
+                .With("id", options.Id)
+                .With(options.Attributes);
         }
 
-        if (options.PreventDoubleClick == true || options.PreventDoubleClick == false)
+        void AppendButtonContent(HtmlTag tag, ButtonOptions options)
         {
-            attrs.With("data-prevent-double-click", options.PreventDoubleClick.Value ? "true" : "false");
+            // Add the button text or HTML
+            tag.InnerHtml.AppendHtml(HtmlOrText(options.Html, options.Text));
+
+            // Add the start icon if needed
+            if (options.IsStartButton == true)
+            {
+                tag.InnerHtml.AppendHtml(CreateStartIcon());
+            }
         }
-    }
 
-    private static void AddCommonButtonAttributes(HtmlTag.AttributeBuilder attrs, ButtonOptions options)
-    {
-        attrs
-            .WithClasses("govuk-button", options.IsStartButton == true ? "govuk-button--start" : null, options.Classes)
-            .With("data-module", "govuk-button")
-            .With("id", options.Id)
-            .With(options.Attributes);
-    }
-
-    private void AppendButtonContent(HtmlTag tag, ButtonOptions options)
-    {
-        // Add the button text or HTML
-        tag.InnerHtml.AppendHtml(HtmlOrText(options.Html, options.Text));
-
-        // Add the start icon if needed
-        if (options.IsStartButton == true)
+        static HtmlTag CreateStartIcon()
         {
-            tag.InnerHtml.AppendHtml(CreateStartIcon());
+            // The SVG needs focusable="false" so that Internet Explorer does not
+            // treat it as an interactive element - without this it will be
+            // 'focusable' when using the keyboard to navigate.
+            var svg = new HtmlTag("svg", attrs => attrs
+                .WithClasses("govuk-button__start-icon")
+                .With("xmlns", "http://www.w3.org/2000/svg")
+                .With("width", "17.5")
+                .With("height", "19")
+                .With("viewBox", "0 0 33 40")
+                .With("aria-hidden", "true")
+                .With("focusable", "false"));
+
+            var path = new HtmlTag("path", attrs => attrs
+                .With("fill", "currentColor")
+                .With("d", "M0 0h13l20 20-20 20H0l20-20z"));
+
+            path.TagRenderMode = Microsoft.AspNetCore.Mvc.Rendering.TagRenderMode.SelfClosing;
+
+            svg.InnerHtml.AppendHtml(path);
+
+            return svg;
         }
-    }
-
-    private static HtmlTag CreateStartIcon()
-    {
-        // The SVG needs focusable="false" so that Internet Explorer does not
-        // treat it as an interactive element - without this it will be
-        // 'focusable' when using the keyboard to navigate.
-        var svg = new HtmlTag("svg", attrs => attrs
-            .WithClasses("govuk-button__start-icon")
-            .With("xmlns", "http://www.w3.org/2000/svg")
-            .With("width", "17.5")
-            .With("height", "19")
-            .With("viewBox", "0 0 33 40")
-            .With("aria-hidden", "true")
-            .With("focusable", "false"));
-
-        var path = new HtmlTag("path", attrs => attrs
-            .With("fill", "currentColor")
-            .With("d", "M0 0h13l20 20-20 20H0l20-20z"));
-
-        path.TagRenderMode = Microsoft.AspNetCore.Mvc.Rendering.TagRenderMode.SelfClosing;
-
-        svg.InnerHtml.AppendHtml(path);
-
-        return svg;
     }
 }

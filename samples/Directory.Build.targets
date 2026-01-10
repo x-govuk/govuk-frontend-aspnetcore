@@ -1,2 +1,15 @@
 <Project>
+
+  <PropertyGroup>
+    <PackageCacheDirectory>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)package_cache')</PackageCacheDirectory>
+  </PropertyGroup>
+
+  <Target Name="ClearPackageCache" BeforeTargets="Clean">
+    <RemoveDir Directories="$(PackageCacheDirectory)" />
+  </Target>
+
+  <Target Name="BuildPackages" BeforeTargets="Restore">
+    <Exec Command="dotnet pack -c Release" WorkingDirectory="$(MSBuildThisFileDirectory)..\src\GovUk.Frontend.AspNetCore" />
+  </Target>
+
 </Project>

@@ -24,7 +24,6 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
     <ImplicitUsings>enable</ImplicitUsings>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageCopyToOutput>false</PackageCopyToOutput>
     <AnalysisMode>All</AnalysisMode>
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">$(DefineConstants);SHORT_TAG_NAMES</DefineConstants>

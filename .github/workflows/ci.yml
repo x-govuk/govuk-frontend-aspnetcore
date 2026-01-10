@@ -49,8 +49,8 @@ jobs:
 
       - name: Build
         run: |
-          just build --configuration Debug --no-restore /p:GeneratePackageOnBuild=false
-          just build --configuration Release --no-restore /p:GeneratePackageOnBuild=false
+          just build --configuration Debug --no-restore
+          just build --configuration Release --no-restore
 
       - name: Install Playwright
         run: just install-playwright

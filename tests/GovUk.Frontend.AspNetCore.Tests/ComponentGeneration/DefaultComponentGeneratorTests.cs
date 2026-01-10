@@ -53,8 +53,7 @@ public class DefaultComponentGeneratorTests
     public Task Checkboxes(ComponentTestCaseData<CheckboxesOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateCheckboxesAsync(options),
-            compareWhitespace: false);
+            (generator, options) => generator.GenerateCheckboxesAsync(options));
 
     [Theory]
     [ComponentFixtureData("cookie-banner", typeof(CookieBannerOptions))]
@@ -130,16 +129,14 @@ public class DefaultComponentGeneratorTests
                     : html.Replace("Mae’r", "Mae&#x2019;r");
 
                 return html;
-            },
-            compareWhitespace: false);
+            });
 
     [Theory]
     [ComponentFixtureData("header", typeof(HeaderOptions))]
     public Task Header(ComponentTestCaseData<HeaderOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateHeaderAsync(options),
-            compareWhitespace: false);
+            (generator, options) => generator.GenerateHeaderAsync(options));
 
     [Theory]
     [ComponentFixtureData("hint", typeof(HintOptions))]
@@ -211,8 +208,7 @@ public class DefaultComponentGeneratorTests
     public Task PasswordInput(ComponentTestCaseData<PasswordInputOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GeneratePasswordInputAsync(options),
-            compareWhitespace: false);
+            (generator, options) => generator.GeneratePasswordInputAsync(options));
 
     [Theory]
     [ComponentFixtureData("phase-banner", typeof(PhaseBannerOptions))]
@@ -230,8 +226,7 @@ public class DefaultComponentGeneratorTests
     public Task ServiceNavigation(ComponentTestCaseData<ServiceNavigationOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateServiceNavigationAsync(options),
-            compareWhitespace: false);
+            (generator, options) => generator.GenerateServiceNavigationAsync(options));
 
     [Theory]
     [ComponentFixtureData("skip-link", typeof(SkipLinkOptions))]
@@ -300,7 +295,6 @@ public class DefaultComponentGeneratorTests
     private async Task CheckComponentHtmlMatchesExpectedHtml<TOptions>(
         ComponentTestCaseData<TOptions> testCaseData,
         Func<DefaultComponentGenerator, TOptions, Task<GovUkComponent>> generateComponent,
-        bool compareWhitespace = true,
         Predicate<IDiff>? excludeDiff = null,
         Func<string, string>? amendExpectedHtml = null)
     {
@@ -324,11 +318,5 @@ public class DefaultComponentGeneratorTests
 
         // Semantic comparison
         AssertEx.HtmlEqual(expectedHtml, html, excludeDiff);
-
-        // For exact character-by-character equality
-        if (compareWhitespace)
-        {
-            Assert.Equal(expectedHtml.ReplaceLineEndings(), html.ReplaceLineEndings());
-        }
     }
 }

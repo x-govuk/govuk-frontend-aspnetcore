@@ -33,7 +33,9 @@ internal partial class DefaultComponentGenerator
     {
         if (options.Element is not null)
         {
-            return options.Element.ToHtmlString(raw: true).ToLowerInvariant();
+#pragma warning disable CA1308 // Element names should be lowercase
+            return options.Element.ToHtmlString(raw: true).ToLower(System.Globalization.CultureInfo.InvariantCulture);
+#pragma warning restore CA1308
         }
 
         if (options.Href is not null)
@@ -136,7 +138,7 @@ internal partial class DefaultComponentGenerator
         }
     }
 
-    private static IHtmlContent CreateStartIcon()
+    private static HtmlTag CreateStartIcon()
     {
         // The SVG needs focusable="false" so that Internet Explorer does not
         // treat it as an interactive element - without this it will be

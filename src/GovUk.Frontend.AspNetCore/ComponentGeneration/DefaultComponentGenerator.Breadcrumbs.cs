@@ -20,13 +20,11 @@ internal partial class DefaultComponentGenerator
             {
                 var liTag = new HtmlTag("li", attrs =>
                 {
-                    attrs.WithClasses("govuk-breadcrumbs__list-item");
-                    
-                    if (item.Href is not null)
-                    {
-                        attrs.With(item.ItemAttributes);
-                    }
-                    else
+                    attrs
+                        .WithClasses("govuk-breadcrumbs__list-item")
+                        .With(item.ItemAttributes);
+
+                    if (item.Href is null)
                     {
                         attrs.With("aria-current", "page");
                     }
@@ -38,9 +36,9 @@ internal partial class DefaultComponentGenerator
                         .WithClasses("govuk-breadcrumbs__link")
                         .With("href", item.Href)
                         .With(item.Attributes));
-                    
+
                     aTag.InnerHtml.AppendHtml(HtmlOrText(item.Html, item.Text));
-                    
+
                     liTag.InnerHtml.AppendHtml(aTag);
                 }
                 else

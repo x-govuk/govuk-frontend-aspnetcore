@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -53,7 +52,6 @@ public class CharacterCountTagHelper : TagHelper
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
-    private readonly HtmlEncoder _encoder;
 
     private decimal? _threshold;
     private int? _maxLength;
@@ -62,21 +60,18 @@ public class CharacterCountTagHelper : TagHelper
     /// <summary>
     /// Creates an <see cref="CharacterCountTagHelper"/>.
     /// </summary>
-    public CharacterCountTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
-        : this(componentGenerator, modelHelper: new DefaultModelHelper(), encoder)
+    public CharacterCountTagHelper(IComponentGenerator componentGenerator)
+        : this(componentGenerator, modelHelper: new DefaultModelHelper())
     {
-        ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(encoder);
     }
 
-    internal CharacterCountTagHelper(IComponentGenerator componentGenerator, IModelHelper modelHelper, HtmlEncoder encoder)
+    internal CharacterCountTagHelper(IComponentGenerator componentGenerator, IModelHelper modelHelper)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(modelHelper);
-        ArgumentNullException.ThrowIfNull(encoder);
+
         _componentGenerator = componentGenerator;
         _modelHelper = modelHelper;
-        _encoder = encoder;
     }
 
     /// <summary>
@@ -287,7 +282,7 @@ public class CharacterCountTagHelper : TagHelper
 
         if (LabelClass is not null)
         {
-            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(_encoder, LabelClass);
+            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(LabelClass);
         }
 
         var formGroupAttributes = new AttributeCollection(FormGroupAttributes);
@@ -349,7 +344,7 @@ public class CharacterCountTagHelper : TagHelper
             WordsOverLimitText = null
         });
 
-        output.ApplyComponentHtml(component, HtmlEncoder.Default);
+        component.ApplyToTagHelper(output);
 
         if (errorMessageOptions is not null)
         {

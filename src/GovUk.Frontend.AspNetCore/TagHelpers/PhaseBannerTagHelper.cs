@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -15,18 +14,15 @@ public class PhaseBannerTagHelper : TagHelper
     internal const string TagName = "govuk-phase-banner";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly HtmlEncoder _encoder;
 
     /// <summary>
     /// Creates a <see cref="PhaseBannerTagHelper"/>.
     /// </summary>
-    public PhaseBannerTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
+    public PhaseBannerTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
-        _encoder = encoder;
     }
 
     /// <inheritdoc/>
@@ -66,6 +62,6 @@ public class PhaseBannerTagHelper : TagHelper
             Attributes = attributes
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
     }
 }

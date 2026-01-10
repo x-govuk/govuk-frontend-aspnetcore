@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -16,18 +15,15 @@ public class SkipLinkTagHelper : TagHelper
     private const string HrefAttributeName = "href";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly HtmlEncoder _encoder;
 
     /// <summary>
     /// Creates a new <see cref="BackLinkTagHelper"/>.
     /// </summary>
-    public SkipLinkTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
+    public SkipLinkTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
-        _encoder = encoder;
     }
 
     /// <summary>
@@ -64,6 +60,6 @@ public class SkipLinkTagHelper : TagHelper
             Attributes = attributes
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
     }
 }

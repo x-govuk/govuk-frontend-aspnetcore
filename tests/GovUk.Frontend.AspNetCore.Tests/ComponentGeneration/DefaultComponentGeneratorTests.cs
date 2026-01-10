@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
 using AngleSharp.Diffing.Core;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using Microsoft.AspNetCore.Html;
 using Match = System.Text.RegularExpressions.Match;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ComponentGeneration;
@@ -300,12 +299,12 @@ public class DefaultComponentGeneratorTests
 
     private async Task CheckComponentHtmlMatchesExpectedHtml<TOptions>(
         ComponentTestCaseData<TOptions> testCaseData,
-        Func<DefaultComponentGenerator, TOptions, Task<IHtmlContent>> generateComponent,
+        Func<DefaultComponentGenerator, TOptions, Task<GovUkComponent>> generateComponent,
         bool compareWhitespace = true,
         Predicate<IDiff>? excludeDiff = null,
         Func<string, string>? amendExpectedHtml = null)
     {
-        var html = (await generateComponent(_componentGenerator, testCaseData.Options)).ToHtmlString();
+        var html = (await generateComponent(_componentGenerator, testCaseData.Options)).GetHtml();
 
         // Some of the fixtures have characters with different encodings to what we produce;
         // normalize those before comparing:

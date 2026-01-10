@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -33,7 +32,7 @@ public class CookieBannerTagHelperTests : TagHelperTestBase<CookieBannerTagHelpe
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<CookieBannerOptions>(nameof(IComponentGenerator.GenerateCookieBannerAsync));
 
-        var tagHelper = new CookieBannerTagHelper(componentGenerator, HtmlEncoder.Default)
+        var tagHelper = new CookieBannerTagHelper(componentGenerator)
         {
             AriaLabel = arialLabel,
             Hidden = hidden

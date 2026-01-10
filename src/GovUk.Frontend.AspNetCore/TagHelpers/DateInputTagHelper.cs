@@ -2,7 +2,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
@@ -56,7 +55,6 @@ public class DateInputTagHelper : TagHelper
     private readonly IComponentGenerator _componentGenerator;
     private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
     private readonly IModelHelper _modelHelper;
-    private readonly HtmlEncoder _encoder;
 
     private object? _value;
     private bool _valueSpecified;
@@ -66,29 +64,22 @@ public class DateInputTagHelper : TagHelper
     /// </summary>
     public DateInputTagHelper(
         IComponentGenerator componentGenerator,
-        IOptions<GovUkFrontendOptions> optionsAccessor,
-        HtmlEncoder encoder)
-        : this(componentGenerator, optionsAccessor, encoder, modelHelper: new DefaultModelHelper())
+        IOptions<GovUkFrontendOptions> optionsAccessor)
+        : this(componentGenerator, optionsAccessor, modelHelper: new DefaultModelHelper())
     {
-        ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(optionsAccessor);
-        ArgumentNullException.ThrowIfNull(encoder);
     }
 
     internal DateInputTagHelper(
         IComponentGenerator componentGenerator,
         IOptions<GovUkFrontendOptions> optionsAccessor,
-        HtmlEncoder encoder,
         IModelHelper modelHelper)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
-        ArgumentNullException.ThrowIfNull(encoder);
         ArgumentNullException.ThrowIfNull(modelHelper);
 
         _componentGenerator = componentGenerator;
         _optionsAccessor = optionsAccessor;
-        _encoder = encoder;
         _modelHelper = modelHelper;
     }
 
@@ -300,14 +291,14 @@ public class DateInputTagHelper : TagHelper
             Attributes = attributes
         });
 
-        output.ApplyComponentHtml(component, HtmlEncoder.Default);
+        component.ApplyToTagHelper(output);
 
         if (errorMessageOptions is not null)
         {
             Debug.Assert(errorMessageOptions.Html is not null);
 
             var firstFieldWithError = items
-                .First(i => i.Classes?.ToHtmlString(_encoder).Contains("govuk-input--error", StringComparison.Ordinal) == true)
+                .First(i => i.Classes?.ToHtmlString().Contains("govuk-input--error", StringComparison.Ordinal) == true)
                 .Id;
 
             var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
@@ -327,7 +318,7 @@ public class DateInputTagHelper : TagHelper
             var defaultFullName = ModelNames.CreatePropertyModelName(namePrefix, defaultName);
             var itemName = contextItem?.Name ?? defaultFullName;
             var itemId = contextItem?.Id ??
-                contextItem?.Name?.ToHtmlString(_encoder) ??
+                contextItem?.Name?.ToHtmlString() ??
                 $"{id}.{defaultName}";
             var itemLabel = contextItem?.LabelHtml ?? defaultLabel;
 
@@ -344,11 +335,11 @@ public class DateInputTagHelper : TagHelper
 
             var resolvedAttributes = contextItem?.Attributes?.Clone() ?? [];
             resolvedAttributes.Remove("class", out var itemClasses);
-            itemClasses = itemClasses.AppendCssClasses(_encoder, defaultClass);
+            itemClasses = itemClasses.AppendCssClasses(defaultClass);
 
             if (haveError && (errorItems & errorSource) != 0)
             {
-                itemClasses = itemClasses.AppendCssClasses(_encoder, "govuk-input--error");
+                itemClasses = itemClasses.AppendCssClasses("govuk-input--error");
             }
 
             if (Disabled == true)

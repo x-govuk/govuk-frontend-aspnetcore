@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -58,6 +57,6 @@ public class SummaryCardTagHelper : TagHelper
             Attributes = cardContext.SummaryList?.Attributes
         });
 
-        output.ApplyComponentHtml(component, HtmlEncoder.Default);
+        component.ApplyToTagHelper(output);
     }
 }

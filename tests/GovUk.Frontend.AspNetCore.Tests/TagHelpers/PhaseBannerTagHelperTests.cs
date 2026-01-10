@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -41,7 +40,7 @@ public class PhaseBannerTagHelperTests : TagHelperTestBase<PhaseBannerTagHelper>
         var (componentGenerator, getActualOptions) =
             CreateComponentGenerator<PhaseBannerOptions>(nameof(IComponentGenerator.GeneratePhaseBannerAsync));
 
-        var tagHelper = new PhaseBannerTagHelper(componentGenerator, HtmlEncoder.Default);
+        var tagHelper = new PhaseBannerTagHelper(componentGenerator);
 
         tagHelper.Init(context);
 
@@ -76,7 +75,7 @@ public class PhaseBannerTagHelperTests : TagHelperTestBase<PhaseBannerTagHelper>
         var (componentGenerator, getActualOptions) =
             CreateComponentGenerator<PhaseBannerOptions>(nameof(IComponentGenerator.GeneratePhaseBannerAsync));
 
-        var tagHelper = new PhaseBannerTagHelper(componentGenerator, HtmlEncoder.Default);
+        var tagHelper = new PhaseBannerTagHelper(componentGenerator);
 
         tagHelper.Init(context);
 

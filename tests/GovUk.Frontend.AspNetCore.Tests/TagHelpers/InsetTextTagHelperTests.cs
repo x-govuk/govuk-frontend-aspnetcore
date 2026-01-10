@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -34,7 +33,7 @@ public class InsetTextTagHelperTests
         InsetTextOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInsetTextAsync(It.IsAny<InsetTextOptions>())).Callback<InsetTextOptions>(o => actualOptions = o);
 
-        var tagHelper = new InsetTextTagHelper(componentGeneratorMock.Object, HtmlEncoder.Default)
+        var tagHelper = new InsetTextTagHelper(componentGeneratorMock.Object)
         {
             Id = id
         };

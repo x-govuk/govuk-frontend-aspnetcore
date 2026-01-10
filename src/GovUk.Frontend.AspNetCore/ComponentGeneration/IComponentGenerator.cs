@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Html;
-
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 /// <summary>
@@ -11,197 +9,197 @@ public interface IComponentGenerator
     /// Generates an accordion component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateAccordionAsync(AccordionOptions options);
+    Task<GovUkComponent> GenerateAccordionAsync(AccordionOptions options);
 
     /// <summary>
     /// Generates a back link component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateBackLinkAsync(BackLinkOptions options);
+    Task<GovUkComponent> GenerateBackLinkAsync(BackLinkOptions options);
 
     /// <summary>
     /// Generates a breadcrumbs component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateBreadcrumbsAsync(BreadcrumbsOptions options);
+    Task<GovUkComponent> GenerateBreadcrumbsAsync(BreadcrumbsOptions options);
 
     /// <summary>
     /// Generates a button component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateButtonAsync(ButtonOptions options);
+    Task<GovUkComponent> GenerateButtonAsync(ButtonOptions options);
 
     /// <summary>
     /// Generates a character count component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateCharacterCountAsync(CharacterCountOptions options);
+    Task<GovUkComponent> GenerateCharacterCountAsync(CharacterCountOptions options);
 
     /// <summary>
     /// Generates a checkboxes component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateCheckboxesAsync(CheckboxesOptions options);
+    Task<GovUkComponent> GenerateCheckboxesAsync(CheckboxesOptions options);
 
     /// <summary>
     /// Generates a cookie banner component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateCookieBannerAsync(CookieBannerOptions options);
+    Task<GovUkComponent> GenerateCookieBannerAsync(CookieBannerOptions options);
 
     /// <summary>
     /// Generates a date input component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateDateInputAsync(DateInputOptions options);
+    Task<GovUkComponent> GenerateDateInputAsync(DateInputOptions options);
 
     /// <summary>
     /// Generates a details component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateDetailsAsync(DetailsOptions options);
+    Task<GovUkComponent> GenerateDetailsAsync(DetailsOptions options);
 
     /// <summary>
     /// Generates an error message component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateErrorMessageAsync(ErrorMessageOptions options);
+    Task<GovUkComponent> GenerateErrorMessageAsync(ErrorMessageOptions options);
 
     /// <summary>
     /// Generates an error summary component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateErrorSummaryAsync(ErrorSummaryOptions options);
+    Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options);
 
     /// <summary>
     /// Generates an exit this page component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateExitThisPageAsync(ExitThisPageOptions options);
+    Task<GovUkComponent> GenerateExitThisPageAsync(ExitThisPageOptions options);
 
     /// <summary>
     /// Generates a fieldset component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateFieldsetAsync(FieldsetOptions options);
+    Task<GovUkComponent> GenerateFieldsetAsync(FieldsetOptions options);
 
     /// <summary>
     /// Generates a file upload component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateFileUploadAsync(FileUploadOptions options);
+    Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options);
 
     /// <summary>
     /// Generates a footer component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateFooterAsync(FooterOptions options);
+    Task<GovUkComponent> GenerateFooterAsync(FooterOptions options);
 
     /// <summary>
     /// Generates a header component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateHeaderAsync(HeaderOptions options);
+    Task<GovUkComponent> GenerateHeaderAsync(HeaderOptions options);
 
     /// <summary>
     /// Generates a hint component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateHintAsync(HintOptions options);
+    Task<GovUkComponent> GenerateHintAsync(HintOptions options);
 
     /// <summary>
     /// Generates an input component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateInputAsync(InputOptions options);
+    Task<GovUkComponent> GenerateInputAsync(InputOptions options);
 
     /// <summary>
     /// Generates an inset text component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateInsetTextAsync(InsetTextOptions options);
+    Task<GovUkComponent> GenerateInsetTextAsync(InsetTextOptions options);
 
     /// <summary>
     /// Generates a label component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateLabelAsync(LabelOptions options);
+    Task<GovUkComponent> GenerateLabelAsync(LabelOptions options);
 
     /// <summary>
     /// Generates a notification banner component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateNotificationBannerAsync(NotificationBannerOptions options);
+    Task<GovUkComponent> GenerateNotificationBannerAsync(NotificationBannerOptions options);
 
     /// <summary>
     /// Generates a pagination component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GeneratePaginationAsync(PaginationOptions options);
+    Task<GovUkComponent> GeneratePaginationAsync(PaginationOptions options);
 
     /// <summary>
     /// Generates a panel component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GeneratePanelAsync(PanelOptions options);
+    Task<GovUkComponent> GeneratePanelAsync(PanelOptions options);
 
     /// <summary>
     /// Generates a password input component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GeneratePasswordInputAsync(PasswordInputOptions options);
+    Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options);
 
     /// <summary>
     /// Generates a phase banner component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GeneratePhaseBannerAsync(PhaseBannerOptions options);
+    Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options);
 
     /// <summary>
     /// Generates a service navigation component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateServiceNavigationAsync(ServiceNavigationOptions options);
+    Task<GovUkComponent> GenerateServiceNavigationAsync(ServiceNavigationOptions options);
 
     /// <summary>
     /// Generates a skip link component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateSkipLinkAsync(SkipLinkOptions options);
+    Task<GovUkComponent> GenerateSkipLinkAsync(SkipLinkOptions options);
 
     /// <summary>
     /// Generates a summary list component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateSummaryListAsync(SummaryListOptions options);
+    Task<GovUkComponent> GenerateSummaryListAsync(SummaryListOptions options);
 
     /// <summary>
     /// Generates a table component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateTableAsync(TableOptions options);
+    Task<GovUkComponent> GenerateTableAsync(TableOptions options);
 
     /// <summary>
     /// Generates a tabs component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateTabsAsync(TabsOptions options);
+    Task<GovUkComponent> GenerateTabsAsync(TabsOptions options);
 
     /// <summary>
     /// Generates a task list component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateTaskListAsync(TaskListOptions options);
+    Task<GovUkComponent> GenerateTaskListAsync(TaskListOptions options);
 
     /// <summary>
     /// Generates a tag component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateTagAsync(TagOptions options);
+    Task<GovUkComponent> GenerateTagAsync(TagOptions options);
 
     /// <summary>
     /// Generates a warning text component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<IHtmlContent> GenerateWarningTextAsync(WarningTextOptions options);
+    Task<GovUkComponent> GenerateWarningTextAsync(WarningTextOptions options);
 }

@@ -2,15 +2,6 @@ using System.Collections.Concurrent;
 using System.Text.Encodings.Web;
 using Fluid;
 using Fluid.Values;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.FileProviders;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -65,205 +56,205 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         });
     }
 
-    public virtual Task<IHtmlContent> GenerateAccordionAsync(AccordionOptions options)
+    public virtual Task<GovUkComponent> GenerateAccordionAsync(AccordionOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("accordion", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateBackLinkAsync(BackLinkOptions options)
+    public virtual Task<GovUkComponent> GenerateBackLinkAsync(BackLinkOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("back-link", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateBreadcrumbsAsync(BreadcrumbsOptions options)
+    public virtual Task<GovUkComponent> GenerateBreadcrumbsAsync(BreadcrumbsOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("breadcrumbs", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateButtonAsync(ButtonOptions options)
+    public virtual Task<GovUkComponent> GenerateButtonAsync(ButtonOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("button", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateCharacterCountAsync(CharacterCountOptions options)
+    public virtual Task<GovUkComponent> GenerateCharacterCountAsync(CharacterCountOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("character-count", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateCheckboxesAsync(CheckboxesOptions options)
+    public virtual Task<GovUkComponent> GenerateCheckboxesAsync(CheckboxesOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("checkboxes", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateCookieBannerAsync(CookieBannerOptions options)
+    public virtual Task<GovUkComponent> GenerateCookieBannerAsync(CookieBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("cookie-banner", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateDateInputAsync(DateInputOptions options)
+    public virtual Task<GovUkComponent> GenerateDateInputAsync(DateInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("date-input", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateDetailsAsync(DetailsOptions options)
+    public virtual Task<GovUkComponent> GenerateDetailsAsync(DetailsOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("details", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateErrorMessageAsync(ErrorMessageOptions options)
+    public virtual Task<GovUkComponent> GenerateErrorMessageAsync(ErrorMessageOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("error-message", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
+    public virtual Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("error-summary", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateExitThisPageAsync(ExitThisPageOptions options)
+    public virtual Task<GovUkComponent> GenerateExitThisPageAsync(ExitThisPageOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("exit-this-page", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateFieldsetAsync(FieldsetOptions options)
+    public virtual Task<GovUkComponent> GenerateFieldsetAsync(FieldsetOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("fieldset", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateFileUploadAsync(FileUploadOptions options)
+    public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("file-upload", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateFooterAsync(FooterOptions options)
+    public virtual Task<GovUkComponent> GenerateFooterAsync(FooterOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("footer", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateHeaderAsync(HeaderOptions options)
+    public virtual Task<GovUkComponent> GenerateHeaderAsync(HeaderOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("header", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateHintAsync(HintOptions options)
+    public virtual Task<GovUkComponent> GenerateHintAsync(HintOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("hint", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateInsetTextAsync(InsetTextOptions options)
+    public virtual Task<GovUkComponent> GenerateInsetTextAsync(InsetTextOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("inset-text", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateInputAsync(InputOptions options)
+    public virtual Task<GovUkComponent> GenerateInputAsync(InputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("input", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateLabelAsync(LabelOptions options)
+    public virtual Task<GovUkComponent> GenerateLabelAsync(LabelOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("label", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
+    public virtual Task<GovUkComponent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("notification-banner", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateServiceNavigationAsync(ServiceNavigationOptions options)
+    public virtual Task<GovUkComponent> GenerateServiceNavigationAsync(ServiceNavigationOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("service-navigation", options);
     }
 
-    public virtual Task<IHtmlContent> GeneratePanelAsync(PanelOptions options)
+    public virtual Task<GovUkComponent> GeneratePanelAsync(PanelOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("panel", options);
     }
 
-    public virtual Task<IHtmlContent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
+    public virtual Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("phase-banner", options);
     }
 
-    public virtual Task<IHtmlContent> GeneratePaginationAsync(PaginationOptions options)
+    public virtual Task<GovUkComponent> GeneratePaginationAsync(PaginationOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("pagination", options);
     }
 
-    public virtual Task<IHtmlContent> GeneratePasswordInputAsync(PasswordInputOptions options)
+    public virtual Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("password-input", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateSkipLinkAsync(SkipLinkOptions options)
+    public virtual Task<GovUkComponent> GenerateSkipLinkAsync(SkipLinkOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("skip-link", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateSummaryListAsync(SummaryListOptions options)
+    public virtual Task<GovUkComponent> GenerateSummaryListAsync(SummaryListOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("summary-list", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateTableAsync(TableOptions options)
+    public virtual Task<GovUkComponent> GenerateTableAsync(TableOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("table", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateTabsAsync(TabsOptions options)
+    public virtual Task<GovUkComponent> GenerateTabsAsync(TabsOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("tabs", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateTagAsync(TagOptions options)
+    public virtual Task<GovUkComponent> GenerateTagAsync(TagOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("tag", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateTaskListAsync(TaskListOptions options)
+    public virtual Task<GovUkComponent> GenerateTaskListAsync(TaskListOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("task-list", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateTextareaAsync(TextareaOptions options)
+    public virtual Task<GovUkComponent> GenerateTextareaAsync(TextareaOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("textarea", options);
     }
 
-    public virtual Task<IHtmlContent> GenerateWarningTextAsync(WarningTextOptions options)
+    public virtual Task<GovUkComponent> GenerateWarningTextAsync(WarningTextOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("warning-text", options);
@@ -287,7 +278,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
             return template;
         });
 
-    private async Task<IHtmlContent> RenderTemplateAsync(string templateName, object componentOptions)
+    private async Task<GovUkComponent> RenderTemplateAsync(string templateName, object componentOptions)
     {
         var context = new TemplateContext(_templateOptions);
         context.SetValue("array", new FunctionValue(Functions.Array));
@@ -302,6 +293,20 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
         var template = GetTemplate(templateName);
         var result = await template.RenderAsync(context, _encoder);
-        return new HtmlString(result.TrimStart());
+        return new FluidTemplateGovUkComponent(result.TrimStart());
+    }
+
+    private class FluidTemplateGovUkComponent : GovUkComponent
+    {
+        private readonly string _html;
+
+        public FluidTemplateGovUkComponent(string html)
+        {
+            ArgumentNullException.ThrowIfNull(html);
+
+            _html = html;
+        }
+
+        public override string GetHtml() => _html;
     }
 }

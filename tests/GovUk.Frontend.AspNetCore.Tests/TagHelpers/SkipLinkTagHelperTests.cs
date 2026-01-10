@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -34,7 +33,7 @@ public class SkipLinkTagHelperTests
         SkipLinkOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateSkipLinkAsync(It.IsAny<SkipLinkOptions>())).Callback<SkipLinkOptions>(o => actualOptions = o);
 
-        var tagHelper = new SkipLinkTagHelper(componentGeneratorMock.Object, HtmlEncoder.Default)
+        var tagHelper = new SkipLinkTagHelper(componentGeneratorMock.Object)
         {
             Href = href
         };

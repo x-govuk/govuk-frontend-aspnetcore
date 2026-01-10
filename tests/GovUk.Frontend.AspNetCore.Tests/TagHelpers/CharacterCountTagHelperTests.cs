@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
@@ -71,7 +70,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -172,7 +171,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -236,7 +235,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -321,7 +320,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -395,7 +394,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -467,7 +466,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -540,7 +539,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -620,7 +619,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -691,7 +690,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -772,7 +771,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             IgnoreModelStateErrors = true,
@@ -830,7 +829,7 @@ public class CharacterCountTagHelperTests
         CharacterCountOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateCharacterCountAsync(It.IsAny<CharacterCountOptions>())).Callback<CharacterCountOptions>(o => actualOptions = o);
 
-        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new CharacterCountTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             Id = id,
             Name = name,

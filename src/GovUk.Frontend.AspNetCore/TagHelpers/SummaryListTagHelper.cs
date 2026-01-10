@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -65,6 +64,6 @@ public class SummaryListTagHelper : TagHelper
 
         var component = await _componentGenerator.GenerateSummaryListAsync(componentOptions);
 
-        output.ApplyComponentHtml(component, HtmlEncoder.Default);
+        component.ApplyToTagHelper(output);
     }
 }

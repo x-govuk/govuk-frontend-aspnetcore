@@ -59,6 +59,6 @@ public class WarningTextTagHelper : TagHelper
             Attributes = attributes
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
     }
 }

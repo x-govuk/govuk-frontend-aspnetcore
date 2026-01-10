@@ -214,7 +214,7 @@ public class PasswordInputTagHelper : TagHelper
 
         if (LabelClass is not null)
         {
-            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(_encoder, LabelClass);
+            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(LabelClass);
         }
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
@@ -272,7 +272,7 @@ public class PasswordInputTagHelper : TagHelper
             Button = buttonOptions
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
 
         if (errorMessageOptions is not null)
         {

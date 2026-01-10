@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -18,18 +17,15 @@ public class CookieBannerTagHelper : TagHelper
     private const string HiddenAttributeName = "hidden";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly HtmlEncoder _encoder;
 
     /// <summary>
     /// Creates a new <see cref="CookieBannerTagHelper"/>.
     /// </summary>
-    public CookieBannerTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
+    public CookieBannerTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
-        _encoder = encoder;
     }
 
     /// <summary>
@@ -75,6 +71,6 @@ public class CookieBannerTagHelper : TagHelper
             Messages = cookieBannerContext.Messages
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
     }
 }

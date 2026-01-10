@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -70,7 +69,7 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
         var (componentGenerator, getActualOptions) =
             CreateComponentGenerator<ServiceNavigationOptions>(nameof(IComponentGenerator.GenerateServiceNavigationAsync));
 
-        var tagHelper = new ServiceNavigationTagHelper(componentGenerator, HtmlEncoder.Default)
+        var tagHelper = new ServiceNavigationTagHelper(componentGenerator)
         {
             ServiceName = serviceName,
             ServiceUrl = serviceUrl

@@ -14,6 +14,22 @@ internal static class TagHelperAdapter
         ArgumentNullException.ThrowIfNull(encoder);
 
         var unwrapped = UnwrapComponent(content, encoder);
+        ApplyComponentHtml(output, unwrapped);
+    }
+
+    public static void ApplyComponentHtml(TagHelperOutput output, string html)
+    {
+        ArgumentNullException.ThrowIfNull(output);
+        ArgumentNullException.ThrowIfNull(html);
+
+        var unwrapped = UnwrapComponent(html);
+        ApplyComponentHtml(output, unwrapped);
+    }
+
+    public static void ApplyComponentHtml(TagHelperOutput output, ComponentTagHelperOutput unwrapped)
+    {
+        ArgumentNullException.ThrowIfNull(output);
+        ArgumentNullException.ThrowIfNull(unwrapped);
 
         output.TagName = unwrapped.TagName;
         output.TagMode = unwrapped.TagMode;

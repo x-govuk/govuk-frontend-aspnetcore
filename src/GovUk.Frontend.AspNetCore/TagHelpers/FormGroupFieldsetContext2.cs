@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -50,7 +49,7 @@ internal abstract class FormGroupFieldsetContext2
 
         if (_legendClass is not null)
         {
-            legendClasses = legendClasses.AppendCssClasses(HtmlEncoder.Default, _legendClass);
+            legendClasses = legendClasses.AppendCssClasses(_legendClass);
         }
 
         var html = Legend?.Html;

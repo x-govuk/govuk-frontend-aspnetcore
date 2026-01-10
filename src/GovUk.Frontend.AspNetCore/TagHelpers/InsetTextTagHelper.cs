@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -16,18 +15,15 @@ public class InsetTextTagHelper : TagHelper
     private const string IdAttributeName = "id";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly HtmlEncoder _encoder;
 
     /// <summary>
     /// Creates a new <see cref="InsetTextTagHelper"/>.
     /// </summary>
-    public InsetTextTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
+    public InsetTextTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
-        _encoder = encoder;
     }
 
     /// <summary>
@@ -61,6 +57,6 @@ public class InsetTextTagHelper : TagHelper
             Attributes = attributes
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
     }
 }

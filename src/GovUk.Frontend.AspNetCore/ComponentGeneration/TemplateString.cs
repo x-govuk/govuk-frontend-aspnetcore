@@ -185,16 +185,13 @@ public static class TemplateStringExtensions
     /// specified <paramref name="classNames"/>.
     /// </summary>
     /// <param name="templateString">The initial set of CSS class names.</param>
-    /// <param name="encoder">The <see cref="HtmlEncoder"/> to encode values with.</param>
     /// <param name="classNames">The additional CSS class names to append.</param>
     /// <returns>A new <see cref="TemplateString"/>.</returns>
-    public static TemplateString AppendCssClasses(this TemplateString? templateString, HtmlEncoder? encoder, params TemplateString[] classNames)
+    public static TemplateString AppendCssClasses(this TemplateString? templateString, params TemplateString[] classNames)
     {
         ArgumentNullException.ThrowIfNull(classNames);
 
-        encoder ??= TemplateString.DefaultEncoder;
-
-        var original = templateString?.ToHtmlString(encoder).Trim() ?? "";
+        var original = templateString?.ToHtmlString(TemplateString.DefaultEncoder).Trim() ?? "";
 
         if (classNames.Length == 0)
         {
@@ -211,7 +208,7 @@ public static class TemplateStringExtensions
 
         foreach (var className in classNames)
         {
-            sb.Append(className.ToHtmlString(encoder));
+            sb.Append(className.ToHtmlString());
         }
 
         return new TemplateString(new HtmlString(sb.ToString()));

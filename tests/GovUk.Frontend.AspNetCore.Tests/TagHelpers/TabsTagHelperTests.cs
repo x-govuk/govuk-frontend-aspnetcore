@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -61,7 +60,7 @@ public class TabsTagHelperTests
         TabsOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateTabsAsync(It.IsAny<TabsOptions>())).Callback<TabsOptions>(o => actualOptions = o);
 
-        var tagHelper = new TabsTagHelper(componentGeneratorMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TabsTagHelper(componentGeneratorMock.Object)
         {
             Id = id,
             Title = title

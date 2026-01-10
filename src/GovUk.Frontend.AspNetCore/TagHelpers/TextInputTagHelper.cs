@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -60,7 +59,6 @@ public class TextInputTagHelper : TagHelper
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
-    private readonly HtmlEncoder _encoder;
 
     private string? _value;
     private bool _valueSpecified;
@@ -68,22 +66,18 @@ public class TextInputTagHelper : TagHelper
     /// <summary>
     /// Creates a new <see cref="TextInputTagHelper"/>.
     /// </summary>
-    public TextInputTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
-        : this(componentGenerator, new DefaultModelHelper(), encoder)
+    public TextInputTagHelper(IComponentGenerator componentGenerator)
+        : this(componentGenerator, new DefaultModelHelper())
     {
-        ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(encoder);
     }
 
-    internal TextInputTagHelper(IComponentGenerator componentGenerator, IModelHelper modelHelper, HtmlEncoder encoder)
+    internal TextInputTagHelper(IComponentGenerator componentGenerator, IModelHelper modelHelper)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(modelHelper);
-        ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
         _modelHelper = modelHelper;
-        _encoder = encoder;
     }
 
     /// <summary>
@@ -262,7 +256,7 @@ public class TextInputTagHelper : TagHelper
 
         if (LabelClass is not null)
         {
-            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(_encoder, LabelClass);
+            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(LabelClass);
         }
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
@@ -326,7 +320,7 @@ public class TextInputTagHelper : TagHelper
             Attributes = attributes
         });
 
-        output.ApplyComponentHtml(component, HtmlEncoder.Default);
+        component.ApplyToTagHelper(output);
 
         if (errorMessageOptions is not null)
         {

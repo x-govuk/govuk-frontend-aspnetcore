@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -40,7 +39,7 @@ public class FooterTagHelperTests : TagHelperTestBase<FooterTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<FooterOptions>(nameof(IComponentGenerator.GenerateFooterAsync));
 
-        var tagHelper = new FooterTagHelper(componentGenerator, options, HtmlEncoder.Default)
+        var tagHelper = new FooterTagHelper(componentGenerator, options)
         {
             ContainerClass = containerClass
         };
@@ -77,7 +76,7 @@ public class FooterTagHelperTests : TagHelperTestBase<FooterTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<FooterOptions>(nameof(IComponentGenerator.GenerateFooterAsync));
 
-        var tagHelper = new FooterTagHelper(componentGenerator, options, HtmlEncoder.Default);
+        var tagHelper = new FooterTagHelper(componentGenerator, options);
 
         tagHelper.Init(context);
 

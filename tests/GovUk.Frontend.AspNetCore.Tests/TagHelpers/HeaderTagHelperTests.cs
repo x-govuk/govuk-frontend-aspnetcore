@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -24,7 +23,7 @@ public class HeaderTagHelperTests : TagHelperTestBase<HeaderTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<HeaderOptions>(nameof(IComponentGenerator.GenerateHeaderAsync));
 
-        var tagHelper = new HeaderTagHelper(componentGenerator, options, HtmlEncoder.Default)
+        var tagHelper = new HeaderTagHelper(componentGenerator, options)
         {
             HomePageUrl = homePageUrl,
             ProductName = productName,
@@ -61,7 +60,7 @@ public class HeaderTagHelperTests : TagHelperTestBase<HeaderTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<HeaderOptions>(nameof(IComponentGenerator.GenerateHeaderAsync));
 
-        var tagHelper = new HeaderTagHelper(componentGenerator, options, HtmlEncoder.Default);
+        var tagHelper = new HeaderTagHelper(componentGenerator, options);
 
         tagHelper.Init(context);
 

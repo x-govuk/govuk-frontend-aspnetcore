@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -19,18 +18,15 @@ public class TabsTagHelper : TagHelper
     private const string TitleAttributeName = "title";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly HtmlEncoder _encoder;
 
     /// <summary>
     /// Creates a new <see cref="TabsTagHelper"/>.
     /// </summary>
-    public TabsTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
+    public TabsTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
-        _encoder = encoder;
     }
 
     /// <summary>
@@ -83,6 +79,6 @@ public class TabsTagHelper : TagHelper
             Attributes = attributes
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
     }
 }

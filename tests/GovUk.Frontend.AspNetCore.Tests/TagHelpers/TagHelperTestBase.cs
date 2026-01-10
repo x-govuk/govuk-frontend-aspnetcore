@@ -3,7 +3,6 @@ using System.Text.Encodings.Web;
 using AngleSharp.Dom;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -158,7 +157,7 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
     {
         var componentGenerator = TestUtils.CreateComponentGeneratorMock();
 
-        Expression<Func<DefaultComponentGenerator, Task<IHtmlContent>>> CreateExpression()
+        Expression<Func<DefaultComponentGenerator, Task<GovUkComponent>>> CreateExpression()
         {
             var generatorParameter = Expression.Parameter(typeof(DefaultComponentGenerator));
 
@@ -168,7 +167,7 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
                 instance: null,
                 typeof(It).GetMethod("IsAny")!.MakeGenericMethod(typeof(TOptions)));
 
-            return (Expression<Func<DefaultComponentGenerator, Task<IHtmlContent>>>)Expression.Lambda(
+            return (Expression<Func<DefaultComponentGenerator, Task<GovUkComponent>>>)Expression.Lambda(
                 Expression.Call(
                     generatorParameter,
                     method,

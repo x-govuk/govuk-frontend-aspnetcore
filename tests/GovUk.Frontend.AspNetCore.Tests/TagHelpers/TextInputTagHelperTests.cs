@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
@@ -63,7 +62,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             Id = id,
             DescribedBy = describedBy,
@@ -166,7 +165,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -253,7 +252,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -325,7 +324,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -400,7 +399,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -475,7 +474,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -557,7 +556,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -630,7 +629,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -713,7 +712,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         InputOptions? actualOptions = null;
         componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             IgnoreModelStateErrors = true,
@@ -771,7 +770,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
             Id = id,
             Name = name,

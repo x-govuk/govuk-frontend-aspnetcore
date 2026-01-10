@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
@@ -23,23 +22,19 @@ public class FooterTagHelper : TagHelper
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
-    private readonly HtmlEncoder _encoder;
 
     /// <summary>
     /// Creates a new <see cref="FooterTagHelper"/>.
     /// </summary>
     public FooterTagHelper(
         IComponentGenerator componentGenerator,
-        IOptions<GovUkFrontendOptions> optionsAccessor,
-        HtmlEncoder encoder)
+        IOptions<GovUkFrontendOptions> optionsAccessor)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
-        ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
         _optionsAccessor = optionsAccessor;
-        _encoder = encoder;
     }
 
     /// <summary>
@@ -81,6 +76,6 @@ public class FooterTagHelper : TagHelper
             Rebrand = _optionsAccessor.Value.Rebrand
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
     }
 }

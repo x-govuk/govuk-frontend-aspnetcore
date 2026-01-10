@@ -43,10 +43,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             Id = id,
             NamePrefix = namePrefix,
@@ -148,10 +145,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             Id = id,
             NamePrefix = namePrefix,
@@ -204,10 +198,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = viewContext
@@ -251,10 +242,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = viewContext
@@ -284,10 +272,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = viewContext
@@ -326,10 +311,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = viewContext
@@ -376,10 +358,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             Id = id,
             NamePrefix = namePrefix,
@@ -414,10 +393,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = viewContext
@@ -464,10 +440,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = CreateViewContext()
@@ -499,10 +472,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = viewContext
@@ -554,10 +524,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             Id = id,
@@ -644,10 +611,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             Id = id,
             NamePrefix = namePrefix,
@@ -751,10 +715,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             Id = id,
@@ -811,10 +772,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             Id = id,
@@ -856,8 +814,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
-            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDateType), customDateTypeConverter)),
-            HtmlEncoder.Default)
+            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDateType), customDateTypeConverter)))
         {
             Id = id,
             NamePrefix = namePrefix,
@@ -898,8 +855,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
-            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDateType), customDateTypeConverter)),
-            HtmlEncoder.Default)
+            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDateType), customDateTypeConverter)))
         {
             For = @for,
             ViewContext = viewContext
@@ -960,10 +916,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             Id = id,
             NamePrefix = namePrefix,
@@ -1021,10 +974,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         AddDateInputParseException(viewContext, nameof(Model.Date), parseErrors);
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             Id = id,
@@ -1082,10 +1032,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         AddDateInputParseException(viewContext, namePrefix, parseErrors);
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             Id = id,
             NamePrefix = namePrefix,
@@ -1139,10 +1086,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         AddDateInputParseException(viewContext, nameof(Model.Date), DateInputParseErrors.InvalidDay);
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             Id = id,
@@ -1204,10 +1148,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         AddDateInputParseException(viewContext, nameof(Model.Date), DateInputParseErrors.InvalidDay);
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             Id = id,
@@ -1244,10 +1185,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ItemTypes = itemTypes,
@@ -1282,10 +1220,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = viewContext
@@ -1326,8 +1261,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(
             componentGenerator,
-            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDayAndMonthType), new CustomDayAndMonthTypeConverter())),
-            HtmlEncoder.Default)
+            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDayAndMonthType), new CustomDayAndMonthTypeConverter())))
         {
             For = @for,
             ViewContext = viewContext
@@ -1380,10 +1314,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, _) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             Id = id,
             ItemTypes = itemTypes,
@@ -1428,10 +1359,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, _) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             Id = id,
             ItemTypes = itemTypes,
@@ -1464,10 +1392,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
 
-        var tagHelper = new DateInputTagHelper(
-            componentGenerator,
-            CreateOptions(),
-            HtmlEncoder.Default)
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
             For = @for,
             ViewContext = viewContext,

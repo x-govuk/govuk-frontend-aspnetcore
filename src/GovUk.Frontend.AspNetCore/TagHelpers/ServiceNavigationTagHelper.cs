@@ -1,4 +1,3 @@
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -23,18 +22,15 @@ public class ServiceNavigationTagHelper : TagHelper
     private const string ServiceUrlAttributeName = "service-url";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly HtmlEncoder _encoder;
 
     /// <summary>
     /// Creates a new <see cref="ServiceNavigationTagHelper"/>.
     /// </summary>
-    public ServiceNavigationTagHelper(IComponentGenerator componentGenerator, HtmlEncoder encoder)
+    public ServiceNavigationTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(encoder);
 
         _componentGenerator = componentGenerator;
-        _encoder = encoder;
     }
 
     /// <summary>
@@ -97,6 +93,6 @@ public class ServiceNavigationTagHelper : TagHelper
             NavigationAttributes = navigationAttributes
         });
 
-        output.ApplyComponentHtml(component, _encoder);
+        component.ApplyToTagHelper(output);
     }
 }

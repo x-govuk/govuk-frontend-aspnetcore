@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -96,7 +95,7 @@ public class ErrorSummaryTagHelper : TagHelper
             DescriptionAttributes = errorSummaryContext?.Description?.Attributes
         });
 
-        output.ApplyComponentHtml(component, HtmlEncoder.Default);
+        component.ApplyToTagHelper(output);
 
         containerErrorContext.ErrorSummaryHasBeenRendered = true;
     }

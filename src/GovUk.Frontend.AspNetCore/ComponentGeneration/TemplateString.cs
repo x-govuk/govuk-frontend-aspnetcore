@@ -209,6 +209,12 @@ public static class TemplateStringExtensions
         foreach (var className in classNames)
         {
             sb.Append(className.ToHtmlString());
+            sb.Append(' ');
+        }
+
+        if (classNames.Length != 0)
+        {
+            sb.Length -= 1; // Remove trailing space
         }
 
         return new TemplateString(new HtmlString(sb.ToString()));

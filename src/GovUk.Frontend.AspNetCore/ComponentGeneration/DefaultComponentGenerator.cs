@@ -2,6 +2,9 @@ using System.Collections.Concurrent;
 using System.Text.Encodings.Web;
 using Fluid;
 using Fluid.Values;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.FileProviders;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -260,6 +263,9 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("warning-text", options);
     }
 
+    private Task<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
+        Task.FromResult((GovUkComponent)new HtmlTagGovUkComponent(tag));
+
     private IFluidTemplate GetTemplate(string templateName) =>
         _templates.GetOrAdd(templateName, _ =>
         {
@@ -278,6 +284,26 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
             return template;
         });
 
+    private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
+    {
+        if (html is not null)
+        {
+            return new HtmlString(html.ToHtmlString(raw: true));
+        }
+
+        if (text is not null)
+        {
+            return text;
+        }
+
+        if (fallback is not null)
+        {
+            return new HtmlString(fallback);
+        }
+
+        return HtmlString.Empty;
+    }
+
     private async Task<GovUkComponent> RenderTemplateAsync(string templateName, object componentOptions)
     {
         var context = new TemplateContext(_templateOptions);
@@ -294,6 +320,45 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         var template = GetTemplate(templateName);
         var result = await template.RenderAsync(context, _encoder);
         return new FluidTemplateGovUkComponent(result.TrimStart());
+    }
+
+    private class HtmlTagGovUkComponent : GovUkComponent
+    {
+        private readonly HtmlTag _tag;
+
+        public HtmlTagGovUkComponent(HtmlTag tag)
+        {
+            ArgumentNullException.ThrowIfNull(tag);
+
+            _tag = tag;
+        }
+
+        public override string GetHtml() => _tag.ToHtmlString(HtmlEncoder.Default);
+
+        public override void ApplyToTagHelper(TagHelperOutput output)
+        {
+            ArgumentNullException.ThrowIfNull(output);
+
+            var tagMode = _tag.TagRenderMode switch
+            {
+                TagRenderMode.StartTag => TagMode.StartTagOnly,
+                TagRenderMode.SelfClosing => TagMode.SelfClosing,
+                TagRenderMode.Normal => TagMode.StartTagAndEndTag,
+                _ => throw new InvalidOperationException($"Cannot apply an HtmlTag with TagRenderMode '{_tag.TagRenderMode}' to a tag helper.")
+            };
+
+            output.TagName = _tag.TagName;
+            output.TagMode = tagMode;
+
+            output.Attributes.Clear();
+
+            foreach (var attribute in _tag.Attributes.ToTagHelperAttributes())
+            {
+                output.Attributes.Add(attribute);
+            }
+
+            output.Content.AppendHtml(_tag.InnerHtml);
+        }
     }
 
     private class FluidTemplateGovUkComponent : GovUkComponent

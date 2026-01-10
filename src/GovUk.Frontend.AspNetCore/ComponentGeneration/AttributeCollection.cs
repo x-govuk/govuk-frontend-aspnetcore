@@ -58,6 +58,19 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         }
     }
 
+    internal TemplateString? this[string name]
+    {
+        get
+        {
+            if (_attributes.TryGetValue(name, out var attribute))
+            {
+                return attribute.Value as TemplateString ?? attribute.Value?.ToString();
+            }
+
+            return null;
+        }
+    }
+
     internal AttributeCollection(IEnumerable<Attribute> attributes)
     {
         ArgumentNullException.ThrowIfNull(attributes);
@@ -67,6 +80,13 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
 
     internal AttributeCollection(params Attribute[] attributes) : this(attributes.AsEnumerable())
     {
+    }
+
+    internal void Add(Attribute attribute)
+    {
+        ArgumentNullException.ThrowIfNull(attribute);
+
+        _attributes.Add(attribute.Name, attribute);
     }
 
     internal void Add(string name, TemplateString templateString)

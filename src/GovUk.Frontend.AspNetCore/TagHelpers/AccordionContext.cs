@@ -1,19 +1,19 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class AccordionContext
 {
-    private readonly List<AccordionItem> _items;
+    private readonly List<AccordionOptionsItem> _items;
 
     public AccordionContext()
     {
         _items = [];
     }
 
-    public IReadOnlyList<AccordionItem> Items => _items;
+    public IReadOnlyList<AccordionOptionsItem> Items => _items;
 
-    public void AddItem(AccordionItem item)
+    public void AddItem(AccordionOptionsItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
 

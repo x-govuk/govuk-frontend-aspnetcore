@@ -137,23 +137,6 @@ public class AccordionTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var items = accordionContext.Items.Select(item => new AccordionOptionsItem()
-        {
-            Expanded = item.Expanded,
-            Heading = new AccordionOptionsItemHeading()
-            {
-                Html = item.HeadingContent.ToTemplateString()
-            },
-            Summary = item.SummaryContent != null ? new AccordionOptionsItemSummary()
-            {
-                Html = item.SummaryContent.ToTemplateString()
-            } : null,
-            Content = new AccordionOptionsItemContent()
-            {
-                Html = item.Content.ToTemplateString()
-            }
-        }).ToList();
-
         var component = await _componentGenerator.GenerateAccordionAsync(new AccordionOptions()
         {
             Id = Id,
@@ -167,7 +150,7 @@ public class AccordionTagHelper : TagHelper
             ShowAllSectionsText = ShowAllSectionsText,
             ShowSectionText = ShowSectionText,
             ShowSectionAriaLabelText = ShowSectionAriaLabelText,
-            Items = items
+            Items = accordionContext.Items
         });
 
         component.ApplyToTagHelper(output);

@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -40,16 +40,21 @@ public class AccordionItemTagHelper : TagHelper
 
         itemContext.ThrowIfIncomplete();
 
-        accordionContext.AddItem(new AccordionItem()
+        accordionContext.AddItem(new AccordionOptionsItem()
         {
             Expanded = Expanded ?? false,
-            HeadingContent = itemContext.Heading!.Value.Content,
-            HeadingAttributes = itemContext.Heading.Value.Attributes,
-            SummaryContent = itemContext.Summary?.Content,
-            SummaryAttributes = itemContext.Summary?.Attributes,
-            Content = itemContext.Content?.Content,
-            ContentAttributes = itemContext.Content?.Attributes,
-            Attributes = output.Attributes.ToAttributeDictionary()
+            Heading = new AccordionOptionsItemHeading()
+            {
+                Html = itemContext.Heading!.Value.Content.ToTemplateString()
+            },
+            Summary = itemContext.Summary != null ? new AccordionOptionsItemSummary()
+            {
+                Html = itemContext.Summary.Value.Content.ToTemplateString()
+            } : null,
+            Content = new AccordionOptionsItemContent()
+            {
+                Html = itemContext.Content!.Value.Content.ToTemplateString()
+            }
         });
 
         output.SuppressOutput();

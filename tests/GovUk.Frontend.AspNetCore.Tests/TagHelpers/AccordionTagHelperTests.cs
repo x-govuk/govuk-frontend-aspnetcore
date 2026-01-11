@@ -1,7 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -26,18 +24,18 @@ public class AccordionTagHelperTests
 
         var items = new[]
         {
-            new AccordionItem()
+            new AccordionOptionsItem()
             {
-                Content = new HtmlString("First content"),
+                Content = new AccordionOptionsItemContent() { Html = "First content" },
                 Expanded = false,
-                HeadingContent = new HtmlString("First heading"),
-                SummaryContent = new HtmlString("First summary")
+                Heading = new AccordionOptionsItemHeading() { Html = "First heading" },
+                Summary = new AccordionOptionsItemSummary() { Html = "First summary" }
             },
-            new AccordionItem()
+            new AccordionOptionsItem()
             {
-                Content = new HtmlString("Second content"),
+                Content = new AccordionOptionsItemContent() { Html = "Second content" },
                 Expanded = true,
-                HeadingContent = new HtmlString("Second heading")
+                Heading = new AccordionOptionsItemHeading() { Html = "Second heading" }
             }
         };
 
@@ -143,12 +141,12 @@ public class AccordionTagHelperTests
             {
                 var accordionContext = context.GetContextItem<AccordionContext>();
 
-                accordionContext.AddItem(new AccordionItem()
+                accordionContext.AddItem(new AccordionOptionsItem()
                 {
-                    Content = new HtmlString("First content"),
+                    Content = new AccordionOptionsItemContent() { Html = "First content" },
                     Expanded = false,
-                    HeadingContent = new HtmlString("First heading"),
-                    SummaryContent = new HtmlString("First summary")
+                    Heading = new AccordionOptionsItemHeading() { Html = "First heading" },
+                    Summary = new AccordionOptionsItemSummary() { Html = "First summary" }
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();

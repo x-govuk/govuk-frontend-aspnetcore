@@ -38,10 +38,10 @@ public class NotificationBannerTitleTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        if (HeadingLevel is not null and not (>= Constants.NotificationBannerMinHeadingLevel and <= Constants.NotificationBannerMaxHeadingLevel))
+        if (HeadingLevel is not null and not (>= 1 and <= 6))
         {
             throw new InvalidOperationException(
-                $"The '{HeadingLevelAttributeName}' attribute must be between {Constants.NotificationBannerMinHeadingLevel} and {Constants.NotificationBannerMaxHeadingLevel} (inclusive).");
+                $"The '{HeadingLevelAttributeName}' attribute must be between 1 and 6 (inclusive).");
         }
 
         var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();
@@ -56,8 +56,8 @@ public class NotificationBannerTitleTagHelper : TagHelper
         }
 
         notificationBannerContext.SetTitle(
-            Id ?? Constants.NotificationBannerDefaultTitleId,
-            HeadingLevel ?? Constants.NotificationBannerDefaultTitleHeadingLevel,
+            Id,
+            HeadingLevel,
             content.ToTemplateString());
 
         output.SuppressOutput();

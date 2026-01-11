@@ -75,7 +75,7 @@ public class NotificationBannerTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var options = new NotificationBannerOptions()
+        var options = new NotificationBannerOptions
         {
             Html = content.ToTemplateString(),
 #pragma warning disable CA1308 // Type string needs to be lowercase for the liquid template

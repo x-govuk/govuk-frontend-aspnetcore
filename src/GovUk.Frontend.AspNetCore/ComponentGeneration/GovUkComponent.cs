@@ -15,10 +15,5 @@ public abstract class GovUkComponent
     /// <summary>
     /// Applies the generated component to the specified <see cref="TagHelperOutput"/>.
     /// </summary>
-    public virtual void ApplyToTagHelper(TagHelperOutput output)
-    {
-        ArgumentNullException.ThrowIfNull(output);
-
-        TagHelperAdapter.ApplyComponentHtml(output, GetHtml());
-    }
+    public abstract void ApplyToTagHelper(TagHelperOutput output);
 }

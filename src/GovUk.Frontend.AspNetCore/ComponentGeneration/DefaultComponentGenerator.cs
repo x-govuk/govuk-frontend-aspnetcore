@@ -348,6 +348,13 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
             _html = html;
         }
 
+        public override void ApplyToTagHelper(TagHelperOutput output)
+        {
+            ArgumentNullException.ThrowIfNull(output);
+
+            TagHelperAdapter.ApplyComponentHtml(output, GetHtml());
+        }
+
         public override string GetHtml() => _html;
     }
 }

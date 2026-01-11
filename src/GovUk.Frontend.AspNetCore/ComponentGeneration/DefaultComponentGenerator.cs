@@ -89,11 +89,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("details", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateErrorMessageAsync(ErrorMessageOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("error-message", options);
-    }
+
 
     public virtual Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
     {
@@ -107,11 +103,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("exit-this-page", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateFieldsetAsync(FieldsetOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("fieldset", options);
-    }
+
 
     public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
@@ -131,11 +123,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("header", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateHintAsync(HintOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("hint", options);
-    }
+
 
     public virtual Task<GovUkComponent> GenerateInsetTextAsync(InsetTextOptions options)
     {
@@ -149,11 +137,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("input", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateLabelAsync(LabelOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("label", options);
-    }
+
 
     public virtual Task<GovUkComponent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
     {

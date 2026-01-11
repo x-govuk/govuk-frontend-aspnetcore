@@ -6,23 +6,30 @@ internal partial class DefaultComponentGenerator
     {
         public const string Accordion = "div";
         public const string BackLink = "a";
-        public const string CharacterCount = "div";
-        public const string CookieBanner = "div";
         public const string Breadcrumbs = "nav";
+        public const string CharacterCount = "div";
+        public const string Checkboxes = "div";
+        public const string CookieBanner = "div";
         public const string Details = "details";
+        public const string ErrorMessage = "p";
         public const string ErrorSummary = "div";
+        public const string Fieldset = "fieldset";
         public const string Footer = "footer";
         public const string FormGroup = "div";
         public const string Header = "header";
         public const string InsetText = "div";
         public const string NotificationBanner = "div";
         public const string Pagination = "nav";
+        public const string Panel = "div";
         public const string PhaseBanner = "div";
+        public const string Radios = "div";
+        public const string Select = "div";
         public const string SkipLink = "a";
         public const string SummaryCard = "div";
         public const string SummaryList = "dl";
         public const string Tabs = "div";
         public const string Tag = "strong";
+        public const string Textarea = "div";
         public const string WarningText = "div";
     }
 }

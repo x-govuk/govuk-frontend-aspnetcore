@@ -1,11 +1,10 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Html;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using AttributeCollection = GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -13,7 +12,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS error message component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[OutputElementHint(ComponentGenerator.ErrorMessageElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.ErrorMessage)]
 public class ErrorMessageTagHelper : TagHelper
 {
     internal const string TagName = "govuk-error-message";
@@ -21,24 +20,28 @@ public class ErrorMessageTagHelper : TagHelper
     private const string AspForAttributeName = "asp-for";
     private const string ForAttributeName = "for";
     private const string VisuallyHiddenTextAttributeName = "visually-hidden-text";
+    private const string DefaultVisuallyHiddenText = "Error";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
 
     /// <summary>
     /// Creates a <see cref="ErrorMessageTagHelper"/>.
     /// </summary>
-    public ErrorMessageTagHelper()
-        : this(htmlGenerator: null, modelHelper: null)
+    public ErrorMessageTagHelper(IComponentGenerator componentGenerator)
+        : this(componentGenerator, modelHelper: new DefaultModelHelper())
     {
     }
 
     internal ErrorMessageTagHelper(
-        IGovUkHtmlGenerator? htmlGenerator,
-        IModelHelper? modelHelper)
+        IComponentGenerator componentGenerator,
+        IModelHelper modelHelper)
     {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
-        _modelHelper = modelHelper ?? new DefaultModelHelper();
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+        ArgumentNullException.ThrowIfNull(modelHelper);
+        
+        _componentGenerator = componentGenerator;
+        _modelHelper = modelHelper;
     }
 
     /// <summary>
@@ -66,7 +69,7 @@ public class ErrorMessageTagHelper : TagHelper
     /// The default is <c>&quot;Error&quot;</c>.
     /// </remarks>
     [HtmlAttributeName(VisuallyHiddenTextAttributeName)]
-    public string? VisuallyHiddenText { get; set; } = ComponentGenerator.ErrorMessageDefaultVisuallyHiddenText;
+    public string? VisuallyHiddenText { get; set; } = DefaultVisuallyHiddenText;
 
     /// <summary>
     /// Gets the <see cref="ViewContext"/> of the executing view.
@@ -97,8 +100,12 @@ public class ErrorMessageTagHelper : TagHelper
                 $"Cannot determine content. Element must contain content if the '{AspForAttributeName}' attribute is not specified.");
         }
 
-        IHtmlContent? resolvedContent = content;
-        if (resolvedContent is null && For is not null)
+        string? resolvedContent = null;
+        if (content is not null)
+        {
+            resolvedContent = content.GetContent();
+        }
+        else if (For is not null)
         {
             var validationMessage = _modelHelper.GetValidationMessage(
                 ViewContext!,
@@ -107,23 +114,24 @@ public class ErrorMessageTagHelper : TagHelper
 
             if (validationMessage is not null)
             {
-                resolvedContent = validationMessage.EncodeHtml();
+                resolvedContent = validationMessage;
             }
         }
 
         if (resolvedContent is not null)
         {
-            var tagBuilder = _htmlGenerator.GenerateErrorMessage(
-                VisuallyHiddenText,
-                resolvedContent,
-                output.Attributes.ToAttributeDictionary());
+            var attributes = new AttributeCollection(output.Attributes);
+            attributes.Remove("class", out var classes);
 
-            output.TagName = tagBuilder.TagName;
-            output.TagMode = TagMode.StartTagAndEndTag;
+            var component = await _componentGenerator.GenerateErrorMessageAsync(new ErrorMessageOptions()
+            {
+                Text = resolvedContent,
+                VisuallyHiddenText = VisuallyHiddenText,
+                Classes = classes,
+                Attributes = attributes
+            });
 
-            output.Attributes.Clear();
-            output.MergeAttributes(tagBuilder);
-            output.Content.SetHtmlContent(tagBuilder.InnerHtml);
+            component.ApplyToTagHelper(output);
         }
         else
         {

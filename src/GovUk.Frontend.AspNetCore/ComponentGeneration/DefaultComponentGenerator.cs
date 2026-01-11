@@ -90,8 +90,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("details", options);
     }
 
-
-
     public virtual Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -103,8 +101,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("exit-this-page", options);
     }
-
-
 
     public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
@@ -124,8 +120,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("header", options);
     }
 
-
-
     public virtual Task<GovUkComponent> GenerateInsetTextAsync(InsetTextOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -137,8 +131,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("input", options);
     }
-
-
 
     public virtual Task<GovUkComponent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
     {
@@ -283,42 +275,58 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return new FluidTemplateGovUkComponent(result.TrimStart());
     }
 
-    private class HtmlTagGovUkComponent : GovUkComponent
+    protected sealed class EmptyComponent : GovUkComponent
     {
-        private readonly HtmlTag _tag;
+        private EmptyComponent() { }
 
-        public HtmlTagGovUkComponent(HtmlTag tag)
-        {
-            ArgumentNullException.ThrowIfNull(tag);
-
-            _tag = tag;
-        }
-
-        public override string GetHtml() => _tag.ToHtmlString(HtmlEncoder.Default);
+        public static EmptyComponent Instance { get; } = new();
 
         public override void ApplyToTagHelper(TagHelperOutput output)
         {
             ArgumentNullException.ThrowIfNull(output);
 
-            var tagMode = _tag.TagRenderMode switch
+            output.SuppressOutput();
+        }
+
+        public override string GetHtml() => string.Empty;
+    }
+
+    private class HtmlTagGovUkComponent : GovUkComponent
+    {
+        public HtmlTagGovUkComponent(HtmlTag tag)
+        {
+            ArgumentNullException.ThrowIfNull(tag);
+
+            Tag = tag;
+        }
+
+        public HtmlTag Tag { get; }
+
+        public override string GetHtml() => Tag.ToHtmlString(HtmlEncoder.Default);
+
+        public override void ApplyToTagHelper(TagHelperOutput output)
+        {
+            ArgumentNullException.ThrowIfNull(output);
+
+            var tagMode = Tag.TagRenderMode switch
             {
                 TagRenderMode.StartTag => TagMode.StartTagOnly,
                 TagRenderMode.SelfClosing => TagMode.SelfClosing,
                 TagRenderMode.Normal => TagMode.StartTagAndEndTag,
-                _ => throw new InvalidOperationException($"Cannot apply an HtmlTag with TagRenderMode '{_tag.TagRenderMode}' to a tag helper.")
+                _ => throw new InvalidOperationException($"Cannot apply an HtmlTag with TagRenderMode '{Tag.TagRenderMode}' to a tag helper.")
             };
 
-            output.TagName = _tag.TagName;
+            output.TagName = Tag.TagName;
             output.TagMode = tagMode;
 
             output.Attributes.Clear();
 
-            foreach (var attribute in _tag.Attributes.ToTagHelperAttributes())
+            foreach (var attribute in Tag.Attributes.ToTagHelperAttributes())
             {
                 output.Attributes.Add(attribute);
             }
 
-            output.Content.AppendHtml(_tag.InnerHtml);
+            output.Content.AppendHtml(Tag.InnerHtml);
         }
     }
 

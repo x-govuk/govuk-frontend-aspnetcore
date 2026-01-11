@@ -156,6 +156,18 @@ public interface IComponentGenerator
     Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options);
 
     /// <summary>
+    /// Generates a radios component.
+    /// </summary>
+    /// <returns>A <see cref="string"/> with the component's HTML.</returns>
+    Task<GovUkComponent> GenerateRadiosAsync(RadiosOptions options);
+
+    /// <summary>
+    /// Generates a select component.
+    /// </summary>
+    /// <returns>A <see cref="string"/> with the component's HTML.</returns>
+    Task<GovUkComponent> GenerateSelectAsync(SelectOptions options);
+
+    /// <summary>
     /// Generates a service navigation component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>

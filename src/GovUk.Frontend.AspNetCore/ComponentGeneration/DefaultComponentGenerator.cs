@@ -185,6 +185,18 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("pagination", options);
     }
 
+    public virtual Task<GovUkComponent> GenerateRadiosAsync(RadiosOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        return RenderTemplateAsync("radios", options);
+    }
+
+    public virtual Task<GovUkComponent> GenerateSelectAsync(SelectOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        return RenderTemplateAsync("select", options);
+    }
+
     public virtual Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

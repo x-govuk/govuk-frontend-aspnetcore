@@ -45,11 +45,9 @@ internal partial class DefaultComponentGenerator
                 var sectionTag = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-accordion__section", item.Expanded == true ? "govuk-accordion__section--expanded" : null));
 
-                // Section header
                 var headerTag = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-accordion__section-header"));
 
-                // Heading
                 var headingTag = new HtmlTag($"h{headingLevel}", attrs => attrs
                     .WithClasses("govuk-accordion__section-heading"));
 
@@ -61,7 +59,6 @@ internal partial class DefaultComponentGenerator
                 headingTag.InnerHtml.AppendHtml(headingButtonTag);
                 headerTag.InnerHtml.AppendHtml(headingTag);
 
-                // Summary (optional)
                 if (item.Summary?.Html is not null || item.Summary?.Text is not null)
                 {
                     var summaryTag = new HtmlTag("div", attrs => attrs
@@ -74,7 +71,6 @@ internal partial class DefaultComponentGenerator
 
                 sectionTag.InnerHtml.AppendHtml(headerTag);
 
-                // Content
                 var contentTag = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-accordion__section-content")
                     .With("id", $"{options.Id.ToHtmlString(raw: true)}-content-{index}"));

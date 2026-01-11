@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Html;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -9,7 +11,7 @@ internal partial class DefaultComponentGenerator
         var content = HtmlOrText(options.Html, options.Text);
 
         // Only generate label if there is content
-        if (content == null || content == Microsoft.AspNetCore.Html.HtmlString.Empty)
+        if (content == null || content == HtmlString.Empty)
         {
             return Task.FromResult((GovUkComponent)new FluidTemplateGovUkComponent(string.Empty));
         }

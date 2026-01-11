@@ -6,7 +6,7 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var visuallyHiddenText = options.VisuallyHiddenText?.ToHtmlString() ?? "Error";
+        var visuallyHiddenText = options.VisuallyHiddenText?.ToHtmlString() ?? DefaultErrorMessageVisuallyHiddenText;
         var content = HtmlOrText(options.Html, options.Text);
 
         var tag = new HtmlTag("p", attrs => attrs

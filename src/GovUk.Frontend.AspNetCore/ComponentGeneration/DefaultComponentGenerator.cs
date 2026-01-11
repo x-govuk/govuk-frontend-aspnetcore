@@ -12,6 +12,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 internal partial class DefaultComponentGenerator : IComponentGenerator
 {
     internal const string DefaultErrorSummaryTitleHtml = "There is a problem";
+    internal const string DefaultErrorMessageVisuallyHiddenText = "Error";
 
     private static readonly HtmlEncoder _encoder = HtmlEncoder.Default;
 

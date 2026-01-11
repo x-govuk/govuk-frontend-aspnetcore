@@ -42,9 +42,12 @@ public class AccordionItemTagHelperTests
 
         // Assert
         var item = Assert.Single(accordionContext.Items);
-        Assert.Equal("Heading", item.HeadingContent?.ToHtmlString());
-        Assert.Equal("Summary", item.SummaryContent?.ToHtmlString());
-        Assert.Equal("Content", item.Content?.ToHtmlString());
+        Assert.NotNull(item.Heading);
+        Assert.Equal("Heading", item.Heading.Html);
+        Assert.NotNull(item.Summary);
+        Assert.Equal("Summary", item.Summary.Html);
+        Assert.NotNull(item.Content);
+        Assert.Equal("Content", item.Content.Html);
     }
 
     [Fact]

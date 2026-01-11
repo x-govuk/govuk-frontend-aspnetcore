@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -25,16 +25,16 @@ public class DetailsTagHelperTests
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary([], summary);
+                detailsContext.SetSummary(new AttributeCollection(), summary);
 
                 var text = new HtmlString("The text");
-                detailsContext.SetText([], text);
+                detailsContext.SetText(new AttributeCollection(), text);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new DetailsTagHelper(new ComponentGenerator());
+        var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator());
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -69,16 +69,16 @@ public class DetailsTagHelperTests
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary([], summary);
+                detailsContext.SetSummary(new AttributeCollection(), summary);
 
                 var text = new HtmlString("The text");
-                detailsContext.SetText([], text);
+                detailsContext.SetText(new AttributeCollection(), text);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new DetailsTagHelper(new ComponentGenerator())
+        var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator())
         {
             Open = true
         };
@@ -113,7 +113,7 @@ public class DetailsTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new DetailsTagHelper(new ComponentGenerator())
+        var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator())
         {
             Open = true
         };
@@ -144,13 +144,13 @@ public class DetailsTagHelperTests
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary([], summary);
+                detailsContext.SetSummary(new AttributeCollection(), summary);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new DetailsTagHelper(new ComponentGenerator())
+        var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator())
         {
             Open = true
         };
@@ -161,5 +161,87 @@ public class DetailsTagHelperTests
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal("A <govuk-details-text> element must be provided.", ex.Message);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_WithSummaryAttributes_IncludesAttributesInOutput()
+    {
+        // Arrange
+        var context = new TagHelperContext(
+            tagName: "govuk-details",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-details",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
+
+                var summaryAttributes = new AttributeCollection();
+                summaryAttributes.Add("data-test", "summary-value");
+                var summary = new HtmlString("The summary");
+                detailsContext.SetSummary(summaryAttributes, summary);
+
+                var text = new HtmlString("The text");
+                detailsContext.SetText(new AttributeCollection(), text);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator());
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var element = output.RenderToElement();
+        var summaryElement = element.QuerySelector("summary");
+        Assert.NotNull(summaryElement);
+        Assert.Equal("summary-value", summaryElement.Attributes["data-test"]?.Value);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_WithTextAttributes_IncludesAttributesInOutput()
+    {
+        // Arrange
+        var context = new TagHelperContext(
+            tagName: "govuk-details",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-details",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
+
+                var summary = new HtmlString("The summary");
+                detailsContext.SetSummary(new AttributeCollection(), summary);
+
+                var textAttributes = new AttributeCollection();
+                textAttributes.Add("data-test", "text-value");
+                var text = new HtmlString("The text");
+                detailsContext.SetText(textAttributes, text);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator());
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var element = output.RenderToElement();
+        var textElement = element.QuerySelector(".govuk-details__text");
+        Assert.NotNull(textElement);
+        Assert.Equal("text-value", textElement.Attributes["data-test"]?.Value);
     }
 }

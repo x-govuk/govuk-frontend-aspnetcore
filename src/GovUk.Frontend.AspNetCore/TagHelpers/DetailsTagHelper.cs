@@ -1,5 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -9,26 +8,23 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [RestrictChildren(DetailsSummaryTagHelper.TagName, DetailsTextTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.DetailsElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Details)]
 public class DetailsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-details";
 
     private const string OpenAttributeName = "open";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
 
     /// <summary>
     /// Creates a new <see cref="DetailsTagHelper"/>.
     /// </summary>
-    public DetailsTagHelper()
-        : this(htmlGenerator: null)
+    public DetailsTagHelper(IComponentGenerator componentGenerator)
     {
-    }
+        ArgumentNullException.ThrowIfNull(componentGenerator);
 
-    internal DetailsTagHelper(IGovUkHtmlGenerator? htmlGenerator)
-    {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
+        _componentGenerator = componentGenerator;
     }
 
     /// <summary>
@@ -55,19 +51,20 @@ public class DetailsTagHelper : TagHelper
 
         detailsContext.ThrowIfNotComplete();
 
-        var tagBuilder = _htmlGenerator.GenerateDetails(
-            Open ?? ComponentGenerator.DetailsDefaultOpen,
-            detailsContext.Summary?.Content,
-            detailsContext.Summary?.Attributes,
-            detailsContext.Text?.Content,
-            detailsContext.Text?.Attributes,
-            output.Attributes.ToAttributeDictionary());
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
 
-        output.TagName = tagBuilder.TagName;
-        output.TagMode = TagMode.StartTagAndEndTag;
+        var component = await _componentGenerator.GenerateDetailsAsync(new DetailsOptions()
+        {
+            Open = Open,
+            SummaryHtml = detailsContext.Summary?.Content.ToTemplateString(),
+            SummaryAttributes = detailsContext.Summary?.Attributes,
+            Html = detailsContext.Text?.Content.ToTemplateString(),
+            TextAttributes = detailsContext.Text?.Attributes,
+            Classes = classes,
+            Attributes = attributes
+        });
 
-        output.Attributes.Clear();
-        output.MergeAttributes(tagBuilder);
-        output.Content.SetHtmlContent(tagBuilder.InnerHtml);
+        component.ApplyToTagHelper(output);
     }
 }

@@ -60,6 +60,8 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         });
     }
 
+    protected Task<GovUkComponent> EmptyComponentTask { get; } = Task.FromResult((GovUkComponent)EmptyComponent.Instance);
+
     public virtual Task<GovUkComponent> GenerateCharacterCountAsync(CharacterCountOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

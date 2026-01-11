@@ -11,7 +11,9 @@ internal partial class DefaultComponentGenerator
         // Only generate label if there is content
         if (content.IsEmpty())
         {
-            return Task.FromResult((GovUkComponent)EmptyComponent.Instance);
+#pragma warning disable VSTHRD003
+            return EmptyComponentTask;
+#pragma warning restore VSTHRD003
         }
 
         var label = new HtmlTag("label", attrs => attrs

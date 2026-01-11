@@ -10,6 +10,9 @@ jobs:
     permissions:
       contents: read
 
+    env:
+      COPILOT_AGENT_FIREWALL_ALLOW_LIST_ADDITIONS: vsblob.vsassets.io,data.jsdelivr.com
+
     steps:
       - uses: actions/checkout@v5
 

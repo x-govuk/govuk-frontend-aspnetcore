@@ -61,16 +61,6 @@ internal interface IGovUkHtmlGenerator
         IHtmlContent content,
         AttributeDictionary attributes);
 
-    TagBuilder GenerateNotificationBanner(
-        NotificationBannerType type,
-        string role,
-        bool? disableAutoFocus,
-        string titleId,
-        int? titleHeadingLevel,
-        IHtmlContent titleContent,
-        IHtmlContent content,
-        AttributeDictionary attributes);
-
     TagBuilder GeneratePanel(
         int headingLevel,
         IHtmlContent titleContent,

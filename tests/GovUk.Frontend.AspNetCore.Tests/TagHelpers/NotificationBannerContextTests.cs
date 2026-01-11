@@ -1,5 +1,5 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -10,10 +10,10 @@ public class NotificationBannerContextTests
     {
         // Arrange
         var context = new NotificationBannerContext();
-        context.SetTitle("id", headingLevel: 4, content: new HtmlString("Title"));
+        context.SetTitle("id", headingLevel: 4, content: new TemplateString("Title"));
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle("id", headingLevel: 4, content: new HtmlString("Title")));
+        var ex = Record.Exception(() => context.SetTitle("id", headingLevel: 4, content: new TemplateString("Title")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

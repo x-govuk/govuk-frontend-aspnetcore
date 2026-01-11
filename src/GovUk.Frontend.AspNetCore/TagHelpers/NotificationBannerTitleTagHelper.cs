@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -38,10 +38,10 @@ public class NotificationBannerTitleTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        if (HeadingLevel is not null and not (>= ComponentGenerator.NotificationBannerMinHeadingLevel and <= ComponentGenerator.NotificationBannerMaxHeadingLevel))
+        if (HeadingLevel is not null and not (>= Constants.NotificationBannerMinHeadingLevel and <= Constants.NotificationBannerMaxHeadingLevel))
         {
             throw new InvalidOperationException(
-                $"The '{HeadingLevelAttributeName}' attribute must be between {ComponentGenerator.NotificationBannerMinHeadingLevel} and {ComponentGenerator.NotificationBannerMaxHeadingLevel} (inclusive).");
+                $"The '{HeadingLevelAttributeName}' attribute must be between {Constants.NotificationBannerMinHeadingLevel} and {Constants.NotificationBannerMaxHeadingLevel} (inclusive).");
         }
 
         var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();
@@ -56,9 +56,9 @@ public class NotificationBannerTitleTagHelper : TagHelper
         }
 
         notificationBannerContext.SetTitle(
-            Id ?? ComponentGenerator.NotificationBannerDefaultTitleId,
-            HeadingLevel ?? ComponentGenerator.NotificationBannerDefaultTitleHeadingLevel,
-            content?.Snapshot());
+            Id ?? Constants.NotificationBannerDefaultTitleId,
+            HeadingLevel ?? Constants.NotificationBannerDefaultTitleHeadingLevel,
+            content.ToTemplateString());
 
         output.SuppressOutput();
     }

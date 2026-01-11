@@ -1,5 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -8,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS notification banner component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[OutputElementHint(ComponentGenerator.NotificationBannerElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.NotificationBanner)]
 public class NotificationBannerTagHelper : TagHelper
 {
     internal const string TagName = "govuk-notification-banner";
@@ -17,19 +16,15 @@ public class NotificationBannerTagHelper : TagHelper
     private const string RoleAttributeName = "role";
     private const string TypeAttributeName = "type";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
 
     /// <summary>
     /// Creates a new <see cref="NotificationBannerTagHelper"/>.
     /// </summary>
-    public NotificationBannerTagHelper()
-        : this(htmlGenerator: null)
+    public NotificationBannerTagHelper(IComponentGenerator componentGenerator)
     {
-    }
-
-    internal NotificationBannerTagHelper(IGovUkHtmlGenerator? htmlGenerator = null)
-    {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+        _componentGenerator = componentGenerator;
     }
 
     /// <summary>
@@ -77,21 +72,25 @@ public class NotificationBannerTagHelper : TagHelper
             content = output.Content;
         }
 
-        var tagBuilder = _htmlGenerator.GenerateNotificationBanner(
-            Type ?? ComponentGenerator.NotificationBannerDefaultType,
-            Role,
-            DisableAutoFocus,
-            notificationBannerContext.Title?.Id,
-            notificationBannerContext.Title?.HeadingLevel,
-            notificationBannerContext.Title?.Content,
-            content.Snapshot(),
-            output.Attributes.ToAttributeDictionary());
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
 
-        output.TagName = tagBuilder.TagName;
-        output.TagMode = TagMode.StartTagAndEndTag;
+        var options = new NotificationBannerOptions()
+        {
+            Html = content.ToTemplateString(),
+#pragma warning disable CA1308 // Type string needs to be lowercase for the liquid template
+            Type = Type?.ToString().ToLowerInvariant(),
+#pragma warning restore CA1308
+            Role = Role,
+            DisableAutoFocus = DisableAutoFocus,
+            TitleId = notificationBannerContext.Title?.Id,
+            TitleHeadingLevel = notificationBannerContext.Title?.HeadingLevel,
+            TitleHtml = notificationBannerContext.Title?.Content,
+            Classes = classes,
+            Attributes = attributes
+        };
 
-        output.Attributes.Clear();
-        output.MergeAttributes(tagBuilder);
-        output.Content.SetHtmlContent(tagBuilder.InnerHtml);
+        var component = await _componentGenerator.GenerateNotificationBannerAsync(options);
+        component.ApplyToTagHelper(output);
     }
 }

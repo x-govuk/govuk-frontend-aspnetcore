@@ -81,9 +81,9 @@ public class NotificationBannerTagHelper : TagHelper
 #pragma warning disable CA1308 // Type string needs to be lowercase for the liquid template
             Type = Type.HasValue ? new TemplateString(Type.Value.ToString().ToLowerInvariant()) : null,
 #pragma warning restore CA1308
-            Role = Role,
+            Role = Role != null ? new TemplateString(Role) : null,
             DisableAutoFocus = DisableAutoFocus,
-            TitleId = notificationBannerContext.Title?.Id,
+            TitleId = notificationBannerContext.Title?.Id != null ? new TemplateString(notificationBannerContext.Title.Value.Id) : null,
             TitleHeadingLevel = notificationBannerContext.Title?.HeadingLevel,
             TitleHtml = notificationBannerContext.Title?.Content,
             Classes = classes,

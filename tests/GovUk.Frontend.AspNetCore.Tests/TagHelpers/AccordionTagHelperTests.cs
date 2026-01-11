@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
@@ -8,9 +9,38 @@ namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 public class AccordionTagHelperTests
 {
     [Fact]
-    public async Task ProcessAsync_GeneratesExpectedOutput()
+    public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
     {
         // Arrange
+        var id = "test-accordion";
+        var headingLevel = 3;
+        var rememberExpanded = false;
+        var hideAllSectionsText = "Collapse all";
+        var hideSectionText = "Collapse";
+        var hideSectionAriaLabelText = "Collapse this";
+        var showAllSectionsText = "Expand all";
+        var showSectionText = "Expand";
+        var showSectionAriaLabelText = "Expand this";
+        var classes = "custom-class";
+        var dataFooAttrValue = "bar";
+
+        var items = new[]
+        {
+            new AccordionItem()
+            {
+                Content = new HtmlString("First content"),
+                Expanded = false,
+                HeadingContent = new HtmlString("First heading"),
+                SummaryContent = new HtmlString("First summary")
+            },
+            new AccordionItem()
+            {
+                Content = new HtmlString("Second content"),
+                Expanded = true,
+                HeadingContent = new HtmlString("Second heading")
+            }
+        };
+
         var context = new TagHelperContext(
             tagName: "govuk-accordion",
             allAttributes: [],
@@ -19,145 +49,81 @@ public class AccordionTagHelperTests
 
         var output = new TagHelperOutput(
             "govuk-accordion",
-            attributes: [],
+            attributes: new TagHelperAttributeList()
+            {
+                { "class", classes },
+                { "data-foo", dataFooAttrValue }
+            },
             getChildContentAsync: (useCachedResult, encoder) =>
             {
-                var accordionContext = (AccordionContext)context.Items[typeof(AccordionContext)];
+                var accordionContext = context.GetContextItem<AccordionContext>();
 
-                accordionContext.AddItem(new AccordionItem()
+                foreach (var item in items)
                 {
-                    Content = new HtmlString("First content"),
-                    Expanded = false,
-                    HeadingContent = new HtmlString("First heading"),
-                    SummaryContent = new HtmlString("First summary")
-                });
-
-                accordionContext.AddItem(new AccordionItem()
-                {
-                    Content = new HtmlString("First content"),
-                    Expanded = true,
-                    HeadingContent = new HtmlString("Second heading")
-                });
+                    accordionContext.AddItem(item);
+                }
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new AccordionTagHelper()
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        AccordionOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateAccordionAsync(It.IsAny<AccordionOptions>())).Callback<AccordionOptions>(o => actualOptions = o);
+
+        var tagHelper = new AccordionTagHelper(componentGeneratorMock.Object)
         {
-            Id = "testaccordion",
-            HeadingLevel = 1,
+            Id = id,
+            HeadingLevel = headingLevel,
+            RememberExpanded = rememberExpanded,
+            HideAllSectionsText = hideAllSectionsText,
+            HideSectionText = hideSectionText,
+            HideSectionAriaLabelText = hideSectionAriaLabelText,
+            ShowAllSectionsText = showAllSectionsText,
+            ShowSectionText = showSectionText,
+            ShowSectionAriaLabelText = showSectionAriaLabelText
         };
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
-<div class=""govuk-accordion"" data-module=""govuk-accordion"" id=""testaccordion"">
-    <div class=""govuk-accordion__section"">
-        <div class=""govuk-accordion__section-header"">
-            <h1 class=""govuk-accordion__section-heading"">
-                <span class=""govuk-accordion__section-button"" id=""testaccordion-heading-1"">First heading</span>
-            </h1>
-            <div class=""govuk-body govuk-accordion__section-summary"" id=""testaccordion-summary-1"">First summary</div>
-        </div>
-        <div class=""govuk-accordion__section-content"" id=""testaccordion-content-1"">
-            First content
-        </div>
-    </div>
-    <div class=""govuk-accordion__section--expanded govuk-accordion__section"">
-        <div class=""govuk-accordion__section-header"">
-            <h1 class=""govuk-accordion__section-heading"">
-                <span class=""govuk-accordion__section-button"" id=""testaccordion-heading-2"">Second heading</span>
-            </h1>
-        </div>
-        <div class=""govuk-accordion__section-content"" id=""testaccordion-content-2"">
-            First content
-        </div>
-    </div>
-</div>";
-
-        AssertEx.HtmlEqual(@expectedHtml, output.ToHtmlString());
-    }
-
-    [Fact]
-    public async Task ProcessAsync_WithSectionTranslationAttributes_GeneratesExpectedOutput()
-    {
-        // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-accordion",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "govuk-accordion",
-            attributes: [],
-            getChildContentAsync: (useCachedResult, encoder) =>
-            {
-                var accordionContext = (AccordionContext)context.Items[typeof(AccordionContext)];
-
-                accordionContext.AddItem(new AccordionItem()
-                {
-                    Content = new HtmlString("First content"),
-                    Expanded = false,
-                    HeadingContent = new HtmlString("First heading"),
-                    SummaryContent = new HtmlString("First summary")
-                });
-
-                accordionContext.AddItem(new AccordionItem()
-                {
-                    Content = new HtmlString("First content"),
-                    Expanded = true,
-                    HeadingContent = new HtmlString("Second heading")
-                });
-
-                var tagHelperContent = new DefaultTagHelperContent();
-                return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-
-        var tagHelper = new AccordionTagHelper()
+        Assert.NotNull(actualOptions);
+        Assert.Equal(id, actualOptions.Id);
+        Assert.Equal(headingLevel, actualOptions.HeadingLevel);
+        Assert.Equal(rememberExpanded, actualOptions.RememberExpanded);
+        Assert.Equal(hideAllSectionsText, actualOptions.HideAllSectionsText);
+        Assert.Equal(hideSectionText, actualOptions.HideSectionText);
+        Assert.Equal(hideSectionAriaLabelText, actualOptions.HideSectionAriaLabelText);
+        Assert.Equal(showAllSectionsText, actualOptions.ShowAllSectionsText);
+        Assert.Equal(showSectionText, actualOptions.ShowSectionText);
+        Assert.Equal(showSectionAriaLabelText, actualOptions.ShowSectionAriaLabelText);
+        Assert.Equal(classes, actualOptions.Classes);
+        Assert.NotNull(actualOptions.Attributes);
+        Assert.Collection(actualOptions.Attributes, kvp =>
         {
-            Id = "testaccordion",
-            HideAllSectionsText = "Collapse all sections",
-            HideSectionText = "Collapse",
-            HideSectionAriaLabelText = "Collapse this section",
-            ShowAllSectionsText = "Expand all sections",
-            ShowSectionText = "Expand",
-            ShowSectionAriaLabelText = "Expand this section"
-        };
+            Assert.Equal("data-foo", kvp.Key);
+            Assert.Equal(dataFooAttrValue, kvp.Value);
+        });
+        Assert.NotNull(actualOptions.Items);
+        Assert.Equal(2, actualOptions.Items.Count);
 
-        // Act
-        await tagHelper.ProcessAsync(context, output);
+        var firstItem = actualOptions.Items.ElementAt(0);
+        Assert.Equal(items[0].Expanded, firstItem.Expanded);
+        Assert.NotNull(firstItem.Heading);
+        Assert.Equal("First heading", firstItem.Heading.Html);
+        Assert.NotNull(firstItem.Summary);
+        Assert.Equal("First summary", firstItem.Summary.Html);
+        Assert.NotNull(firstItem.Content);
+        Assert.Equal("First content", firstItem.Content.Html);
 
-        // Assert
-        var expectedHtml = @"
-<div class=""govuk-accordion"" data-module=""govuk-accordion"" id=""testaccordion"" data-i18n.hide-all-sections=""Expand all sections"" data-i18n.hide-section=""Expand"" data-i18n.hide-section-aria-label=""Expand this section"" data-i18n.show-all-sections=""Collapse all sections"" data-i18n.show-section=""Collapse"" data-i18n.show-section-aria-label=""Collapse this section"">
-    <div class=""govuk-accordion__section"">
-        <div class=""govuk-accordion__section-header"">
-            <h2 class=""govuk-accordion__section-heading"">
-                <span class=""govuk-accordion__section-button"" id=""testaccordion-heading-1"">First heading</span>
-            </h2>
-            <div class=""govuk-body govuk-accordion__section-summary"" id=""testaccordion-summary-1"">First summary</div>
-        </div>
-        <div class=""govuk-accordion__section-content"" id=""testaccordion-content-1"">
-            First content
-        </div>
-    </div>
-    <div class=""govuk-accordion__section--expanded govuk-accordion__section"">
-        <div class=""govuk-accordion__section-header"">
-            <h2 class=""govuk-accordion__section-heading"">
-                <span class=""govuk-accordion__section-button"" id=""testaccordion-heading-2"">Second heading</span>
-            </h2>
-        </div>
-        <div class=""govuk-accordion__section-content"" id=""testaccordion-content-2"">
-            First content
-        </div>
-    </div>
-</div>";
-
-        AssertEx.HtmlEqual(@expectedHtml, output.ToHtmlString());
+        var secondItem = actualOptions.Items.ElementAt(1);
+        Assert.Equal(items[1].Expanded, secondItem.Expanded);
+        Assert.NotNull(secondItem.Heading);
+        Assert.Equal("Second heading", secondItem.Heading.Html);
+        Assert.Null(secondItem.Summary);
+        Assert.NotNull(secondItem.Content);
+        Assert.Equal("Second content", secondItem.Content.Html);
     }
 
     [Fact]
@@ -175,7 +141,7 @@ public class AccordionTagHelperTests
             attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
-                var accordionContext = (AccordionContext)context.Items[typeof(AccordionContext)];
+                var accordionContext = context.GetContextItem<AccordionContext>();
 
                 accordionContext.AddItem(new AccordionItem()
                 {
@@ -185,18 +151,11 @@ public class AccordionTagHelperTests
                     SummaryContent = new HtmlString("First summary")
                 });
 
-                accordionContext.AddItem(new AccordionItem()
-                {
-                    Content = new HtmlString("First content"),
-                    Expanded = true,
-                    HeadingContent = new HtmlString("Second heading")
-                });
-
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new AccordionTagHelper(new ComponentGenerator());
+        var tagHelper = new AccordionTagHelper(TestUtils.CreateComponentGenerator());
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));

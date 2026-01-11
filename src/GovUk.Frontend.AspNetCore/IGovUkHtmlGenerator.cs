@@ -8,19 +8,6 @@ namespace GovUk.Frontend.AspNetCore;
 
 internal interface IGovUkHtmlGenerator
 {
-    TagBuilder GenerateAccordion(
-        string id,
-        int headingLevel,
-        AttributeDictionary attributes,
-        bool rememberExpanded,
-        string hideAllSectionsText,
-        string hideSectionText,
-        string hideSectionAriaLabelText,
-        string showAllSectionsText,
-        string showSectionText,
-        string showSectionAriaLabelText,
-        IEnumerable<AccordionItem> items);
-
     TagBuilder GenerateCheckboxes(
         string idPrefix,
         string name,

@@ -1,5 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -8,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS accordion component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[OutputElementHint(ComponentGenerator.AccordionElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Accordion)]
 [RestrictChildren(AccordionItemTagHelper.TagName)]
 public class AccordionTagHelper : TagHelper
 {
@@ -24,19 +23,15 @@ public class AccordionTagHelper : TagHelper
     private const string ShowSectionTextAttributeName = "show-section-text";
     private const string ShowSectionAriaLabelTextAttributeName = "show-section-aria-label-text";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
 
     /// <summary>
     /// Creates a new <see cref="AccordionTagHelper"/>.
     /// </summary>
-    public AccordionTagHelper()
-        : this(null)
+    public AccordionTagHelper(IComponentGenerator componentGenerator)
     {
-    }
-
-    internal AccordionTagHelper(IGovUkHtmlGenerator? htmlGenerator = null)
-    {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+        _componentGenerator = componentGenerator;
     }
 
     /// <summary>
@@ -126,10 +121,10 @@ public class AccordionTagHelper : TagHelper
             throw ExceptionHelper.TheAttributeMustBeSpecified(IdAttributeName);
         }
 
-        if (HeadingLevel is not null and not (>= ComponentGenerator.AccordionMinHeadingLevel and <= ComponentGenerator.AccordionMaxHeadingLevel))
+        if (HeadingLevel is not null and not (>= 1 and <= 6))
         {
             throw new InvalidOperationException(
-                $"The '{nameof(HeadingLevelAttributeName)}' attribute must be between {ComponentGenerator.AccordionMinHeadingLevel} and {ComponentGenerator.AccordionMaxHeadingLevel}.");
+                $"The '{nameof(HeadingLevelAttributeName)}' attribute must be between 1 and 6.");
         }
 
         var accordionContext = new AccordionContext();
@@ -139,24 +134,42 @@ public class AccordionTagHelper : TagHelper
             _ = await output.GetChildContentAsync();
         }
 
-        var tagBuilder = _htmlGenerator.GenerateAccordion(
-            Id,
-            HeadingLevel ?? ComponentGenerator.AccordionDefaultHeadingLevel,
-            output.Attributes.ToAttributeDictionary(),
-            RememberExpanded ?? ComponentGenerator.AccordionDefaultRememberExpanded,
-            ShowAllSectionsText,
-            ShowSectionText,
-            ShowSectionAriaLabelText,
-            HideAllSectionsText,
-            HideSectionText,
-            HideSectionAriaLabelText,
-            items: accordionContext.Items);
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
 
-        output.TagName = tagBuilder.TagName;
-        output.TagMode = TagMode.StartTagAndEndTag;
+        var items = accordionContext.Items.Select(item => new AccordionOptionsItem()
+        {
+            Expanded = item.Expanded,
+            Heading = new AccordionOptionsItemHeading()
+            {
+                Html = item.HeadingContent.ToTemplateString()
+            },
+            Summary = item.SummaryContent != null ? new AccordionOptionsItemSummary()
+            {
+                Html = item.SummaryContent.ToTemplateString()
+            } : null,
+            Content = new AccordionOptionsItemContent()
+            {
+                Html = item.Content.ToTemplateString()
+            }
+        }).ToList();
 
-        output.Attributes.Clear();
-        output.MergeAttributes(tagBuilder);
-        output.Content.SetHtmlContent(tagBuilder.InnerHtml);
+        var component = await _componentGenerator.GenerateAccordionAsync(new AccordionOptions()
+        {
+            Id = Id,
+            HeadingLevel = HeadingLevel,
+            Classes = classes,
+            Attributes = attributes,
+            RememberExpanded = RememberExpanded,
+            HideAllSectionsText = HideAllSectionsText,
+            HideSectionText = HideSectionText,
+            HideSectionAriaLabelText = HideSectionAriaLabelText,
+            ShowAllSectionsText = ShowAllSectionsText,
+            ShowSectionText = ShowSectionText,
+            ShowSectionAriaLabelText = ShowSectionAriaLabelText,
+            Items = items
+        });
+
+        component.ApplyToTagHelper(output);
     }
 }

@@ -4,6 +4,7 @@ internal partial class DefaultComponentGenerator
 {
     internal static class ComponentElementTypes
     {
+        public const string Accordion = "div";
         public const string BackLink = "a";
         public const string CharacterCount = "div";
         public const string CookieBanner = "div";

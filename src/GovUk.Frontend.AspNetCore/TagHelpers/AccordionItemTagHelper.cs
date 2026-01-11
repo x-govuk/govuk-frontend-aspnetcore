@@ -42,7 +42,7 @@ public class AccordionItemTagHelper : TagHelper
 
         accordionContext.AddItem(new AccordionItem()
         {
-            Expanded = Expanded ?? ComponentGenerator.AccordionItemDefaultExpanded,
+            Expanded = Expanded ?? false,
             HeadingContent = itemContext.Heading!.Value.Content,
             HeadingAttributes = itemContext.Heading.Value.Attributes,
             SummaryContent = itemContext.Summary?.Content,

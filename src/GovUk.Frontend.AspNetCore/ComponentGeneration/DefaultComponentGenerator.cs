@@ -59,12 +59,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         });
     }
 
-    public virtual Task<GovUkComponent> GenerateAccordionAsync(AccordionOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("accordion", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateCharacterCountAsync(CharacterCountOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

@@ -19,8 +19,14 @@ build *ARGS:
   @dotnet build {{ARGS}}
 
 # Build the samples
-build-samples *ARGS:
-  @cd samples && dotnet build {{ARGS}}
+[working-directory: 'samples']
+build-samples *ARGS: (_clear-samples-package-cache) (pack '-c Release')
+  @dotnet build {{ARGS}}
+
+[private]
+[working-directory: 'samples']
+_clear-samples-package-cache:
+  @rm -rf package_cache/govuk.frontend.aspnetcore
 
 # Run the tests
 test *ARGS: (unit-tests ARGS) (integration-tests ARGS)
@@ -35,7 +41,7 @@ integration-tests *ARGS:
 
 # Format the C# code
 format *ARGS:
-  @dotnet dotnet-format {{ARGS}}
+  @dotnet format {{ARGS}}
 
 # Package the library
 pack *ARGS:

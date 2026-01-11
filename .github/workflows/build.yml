@@ -1,4 +1,4 @@
-name: ci
+name: "Build & release"
 
 on:
   push:
@@ -20,7 +20,7 @@ on:
 
 jobs:
   build:
-    name: "Build, test & package"
+    name: "Build library"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,11 +34,7 @@ jobs:
           fetch-depth: 0 # required for minver to create the right version number
           filter: tree:0
 
-      - uses: extractions/setup-just@v3
-
-      - uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
+      - uses: jdx/mise-action@v3
 
       - name: Install tools
         run: just install-tools
@@ -73,6 +69,7 @@ jobs:
           fi
 
       - name: Pack
+        if: matrix.build-configuration == 'Release'
         run: just pack --configuration ${{ matrix.build-configuration }}
         env:
           MINVERBUILDMETADATA: build.${{ github.run_id }}.${{ github.run_attempt}}
@@ -84,14 +81,29 @@ jobs:
           name: GovUk.Frontend.AspNetCore.nupkg
           path: packages/*.nupkg
 
-      # The samples are dependent on the package being built, so build them last
-      - name: Build samples
-        run: just build-samples --configuration ${{ matrix.build-configuration }}
-
-  release:
-    name: "Release"
+  build_samples:
+    name: "Build samples"
     runs-on: ubuntu-latest
     needs: build
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          filter: tree:0
+
+      - uses: jdx/mise-action@v3
+
+      - name: Install tools
+        run: just install-tools
+
+      - name: Build samples
+        run: just build-samples --configuration Release
+
+  release:
+    name: "Publish package to NuGet"
+    runs-on: ubuntu-latest
+    needs: [build, build_samples]
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       id-token: write

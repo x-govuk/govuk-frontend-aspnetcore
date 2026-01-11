@@ -1,9 +1,0 @@
-<Project>
-  <ItemGroup>
-    <_OldPackages Include="$(PackageOutputPath)/$(PackageId)*" />
-  </ItemGroup>
-
-  <Target Name="CleanPackages" Condition="'$(PackageId)' != ''" AfterTargets="Pack">
-    <Delete Files="@(_OldPackages)" />
-  </Target>
-</Project>

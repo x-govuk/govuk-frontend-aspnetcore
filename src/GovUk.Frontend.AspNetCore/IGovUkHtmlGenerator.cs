@@ -16,14 +16,6 @@ internal interface IGovUkHtmlGenerator
         IEnumerable<CheckboxesItemBase> items,
         AttributeDictionary attributes);
 
-    TagBuilder GenerateDetails(
-        bool open,
-        IHtmlContent summaryContent,
-        AttributeDictionary summaryAttributes,
-        IHtmlContent text,
-        AttributeDictionary textAttributes,
-        AttributeDictionary attributes);
-
     TagBuilder GenerateErrorMessage(
         string visuallyHiddenText,
         IHtmlContent content,

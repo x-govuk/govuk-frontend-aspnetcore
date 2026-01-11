@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -25,7 +26,7 @@ public class DetailsTextTagHelper : TagHelper
             content = output.Content;
         }
 
-        detailsContext.SetText(output.Attributes.ToAttributeDictionary(), content);
+        detailsContext.SetText(new AttributeCollection(output.Attributes), content);
 
         output.SuppressOutput();
     }

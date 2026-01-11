@@ -13,6 +13,7 @@ internal partial class DefaultComponentGenerator
         public const string FormGroup = "div";
         public const string Header = "header";
         public const string InsetText = "div";
+        public const string NotificationBanner = "div";
         public const string Pagination = "nav";
         public const string PhaseBanner = "div";
         public const string SkipLink = "a";

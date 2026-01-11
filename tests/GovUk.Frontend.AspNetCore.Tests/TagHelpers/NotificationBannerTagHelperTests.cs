@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -26,7 +27,7 @@ public class NotificationBannerTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper();
+        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator());
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -71,7 +72,7 @@ public class NotificationBannerTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper()
+        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator())
         {
             Type = NotificationBannerType.Success
         };
@@ -119,7 +120,7 @@ public class NotificationBannerTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper()
+        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator())
         {
             DisableAutoFocus = true,
             Type = NotificationBannerType.Success
@@ -170,7 +171,7 @@ public class NotificationBannerTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper()
+        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator())
         {
             Role = "custom-role"
         };
@@ -214,14 +215,14 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();
-                notificationBannerContext.SetTitle(id: "title-id", headingLevel: 4, content: new HtmlString("Title"));
+                notificationBannerContext.SetTitle(id: "title-id", headingLevel: 4, content: new TemplateString(new HtmlString("Title")));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 tagHelperContent.SetContent("The message.");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper();
+        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator());
 
         // Act
         await tagHelper.ProcessAsync(context, output);

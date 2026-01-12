@@ -240,17 +240,17 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
     {
-        if (html is not null)
+        if (html?.IsEmpty() == false)
         {
             return new HtmlString(html.ToHtmlString(raw: true));
         }
 
-        if (text is not null)
+        if (text?.IsEmpty() == false)
         {
             return text;
         }
 
-        if (fallback is not null)
+        if (!string.IsNullOrEmpty(fallback))
         {
             return new HtmlString(fallback);
         }

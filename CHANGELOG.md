@@ -2,7 +2,13 @@
 
 ## Unreleased
 
-### 3.4.2
+### Fixes
+
+Fixes default back link content.
+
+## 3.4.2
+
+### Fixes
 
 Fix `id` attribute name on `<govuk-notification-banner>`.
 

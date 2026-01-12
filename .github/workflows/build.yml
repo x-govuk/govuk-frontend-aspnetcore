@@ -1,15 +1,6 @@
 name: "Build & release"
 
 on:
-  push:
-    branches:
-      - "*"
-    tags:
-      - v*
-    paths-ignore:
-      - docs/**
-      - LICENSE
-      - "**.md"
   pull_request:
     branches:
       - "*"

@@ -32,7 +32,6 @@ public class ErrorMessageTagHelper : TagHelper
     public ErrorMessageTagHelper(IComponentGenerator componentGenerator)
         : this(componentGenerator, modelHelper: null)
     {
-        ArgumentNullException.ThrowIfNull(componentGenerator);
     }
 
     internal ErrorMessageTagHelper(

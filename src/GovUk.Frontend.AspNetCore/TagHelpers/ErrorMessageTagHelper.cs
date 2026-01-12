@@ -1,9 +1,9 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -22,22 +22,23 @@ public class ErrorMessageTagHelper : TagHelper
     private const string ForAttributeName = "for";
     private const string VisuallyHiddenTextAttributeName = "visually-hidden-text";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
 
     /// <summary>
-    /// Creates a <see cref="ErrorMessageTagHelper"/>.
+    /// Creates a new <see cref="ErrorMessageTagHelper"/>.
     /// </summary>
-    public ErrorMessageTagHelper()
-        : this(htmlGenerator: null, modelHelper: null)
+    public ErrorMessageTagHelper(IComponentGenerator componentGenerator)
+        : this(componentGenerator, modelHelper: null)
     {
     }
 
     internal ErrorMessageTagHelper(
-        IGovUkHtmlGenerator? htmlGenerator,
+        IComponentGenerator componentGenerator,
         IModelHelper? modelHelper)
     {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+        _componentGenerator = componentGenerator;
         _modelHelper = modelHelper ?? new DefaultModelHelper();
     }
 
@@ -66,7 +67,7 @@ public class ErrorMessageTagHelper : TagHelper
     /// The default is <c>&quot;Error&quot;</c>.
     /// </remarks>
     [HtmlAttributeName(VisuallyHiddenTextAttributeName)]
-    public string? VisuallyHiddenText { get; set; } = ComponentGenerator.ErrorMessageDefaultVisuallyHiddenText;
+    public string? VisuallyHiddenText { get; set; }
 
     /// <summary>
     /// Gets the <see cref="ViewContext"/> of the executing view.
@@ -113,17 +114,18 @@ public class ErrorMessageTagHelper : TagHelper
 
         if (resolvedContent is not null)
         {
-            var tagBuilder = _htmlGenerator.GenerateErrorMessage(
-                VisuallyHiddenText,
-                resolvedContent,
-                output.Attributes.ToAttributeDictionary());
+            var attributes = new ComponentGeneration.AttributeCollection(output.Attributes);
+            attributes.Remove("class", out var classes);
 
-            output.TagName = tagBuilder.TagName;
-            output.TagMode = TagMode.StartTagAndEndTag;
+            var component = await _componentGenerator.GenerateErrorMessageAsync(new ErrorMessageOptions()
+            {
+                Html = resolvedContent.ToTemplateString(),
+                VisuallyHiddenText = VisuallyHiddenText != null ? new TemplateString(VisuallyHiddenText) : null,
+                Classes = classes,
+                Attributes = attributes
+            });
 
-            output.Attributes.Clear();
-            output.MergeAttributes(tagBuilder);
-            output.Content.SetHtmlContent(tagBuilder.InnerHtml);
+            component.ApplyToTagHelper(output);
         }
         else
         {

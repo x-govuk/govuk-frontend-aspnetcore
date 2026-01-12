@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,7 +28,7 @@ public class ErrorMessageTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new ErrorMessageTagHelper();
+        var tagHelper = new ErrorMessageTagHelper(TestUtils.CreateComponentGenerator());
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -64,7 +63,7 @@ public class ErrorMessageTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new ErrorMessageTagHelper()
+        var tagHelper = new ErrorMessageTagHelper(TestUtils.CreateComponentGenerator())
         {
             VisuallyHiddenText = "Overriden"
         };
@@ -116,7 +115,7 @@ public class ErrorMessageTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var tagHelper = new ErrorMessageTagHelper(htmlGenerator: null, modelHelperMock.Object)
+        var tagHelper = new ErrorMessageTagHelper(TestUtils.CreateComponentGenerator(), modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext()
@@ -169,7 +168,7 @@ public class ErrorMessageTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var tagHelper = new ErrorMessageTagHelper(new ComponentGenerator(), modelHelperMock.Object)
+        var tagHelper = new ErrorMessageTagHelper(TestUtils.CreateComponentGenerator(), modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext()
@@ -206,7 +205,7 @@ public class ErrorMessageTagHelperTests
 
         var htmlHelper = new Mock<IHtmlHelper>();
 
-        var tagHelper = new ErrorMessageTagHelper();
+        var tagHelper = new ErrorMessageTagHelper(TestUtils.CreateComponentGenerator());
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));

@@ -1,7 +1,7 @@
 using System.Text.Encodings.Web;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using SoftCircuits.HtmlMonkey;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
@@ -56,16 +56,68 @@ internal static class TagHelperAdapter
             return ComponentTagHelperOutput.Empty;
         }
 
-        var doc = HtmlDocument.FromHtml(html);
-        var root = (HtmlElementNode)doc.RootNodes.Single(n => n is HtmlElementNode);
+        // We only need to parse the root tag and its attributes;
+        // if any inner content is malformed we want to preserve it and output as-is.
 
-        var tagName = root.TagName;
-        var tagMode = root.IsSelfClosing ? TagMode.SelfClosing : TagMode.StartTagAndEndTag;
-        var attributes = new TagHelperAttributeList(
-            root.Attributes.Select(a => a.Value is null ? new TagHelperAttribute(a.Name) : new TagHelperAttribute(a.Name, new HtmlString(a.Value))));
-        var innerHtml = new HtmlString(root.InnerHtml);
+        var startTagStart = html.IndexOf('<', 0);
+        var startTagEnd = html.IndexOf('>', startTagStart + 1);
+        var startTag = html[startTagStart..(startTagEnd + 1)];
+
+        var tagNameStart = startTagStart + 1;
+        var tagNameEnd = ReadUntil([' ', '>', '=', '/'], tagNameStart + 1);
+        var tagName = html[tagNameStart..tagNameEnd];
+
+        var rootTag = startTag;
+        var isSelfClosing = startTag.EndsWith("/>", StringComparison.Ordinal);
+        var tagMode = isSelfClosing ? TagMode.SelfClosing : TagMode.StartTagAndEndTag;
+
+        IHtmlContent innerHtml;
+        if (isSelfClosing)
+        {
+            innerHtml = HtmlString.Empty;
+        }
+        else
+        {
+            var endTagStart = html.LastIndexOf($"</{tagName}>", StringComparison.Ordinal);
+            if (endTagStart == -1)
+            {
+                innerHtml = HtmlString.Empty;
+                tagMode = TagMode.StartTagOnly;
+            }
+            else
+            {
+                rootTag += html[endTagStart..];
+                innerHtml = new HtmlString(html[(startTagEnd + 1)..endTagStart]);
+            }
+        }
+
+        var htmlDocument = new HtmlDocument();
+        htmlDocument.LoadHtml(rootTag);
+        var rootNode = htmlDocument.DocumentNode.FirstChild;
+
+        var attributes = new TagHelperAttributeList();
+        foreach (var attribute in rootNode.Attributes)
+        {
+            var tagHelperAttribute = attribute.QuoteType is AttributeValueQuote.WithoutValue
+                ? new TagHelperAttribute(attribute.Name)
+                : new TagHelperAttribute(attribute.Name, new HtmlString(attribute.Value));
+
+            attributes.Add(tagHelperAttribute);
+        }
 
         return new ComponentTagHelperOutput(tagName, tagMode, attributes, innerHtml);
+
+        int ReadUntil(char[] stopChars, int startIndex)
+        {
+            var index = startIndex;
+
+            while (index < html.Length && !stopChars.Contains(html[index]))
+            {
+                index++;
+            }
+
+            return index;
+        }
     }
 
     internal record ComponentTagHelperOutput(

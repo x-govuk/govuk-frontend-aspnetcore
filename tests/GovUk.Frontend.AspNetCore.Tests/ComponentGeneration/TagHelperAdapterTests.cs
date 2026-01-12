@@ -22,10 +22,10 @@ public class TagHelperAdapterTests
     }
 
     [Theory]
-    [InlineData("<br>")]
-    [InlineData("<br/>")]
-    [InlineData("<br />")]
-    public void VoidElementWithNoAttributes(string html)
+    [InlineData("<br>", TagMode.StartTagOnly)]
+    [InlineData("<br/>", TagMode.SelfClosing)]
+    [InlineData("<br />", TagMode.SelfClosing)]
+    public void VoidElementWithNoAttributes(string html, TagMode expectedTagMode)
     {
         // Arrange
 
@@ -34,7 +34,7 @@ public class TagHelperAdapterTests
 
         // Assert
         Assert.Equal("br", result.TagName);
-        Assert.Equal(TagMode.SelfClosing, result.TagMode);
+        Assert.Equal(expectedTagMode, result.TagMode);
         Assert.Empty(result.Attributes);
         Assert.Equal("", result.InnerHtml.ToHtmlString());
     }
@@ -50,6 +50,19 @@ public class TagHelperAdapterTests
 
         // Assert
         Assert.Equal("<a href=\"foo?bar=baz\">Hello world</a>", result.InnerHtml.ToHtmlString());
+    }
+
+    [Fact]
+    public void MalformedInnerHtml()
+    {
+        // Arrange
+        var html = "<div><a href=https://some.url>Hello world</div>";
+
+        // Act
+        var result = TagHelperAdapter.UnwrapComponent(html);
+
+        // Assert
+        Assert.Equal("<a href=https://some.url>Hello world", result.InnerHtml.ToHtmlString());
     }
 
     [Fact]

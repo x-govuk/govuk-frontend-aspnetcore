@@ -4,9 +4,11 @@
 
 ### Fixes
 
+Fix `id` attribute name on `<govuk-notification-banner>`.
+
 Fix mangling non-conformant HTML blocks.
 
-Fix `id` attribute name on `<govuk-notification-banner>`.
+Fix missing whitespace after 'Error:' in error messages.
 
 ## 3.4.1
 

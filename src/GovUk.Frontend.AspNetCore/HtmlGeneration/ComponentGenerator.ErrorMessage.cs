@@ -26,6 +26,7 @@ internal partial class ComponentGenerator
             vht.MergeCssClass("govuk-visually-hidden");
             vht.InnerHtml.Append(visuallyHiddenText + ":");
 
+            tagBuilder.InnerHtml.Append(" ");
             tagBuilder.InnerHtml.AppendHtml(vht);
         }
 

@@ -68,7 +68,7 @@ public class ErrorMessageTagHelper : TagHelper
     /// The default is <c>&quot;Error&quot;</c>.
     /// </remarks>
     [HtmlAttributeName(VisuallyHiddenTextAttributeName)]
-    public string? VisuallyHiddenText { get; set; } = DefaultComponentGenerator.DefaultErrorMessageVisuallyHiddenText;
+    public string? VisuallyHiddenText { get; set; }
 
     /// <summary>
     /// Gets the <see cref="ViewContext"/> of the executing view.

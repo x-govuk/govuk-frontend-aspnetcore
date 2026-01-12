@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-### Fixes
+### 3.4.2
 
 Fix `id` attribute name on `<govuk-notification-banner>`.
 

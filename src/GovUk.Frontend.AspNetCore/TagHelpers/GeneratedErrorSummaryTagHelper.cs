@@ -106,7 +106,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
             DescriptionAttributes = null
         });
 
-        errorSummary.ApplyToTagHelper(output);
+        output.PreContent.AppendHtml(errorSummary.GetHtml());
 
         containerErrorContext.ErrorSummaryHasBeenRendered = true;
     }

@@ -6,6 +6,8 @@
 
 Fixes default back link content.
 
+Fixes generated error summary to not swallow content.
+
 ## 3.4.2
 
 ### Fixes

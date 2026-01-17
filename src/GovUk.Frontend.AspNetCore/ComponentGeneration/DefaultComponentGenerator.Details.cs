@@ -6,11 +6,19 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var detailsTag = new HtmlTag("details", attrs => attrs
-            .With("id", options.Id)
-            .WithClasses("govuk-details", options.Classes)
-            .With("open", options.Open == true ? "" : null)
-            .With(options.Attributes));
+        var detailsTag = new HtmlTag("details", attrs =>
+        {
+            attrs
+                .With("id", options.Id)
+                .WithClasses("govuk-details", options.Classes);
+
+            if (options.Open == true)
+            {
+                attrs.WithBoolean("open");
+            }
+
+            attrs.With(options.Attributes);
+        });
 
         var summaryTag = new HtmlTag("summary", attrs => attrs
             .WithClasses("govuk-details__summary")

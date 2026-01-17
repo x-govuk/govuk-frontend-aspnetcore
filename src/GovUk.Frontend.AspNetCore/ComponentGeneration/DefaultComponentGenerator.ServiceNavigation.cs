@@ -108,7 +108,8 @@ internal partial class DefaultComponentGenerator
                         .WithClasses("govuk-service-navigation__toggle", "govuk-js-service-navigation-toggle")
                         .With("type", "button")
                         .With("aria-controls", navigationId)
-                        .WithBoolean("hidden");
+                        .WithBoolean("hidden")
+                        .With("aria-hidden", "true");
 
                     if (options.MenuButtonLabel?.IsEmpty() == false &&
                         options.MenuButtonLabel?.ToString() != menuButtonText)

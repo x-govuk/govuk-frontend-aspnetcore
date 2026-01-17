@@ -24,16 +24,13 @@ internal partial class DefaultComponentGenerator
         var textTag = new HtmlTag("strong", attrs => attrs
             .WithClasses("govuk-warning-text__text"));
 
-        if (!string.IsNullOrEmpty(iconFallbackText))
+        var visuallyHiddenTag = new HtmlTag("span", attrs => attrs
+            .WithClasses("govuk-visually-hidden"))
         {
-            var visuallyHiddenTag = new HtmlTag("span", attrs => attrs
-                .WithClasses("govuk-visually-hidden"))
-            {
-                iconFallbackText
-            };
-            textTag.InnerHtml.AppendHtml(visuallyHiddenTag);
-            textTag.InnerHtml.Append(" ");
-        }
+            iconFallbackText
+        };
+        textTag.InnerHtml.AppendHtml(visuallyHiddenTag);
+        textTag.InnerHtml.Append(" ");
 
         textTag.InnerHtml.AppendHtml(content);
         outerTag.InnerHtml.AppendHtml(textTag);

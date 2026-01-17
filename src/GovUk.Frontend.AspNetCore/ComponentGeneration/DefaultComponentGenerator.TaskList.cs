@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateTaskListAsync(TaskListOptions options)
+    public virtual async Task<GovUkComponent> GenerateTaskListAsync(TaskListOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 
@@ -17,14 +17,14 @@ internal partial class DefaultComponentGenerator
             var index = 1;
             foreach (var item in options.Items)
             {
-                ulTag.InnerHtml.AppendHtml(CreateTaskListItem(item, index, idPrefix));
+                ulTag.InnerHtml.AppendHtml(await CreateTaskListItemAsync(item, index, idPrefix));
                 index++;
             }
         }
 
-        return GenerateFromHtmlTagAsync(ulTag);
+        return new HtmlTagGovUkComponent(ulTag);
 
-        HtmlTag CreateTaskListItem(TaskListOptionsItem item, int index, string idPrefix)
+        async Task<HtmlTag> CreateTaskListItemAsync(TaskListOptionsItem item, int index, string idPrefix)
         {
             var hintId = $"{idPrefix}-{index}-hint";
             var statusId = $"{idPrefix}-{index}-status";
@@ -95,7 +95,7 @@ internal partial class DefaultComponentGenerator
 
             if (item.Status?.Tag is not null)
             {
-                var tagComponent = GenerateTagAsync(item.Status.Tag).Result;
+                var tagComponent = await GenerateTagAsync(item.Status.Tag);
                 statusDiv.InnerHtml.AppendHtml(tagComponent.GetHtml());
             }
             else if (item.Status is not null)

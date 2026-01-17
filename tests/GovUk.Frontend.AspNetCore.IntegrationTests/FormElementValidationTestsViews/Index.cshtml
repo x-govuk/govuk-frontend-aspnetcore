@@ -1,0 +1,33 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.FormElementValidationModel
+
+<form method="post">
+    <govuk-input for="TextInput" />
+
+    <govuk-password-input for="PasswordInput" />
+
+    <govuk-textarea for="TextArea" />
+
+    <govuk-character-count for="CharacterCount" max-length="100" />
+
+    <govuk-select for="Select">
+        <govuk-select-item value="">Choose an option</govuk-select-item>
+        <govuk-select-item value="option1">Option 1</govuk-select-item>
+        <govuk-select-item value="option2">Option 2</govuk-select-item>
+    </govuk-select>
+
+    <govuk-checkboxes for="Checkboxes">
+        <govuk-checkboxes-item value="checkbox1">Checkbox 1</govuk-checkboxes-item>
+        <govuk-checkboxes-item value="checkbox2">Checkbox 2</govuk-checkboxes-item>
+    </govuk-checkboxes>
+
+    <govuk-radios for="Radios">
+        <govuk-radios-item value="radio1">Radio 1</govuk-radios-item>
+        <govuk-radios-item value="radio2">Radio 2</govuk-radios-item>
+    </govuk-radios>
+
+    <govuk-date-input for="DateInput" />
+
+    <govuk-file-upload for="FileUpload" />
+
+    <govuk-button type="submit">Submit</govuk-button>
+</form>

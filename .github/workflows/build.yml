@@ -70,7 +70,7 @@ jobs:
           fi
 
       - name: Assign package build metadata
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') != true
         run: |
           echo "MINVERBUILDMETADATA=build.${{ github.run_id }}.${{ github.run_attempt}}" >> $GITHUB_ENV
 

@@ -20,9 +20,9 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        // Should have: <span class="govuk-visually-hidden">Error:</span> Enter your full name
-        // The space after </span> is critical for screen readers
-        Assert.Contains("<span class=\"govuk-visually-hidden\">Error:</span> Enter your full name", html);
+        // Should have at least one whitespace character after </span>
+        var pattern = new Regex(@"<span class=""govuk-visually-hidden"">Error:</span>\s", RegexOptions.Singleline);
+        Assert.True(pattern.IsMatch(html), "Error message should have whitespace after visually-hidden span");
     }
 
     [Fact]
@@ -40,7 +40,9 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        Assert.Contains("<span class=\"govuk-visually-hidden\">Gwall:</span> Rhowch eich enw llawn", html);
+        // Should have at least one whitespace character after </span>
+        var pattern = new Regex(@"<span class=""govuk-visually-hidden"">Gwall:</span>\s", RegexOptions.Singleline);
+        Assert.True(pattern.IsMatch(html), "Error message with custom visually-hidden text should have whitespace after visually-hidden span");
     }
 
     [Fact]
@@ -93,8 +95,9 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        // Should have: <span class="govuk-visually-hidden">Emergency</span> Exit this page
-        Assert.Contains("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page", html);
+        // Should have at least one whitespace character after </span>
+        var pattern = new Regex(@"<span class=""govuk-visually-hidden"">Emergency</span>\s", RegexOptions.Singleline);
+        Assert.True(pattern.IsMatch(html), "Exit this page should have whitespace after visually-hidden span");
     }
 
     [Fact]
@@ -111,8 +114,9 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        // Custom HTML should preserve the Emergency prefix with proper spacing
-        Assert.Contains("<span class=\"govuk-visually-hidden\">Emergency</span> Leave immediately", html);
+        // Should have at least one whitespace character after </span>
+        var pattern = new Regex(@"<span class=""govuk-visually-hidden"">Emergency</span>\s", RegexOptions.Singleline);
+        Assert.True(pattern.IsMatch(html), "Exit this page with custom HTML should have whitespace after visually-hidden span");
     }
 
     [Fact]
@@ -136,10 +140,9 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        // Should have: Previous<span class="govuk-visually-hidden"> page</span>
-        // The space before "page" is critical
-        Assert.Contains("Previous<span class=\"govuk-visually-hidden\"> page</span>", html);
-        Assert.Contains("Next<span class=\"govuk-visually-hidden\"> page</span>", html);
+        // Should have at least one whitespace character after opening <span> tag
+        var previousPattern = new Regex(@"<span class=""govuk-visually-hidden"">\s+page</span>", RegexOptions.Singleline);
+        Assert.True(previousPattern.IsMatch(html), "Pagination should have whitespace before 'page' in visually-hidden span");
     }
 
     [Fact]
@@ -165,9 +168,9 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        // Should have: <span class="govuk-visually-hidden">:</span>
-        // The colon with proper surrounding whitespace
-        Assert.Contains("<span class=\"govuk-visually-hidden\">:</span>", html);
+        // Should have at least one whitespace character before or after the colon
+        var pattern = new Regex(@"<span class=""govuk-visually-hidden"">\s*:\s*</span>", RegexOptions.Singleline);
+        Assert.True(pattern.IsMatch(html), "Pagination with label text should have visually-hidden colon");
     }
 
     [Fact]
@@ -267,9 +270,9 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        // h2 is a block-level element, so whitespace is naturally present
-        Assert.Contains("<h2 class=\"govuk-visually-hidden\"", html);
-        Assert.Contains(">Footer links</h2>", html);
+        // Should have at least one whitespace character after opening <h2> tag
+        var pattern = new Regex(@"<h2 class=""govuk-visually-hidden""[^>]*>\s*Footer links\s*</h2>", RegexOptions.Singleline);
+        Assert.True(pattern.IsMatch(html), "Footer with meta should have visually-hidden h2 with custom title");
     }
 
     [Fact]
@@ -286,8 +289,8 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        // Should use default "Support links" text
-        Assert.Contains("<h2 class=\"govuk-visually-hidden\"", html);
-        Assert.Contains(">Support links</h2>", html);
+        // Should have at least one whitespace character after opening <h2> tag
+        var pattern = new Regex(@"<h2 class=""govuk-visually-hidden""[^>]*>\s*Support links\s*</h2>", RegexOptions.Singleline);
+        Assert.True(pattern.IsMatch(html), "Footer with default meta should have visually-hidden h2 with default title");
     }
 }

@@ -77,12 +77,12 @@ jobs:
       - name: Update package README GitHub link
         if: matrix.build-configuration == 'Release'
         run: |
-          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+          if [[ "${{ github.ref }}" == "refs/tags/v"* ]]; then
             REF="${{ github.ref_name }}"
           else
             REF="${{ github.sha }}"
           fi
-          sed -i "s|https://github.com/x-govuk/govuk-frontend-aspnetcore/blob/main/|https://github.com/x-govuk/govuk-frontend-aspnetcore/blob/${REF}/|g" src/GovUk.Frontend.AspNetCore/Package/README.md
+          sed -i "s|https://github.com/${{ github.repository }}/blob/main/|https://github.com/${{ github.repository }}/blob/${REF}/|g" src/GovUk.Frontend.AspNetCore/Package/README.md
           echo "Updated README link to reference: ${REF}"
 
       - name: Pack

@@ -19,6 +19,8 @@ All front-end assets—including fonts, images, CSS and JavaScript, are automati
 <govuk-button>Submit</govuk-button>
 ```
 
+Built by the [X-GOVUK](https://x-govuk.org/) team.
+
 ## Installation
 
 ### 1. Install NuGet package

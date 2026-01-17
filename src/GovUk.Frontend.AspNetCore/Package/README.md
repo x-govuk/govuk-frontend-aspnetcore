@@ -16,3 +16,5 @@ All front-end assets—including fonts, images, CSS and JavaScript, are automati
 ```
 
 See the [full documentation](https://github.com/x-govuk/govuk-frontend-aspnetcore/blob/main/README.md) for installation and usage guides.
+
+Built by the [X-GOVUK](https://x-govuk.org/) team.

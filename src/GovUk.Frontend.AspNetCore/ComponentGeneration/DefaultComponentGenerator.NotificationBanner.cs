@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Html;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -7,6 +9,7 @@ internal partial class DefaultComponentGenerator
         ArgumentNullException.ThrowIfNull(options);
 
         var isSuccessBanner = options.Type?.ToHtmlString(raw: true) == "success";
+        var typeClass = isSuccessBanner ? $"govuk-notification-banner--{options.Type?.ToHtmlString(raw: true)}" : null;
         var role = DetermineRole(options.Role, isSuccessBanner);
         var titleId = options.TitleId?.ToHtmlString(raw: true) ?? "govuk-notification-banner-title";
         var titleHeadingLevel = options.TitleHeadingLevel ?? 2;
@@ -15,7 +18,7 @@ internal partial class DefaultComponentGenerator
         var outerTag = new HtmlTag("div", attrs =>
         {
             attrs
-                .WithClasses("govuk-notification-banner", isSuccessBanner ? "govuk-notification-banner--success" : null, options.Classes)
+                .WithClasses("govuk-notification-banner", typeClass, options.Classes)
                 .With("role", role)
                 .With("aria-labelledby", titleId)
                 .With("data-module", "govuk-notification-banner");
@@ -38,7 +41,7 @@ internal partial class DefaultComponentGenerator
 
         var contentTag = new HtmlTag("div", attrs => attrs.WithClasses("govuk-notification-banner__content"));
         var content = HtmlOrText(options.Html, options.Text);
-        if (content != Microsoft.AspNetCore.Html.HtmlString.Empty)
+        if (content != HtmlString.Empty)
         {
             // If we have text (not HTML), wrap it in the default paragraph style
             if (options.Html?.IsEmpty() != false && options.Text?.IsEmpty() == false)
@@ -75,11 +78,11 @@ internal partial class DefaultComponentGenerator
             return "region";
         }
 
-        Microsoft.AspNetCore.Html.IHtmlContent DetermineTitle(TemplateString? titleHtml, TemplateString? titleText, bool isSuccessBanner)
+        IHtmlContent DetermineTitle(TemplateString? titleHtml, TemplateString? titleText, bool isSuccessBanner)
         {
             if (titleHtml?.IsEmpty() == false)
             {
-                return new Microsoft.AspNetCore.Html.HtmlString(titleHtml.ToHtmlString(raw: true));
+                return new HtmlString(titleHtml.ToHtmlString(raw: true));
             }
 
             if (titleText?.IsEmpty() == false)
@@ -87,7 +90,7 @@ internal partial class DefaultComponentGenerator
                 return titleText;
             }
 
-            return new Microsoft.AspNetCore.Html.HtmlString(isSuccessBanner ? "Success" : "Important");
+            return new HtmlString(isSuccessBanner ? "Success" : "Important");
         }
     }
 }

@@ -5,7 +5,16 @@
 [![NuGet Downloads](https://img.shields.io/nuget/dt/GovUk.Frontend.AspNetCore)](https://www.nuget.org/packages/GovUk.Frontend.AspNetCore)
 
 This library simplifies setting up an ASP.NET Core application to use the [GOV.UK Design System](https://design-system.service.gov.uk/).
-It includes tag helpers to produce GDS components which integrate with ASP.NET Core's model binding system.
+It provides intuitive **tag helpers** that integrate seamlessly with ASP.NET Core's model binding, enabling you to build accessible, standards-compliant forms quickly.
+All front-end assets—including fonts, images, CSS and JavaScript—are **automatically hosted**, so you can focus on building your service.
+
+```razor
+@* Build a complete form input with label, hint and error handling in just a few lines *@
+<govuk-input for="EmailAddress">
+    <govuk-input-label>Email address</govuk-input-label>
+    <govuk-input-hint>We'll only use this to send you a receipt</govuk-input-hint>
+</govuk-input>
+```
 
 ## Installation
 

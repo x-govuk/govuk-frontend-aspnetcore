@@ -163,12 +163,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("table", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateTabsAsync(TabsOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("tabs", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateTagAsync(TagOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

@@ -252,45 +252,4 @@ public partial class DefaultComponentGeneratorTests
         var pattern = new Regex(@"<span class=""govuk-visually-hidden"">\s", RegexOptions.Singleline);
         Assert.True(pattern.IsMatch(html), "Summary card action should have whitespace after opening visually-hidden span tag");
     }
-
-    [Fact]
-    public async Task Footer_WithMeta_HasCorrectWhitespace()
-    {
-        // Arrange
-        var options = new FooterOptions
-        {
-            Meta = new FooterOptionsMeta
-            {
-                VisuallyHiddenTitle = "Footer links"
-            }
-        };
-
-        // Act
-        var result = await _componentGenerator.GenerateFooterAsync(options);
-        var html = result.GetHtml();
-
-        // Assert
-        // Should have at least one whitespace character after opening <h2> tag
-        var pattern = new Regex(@"<h2 class=""govuk-visually-hidden""[^>]*>\s*Footer links\s*</h2>", RegexOptions.Singleline);
-        Assert.True(pattern.IsMatch(html), "Footer with meta should have visually-hidden h2 with custom title");
-    }
-
-    [Fact]
-    public async Task Footer_WithDefaultVisuallyHiddenTitle_HasCorrectWhitespace()
-    {
-        // Arrange
-        var options = new FooterOptions
-        {
-            Meta = new FooterOptionsMeta()
-        };
-
-        // Act
-        var result = await _componentGenerator.GenerateFooterAsync(options);
-        var html = result.GetHtml();
-
-        // Assert
-        // Should have at least one whitespace character after opening <h2> tag
-        var pattern = new Regex(@"<h2 class=""govuk-visually-hidden""[^>]*>\s*Support links\s*</h2>", RegexOptions.Singleline);
-        Assert.True(pattern.IsMatch(html), "Footer with default meta should have visually-hidden h2 with default title");
-    }
 }

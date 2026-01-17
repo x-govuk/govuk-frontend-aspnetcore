@@ -82,7 +82,25 @@ jobs:
           else
             REF="${{ github.sha }}"
           fi
-          sed -i "s|https://github.com/${{ github.repository }}/blob/main/|https://github.com/${{ github.repository }}/blob/${REF}/|g" src/GovUk.Frontend.AspNetCore/Package/README.md
+          README_PATH="src/GovUk.Frontend.AspNetCore/Package/README.md"
+          ORIGINAL_URL="https://github.com/${{ github.repository }}/blob/main/"
+          NEW_URL="https://github.com/${{ github.repository }}/blob/${REF}/"
+          
+          # Check if the original URL exists in the file
+          if ! grep -q "$ORIGINAL_URL" "$README_PATH"; then
+            echo "::error::Expected URL pattern not found in $README_PATH"
+            exit 1
+          fi
+          
+          # Perform the replacement
+          sed -i "s|${ORIGINAL_URL}|${NEW_URL}|g" "$README_PATH"
+          
+          # Verify the replacement was successful
+          if ! grep -q "$NEW_URL" "$README_PATH"; then
+            echo "::error::Failed to update README link"
+            exit 1
+          fi
+          
           echo "Updated README link to reference: ${REF}"
 
       - name: Pack

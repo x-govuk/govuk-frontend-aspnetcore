@@ -73,12 +73,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("checkboxes", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateCookieBannerAsync(CookieBannerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("cookie-banner", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateDateInputAsync(DateInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

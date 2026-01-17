@@ -76,15 +76,21 @@ internal partial class DefaultComponentGenerator
                     .With(message.ContentAttributes);
             });
 
-            if (message.Html?.IsEmpty() == false)
+            if (message.Html?.IsEmpty() == false || message.Text?.IsEmpty() == false)
             {
-                contentTag.InnerHtml.AppendHtml(new HtmlString(message.Html.ToHtmlString(raw: true)));
-            }
-            else if (message.Text?.IsEmpty() == false)
-            {
-                var textParagraphTag = new HtmlTag("p", attrs => attrs.WithClasses("govuk-body"));
-                textParagraphTag.InnerHtml.AppendHtml(message.Text);
-                contentTag.InnerHtml.AppendHtml(textParagraphTag);
+                var content = HtmlOrText(message.Html, message.Text);
+                
+                // If text was provided (not HTML), wrap it in a paragraph tag
+                if (message.Html?.IsEmpty() != false && message.Text?.IsEmpty() == false)
+                {
+                    var textParagraphTag = new HtmlTag("p", attrs => attrs.WithClasses("govuk-body"));
+                    textParagraphTag.InnerHtml.AppendHtml(content);
+                    contentTag.InnerHtml.AppendHtml(textParagraphTag);
+                }
+                else
+                {
+                    contentTag.InnerHtml.AppendHtml(content);
+                }
             }
 
             gridColumnTag.InnerHtml.AppendHtml(contentTag);

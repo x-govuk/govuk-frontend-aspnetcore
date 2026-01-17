@@ -92,7 +92,7 @@ internal partial class DefaultComponentGenerator
             bool collapseNavigationOnMobile,
             IReadOnlyCollection<ServiceNavigationOptionsNavigationItem>? navigationItems)
         {
-            var ariaLabel = options.NavigationLabel ?? options.AriaLabel ?? menuButtonText;
+            var ariaLabel = options.NavigationLabel?.ToString() ?? menuButtonText;
 
             var navTag = new HtmlTag("nav", attrs => attrs
                 .WithClasses("govuk-service-navigation__wrapper", options.NavigationClasses)

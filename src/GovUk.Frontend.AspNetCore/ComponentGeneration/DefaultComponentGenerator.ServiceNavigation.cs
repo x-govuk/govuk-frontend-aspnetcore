@@ -155,7 +155,7 @@ internal partial class DefaultComponentGenerator
 
         HtmlTag CreateNavigationItem(ServiceNavigationOptionsNavigationItem item)
         {
-            var isActive = item.Active == true || item.Current == true;
+            var isActive = item.Active is true || item.Current is true;
 
             var liTag = new HtmlTag("li", attrs => attrs
                 .WithClasses(
@@ -175,7 +175,7 @@ internal partial class DefaultComponentGenerator
 
                     if (isActive)
                     {
-                        var ariaCurrent = item.Current == true ? "page" : "true";
+                        var ariaCurrent = item.Current is true ? "page" : "true";
                         attrs.With("aria-current", ariaCurrent);
                     }
                 });
@@ -191,7 +191,7 @@ internal partial class DefaultComponentGenerator
 
                     if (isActive)
                     {
-                        var ariaCurrent = item.Current == true ? "page" : "true";
+                        var ariaCurrent = item.Current is true ? "page" : "true";
                         attrs.With("aria-current", ariaCurrent);
                     }
                 });
@@ -208,7 +208,7 @@ internal partial class DefaultComponentGenerator
             var content = HtmlOrText(item.Html, item.Text);
 
             // Wrap active links in strong tags for accessibility
-            if (item.Active == true || item.Current == true)
+            if (item.Active is true || item.Current is true)
             {
                 var strongTag = new HtmlTag("strong", attrs => attrs
                     .WithClasses("govuk-service-navigation__active-fallback"));

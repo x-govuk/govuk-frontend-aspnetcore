@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateCookieBannerAsync(CookieBannerOptions options)
+    public virtual async Task<GovUkComponent> GenerateCookieBannerAsync(CookieBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 
@@ -28,14 +28,14 @@ internal partial class DefaultComponentGenerator
         {
             foreach (var message in options.Messages)
             {
-                var messageTag = CreateMessageTag(message);
+                var messageTag = await CreateMessageTagAsync(message);
                 bannerTag.InnerHtml.AppendHtml(messageTag);
             }
         }
 
-        return GenerateFromHtmlTagAsync(bannerTag);
+        return await GenerateFromHtmlTagAsync(bannerTag);
 
-        HtmlTag CreateMessageTag(CookieBannerOptionsMessage message)
+        async Task<HtmlTag> CreateMessageTagAsync(CookieBannerOptionsMessage message)
         {
             var messageTag = new HtmlTag("div", attrs =>
             {
@@ -103,7 +103,7 @@ internal partial class DefaultComponentGenerator
 
                 foreach (var action in message.Actions)
                 {
-                    var actionTag = CreateActionTag(action);
+                    var actionTag = await CreateActionTagAsync(action);
                     buttonGroupTag.InnerHtml.AppendHtml(actionTag);
                 }
 
@@ -113,7 +113,7 @@ internal partial class DefaultComponentGenerator
             return messageTag;
         }
 
-        HtmlTag CreateActionTag(CookieBannerOptionsMessageAction action)
+        async Task<HtmlTag> CreateActionTagAsync(CookieBannerOptionsMessageAction action)
         {
             var href = action.Href?.ToHtmlString();
             var type = action.Type?.ToHtmlString();
@@ -132,8 +132,8 @@ internal partial class DefaultComponentGenerator
                     Attributes = action.Attributes
                 };
 
-                // Generate button synchronously by calling the existing button generator
-                var buttonComponent = GenerateButtonAsync(buttonOptions).GetAwaiter().GetResult();
+                // Generate button by calling the existing button generator
+                var buttonComponent = await GenerateButtonAsync(buttonOptions);
                 
                 // Extract the HtmlTag from the button component
                 if (buttonComponent is HtmlTagGovUkComponent htmlTagComponent)

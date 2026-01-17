@@ -8,8 +8,9 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var isSuccessBanner = options.Type?.ToHtmlString(raw: true) == "success";
-        var typeClass = isSuccessBanner ? $"govuk-notification-banner--{options.Type?.ToHtmlString(raw: true)}" : null;
+        var typeValue = options.Type?.ToHtmlString(raw: true);
+        var isSuccessBanner = typeValue == "success";
+        var typeClass = isSuccessBanner ? $"govuk-notification-banner--{typeValue}" : null;
         var role = DetermineRole(options.Role, isSuccessBanner);
         var titleId = options.TitleId?.ToHtmlString(raw: true) ?? "govuk-notification-banner-title";
         var titleHeadingLevel = options.TitleHeadingLevel ?? 2;
@@ -44,7 +45,9 @@ internal partial class DefaultComponentGenerator
         if (content != HtmlString.Empty)
         {
             // If we have text (not HTML), wrap it in the default paragraph style
-            if (options.Html?.IsEmpty() != false && options.Text?.IsEmpty() == false)
+            var hasHtml = options.Html?.IsEmpty() == false;
+            var hasText = options.Text?.IsEmpty() == false;
+            if (!hasHtml && hasText)
             {
                 var paragraphTag = new HtmlTag("p", attrs => attrs.WithClasses("govuk-notification-banner__heading"));
                 paragraphTag.InnerHtml.AppendHtml(content);

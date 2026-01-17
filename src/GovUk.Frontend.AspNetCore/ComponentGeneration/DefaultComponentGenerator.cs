@@ -109,12 +109,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("header", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateInsetTextAsync(InsetTextOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("inset-text", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateInputAsync(InputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

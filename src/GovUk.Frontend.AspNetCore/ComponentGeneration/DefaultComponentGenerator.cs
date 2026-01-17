@@ -133,11 +133,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("notification-banner", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateServiceNavigationAsync(ServiceNavigationOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("service-navigation", options);
-    }
+
 
     public virtual Task<GovUkComponent> GeneratePanelAsync(PanelOptions options)
     {

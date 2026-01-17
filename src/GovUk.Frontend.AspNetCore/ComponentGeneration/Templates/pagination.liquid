@@ -67,7 +67,9 @@
   {%- if params.items.size > 0 %}
   <ul class="govuk-pagination__list">
   {% for item in params.items %}
+    {% if item and (item.href or item.ellipsis) %}
     {{ _pageItem(item) | indent: 2 }}
+    {% endif %}
   {% endfor %}
   </ul>
   {% endif %}

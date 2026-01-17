@@ -199,12 +199,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("textarea", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateWarningTextAsync(WarningTextOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("warning-text", options);
-    }
-
     private Task<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
         Task.FromResult((GovUkComponent)new HtmlTagGovUkComponent(tag));
 

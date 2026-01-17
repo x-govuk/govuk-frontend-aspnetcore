@@ -119,17 +119,7 @@ public class DefaultComponentGeneratorTests
     public Task Footer(ComponentTestCaseData<FooterOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateFooterAsync(options),
-            amendExpectedHtml: html =>
-            {
-                html = html.Replace("©", "&#xA9;");
-
-                html = data.Name is "with custom HTML content licence and copyright notice"
-                    ? html.Replace("Mae&#x2019;r", "Mae’r")
-                    : html.Replace("Mae’r", "Mae&#x2019;r");
-
-                return html;
-            });
+            (generator, options) => generator.GenerateFooterAsync(options));
 
     [Theory]
     [ComponentFixtureData("header", typeof(HeaderOptions))]

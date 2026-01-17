@@ -6,11 +6,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    /// <summary>
-    /// Generates the GOV.UK logo SVG.
-    /// This method can be used by footer, header, and service navigation components.
-    /// </summary>
-    protected virtual IHtmlContent GenerateLogo(LogoOptions options)
+    internal IHtmlContent GenerateLogo(LogoOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 
@@ -163,9 +159,6 @@ internal partial class DefaultComponentGenerator
     }
 }
 
-/// <summary>
-/// Options for generating the GOV.UK logo.
-/// </summary>
 internal record LogoOptions
 {
     public TemplateString? Classes { get; set; }

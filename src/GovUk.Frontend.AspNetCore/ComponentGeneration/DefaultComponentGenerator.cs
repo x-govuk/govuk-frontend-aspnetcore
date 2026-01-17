@@ -109,8 +109,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("file-upload", options);
     }
 
-
-
     public virtual Task<GovUkComponent> GenerateHeaderAsync(HeaderOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

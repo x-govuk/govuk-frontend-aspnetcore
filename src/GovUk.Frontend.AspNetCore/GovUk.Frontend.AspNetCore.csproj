@@ -26,6 +26,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageCopyToOutput>false</PackageCopyToOutput>
     <AnalysisMode>All</AnalysisMode>
+    <NoWarn>$(NoWarn);CA1859</NoWarn>
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">$(DefineConstants);SHORT_TAG_NAMES</DefineConstants>
   </PropertyGroup>
 

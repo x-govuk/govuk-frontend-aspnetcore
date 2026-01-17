@@ -5,7 +5,7 @@ using Match = System.Text.RegularExpressions.Match;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ComponentGeneration;
 
-public class DefaultComponentGeneratorTests
+public partial class DefaultComponentGeneratorTests
 {
     private static readonly Regex _decimalEncodedHtmlPattern = new("&#(\\d+);");
 

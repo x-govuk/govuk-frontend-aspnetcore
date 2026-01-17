@@ -113,8 +113,7 @@ internal partial class DefaultComponentGenerator
             {
                 var visuallyHiddenTitle = meta.VisuallyHiddenTitle?.ToHtmlString() ?? "Support links";
                 var h2Tag = new HtmlTag("h2", attrs => attrs
-                    .WithClasses("govuk-visually-hidden")
-                    .With(meta.ContentAttributes));
+                    .WithClasses("govuk-visually-hidden"));
                 h2Tag.InnerHtml.AppendHtml(visuallyHiddenTitle);
                 metaItemGrowTag.InnerHtml.AppendHtml(h2Tag);
 
@@ -145,7 +144,9 @@ internal partial class DefaultComponentGenerator
 
                 if (meta.Text is not null || meta.Html is not null)
                 {
-                    var customDivTag = new HtmlTag("div", attrs => attrs.WithClasses("govuk-footer__meta-custom"));
+                    var customDivTag = new HtmlTag("div", attrs => attrs
+                        .WithClasses("govuk-footer__meta-custom")
+                        .With(meta.ContentAttributes));
                     customDivTag.InnerHtml.AppendHtml(HtmlOrText(meta.Html, meta.Text));
                     metaItemGrowTag.InnerHtml.AppendHtml(customDivTag);
                 }

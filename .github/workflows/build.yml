@@ -74,6 +74,27 @@ jobs:
         run: |
           echo "MINVERBUILDMETADATA=build.${{ github.run_id }}.${{ github.run_attempt}}" >> $GITHUB_ENV
 
+      - name: Update package README GitHub link
+        if: matrix.build-configuration == 'Release'
+        run: |
+          if [[ "${{ github.ref }}" == "refs/tags/v"* ]]; then
+            REF="${{ github.ref_name }}"
+          else
+            REF="${{ github.sha }}"
+          fi
+          README_PATH="src/GovUk.Frontend.AspNetCore/Package/README.md"
+          ORIGINAL_URL="https://github.com/${{ github.repository }}/blob/main/"
+          NEW_URL="https://github.com/${{ github.repository }}/blob/${REF}/"
+          
+          if ! grep -q "$ORIGINAL_URL" "$README_PATH"; then
+            echo "::error::Expected URL pattern '$ORIGINAL_URL' not found in $README_PATH"
+            exit 1
+          fi
+          
+          sed -i "s|${ORIGINAL_URL}|${NEW_URL}|g" "$README_PATH"
+          
+          echo "Updated README link to reference: ${REF}"
+
       - name: Pack
         if: matrix.build-configuration == 'Release'
         run: just pack --configuration ${{ matrix.build-configuration }}

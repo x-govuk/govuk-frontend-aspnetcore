@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+Targets GOV.UK Frontend v5.14.0.
+
+### Fixes
+
+Adds `aria-hidden="true"` attribute to the hidden menu toggle button in the Service navigation component to prevent VoiceOver screen reader software on macOS and iPadOS from accessing it.
+
 ## 3.4.3
 
 ### Fixes

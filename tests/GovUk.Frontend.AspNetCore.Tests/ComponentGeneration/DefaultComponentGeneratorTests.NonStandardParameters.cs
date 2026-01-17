@@ -10,15 +10,15 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new BreadcrumbsOptions
         {
-            Items = new[]
-            {
+            Items =
+            [
                 new BreadcrumbsOptionsItem
                 {
                     Text = "Home",
                     Href = "/",
                     ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -52,24 +52,21 @@ public partial class DefaultComponentGeneratorTests
         Assert.Contains("data-test=\"count-message-attr\"", html);
     }
 
-
-
-
     [Fact]
     public async Task CookieBanner_Message_HeadingAttributes_IsIncludedInOutput()
     {
         // Arrange
         var options = new CookieBannerOptions
         {
-            Messages = new[]
-            {
+            Messages =
+            [
                 new CookieBannerOptionsMessage
                 {
                     HeadingText = "Cookies",
                     Text = "We use cookies",
                     HeadingAttributes = new AttributeCollection { { "data-test", "heading-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -86,14 +83,14 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new CookieBannerOptions
         {
-            Messages = new[]
-            {
+            Messages =
+            [
                 new CookieBannerOptionsMessage
                 {
                     Text = "We use cookies",
                     ContentAttributes = new AttributeCollection { { "data-test", "content-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -110,18 +107,18 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new CookieBannerOptions
         {
-            Messages = new[]
-            {
+            Messages =
+            [
                 new CookieBannerOptionsMessage
                 {
                     Text = "We use cookies",
-                    Actions = new[]
-                    {
+                    Actions =
+                    [
                         new CookieBannerOptionsMessageAction { Text = "Accept", Href = "#" }
-                    },
+                    ],
                     ActionsAttributes = new AttributeCollection { { "data-test", "actions-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -131,6 +128,7 @@ public partial class DefaultComponentGeneratorTests
         // Assert
         Assert.Contains("data-test=\"actions-attr\"", html);
     }
+
     [Fact]
     public async Task Details_SummaryAttributes_IsIncludedInOutput()
     {
@@ -213,15 +211,15 @@ public partial class DefaultComponentGeneratorTests
         var options = new ErrorSummaryOptions
         {
             TitleText = "There is a problem",
-            ErrorList = new[]
-            {
+            ErrorList =
+            [
                 new ErrorSummaryOptionsErrorItem
                 {
                     Text = "Error message",
                     Href = "#error",
                     ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -252,6 +250,7 @@ public partial class DefaultComponentGeneratorTests
         // Assert
         Assert.Contains("data-test=\"legend-attr\"", html);
     }
+
     [Fact]
     public async Task Footer_Meta_Attributes_IsIncludedInOutput()
     {
@@ -302,10 +301,10 @@ public partial class DefaultComponentGeneratorTests
         {
             Meta = new FooterOptionsMeta
             {
-                Items = new[]
-                {
+                Items =
+                [
                     new FooterOptionsMetaItem { Text = "Item", Href = "#" }
-                },
+                ],
                 ItemsAttributes = new AttributeCollection { { "data-test", "items-attr" } }
             }
         };
@@ -326,14 +325,14 @@ public partial class DefaultComponentGeneratorTests
         {
             Meta = new FooterOptionsMeta
             {
-                Items = new[]
-                {
+                Items =
+                [
                     new FooterOptionsMetaItem
                     {
                         Html = "<span data-test=\"item-html\">Custom HTML</span>",
                         Href = "#"
                     }
-                }
+                ]
             }
         };
 
@@ -353,15 +352,15 @@ public partial class DefaultComponentGeneratorTests
         {
             Meta = new FooterOptionsMeta
             {
-                Items = new[]
-                {
+                Items =
+                [
                     new FooterOptionsMetaItem
                     {
                         Text = "Item",
                         Href = "#",
                         ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
                     }
-                }
+                ]
             }
         };
 
@@ -379,18 +378,18 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new FooterOptions
         {
-            Navigation = new[]
-            {
+            Navigation =
+            [
                 new FooterOptionsNavigation
                 {
                     Title = "Section",
-                    Items = new[]
-                    {
+                    Items =
+                    [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
-                    },
+                    ],
                     Attributes = new AttributeCollection { { "data-test", "nav-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -407,18 +406,18 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new FooterOptions
         {
-            Navigation = new[]
-            {
+            Navigation =
+            [
                 new FooterOptionsNavigation
                 {
                     Title = "Section",
-                    Items = new[]
-                    {
+                    Items =
+                    [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
-                    },
+                    ],
                     ItemsAttributes = new AttributeCollection { { "data-test", "items-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -435,18 +434,18 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new FooterOptions
         {
-            Navigation = new[]
-            {
+            Navigation =
+            [
                 new FooterOptionsNavigation
                 {
                     Title = "Section",
-                    Items = new[]
-                    {
+                    Items =
+                    [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
-                    },
+                    ],
                     TitleAttributes = new AttributeCollection { { "data-test", "title-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -463,21 +462,21 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new FooterOptions
         {
-            Navigation = new[]
-            {
+            Navigation =
+            [
                 new FooterOptionsNavigation
                 {
                     Title = "Section",
-                    Items = new[]
-                    {
+                    Items =
+                    [
                         new FooterOptionsNavigationItem
                         {
                             Html = "<span data-test=\"item-html\">Custom HTML</span>",
                             Href = "#"
                         }
-                    }
+                    ]
                 }
-            }
+            ]
         };
 
         // Act
@@ -494,22 +493,22 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new FooterOptions
         {
-            Navigation = new[]
-            {
+            Navigation =
+            [
                 new FooterOptionsNavigation
                 {
                     Title = "Section",
-                    Items = new[]
-                    {
+                    Items =
+                    [
                         new FooterOptionsNavigationItem
                         {
                             Text = "Item",
                             Href = "#",
                             ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
                         }
-                    }
+                    ]
                 }
-            }
+            ]
         };
 
         // Act
@@ -586,10 +585,10 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new HeaderOptions
         {
-            Navigation = new[]
-            {
+            Navigation =
+            [
                 new HeaderOptionsNavigationItem { Text = "Item", Href = "#" }
-            },
+            ],
             NavigationAttributes = new AttributeCollection { { "data-test", "nav-attr" } }
         };
 
@@ -680,18 +679,16 @@ public partial class DefaultComponentGeneratorTests
         Assert.Contains("data-test=\"body-attr\"", html);
     }
 
-
-
     [Fact]
     public async Task ServiceNavigation_NavigationAttributes_IsIncludedInOutput()
     {
         // Arrange
         var options = new ServiceNavigationOptions
         {
-            Navigation = new[]
-            {
+            Navigation =
+            [
                 new ServiceNavigationOptionsNavigationItem { Text = "Item", Href = "#" }
-            },
+            ],
             NavigationAttributes = new AttributeCollection { { "data-test", "nav-attr" } }
         };
 
@@ -717,14 +714,14 @@ public partial class DefaultComponentGeneratorTests
                     Attributes = new AttributeCollection { { "data-test", "title-attr" } }
                 }
             },
-            Rows = new[]
-            {
+            Rows =
+            [
                 new SummaryListOptionsRow
                 {
                     Key = new SummaryListOptionsRowKey { Text = "Key" },
                     Value = new SummaryListOptionsRowValue { Text = "Value" }
                 }
-            }
+            ]
         };
 
         // Act
@@ -741,15 +738,15 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new SummaryListOptions
         {
-            Rows = new[]
-            {
+            Rows =
+            [
                 new SummaryListOptionsRow
                 {
                     Key = new SummaryListOptionsRowKey { Text = "Key" },
                     Value = new SummaryListOptionsRowValue { Text = "Value" },
                     Attributes = new AttributeCollection { { "data-test", "row-attr" } }
                 }
-            }
+            ]
         };
 
         // Act
@@ -766,8 +763,8 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new SummaryListOptions
         {
-            Rows = new[]
-            {
+            Rows =
+            [
                 new SummaryListOptionsRow
                 {
                     Key = new SummaryListOptionsRowKey
@@ -777,7 +774,7 @@ public partial class DefaultComponentGeneratorTests
                     },
                     Value = new SummaryListOptionsRowValue { Text = "Value" }
                 }
-            }
+            ]
         };
 
         // Act
@@ -794,8 +791,8 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new SummaryListOptions
         {
-            Rows = new[]
-            {
+            Rows =
+            [
                 new SummaryListOptionsRow
                 {
                     Key = new SummaryListOptionsRowKey { Text = "Key" },
@@ -805,7 +802,7 @@ public partial class DefaultComponentGeneratorTests
                         Attributes = new AttributeCollection { { "data-test", "value-attr" } }
                     }
                 }
-            }
+            ]
         };
 
         // Act
@@ -822,22 +819,22 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new SummaryListOptions
         {
-            Rows = new[]
-            {
+            Rows =
+            [
                 new SummaryListOptionsRow
                 {
                     Key = new SummaryListOptionsRowKey { Text = "Key" },
                     Value = new SummaryListOptionsRowValue { Text = "Value" },
                     Actions = new SummaryListOptionsRowActions
                     {
-                        Items = new[]
-                        {
+                        Items =
+                        [
                             new SummaryListOptionsRowActionsItem { Text = "Change", Href = "#" }
-                        },
+                        ],
                         Attributes = new AttributeCollection { { "data-test", "actions-attr" } }
                     }
                 }
-            }
+            ]
         };
 
         // Act
@@ -859,21 +856,21 @@ public partial class DefaultComponentGeneratorTests
                 Title = new SummaryListOptionsCardTitle { Text = "Title" },
                 Actions = new SummaryListOptionsCardActions
                 {
-                    Items = new[]
-                    {
+                    Items =
+                    [
                         new SummaryListOptionsCardActionsItem { Text = "Delete", Href = "#" }
-                    },
+                    ],
                     Attributes = new AttributeCollection { { "data-test", "card-actions-attr" } }
                 }
             },
-            Rows = new[]
-            {
+            Rows =
+            [
                 new SummaryListOptionsRow
                 {
                     Key = new SummaryListOptionsRowKey { Text = "Key" },
                     Value = new SummaryListOptionsRowValue { Text = "Value" }
                 }
-            }
+            ]
         };
 
         // Act

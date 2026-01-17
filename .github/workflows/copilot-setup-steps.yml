@@ -23,3 +23,6 @@ jobs:
 
       - name: Restore
         run: just restore
+
+      - name: Install Playwright
+        run: just install-playwright

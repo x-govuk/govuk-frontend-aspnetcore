@@ -133,12 +133,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("tag", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateTaskListAsync(TaskListOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("task-list", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateTextareaAsync(TextareaOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

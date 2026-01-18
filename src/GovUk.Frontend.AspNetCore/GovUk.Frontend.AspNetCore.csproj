@@ -10,7 +10,7 @@
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/x-govuk/govuk-frontend-aspnetcore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>aspnetcore, taghelpers, gds, gov.uk</PackageTags>
+    <PackageTags>aspnetcore, taghelpers, gds, gov.uk, x-govuk</PackageTags>
     <Description>ASP.NET Core integration for the GOV.UK Design system.</Description>
     <Authors>James Gunn</Authors>
     <MinVerTagPrefix>v</MinVerTagPrefix>

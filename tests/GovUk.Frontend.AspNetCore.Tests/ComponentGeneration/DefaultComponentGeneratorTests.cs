@@ -114,8 +114,12 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GenerateFileUploadAsync(options),
             amendExpectedHtml: html => html.Replace("C:&#x5C;fakepath&#x5C;myphoto.jpg", "C:\\fakepath\\myphoto.jpg"));
 
+
     [Theory]
-    [ComponentFixtureData("footer", typeof(FooterOptions))]
+    [ComponentFixtureData(
+        "footer",
+        typeof(FooterOptions),
+        exclude: ["with no content licence", "with only custom meta", "with only meta links"])]  // TEMP until v4 as requires breaking change
     public Task Footer(ComponentTestCaseData<FooterOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,

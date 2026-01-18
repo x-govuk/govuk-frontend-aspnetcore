@@ -73,22 +73,10 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("checkboxes", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateCookieBannerAsync(CookieBannerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("cookie-banner", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateDateInputAsync(DateInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("date-input", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("error-summary", options);
     }
 
     public virtual Task<GovUkComponent> GenerateExitThisPageAsync(ExitThisPageOptions options)
@@ -103,76 +91,16 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("file-upload", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateHeaderAsync(HeaderOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("header", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateInputAsync(InputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("input", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("notification-banner", options);
-    }
-
-    public virtual Task<GovUkComponent> GeneratePanelAsync(PanelOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("panel", options);
-    }
-
-    public virtual Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("phase-banner", options);
-    }
-
     public virtual Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("password-input", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateSkipLinkAsync(SkipLinkOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("skip-link", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateSummaryListAsync(SummaryListOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("summary-list", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateTableAsync(TableOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("table", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateTabsAsync(TabsOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("tabs", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateTagAsync(TagOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("tag", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateTaskListAsync(TaskListOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("task-list", options);
     }
 
     public virtual Task<GovUkComponent> GenerateTextareaAsync(TextareaOptions options)

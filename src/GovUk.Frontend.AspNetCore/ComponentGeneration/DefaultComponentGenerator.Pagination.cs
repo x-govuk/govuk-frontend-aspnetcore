@@ -83,9 +83,7 @@ internal partial class DefaultComponentGenerator
             if (isBlockLevel || true) // always true for prev
             {
                 var arrowSvg = GenerateArrowSvg(true);
-                aTag.InnerHtml.Append("\n      ");
                 aTag.InnerHtml.AppendHtml(arrowSvg);
-                aTag.InnerHtml.Append("\n      ");
             }
 
             var spanTag = new HtmlTag("span", attrs => attrs
@@ -96,17 +94,14 @@ internal partial class DefaultComponentGenerator
             // Add label text if present and block level
             if (link.LabelText is not null && isBlockLevel)
             {
-                aTag.InnerHtml.Append("\n      ");
                 var colonTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-visually-hidden"))
                 {
                     ":"
                 };
                 aTag.InnerHtml.AppendHtml(colonTag);
-                aTag.InnerHtml.Append("\n      ");
                 var labelTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-pagination__link-label"));
                 labelTag.InnerHtml.Append(link.LabelText.ToHtmlString());
                 aTag.InnerHtml.AppendHtml(labelTag);
-                aTag.InnerHtml.Append("\n    ");
             }
 
             divTag.InnerHtml.AppendHtml(aTag);
@@ -129,9 +124,7 @@ internal partial class DefaultComponentGenerator
             if (isBlockLevel)
             {
                 var arrowSvg = GenerateArrowSvg(false);
-                aTag.InnerHtml.Append("\n      ");
                 aTag.InnerHtml.AppendHtml(arrowSvg);
-                aTag.InnerHtml.Append("\n      ");
             }
 
             var spanTag = new HtmlTag("span", attrs => attrs
@@ -142,26 +135,21 @@ internal partial class DefaultComponentGenerator
             // Add label text if present and block level
             if (link.LabelText is not null && isBlockLevel)
             {
-                aTag.InnerHtml.Append("\n      ");
                 var colonTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-visually-hidden"))
                 {
                     ":"
                 };
                 aTag.InnerHtml.AppendHtml(colonTag);
-                aTag.InnerHtml.Append("\n      ");
                 var labelTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-pagination__link-label"));
                 labelTag.InnerHtml.Append(link.LabelText.ToHtmlString());
                 aTag.InnerHtml.AppendHtml(labelTag);
-                aTag.InnerHtml.Append("\n    ");
             }
 
             // Add arrow after content when not block level
             if (!isBlockLevel)
             {
-                aTag.InnerHtml.Append("\n      ");
                 var arrowSvg = GenerateArrowSvg(false);
                 aTag.InnerHtml.AppendHtml(arrowSvg);
-                aTag.InnerHtml.Append("\n    ");
             }
 
             divTag.InnerHtml.AppendHtml(aTag);
@@ -188,9 +176,7 @@ internal partial class DefaultComponentGenerator
             {
                 TagRenderMode = TagRenderMode.SelfClosing
             };
-            svgTag.InnerHtml.Append("\n        ");
             svgTag.InnerHtml.AppendHtml(pathTag);
-            svgTag.InnerHtml.Append("\n      ");
 
             return svgTag;
         }
@@ -205,7 +191,7 @@ internal partial class DefaultComponentGenerator
 
             if (item.Ellipsis == true)
             {
-                liTag.InnerHtml.Append("\n    ⋯\n  ");
+                liTag.InnerHtml.Append("⋯");
             }
             else
             {
@@ -224,13 +210,8 @@ internal partial class DefaultComponentGenerator
                     attrs.With(item.Attributes);
                 });
 
-                aTag.InnerHtml.Append("\n      ");
                 aTag.InnerHtml.Append(item.Number?.ToHtmlString() ?? string.Empty);
-                aTag.InnerHtml.Append("\n    ");
-
-                liTag.InnerHtml.Append("\n    ");
                 liTag.InnerHtml.AppendHtml(aTag);
-                liTag.InnerHtml.Append("\n  ");
             }
 
             return liTag;

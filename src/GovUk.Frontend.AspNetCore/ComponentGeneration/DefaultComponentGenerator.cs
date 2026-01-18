@@ -97,12 +97,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("input", options);
     }
 
-    public virtual Task<GovUkComponent> GeneratePaginationAsync(PaginationOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("pagination", options);
-    }
-
     public virtual Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

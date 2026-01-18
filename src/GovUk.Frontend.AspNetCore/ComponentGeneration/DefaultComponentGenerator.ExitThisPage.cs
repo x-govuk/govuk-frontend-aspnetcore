@@ -37,7 +37,7 @@ internal partial class DefaultComponentGenerator
                 .With(options.Attributes);
         });
 
-        container.InnerHtml.AppendHtml(IndentContent(buttonHtml));
+        container.InnerHtml.AppendHtml(buttonHtml);
 
         return await GenerateFromHtmlTagAsync(container);
 
@@ -54,20 +54,6 @@ internal partial class DefaultComponentGenerator
             }
 
             return new TemplateString(new HtmlString("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page"));
-        }
-
-        static string IndentContent(string content)
-        {
-            var lines = content.Split('\n');
-            var indentedLines = lines.Select((line, index) =>
-            {
-                if (index == 0 || string.IsNullOrWhiteSpace(line))
-                {
-                    return line;
-                }
-                return "  " + line;
-            });
-            return string.Join("\n", indentedLines);
         }
     }
 }

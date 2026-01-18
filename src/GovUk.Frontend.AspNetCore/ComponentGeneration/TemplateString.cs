@@ -51,20 +51,32 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// <returns>A string containing the HTML.</returns>
     public string ToHtmlString(HtmlEncoder? encoder = null, bool raw = false)
     {
-        encoder ??= DefaultEncoder;
+        // Fast path for empty strings
+        if (_value is "" or null)
+        {
+            return string.Empty;
+        }
 
         if (_value is string str)
         {
-            return raw ? str : encoder.Encode(str);
+            if (raw)
+            {
+                return str;
+            }
+
+            encoder ??= DefaultEncoder;
+            return encoder.Encode(str);
         }
 
         Debug.Assert(_value is IHtmlContent);
+        encoder ??= DefaultEncoder;
         return ((IHtmlContent)_value).ToHtmlString(encoder);
     }
 
     internal FluidValue ToFluidValue(HtmlEncoder encoder)
     {
-        if (_value is null)
+        // Fast path for empty strings  
+        if (_value is "" or null)
         {
             return NilValue.Instance;
         }
@@ -91,7 +103,38 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     public static TemplateString operator +(TemplateString? first, TemplateString? second)
 #pragma warning restore CA2225
     {
-        return new TemplateString(new HtmlString((first ?? Empty).ToHtmlString(DefaultEncoder) + (second ?? Empty).ToHtmlString(DefaultEncoder)));
+        first ??= Empty;
+        second ??= Empty;
+
+        // Fast path for empty operands
+        if (first._value is "" or null)
+        {
+            return second;
+        }
+        if (second._value is "" or null)
+        {
+            return first;
+        }
+
+        // Optimize concatenation for string + string case using StringBuilder to avoid intermediate allocations
+        if (first._value is string str1 && second._value is string str2)
+        {
+            // Both are strings - encode both and concatenate using StringBuilder
+            var encoded1 = DefaultEncoder.Encode(str1);
+            var encoded2 = DefaultEncoder.Encode(str2);
+            var sb = new StringBuilder(encoded1.Length + encoded2.Length);
+            sb.Append(encoded1);
+            sb.Append(encoded2);
+            return new TemplateString(new HtmlString(sb.ToString()));
+        }
+
+        // At least one is IHtmlContent - concatenate their HTML representations
+        var html1 = first.ToHtmlString(DefaultEncoder);
+        var html2 = second.ToHtmlString(DefaultEncoder);
+        var result = new StringBuilder(html1.Length + html2.Length);
+        result.Append(html1);
+        result.Append(html2);
+        return new TemplateString(new HtmlString(result.ToString()));
     }
 
     /// <summary>
@@ -151,9 +194,16 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         ArgumentNullException.ThrowIfNull(writer);
         ArgumentNullException.ThrowIfNull(encoder);
 
+        // Fast path for empty
+        if (_value is "" or null)
+        {
+            return;
+        }
+
         if (_value is string str)
         {
-            writer.Write(encoder.Encode(str));
+            // Use encoder.Encode directly to writer to avoid string allocation
+            encoder.Encode(writer, str);
             return;
         }
 
@@ -171,7 +221,42 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// <inheritdoc/>
     public bool Equals(TemplateString? other)
     {
-        return other is not null && (ReferenceEquals(this, other) || Equals(ToString(), other.ToString()));
+        if (other is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        // Fast path: if both have the same underlying value reference, they're equal
+        if (ReferenceEquals(_value, other._value))
+        {
+            return true;
+        }
+
+        // Fast path: both empty
+        if ((_value is "" or null) && (other._value is "" or null))
+        {
+            return true;
+        }
+
+        // Fast path: one is empty, the other is not
+        if ((_value is "" or null) || (other._value is "" or null))
+        {
+            return false;
+        }
+
+        // Fast path: both are strings - compare directly
+        if (_value is string str1 && other._value is string str2)
+        {
+            return str1 == str2;
+        }
+
+        // Slow path: convert to HTML strings and compare
+        return string.Equals(ToHtmlString(DefaultEncoder), other.ToHtmlString(DefaultEncoder), StringComparison.Ordinal);
     }
 }
 
@@ -180,6 +265,9 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 /// </summary>
 public static class TemplateStringExtensions
 {
+    // Estimated average class name length for capacity calculation
+    private const int EstimatedClassNameLength = 20;
+
     /// <summary>
     /// Creates a new <see cref="TemplateString"/> with the contents of <paramref name="templateString"/> and the
     /// specified <paramref name="classNames"/>.
@@ -191,30 +279,43 @@ public static class TemplateStringExtensions
     {
         ArgumentNullException.ThrowIfNull(classNames);
 
-        var original = templateString?.ToHtmlString(TemplateString.DefaultEncoder).Trim() ?? "";
-
+        // Fast path for no additional classes
         if (classNames.Length == 0)
         {
-            return original;
+            return templateString ?? TemplateString.Empty;
         }
 
-        var sb = new StringBuilder();
+        // Get the original value efficiently
+        var originalHtml = templateString?.ToHtmlString(TemplateString.DefaultEncoder) ?? string.Empty;
+        var original = originalHtml.AsSpan().Trim();
+
+        // Calculate approximate capacity to minimize allocations
+        int capacity = original.Length + classNames.Length * (EstimatedClassNameLength + 1); // +1 for space
+
+        var sb = new StringBuilder(capacity);
 
         if (original.Length > 0)
         {
             sb.Append(original);
-            sb.Append(' ');
         }
 
-        foreach (var className in classNames)
+        // Append classes with spaces
+        for (int i = 0; i < classNames.Length; i++)
         {
-            sb.Append(className.ToHtmlString());
-            sb.Append(' ');
-        }
+            var classHtml = classNames[i].ToHtmlString(TemplateString.DefaultEncoder);
 
-        if (classNames.Length != 0)
-        {
-            sb.Length -= 1; // Remove trailing space
+            // Skip empty class names
+            if (classHtml.Length == 0)
+            {
+                continue;
+            }
+
+            if (sb.Length > 0)
+            {
+                sb.Append(' ');
+            }
+
+            sb.Append(classHtml);
         }
 
         return new TemplateString(new HtmlString(sb.ToString()));

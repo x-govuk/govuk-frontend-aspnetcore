@@ -203,7 +203,7 @@ internal partial class DefaultComponentGenerator
             {
                 var aTag = new HtmlTag("a", attrs =>
                 {
-                    var ariaLabel = item.VisuallyHiddenText?.ToHtmlString() 
+                    var ariaLabel = item.VisuallyHiddenText?.ToHtmlString()
                         ?? (item.Number is not null ? $"Page {item.Number.ToHtmlString()}" : null);
 
                     attrs

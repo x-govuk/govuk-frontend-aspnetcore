@@ -32,6 +32,12 @@ internal partial class DefaultComponentGenerator
 
             foreach (var item in options.Items)
             {
+                // Skip null items and items without href (unless they are ellipsis)
+                if (item is null || (item.Ellipsis != true && string.IsNullOrEmpty(item.Href?.ToHtmlString())))
+                {
+                    continue;
+                }
+
                 var liTag = GeneratePageItem(item);
                 ulTag.InnerHtml.AppendHtml(liTag);
             }
@@ -197,10 +203,13 @@ internal partial class DefaultComponentGenerator
             {
                 var aTag = new HtmlTag("a", attrs =>
                 {
+                    var ariaLabel = item.VisuallyHiddenText?.ToHtmlString()
+                        ?? (item.Number is not null ? $"Page {item.Number.ToHtmlString()}" : null);
+
                     attrs
                         .WithClasses("govuk-link", "govuk-pagination__link")
                         .With("href", item.Href)
-                        .With("aria-label", item.VisuallyHiddenText ?? $"Page {item.Number?.ToHtmlString()}");
+                        .With("aria-label", ariaLabel);
 
                     if (item.Current == true)
                     {

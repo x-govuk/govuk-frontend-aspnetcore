@@ -79,12 +79,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("date-input", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("error-summary", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -107,12 +101,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("password-input", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateTagAsync(TagOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("tag", options);
     }
 
     public virtual Task<GovUkComponent> GenerateTextareaAsync(TextareaOptions options)

@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Html;
-
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -79,7 +77,7 @@ internal partial class DefaultComponentGenerator
             if (message.Html?.IsEmpty() == false || message.Text?.IsEmpty() == false)
             {
                 var content = HtmlOrText(message.Html, message.Text);
-                
+
                 // If text was provided (not HTML), wrap it in a paragraph tag
                 if (message.Html?.IsEmpty() != false && message.Text?.IsEmpty() == false)
                 {
@@ -140,13 +138,13 @@ internal partial class DefaultComponentGenerator
 
                 // Generate button by calling the existing button generator
                 var buttonComponent = await GenerateButtonAsync(buttonOptions);
-                
+
                 // Extract the HtmlTag from the button component
                 if (buttonComponent is HtmlTagGovUkComponent htmlTagComponent)
                 {
                     return htmlTagComponent.Tag;
                 }
-                
+
                 throw new InvalidOperationException("Button generation did not return an HtmlTag component.");
             }
 

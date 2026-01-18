@@ -103,12 +103,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("input", options);
     }
 
-    public virtual Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("phase-banner", options);
-    }
-
     public virtual Task<GovUkComponent> GeneratePaginationAsync(PaginationOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -121,22 +115,10 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("password-input", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateTabsAsync(TabsOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("tabs", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateTagAsync(TagOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("tag", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateTaskListAsync(TaskListOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("task-list", options);
     }
 
     public virtual Task<GovUkComponent> GenerateTextareaAsync(TextareaOptions options)

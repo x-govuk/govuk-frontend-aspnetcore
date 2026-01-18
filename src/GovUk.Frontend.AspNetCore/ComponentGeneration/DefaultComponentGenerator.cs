@@ -79,12 +79,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("date-input", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateDetailsAsync(DetailsOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("details", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -109,12 +103,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("header", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateInsetTextAsync(InsetTextOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("inset-text", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateInputAsync(InputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -125,12 +113,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("notification-banner", options);
-    }
-
-    public virtual Task<GovUkComponent> GeneratePanelAsync(PanelOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("panel", options);
     }
 
     public virtual Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
@@ -155,12 +137,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("skip-link", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateSummaryListAsync(SummaryListOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("summary-list", options);
     }
 
     public virtual Task<GovUkComponent> GenerateTableAsync(TableOptions options)

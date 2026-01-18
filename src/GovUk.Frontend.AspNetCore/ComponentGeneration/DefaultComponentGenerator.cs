@@ -127,12 +127,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("password-input", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateSkipLinkAsync(SkipLinkOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("skip-link", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateTableAsync(TableOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

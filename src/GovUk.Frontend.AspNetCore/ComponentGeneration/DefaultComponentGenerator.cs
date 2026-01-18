@@ -79,12 +79,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("date-input", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("error-summary", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateExitThisPageAsync(ExitThisPageOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

@@ -116,15 +116,25 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
             return first;
         }
 
-        // Optimize concatenation for string + string case
+        // Optimize concatenation for string + string case using StringBuilder to avoid intermediate allocations
         if (first._value is string str1 && second._value is string str2)
         {
-            // Both are strings - encode both and concatenate directly
-            return new TemplateString(new HtmlString(DefaultEncoder.Encode(str1) + DefaultEncoder.Encode(str2)));
+            // Both are strings - encode both and concatenate using StringBuilder
+            var encoded1 = DefaultEncoder.Encode(str1);
+            var encoded2 = DefaultEncoder.Encode(str2);
+            var sb = new StringBuilder(encoded1.Length + encoded2.Length);
+            sb.Append(encoded1);
+            sb.Append(encoded2);
+            return new TemplateString(new HtmlString(sb.ToString()));
         }
 
-        // At least one is IHtmlContent - fall back to string concatenation
-        return new TemplateString(new HtmlString(first.ToHtmlString(DefaultEncoder) + second.ToHtmlString(DefaultEncoder)));
+        // At least one is IHtmlContent - concatenate their HTML representations
+        var html1 = first.ToHtmlString(DefaultEncoder);
+        var html2 = second.ToHtmlString(DefaultEncoder);
+        var result = new StringBuilder(html1.Length + html2.Length);
+        result.Append(html1);
+        result.Append(html2);
+        return new TemplateString(new HtmlString(result.ToString()));
     }
 
     /// <summary>
@@ -255,6 +265,9 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 /// </summary>
 public static class TemplateStringExtensions
 {
+    // Estimated average class name length for capacity calculation
+    private const int EstimatedClassNameLength = 20;
+
     /// <summary>
     /// Creates a new <see cref="TemplateString"/> with the contents of <paramref name="templateString"/> and the
     /// specified <paramref name="classNames"/>.
@@ -277,7 +290,7 @@ public static class TemplateStringExtensions
         var original = originalHtml.AsSpan().Trim();
 
         // Calculate approximate capacity to minimize allocations
-        int capacity = original.Length + classNames.Length * 21; // Estimate ~20 chars per class + space
+        int capacity = original.Length + classNames.Length * (EstimatedClassNameLength + 1); // +1 for space
 
         var sb = new StringBuilder(capacity);
 

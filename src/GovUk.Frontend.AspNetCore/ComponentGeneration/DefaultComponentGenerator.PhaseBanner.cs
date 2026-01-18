@@ -4,22 +4,9 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
+    public virtual async Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
-
-        HtmlTag GenerateTag(TagOptions? tagOptions)
-        {
-            var tagContent = tagOptions != null ? HtmlOrText(tagOptions.Html, tagOptions.Text) : HtmlString.Empty;
-
-            var tag = new HtmlTag("strong", attrs => attrs
-                .WithClasses("govuk-tag", "govuk-phase-banner__content__tag", tagOptions?.Classes)
-                .With(tagOptions?.Attributes));
-
-            tag.InnerHtml.AppendHtml(tagContent);
-
-            return tag;
-        }
 
         var content = HtmlOrText(options.Html, options.Text);
 
@@ -30,8 +17,34 @@ internal partial class DefaultComponentGenerator
         var contentTag = new HtmlTag("p", attrs => attrs
             .WithClasses("govuk-phase-banner__content"));
 
-        var tagElement = GenerateTag(options.Tag);
-        contentTag.InnerHtml.AppendHtml(tagElement);
+        // Generate the tag component using the existing GenerateTagAsync method
+        if (options.Tag != null)
+        {
+            var tagOptions = new TagOptions
+            {
+                Text = options.Tag.Text,
+                Html = options.Tag.Html,
+                Classes = options.Tag.Classes != null
+                    ? new TemplateString("govuk-phase-banner__content__tag " + options.Tag.Classes)
+                    : "govuk-phase-banner__content__tag",
+                Attributes = options.Tag.Attributes
+            };
+
+            var tagComponent = await GenerateTagAsync(tagOptions);
+            var tagHtml = new HtmlString(tagComponent.GetHtml());
+            contentTag.InnerHtml.AppendHtml(tagHtml);
+        }
+        else
+        {
+            // If no tag options provided, render an empty tag
+            var emptyTagOptions = new TagOptions
+            {
+                Classes = "govuk-phase-banner__content__tag"
+            };
+            var tagComponent = await GenerateTagAsync(emptyTagOptions);
+            var tagHtml = new HtmlString(tagComponent.GetHtml());
+            contentTag.InnerHtml.AppendHtml(tagHtml);
+        }
 
         var textSpan = new HtmlTag("span", attrs => attrs
             .WithClasses("govuk-phase-banner__text"));
@@ -41,6 +54,6 @@ internal partial class DefaultComponentGenerator
 
         outerTag.InnerHtml.AppendHtml(contentTag);
 
-        return GenerateFromHtmlTagAsync(outerTag);
+        return await GenerateFromHtmlTagAsync(outerTag);
     }
 }

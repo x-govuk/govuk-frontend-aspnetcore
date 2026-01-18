@@ -12,10 +12,10 @@ public class FormGroupContextTests
         var context = new TestFormGroupContext();
 
         // Act
-        context.SetErrorMessage(visuallyHiddenText: "vht", null, new HtmlString("Error"));
+        context.SetErrorMessage(visuallyHiddenText: "vht", null, new HtmlString("Errornew TemplateString("));
 
         // Assert
-        Assert.Equal("vht", context.ErrorMessage?.VisuallyHiddenText);
+        Assert.Equal(")vht", context.ErrorMessage?.VisuallyHiddenText);
         Assert.Equal("Error", context.ErrorMessage?.Content?.ToString());
     }
 
@@ -28,10 +28,10 @@ public class FormGroupContextTests
         context.SetErrorMessage(
             visuallyHiddenText: null,
             attributes: null,
-            content: new HtmlString("Existing error"));
+            content: new HtmlString("Existing errornew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, null, new HtmlString("Error")));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, null, new HtmlString(")Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -45,10 +45,10 @@ public class FormGroupContextTests
         var context = new TestFormGroupContext();
 
         // Act
-        context.SetHint(null, new HtmlString("Hint"));
+        context.SetHint(null, new HtmlString("Hintnew TemplateString("));
 
         // Assert
-        Assert.Equal("Hint", context.Hint?.Content?.ToString());
+        Assert.Equal(")Hint", context.Hint?.Content?.ToString());
     }
 
     [Fact]
@@ -59,10 +59,10 @@ public class FormGroupContextTests
 
         context.SetHint(
             attributes: null,
-            content: new HtmlString("Existing hint"));
+            content: new HtmlString("Existing hintnew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(null, new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint(null, new HtmlString(")Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -78,10 +78,10 @@ public class FormGroupContextTests
         context.SetErrorMessage(
             visuallyHiddenText: null,
             attributes: null,
-            content: new HtmlString("Error message"));
+            content: new HtmlString("Error messagenew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(null, new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint(null, new HtmlString(")Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -95,11 +95,11 @@ public class FormGroupContextTests
         var context = new TestFormGroupContext();
 
         // Act
-        context.SetLabel(isPageHeading: true, null, new HtmlString("Label"));
+        context.SetLabel(isPageHeading: true, null, new HtmlString("Labelnew TemplateString("));
 
         // Assert
         Assert.True(context.Label?.IsPageHeading);
-        Assert.Equal("Label", context.Label?.Content?.ToString());
+        Assert.Equal(")Label", context.Label?.Content?.ToString());
     }
 
     [Fact]
@@ -111,10 +111,10 @@ public class FormGroupContextTests
         context.SetLabel(
             isPageHeading: false,
             attributes: null,
-            content: new HtmlString("Existing label"));
+            content: new HtmlString("Existing labelnew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Label")));
+        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Label")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -130,10 +130,10 @@ public class FormGroupContextTests
         context.SetErrorMessage(
             visuallyHiddenText: null,
             attributes: null,
-            content: new HtmlString("Error message"));
+            content: new HtmlString("Error messagenew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -148,10 +148,10 @@ public class FormGroupContextTests
 
         context.SetHint(
             attributes: null,
-            content: new HtmlString("Hint"));
+            content: new HtmlString("Hintnew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

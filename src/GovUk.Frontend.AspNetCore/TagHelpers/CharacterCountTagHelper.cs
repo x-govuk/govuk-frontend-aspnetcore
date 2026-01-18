@@ -282,7 +282,7 @@ public class CharacterCountTagHelper : TagHelper
 
         if (LabelClass is not null)
         {
-            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(LabelClass);
+            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(new TemplateString(LabelClass));
         }
 
         var formGroupAttributes = new AttributeCollection(FormGroupAttributes);
@@ -298,7 +298,7 @@ public class CharacterCountTagHelper : TagHelper
 
         if (AutoComplete is not null)
         {
-            attributes.Add("autocomplete", AutoComplete!);
+            attributes.Add("autocomplete", new TemplateString(AutoComplete!));
         }
 
         if (Disabled == true)
@@ -350,7 +350,7 @@ public class CharacterCountTagHelper : TagHelper
         {
             Debug.Assert(errorMessageOptions.Html is not null);
             var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
+            containerErrorContext.AddError(errorMessageOptions.Html.Value, href: "#" + id);
         }
     }
 

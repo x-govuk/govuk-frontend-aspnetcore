@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -13,9 +14,7 @@ public class ErrorSummaryContextTests
 
         var context = new ErrorSummaryContext();
 
-        var item = new ErrorSummaryContextItem(
-            href,
-            errorMessageHtml,
+        var item = new ErrorSummaryContextItem(new TemplateString(href), new TemplateString(errorMessageHtml),
             [],
             []);
 
@@ -27,7 +26,7 @@ public class ErrorSummaryContextTests
             context.Items,
             item =>
             {
-                Assert.Equal(errorMessageHtml, item.Html);
+                Assert.Equal(new TemplateString(errorMessageHtml), item.Html);
                 Assert.Equal(href, item.Href);
             });
     }
@@ -41,10 +40,10 @@ public class ErrorSummaryContextTests
         var context = new ErrorSummaryContext();
 
         // Act
-        context.SetDescription([], descriptionHtml);
+        context.SetDescription([], new TemplateString(descriptionHtml));
 
         // Assert
-        Assert.Equal(descriptionHtml, context.Description?.Html);
+        Assert.Equal(new TemplateString(descriptionHtml), context.Description?.Html);
     }
 
     [Fact]
@@ -52,10 +51,10 @@ public class ErrorSummaryContextTests
     {
         // Arrange
         var context = new ErrorSummaryContext();
-        context.SetDescription([], html: "Existing description");
+        context.SetDescription([], html: new TemplateString("Existing description"));
 
         // Act
-        var ex = Record.Exception(() => context.SetDescription([], html: "Description"));
+        var ex = Record.Exception(() => context.SetDescription([], html: new TemplateString("Description")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -71,10 +70,10 @@ public class ErrorSummaryContextTests
         var context = new ErrorSummaryContext();
 
         // Act
-        context.SetTitle([], titleHtml);
+        context.SetTitle([], new TemplateString(titleHtml));
 
         // Assert
-        Assert.Equal(titleHtml, context.Title?.Html);
+        Assert.Equal(new TemplateString(titleHtml), context.Title?.Html);
     }
 
     [Fact]
@@ -82,10 +81,10 @@ public class ErrorSummaryContextTests
     {
         // Arrange
         var context = new ErrorSummaryContext();
-        context.SetTitle([], html: "Existing title");
+        context.SetTitle([], html: new TemplateString("Existing title"));
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle([], html: "Title"));
+        var ex = Record.Exception(() => context.SetTitle([], html: new TemplateString("Title")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

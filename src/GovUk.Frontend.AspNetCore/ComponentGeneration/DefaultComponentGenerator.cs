@@ -128,7 +128,8 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
     {
         if (html?.IsEmpty() == false)
         {
-            return new HtmlString(html.ToHtmlString(raw: true));
+            var rawHtml = html.Value.ToHtmlString(raw: true);
+            return new HtmlString(rawHtml);
         }
 
         if (text?.IsEmpty() == false)

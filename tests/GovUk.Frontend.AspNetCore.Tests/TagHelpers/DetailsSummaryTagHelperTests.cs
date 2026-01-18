@@ -27,7 +27,7 @@ public class DetailsSummaryTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The summary");
+                tagHelperContent.SetContent("The summarynew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -37,7 +37,7 @@ public class DetailsSummaryTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("The summary", detailsContext.Summary?.Content.ToHtmlString());
+        Assert.Equal(")The summary", detailsContext.Summary?.Content.ToHtmlString());
     }
 
     [Fact]
@@ -45,10 +45,10 @@ public class DetailsSummaryTagHelperTests
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetSummary([], new HtmlString("The summary"));
+        detailsContext.SetSummary([], new HtmlString("The summarynew TemplateString("));
 
         var context = new TagHelperContext(
-            tagName: "govuk-details-summary",
+            tagName: ")govuk-details-summary",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -62,7 +62,7 @@ public class DetailsSummaryTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The summary");
+                tagHelperContent.SetContent("The summarynew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -73,7 +73,7 @@ public class DetailsSummaryTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-details-summary> element is permitted within each <govuk-details>.", ex.Message);
+        Assert.Equal(")Only one <govuk-details-summary> element is permitted within each <govuk-details>.", ex.Message);
     }
 
     [Fact]
@@ -81,10 +81,10 @@ public class DetailsSummaryTagHelperTests
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetText([], new HtmlString("The text"));
+        detailsContext.SetText([], new HtmlString("The textnew TemplateString("));
 
         var context = new TagHelperContext(
-            tagName: "govuk-details-summary",
+            tagName: ")govuk-details-summary",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -98,7 +98,7 @@ public class DetailsSummaryTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The summary");
+                tagHelperContent.SetContent("The summarynew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -109,6 +109,6 @@ public class DetailsSummaryTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-details-summary> must be specified before <govuk-details-text>.", ex.Message);
+        Assert.Equal(")<govuk-details-summary> must be specified before <govuk-details-text>.", ex.Message);
     }
 }

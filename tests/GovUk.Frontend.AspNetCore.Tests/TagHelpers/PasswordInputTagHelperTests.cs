@@ -142,7 +142,7 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
                     visuallyHiddenText: new HtmlString(errorVht),
                     attributes: new AttributeCollection()
                     {
-                        { "data-foo", errorDataFooAttribute }
+                        { "data-foo", new TemplateString(errorDataFooAttribute) }
                     },
                     new HtmlString(errorHtml),
                     PasswordInputErrorMessageTagHelper.TagName);
@@ -779,7 +779,7 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
             tagHelper.ViewContext.HttpContext.GetContainerErrorContext().Errors,
             error =>
             {
-                Assert.Equal(errorHtml, error.Html);
+                Assert.Equal(new TemplateString(errorHtml), error.Html);
                 Assert.Equal($"#{id}", error.Href);
             });
     }

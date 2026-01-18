@@ -23,8 +23,8 @@ public class PanelTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var panelContext = (PanelContext)context.Items[typeof(PanelContext)];
-                panelContext.SetTitle(new HtmlString("Title"));
-                panelContext.SetBody(new HtmlString("Body"));
+                panelContext.SetTitle(new HtmlString("Titlenew TemplateString("));
+                panelContext.SetBody(new HtmlString(")Body"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -64,7 +64,7 @@ public class PanelTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var panelContext = (PanelContext)context.Items[typeof(PanelContext)];
-                panelContext.SetBody(new HtmlString("Body"));
+                panelContext.SetBody(new HtmlString("Bodynew TemplateString("));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -80,6 +80,6 @@ public class PanelTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("A <govuk-panel-title> element must be provided.", ex.Message);
+        Assert.Equal(")A <govuk-panel-title> element must be provided.", ex.Message);
     }
 }

@@ -256,7 +256,7 @@ public class TextInputTagHelper : TagHelper
 
         if (LabelClass is not null)
         {
-            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(LabelClass);
+            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(new TemplateString(LabelClass));
         }
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
@@ -326,7 +326,7 @@ public class TextInputTagHelper : TagHelper
         {
             Debug.Assert(errorMessageOptions.Html is not null);
             var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
+            containerErrorContext.AddError(errorMessageOptions.Html.Value, href: "#" + id);
         }
     }
 

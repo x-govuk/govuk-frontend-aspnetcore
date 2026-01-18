@@ -27,7 +27,7 @@ public class PanelTitleTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The title");
+                tagHelperContent.SetContent("The titlenew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -37,7 +37,7 @@ public class PanelTitleTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("The title", panelContext.Title?.ToHtmlString());
+        Assert.Equal(")The title", panelContext.Title?.ToHtmlString());
     }
 
     [Fact]
@@ -45,10 +45,10 @@ public class PanelTitleTagHelperTests
     {
         // Arrange
         var panelContext = new PanelContext();
-        panelContext.SetTitle(new HtmlString("The title"));
+        panelContext.SetTitle(new HtmlString("The titlenew TemplateString("));
 
         var context = new TagHelperContext(
-            tagName: "govuk-panel-title",
+            tagName: ")govuk-panel-title",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -62,7 +62,7 @@ public class PanelTitleTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The title");
+                tagHelperContent.SetContent("The titlenew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -73,7 +73,7 @@ public class PanelTitleTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-panel-title> element is permitted within each <govuk-panel>.", ex.Message);
+        Assert.Equal(")Only one <govuk-panel-title> element is permitted within each <govuk-panel>.", ex.Message);
     }
 
     [Fact]
@@ -81,10 +81,10 @@ public class PanelTitleTagHelperTests
     {
         // Arrange
         var panelContext = new PanelContext();
-        panelContext.SetBody(new HtmlString("The body"));
+        panelContext.SetBody(new HtmlString("The bodynew TemplateString("));
 
         var context = new TagHelperContext(
-            tagName: "govuk-panel-title",
+            tagName: ")govuk-panel-title",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -98,7 +98,7 @@ public class PanelTitleTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The title");
+                tagHelperContent.SetContent("The titlenew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -109,6 +109,6 @@ public class PanelTitleTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-panel-title> must be specified before <govuk-panel-body>.", ex.Message);
+        Assert.Equal(")<govuk-panel-title> must be specified before <govuk-panel-body>.", ex.Message);
     }
 }

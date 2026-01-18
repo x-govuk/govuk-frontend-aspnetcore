@@ -44,11 +44,11 @@ internal partial class DefaultComponentGenerator
             .With(options.Attributes));
 
         // Set focusable to false
-        svgTag.Attributes.Set("focusable", "false");
+        svgTag.Attributes.Set("focusable", new TemplateString("false"));
 
         if (!string.IsNullOrEmpty(options.AriaLabelText))
         {
-            svgTag.Attributes.Set("aria-label", options.AriaLabelText);
+            svgTag.Attributes.Set("aria-label", new TemplateString(options.AriaLabelText));
             var titleTag = new HtmlTag("title");
             titleTag.InnerHtml.AppendHtml(options.AriaLabelText);
             svgTag.InnerHtml.AppendHtml(titleTag);
@@ -112,7 +112,7 @@ internal partial class DefaultComponentGenerator
         var pathTag = CreatePath(pathData);
         if (!useTudorCrown)
         {
-            pathTag.Attributes.Set("transform", "translate(8 0)");
+            pathTag.Attributes.Set("transform", new TemplateString("translate(8 0)"));
         }
         return pathTag;
     }

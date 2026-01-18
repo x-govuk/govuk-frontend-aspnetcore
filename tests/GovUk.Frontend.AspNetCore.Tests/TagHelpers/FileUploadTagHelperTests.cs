@@ -682,7 +682,7 @@ public class FileUploadTagHelperTests
             tagHelper.ViewContext.HttpContext.GetContainerErrorContext().Errors,
             error =>
             {
-                Assert.Equal(errorHtml, error.Html);
+                Assert.Equal(new TemplateString(errorHtml), error.Html);
                 Assert.Equal($"#{id}", error.Href);
             });
     }

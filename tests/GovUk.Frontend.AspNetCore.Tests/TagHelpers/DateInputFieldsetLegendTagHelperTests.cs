@@ -51,7 +51,7 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
         // Arrange
         var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for: null);
 
-        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legend");
+        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legendnew TemplateString(");
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 
@@ -59,7 +59,7 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Legend content");
+                tagHelperContent.SetContent(")Legend content");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 

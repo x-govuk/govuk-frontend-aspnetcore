@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.TagHelpers;
@@ -49,7 +50,7 @@ public class ErrorSummaryItemTagHelperTests : TagHelperTestBase<ErrorSummaryItem
             errorSummaryContext.Items,
             item =>
             {
-                Assert.Equal(HtmlEncoder.Default.Encode(errorMessage), item.Html);
+                Assert.Equal(new TemplateString(HtmlEncoder.Default.Encode(errorMessage)), item.Html);
             });
         Assert.True(errorSummaryContext.HaveExplicitItems);
     }
@@ -145,7 +146,7 @@ public class ErrorSummaryItemTagHelperTests : TagHelperTestBase<ErrorSummaryItem
             errorSummaryContext.Items,
             item =>
             {
-                Assert.Equal(HtmlEncoder.Default.Encode(errorMessage), item.Html);
+                Assert.Equal(new TemplateString(HtmlEncoder.Default.Encode(errorMessage)), item.Html);
             });
     }
 
@@ -247,7 +248,7 @@ public class ErrorSummaryItemTagHelperTests : TagHelperTestBase<ErrorSummaryItem
             errorSummaryContext.Items,
             item =>
             {
-                Assert.Equal(explicitErrorMessage, item.Html);
+                Assert.Equal(new TemplateString(explicitErrorMessage), item.Html);
             });
     }
 
@@ -275,7 +276,7 @@ public class ErrorSummaryItemTagHelperTests : TagHelperTestBase<ErrorSummaryItem
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Error message");
+                tagHelperContent.SetContent("Error messagenew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -291,7 +292,7 @@ public class ErrorSummaryItemTagHelperTests : TagHelperTestBase<ErrorSummaryItem
             errorSummaryContext.Items,
             item =>
             {
-                Assert.Equal("#TheField", item.Href);
+                Assert.Equal(")#TheField", item.Href);
             });
     }
 

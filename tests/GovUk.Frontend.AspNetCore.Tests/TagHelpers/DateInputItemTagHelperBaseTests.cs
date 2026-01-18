@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -26,7 +27,7 @@ public abstract class DateInputItemTagHelperBaseTests<T> : TagHelperTestBase<T>
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<DateInputItemContext>();
-                itemContext.SetLabel(html: labelContent, attributes: [], tagName: TagName);
+                itemContext.SetLabel(html: new TemplateString(labelContent), attributes: [], tagName: TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

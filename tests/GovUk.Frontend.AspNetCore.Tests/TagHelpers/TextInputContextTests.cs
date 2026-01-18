@@ -12,10 +12,10 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var beforeInputTagName = TextInputBeforeInputTagHelper.TagName;
         var errorMessageTagName = TextInputErrorMessageTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -32,7 +32,7 @@ public class TextInputContextTests
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -49,7 +49,7 @@ public class TextInputContextTests
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -63,10 +63,10 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var afterInputTagName = TextInputAfterInputTagHelper.TagName;
         var errorMessageTagName = TextInputErrorMessageTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -80,10 +80,10 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var beforeInputTagName = TextInputBeforeInputTagHelper.TagName;
         var hintTagName = TextInputHintTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -100,7 +100,7 @@ public class TextInputContextTests
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -117,7 +117,7 @@ public class TextInputContextTests
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -131,10 +131,10 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var afterInputTagName = TextInputAfterInputTagHelper.TagName;
         var hintTagName = TextInputHintTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -148,10 +148,10 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var beforeInputTagName = TextInputBeforeInputTagHelper.TagName;
         var labelTagName = TextInputLabelTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -168,7 +168,7 @@ public class TextInputContextTests
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -185,7 +185,7 @@ public class TextInputContextTests
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -199,10 +199,10 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var afterInputTagName = TextInputAfterInputTagHelper.TagName;
         var labelTagName = TextInputLabelTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -219,7 +219,7 @@ public class TextInputContextTests
         context.SetPrefix(new InputOptionsPrefix(), prefixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -236,7 +236,7 @@ public class TextInputContextTests
         context.SetSuffix(new InputOptionsSuffix(), suffixTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -250,10 +250,10 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var afterInputTagName = TextInputAfterInputTagHelper.TagName;
         var beforeInputTagName = TextInputBeforeInputTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -266,10 +266,10 @@ public class TextInputContextTests
         // Arrange
         var context = new TextInputContext();
         var beforeInputTagName = TextInputBeforeInputTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -322,7 +322,7 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var afterInputTagName = TextInputAfterInputTagHelper.TagName;
         var prefixTagName = TextInputSuffixTagHelper.TagName;
-        context.SetAfterInput("Content", prefixTagName);
+        context.SetAfterInput(new TemplateString("Content"), prefixTagName);
 
         // Act
         var ex = Record.Exception(() => context.SetPrefix(new InputOptionsPrefix(), afterInputTagName));
@@ -358,7 +358,7 @@ public class TextInputContextTests
         var context = new TextInputContext();
         var afterInputTagName = TextInputPrefixTagHelper.TagName;
         var suffixTagName = TextInputSuffixTagHelper.TagName;
-        context.SetAfterInput("Content", suffixTagName);
+        context.SetAfterInput(new TemplateString("Content"), suffixTagName);
 
         // Act
         var ex = Record.Exception(() => context.SetSuffix(new InputOptionsSuffix(), afterInputTagName));
@@ -374,10 +374,10 @@ public class TextInputContextTests
         // Arrange
         var context = new TextInputContext();
         var afterInputTagName = TextInputAfterInputTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetAfterInput("Content", afterInputTagName));
+        var ex = Record.Exception(() => context.SetAfterInput(new TemplateString("Content"), afterInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

@@ -25,7 +25,8 @@ internal partial class DefaultComponentGenerator
             // Start slot
             if (options.Slots?.Start?.IsEmpty() == false)
             {
-                widthContainerTag.InnerHtml.AppendHtml(new HtmlString(options.Slots.Start.ToHtmlString(raw: true)));
+                var rawStartHtml = options.Slots.Start.Value.ToHtmlString(raw: true);
+                widthContainerTag.InnerHtml.AppendHtml(new HtmlString(rawStartHtml));
             }
 
             var serviceNavigationContainer = new HtmlTag("div", attrs => attrs
@@ -79,7 +80,8 @@ internal partial class DefaultComponentGenerator
             // End slot
             if (options.Slots?.End?.IsEmpty() == false)
             {
-                widthContainerTag.InnerHtml.AppendHtml(new HtmlString(options.Slots.End.ToHtmlString(raw: true)));
+                var rawEndHtml = options.Slots.End.Value.ToHtmlString(raw: true);
+                widthContainerTag.InnerHtml.AppendHtml(new HtmlString(rawEndHtml));
             }
 
             return widthContainerTag;
@@ -130,7 +132,8 @@ internal partial class DefaultComponentGenerator
             // Navigation start slot
             if (options.Slots?.NavigationStart?.IsEmpty() == false)
             {
-                ulTag.InnerHtml.AppendHtml(new HtmlString(options.Slots.NavigationStart.ToHtmlString(raw: true)));
+                var rawNavStartHtml = options.Slots.NavigationStart.Value.ToHtmlString(raw: true);
+                ulTag.InnerHtml.AppendHtml(new HtmlString(rawNavStartHtml));
             }
 
             // Navigation items
@@ -146,7 +149,8 @@ internal partial class DefaultComponentGenerator
             // Navigation end slot
             if (options.Slots?.NavigationEnd?.IsEmpty() == false)
             {
-                ulTag.InnerHtml.AppendHtml(new HtmlString(options.Slots.NavigationEnd.ToHtmlString(raw: true)));
+                var rawNavEndHtml = options.Slots.NavigationEnd.Value.ToHtmlString(raw: true);
+                ulTag.InnerHtml.AppendHtml(new HtmlString(rawNavEndHtml));
             }
 
             navTag.InnerHtml.AppendHtml(ulTag);

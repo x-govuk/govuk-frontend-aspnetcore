@@ -181,11 +181,11 @@ public class DetailsTagHelperTests
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summaryAttributes = new AttributeCollection();
-                summaryAttributes.Add("data-test", "summary-value");
-                var summary = new HtmlString("The summary");
+                summaryAttributes.Add("data-test", new TemplateString("summary-value"));
+                var summary = new TemplateString("The summary");
                 detailsContext.SetSummary(summaryAttributes, summary);
 
-                var text = new HtmlString("The text");
+                var text = new TemplateString("The text");
                 detailsContext.SetText(new AttributeCollection(), text);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -221,12 +221,12 @@ public class DetailsTagHelperTests
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
-                var summary = new HtmlString("The summary");
+                var summary = new TemplateString("The summary");
                 detailsContext.SetSummary(new AttributeCollection(), summary);
 
                 var textAttributes = new AttributeCollection();
-                textAttributes.Add("data-test", "text-value");
-                var text = new HtmlString("The text");
+                textAttributes.Add("data-test", new TemplateString("text-value"));
+                var text = new TemplateString("The text");
                 detailsContext.SetText(textAttributes, text);
 
                 var tagHelperContent = new DefaultTagHelperContent();

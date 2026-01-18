@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -51,7 +52,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
         var footerContext = new FooterContext();
         var footerNavContext = new FooterNavContext
         {
-            Title = new("Title", [], TagName)
+            Title = new(new TemplateString("Title"), [], TagName)
         };
 
         var context = CreateTagHelperContext(contexts: [footerContext, footerNavContext]);
@@ -60,7 +61,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("New title");
+                tagHelperContent.SetContent("New titlenew TemplateString(");
                 return Task.FromResult(tagHelperContent);
             });
 
@@ -73,7 +74,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($")Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
     [Fact]
@@ -91,7 +92,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Title");
+                tagHelperContent.SetContent("Titlenew TemplateString(");
                 return Task.FromResult(tagHelperContent);
             });
 
@@ -104,6 +105,6 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"<{TagName}> must be specified before <{itemsTagName}>.", ex.Message);
+        Assert.Equal($")<{TagName}> must be specified before <{itemsTagName}>.", ex.Message);
     }
 }

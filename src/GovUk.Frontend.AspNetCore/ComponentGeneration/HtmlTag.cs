@@ -143,7 +143,7 @@ internal class HtmlTag : IHtmlContent, IEnumerable
 
             if (value is not null)
             {
-                Attributes.Add(name, value);
+                Attributes.Add(name, value.Value);
             }
 
             return this;
@@ -172,9 +172,10 @@ internal class HtmlTag : IHtmlContent, IEnumerable
 
         public AttributeBuilder WithClasses(params TemplateString?[] classes)
         {
+            var nonNullClasses = classes.Where(c => c is not null).Select(c => c!.Value).ToArray();
             Attributes.Set(
                 "class",
-                Attributes["class"].AppendCssClasses(classes.Where(c => c is not null).ToArray()!));
+                Attributes["class"].AppendCssClasses(nonNullClasses));
 
             return this;
         }

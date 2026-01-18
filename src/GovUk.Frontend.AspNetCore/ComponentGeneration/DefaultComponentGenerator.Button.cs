@@ -24,7 +24,8 @@ internal partial class DefaultComponentGenerator
             {
                 // HTML element names should be lowercase per HTML spec
 #pragma warning disable CA1308 // Element names should be lowercase
-                return options.Element.ToHtmlString(raw: true).ToLower(System.Globalization.CultureInfo.InvariantCulture);
+                var elementRaw = options.Element.Value.ToHtmlString(raw: true);
+                return elementRaw.ToLower(System.Globalization.CultureInfo.InvariantCulture);
 #pragma warning restore CA1308
             }
 

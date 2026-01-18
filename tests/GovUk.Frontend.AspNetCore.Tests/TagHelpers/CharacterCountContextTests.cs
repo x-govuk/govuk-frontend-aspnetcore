@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -10,7 +11,7 @@ public class CharacterCountContextTests
         // Arrange
         var context = new CharacterCountContext();
 
-        context.SetValue("Value", CharacterCountValueTagHelper.TagName);
+        context.SetValue(new TemplateString("Value"), CharacterCountValueTagHelper.TagName);
 
         // Act
         var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", CharacterCountErrorMessageTagHelper.TagName));
@@ -26,7 +27,7 @@ public class CharacterCountContextTests
         // Arrange
         var context = new CharacterCountContext();
 
-        context.SetValue("Value", CharacterCountValueTagHelper.TagName);
+        context.SetValue(new TemplateString("Value"), CharacterCountValueTagHelper.TagName);
 
         // Act
         var ex = Record.Exception(() => context.SetHint([], "Error", CharacterCountHintTagHelper.TagName));
@@ -42,7 +43,7 @@ public class CharacterCountContextTests
         // Arrange
         var context = new CharacterCountContext();
 
-        context.SetValue("Value", CharacterCountValueTagHelper.TagName);
+        context.SetValue(new TemplateString("Value"), CharacterCountValueTagHelper.TagName);
 
         // Act
         var ex = Record.Exception(() => context.SetLabel(false, [], "Error", CharacterCountLabelTagHelper.TagName));
@@ -58,10 +59,10 @@ public class CharacterCountContextTests
         // Arrange
         var context = new CharacterCountContext();
 
-        context.SetValue("Existing value", CharacterCountValueTagHelper.TagName);
+        context.SetValue(new TemplateString("Existing value"), CharacterCountValueTagHelper.TagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetValue("Value", CharacterCountValueTagHelper.TagName));
+        var ex = Record.Exception(() => context.SetValue(new TemplateString("Value"), CharacterCountValueTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

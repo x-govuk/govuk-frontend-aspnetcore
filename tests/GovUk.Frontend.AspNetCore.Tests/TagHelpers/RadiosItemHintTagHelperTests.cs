@@ -26,7 +26,7 @@ public class RadiosItemHintTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Hint");
+                tagHelperContent.SetContent("Hintnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -36,6 +36,6 @@ public class RadiosItemHintTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Hint", radiosItemContext.Hint?.Content?.ToHtmlString());
+        Assert.Equal(")Hint", radiosItemContext.Hint?.Content?.ToHtmlString());
     }
 }

@@ -10,10 +10,10 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetBody(new HtmlString("Body"));
+        context.SetBody(new HtmlString("Bodynew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetBody(new HtmlString("Body")));
+        var ex = Record.Exception(() => context.SetBody(new HtmlString(")Body")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -25,10 +25,10 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetBody(new HtmlString("Body"));
+        context.SetBody(new HtmlString("Bodynew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle(new HtmlString("Title")));
+        var ex = Record.Exception(() => context.SetTitle(new HtmlString(")Title")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -40,10 +40,10 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetTitle(new HtmlString("Title"));
+        context.SetTitle(new HtmlString("Titlenew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle(new HtmlString("Title")));
+        var ex = Record.Exception(() => context.SetTitle(new HtmlString(")Title")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

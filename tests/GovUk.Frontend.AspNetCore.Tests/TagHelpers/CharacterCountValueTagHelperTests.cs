@@ -26,7 +26,7 @@ public class CharacterCountValueTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Value");
+                tagHelperContent.SetContent("Valuenew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -36,6 +36,6 @@ public class CharacterCountValueTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Value", characterCountContext.Value?.ToString());
+        Assert.Equal(")Value", characterCountContext.Value?.ToString());
     }
 }

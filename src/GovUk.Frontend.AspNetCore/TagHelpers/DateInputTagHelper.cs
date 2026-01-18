@@ -302,7 +302,7 @@ public class DateInputTagHelper : TagHelper
                 .Id;
 
             var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + firstFieldWithError!);
+            containerErrorContext.AddError(errorMessageOptions.Html.Value, href: "#" + firstFieldWithError!);
         }
 
         DateInputOptionsItem CreateDateInputItem(
@@ -335,11 +335,11 @@ public class DateInputTagHelper : TagHelper
 
             var resolvedAttributes = contextItem?.Attributes?.Clone() ?? [];
             resolvedAttributes.Remove("class", out var itemClasses);
-            itemClasses = itemClasses.AppendCssClasses(defaultClass);
+            itemClasses = itemClasses.AppendCssClasses(new TemplateString(defaultClass));
 
             if (haveError && (errorItems & errorSource) != 0)
             {
-                itemClasses = itemClasses.AppendCssClasses("govuk-input--error");
+                itemClasses = itemClasses.AppendCssClasses(new TemplateString("govuk-input--error"));
             }
 
             if (Disabled == true)
@@ -367,7 +367,7 @@ public class DateInputTagHelper : TagHelper
 
             string? GetValueFromModelState()
             {
-                var modelStateKey = _modelHelper.GetFullHtmlFieldName(ViewContext!, itemName.ToString());
+                var modelStateKey = _modelHelper.GetFullHtmlFieldName(ViewContext!, itemName.ToString()!);
 
                 return ViewContext!.ModelState.TryGetValue(modelStateKey, out var modelStateEntry) &&
                     modelStateEntry.AttemptedValue is not null

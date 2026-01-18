@@ -27,7 +27,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Legend content");
+                tagHelperContent.SetContent("Legend contentnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -40,7 +40,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Legend content", fieldsetContext.Legend?.Content?.ToHtmlString());
+        Assert.Equal(")Legend content", fieldsetContext.Legend?.Content?.ToHtmlString());
         Assert.True(fieldsetContext.Legend?.IsPageHeading);
     }
 
@@ -53,10 +53,10 @@ public class CheckboxesFieldsetLegendTagHelperTests
         fieldsetContext.SetLegend(
             isPageHeading: false,
             attributes: null,
-            content: new HtmlString("Existing legend"));
+            content: new HtmlString("Existing legendnew TemplateString("));
 
         var context = new TagHelperContext(
-            tagName: "govuk-checkboxes-fieldset-legend",
+            tagName: ")govuk-checkboxes-fieldset-legend",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -70,7 +70,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Legend content");
+                tagHelperContent.SetContent("Legend contentnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -84,6 +84,6 @@ public class CheckboxesFieldsetLegendTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-checkboxes-fieldset-legend> element is permitted within each <govuk-checkboxes-fieldset>.", ex.Message);
+        Assert.Equal(")Only one <govuk-checkboxes-fieldset-legend> element is permitted within each <govuk-checkboxes-fieldset>.", ex.Message);
     }
 }

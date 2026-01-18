@@ -49,7 +49,7 @@ internal abstract class FormGroupFieldsetContext2
 
         if (_legendClass is not null)
         {
-            legendClasses = legendClasses.AppendCssClasses(_legendClass);
+            legendClasses = legendClasses.AppendCssClasses(new TemplateString(_legendClass));
         }
 
         var html = Legend?.Html;

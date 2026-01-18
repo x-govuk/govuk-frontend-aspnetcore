@@ -23,7 +23,7 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent("The message.new TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -33,7 +33,7 @@ public class NotificationBannerTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
+        var expectedHtml = @")
 <div
     class=""govuk-notification-banner""
     role=""region""
@@ -68,7 +68,7 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent("The message.new TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -81,7 +81,7 @@ public class NotificationBannerTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
+        var expectedHtml = @")
 <div
     class=""govuk-notification-banner govuk-notification-banner--success""
     role=""alert""
@@ -116,7 +116,7 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent("The message.new TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -130,7 +130,7 @@ public class NotificationBannerTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
+        var expectedHtml = @")
 <div
     class=""govuk-notification-banner govuk-notification-banner--success""
     role=""alert""
@@ -167,13 +167,13 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent("The message.new TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator())
         {
-            Role = "custom-role"
+            Role = ")custom-role"
         };
 
         // Act

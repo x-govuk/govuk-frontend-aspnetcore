@@ -24,12 +24,12 @@ public class CheckboxesTagHelperTests
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-                checkboxesContext.SetHint(attributes: null, content: new HtmlString("The hint"));
+                checkboxesContext.SetHint(attributes: null, content: new HtmlString("The hintnew TemplateString("));
 
                 checkboxesContext.AddItem(new CheckboxesItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    LabelContent = new HtmlString(")First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
@@ -93,12 +93,12 @@ public class CheckboxesTagHelperTests
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-                checkboxesContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A error"));
+                checkboxesContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A errornew TemplateString("));
 
                 checkboxesContext.AddItem(new CheckboxesItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    LabelContent = new HtmlString(")First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
@@ -334,9 +334,9 @@ public class CheckboxesTagHelperTests
 
                 checkboxesContext.OpenFieldset();
                 var checkboxesFieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
-                checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legend"));
+                checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legendnew TemplateString("));
 
-                checkboxesContext.SetHint(attributes: null, content: new HtmlString("The hint"));
+                checkboxesContext.SetHint(attributes: null, content: new HtmlString(")The hint"));
 
                 checkboxesContext.AddItem(new CheckboxesItem()
                 {

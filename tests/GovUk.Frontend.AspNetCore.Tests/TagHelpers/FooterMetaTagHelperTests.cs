@@ -31,7 +31,7 @@ public class FooterMetaTagHelperTests : TagHelperTestBase<FooterMetaTagHelper>
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var metaContext = context.GetContextItem<FooterMetaContext>();
-                metaContext.Content = new(content, new(contentAttributes), FooterMetaContentTagHelper.TagName);
+                metaContext.Content = new(new TemplateString(content), new(contentAttributes), FooterMetaContentTagHelper.TagName);
                 metaContext.Items = new([item], new(itemsAttributes), FooterMetaItemsTagHelper.TagName);
 
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();

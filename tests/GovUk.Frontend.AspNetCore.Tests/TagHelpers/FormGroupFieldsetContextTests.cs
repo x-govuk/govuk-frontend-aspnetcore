@@ -13,11 +13,11 @@ public class FormGroupFieldsetContextTests
         var context = new TestContext([], aspFor: null);
 
         // Act
-        context.SetLegend(isPageHeading: true, null, new HtmlString("Legend"));
+        context.SetLegend(isPageHeading: true, null, new HtmlString("Legendnew TemplateString("));
 
         // Assert
         Assert.True(context.Legend?.IsPageHeading);
-        Assert.Equal("Legend", context.Legend?.Content?.ToString());
+        Assert.Equal(")Legend", context.Legend?.Content?.ToString());
     }
 
     [Fact]
@@ -26,10 +26,10 @@ public class FormGroupFieldsetContextTests
         // Arrange
         var context = new TestContext([], aspFor: null);
 
-        context.SetLegend(false, null, new HtmlString("Existing legend"));
+        context.SetLegend(false, null, new HtmlString("Existing legendnew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetLegend(isPageHeading: true, null, new HtmlString("Legend")));
+        var ex = Record.Exception(() => context.SetLegend(isPageHeading: true, null, new HtmlString(")Legend")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

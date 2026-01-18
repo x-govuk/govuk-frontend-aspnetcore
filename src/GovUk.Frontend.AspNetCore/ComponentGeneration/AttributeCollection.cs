@@ -64,7 +64,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         {
             if (_attributes.TryGetValue(name, out var attribute))
             {
-                return attribute.Value as TemplateString ?? attribute.Value?.ToString();
+                return attribute.Value as TemplateString? ?? attribute.Value?.ToString();
             }
 
             return null;
@@ -128,7 +128,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
     {
         if (_attributes.Remove(name, out var attribute))
         {
-            value = attribute.Value as TemplateString ?? attribute.Value?.ToString();
+            value = attribute.Value as TemplateString? ?? attribute.Value?.ToString();
             return true;
         }
 
@@ -185,7 +185,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
 
             yield return KeyValuePair.Create(
                 attribute.Name,
-                attribute.Value as TemplateString ?? attribute.Value?.ToString());
+                attribute.Value as TemplateString? ?? attribute.Value?.ToString());
         }
     }
 

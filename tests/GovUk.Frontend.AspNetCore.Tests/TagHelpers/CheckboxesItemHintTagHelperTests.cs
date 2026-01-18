@@ -26,7 +26,7 @@ public class CheckboxesItemHintTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Hint");
+                tagHelperContent.SetContent("Hintnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -36,6 +36,6 @@ public class CheckboxesItemHintTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Hint", checkboxesItemContext.Hint?.Content?.ToHtmlString());
+        Assert.Equal(")Hint", checkboxesItemContext.Hint?.Content?.ToHtmlString());
     }
 }

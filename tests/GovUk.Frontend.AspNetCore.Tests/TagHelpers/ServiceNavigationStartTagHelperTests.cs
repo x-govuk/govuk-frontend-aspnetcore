@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -42,7 +43,7 @@ public class ServiceNavigationStartTagHelperTests : TagHelperTestBase<ServiceNav
 
         var serviceNavigationContext = new ServiceNavigationContext
         {
-            StartSlot = new("Existing start slot", TagName)
+            StartSlot = new(new TemplateString("Existing start slot"), TagName)
         };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
@@ -108,7 +109,7 @@ public class ServiceNavigationStartTagHelperTests : TagHelperTestBase<ServiceNav
 
         var serviceNavigationContext = new ServiceNavigationContext
         {
-            EndSlot = new("End slot", ServiceNavigationEndTagHelper.TagName)
+            EndSlot = new(new TemplateString("End slot"), ServiceNavigationEndTagHelper.TagName)
         };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);

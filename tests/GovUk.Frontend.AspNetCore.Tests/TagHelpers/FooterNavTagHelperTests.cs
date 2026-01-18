@@ -27,7 +27,7 @@ public class FooterNavTagHelperTests : TagHelperTestBase<FooterNavTagHelper>
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var footerNavContext = context.GetContextItem<FooterNavContext>();
-                footerNavContext.Title = new(titleContent, new(titleAttributes), FooterNavTitleTagHelper.TagName);
+                footerNavContext.Title = new(new TemplateString(titleContent), new(titleAttributes), FooterNavTitleTagHelper.TagName);
                 footerNavContext.Items = new([item], new(itemsAttributes), FooterNavItemsTagHelper.TagName);
 
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();

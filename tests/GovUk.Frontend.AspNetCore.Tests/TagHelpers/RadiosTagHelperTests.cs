@@ -24,12 +24,12 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.SetHint(attributes: null, content: new HtmlString("The hint"));
+                radiosContext.SetHint(attributes: null, content: new HtmlString("The hintnew TemplateString("));
 
                 radiosContext.AddItem(new RadiosItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    LabelContent = new HtmlString(")First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
@@ -93,12 +93,12 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A error"));
+                radiosContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A errornew TemplateString("));
 
                 radiosContext.AddItem(new RadiosItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    LabelContent = new HtmlString(")First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
@@ -334,9 +334,9 @@ public class RadiosTagHelperTests
 
                 radiosContext.OpenFieldset();
                 var radiosFieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
-                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legend"));
+                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legendnew TemplateString("));
 
-                radiosContext.SetHint(attributes: null, content: new HtmlString("The hint"));
+                radiosContext.SetHint(attributes: null, content: new HtmlString(")The hint"));
 
                 radiosContext.AddItem(new RadiosItem()
                 {

@@ -29,7 +29,7 @@ public class AccordionItemHeadingTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Summary content");
+                tagHelperContent.SetContent("Summary contentnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -40,7 +40,7 @@ public class AccordionItemHeadingTagHelperTests
 
         // Assert
         Assert.NotNull(itemContext.Heading);
-        Assert.Equal("Summary content", itemContext.Heading?.Content.ToHtmlString());
+        Assert.Equal(")Summary content", itemContext.Heading?.Content.ToHtmlString());
     }
 
     [Fact]
@@ -49,10 +49,10 @@ public class AccordionItemHeadingTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
         var itemContext = new AccordionItemContext();
-        itemContext.SetHeading([], content: new HtmlString("Existing heading"));
+        itemContext.SetHeading([], content: new HtmlString("Existing headingnew TemplateString("));
 
         var context = new TagHelperContext(
-            tagName: "govuk-accordion-item-heading",
+            tagName: ")govuk-accordion-item-heading",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -67,7 +67,7 @@ public class AccordionItemHeadingTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Summary content");
+                tagHelperContent.SetContent("Summary contentnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -78,7 +78,7 @@ public class AccordionItemHeadingTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-accordion-item-heading> is permitted for each <govuk-accordion-item>.", ex.Message);
+        Assert.Equal(")Only one <govuk-accordion-item-heading> is permitted for each <govuk-accordion-item>.", ex.Message);
     }
 
     [Fact]
@@ -87,10 +87,10 @@ public class AccordionItemHeadingTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
         var itemContext = new AccordionItemContext();
-        itemContext.SetSummary(attributes: [], content: new HtmlString("Summary"));
+        itemContext.SetSummary(attributes: [], content: new HtmlString("Summarynew TemplateString("));
 
         var context = new TagHelperContext(
-            tagName: "govuk-accordion-item-heading",
+            tagName: ")govuk-accordion-item-heading",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -105,7 +105,7 @@ public class AccordionItemHeadingTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Summary content");
+                tagHelperContent.SetContent("Summary contentnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -116,6 +116,6 @@ public class AccordionItemHeadingTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-accordion-item-heading> must be specified before <govuk-accordion-item-summary>.", ex.Message);
+        Assert.Equal(")<govuk-accordion-item-heading> must be specified before <govuk-accordion-item-summary>.", ex.Message);
     }
 }

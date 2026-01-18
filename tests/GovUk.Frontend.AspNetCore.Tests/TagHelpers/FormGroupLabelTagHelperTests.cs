@@ -25,7 +25,7 @@ public class FormGroupLabelTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Label");
+                tagHelperContent.SetContent("Labelnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -35,7 +35,7 @@ public class FormGroupLabelTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Label", formGroupContext.Label?.Content?.ToHtmlString());
+        Assert.Equal(")Label", formGroupContext.Label?.Content?.ToHtmlString());
     }
 
     private class TestFormGroupContext : FormGroupContext

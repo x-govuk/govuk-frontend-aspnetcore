@@ -25,7 +25,7 @@ public class FormGroupHintTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Hint");
+                tagHelperContent.SetContent("Hintnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -35,7 +35,7 @@ public class FormGroupHintTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Hint", formGroupContext.Hint?.Content?.ToHtmlString());
+        Assert.Equal(")Hint", formGroupContext.Hint?.Content?.ToHtmlString());
     }
 
     private class TestFormGroupContext : FormGroupContext

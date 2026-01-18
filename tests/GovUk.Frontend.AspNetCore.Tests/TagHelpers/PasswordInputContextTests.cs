@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -11,10 +12,10 @@ public class PasswordInputContextTests
         var context = new PasswordInputContext();
         var beforeInputTagName = PasswordInputBeforeInputTagHelper.TagName;
         var errorMessageTagName = PasswordInputErrorMessageTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -28,10 +29,10 @@ public class PasswordInputContextTests
         var context = new PasswordInputContext();
         var afterInputTagName = PasswordInputAfterInputTagHelper.TagName;
         var errorMessageTagName = PasswordInputErrorMessageTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -45,10 +46,10 @@ public class PasswordInputContextTests
         var context = new PasswordInputContext();
         var beforeInputTagName = PasswordInputBeforeInputTagHelper.TagName;
         var hintTagName = PasswordInputHintTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -62,10 +63,10 @@ public class PasswordInputContextTests
         var context = new PasswordInputContext();
         var afterInputTagName = PasswordInputAfterInputTagHelper.TagName;
         var hintTagName = PasswordInputHintTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -79,10 +80,10 @@ public class PasswordInputContextTests
         var context = new PasswordInputContext();
         var beforeInputTagName = PasswordInputBeforeInputTagHelper.TagName;
         var labelTagName = PasswordInputLabelTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -96,10 +97,10 @@ public class PasswordInputContextTests
         var context = new PasswordInputContext();
         var afterInputTagName = PasswordInputAfterInputTagHelper.TagName;
         var labelTagName = PasswordInputLabelTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -113,10 +114,10 @@ public class PasswordInputContextTests
         var context = new PasswordInputContext();
         var afterInputTagName = PasswordInputAfterInputTagHelper.TagName;
         var beforeInputTagName = PasswordInputBeforeInputTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -129,10 +130,10 @@ public class PasswordInputContextTests
         // Arrange
         var context = new PasswordInputContext();
         var beforeInputTagName = PasswordInputBeforeInputTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -148,10 +149,10 @@ public class PasswordInputContextTests
         // Arrange
         var context = new PasswordInputContext();
         var afterInputTagName = PasswordInputAfterInputTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetAfterInput("Content", afterInputTagName));
+        var ex = Record.Exception(() => context.SetAfterInput(new TemplateString("Content"), afterInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

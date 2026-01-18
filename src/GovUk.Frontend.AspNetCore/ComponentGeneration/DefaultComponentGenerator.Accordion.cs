@@ -51,9 +51,10 @@ internal partial class DefaultComponentGenerator
                 var headingTag = new HtmlTag($"h{headingLevel}", attrs => attrs
                     .WithClasses("govuk-accordion__section-heading"));
 
+                var headingIdPrefix = options.Id!.Value.ToHtmlString(raw: true);
                 var headingButtonTag = new HtmlTag("span", attrs => attrs
                     .WithClasses("govuk-accordion__section-button")
-                    .With("id", $"{options.Id.ToHtmlString(raw: true)}-heading-{index}"));
+                    .With("id", $"{headingIdPrefix}-heading-{index}"));
 
                 headingButtonTag.InnerHtml.AppendHtml(HtmlOrText(item.Heading?.Html, item.Heading?.Text));
                 headingTag.InnerHtml.AppendHtml(headingButtonTag);
@@ -61,9 +62,10 @@ internal partial class DefaultComponentGenerator
 
                 if (item.Summary?.Html is not null || item.Summary?.Text is not null)
                 {
+                    var summaryIdPrefix = options.Id!.Value.ToHtmlString(raw: true);
                     var summaryTag = new HtmlTag("div", attrs => attrs
                         .WithClasses("govuk-accordion__section-summary", "govuk-body")
-                        .With("id", $"{options.Id.ToHtmlString(raw: true)}-summary-{index}"));
+                        .With("id", $"{summaryIdPrefix}-summary-{index}"));
 
                     summaryTag.InnerHtml.AppendHtml(HtmlOrText(item.Summary?.Html, item.Summary?.Text));
                     headerTag.InnerHtml.AppendHtml(summaryTag);
@@ -71,13 +73,15 @@ internal partial class DefaultComponentGenerator
 
                 sectionTag.InnerHtml.AppendHtml(headerTag);
 
+                var contentIdPrefix = options.Id!.Value.ToHtmlString(raw: true);
                 var contentTag = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-accordion__section-content")
-                    .With("id", $"{options.Id.ToHtmlString(raw: true)}-content-{index}"));
+                    .With("id", $"{contentIdPrefix}-content-{index}"));
 
                 if (item.Content?.Html is not null)
                 {
-                    contentTag.InnerHtml.AppendHtml(new Microsoft.AspNetCore.Html.HtmlString(item.Content.Html.ToHtmlString(raw: true)));
+                    var rawHtml = item.Content.Html.Value.ToHtmlString(raw: true);
+                    contentTag.InnerHtml.AppendHtml(new Microsoft.AspNetCore.Html.HtmlString(rawHtml));
                 }
                 else if (item.Content?.Text is not null)
                 {

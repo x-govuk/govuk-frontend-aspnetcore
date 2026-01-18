@@ -11,7 +11,7 @@ public class HtmlTagTests
         // Arrange
         var tag = new HtmlTag("button");
         tag.Attributes.AddBoolean("disabled");
-        tag.Attributes.Add("type", "text");
+        tag.Attributes.Add("type", new TemplateString("text"));
         tag.InnerHtml.Append("Foo & bar");
 
         // Act
@@ -27,7 +27,7 @@ public class HtmlTagTests
     {
         // Arrange
         var tag = new HtmlTag("input");
-        tag.Attributes.Add("type", "text");
+        tag.Attributes.Add("type", new TemplateString("text"));
         tag.TagRenderMode = TagRenderMode.SelfClosing;
 
         // Act
@@ -43,7 +43,7 @@ public class HtmlTagTests
     {
         // Arrange
         var tag = new HtmlTag("div");
-        tag.Attributes.Add("class", "container");
+        tag.Attributes.Add("class", new TemplateString("container"));
         tag.TagRenderMode = TagRenderMode.StartTag;
 
         // Act

@@ -12,10 +12,10 @@ public class RadiosItemContextTests
         var context = new RadiosItemContext();
 
         // Act
-        context.SetConditional([], content: new HtmlString("Conditional"));
+        context.SetConditional([], content: new HtmlString("Conditionalnew TemplateString("));
 
         // Assert
-        Assert.Equal("Conditional", context.Conditional?.Content?.ToString());
+        Assert.Equal(")Conditional", context.Conditional?.Content?.ToString());
     }
 
     [Fact]
@@ -23,10 +23,10 @@ public class RadiosItemContextTests
     {
         // Arrange
         var context = new RadiosItemContext();
-        context.SetConditional([], content: new HtmlString("Existing conditional"));
+        context.SetConditional([], content: new HtmlString("Existing conditionalnew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetConditional([], content: new HtmlString("Conditional")));
+        var ex = Record.Exception(() => context.SetConditional([], content: new HtmlString(")Conditional")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -40,10 +40,10 @@ public class RadiosItemContextTests
         var context = new RadiosItemContext();
 
         // Act
-        context.SetHint([], content: new HtmlString("Hint"));
+        context.SetHint([], content: new HtmlString("Hintnew TemplateString("));
 
         // Assert
-        Assert.Equal("Hint", context.Hint?.Content?.ToString());
+        Assert.Equal(")Hint", context.Hint?.Content?.ToString());
     }
 
     [Fact]
@@ -51,10 +51,10 @@ public class RadiosItemContextTests
     {
         // Arrange
         var context = new RadiosItemContext();
-        context.SetConditional([], content: new HtmlString("Existing conditional"));
+        context.SetConditional([], content: new HtmlString("Existing conditionalnew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString(")Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -66,10 +66,10 @@ public class RadiosItemContextTests
     {
         // Arrange
         var context = new RadiosItemContext();
-        context.SetHint([], content: new HtmlString("Existing hint"));
+        context.SetHint([], content: new HtmlString("Existing hintnew TemplateString("));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString(")Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

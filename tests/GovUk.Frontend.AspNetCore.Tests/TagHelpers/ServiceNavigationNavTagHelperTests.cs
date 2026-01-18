@@ -37,11 +37,11 @@ public class ServiceNavigationNavTagHelperTests : TagHelperTestBase<ServiceNavig
             {
                 var serviceNavigationNavContext = context.GetContextItem<ServiceNavigationNavContext>();
 
-                serviceNavigationNavContext.NavigationStartSlot = new(navStartSlotContent, ServiceNavigationNavStartTagHelper.TagName);
+                serviceNavigationNavContext.NavigationStartSlot = new(new TemplateString(navStartSlotContent), ServiceNavigationNavStartTagHelper.TagName);
 
                 serviceNavigationNavContext.Items.Add(item);
 
-                serviceNavigationNavContext.NavigationEndSlot = new(navEndSlotContent, ServiceNavigationNavEndTagHelper.TagName);
+                serviceNavigationNavContext.NavigationEndSlot = new(new TemplateString(navEndSlotContent), ServiceNavigationNavEndTagHelper.TagName);
 
                 TagHelperContent content = new DefaultTagHelperContent();
                 return Task.FromResult(content);
@@ -65,14 +65,14 @@ public class ServiceNavigationNavTagHelperTests : TagHelperTestBase<ServiceNavig
         // Assert
         Assert.NotNull(serviceNavigationContext.Nav);
         Assert.Equal(ariaLabel, serviceNavigationContext.Nav.AriaLabel);
-        Assert.Equal(menuButtonText, serviceNavigationContext.Nav.MenuButtonText);
+        Assert.Equal(menuButtonText, serviceNavigationContext.Nav.MenuButtonText?.ToString());
         Assert.Equal(menuButtonLabel, serviceNavigationContext.Nav.MenuButtonLabel);
         Assert.Equal(label, serviceNavigationContext.Nav.Label);
         Assert.Equal(id, serviceNavigationContext.Nav.Id);
         Assert.Equal(collapseNavigationOnMobile, serviceNavigationContext.Nav.CollapseNavigationOnMobile);
         AssertContainsAttributes(attributes, serviceNavigationContext.Nav.Attributes);
-        Assert.Equal(navStartSlotContent, serviceNavigationContext.Nav.NavigationStartSlot?.Html);
-        Assert.Equal(navEndSlotContent, serviceNavigationContext.Nav.NavigationEndSlot?.Html);
+        Assert.Equal(new TemplateString(navStartSlotContent), serviceNavigationContext.Nav.NavigationStartSlot?.Html);
+        Assert.Equal(new TemplateString(navEndSlotContent), serviceNavigationContext.Nav.NavigationEndSlot?.Html);
     }
 
     [Fact]
@@ -106,7 +106,7 @@ public class ServiceNavigationNavTagHelperTests : TagHelperTestBase<ServiceNavig
         // Arrange
         var serviceNavigationContext = new ServiceNavigationContext
         {
-            EndSlot = new("End slot", ServiceNavigationEndTagHelper.TagName)
+            EndSlot = new(new TemplateString("End slot"), ServiceNavigationEndTagHelper.TagName)
         };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);

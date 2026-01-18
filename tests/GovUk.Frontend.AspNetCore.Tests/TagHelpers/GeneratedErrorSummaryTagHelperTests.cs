@@ -28,7 +28,7 @@ public class GeneratedErrorSummaryTagHelperTests
         });
 
         var errorHtml = "Error message";
-        var errorHref = "#Field";
+        var errorHref = new TemplateString("#Field");
 
         var context = new TagHelperContext(
             tagName: "form",
@@ -51,7 +51,7 @@ public class GeneratedErrorSummaryTagHelperTests
 
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
-        containerErrorContext.AddError(errorHtml, errorHref);
+        containerErrorContext.AddError(new TemplateString(errorHtml), errorHref);
 
         var tagHelper = new GeneratedErrorSummaryTagHelper(componentGeneratorMock.Object, options)
         {

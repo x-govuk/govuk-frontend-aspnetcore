@@ -43,7 +43,7 @@ public class ServiceNavigationNavStartTagHelperTests : TagHelperTestBase<Service
 
         var navContext = new ServiceNavigationNavContext
         {
-            NavigationStartSlot = new("Existing start slot", TagName)
+            NavigationStartSlot = new(new TemplateString("Existing start slot"), TagName)
         };
 
         var context = CreateTagHelperContext(contexts: navContext);
@@ -108,7 +108,7 @@ public class ServiceNavigationNavStartTagHelperTests : TagHelperTestBase<Service
 
         var navContext = new ServiceNavigationNavContext
         {
-            NavigationEndSlot = new("End slot", ServiceNavigationNavEndTagHelper.TagName)
+            NavigationEndSlot = new(new TemplateString("End slot"), ServiceNavigationNavEndTagHelper.TagName)
         };
 
         var context = CreateTagHelperContext(contexts: navContext);

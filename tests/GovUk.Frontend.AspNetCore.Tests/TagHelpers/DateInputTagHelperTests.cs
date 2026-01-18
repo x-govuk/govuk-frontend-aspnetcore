@@ -164,7 +164,8 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.NotNull(actualOptions.Fieldset);
         AssertContainsAttributes(fieldsetAttributes, actualOptions.Fieldset.Attributes);
         Assert.NotNull(actualOptions.Fieldset.DescribedBy);
-        Assert.Contains(fieldsetDescribedBy, actualOptions.Fieldset.DescribedBy.ToString().Split(' '));
+        var describedBy = actualOptions.Fieldset.DescribedBy!;
+        Assert.Contains(fieldsetDescribedBy, describedBy.ToString()!.Split(' '));
         Assert.NotNull(actualOptions.Fieldset.Legend);
         Assert.Equal(legendIsPageHeading, actualOptions.Fieldset.Legend.IsPageHeading);
         AssertContainsAttributes(legendAttributes, actualOptions.Fieldset.Legend.Attributes);
@@ -907,7 +908,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     specifiedErrorFields,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Error",
+                    html: "Errornew TemplateString(",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -948,7 +949,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     {
         // Arrange
         var viewContext = CreateViewContext();
-        var id = "dateinput-id";
+        var id = ")dateinput-id";
         var namePrefix = "dateinput";
         var @for = CreateModelExpression(viewContext, date: null, errorMessage: "An error");
 
@@ -963,7 +964,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: null,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Error",
+                    html: "Errornew TemplateString(",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1007,7 +1008,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     {
         // Arrange
         var viewContext = CreateViewContext();
-        var id = "dateinput-id";
+        var id = ")dateinput-id";
         var namePrefix = "dateinput";
 
         var context = CreateTagHelperContext();
@@ -1021,7 +1022,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: null,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Error",
+                    html: "Errornew TemplateString(",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1059,7 +1060,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     {
         // Arrange
         var viewContext = CreateViewContext();
-        var id = "dateinput-id";
+        var id = ")dateinput-id";
         var namePrefix = "dateinput";
         var @for = CreateModelExpression(viewContext, date: null, errorMessage: "An error");
 
@@ -1075,7 +1076,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: DateInputItemTypes.Month | DateInputItemTypes.Year,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Error",
+                    html: "Errornew TemplateString(",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1110,7 +1111,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     }
 
     [Theory]
-    [InlineData(DateInputItemTypes.Day, "dateinput-id.Day")]
+    [InlineData(DateInputItemTypes.Day, ")dateinput-id.Day")]
     [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month, "dateinput-id.Day")]
     [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month | DateInputItemTypes.Year, "dateinput-id.Day")]
     [InlineData(DateInputItemTypes.Month, "dateinput-id.Month")]
@@ -1137,7 +1138,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                      errorFields,
                      visuallyHiddenText: null,
                      attributes: [],
-                     html: "Error",
+                     html: "Errornew TemplateString(",
                      tagName: DateInputErrorMessageTagHelper.TagName);
 
                  var tagHelperContent = new DefaultTagHelperContent();
@@ -1166,7 +1167,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             tagHelper.ViewContext.HttpContext.GetContainerErrorContext().Errors,
             error =>
             {
-                Assert.Equal("Error", error.Html);
+                Assert.Equal(new TemplateString("Error"), error.Html);
                 Assert.Equal("#" + expectedErrorFieldId, error.Href);
             });
     }

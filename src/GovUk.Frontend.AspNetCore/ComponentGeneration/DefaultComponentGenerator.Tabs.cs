@@ -80,7 +80,8 @@ internal partial class DefaultComponentGenerator
 
             if (item.Panel?.Html is not null && !item.Panel.Html.IsEmpty())
             {
-                panelTag.InnerHtml.AppendHtml(new Microsoft.AspNetCore.Html.HtmlString(item.Panel.Html.ToHtmlString(raw: true)));
+                var rawPanelHtml = item.Panel.Html.Value.ToHtmlString(raw: true);
+                panelTag.InnerHtml.AppendHtml(new Microsoft.AspNetCore.Html.HtmlString(rawPanelHtml));
             }
             else if (item.Panel?.Text is not null && !item.Panel.Text.IsEmpty())
             {
@@ -97,10 +98,10 @@ internal partial class DefaultComponentGenerator
         {
             if (item.Id is not null && !item.Id.IsEmpty())
             {
-                return item.Id.ToHtmlString(raw: true);
+                return item.Id.Value.ToHtmlString(raw: true);
             }
 
-            var idPrefix = options.IdPrefix?.ToHtmlString(raw: true);
+            var idPrefix = options.IdPrefix?.ToHtmlString(raw: true) ?? string.Empty;
             if (!string.IsNullOrEmpty(idPrefix))
             {
                 return $"{idPrefix}-{index}";

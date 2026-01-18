@@ -48,7 +48,7 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
 
         dateInputContext.OpenFieldset();
         var checkboxesFieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for: null);
-        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new HtmlString("Existing legend"));
+        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new HtmlString("Existing legendnew TemplateString("));
         dateInputContext.CloseFieldset(checkboxesFieldsetContext);
 
         var context = CreateTagHelperContext(contexts: dateInputContext);
@@ -57,7 +57,7 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: [], html: "New legend");
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: [], html: ")New legend");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

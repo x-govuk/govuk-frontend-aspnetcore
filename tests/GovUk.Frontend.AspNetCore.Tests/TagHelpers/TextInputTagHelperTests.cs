@@ -143,16 +143,16 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     [],
-                    new HtmlString(labelHtml),
+                    new TemplateString(new HtmlString(labelHtml)),
                     TextInputLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
-                    visuallyHiddenText: new HtmlString(errorVht),
+                    visuallyHiddenText: new TemplateString(new HtmlString(errorVht)),
                     attributes: new AttributeCollection()
                     {
-                        { "data-foo", errorDataFooAttribute }
+                        { "data-foo", new TemplateString(errorDataFooAttribute) }
                     },
-                    new HtmlString(errorHtml),
+                    new TemplateString(new HtmlString(errorHtml)),
                     TextInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -364,7 +364,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     [],
-                    new HtmlString(labelHtml),
+                    new TemplateString(new HtmlString(labelHtml)),
                     TextInputLabelTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -436,7 +436,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             {
                 var inputContext = context.GetContextItem<TextInputContext>();
 
-                inputContext.SetHint([], new HtmlString(hintHtml), TextInputHintTagHelper.TagName);
+                inputContext.SetHint([], new TemplateString(new HtmlString(hintHtml)), TextInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -514,7 +514,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     [],
-                    new HtmlString(errorHtml),
+                    new TemplateString(new HtmlString(errorHtml)),
                     TextInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -670,7 +670,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     [],
-                    new HtmlString(errorHtml),
+                    new TemplateString(new HtmlString(errorHtml)),
                     TextInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -753,13 +753,13 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     [],
-                    new HtmlString(labelHtml),
+                    new TemplateString(new HtmlString(labelHtml)),
                     TextInputLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     [],
-                    new HtmlString(errorHtml),
+                    new TemplateString(new HtmlString(errorHtml)),
                     TextInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -787,7 +787,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             tagHelper.ViewContext.HttpContext.GetContainerErrorContext().Errors,
             error =>
             {
-                Assert.Equal(errorHtml, error.Html);
+                Assert.Equal(new TemplateString(errorHtml), error.Html);
                 Assert.Equal($"#{id}", error.Href);
             });
     }

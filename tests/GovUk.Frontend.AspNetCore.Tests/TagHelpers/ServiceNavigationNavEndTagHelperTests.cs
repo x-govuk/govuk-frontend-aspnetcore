@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -42,7 +43,7 @@ public class ServiceNavigationNavEndTagHelperTests : TagHelperTestBase<ServiceNa
 
         var navContext = new ServiceNavigationNavContext
         {
-            NavigationEndSlot = new("Existing end slot", ServiceNavigationNavEndTagHelper.TagName)
+            NavigationEndSlot = new(new TemplateString("Existing end slot"), ServiceNavigationNavEndTagHelper.TagName)
         };
 
         var context = CreateTagHelperContext(contexts: navContext);

@@ -26,7 +26,7 @@ public class CheckboxesItemConditionalTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Conditional");
+                tagHelperContent.SetContent("Conditionalnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -36,6 +36,6 @@ public class CheckboxesItemConditionalTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Conditional", checkboxesItemContext.Conditional?.Content?.ToHtmlString());
+        Assert.Equal(")Conditional", checkboxesItemContext.Conditional?.Content?.ToHtmlString());
     }
 }

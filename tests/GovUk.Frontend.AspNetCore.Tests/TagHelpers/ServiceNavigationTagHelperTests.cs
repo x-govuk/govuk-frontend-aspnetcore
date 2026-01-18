@@ -39,10 +39,10 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
 
                 var attributes = new AttributeCollection(navigationAttributes)
                 {
-                    { "class", navigationClassName }
+                    { "class", new TemplateString(navigationClassName) }
                 };
 
-                serviceNavigationContext.StartSlot = new(startSlotContent, ServiceNavigationStartTagHelper.TagName);
+                serviceNavigationContext.StartSlot = new(new TemplateString(startSlotContent), ServiceNavigationStartTagHelper.TagName);
 
                 serviceNavigationContext.Nav = new ServiceNavigationNavContext()
                 {
@@ -54,13 +54,13 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
                     Id = navigationId,
                     Attributes = attributes,
                     FirstItemTagName = ServiceNavigationNavItemTagHelper.TagName,
-                    NavigationStartSlot = new(navStartSlotContent, ServiceNavigationNavStartTagHelper.TagName),
-                    NavigationEndSlot = new(navEndSlotContent, ServiceNavigationNavEndTagHelper.TagName)
+                    NavigationStartSlot = new(new TemplateString(navStartSlotContent), ServiceNavigationNavStartTagHelper.TagName),
+                    NavigationEndSlot = new(new TemplateString(navEndSlotContent), ServiceNavigationNavEndTagHelper.TagName)
                 };
 
                 serviceNavigationContext.Nav.Items.Add(item);
 
-                serviceNavigationContext.EndSlot = new(endSlotContent, ServiceNavigationEndTagHelper.TagName);
+                serviceNavigationContext.EndSlot = new(new TemplateString(endSlotContent), ServiceNavigationEndTagHelper.TagName);
 
                 TagHelperContent content = new DefaultTagHelperContent();
                 return Task.FromResult(content);

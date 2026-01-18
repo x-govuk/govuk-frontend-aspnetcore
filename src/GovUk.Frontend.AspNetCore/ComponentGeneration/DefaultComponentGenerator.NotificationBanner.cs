@@ -66,7 +66,7 @@ internal partial class DefaultComponentGenerator
         {
             if (role is not null)
             {
-                return role.ToHtmlString(raw: true);
+                return role.Value.ToHtmlString(raw: true);
             }
 
             // If type is success, add role="alert" to prioritise the information in the notification banner
@@ -85,7 +85,8 @@ internal partial class DefaultComponentGenerator
         {
             if (titleHtml?.IsEmpty() == false)
             {
-                return new HtmlString(titleHtml.ToHtmlString(raw: true));
+                var rawTitleHtml = titleHtml.Value.ToHtmlString(raw: true);
+                return new HtmlString(rawTitleHtml);
             }
 
             if (titleText?.IsEmpty() == false)

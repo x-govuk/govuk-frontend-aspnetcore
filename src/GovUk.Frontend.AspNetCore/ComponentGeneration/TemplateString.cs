@@ -12,7 +12,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 /// Contains either an unencoded <see cref="string" /> or an <see cref="IHtmlContent"/>.
 /// </summary>
 [DebuggerDisplay("{ToString()}")]
-public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
+public readonly struct TemplateString : IEquatable<TemplateString>, IHtmlContent
 {
     internal static HtmlEncoder DefaultEncoder { get; } = HtmlEncoder.Default;
 
@@ -103,21 +103,21 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     public static TemplateString operator +(TemplateString? first, TemplateString? second)
 #pragma warning restore CA2225
     {
-        first ??= Empty;
-        second ??= Empty;
+        var firstValue = first ?? Empty;
+        var secondValue = second ?? Empty;
 
         // Fast path for empty operands
-        if (first._value is "" or null)
+        if (firstValue._value is "" or null)
         {
-            return second;
+            return secondValue;
         }
-        if (second._value is "" or null)
+        if (secondValue._value is "" or null)
         {
-            return first;
+            return firstValue;
         }
 
         // Optimize concatenation for string + string case using StringBuilder to avoid intermediate allocations
-        if (first._value is string str1 && second._value is string str2)
+        if (firstValue._value is string str1 && secondValue._value is string str2)
         {
             // Both are strings - encode both and concatenate using StringBuilder
             var encoded1 = DefaultEncoder.Encode(str1);
@@ -129,8 +129,8 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         }
 
         // At least one is IHtmlContent - concatenate their HTML representations
-        var html1 = first.ToHtmlString(DefaultEncoder);
-        var html2 = second.ToHtmlString(DefaultEncoder);
+        var html1 = firstValue.ToHtmlString(DefaultEncoder);
+        var html2 = secondValue.ToHtmlString(DefaultEncoder);
         var result = new StringBuilder(html1.Length + html2.Length);
         result.Append(html1);
         result.Append(html2);
@@ -174,14 +174,14 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 #pragma warning restore CA2225
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static bool operator ==(TemplateString? first, TemplateString? second)
+    public static bool operator ==(TemplateString first, TemplateString second)
     {
-        return (first is null && second is null) || (first is not null && second is not null && first.Equals(second));
+        return first.Equals(second);
     }
 
-    public static bool operator !=(TemplateString? first, TemplateString? second)
+    public static bool operator !=(TemplateString first, TemplateString second)
     {
-        return !(first == second);
+        return !first.Equals(second);
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
@@ -213,24 +213,14 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 
     /// <inheritdoc/>
     public override bool Equals(object? obj) =>
-        ReferenceEquals(this, obj) || (obj is TemplateString other && Equals(other));
+        obj is TemplateString other && Equals(other);
 
     /// <inheritdoc/>
     public override int GetHashCode() => _value != null ? _value.GetHashCode() : 0;
 
     /// <inheritdoc/>
-    public bool Equals(TemplateString? other)
+    public bool Equals(TemplateString other)
     {
-        if (other is null)
-        {
-            return false;
-        }
-
-        if (ReferenceEquals(this, other))
-        {
-            return true;
-        }
-
         // Fast path: if both have the same underlying value reference, they're equal
         if (ReferenceEquals(_value, other._value))
         {

@@ -56,7 +56,7 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("New content");
+                tagHelperContent.SetContent("New contentnew TemplateString(");
                 return Task.FromResult(tagHelperContent);
             });
 
@@ -69,7 +69,7 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($")Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Content");
+                tagHelperContent.SetContent("Contentnew TemplateString(");
                 return Task.FromResult(tagHelperContent);
             });
 
@@ -99,6 +99,6 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"<{TagName}> must be specified before <{copyrightTagName}>.", ex.Message);
+        Assert.Equal($")<{TagName}> must be specified before <{copyrightTagName}>.", ex.Message);
     }
 }

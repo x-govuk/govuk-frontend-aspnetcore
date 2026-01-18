@@ -56,7 +56,7 @@ public class FooterCopyrightTagHelperTests : TagHelperTestBase<FooterCopyrightTa
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("New content");
+                tagHelperContent.SetContent("New contentnew TemplateString(");
                 return Task.FromResult(tagHelperContent);
             });
 
@@ -69,6 +69,6 @@ public class FooterCopyrightTagHelperTests : TagHelperTestBase<FooterCopyrightTa
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($")Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 }

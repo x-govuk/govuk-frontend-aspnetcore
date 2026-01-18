@@ -11,9 +11,9 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
     {
         // Arrange
         var firstErrorHtml = "First error";
-        var firstErrorHref = "#FirstError";
+        var firstErrorHref = new TemplateString("#FirstError");
         var secondErrorHtml = "Second error";
-        var secondErrorHref = "#SecondError";
+        var secondErrorHref = new TemplateString("#SecondError");
         var disableAutoFocus = true;
 
         var context = CreateTagHelperContext();
@@ -23,20 +23,20 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle([], "Title");
-                errorSummaryContext.SetDescription([], "Description");
+                errorSummaryContext.SetTitle([], new TemplateString("Titlenew TemplateString("));
+                errorSummaryContext.SetDescription([], new TemplateString(")Description"));
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         firstErrorHref,
-                        firstErrorHtml,
+                        new TemplateString(firstErrorHtml),
                         [],
                         []));
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         secondErrorHref,
-                        secondErrorHtml,
+                        new TemplateString(secondErrorHtml),
                         [],
                         []));
 
@@ -93,7 +93,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         "#Href",
-                        "Content",
+                        new TemplateString("Content"),
                         [],
                         []));
 
@@ -150,9 +150,9 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
     {
         // Arrange
         var containerErrorContextErrorHtml = "First error";
-        var containerErrorContextErrorHref = "#FirstError";
+        var containerErrorContextErrorHref = new TemplateString("#FirstError");
         var itemErrorHtml = "Item error";
-        var itemErrorHref = "#ItemError";
+        var itemErrorHref = new TemplateString("#ItemError");
 
         var context = CreateTagHelperContext();
 
@@ -161,13 +161,13 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle([], "Title");
-                errorSummaryContext.SetDescription([], "Description");
+                errorSummaryContext.SetTitle([], new TemplateString("Titlenew TemplateString("));
+                errorSummaryContext.SetDescription([], new TemplateString(")Description"));
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         itemErrorHref,
-                        itemErrorHtml,
+                        new TemplateString(itemErrorHtml),
                         [],
                         []));
 
@@ -177,7 +177,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
-        containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
+        containerErrorContext.AddError(new TemplateString(containerErrorContextErrorHtml), containerErrorContextErrorHref);
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ErrorSummaryOptions? actualOptions = null;
@@ -209,7 +209,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
     {
         // Arrange
         var containerErrorContextErrorHtml = "First error";
-        var containerErrorContextErrorHref = "#FirstError";
+        var containerErrorContextErrorHref = new TemplateString("#FirstError");
 
         var context = CreateTagHelperContext();
 
@@ -218,8 +218,8 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle([], "Title");
-                errorSummaryContext.SetDescription([], "Description");
+                errorSummaryContext.SetTitle([], new TemplateString("Title"));
+                errorSummaryContext.SetDescription([], new TemplateString("Description"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -227,7 +227,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
-        containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
+        containerErrorContext.AddError(new TemplateString(containerErrorContextErrorHtml), containerErrorContextErrorHref);
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ErrorSummaryOptions? actualOptions = null;

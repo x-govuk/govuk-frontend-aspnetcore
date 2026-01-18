@@ -17,7 +17,7 @@ internal partial class DefaultComponentGenerator
             Href = options.RedirectUrl ?? "https://www.bbc.co.uk/weather",
             Attributes = new AttributeCollection
             {
-                { "rel", "nofollow noreferrer" }
+                { "rel", new TemplateString("nofollow noreferrer") }
             }
         };
 
@@ -45,12 +45,12 @@ internal partial class DefaultComponentGenerator
         {
             if (options.Html?.IsEmpty() == false)
             {
-                return options.Html;
+                return options.Html.Value;
             }
 
             if (options.Text?.IsEmpty() == false)
             {
-                return options.Text;
+                return options.Text.Value;
             }
 
             return new TemplateString(new HtmlString("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page"));

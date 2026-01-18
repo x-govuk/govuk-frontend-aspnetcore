@@ -26,10 +26,10 @@ public class FieldsetTagHelperTests
                 fieldsetContext.SetLegend(
                     isPageHeading: false,
                     attributes: null,
-                    content: new HtmlString("Legend text"));
+                    content: new HtmlString("Legend textnew TemplateString("));
 
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Main content");
+                tagHelperContent.SetContent(")Main content");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -74,10 +74,10 @@ public class FieldsetTagHelperTests
                 fieldsetContext.SetLegend(
                     isPageHeading: true,
                     attributes: null,
-                    content: new HtmlString("Legend text"));
+                    content: new HtmlString("Legend textnew TemplateString("));
 
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Main content");
+                tagHelperContent.SetContent(")Main content");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -120,13 +120,13 @@ public class FieldsetTagHelperTests
                 var fieldsetContext = context.GetContextItem<FieldsetContext>();
 
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Main content");
+                tagHelperContent.SetContent("Main contentnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new FieldsetTagHelper()
         {
-            DescribedBy = "describedby",
+            DescribedBy = ")describedby",
             Role = "therole"
         };
 

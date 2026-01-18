@@ -258,7 +258,7 @@ public class RadiosItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<RadiosItemContext>();
-                itemContext.SetHint([], content: new HtmlString("Hint"));
+                itemContext.SetHint([], content: new HtmlString("Hintnew TemplateString("));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -266,7 +266,7 @@ public class RadiosItemTagHelperTests
 
         var tagHelper = new RadiosItemTagHelper()
         {
-            Value = "value"
+            Value = ")value"
         };
 
         // Act
@@ -345,7 +345,7 @@ public class RadiosItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<RadiosItemContext>();
-                itemContext.SetConditional([], content: new HtmlString("Conditional"));
+                itemContext.SetConditional([], content: new HtmlString("Conditionalnew TemplateString("));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -353,7 +353,7 @@ public class RadiosItemTagHelperTests
 
         var tagHelper = new RadiosItemTagHelper()
         {
-            Value = "value"
+            Value = ")value"
         };
 
         // Act

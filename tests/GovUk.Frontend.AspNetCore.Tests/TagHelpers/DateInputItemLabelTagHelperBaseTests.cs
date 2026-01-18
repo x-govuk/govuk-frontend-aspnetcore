@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -46,7 +47,7 @@ public abstract class DateInputItemLabelTagHelperBaseTests<T> : TagHelperTestBas
     {
         // Arrange
         var itemContext = new DateInputItemContext(ParentTagName!, TagName);
-        itemContext.SetLabel(html: "Existing label", attributes: [], TagName);
+        itemContext.SetLabel(html: new TemplateString("Existing label"), attributes: [], TagName);
 
         var context = CreateTagHelperContext(contexts: itemContext);
 
@@ -54,7 +55,7 @@ public abstract class DateInputItemLabelTagHelperBaseTests<T> : TagHelperTestBas
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("New label");
+                tagHelperContent.SetContent(")New label");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 

@@ -16,7 +16,7 @@ public partial class DefaultComponentGeneratorTests
                 {
                     Text = "Home",
                     Href = "/",
-                    ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
+                    ItemAttributes = new AttributeCollection { { "data-test", new TemplateString("item-attr") } }
                 }
             ]
         };
@@ -40,7 +40,7 @@ public partial class DefaultComponentGeneratorTests
             MaxLength = 10,
             CountMessage = new CharacterCountCountOptionsMessage
             {
-                Attributes = new AttributeCollection { { "data-test", "count-message-attr" } }
+                Attributes = new AttributeCollection { { "data-test", new TemplateString("count-message-attr") } }
             }
         };
 
@@ -64,7 +64,7 @@ public partial class DefaultComponentGeneratorTests
                 {
                     HeadingText = "Cookies",
                     Text = "We use cookies",
-                    HeadingAttributes = new AttributeCollection { { "data-test", "heading-attr" } }
+                    HeadingAttributes = new AttributeCollection { { "data-test", new TemplateString("heading-attr") } }
                 }
             ]
         };
@@ -88,7 +88,7 @@ public partial class DefaultComponentGeneratorTests
                 new CookieBannerOptionsMessage
                 {
                     Text = "We use cookies",
-                    ContentAttributes = new AttributeCollection { { "data-test", "content-attr" } }
+                    ContentAttributes = new AttributeCollection { { "data-test", new TemplateString("content-attr") } }
                 }
             ]
         };
@@ -116,7 +116,7 @@ public partial class DefaultComponentGeneratorTests
                     [
                         new CookieBannerOptionsMessageAction { Text = "Accept", Href = "#" }
                     ],
-                    ActionsAttributes = new AttributeCollection { { "data-test", "actions-attr" } }
+                    ActionsAttributes = new AttributeCollection { { "data-test", new TemplateString("actions-attr") } }
                 }
             ]
         };
@@ -137,7 +137,7 @@ public partial class DefaultComponentGeneratorTests
         {
             SummaryText = "Summary",
             Text = "Details text",
-            SummaryAttributes = new AttributeCollection { { "data-test", "summary-attr" } }
+            SummaryAttributes = new AttributeCollection { { "data-test", new TemplateString("summary-attr") } }
         };
 
         // Act
@@ -156,7 +156,7 @@ public partial class DefaultComponentGeneratorTests
         {
             SummaryText = "Summary",
             Text = "Details text",
-            TextAttributes = new AttributeCollection { { "data-test", "text-attr" } }
+            TextAttributes = new AttributeCollection { { "data-test", new TemplateString("text-attr") } }
         };
 
         // Act
@@ -174,7 +174,7 @@ public partial class DefaultComponentGeneratorTests
         var options = new ErrorSummaryOptions
         {
             TitleText = "There is a problem",
-            TitleAttributes = new AttributeCollection { { "data-test", "title-attr" } }
+            TitleAttributes = new AttributeCollection { { "data-test", new TemplateString("title-attr") } }
         };
 
         // Act
@@ -193,7 +193,7 @@ public partial class DefaultComponentGeneratorTests
         {
             TitleText = "There is a problem",
             DescriptionText = "Please fix the errors",
-            DescriptionAttributes = new AttributeCollection { { "data-test", "description-attr" } }
+            DescriptionAttributes = new AttributeCollection { { "data-test", new TemplateString("description-attr") } }
         };
 
         // Act
@@ -217,7 +217,7 @@ public partial class DefaultComponentGeneratorTests
                 {
                     Text = "Error message",
                     Href = "#error",
-                    ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
+                    ItemAttributes = new AttributeCollection { { "data-test", new TemplateString("item-attr") } }
                 }
             ]
         };
@@ -239,7 +239,7 @@ public partial class DefaultComponentGeneratorTests
             Legend = new FieldsetOptionsLegend
             {
                 Text = "Legend text",
-                Attributes = new AttributeCollection { { "data-test", "legend-attr" } }
+                Attributes = new AttributeCollection { { "data-test", new TemplateString("legend-attr") } }
             }
         };
 
@@ -260,7 +260,7 @@ public partial class DefaultComponentGeneratorTests
             Meta = new FooterOptionsMeta
             {
                 Text = "Meta text",
-                Attributes = new AttributeCollection { { "data-test", "meta-attr" } }
+                Attributes = new AttributeCollection { { "data-test", new TemplateString("meta-attr") } }
             }
         };
 
@@ -281,7 +281,7 @@ public partial class DefaultComponentGeneratorTests
             Meta = new FooterOptionsMeta
             {
                 Text = "Meta text",
-                ContentAttributes = new AttributeCollection { { "data-test", "content-attr" } }
+                ContentAttributes = new AttributeCollection { { "data-test", new TemplateString("content-attr") } }
             }
         };
 
@@ -305,7 +305,7 @@ public partial class DefaultComponentGeneratorTests
                 [
                     new FooterOptionsMetaItem { Text = "Item", Href = "#" }
                 ],
-                ItemsAttributes = new AttributeCollection { { "data-test", "items-attr" } }
+                ItemsAttributes = new AttributeCollection { { "data-test", new TemplateString("items-attr") } }
             }
         };
 
@@ -358,7 +358,7 @@ public partial class DefaultComponentGeneratorTests
                     {
                         Text = "Item",
                         Href = "#",
-                        ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
+                        ItemAttributes = new AttributeCollection { { "data-test", new TemplateString("item-attr") } }
                     }
                 ]
             }
@@ -387,7 +387,7 @@ public partial class DefaultComponentGeneratorTests
                     [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
                     ],
-                    Attributes = new AttributeCollection { { "data-test", "nav-attr" } }
+                    Attributes = new AttributeCollection { { "data-test", new TemplateString("nav-attr") } }
                 }
             ]
         };
@@ -415,7 +415,7 @@ public partial class DefaultComponentGeneratorTests
                     [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
                     ],
-                    ItemsAttributes = new AttributeCollection { { "data-test", "items-attr" } }
+                    ItemsAttributes = new AttributeCollection { { "data-test", new TemplateString("items-attr") } }
                 }
             ]
         };
@@ -443,7 +443,7 @@ public partial class DefaultComponentGeneratorTests
                     [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
                     ],
-                    TitleAttributes = new AttributeCollection { { "data-test", "title-attr" } }
+                    TitleAttributes = new AttributeCollection { { "data-test", new TemplateString("title-attr") } }
                 }
             ]
         };
@@ -504,7 +504,7 @@ public partial class DefaultComponentGeneratorTests
                         {
                             Text = "Item",
                             Href = "#",
-                            ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
+                            ItemAttributes = new AttributeCollection { { "data-test", new TemplateString("item-attr") } }
                         }
                     ]
                 }
@@ -528,7 +528,7 @@ public partial class DefaultComponentGeneratorTests
             ContentLicence = new FooterOptionsContentLicence
             {
                 Text = "License text",
-                Attributes = new AttributeCollection { { "data-test", "license-attr" } }
+                Attributes = new AttributeCollection { { "data-test", new TemplateString("license-attr") } }
             }
         };
 
@@ -549,7 +549,7 @@ public partial class DefaultComponentGeneratorTests
             Copyright = new FooterOptionsCopyright
             {
                 Text = "Copyright text",
-                Attributes = new AttributeCollection { { "data-test", "copyright-attr" } }
+                Attributes = new AttributeCollection { { "data-test", new TemplateString("copyright-attr") } }
             }
         };
 
@@ -568,7 +568,7 @@ public partial class DefaultComponentGeneratorTests
         var options = new HeaderOptions
         {
             ServiceName = "Service",
-            ContainerAttributes = new AttributeCollection { { "data-test", "container-attr" } }
+            ContainerAttributes = new AttributeCollection { { "data-test", new TemplateString("container-attr") } }
         };
 
         // Act
@@ -589,7 +589,7 @@ public partial class DefaultComponentGeneratorTests
             [
                 new HeaderOptionsNavigationItem { Text = "Item", Href = "#" }
             ],
-            NavigationAttributes = new AttributeCollection { { "data-test", "nav-attr" } }
+            NavigationAttributes = new AttributeCollection { { "data-test", new TemplateString("nav-attr") } }
         };
 
         // Act
@@ -609,7 +609,7 @@ public partial class DefaultComponentGeneratorTests
             Previous = new PaginationOptionsPrevious
             {
                 Href = "/previous",
-                ContainerAttributes = new AttributeCollection { { "data-test", "prev-container-attr" } }
+                ContainerAttributes = new AttributeCollection { { "data-test", new TemplateString("prev-container-attr") } }
             }
         };
 
@@ -630,7 +630,7 @@ public partial class DefaultComponentGeneratorTests
             Next = new PaginationOptionsNext
             {
                 Href = "/next",
-                ContainerAttributes = new AttributeCollection { { "data-test", "next-container-attr" } }
+                ContainerAttributes = new AttributeCollection { { "data-test", new TemplateString("next-container-attr") } }
             }
         };
 
@@ -649,7 +649,7 @@ public partial class DefaultComponentGeneratorTests
         var options = new PanelOptions
         {
             TitleText = "Title",
-            TitleAttributes = new AttributeCollection { { "data-test", "title-attr" } }
+            TitleAttributes = new AttributeCollection { { "data-test", new TemplateString("title-attr") } }
         };
 
         // Act
@@ -668,7 +668,7 @@ public partial class DefaultComponentGeneratorTests
         {
             TitleText = "Title",
             Text = "Body",
-            BodyAttributes = new AttributeCollection { { "data-test", "body-attr" } }
+            BodyAttributes = new AttributeCollection { { "data-test", new TemplateString("body-attr") } }
         };
 
         // Act
@@ -689,7 +689,7 @@ public partial class DefaultComponentGeneratorTests
             [
                 new ServiceNavigationOptionsNavigationItem { Text = "Item", Href = "#" }
             ],
-            NavigationAttributes = new AttributeCollection { { "data-test", "nav-attr" } }
+            NavigationAttributes = new AttributeCollection { { "data-test", new TemplateString("nav-attr") } }
         };
 
         // Act
@@ -711,7 +711,7 @@ public partial class DefaultComponentGeneratorTests
                 Title = new SummaryListOptionsCardTitle
                 {
                     Text = "Title",
-                    Attributes = new AttributeCollection { { "data-test", "title-attr" } }
+                    Attributes = new AttributeCollection { { "data-test", new TemplateString("title-attr") } }
                 }
             },
             Rows =
@@ -744,7 +744,7 @@ public partial class DefaultComponentGeneratorTests
                 {
                     Key = new SummaryListOptionsRowKey { Text = "Key" },
                     Value = new SummaryListOptionsRowValue { Text = "Value" },
-                    Attributes = new AttributeCollection { { "data-test", "row-attr" } }
+                    Attributes = new AttributeCollection { { "data-test", new TemplateString("row-attr") } }
                 }
             ]
         };
@@ -770,7 +770,7 @@ public partial class DefaultComponentGeneratorTests
                     Key = new SummaryListOptionsRowKey
                     {
                         Text = "Key",
-                        Attributes = new AttributeCollection { { "data-test", "key-attr" } }
+                        Attributes = new AttributeCollection { { "data-test", new TemplateString("key-attr") } }
                     },
                     Value = new SummaryListOptionsRowValue { Text = "Value" }
                 }
@@ -799,7 +799,7 @@ public partial class DefaultComponentGeneratorTests
                     Value = new SummaryListOptionsRowValue
                     {
                         Text = "Value",
-                        Attributes = new AttributeCollection { { "data-test", "value-attr" } }
+                        Attributes = new AttributeCollection { { "data-test", new TemplateString("value-attr") } }
                     }
                 }
             ]
@@ -831,7 +831,7 @@ public partial class DefaultComponentGeneratorTests
                         [
                             new SummaryListOptionsRowActionsItem { Text = "Change", Href = "#" }
                         ],
-                        Attributes = new AttributeCollection { { "data-test", "actions-attr" } }
+                        Attributes = new AttributeCollection { { "data-test", new TemplateString("actions-attr") } }
                     }
                 }
             ]
@@ -860,7 +860,7 @@ public partial class DefaultComponentGeneratorTests
                     [
                         new SummaryListOptionsCardActionsItem { Text = "Delete", Href = "#" }
                     ],
-                    Attributes = new AttributeCollection { { "data-test", "card-actions-attr" } }
+                    Attributes = new AttributeCollection { { "data-test", new TemplateString("card-actions-attr") } }
                 }
             },
             Rows =

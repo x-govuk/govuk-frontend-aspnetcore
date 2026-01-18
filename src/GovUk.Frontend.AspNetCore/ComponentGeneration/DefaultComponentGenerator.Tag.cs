@@ -10,7 +10,7 @@ internal partial class DefaultComponentGenerator
         {
             if (options.Html?.IsEmpty() == false)
             {
-                return options.Html.ToHtmlString(raw: true).Trim();
+                return options.Html.Value.ToHtmlString(raw: true).Trim();
             }
 
             if (options.Text?.IsEmpty() == false)

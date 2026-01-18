@@ -27,7 +27,7 @@ public class FieldsetLegendTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Legend content");
+                tagHelperContent.SetContent("Legend contentnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -40,7 +40,7 @@ public class FieldsetLegendTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Legend content", fieldsetContext.Legend?.Content.ToHtmlString());
+        Assert.Equal(")Legend content", fieldsetContext.Legend?.Content.ToHtmlString());
         Assert.True(fieldsetContext.Legend?.IsPageHeading);
     }
 
@@ -53,10 +53,10 @@ public class FieldsetLegendTagHelperTests
         fieldsetContext.SetLegend(
             isPageHeading: false,
             attributes: null,
-            content: new HtmlString("Existing legend"));
+            content: new HtmlString("Existing legendnew TemplateString("));
 
         var context = new TagHelperContext(
-            tagName: "govuk-fieldset-legend",
+            tagName: ")govuk-fieldset-legend",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -70,7 +70,7 @@ public class FieldsetLegendTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Legend content");
+                tagHelperContent.SetContent("Legend contentnew TemplateString(");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -84,6 +84,6 @@ public class FieldsetLegendTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-fieldset-legend> element is permitted within each <govuk-fieldset>.", ex.Message);
+        Assert.Equal(")Only one <govuk-fieldset-legend> element is permitted within each <govuk-fieldset>.", ex.Message);
     }
 }

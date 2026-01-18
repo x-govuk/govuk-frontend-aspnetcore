@@ -14,7 +14,7 @@
     <Description>ASP.NET Core integration for the GOV.UK Design system.</Description>
     <Authors>James Gunn</Authors>
     <MinVerTagPrefix>v</MinVerTagPrefix>
-    <MinVerMinimumMajorMinor>3.2</MinVerMinimumMajorMinor>
+    <MinVerMinimumMajorMinor>3.5</MinVerMinimumMajorMinor>
     <MinVerDefaultPreReleaseIdentifiers>pre.0</MinVerDefaultPreReleaseIdentifiers>
     <MinVerBuildMetadata Condition="'$(GITHUB_ACTIONS)' != 'true'">$([System.DateTimeOffset]::Now.ToUnixTimeSeconds())</MinVerBuildMetadata>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>

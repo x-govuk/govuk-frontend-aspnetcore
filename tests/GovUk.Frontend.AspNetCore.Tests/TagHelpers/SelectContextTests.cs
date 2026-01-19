@@ -18,11 +18,11 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, null, new HtmlString("Errornew TemplateString(")));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, null, new HtmlString("Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-select-error-message> must be specified before <govuk-select-item>.", ex.Message);
+        Assert.Equal("<govuk-select-error-message> must be specified before <govuk-select-item>.", ex.Message);
     }
 
     [Fact]
@@ -37,11 +37,11 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(null, new HtmlString("Errornew TemplateString(")));
+        var ex = Record.Exception(() => context.SetHint(null, new HtmlString("Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-select-hint> must be specified before <govuk-select-item>.", ex.Message);
+        Assert.Equal("<govuk-select-hint> must be specified before <govuk-select-item>.", ex.Message);
     }
 
     [Fact]
@@ -56,10 +56,10 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Errornew TemplateString(")));
+        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-select-label> must be specified before <govuk-select-item>.", ex.Message);
+        Assert.Equal("<govuk-select-label> must be specified before <govuk-select-item>.", ex.Message);
     }
 }

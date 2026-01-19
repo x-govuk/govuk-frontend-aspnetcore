@@ -12,10 +12,10 @@ public class FormGroupContextTests
         var context = new TestFormGroupContext();
 
         // Act
-        context.SetErrorMessage(visuallyHiddenText: "vht", null, new HtmlString("Errornew TemplateString("));
+        context.SetErrorMessage(visuallyHiddenText: "vht", null, new HtmlString("Error"));
 
         // Assert
-        Assert.Equal(")vht", context.ErrorMessage?.VisuallyHiddenText);
+        Assert.Equal("vht", context.ErrorMessage?.VisuallyHiddenText);
         Assert.Equal("Error", context.ErrorMessage?.Content?.ToString());
     }
 
@@ -28,7 +28,7 @@ public class FormGroupContextTests
         context.SetErrorMessage(
             visuallyHiddenText: null,
             attributes: null,
-            content: new HtmlString("Existing errornew TemplateString("));
+            content: new HtmlString("Existing error"));
 
         // Act
         var ex = Record.Exception(() => context.SetErrorMessage(null, null, new HtmlString(")Error")));
@@ -45,10 +45,10 @@ public class FormGroupContextTests
         var context = new TestFormGroupContext();
 
         // Act
-        context.SetHint(null, new HtmlString("Hintnew TemplateString("));
+        context.SetHint(null, new HtmlString("Hint"));
 
         // Assert
-        Assert.Equal(")Hint", context.Hint?.Content?.ToString());
+        Assert.Equal("Hint", context.Hint?.Content?.ToString());
     }
 
     [Fact]
@@ -59,7 +59,7 @@ public class FormGroupContextTests
 
         context.SetHint(
             attributes: null,
-            content: new HtmlString("Existing hintnew TemplateString("));
+            content: new HtmlString("Existing hint"));
 
         // Act
         var ex = Record.Exception(() => context.SetHint(null, new HtmlString(")Hint")));
@@ -78,7 +78,7 @@ public class FormGroupContextTests
         context.SetErrorMessage(
             visuallyHiddenText: null,
             attributes: null,
-            content: new HtmlString("Error messagenew TemplateString("));
+            content: new HtmlString("Error message"));
 
         // Act
         var ex = Record.Exception(() => context.SetHint(null, new HtmlString(")Hint")));
@@ -95,11 +95,11 @@ public class FormGroupContextTests
         var context = new TestFormGroupContext();
 
         // Act
-        context.SetLabel(isPageHeading: true, null, new HtmlString("Labelnew TemplateString("));
+        context.SetLabel(isPageHeading: true, null, new HtmlString("Label"));
 
         // Assert
         Assert.True(context.Label?.IsPageHeading);
-        Assert.Equal(")Label", context.Label?.Content?.ToString());
+        Assert.Equal("Label", context.Label?.Content?.ToString());
     }
 
     [Fact]
@@ -111,7 +111,7 @@ public class FormGroupContextTests
         context.SetLabel(
             isPageHeading: false,
             attributes: null,
-            content: new HtmlString("Existing labelnew TemplateString("));
+            content: new HtmlString("Existing label"));
 
         // Act
         var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Label")));
@@ -130,7 +130,7 @@ public class FormGroupContextTests
         context.SetErrorMessage(
             visuallyHiddenText: null,
             attributes: null,
-            content: new HtmlString("Error messagenew TemplateString("));
+            content: new HtmlString("Error message"));
 
         // Act
         var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Hint")));
@@ -148,7 +148,7 @@ public class FormGroupContextTests
 
         context.SetHint(
             attributes: null,
-            content: new HtmlString("Hintnew TemplateString("));
+            content: new HtmlString("Hint"));
 
         // Act
         var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Hint")));

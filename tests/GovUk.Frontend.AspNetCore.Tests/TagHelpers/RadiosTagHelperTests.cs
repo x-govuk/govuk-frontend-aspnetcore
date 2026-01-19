@@ -24,7 +24,7 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.SetHint(attributes: null, content: new HtmlString("The hintnew TemplateString("));
+                radiosContext.SetHint(attributes: null, content: new HtmlString("The hint"));
 
                 radiosContext.AddItem(new RadiosItem()
                 {
@@ -93,7 +93,7 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A errornew TemplateString("));
+                radiosContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A error"));
 
                 radiosContext.AddItem(new RadiosItem()
                 {
@@ -334,7 +334,7 @@ public class RadiosTagHelperTests
 
                 radiosContext.OpenFieldset();
                 var radiosFieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
-                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legendnew TemplateString("));
+                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legend"));
 
                 radiosContext.SetHint(attributes: null, content: new HtmlString(")The hint"));
 

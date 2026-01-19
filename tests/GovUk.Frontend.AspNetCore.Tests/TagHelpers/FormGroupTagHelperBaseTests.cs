@@ -39,7 +39,7 @@ public class FormGroupTagHelperBaseTests
             uniqueId: "test");
 
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetErrorMessage(visuallyHiddenText: "vht", attributes: null, content: new HtmlString("Error messagenew TemplateString("));
+        formGroupContext.SetErrorMessage(visuallyHiddenText: "vht", attributes: null, content: new HtmlString("Error message"));
 
         var modelHelper = new Mock<IModelHelper>();
 
@@ -67,7 +67,7 @@ public class FormGroupTagHelperBaseTests
             uniqueId: "test");
 
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetErrorMessage(visuallyHiddenText: "vht", attributes: null, content: new HtmlString("Error messagenew TemplateString("));
+        formGroupContext.SetErrorMessage(visuallyHiddenText: "vht", attributes: null, content: new HtmlString("Error message"));
 
         var modelHelper = new Mock<IModelHelper>();
 
@@ -134,7 +134,7 @@ public class FormGroupTagHelperBaseTests
             uniqueId: "test");
 
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetErrorMessage(visuallyHiddenText: "vht", attributes: null, content: new HtmlString("Context errornew TemplateString("));
+        formGroupContext.SetErrorMessage(visuallyHiddenText: "vht", attributes: null, content: new HtmlString("Context error"));
 
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
@@ -265,7 +265,7 @@ public class FormGroupTagHelperBaseTests
             uniqueId: "test");
 
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Context errornew TemplateString("));
+        formGroupContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Context error"));
 
         var modelHelper = new Mock<IModelHelper>();
 
@@ -322,7 +322,7 @@ public class FormGroupTagHelperBaseTests
             uniqueId: "test");
 
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetHint(attributes: null, content: new HtmlString("Hintnew TemplateString("));
+        formGroupContext.SetHint(attributes: null, content: new HtmlString("Hint"));
 
         var modelHelper = new Mock<IModelHelper>();
 
@@ -377,10 +377,10 @@ public class FormGroupTagHelperBaseTests
     {
         // Arrange
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetHint(attributes: null, content: new HtmlString("Context hintnew TemplateString("));
+        formGroupContext.SetHint(attributes: null, content: new HtmlString("Context hint"));
 
         var tagHelperContext = new TagHelperContext(
-            tagName: ")test",
+            tagName: "test",
             allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
@@ -445,7 +445,7 @@ public class FormGroupTagHelperBaseTests
             uniqueId: "test");
 
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetHint(attributes: null, content: new HtmlString("Hintnew TemplateString("));
+        formGroupContext.SetHint(attributes: null, content: new HtmlString("Hint"));
 
         var modelHelper = new Mock<IModelHelper>();
 
@@ -516,7 +516,7 @@ public class FormGroupTagHelperBaseTests
     {
         // Arrange
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetLabel(isPageHeading: false, attributes: null, content: new HtmlString("Context labelnew TemplateString("));
+        formGroupContext.SetLabel(isPageHeading: false, attributes: null, content: new HtmlString("Context label"));
 
         var modelHelper = new Mock<IModelHelper>();
 
@@ -567,7 +567,7 @@ public class FormGroupTagHelperBaseTests
     {
         // Arrange
         var formGroupContext = new TestFormGroupContext();
-        formGroupContext.SetLabel(isPageHeading: false, attributes: null, content: new HtmlString("Context labelnew TemplateString("));
+        formGroupContext.SetLabel(isPageHeading: false, attributes: null, content: new HtmlString("Context label"));
 
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
@@ -612,13 +612,13 @@ public class FormGroupTagHelperBaseTests
             attributes: [],
             @for);
 
-        fieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Context namenew TemplateString("));
+        fieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Context name"));
 
         // Act
         var result = tagHelper.ResolveFieldsetLegendContent(fieldsetContext);
 
         // Assert
-        Assert.Equal(")Context name", result.ToHtmlString());
+        Assert.Equal("Context name", result.ToHtmlString());
     }
 
     [Fact]
@@ -682,13 +682,13 @@ public class FormGroupTagHelperBaseTests
             attributes: [],
             @for);
 
-        fieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Context namenew TemplateString("));
+        fieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Context name"));
 
         // Act
         var result = tagHelper.ResolveFieldsetLegendContent(fieldsetContext);
 
         // Assert
-        Assert.Equal(")Context name", result.ToHtmlString());
+        Assert.Equal("Context name", result.ToHtmlString());
     }
 
     [Fact]

@@ -56,7 +56,7 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("New contentnew TemplateString(");
+                tagHelperContent.SetContent("New content");
                 return Task.FromResult(tagHelperContent);
             });
 
@@ -86,7 +86,7 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Contentnew TemplateString(");
+                tagHelperContent.SetContent("Content");
                 return Task.FromResult(tagHelperContent);
             });
 

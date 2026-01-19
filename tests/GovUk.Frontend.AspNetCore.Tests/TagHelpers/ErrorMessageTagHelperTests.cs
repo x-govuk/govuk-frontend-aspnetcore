@@ -24,7 +24,7 @@ public class ErrorMessageTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("An error!new TemplateString(");
+                tagHelperContent.SetContent("An error!");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -59,13 +59,13 @@ public class ErrorMessageTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("An error!new TemplateString(");
+                tagHelperContent.SetContent("An error!");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new ErrorMessageTagHelper(TestUtils.CreateComponentGenerator())
         {
-            VisuallyHiddenText = ")Overriden"
+            VisuallyHiddenText = "Overriden"
         };
 
         // Act

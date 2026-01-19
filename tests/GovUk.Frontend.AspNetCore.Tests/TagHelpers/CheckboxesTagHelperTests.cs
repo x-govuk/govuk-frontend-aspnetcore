@@ -24,7 +24,7 @@ public class CheckboxesTagHelperTests
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-                checkboxesContext.SetHint(attributes: null, content: new HtmlString("The hintnew TemplateString("));
+                checkboxesContext.SetHint(attributes: null, content: new HtmlString("The hint"));
 
                 checkboxesContext.AddItem(new CheckboxesItem()
                 {
@@ -93,7 +93,7 @@ public class CheckboxesTagHelperTests
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-                checkboxesContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A errornew TemplateString("));
+                checkboxesContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A error"));
 
                 checkboxesContext.AddItem(new CheckboxesItem()
                 {
@@ -334,7 +334,7 @@ public class CheckboxesTagHelperTests
 
                 checkboxesContext.OpenFieldset();
                 var checkboxesFieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
-                checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legendnew TemplateString("));
+                checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legend"));
 
                 checkboxesContext.SetHint(attributes: null, content: new HtmlString(")The hint"));
 

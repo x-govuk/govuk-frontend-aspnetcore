@@ -10,7 +10,7 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetBody(new HtmlString("Bodynew TemplateString("));
+        context.SetBody(new HtmlString("Body"));
 
         // Act
         var ex = Record.Exception(() => context.SetBody(new HtmlString(")Body")));
@@ -25,7 +25,7 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetBody(new HtmlString("Bodynew TemplateString("));
+        context.SetBody(new HtmlString("Body"));
 
         // Act
         var ex = Record.Exception(() => context.SetTitle(new HtmlString(")Title")));
@@ -40,7 +40,7 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetTitle(new HtmlString("Titlenew TemplateString("));
+        context.SetTitle(new HtmlString("Title"));
 
         // Act
         var ex = Record.Exception(() => context.SetTitle(new HtmlString(")Title")));

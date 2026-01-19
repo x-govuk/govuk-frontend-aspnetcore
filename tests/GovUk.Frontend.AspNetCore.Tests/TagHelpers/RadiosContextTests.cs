@@ -110,14 +110,14 @@ public class RadiosContextTests
     {
         // Arrange
         var context = new RadiosContext(name: null, aspFor: null);
-        context.SetHint(attributes: null, content: new HtmlString("Hintnew TemplateString("));
+        context.SetHint(attributes: null, content: new HtmlString("Hint"));
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-radios-fieldset> must be the only direct child of the <govuk-radios>.", ex.Message);
+        Assert.Equal("<govuk-radios-fieldset> must be the only direct child of the <govuk-radios>.", ex.Message);
     }
 
     [Fact]
@@ -125,14 +125,14 @@ public class RadiosContextTests
     {
         // Arrange
         var context = new RadiosContext(name: null, aspFor: null);
-        context.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Errornew TemplateString("));
+        context.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Error"));
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-radios-fieldset> must be the only direct child of the <govuk-radios>.", ex.Message);
+        Assert.Equal("<govuk-radios-fieldset> must be the only direct child of the <govuk-radios>.", ex.Message);
     }
 
     [Fact]
@@ -165,11 +165,11 @@ public class RadiosContextTests
 
         // Act
         var ex = Record.Exception(
-            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Errornew TemplateString(")));
+            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-radios-error-message> must be specified before <govuk-radios-item>.", ex.Message);
+        Assert.Equal("<govuk-radios-error-message> must be specified before <govuk-radios-item>.", ex.Message);
     }
 
     [Fact]
@@ -190,11 +190,11 @@ public class RadiosContextTests
 
         // Act
         var ex = Record.Exception(
-            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Errornew TemplateString(")));
+            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-radios-error-message> must be inside <govuk-radios-fieldset>.", ex.Message);
+        Assert.Equal("<govuk-radios-error-message> must be inside <govuk-radios-fieldset>.", ex.Message);
     }
 
     [Fact]
@@ -212,11 +212,11 @@ public class RadiosContextTests
         context.AddItem(item);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hintnew TemplateString(")));
+        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-radios-hint> must be specified before <govuk-radios-item>.", ex.Message);
+        Assert.Equal("<govuk-radios-hint> must be specified before <govuk-radios-item>.", ex.Message);
     }
 
     [Fact]
@@ -236,11 +236,11 @@ public class RadiosContextTests
         context.CloseFieldset(fieldsetContext);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hintnew TemplateString(")));
+        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-radios-hint> must be inside <govuk-radios-fieldset>.", ex.Message);
+        Assert.Equal("<govuk-radios-hint> must be inside <govuk-radios-fieldset>.", ex.Message);
     }
 
     [Fact]

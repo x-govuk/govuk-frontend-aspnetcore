@@ -276,7 +276,7 @@ public class ErrorSummaryItemTagHelperTests : TagHelperTestBase<ErrorSummaryItem
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Error messagenew TemplateString(");
+                tagHelperContent.SetContent("Error message");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -292,7 +292,7 @@ public class ErrorSummaryItemTagHelperTests : TagHelperTestBase<ErrorSummaryItem
             errorSummaryContext.Items,
             item =>
             {
-                Assert.Equal(")#TheField", item.Href);
+                Assert.Equal("#TheField", item.Href);
             });
     }
 

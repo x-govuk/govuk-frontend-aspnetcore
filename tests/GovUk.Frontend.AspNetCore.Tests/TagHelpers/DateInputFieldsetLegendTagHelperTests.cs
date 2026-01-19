@@ -51,7 +51,7 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
         // Arrange
         var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for: null);
 
-        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legendnew TemplateString(");
+        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legend");
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 

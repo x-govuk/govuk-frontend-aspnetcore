@@ -56,7 +56,7 @@ public class FooterCopyrightTagHelperTests : TagHelperTestBase<FooterCopyrightTa
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("New contentnew TemplateString(");
+                tagHelperContent.SetContent("New content");
                 return Task.FromResult(tagHelperContent);
             });
 

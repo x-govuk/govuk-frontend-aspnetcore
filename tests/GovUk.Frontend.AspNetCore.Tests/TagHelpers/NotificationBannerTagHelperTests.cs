@@ -23,7 +23,7 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.new TemplateString(");
+                tagHelperContent.SetContent("The message.");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -68,7 +68,7 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.new TemplateString(");
+                tagHelperContent.SetContent("The message.");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -116,7 +116,7 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.new TemplateString(");
+                tagHelperContent.SetContent("The message.");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -167,7 +167,7 @@ public class NotificationBannerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.new TemplateString(");
+                tagHelperContent.SetContent("The message.");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 

@@ -110,14 +110,14 @@ public class CheckboxesContextTests
     {
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
-        context.SetHint(attributes: null, content: new HtmlString("Hintnew TemplateString("));
+        context.SetHint(attributes: null, content: new HtmlString("Hint"));
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-checkboxes-fieldset> must be the only direct child of the <govuk-checkboxes>.", ex.Message);
+        Assert.Equal("<govuk-checkboxes-fieldset> must be the only direct child of the <govuk-checkboxes>.", ex.Message);
     }
 
     [Fact]
@@ -125,14 +125,14 @@ public class CheckboxesContextTests
     {
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
-        context.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Errornew TemplateString("));
+        context.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Error"));
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-checkboxes-fieldset> must be the only direct child of the <govuk-checkboxes>.", ex.Message);
+        Assert.Equal("<govuk-checkboxes-fieldset> must be the only direct child of the <govuk-checkboxes>.", ex.Message);
     }
 
     [Fact]
@@ -165,11 +165,11 @@ public class CheckboxesContextTests
 
         // Act
         var ex = Record.Exception(
-            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Errornew TemplateString(")));
+            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-checkboxes-error-message> must be specified before <govuk-checkboxes-item>.", ex.Message);
+        Assert.Equal("<govuk-checkboxes-error-message> must be specified before <govuk-checkboxes-item>.", ex.Message);
     }
 
     [Fact]
@@ -190,11 +190,11 @@ public class CheckboxesContextTests
 
         // Act
         var ex = Record.Exception(
-            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Errornew TemplateString(")));
+            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-checkboxes-error-message> must be inside <govuk-checkboxes-fieldset>.", ex.Message);
+        Assert.Equal("<govuk-checkboxes-error-message> must be inside <govuk-checkboxes-fieldset>.", ex.Message);
     }
 
     [Fact]
@@ -212,11 +212,11 @@ public class CheckboxesContextTests
         context.AddItem(item);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hintnew TemplateString(")));
+        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-checkboxes-hint> must be specified before <govuk-checkboxes-item>.", ex.Message);
+        Assert.Equal("<govuk-checkboxes-hint> must be specified before <govuk-checkboxes-item>.", ex.Message);
     }
 
     [Fact]
@@ -236,11 +236,11 @@ public class CheckboxesContextTests
         context.CloseFieldset(fieldsetContext);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hintnew TemplateString(")));
+        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")<govuk-checkboxes-hint> must be inside <govuk-checkboxes-fieldset>.", ex.Message);
+        Assert.Equal("<govuk-checkboxes-hint> must be inside <govuk-checkboxes-fieldset>.", ex.Message);
     }
 
     [Fact]

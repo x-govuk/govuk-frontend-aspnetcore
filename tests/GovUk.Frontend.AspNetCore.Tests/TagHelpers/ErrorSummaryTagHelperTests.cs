@@ -23,7 +23,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle([], new TemplateString("Titlenew TemplateString("));
+                errorSummaryContext.SetTitle([], new TemplateString("Title"));
                 errorSummaryContext.SetDescription([], new TemplateString(")Description"));
 
                 errorSummaryContext.AddItem(
@@ -161,7 +161,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle([], new TemplateString("Titlenew TemplateString("));
+                errorSummaryContext.SetTitle([], new TemplateString("Title"));
                 errorSummaryContext.SetDescription([], new TemplateString(")Description"));
 
                 errorSummaryContext.AddItem(

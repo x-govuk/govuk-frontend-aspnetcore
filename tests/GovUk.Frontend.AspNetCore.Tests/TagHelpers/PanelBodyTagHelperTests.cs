@@ -27,7 +27,7 @@ public class PanelBodyTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The bodynew TemplateString(");
+                tagHelperContent.SetContent("The body");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -37,7 +37,7 @@ public class PanelBodyTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(")The body", panelContext.Body?.ToHtmlString());
+        Assert.Equal("The body", panelContext.Body?.ToHtmlString());
     }
 
     [Fact]
@@ -45,10 +45,10 @@ public class PanelBodyTagHelperTests
     {
         // Arrange
         var panelContext = new PanelContext();
-        panelContext.SetBody(new HtmlString("The bodynew TemplateString("));
+        panelContext.SetBody(new HtmlString("The body"));
 
         var context = new TagHelperContext(
-            tagName: ")govuk-panel-body",
+            tagName: "govuk-panel-body",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -62,7 +62,7 @@ public class PanelBodyTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The bodynew TemplateString(");
+                tagHelperContent.SetContent("The body");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -73,6 +73,6 @@ public class PanelBodyTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")Only one <govuk-panel-body> element is permitted within each <govuk-panel>.", ex.Message);
+        Assert.Equal("Only one <govuk-panel-body> element is permitted within each <govuk-panel>.", ex.Message);
     }
 }

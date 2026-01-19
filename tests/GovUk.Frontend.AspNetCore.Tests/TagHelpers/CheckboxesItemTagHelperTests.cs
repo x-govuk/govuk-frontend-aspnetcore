@@ -355,7 +355,7 @@ public class CheckboxesItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<CheckboxesItemContext>();
-                itemContext.SetHint([], content: new HtmlString("Hintnew TemplateString("));
+                itemContext.SetHint([], content: new HtmlString("Hint"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -363,7 +363,7 @@ public class CheckboxesItemTagHelperTests
 
         var tagHelper = new CheckboxesItemTagHelper()
         {
-            Name = ")name",
+            Name = "name",
             Value = "value"
         };
 
@@ -444,7 +444,7 @@ public class CheckboxesItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<CheckboxesItemContext>();
-                itemContext.SetConditional([], content: new HtmlString("Conditionalnew TemplateString("));
+                itemContext.SetConditional([], content: new HtmlString("Conditional"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -452,7 +452,7 @@ public class CheckboxesItemTagHelperTests
 
         var tagHelper = new CheckboxesItemTagHelper()
         {
-            Name = ")name",
+            Name = "name",
             Value = "value"
         };
 

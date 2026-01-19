@@ -12,10 +12,10 @@ public class CheckboxesItemContextTests
         var context = new CheckboxesItemContext();
 
         // Act
-        context.SetConditional([], content: new HtmlString("Conditionalnew TemplateString("));
+        context.SetConditional([], content: new HtmlString("Conditional"));
 
         // Assert
-        Assert.Equal(")Conditional", context.Conditional?.Content?.ToString());
+        Assert.Equal("Conditional", context.Conditional?.Content?.ToString());
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetConditional([], content: new HtmlString("Existing conditionalnew TemplateString("));
+        context.SetConditional([], content: new HtmlString("Existing conditional"));
 
         // Act
         var ex = Record.Exception(() => context.SetConditional([], content: new HtmlString(")Conditional")));
@@ -40,10 +40,10 @@ public class CheckboxesItemContextTests
         var context = new CheckboxesItemContext();
 
         // Act
-        context.SetHint([], content: new HtmlString("Hintnew TemplateString("));
+        context.SetHint([], content: new HtmlString("Hint"));
 
         // Assert
-        Assert.Equal(")Hint", context.Hint?.Content?.ToString());
+        Assert.Equal("Hint", context.Hint?.Content?.ToString());
     }
 
     [Fact]
@@ -51,7 +51,7 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetConditional([], content: new HtmlString("Existing conditionalnew TemplateString("));
+        context.SetConditional([], content: new HtmlString("Existing conditional"));
 
         // Act
         var ex = Record.Exception(() => context.SetHint([], content: new HtmlString(")Hint")));
@@ -66,7 +66,7 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetHint([], content: new HtmlString("Existing hintnew TemplateString("));
+        context.SetHint([], content: new HtmlString("Existing hint"));
 
         // Act
         var ex = Record.Exception(() => context.SetHint([], content: new HtmlString(")Hint")));

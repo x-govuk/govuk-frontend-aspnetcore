@@ -61,7 +61,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("New titlenew TemplateString(");
+                tagHelperContent.SetContent("New title");
                 return Task.FromResult(tagHelperContent);
             });
 
@@ -92,7 +92,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Titlenew TemplateString(");
+                tagHelperContent.SetContent("Title");
                 return Task.FromResult(tagHelperContent);
             });
 

@@ -26,14 +26,14 @@ public class NotificationBannerTitleTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Titlenew TemplateString(");
+                tagHelperContent.SetContent("Title");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
         var tagHelper = new NotificationBannerTitleTagHelper()
         {
             HeadingLevel = 3,
-            Id = ")my-title"
+            Id = "my-title"
         };
 
         // Act

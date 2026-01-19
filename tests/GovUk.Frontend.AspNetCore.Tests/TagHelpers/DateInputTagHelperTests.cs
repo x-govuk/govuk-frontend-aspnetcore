@@ -908,7 +908,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     specifiedErrorFields,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Errornew TemplateString(",
+                    html: "Error",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -949,7 +949,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     {
         // Arrange
         var viewContext = CreateViewContext();
-        var id = ")dateinput-id";
+        var id = "dateinput-id";
         var namePrefix = "dateinput";
         var @for = CreateModelExpression(viewContext, date: null, errorMessage: "An error");
 
@@ -964,7 +964,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: null,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Errornew TemplateString(",
+                    html: "Error",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1008,7 +1008,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     {
         // Arrange
         var viewContext = CreateViewContext();
-        var id = ")dateinput-id";
+        var id = "dateinput-id";
         var namePrefix = "dateinput";
 
         var context = CreateTagHelperContext();
@@ -1022,7 +1022,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: null,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Errornew TemplateString(",
+                    html: "Error",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1060,7 +1060,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     {
         // Arrange
         var viewContext = CreateViewContext();
-        var id = ")dateinput-id";
+        var id = "dateinput-id";
         var namePrefix = "dateinput";
         var @for = CreateModelExpression(viewContext, date: null, errorMessage: "An error");
 
@@ -1076,7 +1076,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: DateInputItemTypes.Month | DateInputItemTypes.Year,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Errornew TemplateString(",
+                    html: "Error",
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1111,7 +1111,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     }
 
     [Theory]
-    [InlineData(DateInputItemTypes.Day, ")dateinput-id.Day")]
+    [InlineData(DateInputItemTypes.Day, "dateinput-id.Day")]
     [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month, "dateinput-id.Day")]
     [InlineData(DateInputItemTypes.Day | DateInputItemTypes.Month | DateInputItemTypes.Year, "dateinput-id.Day")]
     [InlineData(DateInputItemTypes.Month, "dateinput-id.Month")]
@@ -1138,7 +1138,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                      errorFields,
                      visuallyHiddenText: null,
                      attributes: [],
-                     html: "Errornew TemplateString(",
+                     html: "Error",
                      tagName: DateInputErrorMessageTagHelper.TagName);
 
                  var tagHelperContent = new DefaultTagHelperContent();

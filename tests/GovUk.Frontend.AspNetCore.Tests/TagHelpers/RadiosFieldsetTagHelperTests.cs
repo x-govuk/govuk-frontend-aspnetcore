@@ -27,7 +27,7 @@ public class RadiosFieldsetTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: null, content: new HtmlString("Legendnew TemplateString("));
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: null, content: new HtmlString("Legend"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -40,7 +40,7 @@ public class RadiosFieldsetTagHelperTests
 
         // Assert
         Assert.True(radiosContext.Fieldset?.Legend?.IsPageHeading);
-        Assert.Equal(")Legend", radiosContext.Fieldset?.Legend?.Content?.ToHtmlString());
+        Assert.Equal("Legend", radiosContext.Fieldset?.Legend?.Content?.ToHtmlString());
     }
 
     [Fact]
@@ -51,11 +51,11 @@ public class RadiosFieldsetTagHelperTests
 
         radiosContext.OpenFieldset();
         var radiosFieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
-        radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Existing legendnew TemplateString("));
+        radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Existing legend"));
         radiosContext.CloseFieldset(radiosFieldsetContext);
 
         var context = new TagHelperContext(
-            tagName: ")govuk-radios-fieldset",
+            tagName: "govuk-radios-fieldset",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -69,7 +69,7 @@ public class RadiosFieldsetTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: null, content: new HtmlString("Legendnew TemplateString("));
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: null, content: new HtmlString("Legend"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -82,6 +82,6 @@ public class RadiosFieldsetTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")Only one <govuk-radios-fieldset> element is permitted within each <govuk-radios>.", ex.Message);
+        Assert.Equal("Only one <govuk-radios-fieldset> element is permitted within each <govuk-radios>.", ex.Message);
     }
 }

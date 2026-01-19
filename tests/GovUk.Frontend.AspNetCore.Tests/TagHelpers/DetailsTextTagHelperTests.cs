@@ -11,10 +11,10 @@ public class DetailsTextTagHelperTests
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetSummary([], new HtmlString("The summarynew TemplateString("));
+        detailsContext.SetSummary([], new HtmlString("The summary"));
 
         var context = new TagHelperContext(
-            tagName: ")govuk-details-text",
+            tagName: "govuk-details-text",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -28,7 +28,7 @@ public class DetailsTextTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The textnew TemplateString(");
+                tagHelperContent.SetContent("The text");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -38,7 +38,7 @@ public class DetailsTextTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(")The text", detailsContext.Text?.Content.ToHtmlString());
+        Assert.Equal("The text", detailsContext.Text?.Content.ToHtmlString());
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class DetailsTextTagHelperTests
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetSummary([], new HtmlString("The summarynew TemplateString("));
+        detailsContext.SetSummary([], new HtmlString("The summary"));
         detailsContext.SetText([], new HtmlString(")The text"));
 
         var context = new TagHelperContext(
@@ -64,7 +64,7 @@ public class DetailsTextTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The textnew TemplateString(");
+                tagHelperContent.SetContent("The text");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -75,6 +75,6 @@ public class DetailsTextTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal(")Only one <govuk-details-text> element is permitted within each <govuk-details>.", ex.Message);
+        Assert.Equal("Only one <govuk-details-text> element is permitted within each <govuk-details>.", ex.Message);
     }
 }

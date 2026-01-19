@@ -144,7 +144,7 @@ public readonly struct TemplateString : IEquatable<TemplateString>, IHtmlContent
     public static TemplateString operator +(TemplateString? first, string? second)
 #pragma warning restore CA2225
     {
-        return first + new TemplateString(second);
+        return first + (TemplateString?)second;
     }
 
     /// <summary>

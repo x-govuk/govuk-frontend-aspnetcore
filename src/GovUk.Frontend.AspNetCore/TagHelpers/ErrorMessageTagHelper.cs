@@ -120,7 +120,7 @@ public class ErrorMessageTagHelper : TagHelper
             var component = await _componentGenerator.GenerateErrorMessageAsync(new ErrorMessageOptions()
             {
                 Html = resolvedContent.ToTemplateString(),
-                VisuallyHiddenText = VisuallyHiddenText != null ? new TemplateString(VisuallyHiddenText) : null,
+                VisuallyHiddenText = VisuallyHiddenText,
                 Classes = classes,
                 Attributes = attributes
             });

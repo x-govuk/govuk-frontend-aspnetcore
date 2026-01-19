@@ -25,7 +25,7 @@ internal partial class DefaultComponentGenerator
                 Text = options.Tag.Text,
                 Html = options.Tag.Html,
                 Classes = options.Tag.Classes != null
-                    ? new TemplateString("govuk-phase-banner__content__tag " + options.Tag.Classes)
+                    ? "govuk-phase-banner__content__tag " + options.Tag.Classes
                     : "govuk-phase-banner__content__tag",
                 Attributes = options.Tag.Attributes
             };

@@ -95,7 +95,7 @@ public class ButtonTagHelper : TagHelper
 
         if (output.Attributes.ContainsName("formaction"))
         {
-            attributes.Set("formaction", new TemplateString(output.GetUrlAttribute("formaction")!));
+            attributes.Set("formaction", output.GetUrlAttribute("formaction")!);
         }
 
         var component = await _componentGenerator.GenerateButtonAsync(new ButtonOptions()

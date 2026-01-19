@@ -176,7 +176,7 @@ public class FileUploadTagHelper : TagHelper
 
         if (LabelClass is not null)
         {
-            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(new TemplateString(LabelClass));
+            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(LabelClass);
         }
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);

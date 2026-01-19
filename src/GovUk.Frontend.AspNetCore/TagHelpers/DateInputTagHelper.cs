@@ -335,11 +335,11 @@ public class DateInputTagHelper : TagHelper
 
             var resolvedAttributes = contextItem?.Attributes?.Clone() ?? [];
             resolvedAttributes.Remove("class", out var itemClasses);
-            itemClasses = itemClasses.AppendCssClasses(new TemplateString(defaultClass));
+            itemClasses = itemClasses.AppendCssClasses(defaultClass);
 
             if (haveError && (errorItems & errorSource) != 0)
             {
-                itemClasses = itemClasses.AppendCssClasses(new TemplateString("govuk-input--error"));
+                itemClasses = itemClasses.AppendCssClasses("govuk-input--error");
             }
 
             if (Disabled == true)

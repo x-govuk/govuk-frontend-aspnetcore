@@ -125,7 +125,7 @@ public readonly struct TemplateString : IEquatable<TemplateString>, IHtmlContent
             var sb = new StringBuilder(encoded1.Length + encoded2.Length);
             sb.Append(encoded1);
             sb.Append(encoded2);
-            return new TemplateString(new HtmlString(sb.ToString()));
+            return ((TemplateString?)new HtmlString(sb.ToString())).Value;
         }
 
         // At least one is IHtmlContent - concatenate their HTML representations
@@ -134,7 +134,7 @@ public readonly struct TemplateString : IEquatable<TemplateString>, IHtmlContent
         var result = new StringBuilder(html1.Length + html2.Length);
         result.Append(html1);
         result.Append(html2);
-        return new TemplateString(new HtmlString(result.ToString()));
+        return ((TemplateString?)new HtmlString(result.ToString())).Value;
     }
 
     /// <summary>
@@ -265,7 +265,7 @@ public static class TemplateStringExtensions
     /// <param name="templateString">The initial set of CSS class names.</param>
     /// <param name="classNames">The additional CSS class names to append.</param>
     /// <returns>A new <see cref="TemplateString"/>.</returns>
-    public static TemplateString AppendCssClasses(this TemplateString? templateString, params TemplateString[] classNames)
+    public static TemplateString AppendCssClasses(this TemplateString? templateString, params TemplateString?[] classNames)
     {
         ArgumentNullException.ThrowIfNull(classNames);
 
@@ -292,7 +292,13 @@ public static class TemplateStringExtensions
         // Append classes with spaces
         for (int i = 0; i < classNames.Length; i++)
         {
-            var classHtml = classNames[i].ToHtmlString(TemplateString.DefaultEncoder);
+            var className = classNames[i];
+            if (className == null)
+            {
+                continue;
+            }
+
+            var classHtml = className.Value.ToHtmlString(TemplateString.DefaultEncoder);
 
             // Skip empty class names
             if (classHtml.Length == 0)
@@ -308,7 +314,7 @@ public static class TemplateStringExtensions
             sb.Append(classHtml);
         }
 
-        return new TemplateString(new HtmlString(sb.ToString()));
+        return ((TemplateString?)new HtmlString(sb.ToString())).Value;
     }
 
     /// <summary>

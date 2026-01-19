@@ -12,7 +12,7 @@ internal static class TagHelperOutputExtensions
         ArgumentNullException.ThrowIfNull(attributeName);
 
         return output.Attributes.TryGetAttribute(attributeName, out var attr) && attr.Value is not null
-            ? attr.Value is IHtmlContent hrefHtmlContent ? new TemplateString(hrefHtmlContent) : new TemplateString(attr.Value.ToString())
+            ? attr.Value is IHtmlContent hrefHtmlContent ? new TemplateString(hrefHtmlContent) : attr.Value.ToString()
             : null;
     }
 }

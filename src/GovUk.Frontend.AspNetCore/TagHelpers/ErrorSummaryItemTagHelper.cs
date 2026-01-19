@@ -119,7 +119,7 @@ public class ErrorSummaryItemTagHelper : TagHelper
                 return;
             }
 
-            itemHtml = new TemplateString(validationMessage);
+            itemHtml = ((TemplateString?)validationMessage).Value;
         }
 
         TemplateString? resolvedHref = null;

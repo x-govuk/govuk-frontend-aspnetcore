@@ -216,7 +216,7 @@ internal partial class DefaultComponentGenerator
                 .With("width", "41"));
 
             // Set focusable to false
-            svgTag.Attributes.Set("focusable", new TemplateString("false"));
+            svgTag.Attributes.Set("focusable", "false");
 
             var pathTag = new HtmlTag("path", attrs => attrs
                 .With("fill", "currentColor")

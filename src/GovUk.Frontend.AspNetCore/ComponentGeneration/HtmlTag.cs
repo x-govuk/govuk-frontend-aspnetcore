@@ -172,7 +172,7 @@ internal class HtmlTag : IHtmlContent, IEnumerable
 
         public AttributeBuilder WithClasses(params TemplateString?[] classes)
         {
-            var nonNullClasses = classes.Where(c => c is not null).Select(c => c!.Value).ToArray();
+            var nonNullClasses = classes.Where(c => c is not null).Select(c => (TemplateString?)c!.Value).ToArray();
             Attributes.Set(
                 "class",
                 Attributes["class"].AppendCssClasses(nonNullClasses));

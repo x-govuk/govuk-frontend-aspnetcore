@@ -89,12 +89,12 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         _attributes.Add(attribute.Name, attribute);
     }
 
-    internal void Add(string name, TemplateString templateString)
+    internal void Add(string name, TemplateString? templateString)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(templateString);
 
-        var attribute = new Attribute(name, templateString, Optional: false);
+        var attribute = new Attribute(name, templateString.Value, Optional: false);
         _attributes.Add(name, attribute);
     }
 
@@ -106,12 +106,12 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         _attributes.Add(name, attribute);
     }
 
-    internal void Set(string name, TemplateString templateString)
+    internal void Set(string name, TemplateString? templateString)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(templateString);
 
-        var attribute = new Attribute(name, templateString, Optional: false);
+        var attribute = new Attribute(name, templateString.Value, Optional: false);
         _attributes[name] = attribute;
     }
 

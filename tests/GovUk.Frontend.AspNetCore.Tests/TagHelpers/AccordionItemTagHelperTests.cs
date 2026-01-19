@@ -28,7 +28,7 @@ public class AccordionItemTagHelperTests
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
                 itemContext.SetHeading([], new HtmlString("Heading"));
-                itemContext.SetSummary([], new HtmlString(")Summary"));
+                itemContext.SetSummary([], new HtmlString("Summary"));
                 itemContext.SetContent([], new HtmlString("Content"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -72,7 +72,7 @@ public class AccordionItemTagHelperTests
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
                 itemContext.SetSummary([], new HtmlString("Summary"));
-                itemContext.SetContent([], new HtmlString(")Content"));
+                itemContext.SetContent([], new HtmlString("Content"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

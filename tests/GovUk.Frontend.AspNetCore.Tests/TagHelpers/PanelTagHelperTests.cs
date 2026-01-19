@@ -24,7 +24,7 @@ public class PanelTagHelperTests
             {
                 var panelContext = (PanelContext)context.Items[typeof(PanelContext)];
                 panelContext.SetTitle(new HtmlString("Title"));
-                panelContext.SetBody(new HtmlString(")Body"));
+                panelContext.SetBody(new HtmlString("Body"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

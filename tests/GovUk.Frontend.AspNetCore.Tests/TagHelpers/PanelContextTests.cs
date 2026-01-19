@@ -13,7 +13,7 @@ public class PanelContextTests
         context.SetBody(new HtmlString("Body"));
 
         // Act
-        var ex = Record.Exception(() => context.SetBody(new HtmlString(")Body")));
+        var ex = Record.Exception(() => context.SetBody(new HtmlString("Body")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -28,7 +28,7 @@ public class PanelContextTests
         context.SetBody(new HtmlString("Body"));
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle(new HtmlString(")Title")));
+        var ex = Record.Exception(() => context.SetTitle(new HtmlString("Title")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -43,7 +43,7 @@ public class PanelContextTests
         context.SetTitle(new HtmlString("Title"));
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle(new HtmlString(")Title")));
+        var ex = Record.Exception(() => context.SetTitle(new HtmlString("Title")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

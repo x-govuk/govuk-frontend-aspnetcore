@@ -26,7 +26,7 @@ public class CheckboxesItemContextTests
         context.SetConditional([], content: new HtmlString("Existing conditional"));
 
         // Act
-        var ex = Record.Exception(() => context.SetConditional([], content: new HtmlString(")Conditional")));
+        var ex = Record.Exception(() => context.SetConditional([], content: new HtmlString("Conditional")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -54,7 +54,7 @@ public class CheckboxesItemContextTests
         context.SetConditional([], content: new HtmlString("Existing conditional"));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString(")Hint")));
+        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -69,7 +69,7 @@ public class CheckboxesItemContextTests
         context.SetHint([], content: new HtmlString("Existing hint"));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString(")Hint")));
+        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

@@ -29,7 +29,7 @@ public class FieldsetTagHelperTests
                     content: new HtmlString("Legend text"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent(")Main content");
+                tagHelperContent.SetContent("Main content");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -77,7 +77,7 @@ public class FieldsetTagHelperTests
                     content: new HtmlString("Legend text"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent(")Main content");
+                tagHelperContent.SetContent("Main content");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 

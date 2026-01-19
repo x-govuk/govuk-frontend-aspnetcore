@@ -55,7 +55,7 @@ public abstract class DateInputItemLabelTagHelperBaseTests<T> : TagHelperTestBas
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent(")New label");
+                tagHelperContent.SetContent("New label");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 

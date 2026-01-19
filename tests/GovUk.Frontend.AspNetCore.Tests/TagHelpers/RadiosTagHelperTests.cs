@@ -29,7 +29,7 @@ public class RadiosTagHelperTests
                 radiosContext.AddItem(new RadiosItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString(")First"),
+                    LabelContent = new HtmlString("First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
@@ -98,7 +98,7 @@ public class RadiosTagHelperTests
                 radiosContext.AddItem(new RadiosItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString(")First"),
+                    LabelContent = new HtmlString("First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
@@ -336,7 +336,7 @@ public class RadiosTagHelperTests
                 var radiosFieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
                 radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legend"));
 
-                radiosContext.SetHint(attributes: null, content: new HtmlString(")The hint"));
+                radiosContext.SetHint(attributes: null, content: new HtmlString("The hint"));
 
                 radiosContext.AddItem(new RadiosItem()
                 {

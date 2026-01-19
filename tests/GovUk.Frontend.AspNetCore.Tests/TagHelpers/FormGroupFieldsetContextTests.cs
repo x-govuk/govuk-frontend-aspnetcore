@@ -29,7 +29,7 @@ public class FormGroupFieldsetContextTests
         context.SetLegend(false, null, new HtmlString("Existing legend"));
 
         // Act
-        var ex = Record.Exception(() => context.SetLegend(isPageHeading: true, null, new HtmlString(")Legend")));
+        var ex = Record.Exception(() => context.SetLegend(isPageHeading: true, null, new HtmlString("Legend")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

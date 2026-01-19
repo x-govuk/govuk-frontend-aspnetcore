@@ -34,7 +34,7 @@ public class ErrorMessageTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @")
+        var expectedHtml = @"
 <p class=""govuk-error-message"">
     <span class=""govuk-visually-hidden"">Error:</span>
     An error!

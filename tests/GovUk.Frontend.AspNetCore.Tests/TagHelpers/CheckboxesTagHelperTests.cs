@@ -29,7 +29,7 @@ public class CheckboxesTagHelperTests
                 checkboxesContext.AddItem(new CheckboxesItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString(")First"),
+                    LabelContent = new HtmlString("First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
@@ -98,7 +98,7 @@ public class CheckboxesTagHelperTests
                 checkboxesContext.AddItem(new CheckboxesItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString(")First"),
+                    LabelContent = new HtmlString("First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
@@ -336,7 +336,7 @@ public class CheckboxesTagHelperTests
                 var checkboxesFieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
                 checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legend"));
 
-                checkboxesContext.SetHint(attributes: null, content: new HtmlString(")The hint"));
+                checkboxesContext.SetHint(attributes: null, content: new HtmlString("The hint"));
 
                 checkboxesContext.AddItem(new CheckboxesItem()
                 {

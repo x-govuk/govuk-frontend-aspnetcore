@@ -69,7 +69,7 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($")Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
     [Fact]
@@ -99,6 +99,6 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($")<{TagName}> must be specified before <{copyrightTagName}>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{copyrightTagName}>.", ex.Message);
     }
 }

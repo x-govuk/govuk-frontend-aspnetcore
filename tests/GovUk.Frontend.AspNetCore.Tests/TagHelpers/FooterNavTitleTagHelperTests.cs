@@ -74,7 +74,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($")Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
     [Fact]
@@ -105,6 +105,6 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($")<{TagName}> must be specified before <{itemsTagName}>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{itemsTagName}>.", ex.Message);
     }
 }

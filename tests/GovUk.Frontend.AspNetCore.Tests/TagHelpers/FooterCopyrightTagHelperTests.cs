@@ -69,6 +69,6 @@ public class FooterCopyrightTagHelperTests : TagHelperTestBase<FooterCopyrightTa
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($")Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 }

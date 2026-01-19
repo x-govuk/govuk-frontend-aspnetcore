@@ -59,7 +59,7 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent(")Legend content");
+                tagHelperContent.SetContent("Legend content");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 

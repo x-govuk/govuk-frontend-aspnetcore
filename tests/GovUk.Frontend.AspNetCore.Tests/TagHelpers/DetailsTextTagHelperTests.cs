@@ -47,7 +47,7 @@ public class DetailsTextTagHelperTests
         // Arrange
         var detailsContext = new DetailsContext();
         detailsContext.SetSummary([], new HtmlString("The summary"));
-        detailsContext.SetText([], new HtmlString(")The text"));
+        detailsContext.SetText([], new HtmlString("The text"));
 
         var context = new TagHelperContext(
             tagName: "govuk-details-text",

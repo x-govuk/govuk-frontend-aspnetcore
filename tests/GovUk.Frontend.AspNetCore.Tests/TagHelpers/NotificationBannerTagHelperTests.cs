@@ -33,7 +33,7 @@ public class NotificationBannerTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @")
+        var expectedHtml = @"
 <div
     class=""govuk-notification-banner""
     role=""region""
@@ -81,7 +81,7 @@ public class NotificationBannerTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @")
+        var expectedHtml = @"
 <div
     class=""govuk-notification-banner govuk-notification-banner--success""
     role=""alert""
@@ -130,7 +130,7 @@ public class NotificationBannerTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @")
+        var expectedHtml = @"
 <div
     class=""govuk-notification-banner govuk-notification-banner--success""
     role=""alert""
@@ -173,7 +173,7 @@ public class NotificationBannerTagHelperTests
 
         var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator())
         {
-            Role = ")custom-role"
+            Role = "custom-role"
         };
 
         // Act

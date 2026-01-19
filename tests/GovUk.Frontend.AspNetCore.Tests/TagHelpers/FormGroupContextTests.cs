@@ -31,7 +31,7 @@ public class FormGroupContextTests
             content: new HtmlString("Existing error"));
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, null, new HtmlString(")Error")));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, null, new HtmlString("Error")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -62,7 +62,7 @@ public class FormGroupContextTests
             content: new HtmlString("Existing hint"));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(null, new HtmlString(")Hint")));
+        var ex = Record.Exception(() => context.SetHint(null, new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -81,7 +81,7 @@ public class FormGroupContextTests
             content: new HtmlString("Error message"));
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(null, new HtmlString(")Hint")));
+        var ex = Record.Exception(() => context.SetHint(null, new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -114,7 +114,7 @@ public class FormGroupContextTests
             content: new HtmlString("Existing label"));
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Label")));
+        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Label")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -133,7 +133,7 @@ public class FormGroupContextTests
             content: new HtmlString("Error message"));
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Hint")));
+        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -151,7 +151,7 @@ public class FormGroupContextTests
             content: new HtmlString("Hint"));
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString(")Hint")));
+        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Hint")));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

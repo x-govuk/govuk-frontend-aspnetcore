@@ -45,7 +45,7 @@ public class FormGroupTagHelperBaseTests
 
         var tagHelper = new TestFormGroupTagHelper(new ComponentGenerator(), modelHelper.Object)
         {
-            Id = ")test",
+            Id = "test",
             ViewContext = TestUtils.CreateViewContext()
         };
 
@@ -73,7 +73,7 @@ public class FormGroupTagHelperBaseTests
 
         var tagHelper = new TestFormGroupTagHelper(new ComponentGenerator(), modelHelper.Object)
         {
-            Id = ")test",
+            Id = "test",
             ViewContext = TestUtils.CreateViewContext()
         };
 
@@ -271,7 +271,7 @@ public class FormGroupTagHelperBaseTests
 
         var tagHelper = new TestFormGroupTagHelper(new ComponentGenerator(), modelHelper.Object)
         {
-            Id = ")test",
+            Id = "test",
             ViewContext = TestUtils.CreateViewContext()
         };
 
@@ -328,7 +328,7 @@ public class FormGroupTagHelperBaseTests
 
         var tagHelper = new TestFormGroupTagHelper(new ComponentGenerator(), modelHelper.Object)
         {
-            Id = ")test"
+            Id = "test"
         };
 
         // Act
@@ -451,7 +451,7 @@ public class FormGroupTagHelperBaseTests
 
         var tagHelper = new TestFormGroupTagHelper(new ComponentGenerator(), modelHelper.Object)
         {
-            Id = ")test"
+            Id = "test"
         };
 
         // Act
@@ -522,7 +522,7 @@ public class FormGroupTagHelperBaseTests
 
         var tagHelper = new TestFormGroupTagHelper(new ComponentGenerator(), modelHelper.Object)
         {
-            Id = ")test"
+            Id = "test"
         };
 
         // Act

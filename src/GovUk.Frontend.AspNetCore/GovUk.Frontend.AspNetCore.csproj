@@ -118,10 +118,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Package\README.md" Pack="true" PackagePath="" />
-    <Content Include="Package\icon.png" Pack="true" PackagePath="" />
-    <Content Include="Package\build\GovUk.Frontend.AspNetCore.props" Pack="true" PackagePath="build" />
-    <Content Include="Package\build\GovUk.Frontend.AspNetCore.targets" Pack="true" PackagePath="build" />
+    <Content Include="Package\**\*" Pack="true" PackagePath="$(RecursiveDir)" />
   </ItemGroup>
 
 </Project>

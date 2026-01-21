@@ -45,7 +45,13 @@ public class PasswordInputTagHelper : TagHelper
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
     private const string LabelClassAttributeName = "label-class";
     private const string NameAttributeName = "name";
+    private const string HidePasswordAriaLabelTextAttributeName = "hide-password-aria-label-text";
+    private const string HidePasswordTextAttributeName = "hide-password-text";
+    private const string PasswordHiddenAnnouncementTextAttributeName = "password-hidden-announcement-text";
+    private const string PasswordShownAnnouncementTextAttributeName = "password-shown-announcement-text";
     private const string ReadOnlyAttributeName = "readonly";
+    private const string ShowPasswordAriaLabelTextAttributeName = "show-password-aria-label-text";
+    private const string ShowPasswordTextAttributeName = "show-password-text";
     private const string ValueAttributeName = "value";
 
     private readonly IComponentGenerator _componentGenerator;
@@ -151,6 +157,60 @@ public class PasswordInputTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(ReadOnlyAttributeName)]
     public bool? ReadOnly { get; set; }
+
+    /// <summary>
+    /// The button text when the password is hidden.
+    /// </summary>
+    /// <remarks>
+    /// The default is <c>&quot;Show&quot;</c>.
+    /// </remarks>
+    [HtmlAttributeName(ShowPasswordTextAttributeName)]
+    public string? ShowPasswordText { get; set; }
+
+    /// <summary>
+    /// The button text when the password is visible.
+    /// </summary>
+    /// <remarks>
+    /// The default is <c>&quot;Hide&quot;</c>.
+    /// </remarks>
+    [HtmlAttributeName(HidePasswordTextAttributeName)]
+    public string? HidePasswordText { get; set; }
+
+    /// <summary>
+    /// The button text exposed to assistive technologies, like screen readers, when the password is hidden.
+    /// </summary>
+    /// <remarks>
+    /// The default is <c>&quot;Show password&quot;</c>.
+    /// </remarks>
+    [HtmlAttributeName(ShowPasswordAriaLabelTextAttributeName)]
+    public string? ShowPasswordAriaLabelText { get; set; }
+
+    /// <summary>
+    /// The button text exposed to assistive technologies, like screen readers, when the password is visible.
+    /// </summary>
+    /// <remarks>
+    /// The default is <c>&quot;Hide password&quot;</c>.
+    /// </remarks>
+    [HtmlAttributeName(HidePasswordAriaLabelTextAttributeName)]
+    public string? HidePasswordAriaLabelText { get; set; }
+
+    /// <summary>
+    /// The announcement made to screen reader users when their password has become visible in plain text.
+    /// </summary>
+    /// <remarks>
+    /// The default is <c>&quot;Your password is visible&quot;</c>.
+    /// </remarks>
+    [HtmlAttributeName(PasswordShownAnnouncementTextAttributeName)]
+    public string? PasswordShownAnnouncementText { get; set; }
+
+    /// <summary>
+    /// The announcement made to screen reader users when their password has been obscured and is not visible.
+    /// </summary>
+    /// <remarks>
+    /// The default is <c>&quot;Your password is hidden&quot;</c>.
+    /// </remarks>
+    [HtmlAttributeName(PasswordHiddenAnnouncementTextAttributeName)]
+    public string? PasswordHiddenAnnouncementText { get; set; }
 
     /// <summary>
     /// The <c>value</c> attribute for the generated <c>input</c> element.
@@ -263,12 +323,12 @@ public class PasswordInputTagHelper : TagHelper
             Classes = classes,
             AutoComplete = AutoComplete,
             Attributes = attributes,
-            ShowPasswordText = null,  // TODO
-            HidePasswordText = null,  // TODO
-            ShowPasswordAriaLabelText = null,  // TODO
-            HidePasswordAriaLabelText = null,  // TODO
-            PasswordShownAnnouncementText = null,  // TODO
-            PasswordHiddenAnnouncementText = null,  // TODO
+            ShowPasswordText = ShowPasswordText,
+            HidePasswordText = HidePasswordText,
+            ShowPasswordAriaLabelText = ShowPasswordAriaLabelText,
+            HidePasswordAriaLabelText = HidePasswordAriaLabelText,
+            PasswordShownAnnouncementText = PasswordShownAnnouncementText,
+            PasswordHiddenAnnouncementText = PasswordHiddenAnnouncementText,
             Button = buttonOptions
         });
 

@@ -27,12 +27,18 @@
 | `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute of the generated `input` element. |
 | `disabled` | `bool?` | Whether the `disabled` attribute should be added to the generated `input` element. |
 | `for` | `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` | An expression to be evaluated against the current model. |
+| `hide-password-aria-label-text` | `string` | The button text exposed to assistive technologies, like screen readers, when the password is visible. The default is `"Hide password"`. |
+| `hide-password-text` | `string` | The button text when the password is visible. The default is `"Hide"`. |
 | `id` | `string` | The `id` attribute for the generated `input` element. If not specified then a value is generated from the `name` attribute. |
 | `ignore-modelstate-errors` | `bool?` | Whether the `Errors` for the `For` expression should be used to deduce an error message. When there are multiple errors in the `ModelErrorCollection` the first is used. |
 | `input-*` |  | Additional attributes to add to the generated `input` element. |
 | `label-class` | `string` | Additional classes for the generated `label` element. |
 | `name` | `string` | The `name` attribute for the generated `input` element. Required unless `For` is specified. |
+| `password-hidden-announcement-text` | `string` | The announcement made to screen reader users when their password has been obscured and is not visible. The default is `"Your password is hidden"`. |
+| `password-shown-announcement-text` | `string` | The announcement made to screen reader users when their password has become visible in plain text. The default is `"Your password is visible"`. |
 | `readonly` | `bool?` | Whether the `readonly` attribute should be added to the generated `input` element. |
+| `show-password-aria-label-text` | `string` | The button text exposed to assistive technologies, like screen readers, when the password is hidden. The default is `"Show password"`. |
+| `show-password-text` | `string` | The button text when the password is hidden. The default is `"Show"`. |
 | `value` | `string` | The `value` attribute for the generated `input` element. If not specified and `For` is not `null` then the value for the specified model expression will be used. |
 
 

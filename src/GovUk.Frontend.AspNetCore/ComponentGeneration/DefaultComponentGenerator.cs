@@ -73,15 +73,11 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("checkboxes", options);
     }
 
-
-
     public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("file-upload", options);
     }
-
-
 
     public virtual Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
     {

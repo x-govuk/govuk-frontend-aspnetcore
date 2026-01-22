@@ -28,10 +28,10 @@ internal partial class DefaultComponentGenerator
         }
 
         // Check for prefix, suffix, and before/after input
-        var hasPrefix = options.Prefix is not null && (!string.IsNullOrEmpty(options.Prefix.Text) || options.Prefix.Html?.IsEmpty() == false);
-        var hasSuffix = options.Suffix is not null && (!string.IsNullOrEmpty(options.Suffix.Text?.ToHtmlString()) || options.Suffix.Html?.IsEmpty() == false);
-        var hasBeforeInput = options.FormGroup?.BeforeInput is not null && (!string.IsNullOrEmpty(options.FormGroup.BeforeInput.Text?.ToHtmlString()) || options.FormGroup.BeforeInput.Html?.IsEmpty() == false);
-        var hasAfterInput = options.FormGroup?.AfterInput is not null && (!string.IsNullOrEmpty(options.FormGroup.AfterInput.Text?.ToHtmlString()) || options.FormGroup.AfterInput.Html?.IsEmpty() == false);
+        var hasPrefix = options.Prefix is not null && (!string.IsNullOrEmpty(options.Prefix.Text) || !(options.Prefix.Html?.IsEmpty() ?? true));
+        var hasSuffix = options.Suffix is not null && (!string.IsNullOrEmpty(options.Suffix.Text?.ToHtmlString()) || !(options.Suffix.Html?.IsEmpty() ?? true));
+        var hasBeforeInput = options.FormGroup?.BeforeInput is not null && (!string.IsNullOrEmpty(options.FormGroup.BeforeInput.Text?.ToHtmlString()) || !(options.FormGroup.BeforeInput.Html?.IsEmpty() ?? true));
+        var hasAfterInput = options.FormGroup?.AfterInput is not null && (!string.IsNullOrEmpty(options.FormGroup.AfterInput.Text?.ToHtmlString()) || !(options.FormGroup.AfterInput.Html?.IsEmpty() ?? true));
 
         // Local function to create the input element
         HtmlTag CreateInputElement()

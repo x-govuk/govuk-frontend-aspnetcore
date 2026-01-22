@@ -29,6 +29,12 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         var dataFooAttrValue = "foo";
         var labelContent = "The label";
         var hintContent = "The hint";
+        var showPasswordText = "Reveal";
+        var hidePasswordText = "Conceal";
+        var showPasswordAriaLabelText = "Reveal your password";
+        var hidePasswordAriaLabelText = "Conceal your password";
+        var passwordShownAnnouncementText = "Your password is now visible";
+        var passwordHiddenAnnouncementText = "Your password is now hidden";
 
         var context = CreateTagHelperContext(className: className, attributes: attributes);
 
@@ -71,6 +77,12 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
             ReadOnly = readOnly,
             LabelClass = labelClass,
             ButtonClass = buttonClass,
+            ShowPasswordText = showPasswordText,
+            HidePasswordText = hidePasswordText,
+            ShowPasswordAriaLabelText = showPasswordAriaLabelText,
+            HidePasswordAriaLabelText = hidePasswordAriaLabelText,
+            PasswordShownAnnouncementText = passwordShownAnnouncementText,
+            PasswordHiddenAnnouncementText = passwordHiddenAnnouncementText,
             ViewContext = new ViewContext(),
             InputAttributes = new Dictionary<string, string?>()
             {
@@ -97,6 +109,12 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         Assert.Null(actualOptions.ErrorMessage);
         Assert.Equal(className, actualOptions.Classes);
         Assert.Equal(autocomplete, actualOptions.AutoComplete);
+        Assert.Equal(showPasswordText, actualOptions.ShowPasswordText);
+        Assert.Equal(hidePasswordText, actualOptions.HidePasswordText);
+        Assert.Equal(showPasswordAriaLabelText, actualOptions.ShowPasswordAriaLabelText);
+        Assert.Equal(hidePasswordAriaLabelText, actualOptions.HidePasswordAriaLabelText);
+        Assert.Equal(passwordShownAnnouncementText, actualOptions.PasswordShownAnnouncementText);
+        Assert.Equal(passwordHiddenAnnouncementText, actualOptions.PasswordHiddenAnnouncementText);
 
         Assert.NotNull(actualOptions.Attributes);
         Assert.Collection(actualOptions.Attributes,

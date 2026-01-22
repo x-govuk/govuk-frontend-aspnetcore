@@ -33,40 +33,6 @@ internal partial class DefaultComponentGenerator
         var hasBeforeInput = options.FormGroup?.BeforeInput is not null && (!string.IsNullOrEmpty(options.FormGroup.BeforeInput.Text?.ToHtmlString()) || !(options.FormGroup.BeforeInput.Html?.IsEmpty() ?? true));
         var hasAfterInput = options.FormGroup?.AfterInput is not null && (!string.IsNullOrEmpty(options.FormGroup.AfterInput.Text?.ToHtmlString()) || !(options.FormGroup.AfterInput.Html?.IsEmpty() ?? true));
 
-        // Local function to create the input element
-        HtmlTag CreateInputElement()
-        {
-            var input = new HtmlTag("input", attrs => attrs
-                .With("id", id)
-                .With("type", options.Type ?? "text")
-                .WithClasses(classNames)
-                .With("value", options.Value)
-                .With("aria-describedby", describedByParts.Count > 0 ? string.Join(" ", describedByParts) : null)
-                .With("autocomplete", options.AutoComplete)
-                .With("autocapitalize", options.AutoCapitalize)
-                .With("pattern", options.Pattern)
-                .With("inputmode", options.InputMode)
-                .With(options.Attributes));
-
-            // Always add name attribute, even if empty
-            input.Attributes.Set("name", options.Name?.ToHtmlString() ?? string.Empty);
-
-            // Handle spellcheck - only add if explicitly set
-            if (options.Spellcheck == true || options.Spellcheck == false)
-            {
-                input.Attributes.Set("spellcheck", options.Spellcheck.Value ? "true" : "false");
-            }
-
-            // Handle disabled
-            if (options.Disabled == true)
-            {
-                input.Attributes.AddBoolean("disabled");
-            }
-
-            input.TagRenderMode = TagRenderMode.SelfClosing;
-            return input;
-        }
-
         // Local function to create affix item (prefix or suffix)
         HtmlTag CreateAffixItem(TemplateString? html, TemplateString? text, TemplateString? classes, AttributeCollection? attributes, string type)
         {
@@ -97,23 +63,16 @@ internal partial class DefaultComponentGenerator
             For = id
         });
 
-        formGroupDiv.InnerHtml.AppendHtml(((HtmlTagGovUkComponent)labelComponent).Tag);
+        formGroupDiv.InnerHtml.AppendHtml(labelComponent.GetHtml());
 
         // Generate hint if present
         if (options.Hint is not null)
         {
             var hintId = id + "-hint";
             describedByParts.Add(hintId);
-            var hintComponent = await GenerateHintAsync(new HintOptions
-            {
-                Id = hintId,
-                Classes = options.Hint.Classes,
-                Attributes = options.Hint.Attributes,
-                Html = options.Hint.Html,
-                Text = options.Hint.Text
-            });
+            var hintComponent = await GenerateHintAsync(options.Hint with { Id = hintId });
 
-            formGroupDiv.InnerHtml.AppendHtml(((HtmlTagGovUkComponent)hintComponent).Tag);
+            formGroupDiv.InnerHtml.AppendHtml(hintComponent.GetHtml());
         }
 
         // Generate error message if present
@@ -121,17 +80,9 @@ internal partial class DefaultComponentGenerator
         {
             var errorId = id + "-error";
             describedByParts.Add(errorId);
-            var errorMessageComponent = await GenerateErrorMessageAsync(new ErrorMessageOptions
-            {
-                Id = errorId,
-                Classes = options.ErrorMessage.Classes,
-                Attributes = options.ErrorMessage.Attributes,
-                Html = options.ErrorMessage.Html,
-                Text = options.ErrorMessage.Text,
-                VisuallyHiddenText = options.ErrorMessage.VisuallyHiddenText
-            });
+            var errorMessageComponent = await GenerateErrorMessageAsync(options.ErrorMessage with { Id = errorId });
 
-            formGroupDiv.InnerHtml.AppendHtml(((HtmlTagGovUkComponent)errorMessageComponent).Tag);
+            formGroupDiv.InnerHtml.AppendHtml(errorMessageComponent.GetHtml());
         }
 
         // Add input with optional wrapper
@@ -182,5 +133,39 @@ internal partial class DefaultComponentGenerator
         }
 
         return await GenerateFromHtmlTagAsync(formGroupDiv);
+
+        // Local function to create the input element
+        HtmlTag CreateInputElement()
+        {
+            var input = new HtmlTag("input", attrs => attrs
+                .With("id", id)
+                .With("type", options.Type ?? "text")
+                .WithClasses(classNames)
+                .With("value", options.Value)
+                .With("aria-describedby", describedByParts.Count > 0 ? string.Join(" ", describedByParts) : null)
+                .With("autocomplete", options.AutoComplete)
+                .With("autocapitalize", options.AutoCapitalize)
+                .With("pattern", options.Pattern)
+                .With("inputmode", options.InputMode)
+                .With(options.Attributes));
+
+            // Always add name attribute, even if empty
+            input.Attributes.Set("name", options.Name?.ToHtmlString() ?? string.Empty);
+
+            // Handle spellcheck - only add if explicitly set
+            if (options.Spellcheck is true or false)
+            {
+                input.Attributes.Set("spellcheck", options.Spellcheck.Value ? "true" : "false");
+            }
+
+            // Handle disabled
+            if (options.Disabled is true)
+            {
+                input.Attributes.AddBoolean("disabled");
+            }
+
+            input.TagRenderMode = TagRenderMode.SelfClosing;
+            return input;
+        }
     }
 }

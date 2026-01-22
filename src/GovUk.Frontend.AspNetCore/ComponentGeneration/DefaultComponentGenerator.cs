@@ -166,6 +166,18 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         public override string GetHtml() => string.Empty;
     }
 
+    private static string Capitalize(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+#pragma warning disable CA1308
+        return char.ToUpperInvariant(input[0]) + input[1..].ToLowerInvariant();
+#pragma warning restore CA1308
+    }
+
     private class HtmlTagGovUkComponent : GovUkComponent
     {
         public HtmlTagGovUkComponent(HtmlTag tag)

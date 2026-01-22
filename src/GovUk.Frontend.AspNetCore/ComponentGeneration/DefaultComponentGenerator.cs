@@ -73,11 +73,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("checkboxes", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateDateInputAsync(DateInputOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("date-input", options);
-    }
+
 
     public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
@@ -85,11 +81,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("file-upload", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateInputAsync(InputOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("input", options);
-    }
+
 
     public virtual Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
     {

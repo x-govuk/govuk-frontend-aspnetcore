@@ -73,22 +73,10 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("checkboxes", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateDateInputAsync(DateInputOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("date-input", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return RenderTemplateAsync("file-upload", options);
-    }
-
-    public virtual Task<GovUkComponent> GenerateInputAsync(InputOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("input", options);
     }
 
     public virtual Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
@@ -176,6 +164,18 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         }
 
         public override string GetHtml() => string.Empty;
+    }
+
+    private static string Capitalize(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+#pragma warning disable CA1308
+        return char.ToUpperInvariant(input[0]) + input[1..].ToLowerInvariant();
+#pragma warning restore CA1308
     }
 
     private class HtmlTagGovUkComponent : GovUkComponent

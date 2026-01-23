@@ -30,7 +30,7 @@ internal partial class DefaultComponentGenerator
                     continue;
                 }
 
-                ulTag.InnerHtml.AppendHtml(CreateTabListItem(options, item, index));
+                ulTag.InnerHtml.AppendHtml(CreateTabListItem(item, index));
                 index++;
             }
 
@@ -44,45 +44,45 @@ internal partial class DefaultComponentGenerator
                     continue;
                 }
 
-                tabsTag.InnerHtml.AppendHtml(CreateTabPanel(options, item, index));
+                tabsTag.InnerHtml.AppendHtml(CreateTabPanel(item, index));
                 index++;
             }
         }
 
         return GenerateFromHtmlTagAsync(tabsTag);
 
-        HtmlTag CreateTabListItem(TabsOptions options, TabsOptionsItem item, int index)
+        HtmlTag CreateTabListItem(TabsOptionsItem item, int index)
         {
-            var tabPanelId = GetTabPanelId(options, item, index);
+            var tabPanelId = GetTabPanelId(item, index);
 
             var liTag = new HtmlTag("li", attrs => attrs
                 .WithClasses("govuk-tabs__list-item", index == 1 ? "govuk-tabs__list-item--selected" : null));
 
             var aTag = new HtmlTag("a", attrs => attrs
                 .WithClasses("govuk-tabs__tab")
-                .With("href", $"#{tabPanelId}")
+                .With("href", new TemplateString($"#{tabPanelId}"))
                 .With(item.Attributes));
 
-            aTag.InnerHtml.AppendHtml(item.Label ?? Microsoft.AspNetCore.Html.HtmlString.Empty);
+            aTag.InnerHtml.AppendHtml(item.Label ?? TemplateString.Empty);
             liTag.InnerHtml.AppendHtml(aTag);
 
             return liTag;
         }
 
-        HtmlTag CreateTabPanel(TabsOptions options, TabsOptionsItem item, int index)
+        HtmlTag CreateTabPanel(TabsOptionsItem item, int index)
         {
-            var tabPanelId = GetTabPanelId(options, item, index);
+            var tabPanelId = GetTabPanelId(item, index);
 
             var panelTag = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-tabs__panel", index > 1 ? "govuk-tabs__panel--hidden" : null)
                 .With("id", tabPanelId)
                 .With(item.Panel?.Attributes));
 
-            if (item.Panel?.Html is not null && !item.Panel.Html.IsEmpty())
+            if (!(item.Panel?.Html).IsEmpty())
             {
-                panelTag.InnerHtml.AppendHtml(new Microsoft.AspNetCore.Html.HtmlString(item.Panel.Html.ToHtmlString(raw: true)));
+                panelTag.InnerHtml.AppendHtml(item.Panel.Html.GetRawHtml());
             }
-            else if (item.Panel?.Text is not null && !item.Panel.Text.IsEmpty())
+            else if (!(item.Panel?.Text).IsEmpty())
             {
                 var pTag = new HtmlTag("p", attrs => attrs
                     .WithClasses("govuk-body"));
@@ -93,20 +93,16 @@ internal partial class DefaultComponentGenerator
             return panelTag;
         }
 
-        string GetTabPanelId(TabsOptions options, TabsOptionsItem item, int index)
+        TemplateString GetTabPanelId(TabsOptionsItem item, int index)
         {
-            if (item.Id is not null && !item.Id.IsEmpty())
+            if (!item.Id.IsEmpty())
             {
-                return item.Id.ToHtmlString(raw: true);
+                return item.Id;
             }
 
-            var idPrefix = options.IdPrefix?.ToHtmlString(raw: true);
-            if (!string.IsNullOrEmpty(idPrefix))
-            {
-                return $"{idPrefix}-{index}";
-            }
+            var idPrefix = options.IdPrefix;
 
-            return $"{index}";
+            return !idPrefix.IsEmpty() ? new TemplateString($"{idPrefix}-{index}") : $"{index}";
         }
     }
 }

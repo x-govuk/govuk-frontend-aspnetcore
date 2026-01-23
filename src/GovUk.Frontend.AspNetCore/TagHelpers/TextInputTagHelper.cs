@@ -264,14 +264,14 @@ public class TextInputTagHelper : TagHelper
         var formGroupOptions = new InputFormGroupOptions
         {
             BeforeInput = textInputContext.BeforeInput is TemplateString beforeInput ?
-                new InputOptionsBeforeInput()
+                new InputOptionsBeforeInput
                 {
                     Text = null,
                     Html = beforeInput
                 } :
                 null,
             AfterInput = textInputContext.AfterInput is TemplateString afterInput ?
-                new InputOptionsAfterInput()
+                new InputOptionsAfterInput
                 {
                     Text = null,
                     Html = afterInput
@@ -292,7 +292,7 @@ public class TextInputTagHelper : TagHelper
         var inputWrapperAttributes = new AttributeCollection(InputWrapperAttributes);
         inputWrapperAttributes.Remove("classes", out var inputWrapperClasses);
 
-        var component = await _componentGenerator.GenerateInputAsync(new InputOptions()
+        var component = await _componentGenerator.GenerateInputAsync(new InputOptions
         {
             Id = id,
             Name = name,
@@ -312,7 +312,7 @@ public class TextInputTagHelper : TagHelper
             Pattern = Pattern,
             Spellcheck = Spellcheck,
             AutoCapitalize = Autocapitalize,
-            InputWrapper = new InputOptionsInputWrapper()
+            InputWrapper = new InputOptionsInputWrapper
             {
                 Classes = inputWrapperClasses,
                 Attributes = inputWrapperAttributes

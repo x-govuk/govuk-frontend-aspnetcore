@@ -1,5 +1,6 @@
 using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ComponentGeneration;
@@ -11,9 +12,10 @@ public class TagHelperAdapterTests
     {
         // Arrange
         var html = "";
+        var content = new HtmlString(html);
 
         // Act
-        var result = TagHelperAdapter.UnwrapComponent(html);
+        var result = TagHelperAdapter.UnwrapComponent(content);
 
         // Assert
         Assert.Null(result.TagName);
@@ -28,9 +30,10 @@ public class TagHelperAdapterTests
     public void VoidElementWithNoAttributes(string html, TagMode expectedTagMode)
     {
         // Arrange
+        var content = new HtmlString(html);
 
         // Act
-        var result = TagHelperAdapter.UnwrapComponent(html);
+        var result = TagHelperAdapter.UnwrapComponent(content);
 
         // Assert
         Assert.Equal("br", result.TagName);
@@ -44,9 +47,10 @@ public class TagHelperAdapterTests
     {
         // Arrange
         var html = "<div><a href=\"foo?bar=baz\">Hello world</a></div>";
+        var content = new HtmlString(html);
 
         // Act
-        var result = TagHelperAdapter.UnwrapComponent(html);
+        var result = TagHelperAdapter.UnwrapComponent(content);
 
         // Assert
         Assert.Equal("<a href=\"foo?bar=baz\">Hello world</a>", result.InnerHtml.ToHtmlString());
@@ -57,9 +61,10 @@ public class TagHelperAdapterTests
     {
         // Arrange
         var html = "<div><a href=https://some.url>Hello world</div>";
+        var content = new HtmlString(html);
 
         // Act
-        var result = TagHelperAdapter.UnwrapComponent(html);
+        var result = TagHelperAdapter.UnwrapComponent(content);
 
         // Assert
         Assert.Equal("<a href=https://some.url>Hello world", result.InnerHtml.ToHtmlString());
@@ -70,9 +75,10 @@ public class TagHelperAdapterTests
     {
         // Arrange
         var html = "<form novalidate class=\"foo\" disabled=\"\"></form>";
+        var content = new HtmlString(html);
 
         // Act
-        var result = TagHelperAdapter.UnwrapComponent(html);
+        var result = TagHelperAdapter.UnwrapComponent(content);
 
         // Assert
         Assert.Collection(

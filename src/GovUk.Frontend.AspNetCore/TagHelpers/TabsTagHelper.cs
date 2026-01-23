@@ -69,7 +69,7 @@ public class TabsTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateTabsAsync(new TabsOptions()
+        var component = await _componentGenerator.GenerateTabsAsync(new TabsOptions
         {
             Id = Id,
             IdPrefix = IdPrefix,

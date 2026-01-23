@@ -6,7 +6,7 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var visuallyHiddenText = options.VisuallyHiddenText?.ToHtmlString() ?? "Error";
+        var visuallyHiddenText = options.VisuallyHiddenText ?? "Error";
         var content = HtmlOrText(options.Html, options.Text);
 
         var tag = new HtmlTag("p", attrs => attrs
@@ -14,15 +14,15 @@ internal partial class DefaultComponentGenerator
             .WithClasses("govuk-error-message", options.Classes)
             .With(options.Attributes));
 
-        if (!string.IsNullOrEmpty(visuallyHiddenText))
+        if (!visuallyHiddenText.IsEmpty())
         {
-            var vht = new HtmlTag("span", attrs => attrs
+            var vhtTag = new HtmlTag("span", attrs => attrs
                 .WithClasses("govuk-visually-hidden"))
             {
-                visuallyHiddenText + ":"
+                new TemplateString($"{visuallyHiddenText}:")
             };
 
-            tag.InnerHtml.AppendHtml(vht);
+            tag.InnerHtml.AppendHtml(vhtTag);
             tag.InnerHtml.Append(" ");
         }
 

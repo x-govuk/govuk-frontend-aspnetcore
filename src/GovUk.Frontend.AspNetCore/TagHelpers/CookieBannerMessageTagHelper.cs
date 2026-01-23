@@ -57,7 +57,7 @@ public class CookieBannerMessageTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        cookieBannerContext.Messages.Add(new CookieBannerOptionsMessage()
+        cookieBannerContext.Messages.Add(new CookieBannerOptionsMessage
         {
             HeadingText = null,
             HeadingHtml = messageContext.Heading?.Html,

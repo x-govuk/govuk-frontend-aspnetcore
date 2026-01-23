@@ -47,7 +47,7 @@ public class PaginationPreviousTagHelper : TagHelper
         attributes.Remove("href", out _);
         var href = output.GetUrlAttribute("href");
 
-        paginationContext.SetPrevious(new PaginationOptionsPrevious()
+        paginationContext.SetPrevious(new PaginationOptionsPrevious
         {
             Attributes = new AttributeCollection(LinkAttributes),
             ContainerAttributes = attributes,

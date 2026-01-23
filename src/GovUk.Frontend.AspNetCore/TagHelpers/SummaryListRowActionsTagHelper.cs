@@ -36,7 +36,7 @@ public class SummaryListRowActionsTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        rowContext.SetActions(new SummaryListOptionsRowActions()
+        rowContext.SetActions(new SummaryListOptionsRowActions
         {
             Classes = classes,
             Items = actionsContext.Items,

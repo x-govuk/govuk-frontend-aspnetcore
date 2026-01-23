@@ -24,7 +24,7 @@ internal partial class DefaultComponentGenerator
             content
         };
 
-        if (options.IsPageHeading == true)
+        if (options.IsPageHeading is true)
         {
             var wrapper = new HtmlTag("h1", attrs => attrs
                 .WithClasses("govuk-label-wrapper"))

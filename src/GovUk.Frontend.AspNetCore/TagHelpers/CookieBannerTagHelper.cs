@@ -62,7 +62,7 @@ public class CookieBannerTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateCookieBannerAsync(new CookieBannerOptions()
+        var component = await _componentGenerator.GenerateCookieBannerAsync(new CookieBannerOptions
         {
             AriaLabel = AriaLabel,
             Hidden = Hidden,

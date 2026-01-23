@@ -38,7 +38,7 @@ public class FooterNavItemTagHelper : TagHelper
         var href = output.GetUrlAttribute("href");
         attributes.Remove("href", out _);
 
-        navItemsContext.Items.Add(new FooterOptionsNavigationItem()
+        navItemsContext.Items.Add(new FooterOptionsNavigationItem
         {
             Text = null,
             Html = content.ToTemplateString(),

@@ -74,7 +74,7 @@ public static class GovUkFrontendExtensions
                 typeof(GovUkFrontendExtensions).Assembly,
                 root: "Content/Assets");
 
-            app.UseStaticFiles(new StaticFileOptions()
+            app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = fileProvider,
                 RequestPath = PageTemplateHelper.DefaultAssetsPath,

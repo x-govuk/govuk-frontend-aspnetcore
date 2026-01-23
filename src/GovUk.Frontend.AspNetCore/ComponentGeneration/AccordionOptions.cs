@@ -15,7 +15,7 @@ public record AccordionOptions
     public TemplateString? ShowAllSectionsText { get; set; }
     public TemplateString? ShowSectionText { get; set; }
     public TemplateString? ShowSectionAriaLabelText { get; set; }
-    public IReadOnlyCollection<AccordionOptionsItem>? Items { get; set; }
+    public IReadOnlyCollection<AccordionOptionsItem?>? Items { get; set; }
 }
 
 public record AccordionOptionsItem

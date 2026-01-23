@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Html;
-
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -17,32 +15,25 @@ internal partial class DefaultComponentGenerator
         var contentTag = new HtmlTag("p", attrs => attrs
             .WithClasses("govuk-phase-banner__content"));
 
-        // Generate the tag component using the existing GenerateTagAsync method
         if (options.Tag != null)
         {
-            var tagOptions = new TagOptions
+            var tagOptions = options.Tag with
             {
-                Text = options.Tag.Text,
-                Html = options.Tag.Html,
-                Classes = options.Tag.Classes != null
-                    ? new TemplateString("govuk-phase-banner__content__tag " + options.Tag.Classes)
-                    : "govuk-phase-banner__content__tag",
-                Attributes = options.Tag.Attributes
+                Classes = new TemplateString("govuk-phase-banner__content__tag").AppendCssClasses(options.Tag.Classes)
             };
 
             var tagComponent = await GenerateTagAsync(tagOptions);
-            var tagHtml = new HtmlString(tagComponent.GetHtml());
+            var tagHtml = tagComponent.GetContent();
             contentTag.InnerHtml.AppendHtml(tagHtml);
         }
         else
         {
-            // If no tag options provided, render an empty tag
             var emptyTagOptions = new TagOptions
             {
                 Classes = "govuk-phase-banner__content__tag"
             };
             var tagComponent = await GenerateTagAsync(emptyTagOptions);
-            var tagHtml = new HtmlString(tagComponent.GetHtml());
+            var tagHtml = tagComponent.GetContent();
             contentTag.InnerHtml.AppendHtml(tagHtml);
         }
 

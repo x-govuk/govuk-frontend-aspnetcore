@@ -69,7 +69,7 @@ public class ServiceNavigationTagHelper : TagHelper
         var navigationAttributes = serviceNavigationContext.Nav?.Attributes?.Clone() ?? [];
         navigationAttributes.Remove("class", out var navigationClasses);
 
-        var component = await _componentGenerator.GenerateServiceNavigationAsync(new ServiceNavigationOptions()
+        var component = await _componentGenerator.GenerateServiceNavigationAsync(new ServiceNavigationOptions
         {
             Classes = classes,
             Attributes = attributes,
@@ -83,7 +83,7 @@ public class ServiceNavigationTagHelper : TagHelper
             ServiceName = ServiceName,
             ServiceUrl = ServiceUrl,
             Navigation = serviceNavigationContext.Nav?.Items,
-            Slots = new ServiceNavigationOptionsSlots()
+            Slots = new ServiceNavigationOptionsSlots
             {
                 Start = serviceNavigationContext.StartSlot?.Html,
                 End = serviceNavigationContext.EndSlot?.Html,

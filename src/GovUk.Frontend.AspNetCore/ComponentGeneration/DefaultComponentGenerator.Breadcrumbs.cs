@@ -7,7 +7,7 @@ internal partial class DefaultComponentGenerator
         ArgumentNullException.ThrowIfNull(options);
 
         var navTag = new HtmlTag("nav", attrs => attrs
-            .WithClasses("govuk-breadcrumbs", options.CollapseOnMobile == true ? "govuk-breadcrumbs--collapse-on-mobile" : null, options.Classes)
+            .WithClasses("govuk-breadcrumbs", options.CollapseOnMobile is true ? "govuk-breadcrumbs--collapse-on-mobile" : null, options.Classes)
             .With("aria-label", options.LabelText ?? "Breadcrumb")
             .With(options.Attributes));
 
@@ -18,6 +18,11 @@ internal partial class DefaultComponentGenerator
         {
             foreach (var item in options.Items)
             {
+                if (item is null)
+                {
+                    continue;
+                }
+
                 var liTag = new HtmlTag("li", attrs =>
                 {
                     attrs

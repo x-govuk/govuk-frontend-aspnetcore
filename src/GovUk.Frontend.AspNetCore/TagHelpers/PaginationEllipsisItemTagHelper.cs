@@ -21,7 +21,7 @@ public class PaginationEllipsisItemTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        paginationContext.AddItem(new PaginationOptionsItem()
+        paginationContext.AddItem(new PaginationOptionsItem
         {
             Ellipsis = true,
             Attributes = attributes

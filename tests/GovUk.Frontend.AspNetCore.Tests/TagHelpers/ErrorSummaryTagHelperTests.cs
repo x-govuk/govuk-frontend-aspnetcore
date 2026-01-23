@@ -67,11 +67,13 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             actualOptions.ErrorList,
             error =>
             {
+                Assert.NotNull(error);
                 Assert.Equal(firstErrorHref, error.Href);
                 Assert.Equal(firstErrorHtml, error.Html);
             },
             error =>
             {
+                Assert.NotNull(error);
                 Assert.Equal(secondErrorHref, error.Href);
                 Assert.Equal(secondErrorHtml, error.Html);
             });
@@ -198,6 +200,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             actualOptions.ErrorList,
             error =>
             {
+                Assert.NotNull(error);
                 Assert.Equal(itemErrorHref, error.Href);
                 Assert.Equal(itemErrorHtml, error.Html);
             });
@@ -248,6 +251,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             actualOptions.ErrorList,
             error =>
             {
+                Assert.NotNull(error);
                 Assert.Equal(containerErrorContextErrorHref, error.Href);
                 Assert.Equal(containerErrorContextErrorHtml, error.Html);
             });

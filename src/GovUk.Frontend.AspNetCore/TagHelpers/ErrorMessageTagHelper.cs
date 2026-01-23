@@ -117,7 +117,7 @@ public class ErrorMessageTagHelper : TagHelper
             var attributes = new ComponentGeneration.AttributeCollection(output.Attributes);
             attributes.Remove("class", out var classes);
 
-            var component = await _componentGenerator.GenerateErrorMessageAsync(new ErrorMessageOptions()
+            var component = await _componentGenerator.GenerateErrorMessageAsync(new ErrorMessageOptions
             {
                 Html = resolvedContent.ToTemplateString(),
                 VisuallyHiddenText = VisuallyHiddenText != null ? new TemplateString(VisuallyHiddenText) : null,

@@ -21,7 +21,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     public DefaultComponentGenerator()
     {
-        _parser = new FluidParser(new FluidParserOptions()
+        _parser = new FluidParser(new FluidParserOptions
         {
             AllowFunctions = true,
             AllowParentheses = true
@@ -114,22 +114,17 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
     {
-        if (html?.IsEmpty() == false)
+        if (html?.IsEmpty() is false)
         {
-            return new HtmlString(html.ToHtmlString(raw: true));
+            return html.GetRawHtml();
         }
 
-        if (text?.IsEmpty() == false)
+        if (text?.IsEmpty() is false)
         {
             return text;
         }
 
-        if (!string.IsNullOrEmpty(fallback))
-        {
-            return new HtmlString(fallback);
-        }
-
-        return HtmlString.Empty;
+        return new HtmlString(fallback);
     }
 
     private async Task<GovUkComponent> RenderTemplateAsync(string templateName, object componentOptions)
@@ -152,6 +147,8 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     protected sealed class EmptyComponent : GovUkComponent
     {
+        private readonly IHtmlContent _content = new HtmlString(string.Empty);
+
         private EmptyComponent() { }
 
         public static EmptyComponent Instance { get; } = new();
@@ -163,18 +160,20 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
             output.SuppressOutput();
         }
 
-        public override string GetHtml() => string.Empty;
+        public override IHtmlContent GetContent() => _content;
     }
 
-    private static string Capitalize(string input)
+    private static TemplateString Capitalize(TemplateString? input)
     {
-        if (string.IsNullOrEmpty(input))
+        if (input.IsEmpty())
         {
-            return input;
+            return TemplateString.Empty;
         }
 
+        var encodedInput = input.ToHtmlString();
+
 #pragma warning disable CA1308
-        return char.ToUpperInvariant(input[0]) + input[1..].ToLowerInvariant();
+        return TemplateString.FromEncoded(char.ToUpperInvariant(encodedInput[0]) + encodedInput[1..].ToLowerInvariant());
 #pragma warning restore CA1308
     }
 
@@ -189,7 +188,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
         public HtmlTag Tag { get; }
 
-        public override string GetHtml() => Tag.ToHtmlString(HtmlEncoder.Default);
+        public override IHtmlContent GetContent() => Tag;
 
         public override void ApplyToTagHelper(TagHelperOutput output)
         {
@@ -232,9 +231,9 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         {
             ArgumentNullException.ThrowIfNull(output);
 
-            TagHelperAdapter.ApplyComponentHtml(output, GetHtml());
+            TagHelperAdapter.ApplyComponentHtml(output, GetContent());
         }
 
-        public override string GetHtml() => _html;
+        public override IHtmlContent GetContent() => new HtmlString(_html);
     }
 }

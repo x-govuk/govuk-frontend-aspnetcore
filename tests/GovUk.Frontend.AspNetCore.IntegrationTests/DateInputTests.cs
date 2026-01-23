@@ -129,8 +129,6 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await AssertFieldsForCompleteDate(page, day, month, year);
     }
 
-    //...
-
     [Fact]
     public async Task ForDatePartsProperty()
     {

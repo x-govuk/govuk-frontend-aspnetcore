@@ -19,7 +19,7 @@ internal class PageErrorContext
 
     public IReadOnlyCollection<ErrorSummaryOptionsErrorItem> GetErrorList() =>
         Errors
-            .Select(i => new ErrorSummaryOptionsErrorItem()
+            .Select(i => new ErrorSummaryOptionsErrorItem
             {
                 Href = i.Href,
                 Text = null,

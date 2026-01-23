@@ -60,8 +60,7 @@ public partial class DefaultComponentGeneratorTests
     public Task CookieBanner(ComponentTestCaseData<CookieBannerOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,
-            (generator, options) => generator.GenerateCookieBannerAsync(options),
-            amendExpectedHtml: html => Regex.Replace(html, "</div>\n\n\n  </div>\n</div>$", "</div>\n\n  </div>\n</div>"));
+            (generator, options) => generator.GenerateCookieBannerAsync(options));
 
     [Theory]
     [ComponentFixtureData("date-input", typeof(DateInputOptions))]

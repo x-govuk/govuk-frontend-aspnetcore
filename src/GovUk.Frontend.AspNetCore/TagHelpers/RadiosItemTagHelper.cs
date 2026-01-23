@@ -124,12 +124,12 @@ public class RadiosItemTagHelper : TagHelper
             (radiosContext.AspFor is not null ? (bool?)DoesModelMatchItemValue() : null) ??
             ComponentGenerator.RadiosItemDefaultChecked;
 
-        radiosContext.AddItem(new RadiosItem()
+        radiosContext.AddItem(new RadiosItem
         {
             Attributes = output.Attributes.ToAttributeDictionary(),
             Checked = resolvedChecked,
             Conditional = itemContext.Conditional is not null ?
-                new RadiosItemConditional()
+                new RadiosItemConditional
                 {
                     Content = itemContext.Conditional.Value.Content,
                     Attributes = itemContext.Conditional.Value.Attributes
@@ -137,7 +137,7 @@ public class RadiosItemTagHelper : TagHelper
                 null,
             Disabled = Disabled ?? ComponentGenerator.RadiosItemDefaultDisabled,
             Hint = itemContext.Hint is not null ?
-                new RadiosItemHint()
+                new RadiosItemHint
                 {
                     Content = itemContext.Hint.Value.Content,
                     Attributes = itemContext.Hint.Value.Attributes

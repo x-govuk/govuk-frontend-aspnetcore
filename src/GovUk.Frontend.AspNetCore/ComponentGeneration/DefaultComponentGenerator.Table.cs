@@ -47,17 +47,17 @@ internal partial class DefaultComponentGenerator
                         .With("scope", "col")
                         .WithClasses(
                             "govuk-table__header",
-                            item.Format is not null ? $"govuk-table__header--{item.Format.ToHtmlString()}" : null,
+                            item.Format is not null ? new TemplateString($"govuk-table__header--{item.Format}") : null,
                             item.Classes);
 
-                    if (item.ColSpan.HasValue)
+                    if (item.ColSpan is { } colSpan)
                     {
-                        attrs.With("colspan", item.ColSpan.Value.ToString(CultureInfo.InvariantCulture));
+                        attrs.With("colspan", colSpan.ToString(CultureInfo.InvariantCulture));
                     }
 
-                    if (item.RowSpan.HasValue)
+                    if (item.RowSpan is { } rowSpan)
                     {
-                        attrs.With("rowspan", item.RowSpan.Value.ToString(CultureInfo.InvariantCulture));
+                        attrs.With("rowspan", rowSpan.ToString(CultureInfo.InvariantCulture));
                     }
 
                     attrs.With(item.Attributes);
@@ -71,7 +71,7 @@ internal partial class DefaultComponentGenerator
             return theadTag;
         }
 
-        HtmlTag GenerateTableBody(IReadOnlyCollection<IReadOnlyCollection<TableOptionsColumn>>? rows, bool? firstCellIsHeader)
+        HtmlTag GenerateTableBody(IReadOnlyCollection<IReadOnlyCollection<TableOptionsColumn?>?>? rows, bool? firstCellIsHeader)
         {
             var tbodyTag = new HtmlTag("tbody", attrs => attrs
                 .WithClasses("govuk-table__body"));
@@ -88,7 +88,12 @@ internal partial class DefaultComponentGenerator
                         var isFirstCell = true;
                         foreach (var cell in row)
                         {
-                            if (isFirstCell && firstCellIsHeader == true)
+                            if (cell is null)
+                            {
+                                continue;
+                            }
+
+                            if (isFirstCell && firstCellIsHeader is true)
                             {
                                 var thTag = CreateHeaderCell(cell);
                                 trTag.InnerHtml.AppendHtml(thTag);
@@ -131,7 +136,7 @@ internal partial class DefaultComponentGenerator
             {
                 attrs.WithClasses(
                     "govuk-table__cell",
-                    cell.Format is not null ? $"govuk-table__cell--{cell.Format.ToHtmlString()}" : null,
+                    cell.Format is not null ? new TemplateString($"govuk-table__cell--{cell.Format}") : null,
                     cell.Classes);
 
                 AddCellSpanAttributes(attrs, cell);
@@ -143,14 +148,14 @@ internal partial class DefaultComponentGenerator
 
         void AddCellSpanAttributes(HtmlTag.AttributeBuilder attrs, TableOptionsColumn cell)
         {
-            if (cell.ColSpan.HasValue)
+            if (cell.ColSpan is { } colSpan)
             {
-                attrs.With("colspan", cell.ColSpan.Value.ToString(CultureInfo.InvariantCulture));
+                attrs.With("colspan", colSpan.ToString(CultureInfo.InvariantCulture));
             }
 
-            if (cell.RowSpan.HasValue)
+            if (cell.RowSpan is { } rowSpan)
             {
-                attrs.With("rowspan", cell.RowSpan.Value.ToString(CultureInfo.InvariantCulture));
+                attrs.With("rowspan", rowSpan.ToString(CultureInfo.InvariantCulture));
             }
 
             attrs.With(cell.Attributes);

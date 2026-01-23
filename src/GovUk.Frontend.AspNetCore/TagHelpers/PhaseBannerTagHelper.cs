@@ -53,7 +53,7 @@ public class PhaseBannerTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GeneratePhaseBannerAsync(new PhaseBannerOptions()
+        var component = await _componentGenerator.GeneratePhaseBannerAsync(new PhaseBannerOptions
         {
             Text = null,
             Html = content.ToTemplateString(),

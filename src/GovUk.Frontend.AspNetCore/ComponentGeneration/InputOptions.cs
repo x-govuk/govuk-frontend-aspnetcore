@@ -33,7 +33,7 @@ public record InputOptions
 
 public record InputOptionsPrefix
 {
-    public string? Text { get; set; }
+    public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }

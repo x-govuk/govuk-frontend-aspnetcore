@@ -16,7 +16,7 @@ internal partial class DefaultComponentGenerator
         {
             throw new ArgumentOutOfRangeException(
                 nameof(options),
-                $"HeadingLevel must be between 1 and 6.");
+                "HeadingLevel must be between 1 and 6.");
         }
 
         var accordionTag = new HtmlTag("div", attrs => attrs
@@ -29,7 +29,7 @@ internal partial class DefaultComponentGenerator
             .With("data-i18n.show-all-sections", options.ShowAllSectionsText)
             .With("data-i18n.show-section", options.ShowSectionText)
             .With("data-i18n.show-section-aria-label", options.ShowSectionAriaLabelText)
-            .With("data-remember-expanded", options.RememberExpanded == false ? "false" : null)
+            .With("data-remember-expanded", options.RememberExpanded is false ? "false" : null)
             .With(options.Attributes));
 
         if (options.Items is not null)
@@ -43,7 +43,7 @@ internal partial class DefaultComponentGenerator
                 }
 
                 var sectionTag = new HtmlTag("div", attrs => attrs
-                    .WithClasses("govuk-accordion__section", item.Expanded == true ? "govuk-accordion__section--expanded" : null));
+                    .WithClasses("govuk-accordion__section", item.Expanded is true ? "govuk-accordion__section--expanded" : null));
 
                 var headerTag = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-accordion__section-header"));
@@ -53,7 +53,7 @@ internal partial class DefaultComponentGenerator
 
                 var headingButtonTag = new HtmlTag("span", attrs => attrs
                     .WithClasses("govuk-accordion__section-button")
-                    .With("id", $"{options.Id.ToHtmlString(raw: true)}-heading-{index}"));
+                    .With("id", new($"{options.Id}-heading-{index}")));
 
                 headingButtonTag.InnerHtml.AppendHtml(HtmlOrText(item.Heading?.Html, item.Heading?.Text));
                 headingTag.InnerHtml.AppendHtml(headingButtonTag);
@@ -63,7 +63,7 @@ internal partial class DefaultComponentGenerator
                 {
                     var summaryTag = new HtmlTag("div", attrs => attrs
                         .WithClasses("govuk-accordion__section-summary", "govuk-body")
-                        .With("id", $"{options.Id.ToHtmlString(raw: true)}-summary-{index}"));
+                        .With("id", new($"{options.Id}-summary-{index}")));
 
                     summaryTag.InnerHtml.AppendHtml(HtmlOrText(item.Summary?.Html, item.Summary?.Text));
                     headerTag.InnerHtml.AppendHtml(summaryTag);
@@ -73,16 +73,16 @@ internal partial class DefaultComponentGenerator
 
                 var contentTag = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-accordion__section-content")
-                    .With("id", $"{options.Id.ToHtmlString(raw: true)}-content-{index}"));
+                    .With("id", new($"{options.Id}-content-{index}")));
 
-                if (item.Content?.Html is not null)
+                if (item.Content?.Html is { } contentHtml)
                 {
-                    contentTag.InnerHtml.AppendHtml(new Microsoft.AspNetCore.Html.HtmlString(item.Content.Html.ToHtmlString(raw: true)));
+                    contentTag.InnerHtml.AppendHtml(contentHtml.GetRawHtml());
                 }
-                else if (item.Content?.Text is not null)
+                else if (item.Content?.Text is { } contentText)
                 {
                     var pTag = new HtmlTag("p", attrs => attrs.WithClasses("govuk-body"));
-                    pTag.InnerHtml.AppendHtml(item.Content.Text);
+                    pTag.InnerHtml.AppendHtml(contentText);
                     contentTag.InnerHtml.AppendHtml(pTag);
                 }
 

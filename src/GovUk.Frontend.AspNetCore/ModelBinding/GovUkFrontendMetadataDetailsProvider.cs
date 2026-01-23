@@ -10,7 +10,7 @@ internal class GovUkFrontendMetadataDetailsProvider : IDisplayMetadataProvider
 
         if (dateOnlyMetadataAttribute is not null)
         {
-            var dateInputMetadata = new DateInputModelMetadata()
+            var dateInputMetadata = new DateInputModelMetadata
             {
                 ErrorMessagePrefix = dateOnlyMetadataAttribute.ErrorMessagePrefix,
                 ItemTypes = dateOnlyMetadataAttribute.ItemTypes

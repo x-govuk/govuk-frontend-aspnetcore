@@ -71,7 +71,7 @@ public class HeaderTagHelper : TagHelper
         var containerAttributes = new AttributeCollection(ContainerAttributes);
         containerAttributes.Remove("class", out var containerClasses);
 
-        var component = await _componentGenerator.GenerateHeaderAsync(new HeaderOptions()
+        var component = await _componentGenerator.GenerateHeaderAsync(new HeaderOptions
         {
             HomePageUrl = HomePageUrl,
             ProductName = ProductName,

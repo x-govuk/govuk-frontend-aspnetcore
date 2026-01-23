@@ -40,7 +40,7 @@ public class CookieBannerMessageActionLinkTagHelper : TagHelper
         var href = output.GetUrlAttribute("href");
         attributes.Remove("href", out _);
 
-        actionsContext.Actions.Add(new CookieBannerOptionsMessageAction()
+        actionsContext.Actions.Add(new CookieBannerOptionsMessageAction
         {
             Text = Text,
             Type = null,

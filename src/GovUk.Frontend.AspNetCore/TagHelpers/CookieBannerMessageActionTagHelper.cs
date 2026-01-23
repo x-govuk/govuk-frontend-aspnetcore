@@ -59,7 +59,7 @@ public class CookieBannerMessageActionTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        actionsContext.Actions.Add(new CookieBannerOptionsMessageAction()
+        actionsContext.Actions.Add(new CookieBannerOptionsMessageAction
         {
             Text = Text,
             Type = Type,

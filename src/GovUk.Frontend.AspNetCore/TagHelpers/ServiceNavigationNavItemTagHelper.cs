@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -78,7 +77,7 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
 
         var current = Current ?? ItemIsCurrentPage();
 
-        var item = new ServiceNavigationOptionsNavigationItem()
+        var item = new ServiceNavigationOptionsNavigationItem
         {
             Current = current,
             Active = Active,
@@ -100,7 +99,7 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
         bool ItemIsCurrentPage()
         {
             var currentUrl = ViewContext!.HttpContext.Request.GetEncodedPathAndQuery();
-            return href?.ToHtmlString(HtmlEncoder.Default) == currentUrl;
+            return href == currentUrl;
         }
     }
 }

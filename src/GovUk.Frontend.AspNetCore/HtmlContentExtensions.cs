@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Html;
@@ -28,7 +29,7 @@ public static class HtmlContentExtensions
         return writer.ToString();
     }
 
-    internal static bool IsEmpty(this IHtmlContent? content, HtmlEncoder? encoder = null)
+    internal static bool IsEmpty([NotNullWhen(false)] this IHtmlContent? content, HtmlEncoder? encoder = null)
     {
         if (content is null)
         {
@@ -49,6 +50,7 @@ public static class HtmlContentExtensions
 
     private class IsEmptyStringWriter : TextWriter
     {
+        // ReSharper disable once MemberHidesStaticFromOuterClass
         public bool IsEmpty { get; private set; } = true;
 
         public override void Write(char[] buffer, int index, int count)
@@ -58,7 +60,7 @@ public static class HtmlContentExtensions
                 return;
             }
 
-            IsEmpty ^= !buffer.All(Char.IsWhiteSpace);
+            IsEmpty ^= !buffer.All(char.IsWhiteSpace);
         }
 
         public override Encoding Encoding => Encoding.UTF8;

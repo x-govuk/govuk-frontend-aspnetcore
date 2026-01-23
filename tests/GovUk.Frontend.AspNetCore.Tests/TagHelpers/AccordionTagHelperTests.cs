@@ -107,6 +107,7 @@ public class AccordionTagHelperTests
         Assert.Equal(2, actualOptions.Items.Count);
 
         var firstItem = actualOptions.Items.ElementAt(0);
+        Assert.NotNull(firstItem);
         Assert.Equal(items[0].Expanded, firstItem.Expanded);
         Assert.NotNull(firstItem.Heading);
         Assert.Equal("First heading", firstItem.Heading.Html);
@@ -116,6 +117,7 @@ public class AccordionTagHelperTests
         Assert.Equal("First content", firstItem.Content.Html);
 
         var secondItem = actualOptions.Items.ElementAt(1);
+        Assert.NotNull(secondItem);
         Assert.Equal(items[1].Expanded, secondItem.Expanded);
         Assert.NotNull(secondItem.Heading);
         Assert.Equal("Second heading", secondItem.Heading.Html);

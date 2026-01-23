@@ -14,7 +14,6 @@ internal partial class DefaultComponentGenerator
             .With("aria-describedby", options.DescribedBy)
             .With(options.Attributes));
 
-        // Add legend if present
         if (options.Legend?.Html is not null || options.Legend?.Text is not null)
         {
             var legendContent = HtmlOrText(options.Legend.Html, options.Legend.Text);
@@ -41,7 +40,6 @@ internal partial class DefaultComponentGenerator
             tag.InnerHtml.AppendHtml(legend);
         }
 
-        // Add the main content
         tag.InnerHtml.AppendHtml(content);
 
         return GenerateFromHtmlTagAsync(tag);

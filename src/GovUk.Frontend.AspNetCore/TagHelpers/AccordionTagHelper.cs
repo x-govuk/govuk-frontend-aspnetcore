@@ -31,6 +31,7 @@ public class AccordionTagHelper : TagHelper
     public AccordionTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
+
         _componentGenerator = componentGenerator;
     }
 
@@ -137,7 +138,7 @@ public class AccordionTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateAccordionAsync(new AccordionOptions()
+        var component = await _componentGenerator.GenerateAccordionAsync(new AccordionOptions
         {
             Id = Id,
             HeadingLevel = HeadingLevel,

@@ -27,7 +27,7 @@ public class CheckboxesItemDividerTagHelper : TagHelper
             content = output.Content;
         }
 
-        checkboxesContext.AddItem(new CheckboxesItemDivider()
+        checkboxesContext.AddItem(new CheckboxesItemDivider
         {
             Attributes = output.Attributes.ToAttributeDictionary(),
             Content = content.Snapshot()

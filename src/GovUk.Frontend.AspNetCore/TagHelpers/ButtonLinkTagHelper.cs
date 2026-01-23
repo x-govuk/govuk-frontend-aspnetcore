@@ -11,7 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </remarks>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(Element)]
-public class ButtonLinkTagHelper(IComponentGenerator componentGenerator) : TagHelper
+public class ButtonLinkTagHelper : TagHelper
 {
     internal const string TagName = "govuk-button-link";
     internal const string Element = "a";
@@ -19,7 +19,17 @@ public class ButtonLinkTagHelper(IComponentGenerator componentGenerator) : TagHe
     private const string IdAttributeName = "id";
     private const string IsStartButtonAttributeName = "is-start-button";
 
-    private readonly IComponentGenerator _componentGenerator = componentGenerator;
+    private readonly IComponentGenerator _componentGenerator;
+
+    /// <summary>
+    /// Creates a new <see cref="ButtonLinkTagHelper"/>.
+    /// </summary>
+    public ButtonLinkTagHelper(IComponentGenerator componentGenerator)
+    {
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+
+        _componentGenerator = componentGenerator;
+    }
 
     /// <summary>
     /// The <c>id</c> attribute for the generated <c>button</c> element..
@@ -51,7 +61,7 @@ public class ButtonLinkTagHelper(IComponentGenerator componentGenerator) : TagHe
         attributes.Remove("href", out _);
         var href = output.GetUrlAttribute("href");
 
-        var component = await _componentGenerator.GenerateButtonAsync(new ButtonOptions()
+        var component = await _componentGenerator.GenerateButtonAsync(new ButtonOptions
         {
             Element = Element,
             Html = content.ToTemplateString(),

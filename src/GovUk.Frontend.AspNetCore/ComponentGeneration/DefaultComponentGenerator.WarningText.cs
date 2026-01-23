@@ -6,7 +6,7 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var iconFallbackText = options.IconFallbackText?.ToHtmlString() ?? "Warning";
+        var iconFallbackText = options.IconFallbackText ?? "Warning";
         var content = HtmlOrText(options.Html, options.Text);
 
         var outerTag = new HtmlTag("div", attrs => attrs

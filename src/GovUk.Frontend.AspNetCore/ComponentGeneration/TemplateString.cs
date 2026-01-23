@@ -1,5 +1,7 @@
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Encodings.Web;
 using Fluid.Values;
@@ -11,7 +13,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 /// <summary>
 /// Contains either an unencoded <see cref="string" /> or an <see cref="IHtmlContent"/>.
 /// </summary>
-[DebuggerDisplay("{ToString()}")]
+[DebuggerDisplay("{DebuggerToString()}")]
 public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 {
     internal static HtmlEncoder DefaultEncoder { get; } = HtmlEncoder.Default;
@@ -44,38 +46,68 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     }
 
     /// <summary>
-    /// Gets an HTML string for the current <see cref="TemplateString"/>.
+    /// Creates a new <see cref="TemplateString"/> from an interpolated string.
     /// </summary>
-    /// <param name="encoder">The <see cref="HtmlEncoder"/> to encoded unencoded values with.</param>
-    /// <param name="raw">Whether the raw, unencoded value should be returned for <see cref="string"/> values.</param>
-    /// <returns>A string containing the HTML.</returns>
-    public string ToHtmlString(HtmlEncoder? encoder = null, bool raw = false)
+    public TemplateString(TemplateStringInterpolatedStringHandler builder)
     {
-        // Fast path for empty strings
-        if (_value is "" or null)
-        {
-            return string.Empty;
-        }
+        ArgumentNullException.ThrowIfNull(builder);
 
-        if (_value is string str)
+        _value = new HtmlString(builder.GetFormattedText());
+    }
+
+    /// <summary>
+    /// Creates a new <see cref="TemplateString"/> from an encoded <see cref="string"/>.
+    /// </summary>
+    /// <param name="value">The encoded <see cref="string"/>.</param>
+    /// <returns>A new <see cref="TemplateString"/> with the contents of the specified <see cref="string"/>.</returns>
+    public static TemplateString FromEncoded(string value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+
+        return new TemplateString(new HtmlString(value));
+    }
+
+    /// <inheritdoc cref="Join(string, IEnumerable{TemplateString?})"/>
+    public static TemplateString Join(string separator, params TemplateString?[] content) =>
+        Join(separator, content.AsEnumerable());
+
+    /// <summary>
+    /// Joins multiple <see cref="TemplateString"/> instances with the specified separator.
+    /// </summary>
+    /// <param name="separator">The separator to use between each item.</param>
+    /// <param name="content">The content items to join.</param>
+    /// <returns>A new <see cref="TemplateString"/> with the joined content.</returns>
+    public static TemplateString Join(string separator, IEnumerable<TemplateString?> content)
+    {
+        ArgumentNullException.ThrowIfNull(separator);
+        ArgumentNullException.ThrowIfNull(content);
+
+        var builder = new StringBuilder();
+        using var writer = new StringWriter(builder);
+
+        var first = true;
+        foreach (var item in content)
         {
-            if (raw)
+            if (item is null || item.IsEmpty())
             {
-                return str;
+                continue;
             }
 
-            encoder ??= DefaultEncoder;
-            return encoder.Encode(str);
+            if (!first)
+            {
+                builder.Append(separator);
+            }
+
+            item.WriteTo(writer, DefaultEncoder);
+            first = false;
         }
 
-        Debug.Assert(_value is IHtmlContent);
-        encoder ??= DefaultEncoder;
-        return ((IHtmlContent)_value).ToHtmlString(encoder);
+        return FromEncoded(builder.ToString());
     }
 
     internal FluidValue ToFluidValue(HtmlEncoder encoder)
     {
-        // Fast path for empty strings  
+        // Fast path for empty strings
         if (_value is "" or null)
         {
             return NilValue.Instance;
@@ -87,14 +119,14 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         }
 
         Debug.Assert(_value is IHtmlContent);
-        var html = ((IHtmlContent)_value).ToHtmlString(encoder);
+        var html = this.ToHtmlString(encoder);
         return new StringValue(html, encode: false);
     }
 
     /// <summary>
     /// A <see cref="TemplateString"/> with no content.
     /// </summary>
-    public static TemplateString Empty { get; } = new((string?)null);
+    public static TemplateString Empty { get; } = new(HtmlString.Empty);
 
     /// <summary>
     /// Concatenates two <see cref="TemplateString"/> instances.
@@ -129,12 +161,10 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         }
 
         // At least one is IHtmlContent - concatenate their HTML representations
-        var html1 = first.ToHtmlString(DefaultEncoder);
-        var html2 = second.ToHtmlString(DefaultEncoder);
-        var result = new StringBuilder(html1.Length + html2.Length);
-        result.Append(html1);
-        result.Append(html2);
-        return new TemplateString(new HtmlString(result.ToString()));
+        using var writer = new StringWriter();
+        first.WriteTo(writer, DefaultEncoder);
+        second.WriteTo(writer, DefaultEncoder);
+        return FromEncoded(writer.ToString());
     }
 
     /// <summary>
@@ -152,11 +182,10 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// </summary>
     /// <param name="value">The unencoded <see cref="string"/>.</param>
     /// <returns>A new <see cref="TemplateString"/> with the contents of the specified <see cref="string"/>.</returns>
-    [return: NotNullIfNotNull(nameof(value))]
 #pragma warning disable CA2225
-    public static implicit operator TemplateString?(string? value)
+    public static implicit operator TemplateString(string? value)
     {
-        return value is null ? null : new(value);
+        return value is null ? Empty : new(value);
     }
 #pragma warning restore CA2225
 
@@ -165,11 +194,10 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// </summary>
     /// <param name="content">The <see cref="IHtmlContent"/> to create the <see cref="TemplateString"/> from.</param>
     /// <returns>A new <see cref="TemplateString"/> wrapping the specified <see cref="HtmlString"/>.</returns>
-    [return: NotNullIfNotNull(nameof(content))]
 #pragma warning disable CA2225
-    public static implicit operator TemplateString?(HtmlString? content)
+    public static implicit operator TemplateString(HtmlString? content)
     {
-        return content is null ? null : new(content);
+        return content is null ? Empty : new(content);
     }
 #pragma warning restore CA2225
 
@@ -184,9 +212,6 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         return !(first == second);
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    /// <inheritdoc/>
-    public override string ToString() => ToHtmlString(DefaultEncoder);
 
     /// <inheritdoc cref="IHtmlContent.WriteTo"/>
     public void WriteTo(TextWriter writer, HtmlEncoder encoder)
@@ -238,13 +263,13 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         }
 
         // Fast path: both empty
-        if ((_value is "" or null) && (other._value is "" or null))
+        if (_value is "" or null && other._value is "" or null)
         {
             return true;
         }
 
         // Fast path: one is empty, the other is not
-        if ((_value is "" or null) || (other._value is "" or null))
+        if (_value is "" or null || other._value is "" or null)
         {
             return false;
         }
@@ -256,8 +281,58 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         }
 
         // Slow path: convert to HTML strings and compare
-        return string.Equals(ToHtmlString(DefaultEncoder), other.ToHtmlString(DefaultEncoder), StringComparison.Ordinal);
+        return string.Equals(this.ToHtmlString(DefaultEncoder), other.ToHtmlString(DefaultEncoder), StringComparison.Ordinal);
     }
+
+    /// <summary>
+    /// Determines whether this <see cref="TemplateString"/> contains the specified <see cref="TemplateString"/>.
+    /// </summary>
+    /// <param name="other">The <see cref="TemplateString"/> to locate in this instance.</param>
+    /// <returns><see langword="true"/> if the specified <see cref="TemplateString"/> is found; otherwise, <see langword="false"/>.</returns>
+    public bool Contains(TemplateString? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        // Fast path: both empty
+        if (_value is "" or null && other._value is "" or null)
+        {
+            return true;
+        }
+
+        // Fast path: one is empty, the other is not
+        if (_value is "" or null || other._value is "" or null)
+        {
+            return false;
+        }
+
+        // Fast path: both are strings - compare directly
+        if (_value is string str1 && other._value is string str2)
+        {
+            return str1.Contains(str2, StringComparison.Ordinal);
+        }
+
+        // Slow path: convert to HTML strings and compare
+        var thisHtml = this.ToHtmlString(DefaultEncoder);
+        var otherHtml = other.ToHtmlString(DefaultEncoder);
+        return thisHtml.Contains(otherHtml, StringComparison.Ordinal);
+    }
+
+    // TEMP
+    internal IHtmlContent GetRawHtml()
+    {
+        if (_value is string str)
+        {
+            return new HtmlString(str);
+        }
+
+        Debug.Assert(_value is IHtmlContent);
+        return (IHtmlContent)_value;
+    }
+
+    private string DebuggerToString() => this.ToHtmlString(DefaultEncoder);
 }
 
 /// <summary>
@@ -265,9 +340,6 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 /// </summary>
 public static class TemplateStringExtensions
 {
-    // Estimated average class name length for capacity calculation
-    private const int EstimatedClassNameLength = 20;
-
     /// <summary>
     /// Creates a new <see cref="TemplateString"/> with the contents of <paramref name="templateString"/> and the
     /// specified <paramref name="classNames"/>.
@@ -275,7 +347,7 @@ public static class TemplateStringExtensions
     /// <param name="templateString">The initial set of CSS class names.</param>
     /// <param name="classNames">The additional CSS class names to append.</param>
     /// <returns>A new <see cref="TemplateString"/>.</returns>
-    public static TemplateString AppendCssClasses(this TemplateString? templateString, params TemplateString[] classNames)
+    public static TemplateString AppendCssClasses(this TemplateString? templateString, params TemplateString?[] classNames)
     {
         ArgumentNullException.ThrowIfNull(classNames);
 
@@ -285,40 +357,32 @@ public static class TemplateStringExtensions
             return templateString ?? TemplateString.Empty;
         }
 
-        // Get the original value efficiently
-        var originalHtml = templateString?.ToHtmlString(TemplateString.DefaultEncoder) ?? string.Empty;
-        var original = originalHtml.AsSpan().Trim();
+        return TemplateString.Join(
+            " ",
+            !templateString.IsEmpty() ? new[] { templateString }.Concat(classNames) : classNames);
+    }
 
-        // Calculate approximate capacity to minimize allocations
-        int capacity = original.Length + classNames.Length * (EstimatedClassNameLength + 1); // +1 for space
+    /// <summary>
+    /// Returns the first non-empty <see cref="TemplateString"/> from the specified values.
+    /// </summary>
+    public static TemplateString Coalesce(this TemplateString? templateString, params TemplateString?[] others)
+    {
+        ArgumentNullException.ThrowIfNull(others);
 
-        var sb = new StringBuilder(capacity);
-
-        if (original.Length > 0)
+        if (templateString is not null && !templateString.IsEmpty())
         {
-            sb.Append(original);
+            return templateString;
         }
 
-        // Append classes with spaces
-        for (int i = 0; i < classNames.Length; i++)
+        foreach (var other in others)
         {
-            var classHtml = classNames[i].ToHtmlString(TemplateString.DefaultEncoder);
-
-            // Skip empty class names
-            if (classHtml.Length == 0)
+            if (!other.IsEmpty())
             {
-                continue;
+                return other;
             }
-
-            if (sb.Length > 0)
-            {
-                sb.Append(' ');
-            }
-
-            sb.Append(classHtml);
         }
 
-        return new TemplateString(new HtmlString(sb.ToString()));
+        return TemplateString.Empty;
     }
 
     /// <summary>
@@ -327,4 +391,64 @@ public static class TemplateStringExtensions
     /// <param name="content">The <see cref="IHtmlContent"/> to create the <see cref="TemplateString"/> from.</param>
     /// <returns>A new <see cref="TemplateString"/> wrapping the specified <see cref="IHtmlContent"/>.</returns>
     public static TemplateString ToTemplateString(this IHtmlContent? content) => new(content);
+}
+
+/// <summary>
+/// Providers a handler for building HTML content with interpolation that is safely encoded.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+[InterpolatedStringHandler]
+#pragma warning disable CA1815
+#pragma warning disable CA1815
+#pragma warning disable CA1001
+public struct TemplateStringInterpolatedStringHandler
+#pragma warning restore CA1001
+#pragma warning restore CA1815
+#pragma warning restore CA1815
+{
+    private static readonly HtmlEncoder _encoder = TemplateString.DefaultEncoder;
+
+    private readonly StringWriter _writer;
+
+    /// <summary>Initializes a new instance of the <see cref="TemplateStringInterpolatedStringHandler"/> struct.</summary>
+    // ReSharper disable UnusedParameter.Local
+    public TemplateStringInterpolatedStringHandler(int literalLength, int formattedCount)
+    {
+        _writer = new();
+    }
+    // ReSharper restore UnusedParameter.Local
+
+    /// <summary>Writes the specified string to the handler.</summary>
+    /// <param name="value">The string to write.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AppendLiteral(string value)
+    {
+        _writer.Write(_encoder.Encode(value));
+    }
+
+    /// <summary>Writes the specified value to the handler.</summary>
+    /// <param name="value">The value to write.</param>
+    /// <typeparam name="T">The type of the value to write.</typeparam>
+    public void AppendFormatted<T>(T value)
+    {
+        if (value is null)
+        {
+            return;
+        }
+
+        if (value is IHtmlContent htmlContent)
+        {
+            htmlContent.WriteTo(_writer, _encoder);
+        }
+        else
+        {
+            var str = Convert.ToString(value, CultureInfo.InvariantCulture);
+            if (str is not null)
+            {
+                _writer.Write(_encoder.Encode(str));
+            }
+        }
+    }
+
+    internal string GetFormattedText() => _writer.ToString();
 }

@@ -42,17 +42,25 @@ internal partial class DefaultComponentGenerator
 
             foreach (var item in options.ErrorList)
             {
+                if (item is null)
+                {
+                    continue;
+                }
+
                 var itemTag = new HtmlTag("li", attrs => attrs
                     .With(item.ItemAttributes));
 
                 var itemContent = HtmlOrText(item.Html, item.Text);
 
-                if (item.Href?.IsEmpty() == false)
+                if (item.Href?.IsEmpty() is false)
                 {
                     var linkTag = new HtmlTag("a", attrs => attrs
                         .With("href", item.Href)
-                        .With(item.Attributes));
-                    linkTag.InnerHtml.AppendHtml(itemContent);
+                        .With(item.Attributes))
+                    {
+                        itemContent
+                    };
+
                     itemTag.InnerHtml.AppendHtml(linkTag);
                 }
                 else
@@ -73,12 +81,12 @@ internal partial class DefaultComponentGenerator
 
         static TemplateString? GetDisableAutoFocusValue(bool? disableAutoFocus)
         {
-            if (disableAutoFocus == true)
+            if (disableAutoFocus is true)
             {
                 return "true";
             }
 
-            if (disableAutoFocus == false)
+            if (disableAutoFocus is false)
             {
                 return "false";
             }

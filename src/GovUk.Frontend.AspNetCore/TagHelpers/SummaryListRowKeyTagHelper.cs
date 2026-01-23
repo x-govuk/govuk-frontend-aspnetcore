@@ -29,7 +29,7 @@ public class SummaryListRowKeyTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        summaryListRowContext.SetKey(new SummaryListOptionsRowKey()
+        summaryListRowContext.SetKey(new SummaryListOptionsRowKey
         {
             Text = null,
             Html = content.ToTemplateString(),

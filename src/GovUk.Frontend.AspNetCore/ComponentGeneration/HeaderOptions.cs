@@ -11,7 +11,7 @@ public record HeaderOptions
     public TemplateString? ProductName { get; set; }
     public TemplateString? ServiceName { get; set; }
     public TemplateString? ServiceUrl { get; set; }
-    public IReadOnlyCollection<HeaderOptionsNavigationItem>? Navigation { get; set; }
+    public IReadOnlyCollection<HeaderOptionsNavigationItem?>? Navigation { get; set; }
     public TemplateString? NavigationClasses { get; set; }
     public TemplateString? NavigationLabel { get; set; }
     public TemplateString? MenuButtonLabel { get; set; }

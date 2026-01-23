@@ -43,10 +43,10 @@ public class SummaryCardTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateSummaryListAsync(new SummaryListOptions()
+        var component = await _componentGenerator.GenerateSummaryListAsync(new SummaryListOptions
         {
             Rows = cardContext.SummaryList?.Rows,
-            Card = new SummaryListOptionsCard()
+            Card = new SummaryListOptionsCard
             {
                 Title = cardContext.Title,
                 Actions = cardContext.Actions,

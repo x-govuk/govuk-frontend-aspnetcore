@@ -65,7 +65,7 @@ public class FooterNavTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        footerContext.Navigation.Add(new FooterOptionsNavigation()
+        footerContext.Navigation.Add(new FooterOptionsNavigation
         {
             Title = navContext.Title?.Html,
             TitleAttributes = navContext.Title?.Attributes,

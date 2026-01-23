@@ -26,6 +26,7 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     private protected DateInputItemTagHelperBase(DateInputItemTypes itemType, string labelTagName)
     {
         ArgumentNullException.ThrowIfNull(labelTagName);
+
         _itemType = itemType;
         _labelTagName = labelTagName;
     }
@@ -105,7 +106,7 @@ public abstract class DateInputItemTagHelperBase : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        var itemContext = new DateInputContextItem()
+        var itemContext = new DateInputContextItem
         {
             TagName = output.TagName,
             Attributes = attributes,

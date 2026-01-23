@@ -58,7 +58,7 @@ public class FooterMetaTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
 
         footerContext.Meta = (
-            new FooterOptionsMeta()
+            new FooterOptionsMeta
             {
                 VisuallyHiddenTitle = VisuallyHiddenTitle,
                 Html = metaContext.Content?.Html,

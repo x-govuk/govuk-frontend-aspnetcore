@@ -16,8 +16,7 @@ internal partial class DefaultComponentGenerator
         var containerTag = new HtmlTag("div", attrs => attrs
             .WithClasses("govuk-width-container", options.ContainerClasses));
 
-        // Add rebrand logo if enabled
-        if (options.Rebrand == true)
+        if (options.Rebrand is true)
         {
             containerTag.InnerHtml.AppendHtml(GenerateLogo(new LogoOptions
             {
@@ -27,7 +26,6 @@ internal partial class DefaultComponentGenerator
             }));
         }
 
-        // Add navigation section if present
         if (options.Navigation is not null && options.Navigation.Count > 0)
         {
             var navigationTag = GenerateNavigationSection(options.Navigation);
@@ -38,7 +36,6 @@ internal partial class DefaultComponentGenerator
             });
         }
 
-        // Add meta section
         var metaTag = GenerateMetaSection(options.Meta, options.ContentLicence, options.Copyright);
         containerTag.InnerHtml.AppendHtml(metaTag);
 
@@ -46,33 +43,42 @@ internal partial class DefaultComponentGenerator
 
         return GenerateFromHtmlTagAsync(footerTag);
 
-        // Local helper functions
-        HtmlTag GenerateNavigationSection(IReadOnlyCollection<FooterOptionsNavigation> navigation)
+        HtmlTag GenerateNavigationSection(IReadOnlyCollection<FooterOptionsNavigation?> navigation)
         {
             var navContainerTag = new HtmlTag("div", attrs => attrs.WithClasses("govuk-footer__navigation"));
 
             foreach (var nav in navigation)
             {
-                var width = nav.Width?.ToHtmlString() ?? "full";
+                if (nav is null)
+                {
+                    continue;
+                }
+
+                var width = nav.Width ?? "full";
                 var sectionTag = new HtmlTag("div", attrs => attrs
-                    .WithClasses($"govuk-footer__section", $"govuk-grid-column-{width}")
+                    .WithClasses("govuk-footer__section", new TemplateString($"govuk-grid-column-{width}"))
                     .With(nav.Attributes));
 
                 var headingTag = new HtmlTag("h2", attrs => attrs
                     .WithClasses("govuk-footer__heading", "govuk-heading-m")
                     .With(nav.TitleAttributes));
-                headingTag.InnerHtml.AppendHtml(nav.Title?.ToHtmlString() ?? string.Empty);
+                headingTag.InnerHtml.AppendHtml(nav.Title ?? TemplateString.Empty);
                 sectionTag.InnerHtml.AppendHtml(headingTag);
 
                 if (nav.Items is not null && nav.Items.Count > 0)
                 {
-                    var listClasses = nav.Columns > 0 ? $"govuk-footer__list--columns-{nav.Columns}" : null;
+                    var listClasses = nav.Columns > 0 ? new TemplateString($"govuk-footer__list--columns-{nav.Columns}") : null;
                     var ulTag = new HtmlTag("ul", attrs => attrs
                         .WithClasses("govuk-footer__list", listClasses)
                         .With(nav.ItemsAttributes));
 
                     foreach (var item in nav.Items)
                     {
+                        if (item is null)
+                        {
+                            continue;
+                        }
+
                         if (item.Href is not null && (item.Text is not null || item.Html is not null))
                         {
                             var liTag = new HtmlTag("li", attrs => attrs
@@ -108,10 +114,9 @@ internal partial class DefaultComponentGenerator
             var metaItemGrowTag = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-footer__meta-item", "govuk-footer__meta-item--grow"));
 
-            // Meta content
             if (meta is not null)
             {
-                var visuallyHiddenTitle = meta.VisuallyHiddenTitle?.ToHtmlString() ?? "Support links";
+                var visuallyHiddenTitle = meta.VisuallyHiddenTitle ?? "Support links";
                 var h2Tag = new HtmlTag("h2", attrs => attrs
                     .WithClasses("govuk-visually-hidden"));
                 h2Tag.InnerHtml.AppendHtml(visuallyHiddenTitle);
@@ -125,6 +130,11 @@ internal partial class DefaultComponentGenerator
 
                     foreach (var item in meta.Items)
                     {
+                        if (item is null)
+                        {
+                            continue;
+                        }
+
                         var liTag = new HtmlTag("li", attrs => attrs
                             .WithClasses("govuk-footer__inline-list-item")
                             .With(item.ItemAttributes));
@@ -152,10 +162,8 @@ internal partial class DefaultComponentGenerator
                 }
             }
 
-            // OGL licence logo SVG
             metaItemGrowTag.InnerHtml.AppendHtml(GenerateOglLicenceLogo());
 
-            // Content licence
             var licenceSpanTag = new HtmlTag("span", attrs => attrs
                 .WithClasses("govuk-footer__licence-description")
                 .With(contentLicence?.Attributes));
@@ -179,7 +187,6 @@ internal partial class DefaultComponentGenerator
             metaItemGrowTag.InnerHtml.AppendHtml(licenceSpanTag);
             metaTag.InnerHtml.AppendHtml(metaItemGrowTag);
 
-            // Copyright
             var copyrightItemTag = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-footer__meta-item")
                 .With(copyright?.Attributes));
@@ -205,18 +212,14 @@ internal partial class DefaultComponentGenerator
 
         IHtmlContent GenerateOglLicenceLogo()
         {
-            // SVG for OGL licence logo
             var svgTag = new HtmlTag("svg", attrs => attrs
                 .With("aria-hidden", "true")
-                .WithBoolean("focusable")  // focusable="false" in the template
+                .With("focusable", "false")
                 .WithClasses("govuk-footer__licence-logo")
                 .With("xmlns", "http://www.w3.org/2000/svg")
                 .With("viewBox", "0 0 483.2 195.7")
                 .With("height", "17")
                 .With("width", "41"));
-
-            // Set focusable to false
-            svgTag.Attributes.Set("focusable", "false");
 
             var pathTag = new HtmlTag("path", attrs => attrs
                 .With("fill", "currentColor")

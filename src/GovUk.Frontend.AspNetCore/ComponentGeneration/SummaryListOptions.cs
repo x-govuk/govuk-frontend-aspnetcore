@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 public record SummaryListOptions
 {
-    public IReadOnlyCollection<SummaryListOptionsRow>? Rows { get; set; }
+    public IReadOnlyCollection<SummaryListOptionsRow?>? Rows { get; set; }
     public SummaryListOptionsCard? Card { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
@@ -63,7 +63,7 @@ public record SummaryListOptionsRowValue
 public record SummaryListOptionsRowActions
 {
     public TemplateString? Classes { get; set; }
-    public IReadOnlyCollection<SummaryListOptionsRowActionsItem>? Items { get; set; }
+    public IReadOnlyCollection<SummaryListOptionsRowActionsItem?>? Items { get; set; }
 
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
@@ -82,7 +82,7 @@ public record SummaryListOptionsRowActionsItem
 public record SummaryListOptionsCardActions
 {
     public TemplateString? Classes { get; set; }
-    public IReadOnlyCollection<SummaryListOptionsCardActionsItem>? Items { get; set; }
+    public IReadOnlyCollection<SummaryListOptionsCardActionsItem?>? Items { get; set; }
 
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }

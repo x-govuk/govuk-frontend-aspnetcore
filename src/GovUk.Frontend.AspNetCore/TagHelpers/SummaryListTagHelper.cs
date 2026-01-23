@@ -46,7 +46,7 @@ public class SummaryListTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var componentOptions = new SummaryListOptions()
+        var componentOptions = new SummaryListOptions
         {
             Rows = summaryListContext.Rows,
             Card = null,

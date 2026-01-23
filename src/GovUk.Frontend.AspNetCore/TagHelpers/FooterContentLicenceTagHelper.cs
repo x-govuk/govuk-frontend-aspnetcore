@@ -39,7 +39,7 @@ public class FooterContentLicenceTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
 
         footerContext.ContentLicence = new(
-            new FooterOptionsContentLicence()
+            new FooterOptionsContentLicence
             {
                 Text = null,
                 Html = content.ToTemplateString(),

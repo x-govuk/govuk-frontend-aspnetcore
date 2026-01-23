@@ -8,7 +8,7 @@ public record ErrorSummaryOptions
     public TemplateString? TitleHtml { get; set; }
     public TemplateString? DescriptionText { get; set; }
     public TemplateString? DescriptionHtml { get; set; }
-    public IReadOnlyCollection<ErrorSummaryOptionsErrorItem>? ErrorList { get; set; }
+    public IReadOnlyCollection<ErrorSummaryOptionsErrorItem?>? ErrorList { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
     public bool? DisableAutoFocus { get; set; }

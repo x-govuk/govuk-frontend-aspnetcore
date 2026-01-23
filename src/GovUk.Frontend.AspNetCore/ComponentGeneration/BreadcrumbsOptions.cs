@@ -7,7 +7,7 @@ public record BreadcrumbsOptions
     public bool? CollapseOnMobile { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
-    public IReadOnlyCollection<BreadcrumbsOptionsItem>? Items { get; set; }
+    public IReadOnlyCollection<BreadcrumbsOptionsItem?>? Items { get; set; }
     public TemplateString? LabelText { get; set; }
 }
 

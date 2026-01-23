@@ -10,14 +10,9 @@ internal partial class DefaultComponentGenerator
         {
             attrs
                 .With("id", options.Id)
-                .WithClasses("govuk-details", options.Classes);
-
-            if (options.Open == true)
-            {
-                attrs.WithBoolean("open");
-            }
-
-            attrs.With(options.Attributes);
+                .WithClasses("govuk-details", options.Classes)
+                .WithBoolean("open", options.Open is true)
+                .With(options.Attributes);
         });
 
         var summaryTag = new HtmlTag("summary", attrs => attrs

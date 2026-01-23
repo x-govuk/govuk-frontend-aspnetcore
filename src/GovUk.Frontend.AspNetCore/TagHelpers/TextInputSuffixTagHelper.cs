@@ -44,7 +44,7 @@ public class TextInputSuffixTagHelper : TagHelper
         attributes.Remove("class", out var classes);
 
         inputContext.SetSuffix(
-            new InputOptionsSuffix()
+            new InputOptionsSuffix
             {
                 Text = null,
                 Html = content.ToTemplateString(),

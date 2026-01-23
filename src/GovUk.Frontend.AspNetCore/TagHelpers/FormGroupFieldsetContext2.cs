@@ -58,7 +58,7 @@ internal abstract class FormGroupFieldsetContext2
             html = modelHelper.GetDisplayName(_for.ModelExplorer, _for.Name);
         }
 
-        var legendOptions = new FieldsetOptionsLegend()
+        var legendOptions = new FieldsetOptionsLegend
         {
             Text = null,
             Html = html,
@@ -67,7 +67,7 @@ internal abstract class FormGroupFieldsetContext2
             Attributes = legendAttributes
         };
 
-        return new FieldsetOptions()
+        return new FieldsetOptions
         {
             DescribedBy = _describedBy,
             Legend = legendOptions,

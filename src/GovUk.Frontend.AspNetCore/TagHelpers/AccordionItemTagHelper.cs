@@ -40,18 +40,18 @@ public class AccordionItemTagHelper : TagHelper
 
         itemContext.ThrowIfIncomplete();
 
-        accordionContext.AddItem(new AccordionOptionsItem()
+        accordionContext.AddItem(new AccordionOptionsItem
         {
             Expanded = Expanded ?? false,
-            Heading = new AccordionOptionsItemHeading()
+            Heading = new AccordionOptionsItemHeading
             {
                 Html = itemContext.Heading!.Value.Content.ToTemplateString()
             },
-            Summary = itemContext.Summary != null ? new AccordionOptionsItemSummary()
+            Summary = itemContext.Summary is not null ? new AccordionOptionsItemSummary
             {
                 Html = itemContext.Summary.Value.Content.ToTemplateString()
             } : null,
-            Content = new AccordionOptionsItemContent()
+            Content = new AccordionOptionsItemContent
             {
                 Html = itemContext.Content!.Value.Content.ToTemplateString()
             }

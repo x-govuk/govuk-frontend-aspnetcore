@@ -37,6 +37,8 @@ internal partial class DefaultComponentGenerator
 
         public static async ValueTask<FluidValue> GovukAttributesAsync(FunctionArguments args, TemplateContext context)
         {
+#pragma warning disable CA1849
+#pragma warning disable VSTHRD103
             // https://github.com/alphagov/govuk-frontend/blob/v5.8.0/packages/govuk-frontend/src/govuk/macros/attributes.njk
 
             var attrsArg = args.At(0);
@@ -48,7 +50,7 @@ internal partial class DefaultComponentGenerator
             }
             else if (attrsArg.Type is FluidValues.Object && attrsArg.ToObjectValue() is AttributeCollection attributeCollection)
             {
-                var sb = new StringBuilder();
+                using var writer = new StringWriter();
 
                 foreach (var attribute in attributeCollection.GetAttributes())
                 {
@@ -57,23 +59,23 @@ internal partial class DefaultComponentGenerator
                         continue;
                     }
 
-                    sb.Append(' ');
-                    sb.Append(_encoder.Encode(attribute.Name));
+                    writer.Write(' ');
+                    writer.Write(_encoder.Encode(attribute.Name));
 
                     if (!attribute.Optional || attribute.Value is not true)
                     {
-                        sb.Append('=');
-                        sb.Append('"');
-                        sb.Append(attribute.GetValueHtmlString(_encoder));
-                        sb.Append('"');
+                        writer.Write('=');
+                        writer.Write('"');
+                        attribute.WriteTo(writer, _encoder);
+                        writer.Write('"');
                     }
                 }
 
-                attributesHtml = sb.ToString();
+                attributesHtml = writer.ToString();
             }
             else if (attrsArg.Type is FluidValues.Dictionary)
             {
-                var sb = new StringBuilder();
+                using var writer = new StringWriter();
 
                 foreach (var attributeKvp in attrsArg.Enumerate(context))
                 {
@@ -99,19 +101,19 @@ internal partial class DefaultComponentGenerator
                         continue;
                     }
 
-                    sb.Append(' ');
-                    sb.Append(_encoder.Encode(attributeName));
+                    writer.Write(' ');
+                    writer.Write(_encoder.Encode(attributeName));
 
                     if (!optional || !attributeValue.Equals(BooleanValue.True))
                     {
-                        sb.Append('=');
-                        sb.Append('"');
-                        sb.Append(_encoder.Encode(attributeValue.ToStringValue()));
-                        sb.Append('"');
+                        writer.Write('=');
+                        writer.Write('"');
+                        writer.Write(_encoder.Encode(attributeValue.ToStringValue()));
+                        writer.Write('"');
                     }
                 }
 
-                attributesHtml = sb.ToString();
+                attributesHtml = writer.ToString();
             }
             else
             {
@@ -121,6 +123,8 @@ internal partial class DefaultComponentGenerator
             }
 
             return new StringValue(attributesHtml, encode: false);
+#pragma warning restore VSTHRD103
+#pragma warning restore CA1849
         }
 
         public static FluidValue GovukI18nAttributes(FunctionArguments args, TemplateContext context)

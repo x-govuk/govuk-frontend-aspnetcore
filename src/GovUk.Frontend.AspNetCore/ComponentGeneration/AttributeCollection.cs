@@ -151,20 +151,29 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         }
     }
 
-    internal sealed record Attribute(string Name, object? Value, bool Optional)
+    internal sealed record Attribute(string Name, object? Value, bool Optional) : IHtmlContent
     {
-        public string GetValueHtmlString(HtmlEncoder encoder)
+        public void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
+            ArgumentNullException.ThrowIfNull(writer);
             ArgumentNullException.ThrowIfNull(encoder);
 
-            return Value switch
+            if (Value is IHtmlContent htmlContent)
             {
-                TemplateString templateString => templateString.ToHtmlString(encoder),
-                IHtmlContent htmlContent => htmlContent.ToHtmlString(encoder),
-                true => "true",
-                false => "false",
-                var other => other?.ToString() ?? string.Empty
-            };
+                htmlContent.WriteTo(writer, encoder);
+            }
+            else if (Value is true)
+            {
+                writer.Write("true");
+            }
+            else if (Value is false)
+            {
+                writer.Write("false");
+            }
+            else
+            {
+                writer.Write(encoder.Encode(Value?.ToString() ?? string.Empty));
+            }
         }
     }
 
@@ -185,7 +194,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
 
             yield return KeyValuePair.Create(
                 attribute.Name,
-                attribute.Value as TemplateString ?? attribute.Value?.ToString());
+                (TemplateString?)(attribute.Value as TemplateString ?? attribute.Value?.ToString()));
         }
     }
 

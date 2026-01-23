@@ -29,6 +29,7 @@ public class BreadcrumbsTagHelper : TagHelper
     public BreadcrumbsTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
+
         _componentGenerator = componentGenerator;
     }
 
@@ -66,7 +67,7 @@ public class BreadcrumbsTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateBreadcrumbsAsync(new BreadcrumbsOptions()
+        var component = await _componentGenerator.GenerateBreadcrumbsAsync(new BreadcrumbsOptions
         {
             CollapseOnMobile = CollapseOnMobile,
             Classes = classes,

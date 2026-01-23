@@ -6,7 +6,7 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var idPrefix = options.IdPrefix?.ToHtmlString() ?? "task-list";
+        var idPrefix = options.IdPrefix ?? "task-list";
 
         var ulTag = new HtmlTag("ul", attrs => attrs
             .WithClasses("govuk-task-list", options.Classes)
@@ -24,10 +24,10 @@ internal partial class DefaultComponentGenerator
 
         return new HtmlTagGovUkComponent(ulTag);
 
-        async Task<HtmlTag> CreateTaskListItemAsync(TaskListOptionsItem item, int index, string idPrefix)
+        async Task<HtmlTag> CreateTaskListItemAsync(TaskListOptionsItem item, int index, TemplateString idPrefix)
         {
-            var hintId = $"{idPrefix}-{index}-hint";
-            var statusId = $"{idPrefix}-{index}-status";
+            var hintId = new TemplateString($"{idPrefix}-{index}-hint");
+            var statusId = new TemplateString($"{idPrefix}-{index}-status");
 
             var liTag = new HtmlTag("li", attrs =>
             {
@@ -44,14 +44,12 @@ internal partial class DefaultComponentGenerator
                 }
             });
 
-            // Create name and hint container
             var nameAndHintDiv = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-task-list__name-and-hint"));
 
-            // Create title (either as link or div)
             if (item.Href is not null)
             {
-                var ariaDescribedBy = item.Hint is not null ? $"{hintId} {statusId}" : statusId;
+                var ariaDescribedBy = item.Hint is not null ? new TemplateString($"{hintId} {statusId}") : statusId;
 
                 var aTag = new HtmlTag("a", attrs => attrs
                     .WithClasses("govuk-link", "govuk-task-list__link", item.Title?.Classes)
@@ -75,7 +73,6 @@ internal partial class DefaultComponentGenerator
                 nameAndHintDiv.InnerHtml.AppendHtml(divTag);
             }
 
-            // Add hint if present
             if (item.Hint is not null)
             {
                 var hintDiv = new HtmlTag("div", attrs => attrs
@@ -88,7 +85,6 @@ internal partial class DefaultComponentGenerator
 
             liTag.InnerHtml.AppendHtml(nameAndHintDiv);
 
-            // Create status div
             var statusDiv = new HtmlTag("div", attrs => attrs
                 .With("id", statusId)
                 .WithClasses("govuk-task-list__status", item.Status?.Classes));
@@ -96,7 +92,7 @@ internal partial class DefaultComponentGenerator
             if (item.Status?.Tag is not null)
             {
                 var tagComponent = await GenerateTagAsync(item.Status.Tag);
-                statusDiv.InnerHtml.AppendHtml(tagComponent.GetHtml());
+                statusDiv.InnerHtml.AppendHtml(tagComponent.GetContent());
             }
             else if (item.Status is not null)
             {

@@ -34,7 +34,9 @@ public sealed class RazorSnippet(string markup, Stream screenshot) : IDisposable
         tagBuilder.Attributes.Add("src", src);
         tagBuilder.Attributes.Add("alt", alt);
 
-        return tagBuilder.ToHtmlString(HtmlEncoder.Default);
+        var writer = new StringWriter();
+        tagBuilder.WriteTo(writer, HtmlEncoder.Default);
+        return writer.ToString();
     }
 }
 

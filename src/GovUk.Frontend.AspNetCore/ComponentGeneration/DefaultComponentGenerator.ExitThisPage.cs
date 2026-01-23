@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Html;
-
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -21,8 +19,7 @@ internal partial class DefaultComponentGenerator
             }
         };
 
-        var buttonComponent = await GenerateButtonAsync(buttonOptions);
-        var buttonHtml = buttonComponent.GetHtml();
+        var button = await GenerateButtonAsync(buttonOptions);
 
         var container = new HtmlTag("div", attrs =>
         {
@@ -35,25 +32,26 @@ internal partial class DefaultComponentGenerator
                 .With("data-i18n.press-two-more-times", options.PressTwoMoreTimesText)
                 .With("data-i18n.press-one-more-time", options.PressOneMoreTimeText)
                 .With(options.Attributes);
-        });
-
-        container.InnerHtml.AppendHtml(buttonHtml);
+        })
+        {
+            button
+        };
 
         return await GenerateFromHtmlTagAsync(container);
 
         static TemplateString CreateButtonContent(ExitThisPageOptions options)
         {
-            if (options.Html?.IsEmpty() == false)
+            if (!options.Html.IsEmpty())
             {
                 return options.Html;
             }
 
-            if (options.Text?.IsEmpty() == false)
+            if (!options.Text.IsEmpty())
             {
                 return options.Text;
             }
 
-            return new TemplateString(new HtmlString("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page"));
+            return TemplateString.FromEncoded("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page");
         }
     }
 }

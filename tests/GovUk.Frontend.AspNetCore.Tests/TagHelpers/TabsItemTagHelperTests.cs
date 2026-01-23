@@ -86,7 +86,7 @@ public class TabsItemTagHelperTests
             tabsContext.Items,
             item =>
             {
-                Assert.Null(item.Id);
+                Assert.True(item.Id.IsEmpty());
                 Assert.Equal("First", item.Label);
                 Assert.Equal(panelContent.ToHtmlString(), item.Panel?.Html);
             });

@@ -45,7 +45,7 @@ public class TextInputPrefixTagHelper : TagHelper
         attributes.Remove("class", out var classes);
 
         inputContext.SetPrefix(
-            new InputOptionsPrefix()
+            new InputOptionsPrefix
             {
                 Text = null,
                 Html = content.ToTemplateString(),

@@ -7,7 +7,7 @@ public record TabsOptions
     public TemplateString? Id { get; set; }
     public TemplateString? IdPrefix { get; set; }
     public TemplateString? Title { get; set; }
-    public IReadOnlyCollection<TabsOptionsItem>? Items { get; set; }
+    public IReadOnlyCollection<TabsOptionsItem?>? Items { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
 }

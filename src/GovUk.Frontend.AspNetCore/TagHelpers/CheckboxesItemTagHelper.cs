@@ -140,13 +140,13 @@ public class CheckboxesItemTagHelper : TagHelper
             (checkboxesContext.AspFor is not null ? (bool?)DoesModelMatchItemValue() : null) ??
             ComponentGenerator.CheckboxesItemDefaultChecked;
 
-        checkboxesContext.AddItem(new CheckboxesItem()
+        checkboxesContext.AddItem(new CheckboxesItem
         {
             Attributes = output.Attributes.ToAttributeDictionary(),
             Behavior = Behavior ?? ComponentGenerator.CheckboxesItemDefaultBehavior,
             Checked = resolvedChecked,
             Conditional = itemContext.Conditional is not null ?
-                new CheckboxesItemConditional()
+                new CheckboxesItemConditional
                 {
                     Content = itemContext.Conditional.Value.Content,
                     Attributes = itemContext.Conditional.Value.Attributes
@@ -154,7 +154,7 @@ public class CheckboxesItemTagHelper : TagHelper
                 null,
             Disabled = Disabled ?? ComponentGenerator.CheckboxesItemDefaultDisabled,
             Hint = itemContext.Hint is not null ?
-                new CheckboxesItemHint()
+                new CheckboxesItemHint
                 {
                     Content = itemContext.Hint.Value.Content,
                     Attributes = itemContext.Hint.Value.Attributes

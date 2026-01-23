@@ -19,7 +19,7 @@ internal partial class DefaultComponentGenerator
         headingTag.InnerHtml.AppendHtml(titleContent);
         outerTag.InnerHtml.AppendHtml(headingTag);
 
-        if (options.Html?.IsEmpty() == false || options.Text?.IsEmpty() == false)
+        if (!options.Html.IsEmpty() || !options.Text.IsEmpty())
         {
             var bodyContent = HtmlOrText(options.Html, options.Text);
             var bodyTag = new HtmlTag("div", attrs => attrs

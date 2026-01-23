@@ -78,12 +78,14 @@ public class TabsTagHelperTests
             actualOptions.Items,
             item =>
             {
+                Assert.NotNull(item);
                 Assert.Equal(firstItemId, item.Id);
                 Assert.Equal(firstItemLabel, item.Label);
                 Assert.Equal(firstItemContent, item.Panel?.Html);
             },
             item =>
             {
+                Assert.NotNull(item);
                 Assert.Equal(secondItemId, item.Id);
                 Assert.Equal(secondItemLabel, item.Label);
                 Assert.Equal(secondItemContent, item.Panel?.Html);

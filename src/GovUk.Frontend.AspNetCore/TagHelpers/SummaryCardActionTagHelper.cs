@@ -39,7 +39,7 @@ public class SummaryCardActionTagHelper : TagHelper
         attributes.Remove("href", out _);
         var href = output.GetUrlAttribute("href");
 
-        actionsContext.AddItem(new SummaryListOptionsCardActionsItem()
+        actionsContext.AddItem(new SummaryListOptionsCardActionsItem
         {
             Href = href,
             Text = null,

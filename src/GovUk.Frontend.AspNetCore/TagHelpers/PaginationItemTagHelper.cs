@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -84,7 +83,7 @@ public class PaginationItemTagHelper : TagHelper
 
         var current = Current ?? ItemIsCurrentPage();
 
-        paginationContext.AddItem(new PaginationOptionsItem()
+        paginationContext.AddItem(new PaginationOptionsItem
         {
             Attributes = attributes,
             Href = href,
@@ -98,7 +97,7 @@ public class PaginationItemTagHelper : TagHelper
         bool ItemIsCurrentPage()
         {
             var currentUrl = ViewContext!.HttpContext.Request.GetEncodedPathAndQuery();
-            return href?.ToHtmlString(HtmlEncoder.Default) == currentUrl;
+            return href == currentUrl;
         }
     }
 }

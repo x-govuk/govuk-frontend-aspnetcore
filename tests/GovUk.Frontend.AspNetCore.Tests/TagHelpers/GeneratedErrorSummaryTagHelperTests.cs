@@ -76,6 +76,7 @@ public class GeneratedErrorSummaryTagHelperTests
                 actualOptions.ErrorList,
                 error =>
                 {
+                    Assert.NotNull(error);
                     Assert.Equal(errorHref, error.Href);
                     Assert.Equal(errorHtml, error.Html);
                 });

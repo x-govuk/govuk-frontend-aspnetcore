@@ -287,7 +287,7 @@ public class CharacterCountTagHelper : TagHelper
 
         var formGroupAttributes = new AttributeCollection(FormGroupAttributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);
-        var formGroupOptions = new CharacterCountOptionsFormGroup()
+        var formGroupOptions = new CharacterCountOptionsFormGroup
         {
             Attributes = formGroupAttributes,
             Classes = formGroupClasses
@@ -314,7 +314,7 @@ public class CharacterCountTagHelper : TagHelper
         var countMessageAttributes = new AttributeCollection(CountMessageAttributes);
         countMessageAttributes.Remove("class", out var countMessageClasses);
 
-        var component = await _componentGenerator.GenerateCharacterCountAsync(new CharacterCountOptions()
+        var component = await _componentGenerator.GenerateCharacterCountAsync(new CharacterCountOptions
         {
             Id = id,
             Name = name,
@@ -354,24 +354,16 @@ public class CharacterCountTagHelper : TagHelper
         }
     }
 
-    private string ResolveId(string name)
-    {
-        return Id ?? TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
-    }
+    private string ResolveId(string name) =>
+        Id ?? TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
 
-    private string ResolveName()
-    {
-        return Name is null && For is null
+    private string ResolveName() =>
+        Name is null && For is null
             ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
                 AspForAttributeName)
             : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
-    }
 
-    private TemplateString? ResolveValue(CharacterCountContext characterCountContext)
-    {
-        return characterCountContext.Value is not null
-            ? characterCountContext.Value
-            : For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null;
-    }
+    private TemplateString ResolveValue(CharacterCountContext characterCountContext) =>
+        characterCountContext.Value ?? (For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null);
 }

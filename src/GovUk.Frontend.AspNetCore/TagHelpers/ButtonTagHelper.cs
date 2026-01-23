@@ -29,6 +29,7 @@ public class ButtonTagHelper : TagHelper
     public ButtonTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
+
         _componentGenerator = componentGenerator;
     }
 
@@ -98,7 +99,7 @@ public class ButtonTagHelper : TagHelper
             attributes.Set("formaction", output.GetUrlAttribute("formaction")!);
         }
 
-        var component = await _componentGenerator.GenerateButtonAsync(new ButtonOptions()
+        var component = await _componentGenerator.GenerateButtonAsync(new ButtonOptions
         {
             Element = Element,
             Html = content.ToTemplateString(),

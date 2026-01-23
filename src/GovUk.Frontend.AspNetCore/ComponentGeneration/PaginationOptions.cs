@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 public record PaginationOptions
 {
-    public IReadOnlyCollection<PaginationOptionsItem>? Items { get; set; }
+    public IReadOnlyCollection<PaginationOptionsItem?>? Items { get; set; }
     public PaginationOptionsPrevious? Previous { get; set; }
     public PaginationOptionsNext? Next { get; set; }
     public TemplateString? LandmarkLabel { get; set; }

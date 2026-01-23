@@ -51,7 +51,7 @@ public class SkipLinkTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateSkipLinkAsync(new SkipLinkOptions()
+        var component = await _componentGenerator.GenerateSkipLinkAsync(new SkipLinkOptions
         {
             Text = null,
             Html = content.ToTemplateString(),

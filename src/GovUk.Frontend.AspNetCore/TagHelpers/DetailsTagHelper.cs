@@ -54,7 +54,7 @@ public class DetailsTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateDetailsAsync(new DetailsOptions()
+        var component = await _componentGenerator.GenerateDetailsAsync(new DetailsOptions
         {
             Open = Open,
             SummaryHtml = detailsContext.Summary?.Content.ToTemplateString(),

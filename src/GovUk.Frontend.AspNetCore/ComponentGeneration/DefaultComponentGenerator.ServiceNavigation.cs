@@ -8,36 +8,34 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var menuButtonText = options.MenuButtonText?.ToString() ?? "Menu";
-        var navigationId = options.NavigationId?.ToString() ?? "navigation";
+        var menuButtonText = options.MenuButtonText ?? "Menu";
+        var navigationId = options.NavigationId ?? "navigation";
 
-        var innerContent = CreateInnerContent(options, menuButtonText, navigationId);
+        var innerContent = CreateInnerContent();
 
-        var containerTag = CreateContainerTag(options, innerContent);
+        var containerTag = CreateContainerTag();
 
         return GenerateFromHtmlTagAsync(containerTag);
 
-        HtmlTag CreateInnerContent(ServiceNavigationOptions options, string menuButtonText, string navigationId)
+        HtmlTag CreateInnerContent()
         {
             var widthContainerTag = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-width-container"));
 
-            // Start slot
-            if (options.Slots?.Start?.IsEmpty() == false)
+            if (!(options.Slots?.Start).IsEmpty())
             {
-                widthContainerTag.InnerHtml.AppendHtml(new HtmlString(options.Slots.Start.ToHtmlString(raw: true)));
+                widthContainerTag.InnerHtml.AppendHtml(options.Slots.Start.GetRawHtml());
             }
 
             var serviceNavigationContainer = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-service-navigation__container"));
 
-            // Service name
-            if (options.ServiceName?.IsEmpty() == false)
+            if (!options.ServiceName.IsEmpty())
             {
                 var serviceNameSpan = new HtmlTag("span", attrs => attrs
                     .WithClasses("govuk-service-navigation__service-name"));
 
-                if (options.ServiceUrl?.IsEmpty() == false)
+                if (!options.ServiceUrl.IsEmpty())
                 {
                     var linkTag = new HtmlTag("a", attrs => attrs
                         .WithClasses("govuk-service-navigation__link")
@@ -56,18 +54,14 @@ internal partial class DefaultComponentGenerator
                 serviceNavigationContainer.InnerHtml.AppendHtml(serviceNameSpan);
             }
 
-            // Navigation
             var navigationItems = options.Navigation;
-            var collapseNavigationOnMobile = options.CollapseNavigationOnMobile ?? (navigationItems?.Count > 1);
+            var collapseNavigationOnMobile = options.CollapseNavigationOnMobile ?? navigationItems?.Count > 1;
 
-            if ((navigationItems?.Count > 0) ||
-                options.Slots?.NavigationStart?.IsEmpty() == false ||
-                options.Slots?.NavigationEnd?.IsEmpty() == false)
+            if (navigationItems?.Count > 0 ||
+                !(options.Slots?.NavigationStart).IsEmpty() ||
+                !(options.Slots?.NavigationEnd).IsEmpty())
             {
                 var navTag = CreateNavigationTag(
-                    options,
-                    menuButtonText,
-                    navigationId,
                     collapseNavigationOnMobile,
                     navigationItems);
 
@@ -76,30 +70,25 @@ internal partial class DefaultComponentGenerator
 
             widthContainerTag.InnerHtml.AppendHtml(serviceNavigationContainer);
 
-            // End slot
-            if (options.Slots?.End?.IsEmpty() == false)
+            if (!(options.Slots?.End).IsEmpty())
             {
-                widthContainerTag.InnerHtml.AppendHtml(new HtmlString(options.Slots.End.ToHtmlString(raw: true)));
+                widthContainerTag.InnerHtml.AppendHtml(options.Slots.End.GetRawHtml());
             }
 
             return widthContainerTag;
         }
 
         HtmlTag CreateNavigationTag(
-            ServiceNavigationOptions options,
-            string menuButtonText,
-            string navigationId,
             bool collapseNavigationOnMobile,
-            IReadOnlyCollection<ServiceNavigationOptionsNavigationItem>? navigationItems)
+            IReadOnlyCollection<ServiceNavigationOptionsNavigationItem?>? navigationItems)
         {
-            var ariaLabel = options.NavigationLabel?.ToString() ?? menuButtonText;
+            var ariaLabel = options.NavigationLabel.Coalesce(menuButtonText);
 
             var navTag = new HtmlTag("nav", attrs => attrs
                 .WithClasses("govuk-service-navigation__wrapper", options.NavigationClasses)
                 .With("aria-label", ariaLabel)
                 .With(options.NavigationAttributes));
 
-            // Menu button (for mobile)
             if (collapseNavigationOnMobile)
             {
                 var buttonTag = new HtmlTag("button", attrs =>
@@ -111,42 +100,42 @@ internal partial class DefaultComponentGenerator
                         .WithBoolean("hidden")
                         .With("aria-hidden", "true");
 
-                    if (options.MenuButtonLabel?.IsEmpty() == false &&
-                        options.MenuButtonLabel?.ToString() != menuButtonText)
+                    if (!options.MenuButtonLabel.IsEmpty() && options.MenuButtonLabel != menuButtonText)
                     {
                         attrs.With("aria-label", options.MenuButtonLabel);
                     }
                 });
 
-                buttonTag.InnerHtml.Append(menuButtonText);
+                buttonTag.InnerHtml.AppendHtml(menuButtonText);
                 navTag.InnerHtml.AppendHtml(buttonTag);
             }
 
-            // Navigation list
             var ulTag = new HtmlTag("ul", attrs => attrs
                 .WithClasses("govuk-service-navigation__list")
                 .With("id", navigationId));
 
-            // Navigation start slot
-            if (options.Slots?.NavigationStart?.IsEmpty() == false)
+            if (!(options.Slots?.NavigationStart).IsEmpty())
             {
-                ulTag.InnerHtml.AppendHtml(new HtmlString(options.Slots.NavigationStart.ToHtmlString(raw: true)));
+                ulTag.InnerHtml.AppendHtml(options.Slots.NavigationStart.GetRawHtml());
             }
 
-            // Navigation items
             if (navigationItems is not null)
             {
                 foreach (var item in navigationItems)
                 {
+                    if (item is null)
+                    {
+                        continue;
+                    }
+
                     var liTag = CreateNavigationItem(item);
                     ulTag.InnerHtml.AppendHtml(liTag);
                 }
             }
 
-            // Navigation end slot
-            if (options.Slots?.NavigationEnd?.IsEmpty() == false)
+            if (!(options.Slots?.NavigationEnd).IsEmpty())
             {
-                ulTag.InnerHtml.AppendHtml(new HtmlString(options.Slots.NavigationEnd.ToHtmlString(raw: true)));
+                ulTag.InnerHtml.AppendHtml(options.Slots.NavigationEnd.GetRawHtml());
             }
 
             navTag.InnerHtml.AppendHtml(ulTag);
@@ -165,7 +154,7 @@ internal partial class DefaultComponentGenerator
 
             var linkInnerContent = CreateLinkInnerContent(item);
 
-            if (item.Href?.IsEmpty() == false)
+            if (!item.Href.IsEmpty())
             {
                 var aTag = new HtmlTag("a", attrs =>
                 {
@@ -184,7 +173,7 @@ internal partial class DefaultComponentGenerator
                 aTag.InnerHtml.AppendHtml(linkInnerContent);
                 liTag.InnerHtml.AppendHtml(aTag);
             }
-            else if (item.Html?.IsEmpty() == false || item.Text?.IsEmpty() == false)
+            else if (!item.Html.IsEmpty() || !item.Text.IsEmpty())
             {
                 var spanTag = new HtmlTag("span", attrs =>
                 {
@@ -208,7 +197,6 @@ internal partial class DefaultComponentGenerator
         {
             var content = HtmlOrText(item.Html, item.Text);
 
-            // Wrap active links in strong tags for accessibility
             if (item.Active is true || item.Current is true)
             {
                 var strongTag = new HtmlTag("strong", attrs => attrs
@@ -220,18 +208,13 @@ internal partial class DefaultComponentGenerator
             return content;
         }
 
-        HtmlTag CreateContainerTag(
-            ServiceNavigationOptions options,
-            HtmlTag innerContent)
+        HtmlTag CreateContainerTag()
         {
-            // If a service name is included or slots are provided, use a <section> element
-            // with an aria-label to create a containing landmark region.
-            // Otherwise, the <nav> in the innerContent can do the job by itself.
-            if (options.ServiceName?.IsEmpty() == false ||
-                options.Slots?.Start?.IsEmpty() == false ||
-                options.Slots?.End?.IsEmpty() == false)
+            if (!options.ServiceName.IsEmpty() ||
+                !(options.Slots?.Start).IsEmpty() ||
+                !(options.Slots?.End).IsEmpty())
             {
-                var ariaLabel = options.AriaLabel?.ToString() ?? "Service information";
+                var ariaLabel = options.AriaLabel.Coalesce("Service information");
 
                 var sectionTag = new HtmlTag("section", attrs => attrs
                     .WithClasses("govuk-service-navigation", options.Classes)

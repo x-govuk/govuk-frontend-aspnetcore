@@ -216,7 +216,7 @@ public class DateInputTagHelper : TagHelper
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);
-        var formGroupOptions = new DateInputFormGroupOptions()
+        var formGroupOptions = new DateInputFormGroupOptions
         {
             Attributes = formGroupAttributes,
             Classes = formGroupClasses
@@ -276,7 +276,7 @@ public class DateInputTagHelper : TagHelper
         var attributes = new AttributeCollection(DateInputAttributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateDateInputAsync(new DateInputOptions()
+        var component = await _componentGenerator.GenerateDateInputAsync(new DateInputOptions
         {
             Id = id,
             // We've used any specified NamePrefix when creating the name for each item;
@@ -298,7 +298,7 @@ public class DateInputTagHelper : TagHelper
             Debug.Assert(errorMessageOptions.Html is not null);
 
             var firstFieldWithError = items
-                .First(i => i.Classes?.ToHtmlString().Contains("govuk-input--error", StringComparison.Ordinal) == true)
+                .First(i => i.Classes?.Contains("govuk-input--error") is true)
                 .Id;
 
             var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
@@ -306,7 +306,7 @@ public class DateInputTagHelper : TagHelper
         }
 
         DateInputOptionsItem CreateDateInputItem(
-            Func<DateInputItemValues?, string?> getComponentFromValue,
+            Func<DateInputItemValues?, TemplateString?> getComponentFromValue,
             string defaultLabel,
             string defaultName,
             string defaultClass,
@@ -316,11 +316,9 @@ public class DateInputTagHelper : TagHelper
             var haveError = errorMessageOptions is not null;
 
             var defaultFullName = ModelNames.CreatePropertyModelName(namePrefix, defaultName);
-            var itemName = contextItem?.Name ?? defaultFullName;
-            var itemId = contextItem?.Id ??
-                contextItem?.Name?.ToHtmlString() ??
-                $"{id}.{defaultName}";
-            var itemLabel = contextItem?.LabelHtml ?? defaultLabel;
+            var itemName = (contextItem?.Name).Coalesce(defaultFullName);
+            var itemId = (contextItem?.Id).Coalesce(contextItem?.Name, new TemplateString($"{id}.{defaultName}"));
+            var itemLabel = (contextItem?.LabelHtml).Coalesce(defaultLabel);
 
             // Value resolution hierarchy:
             //   if Value has been set on a child tag helper e.g. <date-input-day /> then use that;
@@ -328,7 +326,7 @@ public class DateInputTagHelper : TagHelper
             //   if AspFor is specified use value from ModelState;
             //   otherwise empty.
 
-            var itemValue = contextItem?.ValueSpecified == true ? contextItem.Value?.ToString() ?? string.Empty :
+            var itemValue = contextItem?.ValueSpecified == true ? contextItem.Value ?? string.Empty :
                 _valueSpecified ? getComponentFromValue(value) :
                 For is not null ? GetValueFromModelState() :
                 null;
@@ -352,7 +350,7 @@ public class DateInputTagHelper : TagHelper
                 resolvedAttributes.AddBoolean("readonly");
             }
 
-            return new DateInputOptionsItem()
+            return new DateInputOptionsItem
             {
                 Id = itemId,
                 Name = itemName,
@@ -365,9 +363,9 @@ public class DateInputTagHelper : TagHelper
                 Attributes = resolvedAttributes
             };
 
-            string? GetValueFromModelState()
+            TemplateString? GetValueFromModelState()
             {
-                var modelStateKey = _modelHelper.GetFullHtmlFieldName(ViewContext!, itemName.ToString());
+                var modelStateKey = _modelHelper.GetFullHtmlFieldName(ViewContext!, itemName.ToHtmlString());
 
                 return ViewContext!.ModelState.TryGetValue(modelStateKey, out var modelStateEntry) &&
                     modelStateEntry.AttemptedValue is not null

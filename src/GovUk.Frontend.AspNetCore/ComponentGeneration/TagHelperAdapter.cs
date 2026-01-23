@@ -17,12 +17,12 @@ internal static class TagHelperAdapter
         ApplyComponentHtml(output, unwrapped);
     }
 
-    public static void ApplyComponentHtml(TagHelperOutput output, string html)
+    public static void ApplyComponentHtml(TagHelperOutput output, IHtmlContent content)
     {
         ArgumentNullException.ThrowIfNull(output);
-        ArgumentNullException.ThrowIfNull(html);
+        ArgumentNullException.ThrowIfNull(content);
 
-        var unwrapped = UnwrapComponent(html);
+        var unwrapped = UnwrapComponent(content);
         ApplyComponentHtml(output, unwrapped);
     }
 
@@ -44,12 +44,16 @@ internal static class TagHelperAdapter
         output.Content.AppendHtml(unwrapped.InnerHtml);
     }
 
-    internal static ComponentTagHelperOutput UnwrapComponent(IHtmlContent content, HtmlEncoder encoder) =>
-        UnwrapComponent(content.ToHtmlString(encoder));
+    internal static ComponentTagHelperOutput UnwrapComponent(IHtmlContent content) =>
+        UnwrapComponent(content, HtmlEncoder.Default);
 
-    internal static ComponentTagHelperOutput UnwrapComponent(string html)
+    internal static ComponentTagHelperOutput UnwrapComponent(IHtmlContent content, HtmlEncoder encoder)
     {
-        ArgumentNullException.ThrowIfNull(html);
+        ArgumentNullException.ThrowIfNull(content);
+
+        using var writer = new StringWriter();
+        content.WriteTo(writer, encoder);
+        var html = writer.ToString();
 
         if (string.IsNullOrWhiteSpace(html))
         {

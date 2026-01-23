@@ -181,7 +181,7 @@ public class FileUploadTagHelper : TagHelper
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);
-        var formGroupOptions = new FileUploadOptionsFormGroup()
+        var formGroupOptions = new FileUploadOptionsFormGroup
         {
             Attributes = formGroupAttributes,
             Classes = formGroupClasses

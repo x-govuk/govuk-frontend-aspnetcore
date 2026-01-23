@@ -29,7 +29,7 @@ public class SummaryListRowValueTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        summaryListRowContext.SetValue(new SummaryListOptionsRowValue()
+        summaryListRowContext.SetValue(new SummaryListOptionsRowValue
         {
             Text = null,
             Html = content.ToTemplateString(),

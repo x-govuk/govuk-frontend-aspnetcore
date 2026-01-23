@@ -96,7 +96,7 @@ public class SelectItemTagHelper : TagHelper
                 selectContext.AspFor.Name) == Value :
             _selected;
 
-        selectContext.AddItem(new SelectItem()
+        selectContext.AddItem(new SelectItem
         {
             Attributes = output.Attributes.ToAttributeDictionary(),
             Content = content.Snapshot(),

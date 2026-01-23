@@ -8,13 +8,13 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var typeValue = options.Type?.ToHtmlString(raw: true);
-        var isSuccessBanner = typeValue == "success";
-        var typeClass = isSuccessBanner ? $"govuk-notification-banner--{typeValue}" : null;
+        var type = options.Type;
+        var isSuccessBanner = type == "success";
+        var typeClass = isSuccessBanner ? new TemplateString($"govuk-notification-banner--{type}") : null;
         var role = DetermineRole(options.Role, isSuccessBanner);
-        var titleId = options.TitleId?.ToHtmlString(raw: true) ?? "govuk-notification-banner-title";
+        var titleId = options.TitleId ?? "govuk-notification-banner-title";
         var titleHeadingLevel = options.TitleHeadingLevel ?? 2;
-        var title = DetermineTitle(options.TitleHtml, options.TitleText, isSuccessBanner);
+        var title = DetermineTitle(options.TitleHtml, options.TitleText);
 
         var outerTag = new HtmlTag("div", attrs =>
         {
@@ -24,7 +24,7 @@ internal partial class DefaultComponentGenerator
                 .With("aria-labelledby", titleId)
                 .With("data-module", "govuk-notification-banner");
 
-            if (options.DisableAutoFocus == true || options.DisableAutoFocus == false)
+            if (options.DisableAutoFocus is true or false)
             {
                 attrs.With("data-disable-auto-focus", options.DisableAutoFocus.Value ? "true" : "false");
             }
@@ -42,11 +42,10 @@ internal partial class DefaultComponentGenerator
 
         var contentTag = new HtmlTag("div", attrs => attrs.WithClasses("govuk-notification-banner__content"));
         var content = HtmlOrText(options.Html, options.Text);
-        if (content != HtmlString.Empty)
+        if (!content.IsEmpty())
         {
-            // If we have text (not HTML), wrap it in the default paragraph style
-            var hasHtml = options.Html?.IsEmpty() == false;
-            var hasText = options.Text?.IsEmpty() == false;
+            var hasHtml = !options.Html.IsEmpty();
+            var hasText = !options.Text.IsEmpty();
             if (!hasHtml && hasText)
             {
                 var paragraphTag = new HtmlTag("p", attrs => attrs.WithClasses("govuk-notification-banner__heading"));
@@ -62,33 +61,29 @@ internal partial class DefaultComponentGenerator
 
         return GenerateFromHtmlTagAsync(outerTag);
 
-        static string DetermineRole(TemplateString? role, bool isSuccessBanner)
+        static TemplateString DetermineRole(TemplateString? role, bool isSuccessBanner)
         {
             if (role is not null)
             {
-                return role.ToHtmlString(raw: true);
+                return role;
             }
 
-            // If type is success, add role="alert" to prioritise the information in the notification banner
-            // to users of assistive technologies
             if (isSuccessBanner)
             {
                 return "alert";
             }
 
-            // Otherwise add role="region" to make the notification banner a landmark to help users of
-            // assistive technologies to navigate to the banner
             return "region";
         }
 
-        IHtmlContent DetermineTitle(TemplateString? titleHtml, TemplateString? titleText, bool isSuccessBanner)
+        IHtmlContent DetermineTitle(TemplateString? titleHtml, TemplateString? titleText)
         {
-            if (titleHtml?.IsEmpty() == false)
+            if (!titleHtml.IsEmpty())
             {
-                return new HtmlString(titleHtml.ToHtmlString(raw: true));
+                return titleHtml.GetRawHtml();
             }
 
-            if (titleText?.IsEmpty() == false)
+            if (!titleText.IsEmpty())
             {
                 return titleText;
             }

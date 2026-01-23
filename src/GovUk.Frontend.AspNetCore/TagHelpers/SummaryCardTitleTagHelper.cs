@@ -57,7 +57,7 @@ public class SummaryCardTitleTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        cardContext.SetTitle(new SummaryListOptionsCardTitle()
+        cardContext.SetTitle(new SummaryListOptionsCardTitle
         {
             Text = null,
             Html = content.ToTemplateString(),

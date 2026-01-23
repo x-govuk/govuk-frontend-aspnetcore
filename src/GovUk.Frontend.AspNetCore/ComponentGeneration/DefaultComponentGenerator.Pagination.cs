@@ -16,15 +16,13 @@ internal partial class DefaultComponentGenerator
             .With("aria-label", options.LandmarkLabel ?? "Pagination")
             .With(options.Attributes));
 
-        // Add previous link if present
-        if (options.Previous?.Href is not null)
+        if (!(options.Previous?.Href).IsEmpty())
         {
             var previousLinkContent = GetLinkContent(options.Previous.Html, options.Previous.Text, "Previous", " page");
             var previousTag = GeneratePrevLink(options.Previous, previousLinkContent, blockLevel);
             navTag.InnerHtml.AppendHtml(previousTag);
         }
 
-        // Add items list if present
         if (options.Items is not null && options.Items.Count > 0)
         {
             var ulTag = new HtmlTag("ul", attrs => attrs
@@ -32,8 +30,7 @@ internal partial class DefaultComponentGenerator
 
             foreach (var item in options.Items)
             {
-                // Skip null items and items without href (unless they are ellipsis)
-                if (item is null || (item.Ellipsis != true && string.IsNullOrEmpty(item.Href?.ToHtmlString())))
+                if (item is null || (item.Ellipsis is not true && item.Href.IsEmpty()))
                 {
                     continue;
                 }
@@ -45,8 +42,7 @@ internal partial class DefaultComponentGenerator
             navTag.InnerHtml.AppendHtml(ulTag);
         }
 
-        // Add next link if present
-        if (options.Next?.Href is not null)
+        if (!(options.Next?.Href).IsEmpty())
         {
             var nextLinkContent = GetLinkContent(options.Next.Html, options.Next.Text, "Next", " page");
             var nextTag = GenerateNextLink(options.Next, nextLinkContent, blockLevel);
@@ -55,10 +51,9 @@ internal partial class DefaultComponentGenerator
 
         return GenerateFromHtmlTagAsync(navTag);
 
-        // Local functions
         IHtmlContent GetLinkContent(TemplateString? html, TemplateString? text, string defaultText, string visuallyHiddenSuffix)
         {
-            if (html?.IsEmpty() == false || text?.IsEmpty() == false)
+            if (!html.IsEmpty() || !text.IsEmpty())
             {
                 return HtmlOrText(html, text);
             }
@@ -97,7 +92,6 @@ internal partial class DefaultComponentGenerator
             spanTag.InnerHtml.AppendHtml(content);
             aTag.InnerHtml.AppendHtml(spanTag);
 
-            // Add label text if present and block level
             if (link.LabelText is not null && isBlockLevel)
             {
                 var colonTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-visually-hidden"))
@@ -106,7 +100,7 @@ internal partial class DefaultComponentGenerator
                 };
                 aTag.InnerHtml.AppendHtml(colonTag);
                 var labelTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-pagination__link-label"));
-                labelTag.InnerHtml.Append(link.LabelText.ToHtmlString());
+                labelTag.InnerHtml.AppendHtml(link.LabelText);
                 aTag.InnerHtml.AppendHtml(labelTag);
             }
 
@@ -126,7 +120,6 @@ internal partial class DefaultComponentGenerator
                 .With("rel", "next")
                 .With(link.Attributes));
 
-            // Add arrow before content when block level
             if (isBlockLevel)
             {
                 var arrowSvg = GenerateArrowSvg(false);
@@ -138,7 +131,6 @@ internal partial class DefaultComponentGenerator
             spanTag.InnerHtml.AppendHtml(content);
             aTag.InnerHtml.AppendHtml(spanTag);
 
-            // Add label text if present and block level
             if (link.LabelText is not null && isBlockLevel)
             {
                 var colonTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-visually-hidden"))
@@ -147,11 +139,10 @@ internal partial class DefaultComponentGenerator
                 };
                 aTag.InnerHtml.AppendHtml(colonTag);
                 var labelTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-pagination__link-label"));
-                labelTag.InnerHtml.Append(link.LabelText.ToHtmlString());
+                labelTag.InnerHtml.AppendHtml(link.LabelText);
                 aTag.InnerHtml.AppendHtml(labelTag);
             }
 
-            // Add arrow after content when not block level
             if (!isBlockLevel)
             {
                 var arrowSvg = GenerateArrowSvg(false);
@@ -192,10 +183,10 @@ internal partial class DefaultComponentGenerator
             var liTag = new HtmlTag("li", attrs => attrs
                 .WithClasses(
                     "govuk-pagination__item",
-                    item.Current == true ? "govuk-pagination__item--current" : null,
-                    item.Ellipsis == true ? "govuk-pagination__item--ellipsis" : null));
+                    item.Current is true ? "govuk-pagination__item--current" : null,
+                    item.Ellipsis is true ? "govuk-pagination__item--ellipsis" : null));
 
-            if (item.Ellipsis == true)
+            if (item.Ellipsis is true)
             {
                 liTag.InnerHtml.Append("⋯");
             }
@@ -203,8 +194,8 @@ internal partial class DefaultComponentGenerator
             {
                 var aTag = new HtmlTag("a", attrs =>
                 {
-                    var ariaLabel = item.VisuallyHiddenText?.ToHtmlString()
-                        ?? (item.Number is not null ? $"Page {item.Number.ToHtmlString()}" : null);
+                    var ariaLabel = item.VisuallyHiddenText
+                        ?? (item.Number is not null ? new TemplateString($"Page {item.Number}") : null);
 
                     attrs
                         .WithClasses("govuk-link", "govuk-pagination__link")
@@ -219,7 +210,7 @@ internal partial class DefaultComponentGenerator
                     attrs.With(item.Attributes);
                 });
 
-                aTag.InnerHtml.Append(item.Number?.ToHtmlString() ?? string.Empty);
+                aTag.InnerHtml.AppendHtml(item.Number ?? TemplateString.Empty);
                 liTag.InnerHtml.AppendHtml(aTag);
             }
 

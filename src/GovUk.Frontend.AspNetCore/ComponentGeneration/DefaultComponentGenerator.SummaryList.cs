@@ -15,7 +15,7 @@ internal partial class DefaultComponentGenerator
 
             aTag.InnerHtml.AppendHtml(HtmlOrText(action.Html, action.Text));
 
-            if (action.VisuallyHiddenText?.IsEmpty() == false || cardTitle is not null)
+            if (!action.VisuallyHiddenText.IsEmpty() || cardTitle is not null)
             {
                 var spanTag = new HtmlTag("span", attrs => attrs
                     .WithClasses("govuk-visually-hidden"));
@@ -56,7 +56,7 @@ internal partial class DefaultComponentGenerator
 
                 spanTag.InnerHtml.Append(" ");
 
-                if (action.VisuallyHiddenText?.IsEmpty() == false)
+                if (!action.VisuallyHiddenText.IsEmpty())
                 {
                     spanTag.InnerHtml.AppendHtml(action.VisuallyHiddenText);
                 }
@@ -95,30 +95,32 @@ internal partial class DefaultComponentGenerator
                 titleWrapperTag.InnerHtml.AppendHtml(titleTag);
             }
 
-            if (card.Actions?.Items?.Count > 0)
+            var actionItems = card.Actions?.Items?.Where(i => i is not null).ToArray() ?? [];
+
+            if (actionItems.Length > 0)
             {
-                if (card.Actions.Items.Count == 1)
+                if (actionItems.Length == 1)
                 {
                     var actionsTag = new HtmlTag("div", attrs => attrs
-                        .WithClasses("govuk-summary-card__actions", card.Actions.Classes)
-                        .With(card.Actions.Attributes));
+                        .WithClasses("govuk-summary-card__actions", card.Actions!.Classes)
+                        .With(card.Actions!.Attributes));
 
-                    var actionLink = BuildCardActionLink(card.Actions.Items.First(), card.Title);
+                    var actionLink = BuildCardActionLink(actionItems.First()!, card.Title);
                     actionsTag.InnerHtml.AppendHtml(actionLink);
                     titleWrapperTag.InnerHtml.AppendHtml(actionsTag);
                 }
                 else
                 {
                     var actionsTag = new HtmlTag("ul", attrs => attrs
-                        .WithClasses("govuk-summary-card__actions", card.Actions.Classes)
+                        .WithClasses("govuk-summary-card__actions", card.Actions!.Classes)
                         .With(card.Actions.Attributes));
 
-                    foreach (var action in card.Actions.Items)
+                    foreach (var action in actionItems)
                     {
                         var liTag = new HtmlTag("li", attrs => attrs
                             .WithClasses("govuk-summary-card__action"));
 
-                        var actionLink = BuildCardActionLink(action, card.Title);
+                        var actionLink = BuildCardActionLink(action!, card.Title);
                         liTag.InnerHtml.AppendHtml(actionLink);
                         actionsTag.InnerHtml.AppendHtml(liTag);
                     }
@@ -138,8 +140,7 @@ internal partial class DefaultComponentGenerator
             return cardTag;
         }
 
-        // Determine if we need 2 or 3 columns
-        var anyRowHasActions = options.Rows?.Any(row => row?.Actions?.Items?.Count > 0) == true;
+        var anyRowHasActions = options.Rows?.Any(row => row?.Actions?.Items?.Count > 0) is true;
 
         var dlTag = new HtmlTag("dl", attrs => attrs
             .WithClasses("govuk-summary-list", options.Classes)
@@ -185,7 +186,7 @@ internal partial class DefaultComponentGenerator
 
                     if (row.Actions!.Items!.Count == 1)
                     {
-                        var actionLink = BuildRowActionLink(row.Actions.Items.First(), options.Card?.Title);
+                        var actionLink = BuildRowActionLink(row.Actions.Items.First()!, options.Card?.Title);
                         actionsTag.InnerHtml.AppendHtml(actionLink);
                     }
                     else
@@ -195,6 +196,11 @@ internal partial class DefaultComponentGenerator
 
                         foreach (var action in row.Actions.Items)
                         {
+                            if (action is null)
+                            {
+                                continue;
+                            }
+
                             var liTag = new HtmlTag("li", attrs => attrs
                                 .WithClasses("govuk-summary-list__actions-list-item"));
 

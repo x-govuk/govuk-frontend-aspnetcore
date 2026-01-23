@@ -92,7 +92,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
 
         var disableAutoFocus = generateErrorSummariesOptions.HasFlag(DisableAutoFocus);
 
-        var errorSummary = await _componentGenerator.GenerateErrorSummaryAsync(new ErrorSummaryOptions()
+        var errorSummary = await _componentGenerator.GenerateErrorSummaryAsync(new ErrorSummaryOptions
         {
             TitleText = null,
             TitleHtml = DefaultComponentGenerator.DefaultErrorSummaryTitleHtml,
@@ -106,7 +106,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
             DescriptionAttributes = null
         });
 
-        output.PreContent.AppendHtml(errorSummary.GetHtml());
+        output.PreContent.AppendHtml(errorSummary.GetContent());
 
         containerErrorContext.ErrorSummaryHasBeenRendered = true;
     }

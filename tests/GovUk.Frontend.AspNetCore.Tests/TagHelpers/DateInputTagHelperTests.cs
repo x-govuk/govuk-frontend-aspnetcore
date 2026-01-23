@@ -164,7 +164,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.NotNull(actualOptions.Fieldset);
         AssertContainsAttributes(fieldsetAttributes, actualOptions.Fieldset.Attributes);
         Assert.NotNull(actualOptions.Fieldset.DescribedBy);
-        Assert.Contains(fieldsetDescribedBy, actualOptions.Fieldset.DescribedBy.ToString().Split(' '));
+        Assert.True(actualOptions.Fieldset.DescribedBy.Contains(fieldsetDescribedBy));
         Assert.NotNull(actualOptions.Fieldset.Legend);
         Assert.Equal(legendIsPageHeading, actualOptions.Fieldset.Legend.IsPageHeading);
         AssertContainsAttributes(legendAttributes, actualOptions.Fieldset.Legend.Attributes);
@@ -790,9 +790,9 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.NotNull(actualOptions.Items);
         Assert.Collection(
             actualOptions.Items,
-            item => Assert.StartsWith(namePrefix, item.Name?.ToString()),
-            item => Assert.StartsWith(namePrefix, item.Name?.ToString()),
-            item => Assert.StartsWith(namePrefix, item.Name?.ToString()));
+            item => Assert.StartsWith(namePrefix, item.Name?.ToHtmlString()),
+            item => Assert.StartsWith(namePrefix, item.Name?.ToHtmlString()),
+            item => Assert.StartsWith(namePrefix, item.Name?.ToHtmlString()));
     }
 
     [Fact]
@@ -1430,7 +1430,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
     private static void AssertItemHasExpectedError(DateInputOptionsItem item, bool expectError)
     {
-        var classes = item.Classes?.ToString().Split(' ') ?? [];
+        var classes = item.Classes?.ToHtmlString().Split(' ') ?? [];
 
         if (expectError)
         {

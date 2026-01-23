@@ -111,7 +111,7 @@ internal class HtmlTag : IHtmlContent, IEnumerable
             {
                 writer.Write('=');
                 writer.Write('"');
-                writer.Write(attribute.GetValueHtmlString(encoder));
+                attribute.WriteTo(writer, encoder);
                 writer.Write('"');
             }
         }
@@ -141,7 +141,7 @@ internal class HtmlTag : IHtmlContent, IEnumerable
         {
             ArgumentNullException.ThrowIfNull(name);
 
-            if (value is not null)
+            if (value is not null && !value.IsEmpty())
             {
                 Attributes.Add(name, value);
             }
@@ -162,11 +162,15 @@ internal class HtmlTag : IHtmlContent, IEnumerable
             return this;
         }
 
-        public AttributeBuilder WithBoolean(string name)
+        public AttributeBuilder WithBoolean(string name, bool when = true)
         {
             ArgumentNullException.ThrowIfNull(name);
 
-            Attributes.AddBoolean(name);
+            if (when)
+            {
+                Attributes.AddBoolean(name);
+            }
+
             return this;
         }
 

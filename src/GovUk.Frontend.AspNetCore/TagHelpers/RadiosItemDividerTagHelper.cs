@@ -27,7 +27,7 @@ public class RadiosItemDividerTagHelper : TagHelper
             content = output.Content;
         }
 
-        radiosContext.AddItem(new RadiosItemDivider()
+        radiosContext.AddItem(new RadiosItemDivider
         {
             Attributes = output.Attributes.ToAttributeDictionary(),
             Content = content.Snapshot()

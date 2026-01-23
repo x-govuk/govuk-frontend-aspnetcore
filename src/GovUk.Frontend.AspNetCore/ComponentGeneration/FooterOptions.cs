@@ -5,7 +5,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 public record FooterOptions
 {
     public FooterOptionsMeta? Meta { get; set; }
-    public IReadOnlyCollection<FooterOptionsNavigation>? Navigation { get; set; }
+    public IReadOnlyCollection<FooterOptionsNavigation?>? Navigation { get; set; }
     public FooterOptionsContentLicence? ContentLicence { get; set; }
     public FooterOptionsCopyright? Copyright { get; set; }
     public TemplateString? ContainerClasses { get; set; }
@@ -19,7 +19,7 @@ public record FooterOptionsMeta
     public TemplateString? VisuallyHiddenTitle { get; set; }
     public TemplateString? Html { get; set; }
     public TemplateString? Text { get; set; }
-    public IReadOnlyCollection<FooterOptionsMetaItem>? Items { get; set; }
+    public IReadOnlyCollection<FooterOptionsMetaItem?>? Items { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
     [NonStandardParameter]
@@ -44,7 +44,7 @@ public record FooterOptionsNavigation
     public TemplateString? Title { get; set; }
     public int? Columns { get; set; }
     public TemplateString? Width { get; set; }
-    public IReadOnlyCollection<FooterOptionsNavigationItem>? Items { get; set; }
+    public IReadOnlyCollection<FooterOptionsNavigationItem?>? Items { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
     [NonStandardParameter]

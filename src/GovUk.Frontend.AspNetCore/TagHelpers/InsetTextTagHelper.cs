@@ -48,7 +48,7 @@ public class InsetTextTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateInsetTextAsync(new InsetTextOptions()
+        var component = await _componentGenerator.GenerateInsetTextAsync(new InsetTextOptions
         {
             Text = null,
             Html = content.ToTemplateString(),

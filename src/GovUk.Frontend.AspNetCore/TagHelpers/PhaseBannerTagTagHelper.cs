@@ -31,7 +31,7 @@ public class PhaseBannerTagTagHelper : TagHelper
         attributes.Remove("class", out var classes);
 
         phaseBannerContext.SetTag(
-            new TagOptions()
+            new TagOptions
             {
                 Text = null,
                 Html = content.ToTemplateString(),

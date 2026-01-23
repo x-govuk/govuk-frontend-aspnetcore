@@ -67,12 +67,12 @@ public class TabsItemTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         var itemAttributes = new AttributeCollection(LinkAttributes);
 
-        tabsContext.AddItem(new TabsOptionsItem()
+        tabsContext.AddItem(new TabsOptionsItem
         {
             Id = Id,
             Label = Label,
             Attributes = itemAttributes,
-            Panel = new TabsOptionsItemPanel()
+            Panel = new TabsOptionsItemPanel
             {
                 Text = null,
                 Html = content.ToTemplateString(),

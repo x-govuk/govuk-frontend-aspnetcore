@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Html;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -10,16 +12,11 @@ internal partial class DefaultComponentGenerator
         {
             attrs
                 .WithClasses("govuk-cookie-banner", options.Classes)
-                .With("data-nosnippet", string.Empty)
+                .WithBoolean("data-nosnippet")
                 .With("role", "region")
-                .With("aria-label", options.AriaLabel ?? "Cookie banner");
-
-            if (options.Hidden == true)
-            {
-                attrs.WithBoolean("hidden");
-            }
-
-            attrs.With(options.Attributes);
+                .With("aria-label", options.AriaLabel ?? "Cookie banner")
+                .WithBoolean("hidden", options.Hidden == true)
+                .With(options.Attributes);
         });
 
         if (options.Messages is not null)
@@ -33,26 +30,20 @@ internal partial class DefaultComponentGenerator
 
         return await GenerateFromHtmlTagAsync(bannerTag);
 
-        async Task<HtmlTag> CreateMessageTagAsync(CookieBannerOptionsMessage message)
+        async Task<IHtmlContent> CreateMessageTagAsync(CookieBannerOptionsMessage message)
         {
             var messageTag = new HtmlTag("div", attrs =>
             {
                 attrs
                     .WithClasses("govuk-cookie-banner__message", message.Classes, "govuk-width-container")
-                    .With("role", message.Role);
-
-                if (message.Hidden == true)
-                {
-                    attrs.WithBoolean("hidden");
-                }
-
-                attrs.With(message.Attributes);
+                    .With("role", message.Role)
+                    .WithBoolean("hidden", message.Hidden is true)
+                    .With(message.Attributes);
             });
 
             var gridRowTag = new HtmlTag("div", attrs => attrs.WithClasses("govuk-grid-row"));
             var gridColumnTag = new HtmlTag("div", attrs => attrs.WithClasses("govuk-grid-column-two-thirds"));
 
-            // Add heading if present
             if (message.HeadingHtml?.IsEmpty() == false || message.HeadingText?.IsEmpty() == false)
             {
                 var headingTag = new HtmlTag("h2", attrs =>
@@ -66,7 +57,6 @@ internal partial class DefaultComponentGenerator
                 gridColumnTag.InnerHtml.AppendHtml(headingTag);
             }
 
-            // Add content
             var contentTag = new HtmlTag("div", attrs =>
             {
                 attrs
@@ -78,8 +68,7 @@ internal partial class DefaultComponentGenerator
             {
                 var content = HtmlOrText(message.Html, message.Text);
 
-                // If text was provided (not HTML), wrap it in a paragraph tag
-                if (message.Html?.IsEmpty() != false && message.Text?.IsEmpty() == false)
+                if (message.Html?.IsEmpty() is not false && message.Text?.IsEmpty() is false)
                 {
                     var textParagraphTag = new HtmlTag("p", attrs => attrs.WithClasses("govuk-body"));
                     textParagraphTag.InnerHtml.AppendHtml(content);
@@ -95,7 +84,6 @@ internal partial class DefaultComponentGenerator
             gridRowTag.InnerHtml.AppendHtml(gridColumnTag);
             messageTag.InnerHtml.AppendHtml(gridRowTag);
 
-            // Add actions if present
             if (message.Actions is not null && message.Actions.Count > 0)
             {
                 var buttonGroupTag = new HtmlTag("div", attrs =>
@@ -117,17 +105,16 @@ internal partial class DefaultComponentGenerator
             return messageTag;
         }
 
-        async Task<HtmlTag> CreateActionTagAsync(CookieBannerOptionsMessageAction action)
+        async Task<IHtmlContent> CreateActionTagAsync(CookieBannerOptionsMessageAction action)
         {
-            var href = action.Href?.ToHtmlString();
-            var type = action.Type?.ToHtmlString();
+            var href = action.Href;
+            var type = action.Type;
 
-            // If href is empty or type is "button", use the button component
-            if (string.IsNullOrEmpty(href) || type == "button")
+            if (href.IsEmpty() || type == "button")
             {
                 var buttonOptions = new ButtonOptions
                 {
-                    Text = action.Text?.ToHtmlString(),
+                    Text = action.Text,
                     Type = action.Type ?? "button",
                     Name = action.Name,
                     Value = action.Value,
@@ -136,16 +123,7 @@ internal partial class DefaultComponentGenerator
                     Attributes = action.Attributes
                 };
 
-                // Generate button by calling the existing button generator
-                var buttonComponent = await GenerateButtonAsync(buttonOptions);
-
-                // Extract the HtmlTag from the button component
-                if (buttonComponent is HtmlTagGovUkComponent htmlTagComponent)
-                {
-                    return htmlTagComponent.Tag;
-                }
-
-                throw new InvalidOperationException("Button generation did not return an HtmlTag component.");
+                return await GenerateButtonAsync(buttonOptions);
             }
 
             // Otherwise, render as a plain link
@@ -161,6 +139,7 @@ internal partial class DefaultComponentGenerator
             {
                 linkTag.InnerHtml.AppendHtml(action.Text);
             }
+
             return linkTag;
         }
     }

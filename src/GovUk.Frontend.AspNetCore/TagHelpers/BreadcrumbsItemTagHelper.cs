@@ -44,7 +44,7 @@ public class BreadcrumbsItemTagHelper : TagHelper
         attributes.Remove("href", out _);
         var href = output.GetUrlAttribute("href");
 
-        breadcrumbsContext.AddItem(new BreadcrumbsOptionsItem()
+        breadcrumbsContext.AddItem(new BreadcrumbsOptionsItem
         {
             ItemAttributes = attributes,
             Href = href,

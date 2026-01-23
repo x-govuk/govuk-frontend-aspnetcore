@@ -51,7 +51,7 @@ internal abstract class FormGroupContext3
         var attributes = Label?.Attributes.Clone() ?? [];
         attributes.Remove("class", out var classes);
 
-        return new LabelOptions()
+        return new LabelOptions
         {
             Text = null,
             Html = html,
@@ -84,7 +84,7 @@ internal abstract class FormGroupContext3
         var attributes = Hint?.Attributes.Clone() ?? [];
         attributes.Remove("class", out var classes);
 
-        return new HintOptions()
+        return new HintOptions
         {
             Text = null,
             Html = html,
@@ -162,7 +162,7 @@ internal abstract class FormGroupContext3
 
     protected ErrorMessageOptions? CreateErrorMessageOptions(TemplateString? html)
     {
-        if (html is null)
+        if (html?.IsEmpty() is not false)
         {
             return null;
         }
@@ -170,7 +170,7 @@ internal abstract class FormGroupContext3
         var attributes = ErrorMessage?.Attributes.Clone() ?? [];
         attributes.Remove("class", out var classes);
 
-        return new ErrorMessageOptions()
+        return new ErrorMessageOptions
         {
             Text = null,
             Html = html,
@@ -181,7 +181,7 @@ internal abstract class FormGroupContext3
         };
     }
 
-    protected TemplateString? GetErrorMessageHtml(
+    protected TemplateString GetErrorMessageHtml(
         ModelExpression? @for,
         ViewContext viewContext,
         IModelHelper modelHelper,

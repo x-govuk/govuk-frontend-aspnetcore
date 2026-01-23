@@ -29,7 +29,7 @@ public class SummaryCardActionsTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        cardContext.SetActions(new SummaryListOptionsCardActions()
+        cardContext.SetActions(new SummaryListOptionsCardActions
         {
             Classes = classes,
             Items = actionsContext.Items,

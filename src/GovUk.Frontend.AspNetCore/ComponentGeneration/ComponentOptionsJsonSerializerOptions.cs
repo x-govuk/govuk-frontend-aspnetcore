@@ -7,7 +7,7 @@ internal static class ComponentOptionsJsonSerializerOptions
 {
     static ComponentOptionsJsonSerializerOptions()
     {
-        var serializerOptions = new JsonSerializerOptions()
+        var serializerOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = false,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,

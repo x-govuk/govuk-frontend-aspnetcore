@@ -50,7 +50,7 @@ public class WarningTextTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        var component = await _componentGenerator.GenerateWarningTextAsync(new WarningTextOptions()
+        var component = await _componentGenerator.GenerateWarningTextAsync(new WarningTextOptions
         {
             Text = null,
             Html = content.ToTemplateString(),

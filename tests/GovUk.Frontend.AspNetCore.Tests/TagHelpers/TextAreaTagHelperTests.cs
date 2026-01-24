@@ -48,6 +48,8 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
                     hintContent,
                     TextAreaHintTagHelper.TagName);
 
+                textAreaContext.SetValue(value, TextAreaValueTagHelper.TagName);
+
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
@@ -66,7 +68,6 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
             AutoComplete = autocomplete,
             Spellcheck = spellcheck,
             Rows = rows,
-            Value = value,
             Disabled = disabled,
             ReadOnly = readOnly,
             LabelClass = labelClass,

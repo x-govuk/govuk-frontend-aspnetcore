@@ -48,13 +48,9 @@ public class TextAreaTagHelper : TagHelper
     private const string ReadOnlyAttributeName = "readonly";
     private const string RowsAttributeName = "rows";
     private const string SpellcheckAttributeName = "spellcheck";
-    private const string ValueAttributeName = "value";
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
-
-    private string? _value;
-    private bool _valueSpecified;
 
     /// <summary>
     /// Creates a new <see cref="TextAreaTagHelper"/>.
@@ -171,24 +167,6 @@ public class TextAreaTagHelper : TagHelper
     public IDictionary<string, string?> TextAreaAttributes { get; set; } = new Dictionary<string, string?>();
 
     /// <summary>
-    /// The value for the generated <c>textarea</c> element.
-    /// </summary>
-    /// <remarks>
-    /// If not specified and <see cref="For"/> is not <c>null</c> then the value
-    /// for the specified model expression will be used.
-    /// </remarks>
-    [HtmlAttributeName(ValueAttributeName)]
-    public string? Value
-    {
-        get => _value;
-        set
-        {
-            _value = value;
-            _valueSpecified = true;
-        }
-    }
-
-    /// <summary>
     /// Gets the <see cref="ViewContext"/> of the executing view.
     /// </summary>
     [HtmlAttributeNotBound]
@@ -303,11 +281,6 @@ public class TextAreaTagHelper : TagHelper
         if (textAreaContext?.Value is TemplateString contextValue)
         {
             return contextValue;
-        }
-
-        if (_valueSpecified)
-        {
-            return _value;
         }
 
         if (For is not null)

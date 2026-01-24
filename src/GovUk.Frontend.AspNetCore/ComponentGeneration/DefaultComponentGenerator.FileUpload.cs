@@ -63,27 +63,26 @@ internal partial class DefaultComponentGenerator
                 }
             }
 
-            if (options.JavaScript == true)
+            if (options.JavaScript is true)
             {
                 var dropZoneDiv = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-drop-zone")
-                    .With("data-module", "govuk-file-upload"));
-
-                AddI18nAttribute(dropZoneDiv, "choose-files-button", options.ChooseFilesButtonText);
-                AddI18nAttribute(dropZoneDiv, "no-file-chosen", options.NoFileChosenText);
-                AddI18nAttribute(dropZoneDiv, "drop-instruction", options.DropInstructionText);
-                AddI18nAttribute(dropZoneDiv, "entered-drop-zone", options.EnteredDropZoneText);
-                AddI18nAttribute(dropZoneDiv, "left-drop-zone", options.LeftDropZoneText);
+                    .With("data-module", "govuk-file-upload")
+                    .With("data-i18n.choose-files-button", options.ChooseFilesButtonText)
+                    .With("data-i18n.no-file-chosen", options.NoFileChosenText)
+                    .With("data-i18n.drop-instruction", options.DropInstructionText)
+                    .With("data-i18n.entered-drop-zone", options.EnteredDropZoneText)
+                    .With("data-i18n.left-drop-zone", options.LeftDropZoneText));
 
                 if (options.MultipleFilesChosenText is { } multipleFilesChosenText)
                 {
                     if (!multipleFilesChosenText.One.IsEmpty())
                     {
-                        dropZoneDiv.Attributes.Set($"data-i18n.multiple-files-chosen.one", multipleFilesChosenText.One);
+                        dropZoneDiv.Attributes.Set("data-i18n.multiple-files-chosen.one", multipleFilesChosenText.One);
                     }
                     if (!multipleFilesChosenText.Other.IsEmpty())
                     {
-                        dropZoneDiv.Attributes.Set($"data-i18n.multiple-files-chosen.other", multipleFilesChosenText.Other);
+                        dropZoneDiv.Attributes.Set("data-i18n.multiple-files-chosen.other", multipleFilesChosenText.Other);
                     }
                 }
 
@@ -112,7 +111,7 @@ internal partial class DefaultComponentGenerator
 
         HtmlTag CreateFileInputTag()
         {
-            var inputTag = new HtmlTag("input", attrs => attrs
+            return new HtmlTag("input", attrs => attrs
                 .With("type", "file")
                 .With("id", id)
                 .With("name", options.Name)
@@ -121,19 +120,10 @@ internal partial class DefaultComponentGenerator
                 .WithBoolean("multiple", options.Multiple == true)
                 .With("value", options.Value)
                 .With("aria-describedby", describedByParts.Count > 0 ? TemplateString.Join(" ", describedByParts) : null)
-                .With(options.Attributes));
-
-            inputTag.TagRenderMode = TagRenderMode.SelfClosing;
-
-            return inputTag;
-        }
-
-        void AddI18nAttribute(HtmlTag tag, string key, TemplateString? value)
-        {
-            if (value is var v && !v.IsEmpty())
+                .With(options.Attributes))
             {
-                tag.Attributes.Set($"data-i18n.{key}", v);
-            }
+                TagRenderMode = TagRenderMode.SelfClosing
+            };
         }
     }
 }

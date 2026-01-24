@@ -76,8 +76,8 @@ jobs:
           props_version=$(grep -oP '<GovUkFrontendVersion>\K[^<]+' Directory.Build.props)
           echo "Version in Directory.Build.props: $props_version"
           
-          # Extract version from README badge
-          readme_version=$(grep -oP 'GOV\.UK%20Design%20System-\K[0-9.]+' README.md)
+          # Extract version from README badge (supports semantic versioning including pre-release versions)
+          readme_version=$(grep -oP 'GOV\.UK%20Design%20System-\K[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?(?=-)' README.md)
           echo "Version in README.md: $readme_version"
           
           # Compare versions

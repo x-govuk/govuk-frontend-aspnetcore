@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Html;
-
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -21,8 +19,8 @@ internal partial class DefaultComponentGenerator
             describedByParts.Add(describedBy);
         }
 
-        var hasBeforeInput = !string.IsNullOrEmpty(options.FormGroup?.BeforeInput?.Html) || !string.IsNullOrEmpty(options.FormGroup?.BeforeInput?.Text);
-        var hasAfterInput = !string.IsNullOrEmpty(options.FormGroup?.AfterInput?.Html) || !string.IsNullOrEmpty(options.FormGroup?.AfterInput?.Text);
+        var hasBeforeInput = !(options.FormGroup?.BeforeInput?.Html).IsEmpty() || !(options.FormGroup?.BeforeInput?.Text).IsEmpty();
+        var hasAfterInput = !(options.FormGroup?.AfterInput?.Html).IsEmpty() || !(options.FormGroup?.AfterInput?.Text).IsEmpty();
 
         var formGroupDiv = new HtmlTag("div", attrs => attrs
             .WithClasses("govuk-form-group", options.ErrorMessage is not null ? "govuk-form-group--error" : null, options.FormGroup?.Classes)
@@ -60,7 +58,7 @@ internal partial class DefaultComponentGenerator
 
         if (hasBeforeInput)
         {
-            var beforeContent = HtmlOrTextString(options.FormGroup!.BeforeInput!.Html, options.FormGroup.BeforeInput.Text);
+            var beforeContent = HtmlOrText(options.FormGroup!.BeforeInput!.Html, options.FormGroup.BeforeInput.Text);
             formGroupDiv.InnerHtml.AppendHtml(beforeContent);
         }
 
@@ -69,27 +67,11 @@ internal partial class DefaultComponentGenerator
 
         if (hasAfterInput)
         {
-            var afterContent = HtmlOrTextString(options.FormGroup!.AfterInput!.Html, options.FormGroup.AfterInput.Text);
+            var afterContent = HtmlOrText(options.FormGroup!.AfterInput!.Html, options.FormGroup.AfterInput.Text);
             formGroupDiv.InnerHtml.AppendHtml(afterContent);
         }
 
         return await GenerateFromHtmlTagAsync(formGroupDiv);
-
-        IHtmlContent HtmlOrTextString(string? html, string? text)
-        {
-            if (!string.IsNullOrEmpty(html))
-            {
-                return new HtmlString(html);
-            }
-
-            if (!string.IsNullOrEmpty(text))
-            {
-                // Text needs to be encoded
-                return new HtmlContentBuilder().Append(text);
-            }
-
-            return HtmlString.Empty;
-        }
 
         HtmlTag CreateTextareaElement()
         {

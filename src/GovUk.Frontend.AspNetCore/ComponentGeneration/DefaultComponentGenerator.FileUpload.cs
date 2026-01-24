@@ -12,9 +12,9 @@ internal partial class DefaultComponentGenerator
         var id = options.Id ?? options.Name;
 
         var describedByParts = new List<TemplateString>();
-        if (!options.DescribedBy.IsEmpty())
+        if (options.DescribedBy is var describedBy && !describedBy.IsEmpty())
         {
-            describedByParts.Add(options.DescribedBy!);
+            describedByParts.Add(describedBy);
         }
 
         var formGroupDiv = new HtmlTag("div", attrs => attrs
@@ -130,9 +130,9 @@ internal partial class DefaultComponentGenerator
 
         void AddI18nAttribute(HtmlTag tag, string key, TemplateString? value)
         {
-            if (!value.IsEmpty())
+            if (value is var v && !v.IsEmpty())
             {
-                tag.Attributes.Set($"data-i18n.{key}", value);
+                tag.Attributes.Set($"data-i18n.{key}", v);
             }
         }
     }

@@ -151,14 +151,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         public override IHtmlContent GetContent() => _content;
     }
 
-    private static void AddI18nAttribute(AttributeCollection attributes, string key, TemplateString? value)
-    {
-        if (value is not null && !value.IsEmpty())
-        {
-            attributes.Add($"data-i18n.{key}", value);
-        }
-    }
-
     private static TemplateString Capitalize(TemplateString? input)
     {
         if (input.IsEmpty())

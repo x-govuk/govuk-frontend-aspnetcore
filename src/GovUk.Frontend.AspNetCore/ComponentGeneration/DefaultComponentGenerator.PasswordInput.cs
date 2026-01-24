@@ -16,33 +16,20 @@ internal partial class DefaultComponentGenerator
             describedByParts.Add(describedBy);
         }
 
-        var formGroupAttributes = new AttributeCollection
-        {
-            { "data-module", "govuk-password-input" }
-        };
-
-        AddI18nAttribute(formGroupAttributes, "show-password", options.ShowPasswordText);
-        AddI18nAttribute(formGroupAttributes, "hide-password", options.HidePasswordText);
-        AddI18nAttribute(formGroupAttributes, "show-password-aria-label", options.ShowPasswordAriaLabelText);
-        AddI18nAttribute(formGroupAttributes, "hide-password-aria-label", options.HidePasswordAriaLabelText);
-        AddI18nAttribute(formGroupAttributes, "password-shown-announcement", options.PasswordShownAnnouncementText);
-        AddI18nAttribute(formGroupAttributes, "password-hidden-announcement", options.PasswordHiddenAnnouncementText);
-
-        if (options.FormGroup?.Attributes is not null)
-        {
-            foreach (var attr in options.FormGroup.Attributes.GetAttributes())
-            {
-                formGroupAttributes.Add(attr);
-            }
-        }
-
         var formGroupDiv = new HtmlTag("div", attrs => attrs
             .WithClasses(
                 "govuk-form-group",
                 "govuk-password-input",
                 options.ErrorMessage is not null ? "govuk-form-group--error" : null,
                 options.FormGroup?.Classes)
-            .With(formGroupAttributes));
+            .With("data-module", "govuk-password-input")
+            .With("data-i18n.show-password", options.ShowPasswordText)
+            .With("data-i18n.hide-password", options.HidePasswordText)
+            .With("data-i18n.show-password-aria-label", options.ShowPasswordAriaLabelText)
+            .With("data-i18n.hide-password-aria-label", options.HidePasswordAriaLabelText)
+            .With("data-i18n.password-shown-announcement", options.PasswordShownAnnouncementText)
+            .With("data-i18n.password-hidden-announcement", options.PasswordHiddenAnnouncementText)
+            .With(options.FormGroup?.Attributes));
 
         var labelComponent = await GenerateLabelAsync(new LabelOptions
         {

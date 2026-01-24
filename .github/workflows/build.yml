@@ -69,6 +69,25 @@ jobs:
             exit 1
           fi
 
+      - name: Check GOV.UK Design System version
+        if: matrix.build-configuration == 'Release'
+        run: |
+          # Extract version from Directory.Build.props
+          props_version=$(grep -oP '<GovUkFrontendVersion>\K[^<]+' Directory.Build.props)
+          echo "Version in Directory.Build.props: $props_version"
+          
+          # Extract version from README badge
+          readme_version=$(grep -oP 'GOV\.UK%20Design%20System-\K[0-9.]+' README.md)
+          echo "Version in README.md: $readme_version"
+          
+          # Compare versions
+          if [ "$props_version" != "$readme_version" ]; then
+            echo "::error ::GOV.UK Design System version mismatch: Directory.Build.props has $props_version but README.md has $readme_version"
+            exit 1
+          fi
+          
+          echo "✓ Versions match: $props_version"
+
       - name: Assign package build metadata
         if: startsWith(github.ref, 'refs/tags/v') != true
         run: |

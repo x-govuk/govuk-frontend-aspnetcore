@@ -36,6 +36,6 @@ public class TextAreaValueTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Value", textAreaContext.Value?.ToString());
+        Assert.Equal("Value", textAreaContext.Value?.ToHtmlString());
     }
 }

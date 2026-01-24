@@ -82,7 +82,7 @@ internal partial class DefaultComponentGenerator
             bool collapseNavigationOnMobile,
             IReadOnlyCollection<ServiceNavigationOptionsNavigationItem?>? navigationItems)
         {
-            var ariaLabel = options.NavigationLabel.Coalesce(menuButtonText);
+            var ariaLabel = TemplateString.Coalesce(options.NavigationLabel, menuButtonText);
 
             var navTag = new HtmlTag("nav", attrs => attrs
                 .WithClasses("govuk-service-navigation__wrapper", options.NavigationClasses)
@@ -214,7 +214,7 @@ internal partial class DefaultComponentGenerator
                 !(options.Slots?.Start).IsEmpty() ||
                 !(options.Slots?.End).IsEmpty())
             {
-                var ariaLabel = options.AriaLabel.Coalesce("Service information");
+                var ariaLabel = TemplateString.Coalesce(options.AriaLabel, "Service information");
 
                 var sectionTag = new HtmlTag("section", attrs => attrs
                     .WithClasses("govuk-service-navigation", options.Classes)

@@ -316,9 +316,9 @@ public class DateInputTagHelper : TagHelper
             var haveError = errorMessageOptions is not null;
 
             var defaultFullName = ModelNames.CreatePropertyModelName(namePrefix, defaultName);
-            var itemName = (contextItem?.Name).Coalesce(defaultFullName);
-            var itemId = (contextItem?.Id).Coalesce(contextItem?.Name, new TemplateString($"{id}.{defaultName}"));
-            var itemLabel = (contextItem?.LabelHtml).Coalesce(defaultLabel);
+            var itemName = TemplateString.Coalesce(contextItem?.Name, defaultFullName);
+            var itemId = TemplateString.Coalesce(contextItem?.Id, contextItem?.Name, new TemplateString($"{id}.{defaultName}"));
+            var itemLabel = TemplateString.Coalesce(contextItem?.LabelHtml, defaultLabel);
 
             // Value resolution hierarchy:
             //   if Value has been set on a child tag helper e.g. <date-input-day /> then use that;

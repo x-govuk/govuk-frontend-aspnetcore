@@ -5,74 +5,61 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class NotificationBannerTagHelperTests
+public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBannerTagHelper>
 {
     [Fact]
-    public async Task ProcessAsync_DefaultType_GeneratesExpectedOutput()
+    public async Task ProcessAsync_DefaultType_InvokesComponentGeneratorWithExpectedOptions()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-notification-banner",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var content = "The message.";
 
-        var output = new TagHelperOutput(
-            "govuk-notification-banner",
-            attributes: [],
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator());
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<NotificationBannerOptions>(nameof(IComponentGenerator.GenerateNotificationBannerAsync));
+
+        var tagHelper = new NotificationBannerTagHelper(componentGenerator);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
-<div
-    class=""govuk-notification-banner""
-    role=""region""
-    aria-labelledby=""govuk-notification-banner-title""
-    data-module=""govuk-notification-banner"">
-    <div class=""govuk-notification-banner__header"">
-        <h2 class=""govuk-notification-banner__title"" id=""govuk-notification-banner-title"">
-            Important
-        </h2>
-    </div>
-    <div class=""govuk-notification-banner__content"">
-        The message.
-    </div>
-</div>";
-
-        AssertEx.HtmlEqual(expectedHtml, output.ToHtmlString());
+        var actualOptions = getActualOptions();
+        Assert.Equal(content, actualOptions.Html);
+        Assert.Null(actualOptions.Type);
+        Assert.Null(actualOptions.Role);
+        Assert.Null(actualOptions.DisableAutoFocus);
+        Assert.Null(actualOptions.TitleId);
+        Assert.Null(actualOptions.TitleHeadingLevel);
+        Assert.Null(actualOptions.TitleHtml);
     }
 
     [Fact]
-    public async Task ProcessAsync_SuccessType_GeneratesExpectedOutput()
+    public async Task ProcessAsync_SuccessType_InvokesComponentGeneratorWithExpectedOptions()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-notification-banner",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var content = "The message.";
 
-        var output = new TagHelperOutput(
-            "govuk-notification-banner",
-            attributes: [],
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator())
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<NotificationBannerOptions>(nameof(IComponentGenerator.GenerateNotificationBannerAsync));
+
+        var tagHelper = new NotificationBannerTagHelper(componentGenerator)
         {
             Type = NotificationBannerType.Success
         };
@@ -81,46 +68,32 @@ public class NotificationBannerTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
-<div
-    class=""govuk-notification-banner govuk-notification-banner--success""
-    role=""alert""
-    aria-labelledby=""govuk-notification-banner-title""
-    data-module=""govuk-notification-banner"">
-    <div class=""govuk-notification-banner__header"">
-        <h2 class=""govuk-notification-banner__title"" id=""govuk-notification-banner-title"">
-            Success
-        </h2>
-    </div>
-    <div class=""govuk-notification-banner__content"">
-        The message.
-    </div>
-</div>";
-
-        AssertEx.HtmlEqual(expectedHtml, output.ToHtmlString());
+        var actualOptions = getActualOptions();
+        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal("success", actualOptions.Type);
+        Assert.Null(actualOptions.Role);
+        Assert.Null(actualOptions.DisableAutoFocus);
     }
 
     [Fact]
-    public async Task ProcessAsync_WithDisableAutoFocusSpecified_GeneratesExpectedOutput()
+    public async Task ProcessAsync_WithDisableAutoFocusSpecified_InvokesComponentGeneratorWithExpectedOptions()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-notification-banner",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var content = "The message.";
 
-        var output = new TagHelperOutput(
-            "govuk-notification-banner",
-            attributes: [],
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator())
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<NotificationBannerOptions>(nameof(IComponentGenerator.GenerateNotificationBannerAsync));
+
+        var tagHelper = new NotificationBannerTagHelper(componentGenerator)
         {
             DisableAutoFocus = true,
             Type = NotificationBannerType.Success
@@ -130,120 +103,79 @@ public class NotificationBannerTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
-<div
-    class=""govuk-notification-banner govuk-notification-banner--success""
-    role=""alert""
-    aria-labelledby=""govuk-notification-banner-title""
-    data-module=""govuk-notification-banner""
-    data-disable-auto-focus=""true"">
-    <div class=""govuk-notification-banner__header"">
-        <h2 class=""govuk-notification-banner__title"" id=""govuk-notification-banner-title"">
-            Success
-        </h2>
-    </div>
-    <div class=""govuk-notification-banner__content"">
-        The message.
-    </div>
-</div>";
-
-        AssertEx.HtmlEqual(expectedHtml, output.ToHtmlString());
+        var actualOptions = getActualOptions();
+        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal("success", actualOptions.Type);
+        Assert.True(actualOptions.DisableAutoFocus);
     }
 
-    // 
     [Fact]
-    public async Task ProcessAsync_WithRoleSpecified_GeneratesExpectedOutput()
+    public async Task ProcessAsync_WithRoleSpecified_InvokesComponentGeneratorWithExpectedOptions()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-notification-banner",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var content = "The message.";
+        var role = "custom-role";
 
-        var output = new TagHelperOutput(
-            "govuk-notification-banner",
-            attributes: [],
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator())
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<NotificationBannerOptions>(nameof(IComponentGenerator.GenerateNotificationBannerAsync));
+
+        var tagHelper = new NotificationBannerTagHelper(componentGenerator)
         {
-            Role = "custom-role"
+            Role = role
         };
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
-<div
-    class=""govuk-notification-banner""
-    role=""custom-role""
-    aria-labelledby=""govuk-notification-banner-title""
-    data-module=""govuk-notification-banner"">
-    <div class=""govuk-notification-banner__header"">
-        <h2 class=""govuk-notification-banner__title"" id=""govuk-notification-banner-title"">
-            Important
-        </h2>
-    </div>
-    <div class=""govuk-notification-banner__content"">
-        The message.
-    </div>
-</div>";
-
-        AssertEx.HtmlEqual(expectedHtml, output.ToHtmlString());
+        var actualOptions = getActualOptions();
+        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal(role, actualOptions.Role);
     }
 
     [Fact]
-    public async Task ProcessAsync_WithTitle_GeneratesExpectedOutput()
+    public async Task ProcessAsync_WithTitle_InvokesComponentGeneratorWithExpectedOptions()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-notification-banner",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var content = "The message.";
+        var titleId = "title-id";
+        var titleHeadingLevel = 4;
+        var titleContent = new HtmlString("Title");
 
-        var output = new TagHelperOutput(
-            "govuk-notification-banner",
-            attributes: [],
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();
-                notificationBannerContext.SetTitle(id: "title-id", headingLevel: 4, content: new TemplateString(new HtmlString("Title")));
+                notificationBannerContext.SetTitle(id: titleId, headingLevel: titleHeadingLevel, content: new TemplateString(titleContent));
 
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("The message.");
+                tagHelperContent.SetContent(content);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new NotificationBannerTagHelper(TestUtils.CreateComponentGenerator());
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<NotificationBannerOptions>(nameof(IComponentGenerator.GenerateNotificationBannerAsync));
+
+        var tagHelper = new NotificationBannerTagHelper(componentGenerator);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
-<div
-    class=""govuk-notification-banner""
-    role=""region""
-    aria-labelledby=""title-id""
-    data-module=""govuk-notification-banner"">
-    <div class=""govuk-notification-banner__header"">
-        <h4 class=""govuk-notification-banner__title"" id=""title-id"">
-            Title
-        </h4>
-    </div>
-    <div class=""govuk-notification-banner__content"">
-        The message.
-    </div>
-</div>";
-
-        AssertEx.HtmlEqual(expectedHtml, output.ToHtmlString());
+        var actualOptions = getActualOptions();
+        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal(titleId, actualOptions.TitleId);
+        Assert.Equal(titleHeadingLevel, actualOptions.TitleHeadingLevel);
+        Assert.Equal(titleContent.Value, actualOptions.TitleHtml);
     }
 }

@@ -16,11 +16,11 @@ internal partial class DefaultComponentGenerator
             describedByParts.Add(describedBy);
         }
 
-        // Build the form group attributes
-        var formGroupAttributes = new AttributeCollection();
-        formGroupAttributes.Add("data-module", "govuk-password-input");
+        var formGroupAttributes = new AttributeCollection
+        {
+            { "data-module", "govuk-password-input" }
+        };
 
-        // Add i18n attributes to form group
         AddI18nAttribute(formGroupAttributes, "show-password", options.ShowPasswordText);
         AddI18nAttribute(formGroupAttributes, "hide-password", options.HidePasswordText);
         AddI18nAttribute(formGroupAttributes, "show-password-aria-label", options.ShowPasswordAriaLabelText);
@@ -28,7 +28,6 @@ internal partial class DefaultComponentGenerator
         AddI18nAttribute(formGroupAttributes, "password-shown-announcement", options.PasswordShownAnnouncementText);
         AddI18nAttribute(formGroupAttributes, "password-hidden-announcement", options.PasswordHiddenAnnouncementText);
 
-        // Add form group attributes from options
         if (options.FormGroup?.Attributes is not null)
         {
             foreach (var attr in options.FormGroup.Attributes.GetAttributes())
@@ -77,7 +76,6 @@ internal partial class DefaultComponentGenerator
 
         var hasBeforeInput = !(options.FormGroup?.BeforeInput?.Html).IsEmpty() || !(options.FormGroup?.BeforeInput?.Text).IsEmpty();
 
-        // Create the wrapper div
         var wrapperDiv = new HtmlTag("div", attrs => attrs
             .WithClasses("govuk-input__wrapper", "govuk-password-input__wrapper"));
 
@@ -87,7 +85,6 @@ internal partial class DefaultComponentGenerator
             wrapperDiv.InnerHtml.AppendHtml(beforeContent);
         }
 
-        // Create the input element
         var inputClasses = new TemplateString("govuk-input")
             .AppendCssClasses("govuk-password-input__input")
             .AppendCssClasses("govuk-js-password-input-input")
@@ -107,19 +104,16 @@ internal partial class DefaultComponentGenerator
             .With("autocomplete", options.AutoComplete ?? "current-password")
             .With("autocapitalize", "none")
             .WithBoolean("disabled", options.Disabled is true)
-            .With(options.Attributes));
+            .With(options.Attributes)
+            .With("spellcheck", "false"));
 
         // Always add name attribute, even if empty
         inputElement.Attributes.Set("name", options.Name ?? TemplateString.Empty);
-
-        // Add spellcheck attribute with explicit false value
-        inputElement.Attributes.Set("spellcheck", "false");
 
         inputElement.TagRenderMode = TagRenderMode.SelfClosing;
 
         wrapperDiv.InnerHtml.AppendHtml(inputElement);
 
-        // Create the show/hide button
         var buttonClasses = new TemplateString("govuk-button")
             .AppendCssClasses("govuk-button--secondary")
             .AppendCssClasses("govuk-password-input__toggle")
@@ -131,16 +125,13 @@ internal partial class DefaultComponentGenerator
             .WithClasses(buttonClasses)
             .With("data-module", "govuk-button")
             .With("aria-controls", id)
-            .With("aria-label", options.ShowPasswordAriaLabelText ?? "Show password"));
-
-        // Add hidden attribute as boolean with optional=true
-        buttonElement.Attributes.Add(new AttributeCollection.Attribute("hidden", true, Optional: true));
+            .With("aria-label", options.ShowPasswordAriaLabelText ?? "Show password")
+            .WithBoolean("hidden"));
 
         buttonElement.InnerHtml.Append((options.ShowPasswordText ?? "Show").ToHtmlString());
 
         wrapperDiv.InnerHtml.AppendHtml(buttonElement);
 
-        // Add afterInput content if provided
         if (options.FormGroup?.AfterInput is not null)
         {
             var afterContent = HtmlOrText(options.FormGroup.AfterInput.Html, options.FormGroup.AfterInput.Text);
@@ -150,13 +141,5 @@ internal partial class DefaultComponentGenerator
         formGroupDiv.InnerHtml.AppendHtml(wrapperDiv);
 
         return await GenerateFromHtmlTagAsync(formGroupDiv);
-    }
-
-    private static void AddI18nAttribute(AttributeCollection attributes, string key, TemplateString? value)
-    {
-        if (value is not null && !value.IsEmpty())
-        {
-            attributes.Add($"data-i18n.{key}", value);
-        }
     }
 }

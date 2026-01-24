@@ -61,11 +61,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     protected Task<GovUkComponent> EmptyComponentTask { get; } = Task.FromResult((GovUkComponent)EmptyComponent.Instance);
 
-    public virtual Task<GovUkComponent> GenerateCharacterCountAsync(CharacterCountOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("character-count", options);
-    }
+
 
     private Task<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
         Task.FromResult((GovUkComponent)new HtmlTagGovUkComponent(tag));

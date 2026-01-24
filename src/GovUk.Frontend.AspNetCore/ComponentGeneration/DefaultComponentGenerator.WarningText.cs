@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateWarningTextAsync(WarningTextOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateWarningTextAsync(WarningTextOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

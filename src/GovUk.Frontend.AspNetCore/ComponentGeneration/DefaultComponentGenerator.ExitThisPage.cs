@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateExitThisPageAsync(ExitThisPageOptions options)
+    public virtual async ValueTask<GovUkComponent> GenerateExitThisPageAsync(ExitThisPageOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

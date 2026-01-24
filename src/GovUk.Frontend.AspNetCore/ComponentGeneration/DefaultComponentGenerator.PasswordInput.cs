@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
+    public virtual async ValueTask<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

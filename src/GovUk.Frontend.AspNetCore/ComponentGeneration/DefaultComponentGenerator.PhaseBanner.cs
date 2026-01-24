@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
+    public virtual async ValueTask<GovUkComponent> GeneratePhaseBannerAsync(PhaseBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

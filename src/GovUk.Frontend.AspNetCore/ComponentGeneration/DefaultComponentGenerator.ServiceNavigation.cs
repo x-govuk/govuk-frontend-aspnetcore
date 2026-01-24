@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateServiceNavigationAsync(ServiceNavigationOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateServiceNavigationAsync(ServiceNavigationOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateDateInputAsync(DateInputOptions options)
+    public virtual async ValueTask<GovUkComponent> GenerateDateInputAsync(DateInputOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

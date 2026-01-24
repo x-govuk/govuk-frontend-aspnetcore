@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateLabelAsync(LabelOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateLabelAsync(LabelOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

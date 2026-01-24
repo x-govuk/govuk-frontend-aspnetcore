@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateAccordionAsync(AccordionOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateAccordionAsync(AccordionOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

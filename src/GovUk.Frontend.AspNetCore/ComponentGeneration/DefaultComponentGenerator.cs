@@ -6,10 +6,12 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator : IComponentGenerator
 {
-    protected Task<GovUkComponent> EmptyComponentTask { get; } = Task.FromResult<GovUkComponent>(EmptyComponent.Instance);
+#pragma warning disable CA2012 // ValueTasks should not be composed - but this is a completed ValueTask wrapping an immutable singleton
+    protected ValueTask<GovUkComponent> EmptyComponentTask { get; } = ValueTask.FromResult<GovUkComponent>(EmptyComponent.Instance);
+#pragma warning restore CA2012
 
-    private Task<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
-        Task.FromResult<GovUkComponent>(new HtmlTagGovUkComponent(tag));
+    private ValueTask<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
+        ValueTask.FromResult<GovUkComponent>(new HtmlTagGovUkComponent(tag));
 
     private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
     {

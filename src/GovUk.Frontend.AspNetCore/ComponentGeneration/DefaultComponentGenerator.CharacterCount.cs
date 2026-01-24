@@ -74,7 +74,7 @@ internal partial class DefaultComponentGenerator
         }
 
         // Add i18n attributes for textarea-description (only if no limit and explicitly provided)
-        if (hasNoLimit && options.TextareaDescriptionText is not null && !options.TextareaDescriptionText.IsEmpty())
+        if (hasNoLimit && options.TextareaDescriptionText?.IsEmpty() == false)
         {
             formGroupAttributes.Set("data-i18n.textarea-description.other", options.TextareaDescriptionText);
         }

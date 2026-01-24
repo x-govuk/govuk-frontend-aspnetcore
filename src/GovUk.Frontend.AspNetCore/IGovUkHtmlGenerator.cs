@@ -54,16 +54,4 @@ internal interface IGovUkHtmlGenerator
         bool disabled,
         IEnumerable<SelectItem> items,
         AttributeDictionary attributes);
-
-    TagBuilder GenerateTextArea(
-        bool haveError,
-        string id,
-        string name,
-        int rows,
-        string describedBy,
-        string autocomplete,
-        bool? spellcheck,
-        bool disabled,
-        IHtmlContent content,
-        AttributeDictionary attributes);
 }

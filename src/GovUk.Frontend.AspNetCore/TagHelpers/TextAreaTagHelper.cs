@@ -1,7 +1,12 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Html;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using AttributeCollection = GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -9,38 +14,75 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS textarea component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(LabelTagName, HintTagName, ErrorMessageTagName, TextAreaValueTagHelper.TagName)]
-[OutputElementHint(ComponentGenerator.FormGroupElement)]
-public class TextAreaTagHelper : FormGroupTagHelperBase
+[RestrictChildren(
+    TextAreaLabelTagHelper.TagName,
+    TextAreaHintTagHelper.TagName,
+    TextAreaErrorMessageTagHelper.TagName,
+    TextAreaBeforeInputTagHelper.TagName,
+    TextAreaValueTagHelper.TagName,
+    TextAreaAfterInputTagHelper.TagName
+#if SHORT_TAG_NAMES
+    ,
+    FormGroupLabelTagHelperBase.ShortTagName,
+    FormGroupHintTagHelperBase.ShortTagName,
+    FormGroupErrorMessageTagHelperBase.ShortTagName,
+    TextAreaBeforeInputTagHelper.ShortTagName,
+    TextAreaAfterInputTagHelper.ShortTagName
+#endif
+    )]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
+public class TextAreaTagHelper : TagHelper
 {
-    internal const string ErrorMessageTagName = "govuk-textarea-error-message";
-    internal const string HintTagName = "govuk-textarea-hint";
-    internal const string LabelTagName = "govuk-textarea-label";
     internal const string TagName = "govuk-textarea";
 
+    private const string AspForAttributeName = "asp-for";
+    private const string AttributesPrefix = "textarea-";
     private const string AutoCompleteAttributeName = "autocomplete";
+    private const string DescribedByAttributeName = "described-by";
     private const string DisabledAttributeName = "disabled";
+    private const string ForAttributeName = "for";
     private const string IdAttributeName = "id";
+    private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
     private const string LabelClassAttributeName = "label-class";
     private const string NameAttributeName = "name";
     private const string ReadOnlyAttributeName = "readonly";
     private const string RowsAttributeName = "rows";
     private const string SpellcheckAttributeName = "spellcheck";
-    private const string TextareaAttributesPrefix = "textarea-";
+    private const string ValueAttributeName = "value";
+
+    private readonly IComponentGenerator _componentGenerator;
+    private readonly IModelHelper _modelHelper;
+
+    private string? _value;
+    private bool _valueSpecified;
 
     /// <summary>
-    /// Creates an <see cref="TextAreaTagHelper"/>.
+    /// Creates a new <see cref="TextAreaTagHelper"/>.
     /// </summary>
-    public TextAreaTagHelper()
-        : this(htmlGenerator: null, modelHelper: null)
+    public TextAreaTagHelper(IComponentGenerator componentGenerator)
+        : this(componentGenerator, new DefaultModelHelper())
     {
     }
 
-    internal TextAreaTagHelper(IGovUkHtmlGenerator? htmlGenerator = null, IModelHelper? modelHelper = null)
-        : base(
-              htmlGenerator ?? new ComponentGenerator(),
-              modelHelper ?? new DefaultModelHelper())
+    internal TextAreaTagHelper(IComponentGenerator componentGenerator, IModelHelper modelHelper)
     {
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+        ArgumentNullException.ThrowIfNull(modelHelper);
+
+        _componentGenerator = componentGenerator;
+        _modelHelper = modelHelper;
+    }
+
+    /// <summary>
+    /// An expression to be evaluated against the current model.
+    /// </summary>
+    [HtmlAttributeName(AspForAttributeName)]
+    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ModelExpression? AspFor
+    {
+        get => For;
+        set => For = value;
     }
 
     /// <summary>
@@ -50,10 +92,22 @@ public class TextAreaTagHelper : FormGroupTagHelperBase
     public string? AutoComplete { get; set; }
 
     /// <summary>
+    /// One or more element IDs to add to the <c>aria-describedby</c> attribute of the generated <c>textarea</c> element.
+    /// </summary>
+    [HtmlAttributeName(DescribedByAttributeName)]
+    public string? DescribedBy { get; set; }
+
+    /// <summary>
     /// Whether the <c>disabled</c> attribute should be added to the generated <c>textarea</c> element.
     /// </summary>
     [HtmlAttributeName(DisabledAttributeName)]
     public bool? Disabled { get; set; }
+
+    /// <summary>
+    /// An expression to be evaluated against the current model.
+    /// </summary>
+    [HtmlAttributeName(ForAttributeName)]
+    public ModelExpression? For { get; set; }
 
     /// <summary>
     /// The <c>id</c> attribute for the generated <c>textarea</c> element.
@@ -65,6 +119,16 @@ public class TextAreaTagHelper : FormGroupTagHelperBase
     public string? Id { get; set; }
 
     /// <summary>
+    /// Whether the <see cref="ModelStateEntry.Errors"/> for the <see cref="For"/> expression should be used
+    /// to deduce an error message.
+    /// </summary>
+    /// <remarks>
+    /// <para>When there are multiple errors in the <see cref="ModelErrorCollection"/> the first is used.</para>
+    /// </remarks>
+    [HtmlAttributeName(IgnoreModelStateErrorsAttributeName)]
+    public bool? IgnoreModelStateErrors { get; set; }
+
+    /// <summary>
     /// Additional classes for the generated <c>label</c> element.
     /// </summary>
     [HtmlAttributeName(LabelClassAttributeName)]
@@ -74,7 +138,7 @@ public class TextAreaTagHelper : FormGroupTagHelperBase
     /// The <c>name</c> attribute for the generated <c>textarea</c> element.
     /// </summary>
     /// <remarks>
-    /// Required unless <see cref="FormGroupTagHelperBase.AspFor"/> is specified.
+    /// Required unless <see cref="For"/> is specified.
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }
@@ -103,101 +167,155 @@ public class TextAreaTagHelper : FormGroupTagHelperBase
     /// <summary>
     /// Additional attributes to add to the generated <c>textarea</c> element.
     /// </summary>
-    [HtmlAttributeName(DictionaryAttributePrefix = TextareaAttributesPrefix)]
+    [HtmlAttributeName(DictionaryAttributePrefix = AttributesPrefix)]
     public IDictionary<string, string?> TextAreaAttributes { get; set; } = new Dictionary<string, string?>();
 
-    private protected override FormGroupContext CreateFormGroupContext() => new TextAreaContext();
-
-    private protected override IHtmlContent GenerateFormGroupContent(
-        TagHelperContext tagHelperContext,
-        FormGroupContext formGroupContext,
-        TagHelperOutput tagHelperOutput,
-        IHtmlContent content,
-        out bool haveError)
+    /// <summary>
+    /// The value for the generated <c>textarea</c> element.
+    /// </summary>
+    /// <remarks>
+    /// If not specified and <see cref="For"/> is not <c>null</c> then the value
+    /// for the specified model expression will be used.
+    /// </remarks>
+    [HtmlAttributeName(ValueAttributeName)]
+    public string? Value
     {
-        var contentBuilder = new HtmlContentBuilder();
-
-        var label = GenerateLabel(formGroupContext, LabelClass);
-        contentBuilder.AppendHtml(label);
-
-        var hint = GenerateHint(tagHelperContext, formGroupContext);
-        if (hint is not null)
+        get => _value;
+        set
         {
-            contentBuilder.AppendHtml(hint);
-        }
-
-        var errorMessage = GenerateErrorMessage(tagHelperContext, formGroupContext);
-        if (errorMessage is not null)
-        {
-            contentBuilder.AppendHtml(errorMessage);
-        }
-
-        haveError = errorMessage is not null;
-
-        var textAreaTagBuilder = GenerateTextArea(haveError);
-        contentBuilder.AppendHtml(textAreaTagBuilder);
-
-        return contentBuilder;
-
-        TagBuilder GenerateTextArea(bool haveError)
-        {
-            var textAreaContext = tagHelperContext.GetContextItem<TextAreaContext>();
-
-            var resolvedId = ResolveIdPrefix();
-            var resolvedName = ResolveNameUnencoded();
-
-            var resolvedContent = textAreaContext.Value ??
-                ((For is not null ? ModelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null) ??
-                    string.Empty).EncodeHtml();
-
-            var resolvedTextAreaAttributes = TextAreaAttributes.ToAttributeDictionary();
-            resolvedTextAreaAttributes.MergeCssClass("govuk-js-textarea");
-
-            if (ReadOnly == true)
-            {
-                resolvedTextAreaAttributes.Add("readonly", string.Empty);
-            }
-
-            return Generator.GenerateTextArea(
-                haveError,
-                resolvedId,
-                resolvedName,
-                Rows ?? ComponentGenerator.TextAreaDefaultRows,
-                DescribedBy,
-                AutoComplete,
-                Spellcheck,
-                Disabled ?? ComponentGenerator.TextAreaDefaultDisabled,
-                resolvedContent,
-                resolvedTextAreaAttributes);
+            _value = value;
+            _valueSpecified = true;
         }
     }
 
-    private protected override string ResolveIdPrefix()
+    /// <summary>
+    /// Gets the <see cref="ViewContext"/> of the executing view.
+    /// </summary>
+    [HtmlAttributeNotBound]
+    [ViewContext]
+    [DisallowNull]
+    public ViewContext? ViewContext { get; set; }
+
+    /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
     {
-        if (Id is not null)
-        {
-            return Id;
-        }
-
-        if (Name is null && For is null)
-        {
-            throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
-                IdAttributeName,
-                NameAttributeName,
-                AspForAttributeName);
-        }
-
-        var resolvedName = ResolveNameUnencoded();
-
-        return TagBuilder.CreateSanitizedId(resolvedName, Constants.IdAttributeDotReplacement);
+        context.SetContextItem(new TextAreaContext());
     }
 
-    private string ResolveNameUnencoded()
+    /// <inheritdoc/>
+    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
+
+        var textAreaContext = context.GetContextItem<TextAreaContext>();
+
+        using (context.SetScopedContextItem(textAreaContext))
+        using (context.SetScopedContextItem(typeof(FormGroupContext3), textAreaContext))
+        {
+            _ = await output.GetChildContentAsync();
+        }
+
+        var name = ResolveName();
+        var id = ResolveId(name);
+        var value = ResolveValue(textAreaContext);
+        var labelOptions = textAreaContext.GetLabelOptions(For, ViewContext!, _modelHelper, id, ForAttributeName);
+        var hintOptions = textAreaContext.GetHintOptions(For, _modelHelper);
+        var errorMessageOptions = textAreaContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
+
+        if (LabelClass is not null)
+        {
+            labelOptions.Classes = labelOptions.Classes.AppendCssClasses(LabelClass);
+        }
+
+        var formGroupAttributes = new AttributeCollection(output.Attributes);
+        formGroupAttributes.Remove("class", out var formGroupClasses);
+        var formGroupOptions = new TextareaOptionsFormGroup
+        {
+            BeforeInput = textAreaContext.BeforeInput is TemplateString beforeInput ?
+                new TextareaOptionsBeforeInput
+                {
+                    Text = null,
+                    Html = beforeInput
+                } :
+                null,
+            AfterInput = textAreaContext.AfterInput is TemplateString afterInput ?
+                new TextareaOptionsAfterInput
+                {
+                    Text = null,
+                    Html = afterInput
+                } :
+                null,
+            Attributes = formGroupAttributes,
+            Classes = formGroupClasses
+        };
+
+        var attributes = new AttributeCollection(TextAreaAttributes);
+        attributes.Remove("class", out var classes);
+
+        if (ReadOnly == true)
+        {
+            attributes.AddBoolean("readonly");
+        }
+
+        var component = await _componentGenerator.GenerateTextareaAsync(new TextareaOptions
+        {
+            Id = id,
+            Name = name,
+            Rows = Rows,
+            Value = value,
+            Disabled = Disabled,
+            DescribedBy = DescribedBy,
+            Label = labelOptions,
+            Hint = hintOptions,
+            ErrorMessage = errorMessageOptions,
+            FormGroup = formGroupOptions,
+            Classes = classes,
+            AutoComplete = AutoComplete,
+            Spellcheck = Spellcheck,
+            Attributes = attributes
+        });
+
+        component.ApplyToTagHelper(output);
+
+        if (errorMessageOptions is not null)
+        {
+            Debug.Assert(errorMessageOptions.Html is not null);
+            var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
+            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
+        }
+    }
+
+    private string ResolveId(string name) =>
+        Id ?? TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
+
+    private string ResolveName()
     {
         return Name is null && For is null
             ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
-                AspForAttributeName)
-            : Name ?? ModelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
+                ForAttributeName)
+            : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
+    }
+
+    private TemplateString? ResolveValue(TextAreaContext textAreaContext)
+    {
+        if (textAreaContext?.Value is TemplateString contextValue)
+        {
+            return contextValue;
+        }
+
+        if (_valueSpecified)
+        {
+            return _value;
+        }
+
+        if (For is not null)
+        {
+            var modelValue = _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name);
+            return modelValue is not null ? new TemplateString(modelValue) : null;
+        }
+
+        return null;
     }
 }

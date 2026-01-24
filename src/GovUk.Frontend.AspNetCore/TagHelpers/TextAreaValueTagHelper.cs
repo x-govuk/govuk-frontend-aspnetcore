@@ -1,9 +1,10 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Represents the value of a GDS character count component.
+/// Represents the value of a GDS textarea component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TextAreaTagHelper.TagName)]
 public class TextAreaValueTagHelper : TagHelper
@@ -16,7 +17,7 @@ public class TextAreaValueTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var characterCountContext = context.GetContextItem<TextAreaContext>();
+        var textAreaContext = context.GetContextItem<TextAreaContext>();
 
         var content = await output.GetChildContentAsync();
 
@@ -25,7 +26,7 @@ public class TextAreaValueTagHelper : TagHelper
             content = output.Content;
         }
 
-        characterCountContext.SetValue(content.Snapshot());
+        textAreaContext.SetValue(content.ToTemplateString(), output.TagName);
 
         output.SuppressOutput();
     }

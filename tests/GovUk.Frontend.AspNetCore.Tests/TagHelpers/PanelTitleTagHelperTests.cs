@@ -38,7 +38,7 @@ public class PanelTitleTagHelperTests
 
         // Assert
         Assert.NotNull(panelContext.Title);
-        Assert.Equal("The title", panelContext.Title.Value.Content.ToHtmlString());
+        Assert.Equal("The title", panelContext.Title.Value.Content);
     }
 
     [Fact]

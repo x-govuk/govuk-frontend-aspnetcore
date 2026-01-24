@@ -38,7 +38,7 @@ public class PanelBodyTagHelperTests
 
         // Assert
         Assert.NotNull(panelContext.Body);
-        Assert.Equal("The body", panelContext.Body.Value.Content.ToHtmlString());
+        Assert.Equal("The body", panelContext.Body.Value.Content);
     }
 
     [Fact]

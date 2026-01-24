@@ -105,6 +105,26 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         return FromEncoded(builder.ToString());
     }
 
+    /// <summary>
+    /// Returns the first non-empty <see cref="TemplateString"/> from the specified values.
+    /// </summary>
+    /// <param name="values">The array of <see cref="TemplateString"/> values to check.</param>
+    /// <returns>The first non-empty <see cref="TemplateString"/> from the array, or <see cref="TemplateString.Empty"/> if all values are empty or null.</returns>
+    public static TemplateString Coalesce(params TemplateString?[] values)
+    {
+        ArgumentNullException.ThrowIfNull(values);
+
+        foreach (var value in values)
+        {
+            if (value is not null && !value.IsEmpty())
+            {
+                return value;
+            }
+        }
+
+        return TemplateString.Empty;
+    }
+
     internal FluidValue ToFluidValue(HtmlEncoder encoder)
     {
         // Fast path for empty strings
@@ -360,29 +380,6 @@ public static class TemplateStringExtensions
         return TemplateString.Join(
             " ",
             !templateString.IsEmpty() ? new[] { templateString }.Concat(classNames) : classNames);
-    }
-
-    /// <summary>
-    /// Returns the first non-empty <see cref="TemplateString"/> from the specified values.
-    /// </summary>
-    public static TemplateString Coalesce(this TemplateString? templateString, params TemplateString?[] others)
-    {
-        ArgumentNullException.ThrowIfNull(others);
-
-        if (templateString is not null && !templateString.IsEmpty())
-        {
-            return templateString;
-        }
-
-        foreach (var other in others)
-        {
-            if (!other.IsEmpty())
-            {
-                return other;
-            }
-        }
-
-        return TemplateString.Empty;
     }
 
     /// <summary>

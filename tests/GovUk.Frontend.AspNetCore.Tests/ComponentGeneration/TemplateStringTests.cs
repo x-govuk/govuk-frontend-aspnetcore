@@ -116,4 +116,104 @@ public class TemplateStringTests
         // Assert
         Assert.Equal("<strong>Bold</strong>", result);
     }
+
+    [Fact]
+    public void Coalesce_WithFirstNonEmptyValue_ReturnsFirstNonEmpty()
+    {
+        // Arrange
+        var first = new TemplateString("First");
+        var second = new TemplateString("Second");
+        var third = new TemplateString("Third");
+
+        // Act
+        var result = TemplateString.Coalesce(first, second, third);
+
+        // Assert
+        Assert.Equal(first, result);
+    }
+
+    [Fact]
+    public void Coalesce_WithNullAndEmptyValuesFirst_ReturnsFirstNonEmpty()
+    {
+        // Arrange
+        var empty = TemplateString.Empty;
+        var nonEmpty = new TemplateString("NonEmpty");
+        var another = new TemplateString("Another");
+
+        // Act
+        var result = TemplateString.Coalesce(null, empty, nonEmpty, another);
+
+        // Assert
+        Assert.Equal(nonEmpty, result);
+    }
+
+    [Fact]
+    public void Coalesce_WithAllNullOrEmpty_ReturnsEmpty()
+    {
+        // Arrange & Act
+        var result = TemplateString.Coalesce(null, TemplateString.Empty, null);
+
+        // Assert
+        Assert.Equal(TemplateString.Empty, result);
+    }
+
+    [Fact]
+    public void Coalesce_WithEmptyArray_ReturnsEmpty()
+    {
+        // Arrange & Act
+        var result = TemplateString.Coalesce();
+
+        // Assert
+        Assert.Equal(TemplateString.Empty, result);
+    }
+
+    [Fact]
+    public void Coalesce_WithSingleNonEmptyValue_ReturnsThatValue()
+    {
+        // Arrange
+        var value = new TemplateString("Value");
+
+        // Act
+        var result = TemplateString.Coalesce(value);
+
+        // Assert
+        Assert.Equal(value, result);
+    }
+
+    [Fact]
+    public void Coalesce_WithHtmlContent_ReturnsFirstNonEmpty()
+    {
+        // Arrange
+        var empty = TemplateString.Empty;
+        var htmlContent = new TemplateString(new HtmlString("<strong>Bold</strong>"));
+        var stringContent = new TemplateString("Plain");
+
+        // Act
+        var result = TemplateString.Coalesce(null, empty, htmlContent, stringContent);
+
+        // Assert
+        Assert.Equal(htmlContent, result);
+    }
+
+    [Fact]
+    public void Coalesce_WithNullArray_ThrowsArgumentNullException()
+    {
+        // Arrange, Act & Assert
+        Assert.Throws<ArgumentNullException>(() => TemplateString.Coalesce(null!));
+    }
+
+    [Fact]
+    public void Coalesce_WithMixedTypes_ReturnsFirstNonEmpty()
+    {
+        // Arrange
+        var emptyString = new TemplateString("");
+        var htmlValue = new TemplateString(new HtmlString("HTML"));
+        var stringValue = new TemplateString("String");
+
+        // Act
+        var result = TemplateString.Coalesce(null, emptyString, htmlValue, stringValue);
+
+        // Assert
+        Assert.Equal(htmlValue, result);
+    }
 }

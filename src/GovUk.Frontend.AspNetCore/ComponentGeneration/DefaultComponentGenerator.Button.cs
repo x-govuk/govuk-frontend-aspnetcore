@@ -8,7 +8,7 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var element = options.Element.Coalesce(!options.Href.IsEmpty() ? "a" : "button");
+        var element = TemplateString.Coalesce(options.Element, !options.Href.IsEmpty() ? "a" : "button");
 
         var tag = element == "a" ? CreateLinkButton() : element == "input" ? CreateInputButton() : CreateButtonElement();
 

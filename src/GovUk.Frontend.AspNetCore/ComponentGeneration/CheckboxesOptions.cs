@@ -11,7 +11,7 @@ public record CheckboxesOptions
     public CheckboxesOptionsFormGroup? FormGroup { get; set; }
     public TemplateString? IdPrefix { get; set; }
     public TemplateString? Name { get; set; }
-    public IReadOnlyCollection<CheckboxesOptionsItem>? Items { get; set; }
+    public IReadOnlyCollection<CheckboxesOptionsItem?>? Items { get; set; }
     public IReadOnlyCollection<string>? Values { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }

@@ -67,12 +67,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("character-count", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateCheckboxesAsync(CheckboxesOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("checkboxes", options);
-    }
-
     public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);

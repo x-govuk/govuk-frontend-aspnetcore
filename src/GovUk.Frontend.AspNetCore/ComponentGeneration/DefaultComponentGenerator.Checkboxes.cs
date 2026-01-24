@@ -127,7 +127,7 @@ internal partial class DefaultComponentGenerator
         {
             // Divider is checked on line 98, so it's safe to use here
             var dividerText = item.Divider!;
-            
+
             var divider = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-checkboxes__divider"))
             {
@@ -222,7 +222,7 @@ internal partial class DefaultComponentGenerator
             {
                 // conditionalHtml is guaranteed to be non-null here due to hasConditional check
                 var conditionalContent = conditionalHtml!.GetRawHtml();
-                
+
                 var conditional = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-checkboxes__conditional", !isChecked ? "govuk-checkboxes__conditional--hidden" : null)
                     .With("id", conditionalId))

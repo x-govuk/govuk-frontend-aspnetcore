@@ -20,14 +20,50 @@ on:
       - "**.md"
 
 jobs:
-  build:
-    name: "Build library"
+  format:
+    name: "Check code format"
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        build-configuration: [ Debug, Release ]
-    env:
-      DOTNET_CLI_WORKLOAD_UPDATE_NOTIFY_DISABLE: true
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: jdx/mise-action@v3
+
+      - name: Install tools
+        run: just install-tools
+
+      - name: Format
+        run: just format --verify-no-changes
+
+  build_debug:
+    name: "Debug build"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: jdx/mise-action@v3
+
+      - name: Install tools
+        run: just install-tools
+
+      - name: Restore
+        run: just restore
+
+      - name: Build
+        run: just build --configuration Debug --no-restore
+
+      - name: Install Playwright
+        run: just install-playwright
+
+      - name: Test
+        run: |
+          just unit-tests --configuration Debug --no-build
+          just integration-tests --configuration Debug --no-build
+
+  build_release:
+    name: "Release build & package"
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v6
@@ -47,62 +83,21 @@ jobs:
         run: just format --verify-no-changes
 
       - name: Build
-        run: just build --configuration ${{ matrix.build-configuration }} --no-restore
+        run: just build --configuration Release --no-restore
 
       - name: Install Playwright
         run: just install-playwright
 
       - name: Test
         run: |
-          just unit-tests --configuration ${{ matrix.build-configuration }} --no-build
-          just integration-tests --configuration ${{ matrix.build-configuration }} --no-build
-
-      - name: Check documentation
-        if: matrix.build-configuration == 'Release'
-        run: |
-          just publish-docs --configuration ${{ matrix.build-configuration }}
-
-          changes=$(git status --porcelain docs ':!docs/images' | cut -c 4-)
-          if [ -n "$changes" ]
-          then
-            echo "::error ::Documentation is stale"
-            exit 1
-          fi
-
-      - name: Check GOV.UK Design System version
-        if: matrix.build-configuration == 'Release'
-        run: |
-          # Extract version from Directory.Build.props
-          props_version=$(grep -oP '<GovUkFrontendVersion>\K[^<]+' Directory.Build.props)
-          if [ -z "$props_version" ]; then
-            echo "::error ::Failed to extract version from Directory.Build.props"
-            exit 1
-          fi
-          echo "Version in Directory.Build.props: $props_version"
-          
-          # Extract version from README badge (supports semantic versioning including pre-release versions)
-          readme_version=$(grep -oP 'GOV\.UK%20Design%20System-\K[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?(?=-)' README.md)
-          if [ -z "$readme_version" ]; then
-            echo "::error ::Failed to extract version from README.md badge"
-            exit 1
-          fi
-          echo "Version in README.md: $readme_version"
-          
-          # Compare versions
-          if [ "$props_version" != "$readme_version" ]; then
-            echo "::error ::GOV.UK Design System version mismatch: Directory.Build.props has $props_version but README.md has $readme_version"
-            exit 1
-          fi
-          
-          echo "✓ Versions match: $props_version"
+          just unit-tests --configuration Release --no-build
+          just integration-tests --configuration Release --no-build
 
       - name: Assign package build metadata
-        if: startsWith(github.ref, 'refs/tags/v') != true
         run: |
           echo "MINVERBUILDMETADATA=build.${{ github.run_id }}.${{ github.run_attempt}}" >> $GITHUB_ENV
 
       - name: Update package README GitHub link
-        if: matrix.build-configuration == 'Release'
         run: |
           if [[ "${{ github.ref }}" == "refs/tags/v"* ]]; then
             REF="${{ github.ref_name }}"
@@ -112,22 +107,20 @@ jobs:
           README_PATH="src/GovUk.Frontend.AspNetCore/Package/README.md"
           ORIGINAL_URL="https://github.com/${{ github.repository }}/blob/main/"
           NEW_URL="https://github.com/${{ github.repository }}/blob/${REF}/"
-          
+
           if ! grep -q "$ORIGINAL_URL" "$README_PATH"; then
             echo "::error::Expected URL pattern '$ORIGINAL_URL' not found in $README_PATH"
             exit 1
           fi
-          
+
           sed -i "s|${ORIGINAL_URL}|${NEW_URL}|g" "$README_PATH"
-          
+
           echo "Updated README link to reference: ${REF}"
 
       - name: Pack
-        if: matrix.build-configuration == 'Release'
-        run: just pack --configuration ${{ matrix.build-configuration }}
+        run: just pack --configuration Release
 
       - name: Publish package artifact
-        if: matrix.build-configuration == 'Release'
         uses: actions/upload-artifact@v6
         with:
           name: GovUk.Frontend.AspNetCore.nupkg
@@ -136,7 +129,6 @@ jobs:
   build_samples:
     name: "Build samples"
     runs-on: ubuntu-latest
-    needs: build
 
     steps:
       - uses: actions/checkout@v6
@@ -152,10 +144,60 @@ jobs:
       - name: Build samples
         run: just build-samples --configuration Release
 
+  docs:
+    name: "Check docs"
+    runs-on: ubuntu-latest
+    needs: [build_release]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: jdx/mise-action@v3
+
+      - name: Install tools
+        run: just install-tools
+
+      - name: Check component documentation
+        run: |
+          just publish-docs --configuration Release
+
+          changes=$(git status --porcelain docs ':!docs/images' | cut -c 4-)
+          if [ -n "$changes" ]
+          then
+            echo "::error ::Documentation is stale"
+            exit 1
+          fi
+
+      - name: Check GOV.UK Design System version
+        run: |
+          # Extract version from Directory.Build.props
+          props_version=$(grep -oP '<GovUkFrontendVersion>\K[^<]+' Directory.Build.props)
+          if [ -z "$props_version" ]; then
+            echo "::error ::Failed to extract version from Directory.Build.props"
+            exit 1
+          fi
+          echo "Version in Directory.Build.props: $props_version"
+
+          # Extract version from README badge (supports semantic versioning including pre-release versions)
+          readme_version=$(grep -oP 'GOV\.UK%20Design%20System-\K[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9.]+)?(?=-)' README.md)
+          if [ -z "$readme_version" ]; then
+            echo "::error ::Failed to extract version from README.md badge"
+            exit 1
+          fi
+          echo "Version in README.md: $readme_version"
+
+          # Compare versions
+          if [ "$props_version" != "$readme_version" ]; then
+            echo "::error ::GOV.UK Design System version mismatch: Directory.Build.props has $props_version but README.md has $readme_version"
+            exit 1
+          fi
+
+          echo "✓ Versions match: $props_version"
+
   release:
     name: "Publish package to NuGet"
     runs-on: ubuntu-latest
-    needs: [build, build_samples]
+    needs: [format, build_release, build_samples, docs]
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       id-token: write

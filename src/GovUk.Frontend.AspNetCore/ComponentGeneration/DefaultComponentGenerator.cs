@@ -61,8 +61,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     protected Task<GovUkComponent> EmptyComponentTask { get; } = Task.FromResult((GovUkComponent)EmptyComponent.Instance);
 
-
-
     private Task<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
         Task.FromResult((GovUkComponent)new HtmlTagGovUkComponent(tag));
 

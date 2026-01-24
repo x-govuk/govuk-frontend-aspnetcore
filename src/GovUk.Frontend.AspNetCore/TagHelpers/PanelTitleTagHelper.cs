@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -25,7 +26,9 @@ public class PanelTitleTagHelper : TagHelper
             content = output.Content;
         }
 
-        panelContext.SetTitle(content.Snapshot());
+        var attributes = new AttributeCollection(output.Attributes);
+
+        panelContext.SetTitle(content.ToTemplateString(), attributes);
 
         output.SuppressOutput();
     }

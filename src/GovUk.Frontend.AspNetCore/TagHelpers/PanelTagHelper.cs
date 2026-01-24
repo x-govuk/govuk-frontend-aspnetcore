@@ -1,5 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -8,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS panel component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[OutputElementHint(ComponentGenerator.PanelElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Panel)]
 [RestrictChildren(PanelTitleTagHelper.TagName, PanelBodyTagHelper.TagName)]
 public class PanelTagHelper : TagHelper
 {
@@ -16,20 +15,16 @@ public class PanelTagHelper : TagHelper
 
     private const string HeadingLevelAttributeName = "heading-level";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
     private int? _headingLevel;
 
     /// <summary>
     /// Creates a new <see cref="PanelTagHelper"/>.
     /// </summary>
-    public PanelTagHelper()
-        : this(null)
+    public PanelTagHelper(IComponentGenerator componentGenerator)
     {
-    }
-
-    internal PanelTagHelper(IGovUkHtmlGenerator? htmlGenerator = null)
-    {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
+        ArgumentNullException.ThrowIfNull(componentGenerator);
+        _componentGenerator = componentGenerator;
     }
 
     /// <summary>
@@ -44,12 +39,11 @@ public class PanelTagHelper : TagHelper
         get => _headingLevel;
         set
         {
-            if (value is < ComponentGenerator.PanelMinHeadingLevel or
-                > ComponentGenerator.PanelMaxHeadingLevel)
+            if (value is < 1 or > 6)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(value),
-                    $"{nameof(HeadingLevel)} must be between {ComponentGenerator.PanelMinHeadingLevel} and {ComponentGenerator.PanelMaxHeadingLevel}.");
+                    $"{nameof(HeadingLevel)} must be between 1 and 6.");
             }
 
             _headingLevel = value;
@@ -64,24 +58,35 @@ public class PanelTagHelper : TagHelper
 
         var panelContext = new PanelContext();
 
+        TagHelperContent content;
+
         using (context.SetScopedContextItem(panelContext))
         {
-            _ = await output.GetChildContentAsync();
+            content = await output.GetChildContentAsync();
+        }
+
+        if (output.Content.IsModified)
+        {
+            content = output.Content;
         }
 
         panelContext.ThrowIfNotComplete();
 
-        var tagBuilder = _htmlGenerator.GeneratePanel(
-            HeadingLevel ?? ComponentGenerator.PanelDefaultHeadingLevel,
-            panelContext.Title,
-            panelContext.Body,
-            output.Attributes.ToAttributeDictionary());
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
 
-        output.TagName = tagBuilder.TagName;
-        output.TagMode = TagMode.StartTagAndEndTag;
+        var options = new PanelOptions
+        {
+            HeadingLevel = HeadingLevel ?? 1,
+            TitleHtml = panelContext.Title?.Content,
+            TitleAttributes = panelContext.Title?.Attributes,
+            Html = panelContext.Body?.Content,
+            BodyAttributes = panelContext.Body?.Attributes,
+            Classes = classes,
+            Attributes = attributes
+        };
 
-        output.Attributes.Clear();
-        output.MergeAttributes(tagBuilder);
-        output.Content.SetHtmlContent(tagBuilder.InnerHtml);
+        var component = await _componentGenerator.GeneratePanelAsync(options);
+        component.ApplyToTagHelper(output);
     }
 }

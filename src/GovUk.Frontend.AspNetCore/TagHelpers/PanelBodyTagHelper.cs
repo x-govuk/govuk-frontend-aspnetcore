@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -25,7 +26,9 @@ public class PanelBodyTagHelper : TagHelper
             content = output.Content;
         }
 
-        panelContext.SetBody(content.Snapshot());
+        var attributes = new AttributeCollection(output.Attributes);
+
+        panelContext.SetBody(content.ToTemplateString(), attributes);
 
         output.SuppressOutput();
     }

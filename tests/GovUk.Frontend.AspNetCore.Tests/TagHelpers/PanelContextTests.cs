@@ -1,5 +1,5 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -10,10 +10,10 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetBody(new HtmlString("Body"));
+        context.SetBody(TemplateString.FromEncoded("Body"), null);
 
         // Act
-        var ex = Record.Exception(() => context.SetBody(new HtmlString("Body")));
+        var ex = Record.Exception(() => context.SetBody(TemplateString.FromEncoded("Body"), null));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -25,10 +25,10 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetBody(new HtmlString("Body"));
+        context.SetBody(TemplateString.FromEncoded("Body"), null);
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle(new HtmlString("Title")));
+        var ex = Record.Exception(() => context.SetTitle(TemplateString.FromEncoded("Title"), null));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -40,10 +40,10 @@ public class PanelContextTests
     {
         // Arrange
         var context = new PanelContext();
-        context.SetTitle(new HtmlString("Title"));
+        context.SetTitle(TemplateString.FromEncoded("Title"), null);
 
         // Act
-        var ex = Record.Exception(() => context.SetTitle(new HtmlString("Title")));
+        var ex = Record.Exception(() => context.SetTitle(TemplateString.FromEncoded("Title"), null));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

@@ -40,12 +40,6 @@ internal interface IGovUkHtmlGenerator
         IHtmlContent content,
         AttributeDictionary attributes);
 
-    TagBuilder GeneratePanel(
-        int headingLevel,
-        IHtmlContent titleContent,
-        IHtmlContent bodyContent,
-        AttributeDictionary attributes);
-
     TagBuilder GenerateRadios(
         string idPrefix,
         string name,

@@ -91,7 +91,6 @@ internal partial class DefaultComponentGenerator
                 {
                     if (item is null)
                     {
-                        itemIndex++;
                         continue;
                     }
 

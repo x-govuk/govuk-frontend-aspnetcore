@@ -254,7 +254,7 @@ public partial class DefaultComponentGeneratorTests
 
     private async Task CheckComponentHtmlMatchesExpectedHtml<TOptions>(
         ComponentTestCaseData<TOptions> testCaseData,
-        Func<DefaultComponentGenerator, TOptions, Task<GovUkComponent>> generateComponent,
+        Func<DefaultComponentGenerator, TOptions, ValueTask<GovUkComponent>> generateComponent,
         Predicate<IDiff>? excludeDiff = null)
     {
         var html = (await generateComponent(_componentGenerator, testCaseData.Options)).GetHtml();

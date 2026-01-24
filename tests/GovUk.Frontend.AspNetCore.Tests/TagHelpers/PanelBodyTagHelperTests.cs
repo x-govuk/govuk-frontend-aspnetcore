@@ -1,5 +1,5 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -37,7 +37,8 @@ public class PanelBodyTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("The body", panelContext.Body?.ToHtmlString());
+        Assert.NotNull(panelContext.Body);
+        Assert.Equal("The body", panelContext.Body.Value.Content.ToHtmlString());
     }
 
     [Fact]
@@ -45,7 +46,7 @@ public class PanelBodyTagHelperTests
     {
         // Arrange
         var panelContext = new PanelContext();
-        panelContext.SetBody(new HtmlString("The body"));
+        panelContext.SetBody(TemplateString.FromEncoded("The body"), null);
 
         var context = new TagHelperContext(
             tagName: "govuk-panel-body",

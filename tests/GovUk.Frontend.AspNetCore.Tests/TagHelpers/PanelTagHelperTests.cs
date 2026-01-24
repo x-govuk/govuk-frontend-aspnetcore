@@ -1,6 +1,5 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -23,14 +22,14 @@ public class PanelTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var panelContext = (PanelContext)context.Items[typeof(PanelContext)];
-                panelContext.SetTitle(new HtmlString("Title"));
-                panelContext.SetBody(new HtmlString("Body"));
+                panelContext.SetTitle(TemplateString.FromEncoded("Title"), null);
+                panelContext.SetBody(TemplateString.FromEncoded("Body"), null);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new PanelTagHelper(new ComponentGenerator())
+        var tagHelper = new PanelTagHelper(TestUtils.CreateComponentGenerator())
         {
             HeadingLevel = 3
         };
@@ -40,7 +39,7 @@ public class PanelTagHelperTests
 
         // Assert
         var expectedHtml = @"
-<div class=""govuk-panel--confirmation govuk-panel"">
+<div class=""govuk-panel govuk-panel--confirmation"">
     <h3 class=""govuk-panel__title"">Title</h3>
     <div class=""govuk-panel__body"">Body</div>
 </div>";
@@ -64,13 +63,13 @@ public class PanelTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var panelContext = (PanelContext)context.Items[typeof(PanelContext)];
-                panelContext.SetBody(new HtmlString("Body"));
+                panelContext.SetBody(TemplateString.FromEncoded("Body"), null);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new PanelTagHelper(new ComponentGenerator())
+        var tagHelper = new PanelTagHelper(TestUtils.CreateComponentGenerator())
         {
             HeadingLevel = 3
         };

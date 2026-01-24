@@ -1,28 +1,24 @@
-using Microsoft.AspNetCore.Html;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class PanelContext
 {
-    public IHtmlContent? Body { get; private set; }
-    public IHtmlContent? Title { get; private set; }
+    public (TemplateString? Content, AttributeCollection? Attributes)? Body { get; private set; }
+    public (TemplateString? Content, AttributeCollection? Attributes)? Title { get; private set; }
 
-    public void SetBody(IHtmlContent content)
+    public void SetBody(TemplateString? content, AttributeCollection? attributes)
     {
-        ArgumentNullException.ThrowIfNull(content);
-
         if (Body is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(PanelBodyTagHelper.TagName, PanelTagHelper.TagName);
         }
 
-        Body = content;
+        Body = (content, attributes);
     }
 
-    public void SetTitle(IHtmlContent content)
+    public void SetTitle(TemplateString? content, AttributeCollection? attributes)
     {
-        ArgumentNullException.ThrowIfNull(content);
-
         if (Title is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(PanelTitleTagHelper.TagName, PanelTagHelper.TagName);
@@ -33,7 +29,7 @@ internal class PanelContext
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(PanelTitleTagHelper.TagName, PanelBodyTagHelper.TagName);
         }
 
-        Title = content;
+        Title = (content, attributes);
     }
 
     public void ThrowIfNotComplete()

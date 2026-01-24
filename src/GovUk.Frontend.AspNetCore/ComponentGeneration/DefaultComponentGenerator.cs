@@ -67,12 +67,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("character-count", options);
     }
 
-    public virtual Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("file-upload", options);
-    }
-
     private Task<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
         Task.FromResult((GovUkComponent)new HtmlTagGovUkComponent(tag));
 

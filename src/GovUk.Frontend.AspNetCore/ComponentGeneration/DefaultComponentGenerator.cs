@@ -1,86 +1,15 @@
-using System.Collections.Concurrent;
-using System.Text.Encodings.Web;
-using Fluid;
-using Fluid.Values;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.Extensions.FileProviders;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator : IComponentGenerator
 {
-    internal const string DefaultErrorSummaryTitleHtml = "There is a problem";
-
-    private static readonly HtmlEncoder _encoder = HtmlEncoder.Default;
-
-    private readonly FluidParser _parser;
-    private readonly ConcurrentDictionary<string, IFluidTemplate> _templates;
-    private readonly TemplateOptions _templateOptions;
-
-    public DefaultComponentGenerator()
-    {
-        _parser = new FluidParser(new FluidParserOptions
-        {
-            AllowFunctions = true,
-            AllowParentheses = true
-        });
-
-        var optionsJsonSerializerOptions = ComponentOptionsJsonSerializerOptions.Instance;
-
-        _templates = new ConcurrentDictionary<string, IFluidTemplate>();
-
-        _templateOptions = new TemplateOptions
-        {
-            MemberAccessStrategy = new UnsafeMemberAccessStrategy(),
-            Trimming = TrimmingFlags.TagLeft,
-
-            FileProvider = new ManifestEmbeddedFileProvider(
-            typeof(GovUkFrontendExtensions).Assembly,
-            root: "ComponentGeneration/Templates")
-        };
-
-        _templateOptions.Filters.AddFilter("nj_default", Filters.DefaultAsync);
-        _templateOptions.Filters.AddFilter("indent", Filters.IndentAsync);
-        _templateOptions.Filters.AddFilter("strip", Filters.StripAsync);
-
-        _templateOptions.ValueConverters.Add(v =>
-        {
-            if (v is TemplateString templateString)
-            {
-                return templateString.ToFluidValue(_encoder);
-            }
-
-            // If the object is an Options class, convert its property names to camel case
-            return v.GetType().Namespace?.StartsWith(GetType().Namespace!, StringComparison.Ordinal) == true && !v.GetType().IsArray
-                ? new ConvertNamesFromJsonTypeInfoObjectValue(v, optionsJsonSerializerOptions)
-                : (object?)null;
-        });
-    }
-
-    protected Task<GovUkComponent> EmptyComponentTask { get; } = Task.FromResult((GovUkComponent)EmptyComponent.Instance);
+    protected Task<GovUkComponent> EmptyComponentTask { get; } = Task.FromResult<GovUkComponent>(EmptyComponent.Instance);
 
     private Task<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
-        Task.FromResult((GovUkComponent)new HtmlTagGovUkComponent(tag));
-
-    private IFluidTemplate GetTemplate(string templateName) =>
-        _templates.GetOrAdd(templateName, _ =>
-        {
-            var templateFileInfo = _templateOptions.FileProvider.GetFileInfo($"{templateName}.liquid");
-            if (!templateFileInfo.Exists)
-            {
-                throw new ArgumentException($"Template '{templateName}' not found.", nameof(templateName));
-            }
-
-            using var sourceStream = templateFileInfo.CreateReadStream();
-            using var reader = new StreamReader(sourceStream);
-            var source = reader.ReadToEnd();
-
-            var template = _parser.Parse(source);
-
-            return template;
-        });
+        Task.FromResult<GovUkComponent>(new HtmlTagGovUkComponent(tag));
 
     private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
     {
@@ -95,24 +24,6 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         }
 
         return new HtmlString(fallback);
-    }
-
-    private async Task<GovUkComponent> RenderTemplateAsync(string templateName, object componentOptions)
-    {
-        var context = new TemplateContext(_templateOptions);
-        context.SetValue("array", new FunctionValue(Functions.Array));
-        context.SetValue("dict", new FunctionValue(Functions.Dict));
-        context.SetValue("govukAttributes", new FunctionValue(Functions.GovukAttributesAsync));
-        context.SetValue("govukI18nAttributes", new FunctionValue(Functions.GovukI18nAttributes));
-        context.SetValue("ifelse", new FunctionValue(Functions.IfElse));
-        context.SetValue("istruthy", new FunctionValue(Functions.IsTruthy));
-        context.SetValue("not", new FunctionValue(Functions.Not));
-        context.SetValue("string", new FunctionValue(Functions.String));
-        context.SetValue("params", componentOptions);  // To match the nunjucks templates
-
-        var template = GetTemplate(templateName);
-        var result = await template.RenderAsync(context, _encoder);
-        return new FluidTemplateGovUkComponent(result.TrimStart());
     }
 
     protected sealed class EmptyComponent : GovUkComponent
@@ -184,26 +95,5 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
             output.Content.AppendHtml(Tag.InnerHtml);
         }
-    }
-
-    private class FluidTemplateGovUkComponent : GovUkComponent
-    {
-        private readonly string _html;
-
-        public FluidTemplateGovUkComponent(string html)
-        {
-            ArgumentNullException.ThrowIfNull(html);
-
-            _html = html;
-        }
-
-        public override void ApplyToTagHelper(TagHelperOutput output)
-        {
-            ArgumentNullException.ThrowIfNull(output);
-
-            TagHelperAdapter.ApplyComponentHtml(output, GetContent());
-        }
-
-        public override IHtmlContent GetContent() => new HtmlString(_html);
     }
 }

@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Encodings.Web;
-using Fluid.Values;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -122,25 +121,7 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
             }
         }
 
-        return TemplateString.Empty;
-    }
-
-    internal FluidValue ToFluidValue(HtmlEncoder encoder)
-    {
-        // Fast path for empty strings
-        if (_value is "" or null)
-        {
-            return NilValue.Instance;
-        }
-
-        if (_value is string str)
-        {
-            return new StringValue(str, encode: true);
-        }
-
-        Debug.Assert(_value is IHtmlContent);
-        var html = this.ToHtmlString(encoder);
-        return new StringValue(html, encode: false);
+        return Empty;
     }
 
     /// <summary>

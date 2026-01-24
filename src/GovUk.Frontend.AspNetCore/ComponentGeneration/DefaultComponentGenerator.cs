@@ -73,11 +73,7 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         return RenderTemplateAsync("file-upload", options);
     }
 
-    public virtual Task<GovUkComponent> GeneratePasswordInputAsync(PasswordInputOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        return RenderTemplateAsync("password-input", options);
-    }
+
 
     public virtual Task<GovUkComponent> GenerateTextareaAsync(TextareaOptions options)
     {

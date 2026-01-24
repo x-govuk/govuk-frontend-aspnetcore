@@ -125,10 +125,13 @@ internal partial class DefaultComponentGenerator
 
         HtmlTag CreateDivider(CheckboxesOptionsItem item)
         {
+            // Divider is checked on line 98, so it's safe to use here
+            var dividerText = item.Divider!;
+            
             var divider = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-checkboxes__divider"))
             {
-                item.Divider!
+                dividerText
             };
 
             return divider;
@@ -147,18 +150,12 @@ internal partial class DefaultComponentGenerator
             var itemName = item.Name ?? parentName;
             var conditionalId = new TemplateString($"conditional-{itemId}");
 
-            // Check if item should be checked
-            // If item.Checked is explicitly set, use that value
-            // Otherwise, check if the value is in the values list
-            var itemValueString = item.Value?.ToHtmlString() ?? string.Empty;
-            var isChecked = item.Checked.HasValue 
-                ? item.Checked.Value 
-                : (values?.Contains(itemValueString) == true);
+            var isChecked = DetermineCheckedState(item, values);
 
             // Only include conditional if Html is not empty/false/blank
             // Check matches liquid template's "!= blank" check
-            var hasConditional = item.Conditional?.Html is not null 
-                && !item.Conditional.Html.IsEmpty();
+            var conditionalHtml = item.Conditional?.Html;
+            var hasConditional = conditionalHtml is not null && !conditionalHtml.IsEmpty();
 
             var itemDiv = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-checkboxes__item"));
@@ -223,17 +220,33 @@ internal partial class DefaultComponentGenerator
 
             if (hasConditional)
             {
+                // conditionalHtml is guaranteed to be non-null here due to hasConditional check
+                var conditionalContent = conditionalHtml!.GetRawHtml();
+                
                 var conditional = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-checkboxes__conditional", !isChecked ? "govuk-checkboxes__conditional--hidden" : null)
                     .With("id", conditionalId))
                 {
-                    item.Conditional!.Html!.GetRawHtml()
+                    conditionalContent
                 };
 
                 result.AppendHtml(conditional);
             }
 
             return result;
+        }
+
+        static bool DetermineCheckedState(CheckboxesOptionsItem item, IReadOnlyCollection<string>? values)
+        {
+            // If item.Checked is explicitly set, use that value
+            if (item.Checked.HasValue)
+            {
+                return item.Checked.Value;
+            }
+
+            // Otherwise, check if the value is in the values list
+            var itemValueString = item.Value?.ToHtmlString() ?? string.Empty;
+            return values?.Contains(itemValueString) == true;
         }
     }
 }

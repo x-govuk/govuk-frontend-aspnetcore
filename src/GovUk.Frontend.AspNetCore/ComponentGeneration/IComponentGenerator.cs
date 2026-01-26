@@ -198,6 +198,12 @@ public interface IComponentGenerator
     Task<GovUkComponent> GenerateTagAsync(TagOptions options);
 
     /// <summary>
+    /// Generates a textarea component.
+    /// </summary>
+    /// <returns>A <see cref="string"/> with the component's HTML.</returns>
+    Task<GovUkComponent> GenerateTextareaAsync(TextareaOptions options);
+
+    /// <summary>
     /// Generates a warning text component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>

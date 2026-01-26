@@ -1,69 +1,125 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextAreaTagHelperTests
+public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
 {
     [Fact]
-    public async Task ProcessAsync_GeneratesExpectedOutput()
+    public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-textarea",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var id = "my-id";
+        var describedBy = "describedby";
+        var name = "my-name";
+        var autocomplete = "none";
+        var spellcheck = false;
+        var rows = 10;
+        var value = "test value";
+        var disabled = true;
+        var readOnly = true;
+        var labelClass = "additional-label-class";
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
+        var dataFooAttrValue = "foo";
+        var labelContent = "The label";
+        var hintContent = "The hint";
 
-        var output = new TagHelperOutput(
-            "govuk-textarea",
-            attributes: [],
+        var context = CreateTagHelperContext(className: className, attributes: attributes);
+
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var textAreaContext = context.GetContextItem<TextAreaContext>();
 
                 textAreaContext.SetLabel(
                     isPageHeading: false,
-                    attributes: null,
-                    content: new HtmlString("The label"));
+                    attributes: [],
+                    labelContent,
+                    TextAreaLabelTagHelper.TagName);
 
                 textAreaContext.SetHint(
-                    attributes: null,
-                    content: new HtmlString("The hint"));
+                    attributes: [],
+                    hintContent,
+                    TextAreaHintTagHelper.TagName);
+
+                textAreaContext.SetValue(value, TextAreaValueTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new TextAreaTagHelper()
+        var modelHelperMock = new Mock<IModelHelper>();
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        TextareaOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateTextareaAsync(It.IsAny<TextareaOptions>())).Callback<TextareaOptions>(o => actualOptions = o);
+
+        var tagHelper = new TextAreaTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
-            Id = "my-id",
-            Name = "my-name",
-            LabelClass = "additional-label-class"
+            Id = id,
+            DescribedBy = describedBy,
+            Name = name,
+            AutoComplete = autocomplete,
+            Spellcheck = spellcheck,
+            Rows = rows,
+            Disabled = disabled,
+            ReadOnly = readOnly,
+            LabelClass = labelClass,
+            ViewContext = new ViewContext(),
+            TextAreaAttributes = new Dictionary<string, string?>()
+            {
+                { "class", className },
+                { "data-foo", dataFooAttrValue },
+            }
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var expectedHtml = @"
-<div class=""govuk-form-group"">
-    <label class=""govuk-label additional-label-class"" for=""my-id"">The label</label>
-    <div class=""govuk-hint"" id=""my-id-hint"">The hint</div>
-    <textarea class=""govuk-textarea govuk-js-textarea"" id=""my-id"" name=""my-name"" rows=""5"" aria-describedby=""my-id-hint""></textarea>
-</div>";
+        Assert.NotNull(actualOptions);
+        Assert.Equal(id, actualOptions.Id);
+        Assert.Equal(name, actualOptions.Name);
+        Assert.Equal(rows, actualOptions.Rows);
+        Assert.Equal(value, actualOptions.Value);
+        Assert.Equal(disabled, actualOptions.Disabled);
+        Assert.Equal(describedBy, actualOptions.DescribedBy);
+        Assert.Equal(labelContent, actualOptions.Label?.Html);
+        Assert.Equal(hintContent, actualOptions.Hint?.Html);
+        Assert.Null(actualOptions.ErrorMessage);
+        Assert.Equal(className, actualOptions.Classes);
+        Assert.Equal(autocomplete, actualOptions.AutoComplete);
+        Assert.Equal(spellcheck, actualOptions.Spellcheck);
 
-        AssertEx.HtmlEqual(expectedHtml, output.ToHtmlString());
+        Assert.NotNull(actualOptions.Attributes);
+        Assert.Collection(actualOptions.Attributes,
+            kvp => Assert.Equal("readonly", kvp.Key),
+            kvp =>
+            {
+                Assert.Equal("data-foo", kvp.Key);
+                Assert.Equal(dataFooAttrValue, kvp.Value);
+            });
     }
 
     [Fact]
-    public async Task ProcessAsync_WithError_GeneratesExpectedOutput()
+    public async Task ProcessAsync_WithErrorMessage_GeneratesOptionsWithErrorMessage()
     {
         // Arrange
+        var id = "my-id";
+        var name = "my-name";
+        var labelHtml = "The label";
+        var errorHtml = "The error message";
+        var errorVht = "visually hidden text";
+        var errorDataFooAttribute = "bar";
+
         var context = new TagHelperContext(
             tagName: "govuk-textarea",
             allAttributes: [],
@@ -79,241 +135,44 @@ public class TextAreaTagHelperTests
 
                 textAreaContext.SetLabel(
                     isPageHeading: false,
-                    attributes: null,
-                    content: new HtmlString("The label"));
-
-                textAreaContext.SetHint(
-                    attributes: null,
-                    content: new HtmlString("The hint"));
+                    [],
+                    new HtmlString(labelHtml),
+                    TextAreaLabelTagHelper.TagName);
 
                 textAreaContext.SetErrorMessage(
-                    visuallyHiddenText: null,
-                    attributes: null,
-                    content: new HtmlString("The error"));
+                    visuallyHiddenText: new HtmlString(errorVht),
+                    attributes: new AttributeCollection { { "data-foo", errorDataFooAttribute } },
+                    html: new HtmlString(errorHtml),
+                    TextAreaErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new TextAreaTagHelper()
+        var modelHelperMock = new Mock<IModelHelper>();
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        TextareaOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateTextareaAsync(It.IsAny<TextareaOptions>())).Callback<TextareaOptions>(o => actualOptions = o);
+
+        var tagHelper = new TextAreaTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
-            Id = "my-id",
-            Name = "my-name",
+            Id = id,
+            Name = name,
             ViewContext = TestUtils.CreateViewContext()
         };
 
-        // Act
-        await tagHelper.ProcessAsync(context, output);
-
-        // Assert
-        var expectedHtml = @"
-<div class=""govuk-form-group govuk-form-group--error"">
-    <label class=""govuk-label"" for=""my-id"">The label</label>
-    <div class=""govuk-hint"" id=""my-id-hint"">The hint</div>
-    <p id=""my-id-error"" class=""govuk-error-message"">
-        <span class=""govuk-visually-hidden"">Error:</span>
-        The error
-    </p>
-    <textarea class=""govuk-textarea govuk-js-textarea govuk-textarea--error"" id=""my-id"" name=""my-name"" rows=""5"" aria-describedby=""my-id-hint my-id-error""></textarea>
-</div>";
-
-        AssertEx.HtmlEqual(expectedHtml, output.ToHtmlString());
-    }
-
-    [Fact]
-    public async Task ProcessAsync_NoValueOrFor_RendersEmptyTextArea()
-    {
-        // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-textarea",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "govuk-textarea",
-            attributes: [],
-            getChildContentAsync: (useCachedResult, encoder) =>
-            {
-                var textAreaContext = context.GetContextItem<TextAreaContext>();
-
-                textAreaContext.SetLabel(
-                    isPageHeading: false,
-                    attributes: null,
-                    content: new HtmlString("The label"));
-
-                var tagHelperContent = new DefaultTagHelperContent();
-                return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-
-        var tagHelper = new TextAreaTagHelper()
-        {
-            Name = "my-name"
-        };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        var element = output.RenderToElement();
-        var textarea = element.GetElementsByTagName("textarea")[0];
-        Assert.Empty(textarea.InnerHtml);
-    }
-
-    [Fact]
-    public async Task ProcessAsync_WithFor_RendersTextAreaWithModelValue()
-    {
-        // Arrange
-        var modelValue = "Foo value";
-        var model = new Model()
-        {
-            Foo = modelValue
-        };
-
-        var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), model)
-            .GetExplorerForProperty(nameof(Model.Foo));
-        var viewContext = new ViewContext();
-        var modelExpression = nameof(Model.Foo);
-
-        var modelHelper = new Mock<IModelHelper>();
-        modelHelper.Setup(mock => mock.GetModelValue(viewContext, modelExplorer, modelExpression)).Returns(modelValue);
-
-        var context = new TagHelperContext(
-            tagName: "govuk-textarea",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "govuk-textarea",
-            attributes: [],
-            getChildContentAsync: (useCachedResult, encoder) =>
-            {
-                var textAreaContext = context.GetContextItem<TextAreaContext>();
-
-                textAreaContext.SetLabel(
-                    isPageHeading: false,
-                    attributes: null,
-                    content: new HtmlString("The label"));
-
-                var tagHelperContent = new DefaultTagHelperContent();
-                return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-
-        var tagHelper = new TextAreaTagHelper(modelHelper: modelHelper.Object)
-        {
-            For = new ModelExpression(modelExpression, modelExplorer),
-            Name = "my-name",
-            ViewContext = viewContext
-        };
-
-        // Act
-        await tagHelper.ProcessAsync(context, output);
-
-        // Assert
-        var element = output.RenderToElement();
-        var textarea = element.GetElementsByTagName("textarea")[0];
-        Assert.Equal("Foo value", textarea.InnerHtml);
-    }
-
-    [Fact]
-    public async Task ProcessAsync_WithValue_RendersTextAreaWithValue()
-    {
-        // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-textarea",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "govuk-textarea",
-            attributes: [],
-            getChildContentAsync: (useCachedResult, encoder) =>
-            {
-                var textAreaContext = context.GetContextItem<TextAreaContext>();
-
-                textAreaContext.SetLabel(
-                    isPageHeading: false,
-                    attributes: null,
-                    content: new HtmlString("The label"));
-
-                textAreaContext.SetValue(new HtmlString("Value"));
-
-                var tagHelperContent = new DefaultTagHelperContent();
-                return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-
-        var tagHelper = new TextAreaTagHelper()
-        {
-            Name = "my-name"
-        };
-
-        // Act
-        await tagHelper.ProcessAsync(context, output);
-
-        // Assert
-        var element = output.RenderToElement();
-        var textarea = element.GetElementsByTagName("textarea")[0];
-        Assert.Equal("Value", textarea.InnerHtml);
-    }
-
-    [Fact]
-    public async Task ProcessAsync_WithValueAndFor_RendersTextAreaWithValue()
-    {
-        // Arrange
-        var modelValue = "Foo value";
-        var model = new Model()
-        {
-            Foo = modelValue
-        };
-
-        var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), model)
-            .GetExplorerForProperty(nameof(Model.Foo));
-        var viewContext = new ViewContext();
-        var modelExpression = nameof(Model.Foo);
-
-        var modelHelper = new Mock<IModelHelper>();
-        modelHelper.Setup(mock => mock.GetModelValue(viewContext, modelExplorer, modelExpression)).Returns(modelValue);
-
-        var context = new TagHelperContext(
-            tagName: "govuk-textarea",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
-        var output = new TagHelperOutput(
-            "govuk-textarea",
-            attributes: [],
-            getChildContentAsync: (useCachedResult, encoder) =>
-            {
-                var textAreaContext = context.GetContextItem<TextAreaContext>();
-
-                textAreaContext.SetLabel(
-                    isPageHeading: false,
-                    attributes: null,
-                    content: new HtmlString("The label"));
-
-                textAreaContext.SetValue(new HtmlString("Value"));
-
-                var tagHelperContent = new DefaultTagHelperContent();
-                return Task.FromResult<TagHelperContent>(tagHelperContent);
-            });
-
-        var tagHelper = new TextAreaTagHelper(modelHelper: modelHelper.Object)
-        {
-            For = new ModelExpression(modelExpression, modelExplorer),
-            Name = "my-name",
-            ViewContext = viewContext
-        };
-
-        // Act
-        await tagHelper.ProcessAsync(context, output);
-
-        // Assert
-        var element = output.RenderToElement();
-        var textarea = element.GetElementsByTagName("textarea")[0];
-        Assert.Equal("Value", textarea.InnerHtml);
+        Assert.NotNull(actualOptions);
+        Assert.NotNull(actualOptions.ErrorMessage);
+        Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);
+        Assert.Equal(errorDataFooAttribute, actualOptions.ErrorMessage.Attributes?["data-foo"]);
     }
 
     private class Model

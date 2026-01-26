@@ -301,12 +301,12 @@ public class CharacterCountTagHelper : TagHelper
             attributes.Add("autocomplete", AutoComplete!);
         }
 
-        if (Disabled == true)
+        if (Disabled is true)
         {
             attributes.AddBoolean("disabled");
         }
 
-        if (ReadOnly == true)
+        if (ReadOnly is true)
         {
             attributes.AddBoolean("readonly");
         }

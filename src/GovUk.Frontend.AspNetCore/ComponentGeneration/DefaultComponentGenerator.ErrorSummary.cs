@@ -28,7 +28,7 @@ internal partial class DefaultComponentGenerator
         var bodyTag = new HtmlTag("div", attrs => attrs
             .WithClasses("govuk-error-summary__body"));
 
-        if (options.DescriptionHtml?.IsEmpty() == false || options.DescriptionText?.IsEmpty() == false)
+        if (!options.DescriptionHtml.IsEmpty() || !options.DescriptionText.IsEmpty())
         {
             var descriptionContent = HtmlOrText(options.DescriptionHtml, options.DescriptionText);
             var descriptionTag = new HtmlTag("p", attrs => attrs
@@ -54,7 +54,7 @@ internal partial class DefaultComponentGenerator
 
                 var itemContent = HtmlOrText(item.Html, item.Text);
 
-                if (item.Href?.IsEmpty() is false)
+                if (!item.Href.IsEmpty())
                 {
                     var linkTag = new HtmlTag("a", attrs => attrs
                         .With("href", item.Href)

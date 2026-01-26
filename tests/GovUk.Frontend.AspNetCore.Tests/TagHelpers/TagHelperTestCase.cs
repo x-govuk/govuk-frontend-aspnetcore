@@ -198,7 +198,7 @@ public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCase
             }
             else
             {
-                return testCase.SkipExceptions?.Contains(ex.GetType()) == true
+                return testCase.SkipExceptions?.Contains(ex.GetType()) is true
                     ? XunitRunnerHelper.SkipTestCases(
                         messageBus,
                         cancellationTokenSource,

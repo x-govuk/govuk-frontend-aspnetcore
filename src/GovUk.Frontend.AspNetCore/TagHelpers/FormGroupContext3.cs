@@ -162,7 +162,7 @@ internal abstract class FormGroupContext3
 
     protected ErrorMessageOptions? CreateErrorMessageOptions(TemplateString? html)
     {
-        if (html?.IsEmpty() is not false)
+        if (html.IsEmpty())
         {
             return null;
         }

@@ -300,11 +300,11 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
 
         var classes = await input.GetClassListAsync();
 
-        if (expectError == true)
+        if (expectError is true)
         {
             Assert.Contains("govuk-input--error", classes);
         }
-        else if (expectError == false)
+        else if (expectError is false)
         {
             Assert.DoesNotContain("govuk-input--error", classes);
         }

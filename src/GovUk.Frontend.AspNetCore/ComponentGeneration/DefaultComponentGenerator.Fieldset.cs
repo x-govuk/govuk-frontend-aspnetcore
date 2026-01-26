@@ -22,7 +22,7 @@ internal partial class DefaultComponentGenerator
                 .WithClasses("govuk-fieldset__legend", options.Legend.Classes)
                 .With(options.Legend.Attributes));
 
-            if (options.Legend.IsPageHeading == true)
+            if (options.Legend.IsPageHeading is true)
             {
                 var h1 = new HtmlTag("h1", attrs => attrs
                     .WithClasses("govuk-fieldset__heading"))

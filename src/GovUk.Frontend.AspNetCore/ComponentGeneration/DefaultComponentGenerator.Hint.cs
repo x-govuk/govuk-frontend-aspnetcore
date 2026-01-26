@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateHintAsync(HintOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateHintAsync(HintOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

@@ -6,10 +6,10 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator : IComponentGenerator
 {
-    protected Task<GovUkComponent> EmptyComponentTask { get; } = Task.FromResult<GovUkComponent>(EmptyComponent.Instance);
+    protected ValueTask<GovUkComponent> EmptyComponentTask { get; } = ValueTask.FromResult<GovUkComponent>(EmptyComponent.Instance);
 
-    private Task<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
-        Task.FromResult<GovUkComponent>(new HtmlTagGovUkComponent(tag));
+    private ValueTask<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
+        ValueTask.FromResult<GovUkComponent>(new HtmlTagGovUkComponent(tag));
 
     private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
     {

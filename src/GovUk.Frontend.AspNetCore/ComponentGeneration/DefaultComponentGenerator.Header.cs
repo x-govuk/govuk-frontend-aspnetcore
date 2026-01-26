@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateHeaderAsync(HeaderOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateHeaderAsync(HeaderOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

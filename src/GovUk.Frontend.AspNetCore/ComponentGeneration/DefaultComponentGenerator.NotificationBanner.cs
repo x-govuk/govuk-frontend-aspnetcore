@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateNotificationBannerAsync(NotificationBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

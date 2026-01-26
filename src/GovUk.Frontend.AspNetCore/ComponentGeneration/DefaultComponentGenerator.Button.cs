@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateButtonAsync(ButtonOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateButtonAsync(ButtonOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

@@ -5,7 +5,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateFooterAsync(FooterOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateFooterAsync(FooterOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

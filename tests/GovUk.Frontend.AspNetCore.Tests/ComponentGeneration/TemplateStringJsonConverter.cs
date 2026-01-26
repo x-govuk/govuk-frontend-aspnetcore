@@ -8,15 +8,11 @@ public class TemplateStringJsonConverter : JsonConverter<TemplateString>
 {
     public override TemplateString? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return reader.TokenType switch
-        {
-            JsonTokenType.Null => null,
-            JsonTokenType.String => new TemplateString(reader.GetString()),
-            JsonTokenType.Number => new TemplateString(reader.GetDecimal().ToString(System.Globalization.CultureInfo.InvariantCulture)),
-            JsonTokenType.True => new TemplateString("true"),
-            JsonTokenType.False => new TemplateString("false"),
-            _ => throw new NotSupportedException($"Cannot create a {nameof(TemplateString)} from a {reader.TokenType}.")
-        };
+        return reader.TokenType == JsonTokenType.Null
+            ? null
+            : reader.TokenType is JsonTokenType.Number or JsonTokenType.String or JsonTokenType.False or JsonTokenType.True
+            ? new TemplateString(JsonSerializer.Deserialize(ref reader, typeof(string), options) as string)
+            : throw new NotSupportedException($"Cannot create a {nameof(TemplateString)} from a {reader.TokenType}.");
     }
 
     public override void Write(Utf8JsonWriter writer, TemplateString value, JsonSerializerOptions options)

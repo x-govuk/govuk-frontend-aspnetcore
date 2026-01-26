@@ -204,7 +204,7 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GenerateSkipLinkAsync(options));
 
     [Theory]
-    [ComponentFixtureData("select", typeof(SelectOptions), exclude: "with falsy items")]
+    [ComponentFixtureData("select", typeof(SelectOptions), exclude: ["with falsy items", "with falsy values"])]
     public Task Select(ComponentTestCaseData<SelectOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,

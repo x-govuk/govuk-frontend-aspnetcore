@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
@@ -18,7 +19,7 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, null, new HtmlString("Error")));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new HtmlString("Error"), SelectTagHelper.ErrorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -37,7 +38,7 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(null, new HtmlString("Error")));
+        var ex = Record.Exception(() => context.SetHint([], new HtmlString("Error"), SelectTagHelper.HintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -56,7 +57,7 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, null, new HtmlString("Error")));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new HtmlString("Error"), SelectTagHelper.LabelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

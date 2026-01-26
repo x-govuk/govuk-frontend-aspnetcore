@@ -100,8 +100,8 @@ public class SelectItemTagHelper : TagHelper
         {
             Attributes = output.Attributes.ToAttributeDictionary(),
             Content = content.Snapshot(),
-            Disabled = Disabled ?? ComponentGenerator.SelectItemDefaultDisabled,
-            Selected = resolvedSelected ?? ComponentGenerator.SelectItemDefaultSelected,
+            Disabled = Disabled ?? false,
+            Selected = resolvedSelected ?? false,
             Value = Value
         });
 

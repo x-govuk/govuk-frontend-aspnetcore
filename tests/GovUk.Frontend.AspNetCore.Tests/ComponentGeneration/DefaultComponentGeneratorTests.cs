@@ -204,6 +204,13 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GenerateSkipLinkAsync(options));
 
     [Theory]
+    [ComponentFixtureData("select", typeof(SelectOptions), exclude: "with falsy items")]
+    public Task Select(ComponentTestCaseData<SelectOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateSelectInputAsync(options));
+
+    [Theory]
     [ComponentFixtureData("summary-list", typeof(SummaryListOptions), exclude: "with falsy values")]
     public Task SummaryList(ComponentTestCaseData<SummaryListOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(

@@ -278,7 +278,7 @@ public class TextAreaTagHelper : TagHelper
 
     private TemplateString? ResolveValue(TextAreaContext textAreaContext)
     {
-        if (textAreaContext?.Value is TemplateString contextValue)
+        if (textAreaContext.Value is TemplateString contextValue)
         {
             return contextValue;
         }

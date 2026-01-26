@@ -10,7 +10,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(RadiosTagHelper.HintTagName, ParentTag = RadiosTagHelper.TagName)]
 [HtmlTargetElement(RadiosTagHelper.HintTagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 [HtmlTargetElement(SelectTagHelper.HintTagName, ParentTag = SelectTagHelper.TagName)]
-[HtmlTargetElement(TextAreaHintTagHelper.TagName, ParentTag = TextAreaTagHelper.TagName)]
 public class FormGroupHintTagHelper : TagHelper
 {
     /// <summary>

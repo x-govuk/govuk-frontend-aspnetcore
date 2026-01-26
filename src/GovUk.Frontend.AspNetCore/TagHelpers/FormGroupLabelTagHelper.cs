@@ -7,7 +7,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the label in a GDS form group component.
 /// </summary>
 [HtmlTargetElement(SelectTagHelper.LabelTagName, ParentTag = SelectTagHelper.TagName)]
-[HtmlTargetElement(TextAreaLabelTagHelper.TagName, ParentTag = TextAreaTagHelper.TagName)]
 public class FormGroupLabelTagHelper : TagHelper
 {
     private const string IsPageHeadingAttributeName = "is-page-heading";

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+Fix error summary when items are specified with an explicit `href` attribute.
+
 ## 3.5.0
 
 Targets GOV.UK Frontend v5.14.0.

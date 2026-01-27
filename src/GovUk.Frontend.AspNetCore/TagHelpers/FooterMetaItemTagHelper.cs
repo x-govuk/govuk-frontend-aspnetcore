@@ -35,8 +35,8 @@ public class FooterMetaItemTagHelper : TagHelper
         }
 
         var attributes = new AttributeCollection(output.Attributes);
-        var href = output.GetUrlAttribute("href");
         attributes.Remove("href", out _);
+        var href = output.GetUrlAttribute("href");
 
         metaItemsContext.Items.Add(new FooterOptionsMetaItem()
         {

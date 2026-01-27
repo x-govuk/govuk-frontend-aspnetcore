@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### New features
+
+Adds support for the password tag helper's show/hide customisation.
+
 ### Fixes
 
 Fix error summary when items are specified with an explicit `href` attribute.

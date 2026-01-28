@@ -434,7 +434,7 @@ public class CheckboxesTagHelper : TagHelper
             return null;
         }
 
-        var modelExpression = For!;
+        var modelExpression = For;
         object model = modelExpression.Model;
 
         if (modelExpression.Metadata.IsEnumerableType)

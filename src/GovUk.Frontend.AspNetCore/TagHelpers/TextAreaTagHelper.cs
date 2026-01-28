@@ -231,7 +231,7 @@ public class TextAreaTagHelper : TagHelper
         var attributes = new AttributeCollection(TextAreaAttributes);
         attributes.Remove("class", out var classes);
 
-        if (ReadOnly == true)
+        if (ReadOnly is true)
         {
             attributes.AddBoolean("readonly");
         }

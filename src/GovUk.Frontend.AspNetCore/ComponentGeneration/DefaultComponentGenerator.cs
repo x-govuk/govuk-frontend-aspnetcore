@@ -13,12 +13,12 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
     {
-        if (html?.IsEmpty() is false)
+        if (!html.IsEmpty())
         {
             return html.GetRawHtml();
         }
 
-        if (text?.IsEmpty() is false)
+        if (!text.IsEmpty())
         {
             return text;
         }

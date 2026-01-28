@@ -202,7 +202,7 @@ internal partial class DefaultComponentGenerator
                         .With("href", item.Href)
                         .With("aria-label", ariaLabel);
 
-                    if (item.Current == true)
+                    if (item.Current is true)
                     {
                         attrs.With("aria-current", "page");
                     }

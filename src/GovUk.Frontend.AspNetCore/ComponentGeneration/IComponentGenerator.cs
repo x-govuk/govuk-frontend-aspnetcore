@@ -159,7 +159,7 @@ public interface IComponentGenerator
     /// Generates a select component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>
-    Task<GovUkComponent> GenerateSelectAsync(SelectOptions options);
+    Task<GovUkComponent> GenerateSelectInputAsync(SelectOptions options);
 
     /// <summary>
     /// Generates a service navigation component.

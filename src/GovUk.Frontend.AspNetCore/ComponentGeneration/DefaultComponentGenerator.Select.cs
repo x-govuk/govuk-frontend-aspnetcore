@@ -2,44 +2,41 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateSelectAsync(SelectOptions options)
+    public virtual async Task<GovUkComponent> GenerateSelectInputAsync(SelectOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var id = options.Id.ToTemplateString() ?? options.Name.ToTemplateString();
-        var classNames = new TemplateString("govuk-select").AppendCssClasses(options.Classes.ToTemplateString());
+        var id = options.Id ?? options.Name;
+        var classNames = new TemplateString("govuk-select").AppendCssClasses(options.Classes);
         if (options.ErrorMessage is not null)
         {
             classNames = classNames.AppendCssClasses("govuk-select--error");
         }
 
         var describedByParts = new List<TemplateString>();
-        if (options.DescribedBy.ToTemplateString() is var describedBy && !describedBy.IsEmpty())
+        if (options.DescribedBy is var describedBy && !describedBy.IsEmpty())
         {
             describedByParts.Add(describedBy);
         }
 
-        var hasBeforeInput = !string.IsNullOrEmpty(options.FormGroup?.BeforeInput?.Html) || !string.IsNullOrEmpty(options.FormGroup?.BeforeInput?.Text);
-        var hasAfterInput = !string.IsNullOrEmpty(options.FormGroup?.AfterInput?.Html) || !string.IsNullOrEmpty(options.FormGroup?.AfterInput?.Text);
+        var hasBeforeInput = !(options.FormGroup?.BeforeInput?.Html).IsEmpty() || !(options.FormGroup?.BeforeInput?.Text).IsEmpty();
+        var hasAfterInput = !(options.FormGroup?.AfterInput?.Html).IsEmpty() || !(options.FormGroup?.AfterInput?.Text).IsEmpty();
 
         var formGroupDiv = new HtmlTag("div", attrs => attrs
-            .WithClasses("govuk-form-group", options.ErrorMessage is not null ? "govuk-form-group--error" : null, options.FormGroup?.Classes.ToTemplateString())
+            .WithClasses("govuk-form-group", options.ErrorMessage is not null ? "govuk-form-group--error" : null, options.FormGroup?.Classes)
             .With(options.FormGroup?.Attributes));
 
-        if (options.Label is not null)
+        var labelComponent = await GenerateLabelAsync(new LabelOptions
         {
-            var labelComponent = await GenerateLabelAsync(new LabelOptions
-            {
-                Html = options.Label.Html,
-                Text = options.Label.Text,
-                Classes = options.Label.Classes,
-                IsPageHeading = options.Label.IsPageHeading,
-                Attributes = options.Label.Attributes,
-                For = id
-            });
+            Html = options.Label?.Html,
+            Text = options.Label?.Text,
+            Classes = options.Label?.Classes,
+            IsPageHeading = options.Label?.IsPageHeading,
+            Attributes = options.Label?.Attributes,
+            For = id
+        });
 
-            formGroupDiv.InnerHtml.AppendHtml(labelComponent.GetContent());
-        }
+        formGroupDiv.InnerHtml.AppendHtml(labelComponent.GetContent());
 
         if (options.Hint is not null)
         {
@@ -85,20 +82,56 @@ internal partial class DefaultComponentGenerator
                 .With(options.Attributes));
 
             // Always add name attribute, even if empty
-            select.Attributes.Set("name", options.Name.ToTemplateString() ?? TemplateString.Empty);
+            select.Attributes.Set("name", options.Name ?? TemplateString.Empty);
 
             if (options.Items is not null)
             {
                 foreach (var item in options.Items)
                 {
+                    if (item is null)
+                    {
+                        continue;
+                    }
+
+                    // Determine if this item should be selected
+                    // If item.Selected is explicitly false, never select it
+                    // Otherwise, select if item.Selected is true, or if the item's value/text matches the select's value
+                    var selected = false;
+
+                    if (item.Selected is not false)
+                    {
+                        if (item.Selected is true)
+                        {
+                            selected = true;
+                        }
+                        else if (!options.Value.IsEmpty())
+                        {
+                            var compareWith = item.Value ?? item.Text;
+                            if (compareWith is not null && !compareWith.IsEmpty() && options.Value.ToHtmlString() == compareWith.ToHtmlString())
+                            {
+                                selected = true;
+                            }
+                        }
+                    }
+
                     var option = new HtmlTag("option", attrs => attrs
-                        .With("value", item.Value.ToTemplateString())
-                        .WithBoolean("selected", item.Selected is true)
                         .WithBoolean("disabled", item.Disabled is true)
                         .With(item.Attributes));
 
-                    var content = item.Text ?? string.Empty;
-                    option.InnerHtml.AppendHtml(content);
+                    if (item.Value is not null)
+                    {
+                        option.Attributes.Set("value", item.Value);
+                    }
+
+                    if (selected)
+                    {
+                        option.Attributes.AddBoolean("selected");
+                    }
+
+                    if (item.Text is not null && !item.Text.IsEmpty())
+                    {
+                        option.InnerHtml.AppendHtml(item.Text);
+                    }
 
                     select.InnerHtml.AppendHtml(option);
                 }

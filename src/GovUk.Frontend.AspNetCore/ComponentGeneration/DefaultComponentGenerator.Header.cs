@@ -21,7 +21,7 @@ internal partial class DefaultComponentGenerator
         var logoDiv = CreateLogoSection();
         containerTag.InnerHtml.AppendHtml(logoDiv);
 
-        if (options.ServiceName?.IsEmpty() == false || (options.Navigation?.Count ?? 0) > 0)
+        if (!options.ServiceName.IsEmpty() || (options.Navigation?.Count ?? 0) > 0)
         {
             var contentDiv = CreateContentSection();
             containerTag.InnerHtml.AppendHtml(contentDiv);
@@ -47,7 +47,7 @@ internal partial class DefaultComponentGenerator
                 Rebrand = rebrand
             }));
 
-            if (options.ProductName?.IsEmpty() == false)
+            if (!options.ProductName.IsEmpty())
             {
                 var productNameSpan = new HtmlTag("span", attrs => attrs
                     .WithClasses("govuk-header__product-name"));
@@ -63,9 +63,9 @@ internal partial class DefaultComponentGenerator
         {
             var contentDiv = new HtmlTag("div", attrs => attrs.WithClasses("govuk-header__content"));
 
-            if (options.ServiceName?.IsEmpty() == false)
+            if (!options.ServiceName.IsEmpty())
             {
-                if (options.ServiceUrl?.IsEmpty() == false)
+                if (!options.ServiceUrl.IsEmpty())
                 {
                     var serviceLink = new HtmlTag("a", attrs => attrs
                         .With("href", options.ServiceUrl)
@@ -108,8 +108,7 @@ internal partial class DefaultComponentGenerator
                     .With("aria-controls", "navigation")
                     .WithBoolean("hidden");
 
-                if (options.MenuButtonLabel?.IsEmpty() is false &&
-                    options.MenuButtonLabel?.ToString() != menuButtonText)
+                if (!options.MenuButtonLabel.IsEmpty() && options.MenuButtonLabel != menuButtonText)
                 {
                     attrs.With("aria-label", options.MenuButtonLabel);
                 }
@@ -130,7 +129,7 @@ internal partial class DefaultComponentGenerator
                         continue;
                     }
 
-                    if (item.Text?.IsEmpty() == false || item.Html?.IsEmpty() == false)
+                    if (!item.Text.IsEmpty() || !item.Html.IsEmpty())
                     {
                         var liTag = CreateNavigationItem(item);
                         ulTag.InnerHtml.AppendHtml(liTag);

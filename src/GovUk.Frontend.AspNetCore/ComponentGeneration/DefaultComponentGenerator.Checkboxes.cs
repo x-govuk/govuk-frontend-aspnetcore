@@ -178,7 +178,7 @@ internal partial class DefaultComponentGenerator
                 .With("type", "checkbox")
                 .With("value", item.Value)
                 .WithBoolean("checked", isChecked)
-                .WithBoolean("disabled", item.Disabled == true)
+                .WithBoolean("disabled", item.Disabled is true)
                 .With("data-aria-controls", hasConditional ? conditionalId : null)
                 .With("data-behaviour", item.Behaviour)
                 .With("aria-describedby", itemDescribedByParts.Count > 0 ? TemplateString.Join(" ", itemDescribedByParts) : null)
@@ -245,7 +245,7 @@ internal partial class DefaultComponentGenerator
 
             // Otherwise, check if the value is in the values list
             var itemValueString = item.Value?.ToHtmlString() ?? string.Empty;
-            return values?.Contains(itemValueString) == true;
+            return values?.Contains(itemValueString) is true;
         }
     }
 }

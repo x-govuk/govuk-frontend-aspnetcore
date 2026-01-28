@@ -326,7 +326,7 @@ public class DateInputTagHelper : TagHelper
             //   if AspFor is specified use value from ModelState;
             //   otherwise empty.
 
-            var itemValue = contextItem?.ValueSpecified == true ? contextItem.Value ?? string.Empty :
+            var itemValue = contextItem?.ValueSpecified is true ? contextItem.Value ?? string.Empty :
                 _valueSpecified ? getComponentFromValue(value) :
                 For is not null ? GetValueFromModelState() :
                 null;
@@ -340,12 +340,12 @@ public class DateInputTagHelper : TagHelper
                 itemClasses = itemClasses.AppendCssClasses("govuk-input--error");
             }
 
-            if (Disabled == true)
+            if (Disabled is true)
             {
                 resolvedAttributes.AddBoolean("disabled");
             }
 
-            if (ReadOnly == true)
+            if (ReadOnly is true)
             {
                 resolvedAttributes.AddBoolean("readonly");
             }
@@ -400,7 +400,7 @@ public class DateInputTagHelper : TagHelper
             return ItemTypes.Value;
         }
 
-        if (For?.Metadata.TryGetDateInputModelMetadata(out var dateInputModelMetadata) == true &&
+        if (For?.Metadata.TryGetDateInputModelMetadata(out var dateInputModelMetadata) is true &&
             dateInputModelMetadata.ItemTypes is DateInputItemTypes metadataTypes)
         {
             return metadataTypes;

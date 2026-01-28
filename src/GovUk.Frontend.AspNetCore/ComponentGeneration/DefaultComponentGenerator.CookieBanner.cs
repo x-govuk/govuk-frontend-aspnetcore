@@ -15,7 +15,7 @@ internal partial class DefaultComponentGenerator
                 .WithBoolean("data-nosnippet")
                 .With("role", "region")
                 .With("aria-label", options.AriaLabel ?? "Cookie banner")
-                .WithBoolean("hidden", options.Hidden == true)
+                .WithBoolean("hidden", options.Hidden is true)
                 .With(options.Attributes);
         });
 
@@ -44,7 +44,7 @@ internal partial class DefaultComponentGenerator
             var gridRowTag = new HtmlTag("div", attrs => attrs.WithClasses("govuk-grid-row"));
             var gridColumnTag = new HtmlTag("div", attrs => attrs.WithClasses("govuk-grid-column-two-thirds"));
 
-            if (message.HeadingHtml?.IsEmpty() == false || message.HeadingText?.IsEmpty() == false)
+            if (!message.HeadingHtml.IsEmpty() || !message.HeadingText.IsEmpty())
             {
                 var headingTag = new HtmlTag("h2", attrs =>
                 {
@@ -64,11 +64,11 @@ internal partial class DefaultComponentGenerator
                     .With(message.ContentAttributes);
             });
 
-            if (message.Html?.IsEmpty() == false || message.Text?.IsEmpty() == false)
+            if (!message.Html.IsEmpty() || !message.Text.IsEmpty())
             {
                 var content = HtmlOrText(message.Html, message.Text);
 
-                if (message.Html?.IsEmpty() is not false && message.Text?.IsEmpty() is false)
+                if (message.Html.IsEmpty() && !message.Text.IsEmpty())
                 {
                     var textParagraphTag = new HtmlTag("p", attrs => attrs.WithClasses("govuk-body"));
                     textParagraphTag.InnerHtml.AppendHtml(content);

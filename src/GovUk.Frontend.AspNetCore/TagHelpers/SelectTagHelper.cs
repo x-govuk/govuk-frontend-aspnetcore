@@ -181,18 +181,18 @@ public class SelectTagHelper : TagHelper
 
         var items = selectContext.Items.Select(item => new SelectOptionsItem
         {
-            Value = item.Value != null ? new HtmlString(item.Value) : null,
-            Text = item.Content?.ToHtmlString(),
+            Value = item.Value,
+            Text = item.Content?.ToTemplateString(),
             Selected = item.Selected,
             Disabled = item.Disabled,
             Attributes = item.Attributes != null ? new AttributeCollection(item.Attributes) : null
         }).ToList();
 
-        var component = await _componentGenerator.GenerateSelectAsync(new SelectOptions
+        var component = await _componentGenerator.GenerateSelectInputAsync(new SelectOptions
         {
-            Id = new HtmlString(id),
-            Name = new HtmlString(name),
-            DescribedBy = DescribedBy != null ? new HtmlString(DescribedBy) : null,
+            Id = id,
+            Name = name,
+            DescribedBy = DescribedBy,
             Label = labelOptions,
             Hint = hintOptions,
             ErrorMessage = errorMessageOptions,

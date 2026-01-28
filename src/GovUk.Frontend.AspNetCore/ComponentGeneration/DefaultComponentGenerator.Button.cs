@@ -69,7 +69,7 @@ internal partial class DefaultComponentGenerator
         {
             attrs.With("name", options.Name);
 
-            if (options.Disabled == true)
+            if (options.Disabled is true)
             {
                 attrs
                     .WithBoolean("disabled")
@@ -95,7 +95,7 @@ internal partial class DefaultComponentGenerator
         {
             tag.InnerHtml.AppendHtml(HtmlOrText(options.Html, options.Text));
 
-            if (options.IsStartButton == true)
+            if (options.IsStartButton is true)
             {
                 tag.InnerHtml.AppendHtml(CreateStartIcon());
             }

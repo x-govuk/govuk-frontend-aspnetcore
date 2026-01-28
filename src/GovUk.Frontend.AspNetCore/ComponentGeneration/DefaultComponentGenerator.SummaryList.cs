@@ -22,7 +22,7 @@ internal partial class DefaultComponentGenerator
 
                 spanTag.InnerHtml.Append(" ");
 
-                if (action.VisuallyHiddenText?.IsEmpty() == false)
+                if (!action.VisuallyHiddenText.IsEmpty())
                 {
                     spanTag.InnerHtml.AppendHtml(action.VisuallyHiddenText);
                 }
@@ -49,7 +49,7 @@ internal partial class DefaultComponentGenerator
 
             aTag.InnerHtml.AppendHtml(HtmlOrText(action.Html, action.Text));
 
-            if (action.VisuallyHiddenText?.IsEmpty() == false || cardTitle is not null)
+            if (!action.VisuallyHiddenText.IsEmpty() || cardTitle is not null)
             {
                 var spanTag = new HtmlTag("span", attrs => attrs
                     .WithClasses("govuk-visually-hidden"));

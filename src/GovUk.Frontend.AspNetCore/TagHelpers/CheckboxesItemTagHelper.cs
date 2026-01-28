@@ -185,7 +185,7 @@ public class CheckboxesItemTagHelper : TagHelper
                     model;
 
                 var values = (value as IEnumerable)?.Cast<object>();
-                return values?.Any(v => v?.ToString() == Value) == true;
+                return values?.Any(v => v?.ToString() == Value) is true;
             }
 
             return model?.ToString() == Value;

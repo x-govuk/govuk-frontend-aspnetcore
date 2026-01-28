@@ -41,7 +41,7 @@ internal partial class ComponentGenerator
             legend.MergeOptionalAttributes(legendAttributes);
             legend.MergeCssClass("govuk-fieldset__legend");
 
-            if (legendIsPageHeading == true)
+            if (legendIsPageHeading is true)
             {
                 var h1 = new TagBuilder("h1");
                 h1.MergeCssClass("govuk-fieldset__heading");

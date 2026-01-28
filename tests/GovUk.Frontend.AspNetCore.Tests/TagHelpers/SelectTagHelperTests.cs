@@ -66,7 +66,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         SelectOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateSelectAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
+        componentGeneratorMock.Setup(mock => mock.GenerateSelectInputAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
 
         var tagHelper = new SelectTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
@@ -170,7 +170,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         SelectOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateSelectAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
+        componentGeneratorMock.Setup(mock => mock.GenerateSelectInputAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
 
         var tagHelper = new SelectTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
@@ -271,7 +271,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         SelectOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateSelectAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
+        componentGeneratorMock.Setup(mock => mock.GenerateSelectInputAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
 
         var tagHelper = new SelectTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {

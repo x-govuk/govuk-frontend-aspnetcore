@@ -59,7 +59,7 @@ public class RazorSnippetProvider
 
     public async Task<RazorSnippet> CreateSnippetAsync(string path, string screenshotName)
     {
-        if (screenshotName == null)
+        if (screenshotName is null)
         {
             throw new ArgumentNullException(nameof(screenshotName));
         }

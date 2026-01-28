@@ -304,7 +304,7 @@ public class PasswordInputTagHelper : TagHelper
         var attributes = new AttributeCollection(InputAttributes);
         attributes.Remove("class", out var classes);
 
-        if (ReadOnly == true)
+        if (ReadOnly is true)
         {
             attributes.AddBoolean("readonly");
         }

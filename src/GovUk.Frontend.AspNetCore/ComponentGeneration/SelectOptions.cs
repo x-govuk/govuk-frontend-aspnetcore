@@ -27,8 +27,6 @@ public record SelectOptionsBeforeInput
 {
     public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
 }
 
 public record SelectOptionsAfterInput

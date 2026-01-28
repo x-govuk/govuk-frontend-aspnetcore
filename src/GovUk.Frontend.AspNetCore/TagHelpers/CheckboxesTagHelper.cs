@@ -179,8 +179,8 @@ public class CheckboxesTagHelper : TagHelper
 
         var component = await _componentGenerator.GenerateCheckboxesAsync(new CheckboxesOptions
         {
-            IdPrefix = idPrefix,
-            Name = name,
+            IdPrefix = new TemplateString(idPrefix),
+            Name = name is not null ? new TemplateString(name) : null,
             DescribedBy = DescribedBy,
             Fieldset = fieldsetOptions,
             Hint = hintOptions,
@@ -404,13 +404,13 @@ public class CheckboxesTagHelper : TagHelper
 
                 items.Add(new CheckboxesOptionsItem
                 {
-                    Id = checkboxItem.Id,
-                    Name = checkboxItem.Name,
-                    Value = checkboxItem.Value,
+                    Text = null,
+                    Html = checkboxItem.LabelContent is not null ? new TemplateString(checkboxItem.LabelContent.ToHtmlString()) : null,
+                    Id = checkboxItem.Id is not null ? new TemplateString(checkboxItem.Id) : null,
+                    Name = checkboxItem.Name is not null ? new TemplateString(checkboxItem.Name) : null,
+                    Value = checkboxItem.Value is not null ? new TemplateString(checkboxItem.Value) : null,
                     Label = new LabelOptions
                     {
-                        Text = null,
-                        Html = checkboxItem.LabelContent is not null ? new TemplateString(checkboxItem.LabelContent.ToHtmlString()) : null,
                         Classes = labelClasses,
                         Attributes = labelAttributes
                     },

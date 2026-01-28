@@ -56,6 +56,7 @@ public class CheckboxesTagHelperTests
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -126,6 +127,7 @@ public class CheckboxesTagHelperTests
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -186,6 +188,7 @@ public class CheckboxesTagHelperTests
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -242,6 +245,7 @@ public class CheckboxesTagHelperTests
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -299,6 +303,7 @@ public class CheckboxesTagHelperTests
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -371,6 +376,7 @@ public class CheckboxesTagHelperTests
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert

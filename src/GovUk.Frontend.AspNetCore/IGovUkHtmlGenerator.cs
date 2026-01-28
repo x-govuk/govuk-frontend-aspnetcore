@@ -45,13 +45,4 @@ internal interface IGovUkHtmlGenerator
         string name,
         IEnumerable<RadiosItemBase> items,
         AttributeDictionary attributes);
-
-    TagBuilder GenerateSelect(
-        bool haveError,
-        string id,
-        string name,
-        string describedBy,
-        bool disabled,
-        IEnumerable<SelectItem> items,
-        AttributeDictionary attributes);
 }

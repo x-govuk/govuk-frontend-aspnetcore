@@ -1,10 +1,10 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class SelectContext(ModelExpression? aspFor) : FormGroupContext
+internal class SelectContext(ModelExpression? aspFor) : FormGroupContext3
 {
     private readonly List<SelectItem> _items = [];
 
@@ -14,11 +14,11 @@ internal class SelectContext(ModelExpression? aspFor) : FormGroupContext
 
     public IReadOnlyCollection<SelectItem> Items => _items;
 
-    protected override string ErrorMessageTagName => SelectTagHelper.ErrorMessageTagName;
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => [SelectTagHelper.ErrorMessageTagName];
 
-    protected override string HintTagName => SelectTagHelper.HintTagName;
+    protected override IReadOnlyCollection<string> HintTagNames => [SelectTagHelper.HintTagName];
 
-    protected override string LabelTagName => SelectTagHelper.LabelTagName;
+    protected override IReadOnlyCollection<string> LabelTagNames => [SelectTagHelper.LabelTagName];
 
     protected override string RootTagName => SelectTagHelper.TagName;
 
@@ -30,35 +30,43 @@ internal class SelectContext(ModelExpression? aspFor) : FormGroupContext
     }
 
     public override void SetErrorMessage(
-        string? visuallyHiddenText,
-        AttributeDictionary? attributes,
-        IHtmlContent? content)
+        TemplateString? visuallyHiddenText,
+        AttributeCollection attributes,
+        TemplateString? html,
+        string tagName)
     {
         if (_items.Count != 0)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(ErrorMessageTagName, SelectItemTagHelper.TagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, SelectItemTagHelper.TagName);
         }
 
-        base.SetErrorMessage(visuallyHiddenText, attributes, content);
+        base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
     }
 
-    public override void SetHint(AttributeDictionary? attributes, IHtmlContent? content)
+    public override void SetHint(
+        AttributeCollection attributes,
+        TemplateString? html,
+        string tagName)
     {
         if (_items.Count != 0)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(HintTagName, SelectItemTagHelper.TagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, SelectItemTagHelper.TagName);
         }
 
-        base.SetHint(attributes, content);
+        base.SetHint(attributes, html, tagName);
     }
 
-    public override void SetLabel(bool isPageHeading, AttributeDictionary? attributes, IHtmlContent? content)
+    public override void SetLabel(
+        bool? isPageHeading,
+        AttributeCollection attributes,
+        TemplateString? html,
+        string tagName)
     {
         if (_items.Count != 0)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(LabelTagName, SelectItemTagHelper.TagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, SelectItemTagHelper.TagName);
         }
 
-        base.SetLabel(isPageHeading, attributes, content);
+        base.SetLabel(isPageHeading, attributes, html, tagName);
     }
 }

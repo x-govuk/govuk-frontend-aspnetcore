@@ -122,6 +122,9 @@ public class ErrorSummaryItemTagHelper : TagHelper
             itemHtml = validationMessage;
         }
 
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("href", out _);
+
         TemplateString? resolvedHref = null;
 
         if (output.Attributes.ContainsName("href"))
@@ -162,10 +165,8 @@ public class ErrorSummaryItemTagHelper : TagHelper
                     ? CreateIdFromName(
                         ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.DayInputName))
                     : dateInputErrorItems.HasFlag(DateInputItemTypes.Month)
-                        ? CreateIdFromName(
-                                            ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.MonthInputName))
-                        : CreateIdFromName(
-                                            ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.YearInputName));
+                        ? CreateIdFromName(ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.MonthInputName))
+                        : CreateIdFromName(ModelNames.CreatePropertyModelName(errorFieldId, DateInputModelBinder.YearInputName));
             }
 
             resolvedHref = $"#{errorFieldId}";
@@ -175,7 +176,7 @@ public class ErrorSummaryItemTagHelper : TagHelper
             new ErrorSummaryContextItem(
                 resolvedHref,
                 itemHtml,
-                new AttributeCollection(output.Attributes),
+                attributes,
                 new AttributeCollection(LinkAttributes)));
 
         output.SuppressOutput();

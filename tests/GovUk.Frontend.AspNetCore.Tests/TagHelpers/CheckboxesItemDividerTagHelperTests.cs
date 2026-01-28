@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -42,8 +42,8 @@ public class CheckboxesItemDividerTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var divider = Assert.IsType<CheckboxesItemDivider>(item);
-                Assert.Equal("Divider", divider.Content?.ToString());
+                var dividerItem = Assert.IsType<CheckboxesOptionsItem>(item);
+                Assert.Equal("Divider", dividerItem.Divider?.ToHtmlString());
             });
     }
 }

@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 
@@ -12,10 +12,10 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
 
-        var item = new CheckboxesItem()
+        var item = new CheckboxesOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         // Act
@@ -32,10 +32,10 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
 
-        var item = new CheckboxesItem()
+        var item = new CheckboxesOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.OpenFieldset();
@@ -89,10 +89,10 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
 
-        var item = new CheckboxesItem()
+        var item = new CheckboxesOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.AddItem(item);
@@ -155,10 +155,10 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
 
-        var item = new CheckboxesItem()
+        var item = new CheckboxesOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.AddItem(item);
@@ -178,10 +178,10 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
 
-        var item = new CheckboxesItem()
+        var item = new CheckboxesOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.OpenFieldset();
@@ -203,10 +203,10 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
 
-        var item = new CheckboxesItem()
+        var item = new CheckboxesOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.AddItem(item);
@@ -225,10 +225,10 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
 
-        var item = new CheckboxesItem()
+        var item = new CheckboxesOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.OpenFieldset();

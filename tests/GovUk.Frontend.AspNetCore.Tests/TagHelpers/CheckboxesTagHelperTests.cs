@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -26,35 +26,36 @@ public class CheckboxesTagHelperTests
 
                 checkboxesContext.SetHint(attributes: null, content: new HtmlString("The hint"));
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    Html = new TemplateString("First"),
                     Disabled = true,
-                    Id = "first",
-                    Value = "first"
+                    Id = new TemplateString("first"),
+                    Value = new TemplateString("first")
                 });
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
                     Checked = true,
-                    LabelContent = new HtmlString("Second"),
+                    Html = new TemplateString("Second"),
                     Disabled = false,
-                    Id = "second",
-                    Value = "second"
+                    Id = new TemplateString("second"),
+                    Value = new TemplateString("second")
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes"
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -95,29 +96,29 @@ public class CheckboxesTagHelperTests
 
                 checkboxesContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A error"));
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    Html = new TemplateString("First"),
                     Disabled = true,
-                    Id = "first",
-                    Value = "first"
+                    Id = new TemplateString("first"),
+                    Value = new TemplateString("first")
                 });
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
                     Checked = true,
-                    LabelContent = new HtmlString("Second"),
+                    Html = new TemplateString("Second"),
                     Disabled = false,
-                    Id = "second",
-                    Value = "second"
+                    Id = new TemplateString("second"),
+                    Value = new TemplateString("second")
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes",
@@ -125,6 +126,7 @@ public class CheckboxesTagHelperTests
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -163,28 +165,29 @@ public class CheckboxesTagHelperTests
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
-                    LabelContent = new HtmlString("First"),
-                    Hint = new CheckboxesItemHint()
+                    Html = new TemplateString("First"),
+                    Hint = new HintOptions()
                     {
-                        Content = new HtmlString("First item hint")
+                        Html = new TemplateString("First item hint")
                     },
-                    Id = "first",
-                    Value = "first"
+                    Id = new TemplateString("first"),
+                    Value = new TemplateString("first")
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes"
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -219,28 +222,29 @@ public class CheckboxesTagHelperTests
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
-                    LabelContent = new HtmlString("First"),
-                    Conditional = new CheckboxesItemConditional()
+                    Html = new TemplateString("First"),
+                    Conditional = new CheckboxesOptionsItemConditional()
                     {
-                        Content = new HtmlString("Item 1 conditional")
+                        Html = new TemplateString("Item 1 conditional")
                     },
-                    Id = "first",
-                    Value = "first"
+                    Id = new TemplateString("first"),
+                    Value = new TemplateString("first")
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes"
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -275,29 +279,30 @@ public class CheckboxesTagHelperTests
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
                     Checked = true,
-                    LabelContent = new HtmlString("First"),
-                    Conditional = new CheckboxesItemConditional()
+                    Html = new TemplateString("First"),
+                    Conditional = new CheckboxesOptionsItemConditional()
                     {
-                        Content = new HtmlString("Item 1 conditional")
+                        Html = new TemplateString("Item 1 conditional")
                     },
-                    Id = "first",
-                    Value = "first"
+                    Id = new TemplateString("first"),
+                    Value = new TemplateString("first")
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes"
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -338,22 +343,22 @@ public class CheckboxesTagHelperTests
 
                 checkboxesContext.SetHint(attributes: null, content: new HtmlString("The hint"));
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    Html = new TemplateString("First"),
                     Disabled = true,
-                    Id = "first",
-                    Value = "first"
+                    Id = new TemplateString("first"),
+                    Value = new TemplateString("first")
                 });
 
-                checkboxesContext.AddItem(new CheckboxesItem()
+                checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
                     Checked = true,
-                    LabelContent = new HtmlString("Second"),
+                    Html = new TemplateString("Second"),
                     Disabled = false,
-                    Id = "second",
-                    Value = "second"
+                    Id = new TemplateString("second"),
+                    Value = new TemplateString("second")
                 });
 
                 checkboxesContext.CloseFieldset(checkboxesFieldsetContext);
@@ -362,7 +367,7 @@ public class CheckboxesTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             DescribedBy = "describedby",
             IdPrefix = "my-id",
@@ -370,6 +375,7 @@ public class CheckboxesTagHelperTests
         };
 
         // Act
+        tagHelper.Init(context);
         await tagHelper.ProcessAsync(context, output);
 
         // Assert

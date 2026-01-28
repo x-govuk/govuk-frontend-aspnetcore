@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -8,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGroupContext
 {
     private bool _fieldsetIsOpen;
-    private readonly List<CheckboxesItemBase> _items = [];
+    private readonly List<CheckboxesOptionsItem> _items = [];
     private (TemplateString Content, string TagName)? _beforeInputs;
     private (TemplateString Content, string TagName)? _afterInputs;
 
@@ -16,7 +15,7 @@ internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGr
 
     public ModelExpression? AspFor { get; } = aspFor;
 
-    public IReadOnlyCollection<CheckboxesItemBase> Items => _items;
+    public IReadOnlyCollection<CheckboxesOptionsItem> Items => _items;
 
     public TemplateString? BeforeInputs => _beforeInputs?.Content;
 
@@ -40,7 +39,7 @@ internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGr
 
     private IReadOnlyCollection<string> AfterInputsTagNames => CheckboxesAfterInputsTagHelper.AllTagNames;
 
-    public void AddItem(CheckboxesItemBase item)
+    public void AddItem(CheckboxesOptionsItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
 

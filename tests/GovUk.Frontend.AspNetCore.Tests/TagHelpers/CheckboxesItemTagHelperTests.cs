@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -51,7 +51,7 @@ public class CheckboxesItemTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var checkboxesItem = Assert.IsType<CheckboxesItem>(item);
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
                 Assert.True(checkboxesItem.Checked);
                 Assert.True(checkboxesItem.Disabled);
                 Assert.Equal("id", checkboxesItem.Id);
@@ -218,7 +218,7 @@ public class CheckboxesItemTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var checkboxesItem = Assert.IsType<CheckboxesItem>(item);
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
                 Assert.Equal(expectedChecked, checkboxesItem.Checked);
             });
     }
@@ -276,7 +276,7 @@ public class CheckboxesItemTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var checkboxesItem = Assert.IsType<CheckboxesItem>(item);
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
                 Assert.Equal(expectedChecked, checkboxesItem.Checked);
             });
     }
@@ -329,7 +329,7 @@ public class CheckboxesItemTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var checkboxesItem = Assert.IsType<CheckboxesItem>(item);
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
                 Assert.False(checkboxesItem.Checked);
             });
     }
@@ -375,8 +375,8 @@ public class CheckboxesItemTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var checkboxesItem = Assert.IsType<CheckboxesItem>(item);
-                Assert.Equal("Hint", checkboxesItem.Hint?.Content?.ToHtmlString());
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
+                Assert.Equal("Hint", checkboxesItem.Hint?.Html?.ToHtmlString());
             });
     }
 
@@ -418,7 +418,7 @@ public class CheckboxesItemTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var checkboxesItem = Assert.IsType<CheckboxesItem>(item);
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
                 Assert.Null(checkboxesItem.Hint);
             });
     }
@@ -464,8 +464,8 @@ public class CheckboxesItemTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var checkboxesItem = Assert.IsType<CheckboxesItem>(item);
-                Assert.Equal("Conditional", checkboxesItem.Conditional?.Content?.ToHtmlString());
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
+                Assert.Equal("Conditional", checkboxesItem.Conditional?.Html?.ToHtmlString());
             });
     }
 
@@ -507,7 +507,7 @@ public class CheckboxesItemTagHelperTests
             checkboxesContext.Items,
             item =>
             {
-                var checkboxesItem = Assert.IsType<CheckboxesItem>(item);
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
                 Assert.Null(checkboxesItem.Conditional);
             });
     }

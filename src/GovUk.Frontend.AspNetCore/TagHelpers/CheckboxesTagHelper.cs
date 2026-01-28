@@ -149,7 +149,7 @@ public class CheckboxesTagHelper : TagHelper
 
         var fieldsetOptions = GetFieldsetOptions(checkboxesContext);
 
-        var items = ConvertItemsToOptions(checkboxesContext);
+        var items = checkboxesContext.Items.ToList();
         var values = GetCheckedValues();
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
@@ -353,78 +353,6 @@ public class CheckboxesTagHelper : TagHelper
             Role = null,
             Attributes = fieldsetAttributes
         };
-    }
-
-    private IReadOnlyCollection<CheckboxesOptionsItem?> ConvertItemsToOptions(CheckboxesContext checkboxesContext)
-    {
-        var items = new List<CheckboxesOptionsItem?>();
-
-        foreach (var item in checkboxesContext.Items)
-        {
-            if (item is HtmlGeneration.CheckboxesItemDivider divider)
-            {
-                items.Add(new CheckboxesOptionsItem
-                {
-                    Divider = divider.Content is not null ? new TemplateString(divider.Content.ToHtmlString()) : null
-                });
-            }
-            else if (item is HtmlGeneration.CheckboxesItem checkboxItem)
-            {
-                var itemAttributes = checkboxItem.Attributes?.ToAttributeCollection() ?? new AttributeCollection();
-
-                var labelAttributes = checkboxItem.LabelAttributes?.ToAttributeCollection() ?? new AttributeCollection();
-                labelAttributes.Remove("class", out var labelClasses);
-
-                var inputAttributes = checkboxItem.InputAttributes?.ToAttributeCollection() ?? new AttributeCollection();
-                inputAttributes.Remove("class", out var inputClasses);
-
-                HintOptions? hintOptions = null;
-                if (checkboxItem.Hint is not null)
-                {
-                    var hintAttributes = checkboxItem.Hint.Attributes?.ToAttributeCollection() ?? new AttributeCollection();
-                    hintAttributes.Remove("class", out var hintClasses);
-
-                    hintOptions = new HintOptions
-                    {
-                        Text = null,
-                        Html = checkboxItem.Hint.Content is not null ? new TemplateString(checkboxItem.Hint.Content.ToHtmlString()) : null,
-                        Classes = hintClasses,
-                        Attributes = hintAttributes
-                    };
-                }
-
-                CheckboxesOptionsItemConditional? conditionalOptions = null;
-                if (checkboxItem.Conditional is not null)
-                {
-                    conditionalOptions = new CheckboxesOptionsItemConditional
-                    {
-                        Html = checkboxItem.Conditional.Content is not null ? new TemplateString(checkboxItem.Conditional.Content.ToHtmlString()) : null
-                    };
-                }
-
-                items.Add(new CheckboxesOptionsItem
-                {
-                    Text = null,
-                    Html = checkboxItem.LabelContent is not null ? new TemplateString(checkboxItem.LabelContent.ToHtmlString()) : null,
-                    Id = checkboxItem.Id is not null ? new TemplateString(checkboxItem.Id) : null,
-                    Name = checkboxItem.Name is not null ? new TemplateString(checkboxItem.Name) : null,
-                    Value = checkboxItem.Value is not null ? new TemplateString(checkboxItem.Value) : null,
-                    Label = new LabelOptions
-                    {
-                        Classes = labelClasses,
-                        Attributes = labelAttributes
-                    },
-                    Hint = hintOptions,
-                    Checked = checkboxItem.Checked,
-                    Conditional = conditionalOptions,
-                    Behaviour = checkboxItem.Behavior == CheckboxesItemBehavior.Exclusive ? "exclusive" : null,
-                    Disabled = checkboxItem.Disabled,
-                    Attributes = itemAttributes.MergeWith(inputAttributes)
-                });
-            }
-        }
-
-        return items;
     }
 
     private IReadOnlyCollection<string>? GetCheckedValues()

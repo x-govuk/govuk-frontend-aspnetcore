@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -140,32 +140,55 @@ public class CheckboxesItemTagHelper : TagHelper
             (checkboxesContext.AspFor is not null ? (bool?)DoesModelMatchItemValue() : null) ??
             false;
 
-        checkboxesContext.AddItem(new CheckboxesItem
+        var itemAttributes = output.Attributes.ToAttributeDictionary().ToAttributeCollection();
+
+        var labelAttributes = LabelAttributes.ToAttributeDictionary().ToAttributeCollection();
+        labelAttributes.Remove("class", out var labelClasses);
+
+        var inputAttributes = InputAttributes.ToAttributeDictionary().ToAttributeCollection();
+
+        HintOptions? hintOptions = null;
+        if (itemContext.Hint is not null)
         {
-            Attributes = output.Attributes.ToAttributeDictionary(),
-            Behavior = Behavior ?? CheckboxesItemBehavior.Default,
+            var hintAttrs = itemContext.Hint.Value.Attributes.ToAttributeCollection();
+            hintAttrs.Remove("class", out var hintClasses);
+
+            hintOptions = new HintOptions
+            {
+                Text = null,
+                Html = itemContext.Hint.Value.Content.ToTemplateString(),
+                Classes = hintClasses,
+                Attributes = hintAttrs
+            };
+        }
+
+        CheckboxesOptionsItemConditional? conditionalOptions = null;
+        if (itemContext.Conditional is not null)
+        {
+            conditionalOptions = new CheckboxesOptionsItemConditional
+            {
+                Html = itemContext.Conditional.Value.Content.ToTemplateString()
+            };
+        }
+
+        checkboxesContext.AddItem(new CheckboxesOptionsItem
+        {
+            Text = null,
+            Html = content.ToTemplateString(),
+            Id = Id is not null ? new TemplateString(Id) : null,
+            Name = Name is not null ? new TemplateString(Name) : null,
+            Value = Value is not null ? new TemplateString(Value) : null,
+            Label = new LabelOptions
+            {
+                Classes = labelClasses,
+                Attributes = labelAttributes
+            },
+            Hint = hintOptions,
             Checked = resolvedChecked,
-            Conditional = itemContext.Conditional is not null ?
-                new CheckboxesItemConditional
-                {
-                    Content = itemContext.Conditional.Value.Content,
-                    Attributes = itemContext.Conditional.Value.Attributes
-                } :
-                null,
+            Conditional = conditionalOptions,
+            Behaviour = Behavior == CheckboxesItemBehavior.Exclusive ? "exclusive" : null,
             Disabled = Disabled ?? false,
-            Hint = itemContext.Hint is not null ?
-                new CheckboxesItemHint
-                {
-                    Content = itemContext.Hint.Value.Content,
-                    Attributes = itemContext.Hint.Value.Attributes
-                } :
-                null,
-            Id = Id,
-            InputAttributes = InputAttributes.ToAttributeDictionary(),
-            LabelAttributes = LabelAttributes.ToAttributeDictionary(),
-            LabelContent = content.Snapshot(),
-            Name = Name,
-            Value = Value
+            Attributes = itemAttributes.MergeWith(inputAttributes)
         });
 
         output.SuppressOutput();

@@ -111,11 +111,20 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
             });
 
         Assert.NotNull(actualOptions.Items);
-        Assert.Equal(2, actualOptions.Items.Count);
-        Assert.Equal("First", actualOptions.Items.First().Text);
-        Assert.Equal("Second", actualOptions.Items.Last().Text);
-        Assert.Equal("second", actualOptions.Items.Last().Value?.ToHtmlString());
-        Assert.True(actualOptions.Items.Last().Selected);
+        Assert.Collection(
+            actualOptions.Items,
+            item =>
+            {
+                Assert.NotNull(item);
+                Assert.Equal("First", item.Text);
+            },
+            item =>
+            {
+                Assert.NotNull(item);
+                Assert.Equal("Second", item.Text);
+                Assert.Equal("second", item.Value?.ToHtmlString());
+                Assert.True(item.Selected);
+            });
     }
 
     [Fact]

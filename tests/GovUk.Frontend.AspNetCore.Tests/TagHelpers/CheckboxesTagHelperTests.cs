@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
@@ -48,7 +49,7 @@ public class CheckboxesTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes"
@@ -117,7 +118,7 @@ public class CheckboxesTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes",
@@ -178,7 +179,7 @@ public class CheckboxesTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes"
@@ -234,7 +235,7 @@ public class CheckboxesTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes"
@@ -291,7 +292,7 @@ public class CheckboxesTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testcheckboxes"
@@ -362,7 +363,7 @@ public class CheckboxesTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(new DefaultComponentGenerator(), new DefaultModelHelper())
         {
             DescribedBy = "describedby",
             IdPrefix = "my-id",

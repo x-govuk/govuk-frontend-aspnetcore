@@ -8,14 +8,6 @@ namespace GovUk.Frontend.AspNetCore;
 
 internal interface IGovUkHtmlGenerator
 {
-    TagBuilder GenerateCheckboxes(
-        string idPrefix,
-        string name,
-        string describedBy,
-        bool hasFieldset,
-        IEnumerable<CheckboxesItemBase> items,
-        AttributeDictionary attributes);
-
     TagBuilder GenerateErrorMessage(
         string visuallyHiddenText,
         IHtmlContent content,

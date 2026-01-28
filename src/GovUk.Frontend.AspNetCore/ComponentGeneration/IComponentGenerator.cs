@@ -168,6 +168,12 @@ public interface IComponentGenerator
     Task<GovUkComponent> GenerateSkipLinkAsync(SkipLinkOptions options);
 
     /// <summary>
+    /// Generates a select component.
+    /// </summary>
+    /// <returns>A <see cref="string"/> with the component's HTML.</returns>
+    Task<GovUkComponent> GenerateSelectInputAsync(SelectOptions options);
+
+    /// <summary>
     /// Generates a summary list component.
     /// </summary>
     /// <returns>A <see cref="string"/> with the component's HTML.</returns>

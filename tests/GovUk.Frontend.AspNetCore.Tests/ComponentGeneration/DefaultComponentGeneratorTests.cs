@@ -105,7 +105,6 @@ public partial class DefaultComponentGeneratorTests
             data,
             (generator, options) => generator.GenerateFileUploadAsync(options));
 
-
     [Theory]
     [ComponentFixtureData(
         "footer",
@@ -185,6 +184,13 @@ public partial class DefaultComponentGeneratorTests
         CheckComponentHtmlMatchesExpectedHtml(
             data,
             (generator, options) => generator.GeneratePhaseBannerAsync(options));
+
+    [Theory]
+    [ComponentFixtureData("select", typeof(SelectOptions), exclude: ["with falsy items", "with falsy values"])]
+    public Task Select(ComponentTestCaseData<SelectOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateSelectInputAsync(options));
 
     [Theory]
     [ComponentFixtureData(

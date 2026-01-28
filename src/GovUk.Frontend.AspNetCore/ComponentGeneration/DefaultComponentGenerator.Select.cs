@@ -84,29 +84,32 @@ internal partial class DefaultComponentGenerator
             // Always add name attribute, even if empty
             select.Attributes.Set("name", options.Name ?? TemplateString.Empty);
 
-            // Add option elements
             if (options.Items is not null)
             {
                 foreach (var item in options.Items)
                 {
+                    if (item is null)
+                    {
+                        continue;
+                    }
+
                     // Determine if this item should be selected
                     // If item.Selected is explicitly false, never select it
                     // Otherwise, select if item.Selected is true, or if the item's value/text matches the select's value
-                    var isSelected = false;
-                    
+                    var selected = false;
+
                     if (item.Selected is not false)
                     {
                         if (item.Selected is true)
                         {
-                            isSelected = true;
+                            selected = true;
                         }
                         else if (!options.Value.IsEmpty())
                         {
-                            // If item has a value, compare with that; otherwise compare with text
                             var compareWith = item.Value ?? item.Text;
                             if (compareWith is not null && !compareWith.IsEmpty() && options.Value.ToHtmlString() == compareWith.ToHtmlString())
                             {
-                                isSelected = true;
+                                selected = true;
                             }
                         }
                     }
@@ -115,16 +118,14 @@ internal partial class DefaultComponentGenerator
                         .WithBoolean("disabled", item.Disabled is true)
                         .With(item.Attributes));
 
-                    // Only set value attribute if item.Value is not null
                     if (item.Value is not null)
                     {
                         option.Attributes.Set("value", item.Value);
                     }
 
-                    // Add selected attribute if selected
-                    if (isSelected)
+                    if (selected)
                     {
-                        option.Attributes.Set("selected", TemplateString.Empty);
+                        option.Attributes.AddBoolean("selected");
                     }
 
                     if (item.Text is not null && !item.Text.IsEmpty())

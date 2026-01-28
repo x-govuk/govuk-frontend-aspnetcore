@@ -105,7 +105,6 @@ public partial class DefaultComponentGeneratorTests
             data,
             (generator, options) => generator.GenerateFileUploadAsync(options));
 
-
     [Theory]
     [ComponentFixtureData(
         "footer",
@@ -187,6 +186,13 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GeneratePhaseBannerAsync(options));
 
     [Theory]
+    [ComponentFixtureData("select", typeof(SelectOptions), exclude: ["with falsy items", "with falsy values"])]
+    public Task Select(ComponentTestCaseData<SelectOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateSelectInputAsync(options));
+
+    [Theory]
     [ComponentFixtureData(
         "service-navigation",
         typeof(ServiceNavigationOptions),
@@ -202,13 +208,6 @@ public partial class DefaultComponentGeneratorTests
         CheckComponentHtmlMatchesExpectedHtml(
             data,
             (generator, options) => generator.GenerateSkipLinkAsync(options));
-
-    [Theory]
-    [ComponentFixtureData("select", typeof(SelectOptions), exclude: ["with falsy items", "with falsy values"])]
-    public Task Select(ComponentTestCaseData<SelectOptions> data) =>
-        CheckComponentHtmlMatchesExpectedHtml(
-            data,
-            (generator, options) => generator.GenerateSelectInputAsync(options));
 
     [Theory]
     [ComponentFixtureData("summary-list", typeof(SummaryListOptions), exclude: "with falsy values")]

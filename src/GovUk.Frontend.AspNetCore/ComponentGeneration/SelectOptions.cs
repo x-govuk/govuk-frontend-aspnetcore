@@ -6,7 +6,7 @@ public record SelectOptions
 {
     public TemplateString? Id { get; set; }
     public TemplateString? Name { get; set; }
-    public IReadOnlyCollection<SelectOptionsItem>? Items { get; set; }
+    public IReadOnlyCollection<SelectOptionsItem?>? Items { get; set; }
     public TemplateString? Value { get; set; }
     public TemplateString? DescribedBy { get; set; }
     public LabelOptions? Label { get; set; }

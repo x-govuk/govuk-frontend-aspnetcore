@@ -1,35 +1,34 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Html;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class RadiosContext(string? name, ModelExpression? aspFor) : FormGroupContext
+internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupContext3
 {
     private bool _fieldsetIsOpen;
-    private readonly List<RadiosItemBase> _items = [];
+    private readonly List<RadiosOptionsItem> _items = [];
 
     public string? Name { get; } = name;
 
-    public ModelExpression? AspFor { get; } = aspFor;
+    public ModelExpression? For { get; } = @for;
 
-    public IReadOnlyCollection<RadiosItemBase> Items => _items;
+    public IReadOnlyCollection<RadiosOptionsItem> Items => _items;
 
-    public FormGroupFieldsetContext? Fieldset { get; private set; }
+    public RadiosFieldsetContext? Fieldset { get; private set; }
 
-    protected override string ErrorMessageTagName => RadiosTagHelper.ErrorMessageTagName;
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } = [RadiosTagHelper.ErrorMessageTagName];
 
     protected string FieldsetTagName => RadiosFieldsetTagHelper.TagName;
 
     protected string ItemTagName => RadiosItemTagHelper.TagName;
 
-    protected override string HintTagName => RadiosTagHelper.HintTagName;
+    protected override IReadOnlyCollection<string> HintTagNames { get; } = [RadiosTagHelper.HintTagName];
 
-    protected override string LabelTagName => throw new NotSupportedException();
+    protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
     protected override string RootTagName => RadiosTagHelper.TagName;
 
-    public void AddItem(RadiosItemBase item)
+    public void AddItem(RadiosOptionsItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
 
@@ -73,42 +72,44 @@ internal class RadiosContext(string? name, ModelExpression? aspFor) : FormGroupC
     }
 
     public override void SetErrorMessage(
-        string? visuallyHiddenText,
-        AttributeDictionary? attributes,
-        IHtmlContent? content)
+        TemplateString? visuallyHiddenText,
+        AttributeCollection attributes,
+        TemplateString? html,
+        string tagName)
     {
         if (Fieldset is not null)
         {
-            throw new InvalidOperationException($"<{ErrorMessageTagName}> must be inside <{FieldsetTagName}>.");
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
         if (Items.Count > 0)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(ErrorMessageTagName, ItemTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, ItemTagName);
         }
 
-        base.SetErrorMessage(visuallyHiddenText, attributes, content);
+        base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
     }
 
-    public override void SetHint(AttributeDictionary? attributes, IHtmlContent? content)
+    public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
     {
         if (Fieldset is not null)
         {
-            throw new InvalidOperationException($"<{HintTagName}> must be inside <{FieldsetTagName}>.");
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
         if (Items.Count > 0)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(HintTagName, ItemTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, ItemTagName);
         }
 
-        base.SetHint(attributes, content);
+        base.SetHint(attributes, html, tagName);
     }
 
     public override void SetLabel(
-        bool isPageHeading,
-        AttributeDictionary? attributes,
-        IHtmlContent? content)
+        bool? isPageHeading,
+        AttributeCollection attributes,
+        TemplateString? html,
+        string tagName)
     {
         throw new NotSupportedException();
     }

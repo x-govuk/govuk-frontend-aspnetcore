@@ -39,12 +39,12 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                     isPageHeading: false,
                     attributes: [],
                     labelContent,
-                    SelectTagHelper.LabelTagName);
+                    SelectLabelTagHelper.TagName);
 
                 selectContext.SetHint(
                     attributes: [],
                     hintContent,
-                    SelectTagHelper.HintTagName);
+                    SelectHintTagHelper.TagName);
 
                 selectContext.AddItem(new SelectItem()
                 {
@@ -155,7 +155,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                     isPageHeading: false,
                     [],
                     new HtmlString(labelHtml),
-                    SelectTagHelper.LabelTagName);
+                    SelectLabelTagHelper.TagName);
 
                 selectContext.SetErrorMessage(
                     visuallyHiddenText: new HtmlString(errorVht),
@@ -164,7 +164,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                         { "data-foo", errorDataFooAttribute }
                     },
                     new HtmlString(errorHtml),
-                    SelectTagHelper.ErrorMessageTagName);
+                    SelectErrorMessageTagHelper.TagName);
 
                 selectContext.AddItem(new SelectItem()
                 {

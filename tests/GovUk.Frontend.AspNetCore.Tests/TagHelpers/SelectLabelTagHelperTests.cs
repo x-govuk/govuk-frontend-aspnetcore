@@ -3,24 +3,24 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FormGroupLabelTagHelperTests
+public class SelectLabelTagHelperTests
 {
     [Fact]
     public async Task ProcessAsync_SetsLabelOnContext()
     {
         // Arrange
-        var formGroupContext = new TestFormGroupContext();
+        var selectContext = new SelectContext(aspFor: null);
 
         var context = new TagHelperContext(
-            tagName: "test-label",
+            tagName: SelectLabelTagHelper.TagName,
             allAttributes: [],
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
-        context.SetScopedContextItem(typeof(FormGroupContext), formGroupContext);
+        context.SetScopedContextItem(typeof(FormGroupContext3), selectContext);
 
         var output = new TagHelperOutput(
-            "test-label",
+            SelectLabelTagHelper.TagName,
             attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
@@ -29,23 +29,13 @@ public class FormGroupLabelTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new FormGroupLabelTagHelper();
+        var tagHelper = new SelectLabelTagHelper();
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Label", formGroupContext.Label?.Content?.ToHtmlString());
-    }
-
-    private class TestFormGroupContext : FormGroupContext
-    {
-        protected override string ErrorMessageTagName => "test-error-message";
-
-        protected override string HintTagName => "test-hint";
-
-        protected override string LabelTagName => "test-label";
-
-        protected override string RootTagName => "test";
+        Assert.NotNull(selectContext.Label);
+        Assert.Equal("Label", selectContext.Label.Html?.ToHtmlString());
     }
 }

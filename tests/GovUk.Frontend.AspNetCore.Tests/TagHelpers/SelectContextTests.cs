@@ -18,7 +18,7 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new HtmlString("Error"), SelectTagHelper.ErrorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new HtmlString("Error"), SelectErrorMessageTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -37,7 +37,7 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], new HtmlString("Error"), SelectTagHelper.HintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new HtmlString("Error"), SelectHintTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -56,7 +56,7 @@ public class SelectContextTests
         });
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], new HtmlString("Error"), SelectTagHelper.LabelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new HtmlString("Error"), SelectLabelTagHelper.TagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

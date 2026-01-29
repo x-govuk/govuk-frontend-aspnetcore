@@ -11,7 +11,7 @@ public class CheckboxesFieldsetTagHelperTests
     public async Task ProcessAsync_AddsFieldsetToContext()
     {
         // Arrange
-        var checkboxesContext = new CheckboxesContext(name: null, aspFor: null);
+        var checkboxesContext = new CheckboxesContext(name: null, @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset",
@@ -48,10 +48,10 @@ public class CheckboxesFieldsetTagHelperTests
     public async Task ProcessAsync_ParentAlreadyHasFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var checkboxesContext = new CheckboxesContext(name: null, aspFor: null);
+        var checkboxesContext = new CheckboxesContext(name: null, @for: null);
 
         checkboxesContext.OpenFieldset();
-        var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
+        var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
         checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString("Existing legend"));
         checkboxesContext.CloseFieldset(checkboxesFieldsetContext);
 

@@ -405,7 +405,7 @@ public class CheckboxesTagHelperTests
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
                 checkboxesContext.OpenFieldset();
-                var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
+                var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
                 checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString(legendContent));
 
                 checkboxesContext.SetHint(

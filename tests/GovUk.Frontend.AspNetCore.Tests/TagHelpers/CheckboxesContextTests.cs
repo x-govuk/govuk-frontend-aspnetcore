@@ -10,7 +10,7 @@ public class CheckboxesContextTests
     public void AddItem_AddsItemToItems()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         var item = new CheckboxesOptionsItem()
         {
@@ -30,7 +30,7 @@ public class CheckboxesContextTests
     public void AddItem_OutsideOfFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         var item = new CheckboxesOptionsItem()
         {
@@ -39,7 +39,7 @@ public class CheckboxesContextTests
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act
@@ -54,7 +54,7 @@ public class CheckboxesContextTests
     public void OpenFieldset_AlreadyOpen_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         context.OpenFieldset();
 
@@ -70,10 +70,10 @@ public class CheckboxesContextTests
     public void OpenFieldset_AlreadyGotFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         context.OpenFieldset();
-        context.CloseFieldset(new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null));
+        context.CloseFieldset(new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null));
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
@@ -87,7 +87,7 @@ public class CheckboxesContextTests
     public void OpenFieldset_AlreadyGotItem_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         var item = new CheckboxesOptionsItem()
         {
@@ -109,7 +109,7 @@ public class CheckboxesContextTests
     public void OpenFieldset_AlreadyGotHint_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
         context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-checkboxes-hint");
 
         // Act
@@ -124,7 +124,7 @@ public class CheckboxesContextTests
     public void OpenFieldset_AlreadyGotErrorMessage_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
         context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-checkboxes-error-message");
 
         // Act
@@ -139,10 +139,10 @@ public class CheckboxesContextTests
     public void CloseFieldset_FieldsetNotOpened_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         // Act
-        var ex = Record.Exception(() => context.CloseFieldset(new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null)));
+        var ex = Record.Exception(() => context.CloseFieldset(new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null)));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -153,7 +153,7 @@ public class CheckboxesContextTests
     public void SetErrorMessage_AlreadyGotItem_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         var item = new CheckboxesOptionsItem()
         {
@@ -176,7 +176,7 @@ public class CheckboxesContextTests
     public void SetErrorMessage_OutsideOfFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         var item = new CheckboxesOptionsItem()
         {
@@ -185,7 +185,7 @@ public class CheckboxesContextTests
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act
@@ -201,7 +201,7 @@ public class CheckboxesContextTests
     public void SetHint_AlreadyGotItem_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         var item = new CheckboxesOptionsItem()
         {
@@ -223,7 +223,7 @@ public class CheckboxesContextTests
     public void SetHint_OutsideOfFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         var item = new CheckboxesOptionsItem()
         {
@@ -232,7 +232,7 @@ public class CheckboxesContextTests
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act
@@ -247,7 +247,7 @@ public class CheckboxesContextTests
     public void SetLabel_ThrowsNotSupportedException()
     {
         // Arrange
-        var context = new CheckboxesContext(name: null, aspFor: null);
+        var context = new CheckboxesContext(name: null, @for: null);
 
         // Act
         var ex = Record.Exception(() => context.SetLabel(isPageHeading: false, attributes: new AttributeCollection(), html: null, tagName: "govuk-checkboxes-label"));

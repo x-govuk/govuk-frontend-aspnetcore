@@ -12,7 +12,7 @@ public record CheckboxesOptions
     public TemplateString? IdPrefix { get; set; }
     public TemplateString? Name { get; set; }
     public IReadOnlyCollection<CheckboxesOptionsItem?>? Items { get; set; }
-    public IReadOnlyCollection<string>? Values { get; set; }
+    public IReadOnlyCollection<TemplateString>? Values { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
 }
@@ -50,9 +50,13 @@ public record CheckboxesOptionsItem
     public TemplateString? Behaviour { get; set; }
     public bool? Disabled { get; set; }
     public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ItemAttributes { get; set; }
 }
 
 public record CheckboxesOptionsItemConditional
 {
     public TemplateString? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }

@@ -11,7 +11,7 @@ public class CheckboxesItemDividerTagHelperTests
     public async Task ProcessAsync_AddsDividerToContextItems()
     {
         // Arrange
-        var checkboxesContext = new CheckboxesContext(name: null, aspFor: null);
+        var checkboxesContext = new CheckboxesContext(name: null, @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-divider",

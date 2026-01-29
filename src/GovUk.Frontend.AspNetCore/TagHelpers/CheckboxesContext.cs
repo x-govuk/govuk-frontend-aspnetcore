@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGroupContext3
+internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGroupContext3
 {
     private bool _fieldsetIsOpen;
     private readonly List<CheckboxesOptionsItem> _items = [];
@@ -12,7 +12,7 @@ internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGr
 
     public string? Name { get; } = name;
 
-    public ModelExpression? AspFor { get; } = aspFor;
+    public ModelExpression? For { get; } = @for;
 
     public IReadOnlyCollection<CheckboxesOptionsItem> Items => _items;
 

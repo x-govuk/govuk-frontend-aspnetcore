@@ -142,15 +142,12 @@ public class CheckboxesTagHelper : TagHelper
         }
 
         var idPrefix = ResolveIdPrefix();
-        TryResolveName(out var name);
+        var name = ResolveName();
 
         var hintOptions = checkboxesContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = checkboxesContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
-        var fieldsetOptions = GetFieldsetOptions(checkboxesContext);
-
-        var items = checkboxesContext.Items.ToList();
-        var values = GetCheckedValues();
+        var fieldsetOptions = checkboxesContext.Fieldset?.GetFieldsetOptions(_modelHelper);
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);
@@ -179,15 +176,15 @@ public class CheckboxesTagHelper : TagHelper
 
         var component = await _componentGenerator.GenerateCheckboxesAsync(new CheckboxesOptions
         {
-            IdPrefix = new TemplateString(idPrefix),
-            Name = name is not null ? new TemplateString(name) : null,
+            IdPrefix = idPrefix,
+            Name = name,
             DescribedBy = DescribedBy,
             Fieldset = fieldsetOptions,
             Hint = hintOptions,
             ErrorMessage = errorMessageOptions,
             FormGroup = formGroupOptions,
-            Items = items,
-            Values = values,
+            Items = checkboxesContext.Items,
+            Values = null,
             Classes = classes,
             Attributes = attributes
         });
@@ -217,55 +214,12 @@ public class CheckboxesTagHelper : TagHelper
                 ForAttributeName);
         }
 
-        TryResolveName(out var resolvedName);
+        var resolvedName = ResolveName();
         Debug.Assert(resolvedName is not null);
 
-        return TagBuilder.CreateSanitizedId(resolvedName!, Constants.IdAttributeDotReplacement);
+        return TagBuilder.CreateSanitizedId(resolvedName, Constants.IdAttributeDotReplacement);
     }
 
-    private bool TryResolveName([NotNullWhen(true)] out string? name)
-    {
-        if (Name is null && For is null)
-        {
-            name = default;
-            return false;
-        }
-
-        name = Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
-        return true;
-    }
-
-    private FieldsetOptions? GetFieldsetOptions(CheckboxesContext checkboxesContext)
-    {
-        if (checkboxesContext.Fieldset is null)
-        {
-            return null;
-        }
-
-        return checkboxesContext.Fieldset.GetFieldsetOptions(_modelHelper);
-    }
-
-    private IReadOnlyCollection<string>? GetCheckedValues()
-    {
-        if (For is null)
-        {
-            return null;
-        }
-
-        var modelExpression = For;
-        object model = modelExpression.Model;
-
-        if (modelExpression.Metadata.IsEnumerableType)
-        {
-            var value = ViewContext!.ModelState.TryGetValue(modelExpression.Name, out var entry) ?
-                entry.RawValue :
-                model;
-
-            var values = (value as IEnumerable)?.Cast<object>();
-            return values?.Select(v => v?.ToString()).Where(v => v is not null).Cast<string>().ToList();
-        }
-
-        var singleValue = model?.ToString();
-        return singleValue is not null ? new[] { singleValue } : null;
-    }
+    private string? ResolveName() =>
+        Name ?? (For is not null ? _modelHelper.GetFullHtmlFieldName(ViewContext!, For.Name) : null);
 }

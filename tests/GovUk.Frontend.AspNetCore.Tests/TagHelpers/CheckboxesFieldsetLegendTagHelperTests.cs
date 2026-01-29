@@ -11,7 +11,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
-        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset-legend",
@@ -49,7 +49,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
 
         fieldsetContext.SetLegend(
             isPageHeading: false,

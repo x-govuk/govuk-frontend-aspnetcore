@@ -21,7 +21,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -71,7 +72,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -105,7 +107,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -142,7 +145,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -190,7 +194,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -249,7 +254,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -302,7 +308,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -345,7 +352,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -392,7 +400,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -435,7 +444,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 
@@ -482,7 +492,8 @@ public class CheckboxesItemTagHelperTests
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(CheckboxesContext), checkboxesContext }
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
             },
             uniqueId: "test");
 

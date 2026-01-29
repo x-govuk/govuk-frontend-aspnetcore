@@ -70,8 +70,9 @@ public class CheckboxesTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
-        // Act
         tagHelper.Init(context);
+
+        // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -162,8 +163,9 @@ public class CheckboxesTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
-        // Act
         tagHelper.Init(context);
+
+        // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -225,8 +227,9 @@ public class CheckboxesTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
-        // Act
         tagHelper.Init(context);
+
+        // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -292,8 +295,9 @@ public class CheckboxesTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
-        // Act
         tagHelper.Init(context);
+
+        // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -361,8 +365,9 @@ public class CheckboxesTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
-        // Act
         tagHelper.Init(context);
+
+        // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
@@ -450,8 +455,9 @@ public class CheckboxesTagHelperTests
             ViewContext = TestUtils.CreateViewContext()
         };
 
-        // Act
         tagHelper.Init(context);
+
+        // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert

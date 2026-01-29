@@ -14,11 +14,11 @@ internal class SelectContext(ModelExpression? aspFor) : FormGroupContext3
 
     public IReadOnlyCollection<SelectItem> Items => _items;
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames => [SelectErrorMessageTagHelper.TagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => SelectErrorMessageTagHelper.AllTagNames;
 
-    protected override IReadOnlyCollection<string> HintTagNames => [SelectHintTagHelper.TagName];
+    protected override IReadOnlyCollection<string> HintTagNames => SelectHintTagHelper.AllTagNames;
 
-    protected override IReadOnlyCollection<string> LabelTagNames => [SelectLabelTagHelper.TagName];
+    protected override IReadOnlyCollection<string> LabelTagNames => SelectLabelTagHelper.AllTagNames;
 
     protected override string RootTagName => SelectTagHelper.TagName;
 

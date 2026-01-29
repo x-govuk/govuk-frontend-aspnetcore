@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -6,10 +7,31 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the fieldset in a GDS radios component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
-[RestrictChildren(RadiosFieldsetLegendTagHelper.TagName, RadiosItemTagHelper.TagName, RadiosItemDividerTagHelper.TagName, RadiosTagHelper.HintTagName, RadiosTagHelper.ErrorMessageTagName)]
+[RestrictChildren(
+    RadiosFieldsetLegendTagHelper.TagName,
+    RadiosItemTagHelper.TagName,
+    RadiosItemDividerTagHelper.TagName,
+    RadiosTagHelper.HintTagName,
+    RadiosTagHelper.ErrorMessageTagName
+)]
 public class RadiosFieldsetTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-fieldset";
+
+    private const string DescribedByAttributeName = "described-by";
+
+    /// <summary>
+    /// One or more element IDs to add to the <c>aria-describedby</c> attribute.
+    /// </summary>
+    [HtmlAttributeName(DescribedByAttributeName)]
+    public string? DescribedBy { get; set; }
+
+    /// <summary>
+    /// Creates a <see cref="RadiosFieldsetTagHelper"/>.
+    /// </summary>
+    public RadiosFieldsetTagHelper()
+    {
+    }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -20,7 +42,10 @@ public class RadiosFieldsetTagHelper : TagHelper
         var radiosContext = context.GetContextItem<RadiosContext>();
         radiosContext.OpenFieldset();
 
-        var fieldsetContext = new RadiosFieldsetContext(output.Attributes.ToAttributeDictionary(), radiosContext.AspFor);
+        var fieldsetContext = new RadiosFieldsetContext(
+            DescribedBy,
+            new AttributeCollection(output.Attributes),
+            @for: radiosContext.For);
 
         using (context.SetScopedContextItem(fieldsetContext))
         {

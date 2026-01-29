@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -25,7 +26,15 @@ public class RadiosItemConditionalTagHelper : TagHelper
             content = output.Content;
         }
 
-        itemContext.SetConditional(output.Attributes.ToAttributeDictionary(), content.Snapshot());
+        var attributes = new AttributeCollection(output.Attributes);
+
+        var conditionalOptions = new RadiosOptionsItemConditional
+        {
+            Attributes = attributes,
+            Html = content.ToTemplateString()
+        };
+
+        itemContext.SetConditional(conditionalOptions, output.TagName);
 
         output.SuppressOutput();
     }

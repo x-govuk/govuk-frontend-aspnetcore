@@ -379,7 +379,6 @@ public class RadiosTagHelperTests
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
         {
-            DescribedBy = "describedby",
             IdPrefix = "my-id",
             Name = "testradios"
         };

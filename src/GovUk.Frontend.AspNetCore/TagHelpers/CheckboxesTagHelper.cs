@@ -31,7 +31,6 @@ public class CheckboxesTagHelper : TagHelper
 
     private const string AspForAttributeName = "asp-for";
     private const string AttributesPrefix = "checkboxes-";
-    private const string DescribedByAttributeName = "described-by";
     private const string ForAttributeName = "for";
     private const string IdPrefixAttributeName = "id-prefix";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
@@ -74,12 +73,6 @@ public class CheckboxesTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(DictionaryAttributePrefix = AttributesPrefix)]
     public IDictionary<string, string?>? CheckboxesAttributes { get; set; } = new Dictionary<string, string?>();
-
-    /// <summary>
-    /// One or more element IDs to add to the <c>aria-describedby</c> attribute of the generated elements.
-    /// </summary>
-    [HtmlAttributeName(DescribedByAttributeName)]
-    public string? DescribedBy { get; set; }
 
     /// <summary>
     /// An expression to be evaluated against the current model.
@@ -176,7 +169,6 @@ public class CheckboxesTagHelper : TagHelper
         {
             IdPrefix = idPrefix,
             Name = name,
-            DescribedBy = DescribedBy,
             Fieldset = fieldsetOptions,
             Hint = hintOptions,
             ErrorMessage = errorMessageOptions,

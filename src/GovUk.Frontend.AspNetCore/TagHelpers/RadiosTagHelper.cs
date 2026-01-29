@@ -29,7 +29,6 @@ public class RadiosTagHelper : TagHelper
 
     private const string AspForAttributeName = "asp-for";
     private const string AttributesPrefix = "radios-";
-    private const string DescribedByAttributeName = "described-by";
     private const string ForAttributeName = "for";
     private const string IdPrefixAttributeName = "id-prefix";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
@@ -66,12 +65,6 @@ public class RadiosTagHelper : TagHelper
         get => For;
         set => For = value;
     }
-
-    /// <summary>
-    /// One or more element IDs to add to the <c>aria-describedby</c> attribute of the generated elements.
-    /// </summary>
-    [HtmlAttributeName(DescribedByAttributeName)]
-    public string? DescribedBy { get; set; }
 
     /// <summary>
     /// An expression to be evaluated against the current model.
@@ -163,7 +156,6 @@ public class RadiosTagHelper : TagHelper
         {
             IdPrefix = idPrefix,
             Name = name,
-            DescribedBy = DescribedBy,
             Fieldset = fieldsetOptions,
             Hint = hintOptions,
             ErrorMessage = errorMessageOptions,

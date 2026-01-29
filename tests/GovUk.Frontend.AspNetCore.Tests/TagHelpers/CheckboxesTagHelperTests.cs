@@ -410,7 +410,7 @@ public class CheckboxesTagHelperTests
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
                 checkboxesContext.OpenFieldset();
-                var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
+                var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy, attributes: new AttributeCollection(), @for: null);
                 checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString(legendContent));
 
                 checkboxesContext.SetHint(
@@ -449,7 +449,6 @@ public class CheckboxesTagHelperTests
 
         var tagHelper = new CheckboxesTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
         {
-            DescribedBy = describedBy,
             IdPrefix = idPrefix,
             Name = name,
             ViewContext = TestUtils.CreateViewContext()
@@ -468,6 +467,7 @@ public class CheckboxesTagHelperTests
         Assert.Equal(hintContent, actualOptions.Hint.Html);
         Assert.NotNull(actualOptions.Fieldset);
         Assert.NotNull(actualOptions.Fieldset.Legend);
+        Assert.Equal(describedBy, actualOptions.Fieldset.DescribedBy);
         Assert.Equal(legendContent, actualOptions.Fieldset.Legend.Html);
         Assert.Equal(2, actualOptions.Items?.Count);
 

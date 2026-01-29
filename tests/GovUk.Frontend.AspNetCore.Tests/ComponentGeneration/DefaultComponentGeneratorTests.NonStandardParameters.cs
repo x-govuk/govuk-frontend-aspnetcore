@@ -908,7 +908,7 @@ public partial class DefaultComponentGeneratorTests
     }
 
     [Fact]
-    public async Task Checkboxes_BeforeInputs_Attributes_IsIncludedInOutput()
+    public async Task Checkboxes_Conditional_Attributes_IsIncludedInOutput()
     {
         // Arrange
         var options = new CheckboxesOptions
@@ -919,16 +919,14 @@ public partial class DefaultComponentGeneratorTests
                 new CheckboxesOptionsItem
                 {
                     Text = "Option 1",
-                    Value = "option1"
+                    Value = "option1",
+                    Conditional = new CheckboxesOptionsItemConditional
+                    {
+                        Html = "Conditional",
+                        Attributes = new AttributeCollection { { "data-test", "item-attr" } }
+                    }
                 }
-            ],
-            FormGroup = new CheckboxesOptionsFormGroup
-            {
-                BeforeInputs = new CheckboxesOptionsBeforeInputs
-                {
-                    Html = "<div data-test=\"before-attr\">Before content</div>"
-                }
-            }
+            ]
         };
 
         // Act

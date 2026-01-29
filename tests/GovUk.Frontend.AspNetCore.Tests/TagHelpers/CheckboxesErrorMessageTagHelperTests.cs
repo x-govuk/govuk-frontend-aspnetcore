@@ -40,8 +40,8 @@ public class CheckboxesErrorMessageTagHelperTests : TagHelperTestBase<Checkboxes
 
         // Assert
         Assert.NotNull(checkboxesContext.ErrorMessage);
-        Assert.Equal(errorContent, checkboxesContext.ErrorMessage.Html.ToHtmlString());
-        Assert.Equal(visuallyHiddenText, checkboxesContext.ErrorMessage.VisuallyHiddenText);
-        AssertContainsAttributes(attributes, checkboxesContext.ErrorMessage.Attributes);
+        Assert.Equal(errorContent, checkboxesContext.ErrorMessage?.Html?.ToHtmlString());
+        Assert.Equal(visuallyHiddenText, checkboxesContext.ErrorMessage?.VisuallyHiddenText);
+        AssertContainsAttributes(attributes, checkboxesContext.ErrorMessage?.Attributes);
     }
 }

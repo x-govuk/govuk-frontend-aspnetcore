@@ -144,8 +144,8 @@ public class CheckboxesTagHelper : TagHelper
         var idPrefix = ResolveIdPrefix();
         TryResolveName(out var name);
 
-        var hintOptions = GetHintOptions(checkboxesContext);
-        var errorMessageOptions = GetErrorMessageOptions(checkboxesContext);
+        var hintOptions = checkboxesContext.GetHintOptions(For, _modelHelper);
+        var errorMessageOptions = checkboxesContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
         var fieldsetOptions = GetFieldsetOptions(checkboxesContext);
 
@@ -233,70 +233,6 @@ public class CheckboxesTagHelper : TagHelper
 
         name = Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
         return true;
-    }
-
-    private HintOptions? GetHintOptions(CheckboxesContext checkboxesContext)
-    {
-        var html = checkboxesContext.Hint?.Content;
-
-        if (html is null && For is not null)
-        {
-            var description = _modelHelper.GetDescription(For.ModelExplorer);
-
-            if (description is not null)
-            {
-                html = new HtmlString(description);
-            }
-        }
-
-        if (html is null)
-        {
-            return checkboxesContext.Hint is not null ? throw new InvalidOperationException("Cannot deduce content for the hint.") : null;
-        }
-
-        var attributes = checkboxesContext.Hint?.Attributes.ToAttributeCollection() ?? new AttributeCollection();
-        attributes.Remove("class", out var classes);
-
-        return new HintOptions
-        {
-            Text = null,
-            Html = html.ToTemplateString(),
-            Id = null,
-            Classes = classes,
-            Attributes = attributes
-        };
-    }
-
-    private ErrorMessageOptions? GetErrorMessageOptions(CheckboxesContext checkboxesContext)
-    {
-        IHtmlContent? htmlContent = checkboxesContext.ErrorMessage?.Content;
-        
-        if (htmlContent is null && For is not null && IgnoreModelStateErrors != true)
-        {
-            var validationMessage = _modelHelper.GetValidationMessage(ViewContext!, For.ModelExplorer, For.Name);
-            if (validationMessage is not null)
-            {
-                htmlContent = new HtmlString(validationMessage);
-            }
-        }
-
-        if (htmlContent is null || string.IsNullOrEmpty(htmlContent.ToHtmlString()))
-        {
-            return null;
-        }
-
-        var attributes = checkboxesContext.ErrorMessage?.Attributes.ToAttributeCollection() ?? new AttributeCollection();
-        attributes.Remove("class", out var classes);
-
-        return new ErrorMessageOptions
-        {
-            Text = null,
-            Html = htmlContent.ToTemplateString(),
-            Id = null,
-            VisuallyHiddenText = checkboxesContext.ErrorMessage?.VisuallyHiddenText is string vht ? new TemplateString(vht) : null,
-            Classes = classes,
-            Attributes = attributes
-        };
     }
 
     private FieldsetOptions? GetFieldsetOptions(CheckboxesContext checkboxesContext)

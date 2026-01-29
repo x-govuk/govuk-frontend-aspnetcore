@@ -110,7 +110,7 @@ public class CheckboxesContextTests
     {
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
-        context.SetHint(attributes: null, content: new HtmlString("Hint"));
+        context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-checkboxes-hint");
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
@@ -125,7 +125,7 @@ public class CheckboxesContextTests
     {
         // Arrange
         var context = new CheckboxesContext(name: null, aspFor: null);
-        context.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Error"));
+        context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-checkboxes-error-message");
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
@@ -165,7 +165,7 @@ public class CheckboxesContextTests
 
         // Act
         var ex = Record.Exception(
-            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Error")));
+            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-checkboxes-error-message"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -190,7 +190,7 @@ public class CheckboxesContextTests
 
         // Act
         var ex = Record.Exception(
-            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Error")));
+            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-checkboxes-error-message"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -212,7 +212,7 @@ public class CheckboxesContextTests
         context.AddItem(item);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-checkboxes-hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -236,7 +236,7 @@ public class CheckboxesContextTests
         context.CloseFieldset(fieldsetContext);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-checkboxes-hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -250,7 +250,7 @@ public class CheckboxesContextTests
         var context = new CheckboxesContext(name: null, aspFor: null);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(isPageHeading: false, attributes: null, content: null));
+        var ex = Record.Exception(() => context.SetLabel(isPageHeading: false, attributes: new AttributeCollection(), html: null, tagName: "govuk-checkboxes-label"));
 
         // Assert
         Assert.IsType<NotSupportedException>(ex);

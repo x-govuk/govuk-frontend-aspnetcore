@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -106,6 +106,12 @@ public class CheckboxesItemTagHelper : TagHelper
     public ViewContext? ViewContext { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new CheckboxesItemContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -117,13 +123,12 @@ public class CheckboxesItemTagHelper : TagHelper
         }
 
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
+        var itemContext = context.GetContextItem<CheckboxesItemContext>();
 
-        if (Name is null && checkboxesContext.Name is null && checkboxesContext.AspFor is null)
+        if (Name is null && checkboxesContext.Name is null && checkboxesContext.For is null)
         {
             throw new InvalidOperationException($"The '{NameAttributeName}' attribute must be specified on each item when not specified on the parent <{CheckboxesTagHelper.TagName}>.");
         }
-
-        var itemContext = new CheckboxesItemContext();
 
         TagHelperContent content;
         using (context.SetScopedContextItem(itemContext))
@@ -137,45 +142,44 @@ public class CheckboxesItemTagHelper : TagHelper
         }
 
         var resolvedChecked = Checked ??
-            (checkboxesContext.AspFor is not null ? (bool?)DoesModelMatchItemValue() : null) ??
-            ComponentGenerator.CheckboxesItemDefaultChecked;
+            (checkboxesContext.For is not null ? DoesModelMatchItemValue() : null);
 
-        checkboxesContext.AddItem(new CheckboxesItem
+        var itemAttributes = new AttributeCollection(output.Attributes);
+
+        var labelAttributes = new AttributeCollection(LabelAttributes);
+        labelAttributes.Remove("class", out var labelClasses);
+
+        var inputAttributes = new AttributeCollection(InputAttributes);
+
+        checkboxesContext.AddItem(new CheckboxesOptionsItem
         {
-            Attributes = output.Attributes.ToAttributeDictionary(),
-            Behavior = Behavior ?? ComponentGenerator.CheckboxesItemDefaultBehavior,
-            Checked = resolvedChecked,
-            Conditional = itemContext.Conditional is not null ?
-                new CheckboxesItemConditional
-                {
-                    Content = itemContext.Conditional.Value.Content,
-                    Attributes = itemContext.Conditional.Value.Attributes
-                } :
-                null,
-            Disabled = Disabled ?? ComponentGenerator.CheckboxesItemDefaultDisabled,
-            Hint = itemContext.Hint is not null ?
-                new CheckboxesItemHint
-                {
-                    Content = itemContext.Hint.Value.Content,
-                    Attributes = itemContext.Hint.Value.Attributes
-                } :
-                null,
+            Text = null,
+            Html = content.ToTemplateString(),
             Id = Id,
-            InputAttributes = InputAttributes.ToAttributeDictionary(),
-            LabelAttributes = LabelAttributes.ToAttributeDictionary(),
-            LabelContent = content.Snapshot(),
             Name = Name,
-            Value = Value
+            Value = Value,
+            Label = new LabelOptions
+            {
+                Classes = labelClasses,
+                Attributes = labelAttributes
+            },
+            Hint = itemContext.Hint?.Options,
+            Checked = resolvedChecked,
+            Conditional = itemContext.Conditional?.Options,
+            Behaviour = Behavior is CheckboxesItemBehavior.Exclusive ? "exclusive" : null,
+            Disabled = Disabled,
+            Attributes = inputAttributes,
+            ItemAttributes = itemAttributes
         });
 
         output.SuppressOutput();
 
         bool DoesModelMatchItemValue()
         {
-            Debug.Assert(checkboxesContext.AspFor is not null);
+            Debug.Assert(checkboxesContext.For is not null);
             Debug.Assert(ViewContext is not null);
 
-            var modelExpression = checkboxesContext.AspFor!;
+            var modelExpression = checkboxesContext.For!;
             object model = modelExpression.Model;
 
             if (modelExpression.Metadata.IsEnumerableType)

@@ -1,35 +1,44 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
-using Microsoft.AspNetCore.Html;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGroupContext
+internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGroupContext3
 {
     private bool _fieldsetIsOpen;
-    private readonly List<CheckboxesItemBase> _items = [];
+    private readonly List<CheckboxesOptionsItem> _items = [];
+    private (TemplateString Content, string TagName)? _beforeInputs;
+    private (TemplateString Content, string TagName)? _afterInputs;
 
     public string? Name { get; } = name;
 
-    public ModelExpression? AspFor { get; } = aspFor;
+    public ModelExpression? For { get; } = @for;
 
-    public IReadOnlyCollection<CheckboxesItemBase> Items => _items;
+    public IReadOnlyCollection<CheckboxesOptionsItem> Items => _items;
 
-    public FormGroupFieldsetContext? Fieldset { get; private set; }
+    public TemplateString? BeforeInputs => _beforeInputs?.Content;
 
-    protected override string ErrorMessageTagName => CheckboxesTagHelper.ErrorMessageTagName;
+    public TemplateString? AfterInputs => _afterInputs?.Content;
+
+    public CheckboxesFieldsetContext? Fieldset { get; private set; }
+
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } = [CheckboxesTagHelper.ErrorMessageTagName];
 
     protected string FieldsetTagName => CheckboxesFieldsetTagHelper.TagName;
 
     protected string ItemTagName => CheckboxesItemTagHelper.TagName;
 
-    protected override string HintTagName => CheckboxesTagHelper.HintTagName;
+    protected override IReadOnlyCollection<string> HintTagNames { get; } = [CheckboxesTagHelper.HintTagName];
 
-    protected override string LabelTagName => throw new NotSupportedException();
+    protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
     protected override string RootTagName => CheckboxesTagHelper.TagName;
 
-    public void AddItem(CheckboxesItemBase item)
+    private IReadOnlyCollection<string> BeforeInputsTagNames => CheckboxesBeforeInputsTagHelper.AllTagNames;
+
+    private IReadOnlyCollection<string> AfterInputsTagNames => CheckboxesAfterInputsTagHelper.AllTagNames;
+
+    public void AddItem(CheckboxesOptionsItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
 
@@ -72,43 +81,109 @@ internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGr
         Fieldset = fieldsetContext;
     }
 
-    public override void SetErrorMessage(
-        string? visuallyHiddenText,
-        AttributeDictionary? attributes,
-        IHtmlContent? content)
+    public void SetBeforeInputs(TemplateString content, string tagName)
     {
-        if (Fieldset is not null)
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (BeforeInputs is not null)
         {
-            throw new InvalidOperationException($"<{ErrorMessageTagName}> must be inside <{FieldsetTagName}>.");
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                BeforeInputsTagNames,
+                RootTagName);
         }
 
         if (Items.Count > 0)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(ErrorMessageTagName, ItemTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                ItemTagName);
         }
 
-        base.SetErrorMessage(visuallyHiddenText, attributes, content);
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                afterInputsTagName);
+        }
+
+        _beforeInputs = (content, tagName);
     }
 
-    public override void SetHint(AttributeDictionary? attributes, IHtmlContent? content)
+    public void SetAfterInputs(TemplateString content, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (AfterInputs is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                AfterInputsTagNames,
+                RootTagName);
+        }
+
+        _afterInputs = (content, tagName);
+    }
+
+    public override void SetErrorMessage(
+        TemplateString? visuallyHiddenText,
+        AttributeCollection attributes,
+        TemplateString? html,
+        string tagName)
     {
         if (Fieldset is not null)
         {
-            throw new InvalidOperationException($"<{HintTagName}> must be inside <{FieldsetTagName}>.");
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
+        }
+
+        if (_beforeInputs is var (_, beforeInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, beforeInputsTagName);
         }
 
         if (Items.Count > 0)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(HintTagName, ItemTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, ItemTagName);
         }
 
-        base.SetHint(attributes, content);
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, afterInputsTagName);
+        }
+
+        base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
+    }
+
+    public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
+    {
+        if (Fieldset is not null)
+        {
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
+        }
+
+        if (_beforeInputs is var (_, beforeInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, beforeInputsTagName);
+        }
+
+        if (Items.Count > 0)
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, ItemTagName);
+        }
+
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, afterInputsTagName);
+        }
+
+        base.SetHint(attributes, html, tagName);
     }
 
     public override void SetLabel(
-        bool isPageHeading,
-        AttributeDictionary? attributes,
-        IHtmlContent? content)
+        bool? isPageHeading,
+        AttributeCollection attributes,
+        TemplateString? html,
+        string tagName)
     {
         throw new NotSupportedException();
     }

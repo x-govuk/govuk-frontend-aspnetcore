@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -10,7 +11,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
-        var fieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset-legend",
@@ -40,7 +41,7 @@ public class CheckboxesFieldsetLegendTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Legend content", fieldsetContext.Legend?.Content?.ToHtmlString());
+        Assert.Equal("Legend content", fieldsetContext.Legend?.Html?.ToHtmlString());
         Assert.True(fieldsetContext.Legend?.IsPageHeading);
     }
 
@@ -48,12 +49,12 @@ public class CheckboxesFieldsetLegendTagHelperTests
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
-            attributes: null,
-            content: new HtmlString("Existing legend"));
+            attributes: new AttributeCollection(),
+            html: new HtmlString("Existing legend"));
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset-legend",

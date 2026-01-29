@@ -880,4 +880,60 @@ public partial class DefaultComponentGeneratorTests
         // Assert
         Assert.Contains("data-test=\"card-actions-attr\"", html);
     }
+
+    [Fact]
+    public async Task Checkboxes_ItemAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new CheckboxesOptions
+        {
+            Name = "test",
+            Items =
+            [
+                new CheckboxesOptionsItem
+                {
+                    Text = "Option 1",
+                    Value = "option1",
+                    ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateCheckboxesAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("data-test=\"item-attr\"", html);
+    }
+
+    [Fact]
+    public async Task Checkboxes_Conditional_Attributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new CheckboxesOptions
+        {
+            Name = "test",
+            Items =
+            [
+                new CheckboxesOptionsItem
+                {
+                    Text = "Option 1",
+                    Value = "option1",
+                    Conditional = new CheckboxesOptionsItemConditional
+                    {
+                        Html = "Conditional",
+                        Attributes = new AttributeCollection { { "data-test", "item-attr" } }
+                    }
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateCheckboxesAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("data-test=\"item-attr\"", html);
+    }
 }

@@ -36,6 +36,6 @@ public class CheckboxesItemHintTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Hint", checkboxesItemContext.Hint?.Content?.ToHtmlString());
+        Assert.Equal("Hint", checkboxesItemContext.Hint?.Options.Html?.ToHtmlString());
     }
 }

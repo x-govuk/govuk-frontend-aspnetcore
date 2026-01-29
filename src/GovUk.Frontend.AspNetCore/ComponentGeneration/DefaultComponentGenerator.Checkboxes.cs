@@ -143,21 +143,20 @@ internal partial class DefaultComponentGenerator
             TemplateString? parentName,
             bool inFieldset,
             List<TemplateString> parentDescribedByParts,
-            IReadOnlyCollection<string>? values)
+            IReadOnlyCollection<TemplateString>? values)
         {
-            var itemId = item.Id ?? (index == 0 ? parentIdPrefix : new TemplateString($"{parentIdPrefix}-{index + 1}"));
-            var itemName = item.Name ?? parentName;
+            var itemId = TemplateString.Coalesce(item.Id, index == 0 ? parentIdPrefix : new TemplateString($"{parentIdPrefix}-{index + 1}"));
+            var itemName = TemplateString.Coalesce(item.Name, parentName);
             var conditionalId = new TemplateString($"conditional-{itemId}");
 
             var isChecked = DetermineCheckedState(item, values);
 
-            // Only include conditional if Html is not empty/false/blank
-            // Check matches liquid template's "!= blank" check
             var conditionalHtml = item.Conditional?.Html;
             var hasConditional = conditionalHtml is not null && !conditionalHtml.IsEmpty();
 
             var itemDiv = new HtmlTag("div", attrs => attrs
-                .WithClasses("govuk-checkboxes__item"));
+                .WithClasses("govuk-checkboxes__item")
+                .With(item.ItemAttributes));
 
             var itemDescribedByParts = new List<TemplateString>();
             if (!inFieldset)
@@ -202,14 +201,12 @@ internal partial class DefaultComponentGenerator
             if (item.Hint is not null)
             {
                 var itemHintId = new TemplateString($"{itemId}-item-hint");
-                var hintComponent = await GenerateHintAsync(new HintOptions
-                {
-                    Id = itemHintId,
-                    Classes = new TemplateString("govuk-checkboxes__hint").AppendCssClasses(item.Hint.Classes),
-                    Attributes = item.Hint.Attributes,
-                    Html = item.Hint.Html,
-                    Text = item.Hint.Text
-                });
+                var hintComponent = await GenerateHintAsync(
+                    item.Hint with
+                    {
+                        Id = itemHintId,
+                        Classes = new TemplateString("govuk-checkboxes__hint").AppendCssClasses(item.Hint.Classes)
+                    });
 
                 itemDiv.InnerHtml.AppendHtml(hintComponent);
             }
@@ -219,12 +216,12 @@ internal partial class DefaultComponentGenerator
 
             if (hasConditional)
             {
-                // conditionalHtml is guaranteed to be non-null here due to hasConditional check
                 var conditionalContent = conditionalHtml!.GetRawHtml();
 
                 var conditional = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-checkboxes__conditional", !isChecked ? "govuk-checkboxes__conditional--hidden" : null)
-                    .With("id", conditionalId))
+                    .With("id", conditionalId)
+                    .With(item.Conditional!.Attributes))
                 {
                     conditionalContent
                 };
@@ -235,7 +232,7 @@ internal partial class DefaultComponentGenerator
             return result;
         }
 
-        static bool DetermineCheckedState(CheckboxesOptionsItem item, IReadOnlyCollection<string>? values)
+        static bool DetermineCheckedState(CheckboxesOptionsItem item, IReadOnlyCollection<TemplateString>? values)
         {
             // If item.Checked is explicitly set, use that value
             if (item.Checked.HasValue)
@@ -244,7 +241,7 @@ internal partial class DefaultComponentGenerator
             }
 
             // Otherwise, check if the value is in the values list
-            var itemValueString = item.Value?.ToHtmlString() ?? string.Empty;
+            var itemValueString = item.Value;
             return values?.Contains(itemValueString) is true;
         }
     }

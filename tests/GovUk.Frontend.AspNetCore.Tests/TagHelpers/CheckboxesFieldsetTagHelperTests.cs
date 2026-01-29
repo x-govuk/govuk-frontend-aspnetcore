@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -10,7 +11,7 @@ public class CheckboxesFieldsetTagHelperTests
     public async Task ProcessAsync_AddsFieldsetToContext()
     {
         // Arrange
-        var checkboxesContext = new CheckboxesContext(name: null, aspFor: null);
+        var checkboxesContext = new CheckboxesContext(name: null, @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset",
@@ -27,7 +28,7 @@ public class CheckboxesFieldsetTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: null, content: new HtmlString("Legend"));
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new HtmlString("Legend"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -40,18 +41,18 @@ public class CheckboxesFieldsetTagHelperTests
 
         // Assert
         Assert.True(checkboxesContext.Fieldset?.Legend?.IsPageHeading);
-        Assert.Equal("Legend", checkboxesContext.Fieldset?.Legend?.Content?.ToHtmlString());
+        Assert.Equal("Legend", checkboxesContext.Fieldset?.Legend?.Html?.ToHtmlString());
     }
 
     [Fact]
     public async Task ProcessAsync_ParentAlreadyHasFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var checkboxesContext = new CheckboxesContext(name: null, aspFor: null);
+        var checkboxesContext = new CheckboxesContext(name: null, @for: null);
 
         checkboxesContext.OpenFieldset();
-        var checkboxesFieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
-        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Existing legend"));
+        var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
+        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString("Existing legend"));
         checkboxesContext.CloseFieldset(checkboxesFieldsetContext);
 
         var context = new TagHelperContext(
@@ -69,7 +70,7 @@ public class CheckboxesFieldsetTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: null, content: new HtmlString("Legend"));
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new HtmlString("Legend"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

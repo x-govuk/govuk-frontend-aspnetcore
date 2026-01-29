@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,11 +7,50 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the fieldset in a GDS checkboxes component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
-[RestrictChildren(CheckboxesFieldsetLegendTagHelper.TagName, CheckboxesItemTagHelper.TagName, CheckboxesItemDividerTagHelper.TagName, CheckboxesTagHelper.HintTagName, CheckboxesTagHelper.ErrorMessageTagName)]
-[OutputElementHint(ComponentGenerator.FieldsetElement)]
+#if SHORT_TAG_NAMES
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
+#endif
+[RestrictChildren(
+    CheckboxesFieldsetLegendTagHelper.TagName,
+    CheckboxesItemTagHelper.TagName,
+    CheckboxesItemDividerTagHelper.TagName,
+    CheckboxesTagHelper.HintTagName,
+    CheckboxesTagHelper.ErrorMessageTagName
+#if SHORT_TAG_NAMES
+    ,
+    FormGroupHintTagHelperBase.ShortTagName,
+    FormGroupErrorMessageTagHelperBase.ShortTagName
+#endif
+)]
 public class CheckboxesFieldsetTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes-fieldset";
+#if SHORT_TAG_NAMES
+    internal const string ShortTagName = ShortTagNames.Fieldset;
+#endif
+
+    private const string DescribedByAttributeName = "described-by";
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
+        TagName
+#if SHORT_TAG_NAMES
+        ,
+        ShortTagName
+#endif
+    ];
+
+    /// <summary>
+    /// One or more element IDs to add to the <c>aria-describedby</c> attribute.
+    /// </summary>
+    [HtmlAttributeName(DescribedByAttributeName)]
+    public string? DescribedBy { get; set; }
+
+    /// <summary>
+    /// Creates a <see cref="CheckboxesFieldsetTagHelper"/>.
+    /// </summary>
+    public CheckboxesFieldsetTagHelper()
+    {
+    }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -22,7 +61,10 @@ public class CheckboxesFieldsetTagHelper : TagHelper
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
         checkboxesContext.OpenFieldset();
 
-        var fieldsetContext = new CheckboxesFieldsetContext(output.Attributes.ToAttributeDictionary(), checkboxesContext.AspFor);
+        var fieldsetContext = new CheckboxesFieldsetContext(
+            DescribedBy,
+            new AttributeCollection(output.Attributes),
+            @for: checkboxesContext.For);
 
         using (context.SetScopedContextItem(fieldsetContext))
         {

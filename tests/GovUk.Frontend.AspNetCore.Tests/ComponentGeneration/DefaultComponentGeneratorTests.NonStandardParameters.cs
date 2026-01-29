@@ -934,6 +934,6 @@ public partial class DefaultComponentGeneratorTests
         var html = result.GetHtml();
 
         // Assert
-        Assert.Contains("data-test=\"before-attr\"", html);
+        Assert.Contains("data-test=\"item-attr\"", html);
     }
 }

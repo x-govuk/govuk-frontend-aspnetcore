@@ -28,7 +28,7 @@ public class CheckboxesItemConditionalTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        var conditionalOptions = new CheckboxesOptionsItemConditional()
+        var conditionalOptions = new CheckboxesOptionsItemConditional
         {
             Attributes = attributes,
             Html = content.ToTemplateString()

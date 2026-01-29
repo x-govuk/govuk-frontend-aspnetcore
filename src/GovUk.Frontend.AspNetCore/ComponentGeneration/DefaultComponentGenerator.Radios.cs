@@ -155,10 +155,6 @@ internal partial class DefaultComponentGenerator
                 .With(item.ItemAttributes));
 
             var itemDescribedByParts = new List<TemplateString>();
-            if (!inFieldset)
-            {
-                itemDescribedByParts.AddRange(parentDescribedByParts);
-            }
 
             if (item.Hint is not null)
             {

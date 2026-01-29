@@ -1,6 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 

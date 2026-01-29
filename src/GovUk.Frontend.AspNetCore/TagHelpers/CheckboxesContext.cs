@@ -20,7 +20,7 @@ internal class CheckboxesContext(string? name, ModelExpression? aspFor) : FormGr
 
     public TemplateString? AfterInputs => _afterInputs?.Content;
 
-    public FormGroupFieldsetContext? Fieldset { get; private set; }
+    public CheckboxesFieldsetContext? Fieldset { get; private set; }
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } = [CheckboxesTagHelper.ErrorMessageTagName];
 

@@ -242,53 +242,7 @@ public class CheckboxesTagHelper : TagHelper
             return null;
         }
 
-        var fieldset = checkboxesContext.Fieldset;
-
-        FieldsetOptionsLegend? legendOptions = null;
-        if (fieldset.Legend is not null)
-        {
-            var (isPageHeading, legendAttributes, legendContent) = fieldset.Legend.Value;
-
-            IHtmlContent? legendHtml = legendContent;
-
-            if (legendHtml is null)
-            {
-                if (For is null)
-                {
-                    throw new InvalidOperationException(
-                        $"Legend content must be specified when the '{ForAttributeName}' attribute is not specified.");
-                }
-
-                var displayName = _modelHelper.GetDisplayName(For!.ModelExplorer, For.Name) ??
-                    throw new InvalidOperationException("Cannot deduce content for the legend.");
-
-                legendHtml = new HtmlString(displayName);
-            }
-
-            var legendAttributeCollection = legendAttributes.ToAttributeCollection();
-            legendAttributeCollection.Remove("class", out var legendClasses);
-
-            legendOptions = new FieldsetOptionsLegend
-            {
-                Text = null,
-                Html = legendHtml.ToTemplateString(),
-                IsPageHeading = isPageHeading,
-                Classes = legendClasses,
-                Attributes = legendAttributeCollection
-            };
-        }
-
-        var fieldsetAttributes = fieldset.Attributes.ToAttributeCollection();
-        fieldsetAttributes.Remove("class", out var fieldsetClasses);
-
-        return new FieldsetOptions
-        {
-            DescribedBy = DescribedBy,
-            Legend = legendOptions,
-            Classes = fieldsetClasses,
-            Role = null,
-            Attributes = fieldsetAttributes
-        };
+        return checkboxesContext.Fieldset.GetFieldsetOptions(_modelHelper);
     }
 
     private IReadOnlyCollection<string>? GetCheckedValues()

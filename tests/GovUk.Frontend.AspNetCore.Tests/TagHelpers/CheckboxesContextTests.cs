@@ -39,7 +39,7 @@ public class CheckboxesContextTests
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act
@@ -73,7 +73,7 @@ public class CheckboxesContextTests
         var context = new CheckboxesContext(name: null, aspFor: null);
 
         context.OpenFieldset();
-        context.CloseFieldset(new CheckboxesFieldsetContext(attributes: null, aspFor: null));
+        context.CloseFieldset(new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null));
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
@@ -142,7 +142,7 @@ public class CheckboxesContextTests
         var context = new CheckboxesContext(name: null, aspFor: null);
 
         // Act
-        var ex = Record.Exception(() => context.CloseFieldset(new CheckboxesFieldsetContext(attributes: null, aspFor: null)));
+        var ex = Record.Exception(() => context.CloseFieldset(new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null)));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -185,7 +185,7 @@ public class CheckboxesContextTests
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act
@@ -232,7 +232,7 @@ public class CheckboxesContextTests
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new CheckboxesFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, legendClass: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act

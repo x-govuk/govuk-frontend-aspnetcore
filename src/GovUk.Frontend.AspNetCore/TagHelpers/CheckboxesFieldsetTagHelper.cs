@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -8,7 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
 [RestrictChildren(CheckboxesFieldsetLegendTagHelper.TagName, CheckboxesItemTagHelper.TagName, CheckboxesItemDividerTagHelper.TagName, CheckboxesTagHelper.HintTagName, CheckboxesTagHelper.ErrorMessageTagName)]
-[OutputElementHint(ComponentGenerator.FieldsetElement)]
+[OutputElementHint("fieldset")]
 public class CheckboxesFieldsetTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes-fieldset";
@@ -22,7 +22,12 @@ public class CheckboxesFieldsetTagHelper : TagHelper
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
         checkboxesContext.OpenFieldset();
 
-        var fieldsetContext = new CheckboxesFieldsetContext(output.Attributes.ToAttributeDictionary(), checkboxesContext.AspFor);
+        var attributes = new AttributeCollection(output.Attributes);
+        var fieldsetContext = new CheckboxesFieldsetContext(
+            describedBy: null,
+            legendClass: null,
+            attributes: attributes,
+            @for: checkboxesContext.AspFor);
 
         using (context.SetScopedContextItem(fieldsetContext))
         {

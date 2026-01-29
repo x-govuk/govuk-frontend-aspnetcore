@@ -4,6 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 public record RadiosOptions
 {
+    public TemplateString? DescribedBy { get; set; }
     public FieldsetOptions? Fieldset { get; set; }
     public HintOptions? Hint { get; set; }
     public ErrorMessageOptions? ErrorMessage { get; set; }
@@ -53,9 +54,13 @@ public record RadiosOptionsItem
     public string? Behaviour { get; set; }
     public bool? Disabled { get; set; }
     public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ItemAttributes { get; set; }
 }
 
 public record RadiosOptionsItemConditional
 {
     public TemplateString? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }

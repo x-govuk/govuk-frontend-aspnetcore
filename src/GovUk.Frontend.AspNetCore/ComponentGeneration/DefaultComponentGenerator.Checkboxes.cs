@@ -17,6 +17,10 @@ internal partial class DefaultComponentGenerator
         {
             describedByParts.Add(describedBy);
         }
+        else if (options.DescribedBy is var describedByOption && !describedByOption.IsEmpty())
+        {
+            describedByParts.Add(describedByOption);
+        }
 
         var formGroupDiv = new HtmlTag("div", attrs => attrs
             .WithClasses("govuk-form-group", options.ErrorMessage is not null ? "govuk-form-group--error" : null, options.FormGroup?.Classes)

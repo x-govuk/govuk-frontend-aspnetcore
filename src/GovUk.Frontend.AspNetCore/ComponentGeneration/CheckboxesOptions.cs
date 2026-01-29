@@ -4,6 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 public record CheckboxesOptions
 {
+    public TemplateString? DescribedBy { get; set; }
     public FieldsetOptions? Fieldset { get; set; }
     public HintOptions? Hint { get; set; }
     public ErrorMessageOptions? ErrorMessage { get; set; }

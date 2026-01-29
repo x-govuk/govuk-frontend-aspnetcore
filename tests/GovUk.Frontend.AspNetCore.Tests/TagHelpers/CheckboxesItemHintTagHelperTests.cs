@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -36,6 +37,6 @@ public class CheckboxesItemHintTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Hint", checkboxesItemContext.Hint?.Content?.ToHtmlString());
+        Assert.Equal("Hint", checkboxesItemContext.Hint?.Options.Html?.ToHtmlString());
     }
 }

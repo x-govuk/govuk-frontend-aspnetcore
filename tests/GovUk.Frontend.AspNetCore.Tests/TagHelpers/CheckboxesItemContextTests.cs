@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 
@@ -10,12 +11,13 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
+        var conditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Conditional") };
 
         // Act
-        context.SetConditional([], content: new HtmlString("Conditional"));
+        context.SetConditional(conditionalOptions, "govuk-checkboxes-item-conditional");
 
         // Assert
-        Assert.Equal("Conditional", context.Conditional?.Content?.ToString());
+        Assert.Equal("Conditional", context.Conditional?.Options.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -23,10 +25,12 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetConditional([], content: new HtmlString("Existing conditional"));
+        var existingConditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Existing conditional") };
+        context.SetConditional(existingConditionalOptions, "govuk-checkboxes-item-conditional");
 
         // Act
-        var ex = Record.Exception(() => context.SetConditional([], content: new HtmlString("Conditional")));
+        var conditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Conditional") };
+        var ex = Record.Exception(() => context.SetConditional(conditionalOptions, "govuk-checkboxes-item-conditional"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -38,12 +42,13 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
+        var hintOptions = new HintOptions { Html = new TemplateString("Hint") };
 
         // Act
-        context.SetHint([], content: new HtmlString("Hint"));
+        context.SetHint(hintOptions, "govuk-checkboxes-item-hint");
 
         // Assert
-        Assert.Equal("Hint", context.Hint?.Content?.ToString());
+        Assert.Equal("Hint", context.Hint?.Options.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -51,10 +56,12 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetConditional([], content: new HtmlString("Existing conditional"));
+        var existingConditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Existing conditional") };
+        context.SetConditional(existingConditionalOptions, "govuk-checkboxes-item-conditional");
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
+        var hintOptions = new HintOptions { Html = new TemplateString("Hint") };
+        var ex = Record.Exception(() => context.SetHint(hintOptions, "govuk-checkboxes-item-hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -66,10 +73,12 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        context.SetHint([], content: new HtmlString("Existing hint"));
+        var existingHintOptions = new HintOptions { Html = new TemplateString("Existing hint") };
+        context.SetHint(existingHintOptions, "govuk-checkboxes-item-hint");
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
+        var hintOptions = new HintOptions { Html = new TemplateString("Hint") };
+        var ex = Record.Exception(() => context.SetHint(hintOptions, "govuk-checkboxes-item-hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -36,6 +37,6 @@ public class CheckboxesItemConditionalTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Conditional", checkboxesItemContext.Conditional?.Content?.ToHtmlString());
+        Assert.Equal("Conditional", checkboxesItemContext.Conditional?.Options.Html?.ToHtmlString());
     }
 }

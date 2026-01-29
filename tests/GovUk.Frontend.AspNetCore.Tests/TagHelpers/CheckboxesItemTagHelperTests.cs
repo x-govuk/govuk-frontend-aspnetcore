@@ -355,7 +355,8 @@ public class CheckboxesItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<CheckboxesItemContext>();
-                itemContext.SetHint([], content: new HtmlString("Hint"));
+                var hintOptions = new HintOptions { Html = new TemplateString("Hint") };
+                itemContext.SetHint(hintOptions, "govuk-checkboxes-item-hint");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -444,7 +445,8 @@ public class CheckboxesItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<CheckboxesItemContext>();
-                itemContext.SetConditional([], content: new HtmlString("Conditional"));
+                var conditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Conditional") };
+                itemContext.SetConditional(conditionalOptions, "govuk-checkboxes-item-conditional");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

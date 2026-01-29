@@ -1,5 +1,5 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -12,10 +12,10 @@ public class RadiosItemContextTests
         var context = new RadiosItemContext();
 
         // Act
-        context.SetConditional([], content: new HtmlString("Conditional"));
+        context.SetConditional(new RadiosOptionsItemConditional { Html = new TemplateString("Conditional") }, tagName: "govuk-radios-item-conditional");
 
         // Assert
-        Assert.Equal("Conditional", context.Conditional?.Content?.ToString());
+        Assert.Equal("Conditional", context.Conditional?.Options.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -23,10 +23,10 @@ public class RadiosItemContextTests
     {
         // Arrange
         var context = new RadiosItemContext();
-        context.SetConditional([], content: new HtmlString("Existing conditional"));
+        context.SetConditional(new RadiosOptionsItemConditional { Html = new TemplateString("Existing conditional") }, tagName: "govuk-radios-item-conditional");
 
         // Act
-        var ex = Record.Exception(() => context.SetConditional([], content: new HtmlString("Conditional")));
+        var ex = Record.Exception(() => context.SetConditional(new RadiosOptionsItemConditional { Html = new TemplateString("Conditional") }, tagName: "govuk-radios-item-conditional"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -40,10 +40,10 @@ public class RadiosItemContextTests
         var context = new RadiosItemContext();
 
         // Act
-        context.SetHint([], content: new HtmlString("Hint"));
+        context.SetHint(new HintOptions { Html = new TemplateString("Hint") }, tagName: "govuk-radios-item-hint");
 
         // Assert
-        Assert.Equal("Hint", context.Hint?.Content?.ToString());
+        Assert.Equal("Hint", context.Hint?.Options.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -51,10 +51,10 @@ public class RadiosItemContextTests
     {
         // Arrange
         var context = new RadiosItemContext();
-        context.SetConditional([], content: new HtmlString("Existing conditional"));
+        context.SetConditional(new RadiosOptionsItemConditional { Html = new TemplateString("Existing conditional") }, tagName: "govuk-radios-item-conditional");
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint(new HintOptions { Html = new TemplateString("Hint") }, tagName: "govuk-radios-item-hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -66,10 +66,10 @@ public class RadiosItemContextTests
     {
         // Arrange
         var context = new RadiosItemContext();
-        context.SetHint([], content: new HtmlString("Existing hint"));
+        context.SetHint(new HintOptions { Html = new TemplateString("Existing hint") }, tagName: "govuk-radios-item-hint");
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], content: new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint(new HintOptions { Html = new TemplateString("Hint") }, tagName: "govuk-radios-item-hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

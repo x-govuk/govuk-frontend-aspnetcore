@@ -1,6 +1,5 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -10,12 +9,12 @@ public class RadiosContextTests
     public void AddItem_AddsItemToItems()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
-        var item = new RadiosItem()
+        var item = new RadiosOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         // Act
@@ -30,16 +29,16 @@ public class RadiosContextTests
     public void AddItem_OutsideOfFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
-        var item = new RadiosItem()
+        var item = new RadiosOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act
@@ -54,7 +53,7 @@ public class RadiosContextTests
     public void OpenFieldset_AlreadyOpen_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
         context.OpenFieldset();
 
@@ -70,10 +69,10 @@ public class RadiosContextTests
     public void OpenFieldset_AlreadyGotFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
         context.OpenFieldset();
-        context.CloseFieldset(new RadiosFieldsetContext(attributes: null, aspFor: null));
+        context.CloseFieldset(new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null));
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
@@ -87,12 +86,12 @@ public class RadiosContextTests
     public void OpenFieldset_AlreadyGotItem_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
-        var item = new RadiosItem()
+        var item = new RadiosOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.AddItem(item);
@@ -109,8 +108,8 @@ public class RadiosContextTests
     public void OpenFieldset_AlreadyGotHint_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
-        context.SetHint(attributes: null, content: new HtmlString("Hint"));
+        var context = new RadiosContext(name: null, @for: null);
+        context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-radios-hint");
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
@@ -124,8 +123,8 @@ public class RadiosContextTests
     public void OpenFieldset_AlreadyGotErrorMessage_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
-        context.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("Error"));
+        var context = new RadiosContext(name: null, @for: null);
+        context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-radios-error-message");
 
         // Act
         var ex = Record.Exception(context.OpenFieldset);
@@ -139,10 +138,10 @@ public class RadiosContextTests
     public void CloseFieldset_FieldsetNotOpened_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
         // Act
-        var ex = Record.Exception(() => context.CloseFieldset(new RadiosFieldsetContext(attributes: null, aspFor: null)));
+        var ex = Record.Exception(() => context.CloseFieldset(new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null)));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -153,19 +152,19 @@ public class RadiosContextTests
     public void SetErrorMessage_AlreadyGotItem_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
-        var item = new RadiosItem()
+        var item = new RadiosOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.AddItem(item);
 
         // Act
         var ex = Record.Exception(
-            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Error")));
+            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-radios-error-message"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -176,21 +175,21 @@ public class RadiosContextTests
     public void SetErrorMessage_OutsideOfFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
-        var item = new RadiosItem()
+        var item = new RadiosOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act
         var ex = Record.Exception(
-            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: null, new HtmlString("Error")));
+            () => context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-radios-error-message"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -201,18 +200,18 @@ public class RadiosContextTests
     public void SetHint_AlreadyGotItem_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
-        var item = new RadiosItem()
+        var item = new RadiosOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.AddItem(item);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-radios-hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -223,20 +222,20 @@ public class RadiosContextTests
     public void SetHint_OutsideOfFieldset_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
-        var item = new RadiosItem()
+        var item = new RadiosOptionsItem()
         {
-            LabelContent = new HtmlString("Item 1"),
-            Value = "item1"
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
         };
 
         context.OpenFieldset();
-        var fieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
         context.CloseFieldset(fieldsetContext);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint(attributes: null, new HtmlString("Hint")));
+        var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-radios-hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -247,10 +246,10 @@ public class RadiosContextTests
     public void SetLabel_ThrowsNotSupportedException()
     {
         // Arrange
-        var context = new RadiosContext(name: null, aspFor: null);
+        var context = new RadiosContext(name: null, @for: null);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(isPageHeading: false, attributes: null, content: null));
+        var ex = Record.Exception(() => context.SetLabel(isPageHeading: false, attributes: new AttributeCollection(), html: null, tagName: "govuk-radios-label"));
 
         // Assert
         Assert.IsType<NotSupportedException>(ex);

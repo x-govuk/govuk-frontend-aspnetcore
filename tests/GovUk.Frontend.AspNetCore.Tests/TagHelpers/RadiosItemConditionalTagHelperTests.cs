@@ -12,7 +12,7 @@ public class RadiosItemConditionalTagHelperTests
         var radiosItemContext = new RadiosItemContext();
 
         var context = new TagHelperContext(
-            tagName: "govuk-radios-item-Conditional",
+            tagName: "govuk-radios-item-conditional",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
@@ -21,7 +21,7 @@ public class RadiosItemConditionalTagHelperTests
             uniqueId: "test");
 
         var output = new TagHelperOutput(
-            "govuk-radios-item-Conditional",
+            "govuk-radios-item-conditional",
             attributes: [],
             getChildContentAsync: (useCachedResult, encoder) =>
             {
@@ -36,6 +36,6 @@ public class RadiosItemConditionalTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Conditional", radiosItemContext.Conditional?.Content?.ToHtmlString());
+        Assert.Equal("Conditional", radiosItemContext.Conditional?.Options.Html?.ToHtmlString());
     }
 }

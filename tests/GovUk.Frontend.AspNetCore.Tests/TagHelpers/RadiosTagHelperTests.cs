@@ -1,6 +1,5 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -24,21 +23,21 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.SetHint(attributes: null, content: new HtmlString("The hint"));
+                radiosContext.SetHint(attributes: new AttributeCollection(), html: new TemplateString("The hint"), tagName: "govuk-radios-hint");
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    Html = new TemplateString("First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
                 });
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
                     Checked = true,
-                    LabelContent = new HtmlString("Second"),
+                    Html = new TemplateString("Second"),
                     Disabled = false,
                     Id = "second",
                     Value = "second"
@@ -48,11 +47,14 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testradios"
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -63,11 +65,11 @@ public class RadiosTagHelperTests
     <div class=""govuk-hint"" id=""my-id-hint"">The hint</div>
     <div class=""govuk-radios"" data-module=""govuk-radios"">
         <div class=""govuk-radios__item"">
-            <input class=""govuk-radios__input"" id=""first"" name=""testradios"" type=""radio"" value=""first"" disabled=""disabled"" />
+            <input class=""govuk-radios__input"" id=""first"" name=""testradios"" type=""radio"" value=""first"" disabled=""disabled"" aria-describedby=""my-id-hint"" />
             <label class=""govuk-radios__label govuk-label"" for=""first"">First</label>
         </div>
         <div class=""govuk-radios__item"">
-            <input class=""govuk-radios__input"" id=""second"" name=""testradios"" type=""radio"" value=""second"" checked=""checked"" />
+            <input class=""govuk-radios__input"" id=""second"" name=""testradios"" type=""radio"" value=""second"" checked=""checked"" aria-describedby=""my-id-hint"" />
             <label class=""govuk-radios__label govuk-label"" for=""second"">Second</label>
         </div>
     </div>
@@ -93,21 +95,21 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.SetErrorMessage(visuallyHiddenText: null, attributes: null, content: new HtmlString("A error"));
+                radiosContext.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("A error"), tagName: "govuk-radios-error-message");
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    Html = new TemplateString("First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
                 });
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
                     Checked = true,
-                    LabelContent = new HtmlString("Second"),
+                    Html = new TemplateString("Second"),
                     Disabled = false,
                     Id = "second",
                     Value = "second"
@@ -117,12 +119,15 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testradios",
             ViewContext = TestUtils.CreateViewContext()
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -133,11 +138,11 @@ public class RadiosTagHelperTests
     <p class=""govuk-error-message"" id=""my-id-error""><span class=""govuk-visually-hidden"">Error:</span>A error</p>
     <div class=""govuk-radios"" data-module=""govuk-radios"">
         <div class=""govuk-radios__item"">
-            <input class=""govuk-radios__input"" id=""first"" name=""testradios"" type=""radio"" value=""first"" disabled=""disabled"" />
+            <input class=""govuk-radios__input"" id=""first"" name=""testradios"" type=""radio"" value=""first"" disabled=""disabled"" aria-describedby=""my-id-error"" />
             <label class=""govuk-radios__label govuk-label"" for=""first"">First</label>
         </div>
         <div class=""govuk-radios__item"">
-            <input class=""govuk-radios__input"" id=""second"" name=""testradios"" type=""radio"" value=""second"" checked=""checked"" />
+            <input class=""govuk-radios__input"" id=""second"" name=""testradios"" type=""radio"" value=""second"" checked=""checked"" aria-describedby=""my-id-error"" />
             <label class=""govuk-radios__label govuk-label"" for=""second"">Second</label>
         </div>
     </div>
@@ -163,12 +168,12 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
-                    LabelContent = new HtmlString("First"),
-                    Hint = new RadiosItemHint()
+                    Html = new TemplateString("First"),
+                    Hint = new HintOptions()
                     {
-                        Content = new HtmlString("First item hint")
+                        Html = new TemplateString("First item hint")
                     },
                     Id = "first",
                     Value = "first"
@@ -178,11 +183,14 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testradios"
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -219,12 +227,12 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
-                    LabelContent = new HtmlString("First"),
-                    Conditional = new RadiosItemConditional()
+                    Html = new TemplateString("First"),
+                    Conditional = new RadiosOptionsItemConditional()
                     {
-                        Content = new HtmlString("Item 1 conditional")
+                        Html = new TemplateString("Item 1 conditional")
                     },
                     Id = "first",
                     Value = "first"
@@ -234,11 +242,14 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testradios"
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -275,13 +286,13 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
                     Checked = true,
-                    LabelContent = new HtmlString("First"),
-                    Conditional = new RadiosItemConditional()
+                    Html = new TemplateString("First"),
+                    Conditional = new RadiosOptionsItemConditional()
                     {
-                        Content = new HtmlString("Item 1 conditional")
+                        Html = new TemplateString("Item 1 conditional")
                     },
                     Id = "first",
                     Value = "first"
@@ -291,11 +302,14 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
         {
             IdPrefix = "my-id",
             Name = "testradios"
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -333,24 +347,24 @@ public class RadiosTagHelperTests
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
                 radiosContext.OpenFieldset();
-                var radiosFieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
-                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: null, content: new HtmlString("Legend"));
+                var radiosFieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
+                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString("Legend"));
 
-                radiosContext.SetHint(attributes: null, content: new HtmlString("The hint"));
+                radiosContext.SetHint(attributes: new AttributeCollection(), html: new TemplateString("The hint"), tagName: "govuk-radios-hint");
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
                     Checked = false,
-                    LabelContent = new HtmlString("First"),
+                    Html = new TemplateString("First"),
                     Disabled = true,
                     Id = "first",
                     Value = "first"
                 });
 
-                radiosContext.AddItem(new RadiosItem()
+                radiosContext.AddItem(new RadiosOptionsItem()
                 {
                     Checked = true,
-                    LabelContent = new HtmlString("Second"),
+                    Html = new TemplateString("Second"),
                     Disabled = false,
                     Id = "second",
                     Value = "second"
@@ -362,12 +376,15 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosTagHelper(new ComponentGenerator(), new DefaultModelHelper())
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
         {
             DescribedBy = "describedby",
             IdPrefix = "my-id",
             Name = "testradios"
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

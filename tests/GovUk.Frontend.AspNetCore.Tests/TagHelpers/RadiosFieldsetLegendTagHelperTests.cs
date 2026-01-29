@@ -1,5 +1,5 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -10,7 +10,7 @@ public class RadiosFieldsetLegendTagHelperTests
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
-        var fieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset-legend",
@@ -40,7 +40,7 @@ public class RadiosFieldsetLegendTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Legend content", fieldsetContext.Legend?.Content?.ToHtmlString());
+        Assert.Equal("Legend content", fieldsetContext.Legend?.Html?.ToHtmlString());
         Assert.True(fieldsetContext.Legend?.IsPageHeading);
     }
 
@@ -48,12 +48,12 @@ public class RadiosFieldsetLegendTagHelperTests
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new RadiosFieldsetContext(attributes: null, aspFor: null);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
-            attributes: null,
-            content: new HtmlString("Existing legend"));
+            attributes: new AttributeCollection(),
+            html: new TemplateString("Existing legend"));
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset-legend",

@@ -227,11 +227,9 @@ public class TextInputTagHelper : TagHelper
 
         var textInputContext = context.GetContextItem<TextInputContext>();
 
-        using (context.SetScopedContextItem(textInputContext))
-        using (context.SetScopedContextItem(typeof(FormGroupContext3), textInputContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(textInputContext);
+        context.SetContextItem(typeof(FormGroupContext3), textInputContext);
+        _ = await output.GetChildContentAsync();
 
         var name = ResolveName();
         var id = ResolveId(name);

@@ -21,10 +21,8 @@ public class SummaryListRowTagHelper : TagHelper
         var summaryListContext = context.GetContextItem<SummaryListContext>();
         var rowContext = new SummaryListRowContext();
 
-        using (context.SetScopedContextItem(rowContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(rowContext);
+        _ = await output.GetChildContentAsync();
 
         rowContext.ThrowIfIncomplete();
 

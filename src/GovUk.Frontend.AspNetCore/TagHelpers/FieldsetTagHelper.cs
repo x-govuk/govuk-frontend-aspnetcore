@@ -50,10 +50,8 @@ public class FieldsetTagHelper : TagHelper
 
         IHtmlContent content;
 
-        using (context.SetScopedContextItem(fieldsetContext))
-        {
-            content = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(fieldsetContext);
+        content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

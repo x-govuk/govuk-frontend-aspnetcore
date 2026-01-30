@@ -17,7 +17,7 @@ public class SelectHintTagHelperTests
             items: new Dictionary<object, object>(),
             uniqueId: "test");
 
-        context.SetScopedContextItem(typeof(FormGroupContext3), selectContext);
+        context.SetContextItem(typeof(FormGroupContext3), selectContext);
 
         var output = new TagHelperOutput(
             SelectHintTagHelper.TagName,

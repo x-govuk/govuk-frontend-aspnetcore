@@ -118,10 +118,8 @@ public class CheckboxesTagHelper : TagHelper
 
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-        using (context.SetScopedContextItem(checkboxesContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(checkboxesContext);
+        _ = await output.GetChildContentAsync();
 
         var idPrefix = ResolveIdPrefix();
         var name = ResolveName();

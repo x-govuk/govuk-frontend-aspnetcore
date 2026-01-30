@@ -51,10 +51,8 @@ public class PaginationTagHelper : TagHelper
 
         var paginationContext = new PaginationContext();
 
-        using (context.SetScopedContextItem(paginationContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(paginationContext);
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

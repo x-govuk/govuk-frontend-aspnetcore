@@ -174,11 +174,9 @@ public class TextAreaTagHelper : TagHelper
 
         var textAreaContext = context.GetContextItem<TextAreaContext>();
 
-        using (context.SetScopedContextItem(textAreaContext))
-        using (context.SetScopedContextItem(typeof(FormGroupContext3), textAreaContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(textAreaContext);
+        context.SetContextItem(typeof(FormGroupContext3), textAreaContext);
+        _ = await output.GetChildContentAsync();
 
         var name = ResolveName();
         var id = ResolveId(name);

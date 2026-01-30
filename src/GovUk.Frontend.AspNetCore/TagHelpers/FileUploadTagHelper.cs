@@ -148,11 +148,9 @@ public class FileUploadTagHelper : TagHelper
 
         var fileUploadContext = new FileUploadContext();
 
-        using (context.SetScopedContextItem(fileUploadContext))
-        using (context.SetScopedContextItem(typeof(FormGroupContext3), fileUploadContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(fileUploadContext);
+        context.SetContextItem(typeof(FormGroupContext3), fileUploadContext);
+        _ = await output.GetChildContentAsync();
 
         var name = ResolveName();
         var id = ResolveId(name);

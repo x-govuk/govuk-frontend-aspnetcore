@@ -106,10 +106,8 @@ public class RadiosItemTagHelper : TagHelper
         var itemContext = context.GetContextItem<RadiosItemContext>();
 
         TagHelperContent content;
-        using (context.SetScopedContextItem(itemContext))
-        {
-            content = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(itemContext);
+        content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

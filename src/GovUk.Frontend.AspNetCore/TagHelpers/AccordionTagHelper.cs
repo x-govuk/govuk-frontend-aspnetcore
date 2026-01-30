@@ -130,10 +130,8 @@ public class AccordionTagHelper : TagHelper
 
         var accordionContext = new AccordionContext();
 
-        using (context.SetScopedContextItem(accordionContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(accordionContext);
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

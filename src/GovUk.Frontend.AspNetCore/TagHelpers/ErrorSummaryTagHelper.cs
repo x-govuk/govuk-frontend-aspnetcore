@@ -51,10 +51,8 @@ public class ErrorSummaryTagHelper : TagHelper
 
         var errorSummaryContext = new ErrorSummaryContext();
 
-        using (context.SetScopedContextItem(typeof(ErrorSummaryContext), errorSummaryContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(typeof(ErrorSummaryContext), errorSummaryContext);
+        _ = await output.GetChildContentAsync();
 
         var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
 

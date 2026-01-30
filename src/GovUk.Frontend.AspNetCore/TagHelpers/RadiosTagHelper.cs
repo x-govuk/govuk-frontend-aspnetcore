@@ -111,11 +111,9 @@ public class RadiosTagHelper : TagHelper
 
         var radiosContext = context.GetContextItem<RadiosContext>();
 
-        using (context.SetScopedContextItem(radiosContext))
-        using (context.SetScopedContextItem(typeof(FormGroupContext3), radiosContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(radiosContext);
+        context.SetContextItem(typeof(FormGroupContext3), radiosContext);
+        _ = await output.GetChildContentAsync();
 
         var idPrefix = ResolveIdPrefix();
         var name = ResolveName();

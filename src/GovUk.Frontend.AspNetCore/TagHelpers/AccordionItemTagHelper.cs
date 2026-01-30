@@ -45,15 +45,15 @@ public class AccordionItemTagHelper : TagHelper
             Expanded = Expanded ?? false,
             Heading = new AccordionOptionsItemHeading
             {
-                Html = itemContext.Heading!.Value.Content.ToTemplateString()
+                Html = itemContext.Heading!.Value.Content
             },
             Summary = itemContext.Summary is not null ? new AccordionOptionsItemSummary
             {
-                Html = itemContext.Summary.Value.Content.ToTemplateString()
+                Html = itemContext.Summary.Value.Content
             } : null,
             Content = new AccordionOptionsItemContent
             {
-                Html = itemContext.Content!.Value.Content.ToTemplateString()
+                Html = itemContext.Content!.Value.Content
             }
         });
 

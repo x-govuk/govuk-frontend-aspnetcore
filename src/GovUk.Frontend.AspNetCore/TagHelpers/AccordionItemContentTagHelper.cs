@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -25,7 +26,9 @@ public class AccordionItemContentTagHelper : TagHelper
             content = output.Content;
         }
 
-        itemContext.SetContent(output.Attributes.ToAttributeDictionary(), content.Snapshot());
+        var attributes = new AttributeCollection(output.Attributes);
+
+        itemContext.SetContent(attributes, content.ToTemplateString());
 
         output.SuppressOutput();
     }

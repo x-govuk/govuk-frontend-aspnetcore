@@ -44,7 +44,7 @@ public class FieldsetLegendTagHelper : TagHelper
 
         fieldsetContext.SetLegend(
             IsPageHeading ?? ComponentGenerator.FieldsetLegendDefaultIsPageHeading,
-            output.Attributes.Count > 0 ? new AttributeCollection(output.Attributes) : null,
+            new AttributeCollection(output.Attributes),
             content.Snapshot());
 
         output.SuppressOutput();

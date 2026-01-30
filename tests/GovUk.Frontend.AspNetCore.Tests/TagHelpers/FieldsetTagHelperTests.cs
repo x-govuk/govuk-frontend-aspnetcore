@@ -31,7 +31,7 @@ public class FieldsetTagHelperTests
 
                 fieldsetContext.SetLegend(
                     isPageHeading: false,
-                    attributes: null,
+                    attributes: new AttributeCollection(),
                     content: new HtmlString(legendText));
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -60,7 +60,8 @@ public class FieldsetTagHelperTests
         Assert.NotNull(actualOptions.Legend);
         Assert.False(actualOptions.Legend!.IsPageHeading);
         Assert.Equal(legendText, actualOptions.Legend.Html);
-        Assert.Null(actualOptions.Legend.Attributes);
+        Assert.NotNull(actualOptions.Legend.Attributes);
+        Assert.Empty(actualOptions.Legend.Attributes);
         Assert.Null(actualOptions.Classes);
         Assert.NotNull(actualOptions.Attributes);
         Assert.Empty(actualOptions.Attributes);
@@ -90,7 +91,7 @@ public class FieldsetTagHelperTests
 
                 fieldsetContext.SetLegend(
                     isPageHeading: true,
-                    attributes: null,
+                    attributes: new AttributeCollection(),
                     content: new HtmlString(legendText));
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -119,7 +120,8 @@ public class FieldsetTagHelperTests
         Assert.NotNull(actualOptions.Legend);
         Assert.True(actualOptions.Legend!.IsPageHeading);
         Assert.Equal(legendText, actualOptions.Legend.Html);
-        Assert.Null(actualOptions.Legend.Attributes);
+        Assert.NotNull(actualOptions.Legend.Attributes);
+        Assert.Empty(actualOptions.Legend.Attributes);
     }
 
     [Fact]
@@ -190,7 +192,7 @@ public class FieldsetTagHelperTests
 
                 fieldsetContext.SetLegend(
                     isPageHeading: false,
-                    attributes: null,
+                    attributes: new AttributeCollection(),
                     content: new HtmlString(legendText));
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -219,7 +221,8 @@ public class FieldsetTagHelperTests
         Assert.NotNull(actualOptions.Legend);
         Assert.False(actualOptions.Legend!.IsPageHeading);
         Assert.Equal(legendText, actualOptions.Legend.Html);
-        Assert.Null(actualOptions.Legend.Attributes);
+        Assert.NotNull(actualOptions.Legend.Attributes);
+        Assert.Empty(actualOptions.Legend.Attributes);
         Assert.Equal(customClass, actualOptions.Classes);
         Assert.NotNull(actualOptions.Attributes);
         Assert.Collection(actualOptions.Attributes, kvp =>

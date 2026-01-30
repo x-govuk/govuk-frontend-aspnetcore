@@ -5,13 +5,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class FieldsetContext
 {
-    public (bool IsPageHeading, AttributeCollection? Attributes, IHtmlContent Content)? Legend { get; private set; }
+    public (bool IsPageHeading, AttributeCollection Attributes, IHtmlContent Content)? Legend { get; private set; }
 
     public void SetLegend(
         bool isPageHeading,
-        AttributeCollection? attributes,
+        AttributeCollection attributes,
         IHtmlContent content)
     {
+        ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);
 
         if (Legend is not null)

@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -13,7 +12,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS error message component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[OutputElementHint(ComponentGenerator.ErrorMessageElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.ErrorMessage)]
 public class ErrorMessageTagHelper : TagHelper
 {
     internal const string TagName = "govuk-error-message";

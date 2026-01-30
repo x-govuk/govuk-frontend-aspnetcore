@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -9,7 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS fieldset component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[OutputElementHint(ComponentGenerator.FieldsetElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Fieldset)]
 public class FieldsetTagHelper : TagHelper
 {
     internal const string TagName = "govuk-fieldset";

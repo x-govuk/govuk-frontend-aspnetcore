@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Builder;
@@ -44,7 +43,6 @@ public static class GovUkFrontendExtensions
 
         services.AddMvcCore();
 
-        services.TryAddSingleton<IGovUkHtmlGenerator, ComponentGenerator>();
         services.TryAddSingleton<IComponentGenerator, DefaultComponentGenerator>();
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();

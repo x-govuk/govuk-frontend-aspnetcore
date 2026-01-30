@@ -5,7 +5,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal abstract class FormGroupFieldsetContext2
 {
-    public record LegendInfo(bool IsPageHeading, AttributeCollection Attributes, TemplateString? Html);
+    public record LegendInfo(bool? IsPageHeading, AttributeCollection Attributes, TemplateString? Html);
 
     private readonly string _fieldsetTagName;
     private readonly string _legendTagName;
@@ -25,6 +25,7 @@ internal abstract class FormGroupFieldsetContext2
         ArgumentNullException.ThrowIfNull(fieldsetTagName);
         ArgumentNullException.ThrowIfNull(legendTagName);
         ArgumentNullException.ThrowIfNull(attributes);
+
         _fieldsetTagName = fieldsetTagName;
         _legendTagName = legendTagName;
         _describedBy = describedBy;
@@ -78,7 +79,7 @@ internal abstract class FormGroupFieldsetContext2
         };
     }
 
-    public void SetLegend(bool isPageHeading, AttributeCollection attributes, TemplateString? html)
+    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, TemplateString? html)
     {
         ArgumentNullException.ThrowIfNull(attributes);
 

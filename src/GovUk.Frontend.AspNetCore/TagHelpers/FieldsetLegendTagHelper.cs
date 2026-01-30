@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -43,7 +42,7 @@ public class FieldsetLegendTagHelper : TagHelper
         }
 
         fieldsetContext.SetLegend(
-            IsPageHeading ?? ComponentGenerator.FieldsetLegendDefaultIsPageHeading,
+            IsPageHeading,
             new AttributeCollection(output.Attributes),
             content.Snapshot());
 

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,7 +30,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     FormGroupErrorMessageTagHelperBase.ShortTagName
 #endif
     )]
-[OutputElementHint(ComponentGenerator.FormGroupElement)]
+[OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class DateInputTagHelper : TagHelper
 {
     internal const string TagName = "govuk-date-input";

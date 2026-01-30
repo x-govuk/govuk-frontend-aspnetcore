@@ -468,6 +468,7 @@ public class CheckboxesTagHelperTests
         Assert.Equal(hintContent, actualOptions.Hint.Html);
         Assert.NotNull(actualOptions.Fieldset);
         Assert.NotNull(actualOptions.Fieldset.Legend);
+        Assert.Equal(describedBy, actualOptions.DescribedBy);
         Assert.Equal(legendContent, actualOptions.Fieldset.Legend.Html);
         Assert.Equal(2, actualOptions.Items?.Count);
 

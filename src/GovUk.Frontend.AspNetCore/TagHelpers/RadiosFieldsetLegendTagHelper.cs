@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -40,9 +40,9 @@ public class RadiosFieldsetLegendTagHelper : TagHelper
         }
 
         fieldsetContext.SetLegend(
-            IsPageHeading ?? ComponentGenerator.FieldsetLegendDefaultIsPageHeading,
-            output.Attributes.ToAttributeDictionary(),
-            content: content);
+            IsPageHeading ?? false,
+            new AttributeCollection(output.Attributes),
+            html: content.ToTemplateString());
 
         output.SuppressOutput();
     }

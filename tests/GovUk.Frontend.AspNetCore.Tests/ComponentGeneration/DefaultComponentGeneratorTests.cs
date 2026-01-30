@@ -186,6 +186,13 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GeneratePhaseBannerAsync(options));
 
     [Theory]
+    [ComponentFixtureData("radios", typeof(RadiosOptions), exclude: ["with falsy items"])]
+    public Task Radios(ComponentTestCaseData<RadiosOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateRadiosAsync(options));
+
+    [Theory]
     [ComponentFixtureData("select", typeof(SelectOptions), exclude: ["with falsy items", "with falsy values"])]
     public Task Select(ComponentTestCaseData<SelectOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(

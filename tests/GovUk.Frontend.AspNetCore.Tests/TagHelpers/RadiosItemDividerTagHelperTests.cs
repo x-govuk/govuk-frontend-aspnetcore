@@ -1,6 +1,5 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -11,7 +10,7 @@ public class RadiosItemDividerTagHelperTests
     public async Task ProcessAsync_AddsDividerToContextItems()
     {
         // Arrange
-        var radiosContext = new RadiosContext(name: null, aspFor: null);
+        var radiosContext = new RadiosContext(name: null, @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-divider",
@@ -28,7 +27,7 @@ public class RadiosItemDividerTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.AppendHtml(new HtmlString("Divider"));
+                tagHelperContent.AppendHtml("Divider");
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
@@ -42,8 +41,8 @@ public class RadiosItemDividerTagHelperTests
             radiosContext.Items,
             item =>
             {
-                var divider = Assert.IsType<RadiosItemDivider>(item);
-                Assert.Equal("Divider", divider.Content?.ToString());
+                var divider = Assert.IsType<RadiosOptionsItem>(item);
+                Assert.Equal("Divider", divider.Divider?.ToHtmlString());
             });
     }
 }

@@ -1,5 +1,4 @@
 #nullable disable
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -30,11 +29,5 @@ internal interface IGovUkHtmlGenerator
         string @for,
         bool isPageHeading,
         IHtmlContent content,
-        AttributeDictionary attributes);
-
-    TagBuilder GenerateRadios(
-        string idPrefix,
-        string name,
-        IEnumerable<RadiosItemBase> items,
         AttributeDictionary attributes);
 }

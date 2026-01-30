@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -27,10 +27,9 @@ public class RadiosItemDividerTagHelper : TagHelper
             content = output.Content;
         }
 
-        radiosContext.AddItem(new RadiosItemDivider
+        radiosContext.AddItem(new RadiosOptionsItem
         {
-            Attributes = output.Attributes.ToAttributeDictionary(),
-            Content = content.Snapshot()
+            Divider = content.ToTemplateString()
         });
 
         output.SuppressOutput();

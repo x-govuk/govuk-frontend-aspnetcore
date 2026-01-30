@@ -174,9 +174,9 @@ public class CheckboxesTagHelper : TagHelper
 
         var component = await _componentGenerator.GenerateCheckboxesAsync(new CheckboxesOptions
         {
+            DescribedBy = DescribedBy,
             IdPrefix = idPrefix,
             Name = name,
-            DescribedBy = DescribedBy,
             Fieldset = fieldsetOptions,
             Hint = hintOptions,
             ErrorMessage = errorMessageOptions,

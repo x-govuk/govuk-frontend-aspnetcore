@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -23,26 +23,18 @@ public class RadiosItemTagHelper : TagHelper
     private const string LabelAttributesPrefix = "label-";
     private const string ValueAttributeName = "value";
 
-    private readonly IModelHelper _modelHelper;
-
     /// <summary>
-    /// Creates a new <see cref="CheckboxesItemTagHelper"/>.
+    /// Creates a new <see cref="RadiosItemTagHelper"/>.
     /// </summary>
     public RadiosItemTagHelper()
-        : this(modelHelper: null)
     {
-    }
-
-    internal RadiosItemTagHelper(IModelHelper? modelHelper = null)
-    {
-        _modelHelper = modelHelper ?? new DefaultModelHelper();
     }
 
     /// <summary>
     /// Whether the item should be checked.
     /// </summary>
     /// <remarks>
-    /// If <c>null</c> and <see cref="FormGroupTagHelperBase.AspFor"/> is not <c>null</c> on the parent <see cref="RadiosTagHelper"/> then the value
+    /// If <c>null</c> and <see cref="RadiosTagHelper.For"/> is not <c>null</c> on the parent <see cref="RadiosTagHelper"/> then the value
     /// will be computed by comparing the specified model expression with <see cref="Value"/>.
     /// The default is <c>false</c>.
     /// </remarks>
@@ -94,6 +86,12 @@ public class RadiosItemTagHelper : TagHelper
     public ViewContext? ViewContext { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new RadiosItemContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -105,11 +103,9 @@ public class RadiosItemTagHelper : TagHelper
         }
 
         var radiosContext = context.GetContextItem<RadiosContext>();
-
-        var itemContext = new RadiosItemContext();
+        var itemContext = context.GetContextItem<RadiosItemContext>();
 
         TagHelperContent content;
-
         using (context.SetScopedContextItem(itemContext))
         {
             content = await output.GetChildContentAsync();
@@ -121,47 +117,42 @@ public class RadiosItemTagHelper : TagHelper
         }
 
         var resolvedChecked = Checked ??
-            (radiosContext.AspFor is not null ? (bool?)DoesModelMatchItemValue() : null) ??
-            ComponentGenerator.RadiosItemDefaultChecked;
+            (radiosContext.For is not null ? DoesModelMatchItemValue() : null);
 
-        radiosContext.AddItem(new RadiosItem
+        var itemAttributes = new AttributeCollection(output.Attributes);
+
+        var labelAttributes = new AttributeCollection(LabelAttributes);
+        labelAttributes.Remove("class", out var labelClasses);
+
+        var inputAttributes = new AttributeCollection(InputAttributes);
+
+        radiosContext.AddItem(new RadiosOptionsItem
         {
-            Attributes = output.Attributes.ToAttributeDictionary(),
-            Checked = resolvedChecked,
-            Conditional = itemContext.Conditional is not null ?
-                new RadiosItemConditional
-                {
-                    Content = itemContext.Conditional.Value.Content,
-                    Attributes = itemContext.Conditional.Value.Attributes
-                } :
-                null,
-            Disabled = Disabled ?? ComponentGenerator.RadiosItemDefaultDisabled,
-            Hint = itemContext.Hint is not null ?
-                new RadiosItemHint
-                {
-                    Content = itemContext.Hint.Value.Content,
-                    Attributes = itemContext.Hint.Value.Attributes
-                } :
-                null,
+            Text = null,
+            Html = content.ToTemplateString(),
             Id = Id,
-            InputAttributes = InputAttributes.ToAttributeDictionary(),
-            LabelAttributes = LabelAttributes.ToAttributeDictionary(),
-            LabelContent = content.Snapshot(),
-            Value = Value
+            Value = Value,
+            Label = new LabelOptions
+            {
+                Classes = labelClasses,
+                Attributes = labelAttributes
+            },
+            Hint = itemContext.Hint?.Options,
+            Checked = resolvedChecked,
+            Conditional = itemContext.Conditional?.Options,
+            Disabled = Disabled,
+            Attributes = inputAttributes,
+            ItemAttributes = itemAttributes
         });
 
         output.SuppressOutput();
 
         bool DoesModelMatchItemValue()
         {
-            Debug.Assert(radiosContext.AspFor is not null);
+            Debug.Assert(radiosContext.For is not null);
             Debug.Assert(ViewContext is not null);
 
-            var modelValue = _modelHelper.GetModelValue(
-                ViewContext!,
-                radiosContext.AspFor.ModelExplorer,
-                radiosContext.AspFor.Name);
-
+            var modelValue = radiosContext.For?.Model?.ToString();
             return modelValue == Value;
         }
     }

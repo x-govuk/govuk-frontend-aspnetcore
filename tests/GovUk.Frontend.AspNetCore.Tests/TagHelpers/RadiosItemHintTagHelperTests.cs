@@ -36,6 +36,6 @@ public class RadiosItemHintTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Hint", radiosItemContext.Hint?.Content?.ToHtmlString());
+        Assert.Equal("Hint", radiosItemContext.Hint?.Options.Html?.ToHtmlString());
     }
 }

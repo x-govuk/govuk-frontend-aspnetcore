@@ -1,6 +1,5 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -14,14 +13,15 @@ public class RadiosItemTagHelperTests
     public async Task ProcessAsync_AddsItemToContext()
     {
         // Arrange
-        var radiosContext = new RadiosContext(name: "test", aspFor: null);
+        var radiosContext = new RadiosContext(name: "test", @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -50,7 +50,7 @@ public class RadiosItemTagHelperTests
             radiosContext.Items,
             item =>
             {
-                var radiosItem = Assert.IsType<RadiosItem>(item);
+                var radiosItem = Assert.IsType<RadiosOptionsItem>(item);
                 Assert.True(radiosItem.Checked);
                 Assert.True(radiosItem.Disabled);
                 Assert.Equal("id", radiosItem.Id);
@@ -62,14 +62,15 @@ public class RadiosItemTagHelperTests
     public async Task ProcessAsync_NoValue_ThrowsInvalidOperationException()
     {
         // Arrange
-        var radiosContext = new RadiosContext(name: "test", aspFor: null);
+        var radiosContext = new RadiosContext(name: "test", @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -96,14 +97,15 @@ public class RadiosItemTagHelperTests
     public async Task ProcessAsync_NoNameButParentHasName_DoesNotThrowInvalidOperationException()
     {
         // Arrange
-        var radiosContext = new RadiosContext(name: "parent", aspFor: null);
+        var radiosContext = new RadiosContext(name: "parent", @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -144,14 +146,15 @@ public class RadiosItemTagHelperTests
         var viewContext = new ViewContext();
         var modelExpression = nameof(Model.Foo);
 
-        var radiosContext = new RadiosContext(name: "test", aspFor: new ModelExpression(modelExpression, modelExplorer));
+        var radiosContext = new RadiosContext(name: "test", @for: new ModelExpression(modelExpression, modelExplorer));
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -179,7 +182,7 @@ public class RadiosItemTagHelperTests
             radiosContext.Items,
             item =>
             {
-                var radiosItem = Assert.IsType<RadiosItem>(item);
+                var radiosItem = Assert.IsType<RadiosOptionsItem>(item);
                 Assert.Equal(expectedChecked, radiosItem.Checked);
             });
     }
@@ -198,14 +201,15 @@ public class RadiosItemTagHelperTests
         var viewContext = new ViewContext();
         var modelExpression = nameof(ModelWithCollectionProperty.CollectionProperty);
 
-        var radiosContext = new RadiosContext(name: "test", aspFor: new ModelExpression(modelExpression, modelExplorer));
+        var radiosContext = new RadiosContext(name: "test", @for: new ModelExpression(modelExpression, modelExplorer));
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -232,7 +236,7 @@ public class RadiosItemTagHelperTests
             radiosContext.Items,
             item =>
             {
-                var radiosItem = Assert.IsType<RadiosItem>(item);
+                var radiosItem = Assert.IsType<RadiosOptionsItem>(item);
                 Assert.False(radiosItem.Checked);
             });
     }
@@ -241,14 +245,15 @@ public class RadiosItemTagHelperTests
     public async Task ProcessAsync_WithHint_SetsHintOnContext()
     {
         // Arrange
-        var radiosContext = new RadiosContext(name: "test", aspFor: null);
+        var radiosContext = new RadiosContext(name: "test", @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -258,7 +263,8 @@ public class RadiosItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<RadiosItemContext>();
-                itemContext.SetHint([], content: new HtmlString("Hint"));
+                var hintOptions = new HintOptions { Html = new TemplateString("Hint") };
+                itemContext.SetHint(hintOptions, "govuk-radios-item-hint");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -277,8 +283,8 @@ public class RadiosItemTagHelperTests
             radiosContext.Items,
             item =>
             {
-                var radiosItem = Assert.IsType<RadiosItem>(item);
-                Assert.Equal("Hint", radiosItem.Hint?.Content?.ToHtmlString());
+                var radiosItem = Assert.IsType<RadiosOptionsItem>(item);
+                Assert.Equal("Hint", radiosItem.Hint?.Html?.ToHtmlString());
             });
     }
 
@@ -286,14 +292,15 @@ public class RadiosItemTagHelperTests
     public async Task ProcessAsync_WithoutHint_DoesNotSetHintOnContext()
     {
         // Arrange
-        var radiosContext = new RadiosContext(name: "test", aspFor: null);
+        var radiosContext = new RadiosContext(name: "test", @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -319,7 +326,7 @@ public class RadiosItemTagHelperTests
             radiosContext.Items,
             item =>
             {
-                var radiosItem = Assert.IsType<RadiosItem>(item);
+                var radiosItem = Assert.IsType<RadiosOptionsItem>(item);
                 Assert.Null(radiosItem.Hint);
             });
     }
@@ -328,14 +335,15 @@ public class RadiosItemTagHelperTests
     public async Task ProcessAsync_WithConditional_SetsConditionalOnContext()
     {
         // Arrange
-        var radiosContext = new RadiosContext(name: "test", aspFor: null);
+        var radiosContext = new RadiosContext(name: "test", @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -345,7 +353,8 @@ public class RadiosItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<RadiosItemContext>();
-                itemContext.SetConditional([], content: new HtmlString("Conditional"));
+                var conditionalOptions = new RadiosOptionsItemConditional { Html = new TemplateString("Conditional") };
+                itemContext.SetConditional(conditionalOptions, "govuk-radios-item-conditional");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -364,8 +373,8 @@ public class RadiosItemTagHelperTests
             radiosContext.Items,
             item =>
             {
-                var radiosItem = Assert.IsType<RadiosItem>(item);
-                Assert.Equal("Conditional", radiosItem.Conditional?.Content?.ToHtmlString());
+                var radiosItem = Assert.IsType<RadiosOptionsItem>(item);
+                Assert.Equal("Conditional", radiosItem.Conditional?.Html?.ToHtmlString());
             });
     }
 
@@ -373,14 +382,15 @@ public class RadiosItemTagHelperTests
     public async Task ProcessAsync_WithoutConditional_DoesNotSetConditionalOnContext()
     {
         // Arrange
-        var radiosContext = new RadiosContext(name: "test", aspFor: null);
+        var radiosContext = new RadiosContext(name: "test", @for: null);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-item",
             allAttributes: [],
             items: new Dictionary<object, object>()
             {
-                { typeof(RadiosContext), radiosContext }
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
             },
             uniqueId: "test");
 
@@ -406,7 +416,7 @@ public class RadiosItemTagHelperTests
             radiosContext.Items,
             item =>
             {
-                var radiosItem = Assert.IsType<RadiosItem>(item);
+                var radiosItem = Assert.IsType<RadiosOptionsItem>(item);
                 Assert.Null(radiosItem.Conditional);
             });
     }

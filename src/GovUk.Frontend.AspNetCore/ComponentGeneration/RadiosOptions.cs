@@ -10,7 +10,7 @@ public record RadiosOptions
     public RadiosOptionsFormGroup? FormGroup { get; set; }
     public TemplateString? IdPrefix { get; set; }
     public TemplateString? Name { get; set; }
-    public IReadOnlyCollection<RadiosOptionsItem>? Items { get; set; }
+    public IReadOnlyCollection<RadiosOptionsItem?>? Items { get; set; }
     public TemplateString? Value { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
@@ -24,23 +24,19 @@ public record RadiosOptionsFormGroup : FormGroupOptions
 
 public record RadiosOptionsBeforeInputs
 {
-    public string? Text { get; set; }
-    public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
+    public TemplateString? Text { get; set; }
+    public TemplateString? Html { get; set; }
 }
 
 public record RadiosOptionsAfterInputs
 {
     public string? Text { get; set; }
     public string? Html { get; set; }
-    [NonStandardParameter]
-    public AttributeCollection? Attributes { get; set; }
 }
 
 public record RadiosOptionsItem
 {
-    public string? Text { get; set; }
+    public TemplateString? Text { get; set; }
     public TemplateString? Html { get; set; }
     public TemplateString? Id { get; set; }
     public TemplateString? Name { get; set; }
@@ -53,9 +49,13 @@ public record RadiosOptionsItem
     public string? Behaviour { get; set; }
     public bool? Disabled { get; set; }
     public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ItemAttributes { get; set; }
 }
 
 public record RadiosOptionsItemConditional
 {
     public TemplateString? Html { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }

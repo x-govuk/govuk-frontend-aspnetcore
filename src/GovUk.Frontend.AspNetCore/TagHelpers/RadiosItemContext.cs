@@ -1,17 +1,16 @@
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class RadiosItemContext
 {
-    public (AttributeDictionary Attributes, IHtmlContent Content)? Conditional { get; private set; }
-    public (AttributeDictionary Attributes, IHtmlContent Content)? Hint { get; private set; }
+    public (RadiosOptionsItemConditional Options, string TagName)? Conditional { get; private set; }
+    public (HintOptions Options, string TagName)? Hint { get; private set; }
 
-    public void SetConditional(AttributeDictionary attributes, IHtmlContent content)
+    public void SetConditional(RadiosOptionsItemConditional options, string tagName)
     {
-        ArgumentNullException.ThrowIfNull(attributes);
-        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(tagName);
 
         if (Conditional is not null)
         {
@@ -20,13 +19,13 @@ internal class RadiosItemContext
                 RadiosItemTagHelper.TagName);
         }
 
-        Conditional = (attributes, content);
+        Conditional = (options, tagName);
     }
 
-    public void SetHint(AttributeDictionary attributes, IHtmlContent content)
+    public void SetHint(HintOptions options, string tagName)
     {
-        ArgumentNullException.ThrowIfNull(attributes);
-        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(tagName);
 
         if (Hint is not null)
         {
@@ -42,6 +41,6 @@ internal class RadiosItemContext
                 RadiosItemConditionalTagHelper.TagName);
         }
 
-        Hint = (attributes, content);
+        Hint = (options, tagName);
     }
 }

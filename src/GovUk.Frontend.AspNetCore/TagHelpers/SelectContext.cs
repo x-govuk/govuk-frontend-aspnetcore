@@ -1,18 +1,17 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class SelectContext(ModelExpression? aspFor) : FormGroupContext3
 {
-    private readonly List<SelectItem> _items = [];
+    private readonly List<SelectOptionsItem> _items = [];
 
     public ModelExpression? AspFor { get; } = aspFor;
 
     public bool HaveModelExpression => AspFor is not null;
 
-    public IReadOnlyCollection<SelectItem> Items => _items;
+    public IReadOnlyCollection<SelectOptionsItem> Items => _items;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => SelectErrorMessageTagHelper.AllTagNames;
 
@@ -22,7 +21,7 @@ internal class SelectContext(ModelExpression? aspFor) : FormGroupContext3
 
     protected override string RootTagName => SelectTagHelper.TagName;
 
-    public void AddItem(SelectItem item)
+    public void AddItem(SelectOptionsItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
 

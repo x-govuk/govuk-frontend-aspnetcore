@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -96,12 +96,12 @@ public class SelectItemTagHelper : TagHelper
                 selectContext.AspFor.Name) == Value :
             _selected;
 
-        selectContext.AddItem(new SelectItem
+        selectContext.AddItem(new SelectOptionsItem
         {
-            Attributes = output.Attributes.ToAttributeDictionary(),
-            Content = content.Snapshot(),
-            Disabled = Disabled ?? false,
-            Selected = resolvedSelected ?? false,
+            Attributes = new AttributeCollection(output.Attributes),
+            Text = content.ToTemplateString(),
+            Disabled = Disabled,
+            Selected = resolvedSelected,
             Value = Value
         });
 

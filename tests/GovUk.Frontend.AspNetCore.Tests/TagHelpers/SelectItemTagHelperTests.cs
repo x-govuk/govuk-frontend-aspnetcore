@@ -49,7 +49,7 @@ public class SelectItemTagHelperTests
             selectContext.Items,
             item =>
             {
-                Assert.Equal("Item text", item.Content?.ToHtmlString());
+                Assert.Equal("Item text", item.Text?.ToHtmlString());
                 Assert.True(item.Disabled);
                 Assert.True(item.Selected);
                 Assert.Equal("value", item.Value);

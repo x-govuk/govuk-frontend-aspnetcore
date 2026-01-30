@@ -186,15 +186,6 @@ public class SelectTagHelper : TagHelper
             attributes.AddBoolean("disabled");
         }
 
-        var items = selectContext.Items.Select(item => new SelectOptionsItem
-        {
-            Value = item.Value,
-            Text = item.Content?.ToTemplateString(),
-            Selected = item.Selected,
-            Disabled = item.Disabled,
-            Attributes = item.Attributes != null ? new AttributeCollection(item.Attributes) : null
-        }).ToList();
-
         var component = await _componentGenerator.GenerateSelectInputAsync(new SelectOptions
         {
             Id = id,
@@ -205,7 +196,7 @@ public class SelectTagHelper : TagHelper
             ErrorMessage = errorMessageOptions,
             FormGroup = formGroupOptions,
             Classes = classes,
-            Items = items,
+            Items = selectContext.Items,
             Attributes = attributes
         });
 

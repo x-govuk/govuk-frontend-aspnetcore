@@ -57,9 +57,9 @@ public class DetailsTagHelper : TagHelper
         var component = await _componentGenerator.GenerateDetailsAsync(new DetailsOptions
         {
             Open = Open,
-            SummaryHtml = detailsContext.Summary?.Content.ToTemplateString(),
+            SummaryHtml = detailsContext.Summary?.Content,
             SummaryAttributes = detailsContext.Summary?.Attributes,
-            Html = detailsContext.Text?.Content.ToTemplateString(),
+            Html = detailsContext.Text?.Content,
             TextAttributes = detailsContext.Text?.Attributes,
             Classes = classes,
             Attributes = attributes

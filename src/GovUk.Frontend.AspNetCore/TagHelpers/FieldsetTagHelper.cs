@@ -74,7 +74,7 @@ public class FieldsetTagHelper : TagHelper
             legend = new FieldsetOptionsLegend
             {
                 IsPageHeading = legendValue.IsPageHeading,
-                Html = legendValue.Content.ToTemplateString(),
+                Html = legendValue.Content,
                 Attributes = legendAttributes
             };
         }

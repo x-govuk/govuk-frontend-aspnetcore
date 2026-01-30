@@ -26,7 +26,7 @@ public class DetailsTextTagHelper : TagHelper
             content = output.Content;
         }
 
-        detailsContext.SetText(new AttributeCollection(output.Attributes), content);
+        detailsContext.SetText(new AttributeCollection(output.Attributes), content.ToTemplateString());
 
         output.SuppressOutput();
     }

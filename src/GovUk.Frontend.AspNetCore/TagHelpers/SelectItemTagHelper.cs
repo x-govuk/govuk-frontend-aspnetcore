@@ -98,8 +98,8 @@ public class SelectItemTagHelper : TagHelper
 
         selectContext.AddItem(new SelectOptionsItem
         {
-            Attributes = output.Attributes.Count > 0 ? new AttributeCollection(output.Attributes.ToAttributeDictionary()) : null,
-            Text = content.Snapshot().ToTemplateString(),
+            Attributes = new AttributeCollection(output.Attributes),
+            Text = content.ToTemplateString(),
             Disabled = Disabled,
             Selected = resolvedSelected,
             Value = Value

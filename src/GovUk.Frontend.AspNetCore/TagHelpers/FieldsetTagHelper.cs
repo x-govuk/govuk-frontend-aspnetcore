@@ -1,6 +1,6 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -17,19 +17,16 @@ public class FieldsetTagHelper : TagHelper
     private const string DescribedByAttributeName = "described-by";
     private const string RoleAttributeName = "role";
 
-    private readonly IGovUkHtmlGenerator _htmlGenerator;
+    private readonly IComponentGenerator _componentGenerator;
 
     /// <summary>
     /// Creates a new <see cref="FieldsetTagHelper"/>.
     /// </summary>
-    public FieldsetTagHelper()
-        : this(htmlGenerator: null)
+    public FieldsetTagHelper(IComponentGenerator componentGenerator)
     {
-    }
+        ArgumentNullException.ThrowIfNull(componentGenerator);
 
-    internal FieldsetTagHelper(IGovUkHtmlGenerator? htmlGenerator)
-    {
-        _htmlGenerator = htmlGenerator ?? new ComponentGenerator();
+        _componentGenerator = componentGenerator;
     }
 
     /// <summary>
@@ -66,20 +63,35 @@ public class FieldsetTagHelper : TagHelper
 
         fieldsetContext.ThrowIfNotComplete();
 
-        var tagBuilder = _htmlGenerator.GenerateFieldset(
-            DescribedBy,
-            Role,
-            fieldsetContext.Legend?.IsPageHeading,
-            fieldsetContext.Legend?.Content,
-            fieldsetContext.Legend?.Attributes,
-            content,
-            output.Attributes.ToAttributeDictionary());
+        var attributes = new AttributeCollection(output.Attributes);
+        attributes.Remove("class", out var classes);
 
-        output.TagName = tagBuilder.TagName;
-        output.TagMode = TagMode.StartTagAndEndTag;
+        FieldsetOptionsLegend? legend = null;
+        if (fieldsetContext.Legend != null)
+        {
+            var legendValue = fieldsetContext.Legend.Value;
+            var legendAttributes = legendValue.Attributes != null
+                ? new AttributeCollection(legendValue.Attributes)
+                : null;
 
-        output.Attributes.Clear();
-        output.MergeAttributes(tagBuilder);
-        output.Content.SetHtmlContent(tagBuilder.InnerHtml);
+            legend = new FieldsetOptionsLegend
+            {
+                IsPageHeading = legendValue.IsPageHeading,
+                Html = legendValue.Content.ToTemplateString(),
+                Attributes = legendAttributes
+            };
+        }
+
+        var component = await _componentGenerator.GenerateFieldsetAsync(new FieldsetOptions
+        {
+            DescribedBy = DescribedBy,
+            Role = Role,
+            Legend = legend,
+            Html = content.ToTemplateString(),
+            Classes = classes,
+            Attributes = attributes
+        });
+
+        component.ApplyToTagHelper(output);
     }
 }

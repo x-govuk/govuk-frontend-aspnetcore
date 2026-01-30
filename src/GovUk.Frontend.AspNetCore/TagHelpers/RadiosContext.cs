@@ -16,13 +16,13 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     public RadiosFieldsetContext? Fieldset { get; private set; }
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } = [RadiosTagHelper.ErrorMessageTagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => RadiosErrorMessageTagHelper.AllTagNames;
 
     protected string FieldsetTagName => RadiosFieldsetTagHelper.TagName;
 
     protected string ItemTagName => RadiosItemTagHelper.TagName;
 
-    protected override IReadOnlyCollection<string> HintTagNames { get; } = [RadiosTagHelper.HintTagName];
+    protected override IReadOnlyCollection<string> HintTagNames => RadiosHintTagHelper.AllTagNames;
 
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 

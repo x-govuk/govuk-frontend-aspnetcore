@@ -159,4 +159,73 @@ public class FieldsetTagHelperTests
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal("A <govuk-fieldset-legend> element must be provided.", ex.Message);
     }
+
+    [Fact]
+    public async Task ProcessAsync_WithCustomAttributesAndClasses_InvokesComponentGeneratorWithExpectedOptions()
+    {
+        // Arrange
+        var describedBy = "describedby";
+        var role = "therole";
+        var legendText = "Legend text";
+        var mainContent = "Main content";
+        var customClass = "custom-class";
+        var dataFooAttrValue = "bar";
+
+        var context = new TagHelperContext(
+            tagName: "govuk-fieldset",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-fieldset",
+            attributes: new TagHelperAttributeList()
+            {
+                { "class", customClass },
+                { "data-foo", dataFooAttrValue }
+            },
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var fieldsetContext = context.GetContextItem<FieldsetContext>();
+
+                fieldsetContext.SetLegend(
+                    isPageHeading: false,
+                    attributes: null,
+                    content: new HtmlString(legendText));
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                tagHelperContent.SetContent(mainContent);
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        FieldsetOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateFieldsetAsync(It.IsAny<FieldsetOptions>())).Callback<FieldsetOptions>(o => actualOptions = o);
+
+        var tagHelper = new FieldsetTagHelper(componentGeneratorMock.Object)
+        {
+            DescribedBy = describedBy,
+            Role = role
+        };
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.NotNull(actualOptions);
+        Assert.Equal(describedBy, actualOptions!.DescribedBy);
+        Assert.Equal(role, actualOptions.Role);
+        Assert.Equal(mainContent, actualOptions.Html);
+        Assert.NotNull(actualOptions.Legend);
+        Assert.False(actualOptions.Legend!.IsPageHeading);
+        Assert.Equal(legendText, actualOptions.Legend.Html);
+        Assert.Null(actualOptions.Legend.Attributes);
+        Assert.Equal(customClass, actualOptions.Classes);
+        Assert.NotNull(actualOptions.Attributes);
+        Assert.Collection(actualOptions.Attributes, kvp =>
+        {
+            Assert.Equal("data-foo", kvp.Key);
+            Assert.Equal(dataFooAttrValue, kvp.Value);
+        });
+    }
 }

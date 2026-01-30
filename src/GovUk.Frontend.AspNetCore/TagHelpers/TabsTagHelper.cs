@@ -61,10 +61,8 @@ public class TabsTagHelper : TagHelper
 
         var tabsContext = new TabsContext(haveIdPrefix: IdPrefix is not null);
 
-        using (context.SetScopedContextItem(tabsContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(tabsContext);
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

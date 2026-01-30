@@ -44,10 +44,8 @@ public class DetailsTagHelper : TagHelper
 
         var detailsContext = new DetailsContext();
 
-        using (context.SetScopedContextItem(detailsContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(detailsContext);
+        _ = await output.GetChildContentAsync();
 
         detailsContext.ThrowIfNotComplete();
 

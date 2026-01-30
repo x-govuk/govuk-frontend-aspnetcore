@@ -62,10 +62,8 @@ public class NotificationBannerTagHelper : TagHelper
 
         TagHelperContent content;
 
-        using (context.SetScopedContextItem(notificationBannerContext))
-        {
-            content = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(notificationBannerContext);
+        content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

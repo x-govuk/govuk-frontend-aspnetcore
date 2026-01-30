@@ -33,10 +33,8 @@ public class SummaryCardTagHelper : TagHelper
 
         var cardContext = new SummaryCardContext();
 
-        using (context.SetScopedContextItem(cardContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(cardContext);
+        _ = await output.GetChildContentAsync();
 
         cardContext.ThrowIfNotComplete();
 

@@ -66,10 +66,8 @@ public class CheckboxesFieldsetTagHelper : TagHelper
             new AttributeCollection(output.Attributes),
             @for: checkboxesContext.For);
 
-        using (context.SetScopedContextItem(fieldsetContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(fieldsetContext);
+        _ = await output.GetChildContentAsync();
 
         fieldsetContext.ThrowIfNotComplete();
         checkboxesContext.CloseFieldset(fieldsetContext);

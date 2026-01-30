@@ -139,11 +139,9 @@ public class SelectTagHelper : TagHelper
 
         var selectContext = context.GetContextItem<SelectContext>();
 
-        using (context.SetScopedContextItem(selectContext))
-        using (context.SetScopedContextItem(typeof(FormGroupContext3), selectContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(selectContext);
+        context.SetContextItem(typeof(FormGroupContext3), selectContext);
+        _ = await output.GetChildContentAsync();
 
         var name = ResolveName();
         var id = ResolveId(name);

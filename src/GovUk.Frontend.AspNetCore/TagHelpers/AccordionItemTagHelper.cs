@@ -33,10 +33,8 @@ public class AccordionItemTagHelper : TagHelper
 
         var itemContext = new AccordionItemContext();
 
-        using (context.SetScopedContextItem(itemContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(itemContext);
+        _ = await output.GetChildContentAsync();
 
         itemContext.ThrowIfIncomplete();
 

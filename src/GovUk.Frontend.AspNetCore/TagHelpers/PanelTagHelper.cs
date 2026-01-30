@@ -60,10 +60,8 @@ public class PanelTagHelper : TagHelper
 
         TagHelperContent content;
 
-        using (context.SetScopedContextItem(panelContext))
-        {
-            content = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(panelContext);
+        content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

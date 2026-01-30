@@ -67,10 +67,8 @@ public class DateInputFieldsetTagHelper : TagHelper
             new AttributeCollection(output.Attributes),
             dateInputContext.For);
 
-        using (context.SetScopedContextItem(fieldsetContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(fieldsetContext);
+        _ = await output.GetChildContentAsync();
 
         fieldsetContext.ThrowIfNotComplete();
         dateInputContext.CloseFieldset(fieldsetContext);

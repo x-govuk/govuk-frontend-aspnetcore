@@ -99,10 +99,8 @@ public abstract class DateInputItemTagHelperBase : TagHelper
         var dateInputContext = context.GetContextItem<DateInputContext>();
         var dateInputItemContext = new DateInputItemContext(output.TagName, _labelTagName);
 
-        using (context.SetScopedContextItem(dateInputItemContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(dateInputItemContext);
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
 

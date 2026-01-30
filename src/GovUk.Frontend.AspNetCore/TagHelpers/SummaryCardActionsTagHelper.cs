@@ -21,10 +21,8 @@ public class SummaryCardActionsTagHelper : TagHelper
         var cardContext = context.GetContextItem<SummaryCardContext>();
         var actionsContext = new SummaryCardActionsContext();
 
-        using (context.SetScopedContextItem(actionsContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(actionsContext);
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

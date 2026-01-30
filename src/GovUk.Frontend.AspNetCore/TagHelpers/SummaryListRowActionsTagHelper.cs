@@ -28,10 +28,8 @@ public class SummaryListRowActionsTagHelper : TagHelper
         var rowContext = context.GetContextItem<SummaryListRowContext>();
         var actionsContext = new SummaryListRowActionsContext();
 
-        using (context.SetScopedContextItem(actionsContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(actionsContext);
+        _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);

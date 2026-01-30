@@ -47,10 +47,8 @@ public class RadiosFieldsetTagHelper : TagHelper
             new AttributeCollection(output.Attributes),
             @for: radiosContext.For);
 
-        using (context.SetScopedContextItem(fieldsetContext))
-        {
-            _ = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(fieldsetContext);
+        _ = await output.GetChildContentAsync();
 
         fieldsetContext.ThrowIfNotComplete();
         radiosContext.CloseFieldset(fieldsetContext);

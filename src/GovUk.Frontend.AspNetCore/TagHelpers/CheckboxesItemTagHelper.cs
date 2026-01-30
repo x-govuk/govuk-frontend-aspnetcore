@@ -131,10 +131,8 @@ public class CheckboxesItemTagHelper : TagHelper
         }
 
         TagHelperContent content;
-        using (context.SetScopedContextItem(itemContext))
-        {
-            content = await output.GetChildContentAsync();
-        }
+        context.SetContextItem(itemContext);
+        content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

@@ -5,8 +5,6 @@ namespace GovUk.Frontend.AspNetCore;
 
 internal static class TagHelperContextExtensions
 {
-    private sealed record FormGroupContextKey;
-
     public static TItem GetRequiredContextItem<TItem>(this TagHelperContext context)
         where TItem : class
     {
@@ -35,28 +33,13 @@ internal static class TagHelperContextExtensions
         context.Items[typeof(TItem)] = item;
     }
 
-    public static IDisposable SetScopedContextItem<TItem>(this TagHelperContext context, TItem item)
-        where TItem : class
-    {
-        ArgumentNullException.ThrowIfNull(context);
-        ArgumentNullException.ThrowIfNull(item);
-
-        return SetScopedContextItem(context, typeof(TItem), item);
-    }
-
-    public static IDisposable SetScopedContextItem(
-        this TagHelperContext context,
-        object key,
-        object value)
+    public static void SetContextItem(this TagHelperContext context, object key, object value)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(key);
         ArgumentNullException.ThrowIfNull(value);
 
-        context.Items.TryGetValue(key, out var previousValue);
         context.Items[key] = value;
-
-        return new RestoreItemsOnDispose(context, key, previousValue);
     }
 
     public static bool TryGetContextItem<TItem>(this TagHelperContext context, [NotNullWhen(true)] out TItem? item)
@@ -74,38 +57,6 @@ internal static class TagHelperContextExtensions
         {
             item = default;
             return false;
-        }
-    }
-
-    internal class RestoreItemsOnDispose : IDisposable
-    {
-        private readonly TagHelperContext _context;
-        private readonly object _key;
-        private readonly object? _previousValue;
-
-        public RestoreItemsOnDispose(
-            TagHelperContext context,
-            object key,
-            object? previousValue)
-        {
-            ArgumentNullException.ThrowIfNull(context);
-            ArgumentNullException.ThrowIfNull(key);
-
-            _context = context;
-            _key = key;
-            _previousValue = previousValue;
-        }
-
-        public void Dispose()
-        {
-            if (_previousValue is not null)
-            {
-                _context.Items[_key] = _previousValue;
-            }
-            else
-            {
-                _context.Items.Remove(_key);
-            }
         }
     }
 }

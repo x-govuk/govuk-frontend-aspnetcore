@@ -141,7 +141,7 @@ public class FileUploadTagHelper : TagHelper
     /// The <c>name</c> attribute for the generated <c>input</c> element.
     /// </summary>
     /// <remarks>
-    /// Required unless <see cref="FormGroupTagHelperBase.AspFor"/> is specified.
+    /// Required unless <see cref="For"/> is specified.
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }

@@ -191,7 +191,7 @@ public class CharacterCountTagHelper : TagHelper
     /// The <c>name</c> attribute for the generated <c>textarea</c> element.
     /// </summary>
     /// <remarks>
-    /// Required unless <see cref="FormGroupTagHelperBase.AspFor"/> is specified.
+    /// Required unless <see cref="AspFor"/> is specified.
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }

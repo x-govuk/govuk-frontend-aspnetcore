@@ -32,7 +32,7 @@ public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
     /// The components of the date that have errors (day, month and/or year).
     /// </summary>
     /// <remarks>
-    /// If the value for the parent <see cref="DateInputTagHelper"/> was specified using <see cref="FormGroupTagHelperBase.For"/>
+    /// If the value for the parent <see cref="DateInputTagHelper"/> was specified using <see cref="DateInputTagHelper.For"/>
     /// then <see cref="ErrorItems"/> will be computed from model binding errors.
     /// </remarks>
     [HtmlAttributeName(ErrorItemsAttributeName)]

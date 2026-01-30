@@ -45,7 +45,7 @@ public class SelectItemTagHelper : TagHelper
     /// Whether the item should be selected.
     /// </summary>
     /// <remarks>
-    /// If not specified and <see cref="FormGroupTagHelperBase.AspFor"/> is not <c>null</c> on the parent
+    /// If not specified and <see cref="SelectTagHelper.For"/> is not <c>null</c> on the parent
     /// <see cref="SelectTagHelper"/> then this value will be computed by comparing the <see cref="Value"/>
     /// attribute with the model expression's value.
     /// </remarks>

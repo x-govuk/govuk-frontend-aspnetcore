@@ -59,7 +59,7 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     /// The <c>name</c> attribute for the generated <c>input</c> element.
     /// </summary>
     /// <remarks>
-    /// By default the value will be generated from the parent's <see cref="FormGroupTagHelperBase.AspFor"/> and/or <see cref="DateInputTagHelper.NamePrefix"/>.
+    /// By default the value will be generated from the parent's <see cref="DateInputTagHelper.For"/> and/or <see cref="DateInputTagHelper.NamePrefix"/>.
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }

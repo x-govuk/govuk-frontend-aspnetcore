@@ -45,7 +45,7 @@ public class CheckboxesItemTagHelper : TagHelper
     /// Whether the item should be checked.
     /// </summary>
     /// <remarks>
-    /// If <c>null</c> and <see cref="FormGroupTagHelperBase.AspFor"/> is not <c>null</c> on the parent <see cref="CheckboxesTagHelper"/> then the value
+    /// If <c>null</c> and <see cref="CheckboxesTagHelper.For"/> is not <c>null</c> on the parent <see cref="CheckboxesTagHelper"/> then the value
     /// will be computed by comparing the specified model expression with <see cref="Value"/>.
     /// The default is <c>false</c>.
     /// </remarks>
@@ -86,7 +86,7 @@ public class CheckboxesItemTagHelper : TagHelper
     /// The <c>name</c> attribute for the generated <c>input</c> element.
     /// </summary>
     /// <remarks>
-    /// Required unless <see cref="FormGroupTagHelperBase.AspFor"/> or <see cref="CheckboxesTagHelper.Name"/> is specified on the parent <see cref="CheckboxesTagHelper"/>.
+    /// Required unless <see cref="CheckboxesTagHelper.For"/> or <see cref="CheckboxesTagHelper.Name"/> is specified on the parent <see cref="CheckboxesTagHelper"/>.
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }

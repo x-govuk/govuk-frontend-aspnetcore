@@ -147,7 +147,7 @@ public class PasswordInputTagHelper : TagHelper
     /// The <c>name</c> attribute for the generated <c>input</c> element.
     /// </summary>
     /// <remarks>
-    /// Required unless <see cref="FormGroupTagHelperBase.For"/> is specified.
+    /// Required unless <see cref="For"/> is specified.
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }
@@ -216,7 +216,7 @@ public class PasswordInputTagHelper : TagHelper
     /// The <c>value</c> attribute for the generated <c>input</c> element.
     /// </summary>
     /// <remarks>
-    /// If not specified and <see cref="FormGroupTagHelperBase.For"/> is not <c>null</c> then the value
+    /// If not specified and <see cref="For"/> is not <c>null</c> then the value
     /// for the specified model expression will be used.
     /// </remarks>
     [HtmlAttributeName(ValueAttributeName)]

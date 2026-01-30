@@ -1,4 +1,4 @@
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 
@@ -12,9 +12,9 @@ public class SelectContextTests
         // Arrange
         var context = new SelectContext(aspFor: null);
 
-        context.AddItem(new SelectItem()
+        context.AddItem(new SelectOptionsItem()
         {
-            Content = new HtmlString("Option")
+            Text = "Option"
         });
 
         // Act
@@ -31,9 +31,9 @@ public class SelectContextTests
         // Arrange
         var context = new SelectContext(aspFor: null);
 
-        context.AddItem(new SelectItem()
+        context.AddItem(new SelectOptionsItem()
         {
-            Content = new HtmlString("Option")
+            Text = "Option"
         });
 
         // Act
@@ -50,9 +50,9 @@ public class SelectContextTests
         // Arrange
         var context = new SelectContext(aspFor: null);
 
-        context.AddItem(new SelectItem()
+        context.AddItem(new SelectOptionsItem()
         {
-            Content = new HtmlString("Option")
+            Text = "Option"
         });
 
         // Act

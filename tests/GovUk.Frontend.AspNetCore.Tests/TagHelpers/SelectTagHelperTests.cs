@@ -1,5 +1,4 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using GovUk.Frontend.AspNetCore.HtmlGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -46,14 +45,14 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                     hintContent,
                     SelectHintTagHelper.TagName);
 
-                selectContext.AddItem(new SelectItem()
+                selectContext.AddItem(new SelectOptionsItem()
                 {
-                    Content = new HtmlString("First")
+                    Text = "First"
                 });
 
-                selectContext.AddItem(new SelectItem()
+                selectContext.AddItem(new SelectOptionsItem()
                 {
-                    Content = new HtmlString("Second"),
+                    Text = "Second",
                     Value = "second",
                     Selected = true
                 });
@@ -166,9 +165,9 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                     new HtmlString(errorHtml),
                     SelectErrorMessageTagHelper.TagName);
 
-                selectContext.AddItem(new SelectItem()
+                selectContext.AddItem(new SelectOptionsItem()
                 {
-                    Content = new HtmlString("First")
+                    Text = "First"
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -227,15 +226,15 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
             {
                 var selectContext = context.GetContextItem<SelectContext>();
 
-                selectContext.AddItem(new SelectItem()
+                selectContext.AddItem(new SelectOptionsItem()
                 {
-                    Content = new HtmlString("First"),
+                    Text = "First",
                     Value = "1"
                 });
 
-                selectContext.AddItem(new SelectItem()
+                selectContext.AddItem(new SelectOptionsItem()
                 {
-                    Content = new HtmlString("Second"),
+                    Text = "Second",
                     Value = modelStateValue
                 });
 

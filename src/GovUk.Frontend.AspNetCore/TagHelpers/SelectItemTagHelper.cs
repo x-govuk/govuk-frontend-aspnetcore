@@ -100,8 +100,8 @@ public class SelectItemTagHelper : TagHelper
         {
             Attributes = output.Attributes.Count > 0 ? new AttributeCollection(output.Attributes.ToAttributeDictionary()) : null,
             Text = content.Snapshot().ToTemplateString(),
-            Disabled = Disabled ?? false,
-            Selected = resolvedSelected ?? false,
+            Disabled = Disabled,
+            Selected = resolvedSelected,
             Value = Value
         });
 

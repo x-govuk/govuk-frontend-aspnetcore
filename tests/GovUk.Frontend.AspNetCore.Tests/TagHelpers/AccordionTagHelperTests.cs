@@ -81,6 +81,7 @@ public class AccordionTagHelperTests
             ShowSectionText = showSectionText,
             ShowSectionAriaLabelText = showSectionAriaLabelText
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -156,6 +157,7 @@ public class AccordionTagHelperTests
             });
 
         var tagHelper = new AccordionTagHelper(TestUtils.CreateComponentGenerator());
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));

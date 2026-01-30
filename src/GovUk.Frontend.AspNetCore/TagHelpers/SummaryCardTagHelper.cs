@@ -26,14 +26,19 @@ public class SummaryCardTagHelper : TagHelper
     }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new SummaryCardContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var cardContext = new SummaryCardContext();
+        var cardContext = context.GetContextItem<SummaryCardContext>();
 
-        context.SetContextItem(cardContext);
         _ = await output.GetChildContentAsync();
 
         cardContext.ThrowIfNotComplete();

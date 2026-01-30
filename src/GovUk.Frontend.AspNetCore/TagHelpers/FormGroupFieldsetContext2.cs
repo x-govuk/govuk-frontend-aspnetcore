@@ -7,43 +7,40 @@ internal abstract class FormGroupFieldsetContext2
 {
     public record LegendInfo(bool? IsPageHeading, AttributeCollection Attributes, TemplateString? Html);
 
-    private readonly string _fieldsetTagName;
-    private readonly string _legendTagName;
     private readonly string? _describedBy;
     private readonly string? _legendClass;
-    private readonly AttributeCollection _attributes;
     private readonly ModelExpression? _for;
+    private AttributeCollection? _attributes;
 
     protected FormGroupFieldsetContext2(
-        string fieldsetTagName,
-        string legendTagName,
         string? describedBy,
         string? legendClass,
-        AttributeCollection attributes,
         ModelExpression? @for)
     {
-        ArgumentNullException.ThrowIfNull(fieldsetTagName);
-        ArgumentNullException.ThrowIfNull(legendTagName);
-        ArgumentNullException.ThrowIfNull(attributes);
-
-        _fieldsetTagName = fieldsetTagName;
-        _legendTagName = legendTagName;
         _describedBy = describedBy;
         _legendClass = legendClass;
-        _attributes = attributes;
         _for = @for;
     }
 
     public LegendInfo? Legend { get; private set; }
 
+    public void SetAttributes(AttributeCollection attributes)
+    {
+        ArgumentNullException.ThrowIfNull(attributes);
+        _attributes = attributes;
+    }
+
     public FieldsetOptions GetFieldsetOptions(IModelHelper modelHelper)
     {
         ArgumentNullException.ThrowIfNull(modelHelper);
 
-        ThrowIfNotComplete();
+        if (_attributes is null)
+        {
+            throw new InvalidOperationException("Attributes must be set before calling GetFieldsetOptions.");
+        }
 
-        var attributes = _attributes.Clone();
-        attributes.Remove("class", out var classes);
+        var clonedAttributes = _attributes.Clone();
+        clonedAttributes.Remove("class", out var classes);
 
         var legendAttributes = Legend?.Attributes.Clone() ?? [];
         legendAttributes.Remove("class", out var legendClasses);
@@ -75,27 +72,31 @@ internal abstract class FormGroupFieldsetContext2
             Role = "group",
             Html = null,
             Classes = classes,
-            Attributes = attributes
+            Attributes = clonedAttributes
         };
     }
 
-    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, TemplateString? html)
+    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string legendTagName, string fieldsetTagName)
     {
         ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(legendTagName);
+        ArgumentNullException.ThrowIfNull(fieldsetTagName);
 
         if (Legend is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(_legendTagName, _fieldsetTagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(legendTagName, fieldsetTagName);
         }
 
         Legend = new(isPageHeading, attributes, html);
     }
 
-    public void ThrowIfNotComplete()
+    public void ThrowIfNotComplete(string legendTagName)
     {
+        ArgumentNullException.ThrowIfNull(legendTagName);
+
         if (Legend is null && _for is null)
         {
-            throw ExceptionHelper.AChildElementMustBeProvided(_legendTagName);
+            throw ExceptionHelper.AChildElementMustBeProvided(legendTagName);
         }
     }
 }

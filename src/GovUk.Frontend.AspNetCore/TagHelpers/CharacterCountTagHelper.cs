@@ -241,6 +241,14 @@ public class CharacterCountTagHelper : TagHelper
     public ViewContext? ViewContext { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        var characterCountContext = new CharacterCountContext();
+        context.SetContextItem(characterCountContext);
+        context.SetContextItem(typeof(FormGroupContext3), characterCountContext);
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -251,10 +259,8 @@ public class CharacterCountTagHelper : TagHelper
             throw new InvalidOperationException($"Only one of the '{MaxLengthAttributeName}' or '{MaxWordsLengthAttributeName}' attributes can be specified.");
         }
 
-        var characterCountContext = new CharacterCountContext();
+        var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
-        context.SetContextItem(characterCountContext);
-        context.SetContextItem(typeof(FormGroupContext3), characterCountContext);
         _ = await output.GetChildContentAsync();
 
         var name = ResolveName();

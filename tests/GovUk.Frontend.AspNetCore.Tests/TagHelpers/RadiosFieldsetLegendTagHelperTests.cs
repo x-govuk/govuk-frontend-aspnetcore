@@ -10,7 +10,8 @@ public class RadiosFieldsetLegendTagHelperTests
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        fieldsetContext.SetAttributes(new AttributeCollection());
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset-legend",
@@ -48,12 +49,15 @@ public class RadiosFieldsetLegendTagHelperTests
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        fieldsetContext.SetAttributes(new AttributeCollection());
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
             attributes: new AttributeCollection(),
-            html: new TemplateString("Existing legend"));
+            html: new TemplateString("Existing legend"),
+            RadiosFieldsetLegendTagHelper.TagName,
+            RadiosFieldsetTagHelper.TagName);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset-legend",

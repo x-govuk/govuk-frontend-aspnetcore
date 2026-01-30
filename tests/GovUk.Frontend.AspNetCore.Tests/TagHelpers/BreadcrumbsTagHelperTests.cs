@@ -62,6 +62,7 @@ public class BreadcrumbsTagHelperTests
             CollapseOnMobile = collapseOnMobile,
             LabelText = labelText,
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

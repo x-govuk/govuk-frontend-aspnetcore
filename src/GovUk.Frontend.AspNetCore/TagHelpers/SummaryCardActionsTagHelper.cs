@@ -13,15 +13,20 @@ public class SummaryCardActionsTagHelper : TagHelper
     internal const string TagName = "govuk-summary-card-actions";
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new SummaryCardActionsContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
         var cardContext = context.GetContextItem<SummaryCardContext>();
-        var actionsContext = new SummaryCardActionsContext();
+        var actionsContext = context.GetContextItem<SummaryCardActionsContext>();
 
-        context.SetContextItem(actionsContext);
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);

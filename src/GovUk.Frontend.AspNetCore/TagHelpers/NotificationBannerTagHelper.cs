@@ -53,12 +53,18 @@ public class NotificationBannerTagHelper : TagHelper
     public NotificationBannerType? Type { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new NotificationBannerContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var notificationBannerContext = new NotificationBannerContext();
+        var notificationBannerContext = context.GetContextItem<NotificationBannerContext>();
 
         TagHelperContent content;
 

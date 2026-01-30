@@ -98,6 +98,7 @@ public class CharacterCountTagHelperTests
             },
             Threshold = threshold
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -177,6 +178,7 @@ public class CharacterCountTagHelperTests
             Name = name,
             MaxWords = maxWords
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -241,6 +243,7 @@ public class CharacterCountTagHelperTests
             Name = name,
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -325,6 +328,7 @@ public class CharacterCountTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -399,6 +403,7 @@ public class CharacterCountTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -471,6 +476,7 @@ public class CharacterCountTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -544,6 +550,7 @@ public class CharacterCountTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -624,6 +631,7 @@ public class CharacterCountTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -696,6 +704,7 @@ public class CharacterCountTagHelperTests
             ViewContext = new ViewContext(),
             IgnoreModelStateErrors = true
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -777,6 +786,7 @@ public class CharacterCountTagHelperTests
             IgnoreModelStateErrors = true,
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -835,6 +845,7 @@ public class CharacterCountTagHelperTests
             Name = name,
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

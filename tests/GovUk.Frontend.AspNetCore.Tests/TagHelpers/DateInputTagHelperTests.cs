@@ -133,10 +133,11 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                var fieldsetContext = new DateInputFieldsetContext(fieldsetDescribedBy, new(fieldsetAttributes), @for: null);
+                var fieldsetContext = new DateInputFieldsetContext(fieldsetDescribedBy, @for: null);
+                fieldsetContext.SetAttributes(new(fieldsetAttributes));
 
                 dateInputContext.OpenFieldset();
-                fieldsetContext.SetLegend(legendIsPageHeading, new(legendAttributes), legendContent);
+                fieldsetContext.SetLegend(legendIsPageHeading, new(legendAttributes), legendContent, DateInputFieldsetLegendTagHelper.TagName, DateInputFieldsetTagHelper.TagName);
                 dateInputContext.CloseFieldset(fieldsetContext);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -186,10 +187,11 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for);
+                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for);
+                fieldsetContext.SetAttributes([]);
 
                 dateInputContext.OpenFieldset();
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: null);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: null, DateInputFieldsetLegendTagHelper.TagName, DateInputFieldsetTagHelper.TagName);
                 dateInputContext.CloseFieldset(fieldsetContext);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -230,10 +232,11 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for);
+                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for);
+                fieldsetContext.SetAttributes([]);
 
                 dateInputContext.OpenFieldset();
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: legendContent);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: legendContent, DateInputFieldsetLegendTagHelper.TagName, DateInputFieldsetTagHelper.TagName);
                 dateInputContext.CloseFieldset(fieldsetContext);
 
                 var tagHelperContent = new DefaultTagHelperContent();

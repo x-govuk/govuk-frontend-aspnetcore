@@ -13,7 +13,8 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
         var isPageHeading = true;
         var attributes = CreateDummyDataAttributes();
 
-        var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for: null);
+        var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for: null);
+        fieldsetContext.SetAttributes([]);
 
         var context = CreateTagHelperContext(
             attributes: attributes,
@@ -49,9 +50,10 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for: null);
+        var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for: null);
+        fieldsetContext.SetAttributes([]);
 
-        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legend");
+        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legend", DateInputFieldsetLegendTagHelper.TagName, DateInputFieldsetTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 

@@ -65,6 +65,7 @@ public class TabsTagHelperTests
             Id = id,
             Title = title
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

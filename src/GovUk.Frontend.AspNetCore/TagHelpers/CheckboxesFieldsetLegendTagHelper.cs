@@ -42,7 +42,9 @@ public class CheckboxesFieldsetLegendTagHelper : TagHelper
         fieldsetContext.SetLegend(
             IsPageHeading ?? false,
             new AttributeCollection(output.Attributes),
-            html: content.ToTemplateString());
+            html: content.ToTemplateString(),
+            CheckboxesFieldsetLegendTagHelper.TagName,
+            CheckboxesFieldsetTagHelper.TagName);
 
         output.SuppressOutput();
     }

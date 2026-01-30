@@ -52,14 +52,19 @@ public class BreadcrumbsTagHelper : TagHelper
     public string? LabelText { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new BreadcrumbsContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var breadcrumbsContext = new BreadcrumbsContext();
+        var breadcrumbsContext = context.GetContextItem<BreadcrumbsContext>();
 
-        context.SetContextItem(breadcrumbsContext);
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);

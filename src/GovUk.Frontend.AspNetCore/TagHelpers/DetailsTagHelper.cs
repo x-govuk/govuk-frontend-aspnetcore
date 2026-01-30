@@ -37,14 +37,19 @@ public class DetailsTagHelper : TagHelper
     public bool? Open { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new DetailsContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var detailsContext = new DetailsContext();
+        var detailsContext = context.GetContextItem<DetailsContext>();
 
-        context.SetContextItem(detailsContext);
         _ = await output.GetChildContentAsync();
 
         detailsContext.ThrowIfNotComplete();

@@ -18,4 +18,7 @@ public class DateInputDayTagHelper : DateInputItemTagHelperBase
     public DateInputDayTagHelper() : base(DateInputItemTypes.Day, labelTagName: DateInputDayLabelTagHelper.TagName)
     {
     }
+
+    /// <inheritdoc/>
+    private protected override string ItemTagName => TagName;
 }

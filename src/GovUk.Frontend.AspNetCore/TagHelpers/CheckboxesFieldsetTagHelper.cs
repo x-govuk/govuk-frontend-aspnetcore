@@ -53,23 +53,32 @@ public class CheckboxesFieldsetTagHelper : TagHelper
     }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        var checkboxesContext = context.GetContextItem<CheckboxesContext>();
+        checkboxesContext.OpenFieldset();
+
+        var fieldsetContext = new CheckboxesFieldsetContext(
+            DescribedBy,
+            @for: checkboxesContext.For);
+
+        context.SetContextItem(fieldsetContext);
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
-        checkboxesContext.OpenFieldset();
+        var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
 
-        var fieldsetContext = new CheckboxesFieldsetContext(
-            DescribedBy,
-            new AttributeCollection(output.Attributes),
-            @for: checkboxesContext.For);
+        fieldsetContext.SetAttributes(new AttributeCollection(output.Attributes));
 
-        context.SetContextItem(fieldsetContext);
         _ = await output.GetChildContentAsync();
 
-        fieldsetContext.ThrowIfNotComplete();
+        fieldsetContext.ThrowIfNotComplete(CheckboxesFieldsetLegendTagHelper.TagName);
         checkboxesContext.CloseFieldset(fieldsetContext);
 
         output.SuppressOutput();

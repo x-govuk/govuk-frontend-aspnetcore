@@ -18,4 +18,7 @@ public class DateInputYearTagHelper : DateInputItemTagHelperBase
     public DateInputYearTagHelper() : base(DateInputItemTypes.Year, labelTagName: DateInputYearLabelTagHelper.TagName)
     {
     }
+
+    /// <inheritdoc/>
+    private protected override string ItemTagName => TagName;
 }

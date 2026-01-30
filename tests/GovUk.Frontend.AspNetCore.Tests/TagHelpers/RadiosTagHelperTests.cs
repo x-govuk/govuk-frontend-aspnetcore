@@ -423,8 +423,9 @@ public class RadiosTagHelperTests
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
                 radiosContext.OpenFieldset();
-                var radiosFieldsetContext = new RadiosFieldsetContext(describedBy, attributes: new AttributeCollection(), @for: null);
-                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString(legendContent));
+                var radiosFieldsetContext = new RadiosFieldsetContext(describedBy, @for: null);
+                radiosFieldsetContext.SetAttributes(new AttributeCollection());
+                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString(legendContent), RadiosFieldsetLegendTagHelper.TagName, RadiosFieldsetTagHelper.TagName);
 
                 radiosContext.SetHint(
                     attributes: new AttributeCollection(),

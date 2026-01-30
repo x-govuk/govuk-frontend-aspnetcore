@@ -44,14 +44,19 @@ public class ErrorSummaryTagHelper : TagHelper
     public ViewContext? ViewContext { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(typeof(ErrorSummaryContext), new ErrorSummaryContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var errorSummaryContext = new ErrorSummaryContext();
+        var errorSummaryContext = context.GetContextItem<ErrorSummaryContext>();
 
-        context.SetContextItem(typeof(ErrorSummaryContext), errorSummaryContext);
         _ = await output.GetChildContentAsync();
 
         var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();

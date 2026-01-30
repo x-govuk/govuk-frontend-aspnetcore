@@ -34,23 +34,32 @@ public class RadiosFieldsetTagHelper : TagHelper
     }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        var radiosContext = context.GetContextItem<RadiosContext>();
+        radiosContext.OpenFieldset();
+
+        var fieldsetContext = new RadiosFieldsetContext(
+            DescribedBy,
+            @for: radiosContext.For);
+
+        context.SetContextItem(fieldsetContext);
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
         var radiosContext = context.GetContextItem<RadiosContext>();
-        radiosContext.OpenFieldset();
+        var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
 
-        var fieldsetContext = new RadiosFieldsetContext(
-            DescribedBy,
-            new AttributeCollection(output.Attributes),
-            @for: radiosContext.For);
+        fieldsetContext.SetAttributes(new AttributeCollection(output.Attributes));
 
-        context.SetContextItem(fieldsetContext);
         _ = await output.GetChildContentAsync();
 
-        fieldsetContext.ThrowIfNotComplete();
+        fieldsetContext.ThrowIfNotComplete(RadiosFieldsetLegendTagHelper.TagName);
         radiosContext.CloseFieldset(fieldsetContext);
 
         output.SuppressOutput();

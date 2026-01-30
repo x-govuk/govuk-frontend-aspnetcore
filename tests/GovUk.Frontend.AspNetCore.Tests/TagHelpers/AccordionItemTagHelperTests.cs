@@ -36,6 +36,7 @@ public class AccordionItemTagHelperTests
             });
 
         var tagHelper = new AccordionItemTagHelper();
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -79,6 +80,7 @@ public class AccordionItemTagHelperTests
             });
 
         var tagHelper = new AccordionItemTagHelper();
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
@@ -116,6 +118,7 @@ public class AccordionItemTagHelperTests
             });
 
         var tagHelper = new AccordionItemTagHelper();
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));

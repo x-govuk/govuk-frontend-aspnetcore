@@ -18,4 +18,7 @@ public class DateInputMonthTagHelper : DateInputItemTagHelperBase
     public DateInputMonthTagHelper() : base(DateInputItemTypes.Month, labelTagName: DateInputMonthLabelTagHelper.TagName)
     {
     }
+
+    /// <inheritdoc/>
+    private protected override string ItemTagName => TagName;
 }

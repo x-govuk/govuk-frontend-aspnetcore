@@ -410,8 +410,9 @@ public class CheckboxesTagHelperTests
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
                 checkboxesContext.OpenFieldset();
-                var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
-                checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString(legendContent));
+                var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
+                checkboxesFieldsetContext.SetAttributes(new AttributeCollection());
+                checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString(legendContent), CheckboxesFieldsetLegendTagHelper.TagName, CheckboxesFieldsetTagHelper.TagName);
 
                 checkboxesContext.SetHint(
                     attributes: new AttributeCollection(),

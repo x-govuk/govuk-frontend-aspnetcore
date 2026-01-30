@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -97,8 +96,8 @@ public class ErrorMessageTagHelper : TagHelper
                 $"Cannot determine content. Element must contain content if the '{AspForAttributeName}' attribute is not specified.");
         }
 
-        IHtmlContent? resolvedContent = content;
-        if (resolvedContent is null && For is not null)
+        var resolvedContent = content.ToTemplateString();
+        if (resolvedContent.IsEmpty() && For is not null)
         {
             var validationMessage = _modelHelper.GetValidationMessage(
                 ViewContext!,
@@ -107,19 +106,19 @@ public class ErrorMessageTagHelper : TagHelper
 
             if (validationMessage is not null)
             {
-                resolvedContent = validationMessage.EncodeHtml();
+                resolvedContent = validationMessage;
             }
         }
 
-        if (resolvedContent is not null)
+        if (!resolvedContent.IsEmpty())
         {
             var attributes = new ComponentGeneration.AttributeCollection(output.Attributes);
             attributes.Remove("class", out var classes);
 
             var component = await _componentGenerator.GenerateErrorMessageAsync(new ErrorMessageOptions
             {
-                Html = resolvedContent.ToTemplateString(),
-                VisuallyHiddenText = VisuallyHiddenText != null ? new TemplateString(VisuallyHiddenText) : null,
+                Html = resolvedContent,
+                VisuallyHiddenText = VisuallyHiddenText is not null ? new TemplateString(VisuallyHiddenText) : null,
                 Classes = classes,
                 Attributes = attributes
             });

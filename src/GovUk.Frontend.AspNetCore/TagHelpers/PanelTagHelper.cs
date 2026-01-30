@@ -66,7 +66,6 @@ public class PanelTagHelper : TagHelper
 
         TagHelperContent content;
 
-        context.SetContextItem(panelContext);
         content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)

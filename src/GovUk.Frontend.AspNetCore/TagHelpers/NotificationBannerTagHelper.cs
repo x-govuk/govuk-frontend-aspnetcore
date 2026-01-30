@@ -68,7 +68,6 @@ public class NotificationBannerTagHelper : TagHelper
 
         TagHelperContent content;
 
-        context.SetContextItem(notificationBannerContext);
         content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)

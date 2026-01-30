@@ -1,15 +1,14 @@
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class AccordionItemContext
 {
-    public (AttributeDictionary Attributes, IHtmlContent Content)? Heading { get; private set; }
-    public (AttributeDictionary Attributes, IHtmlContent Content)? Summary { get; private set; }
-    public (AttributeDictionary Attributes, IHtmlContent Content)? Content { get; private set; }
+    public (AttributeCollection Attributes, TemplateString Content)? Heading { get; private set; }
+    public (AttributeCollection Attributes, TemplateString Content)? Summary { get; private set; }
+    public (AttributeCollection Attributes, TemplateString Content)? Content { get; private set; }
 
-    public void SetHeading(AttributeDictionary attributes, IHtmlContent content)
+    public void SetHeading(AttributeCollection attributes, TemplateString content)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);
@@ -35,7 +34,7 @@ internal class AccordionItemContext
         Heading = (attributes, content);
     }
 
-    public void SetSummary(AttributeDictionary attributes, IHtmlContent content)
+    public void SetSummary(AttributeCollection attributes, TemplateString content)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);
@@ -55,7 +54,7 @@ internal class AccordionItemContext
         Summary = (attributes, content);
     }
 
-    public void SetContent(AttributeDictionary attributes, IHtmlContent content)
+    public void SetContent(AttributeCollection attributes, TemplateString content)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);

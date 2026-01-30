@@ -1,5 +1,5 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -27,9 +27,9 @@ public class AccordionItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
-                itemContext.SetHeading([], new HtmlString("Heading"));
-                itemContext.SetSummary([], new HtmlString("Summary"));
-                itemContext.SetContent([], new HtmlString("Content"));
+                itemContext.SetHeading(new AttributeCollection(), new TemplateString("Heading"));
+                itemContext.SetSummary(new AttributeCollection(), new TemplateString("Summary"));
+                itemContext.SetContent(new AttributeCollection(), new TemplateString("Content"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -71,8 +71,8 @@ public class AccordionItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
-                itemContext.SetSummary([], new HtmlString("Summary"));
-                itemContext.SetContent([], new HtmlString("Content"));
+                itemContext.SetSummary(new AttributeCollection(), new TemplateString("Summary"));
+                itemContext.SetContent(new AttributeCollection(), new TemplateString("Content"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -109,7 +109,7 @@ public class AccordionItemTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
-                itemContext.SetHeading([], new HtmlString("Heading"));
+                itemContext.SetHeading(new AttributeCollection(), new TemplateString("Heading"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

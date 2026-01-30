@@ -1,5 +1,5 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -49,7 +49,7 @@ public class AccordionItemSummaryTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
         var itemContext = new AccordionItemContext();
-        itemContext.SetSummary([], new HtmlString("Existing summary"));
+        itemContext.SetSummary(new AttributeCollection(), new TemplateString("Existing summary"));
 
         var context = new TagHelperContext(
             tagName: "govuk-accordion-item-summary",

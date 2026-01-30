@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;

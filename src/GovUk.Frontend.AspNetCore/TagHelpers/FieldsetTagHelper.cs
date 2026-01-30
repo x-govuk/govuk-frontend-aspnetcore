@@ -70,9 +70,7 @@ public class FieldsetTagHelper : TagHelper
         if (fieldsetContext.Legend != null)
         {
             var legendValue = fieldsetContext.Legend.Value;
-            var legendAttributes = legendValue.Attributes != null
-                ? new AttributeCollection(legendValue.Attributes)
-                : null;
+            var legendAttributes = legendValue.Attributes;
 
             legend = new FieldsetOptionsLegend
             {

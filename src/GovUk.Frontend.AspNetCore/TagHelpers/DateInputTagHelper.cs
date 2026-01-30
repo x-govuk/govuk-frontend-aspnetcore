@@ -309,7 +309,7 @@ public class DateInputTagHelper : TagHelper
             // Value resolution hierarchy:
             //   if Value has been set on a child tag helper e.g. <date-input-day /> then use that;
             //   if Value property is specified, use that;
-            //   if AspFor is specified use value from ModelState;
+            //   if For is specified use value from ModelState;
             //   otherwise empty.
 
             var itemValue = contextItem?.ValueSpecified is true ? contextItem.Value ?? string.Empty :

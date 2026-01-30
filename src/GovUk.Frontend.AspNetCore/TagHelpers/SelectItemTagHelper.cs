@@ -92,8 +92,8 @@ public class SelectItemTagHelper : TagHelper
         var resolvedSelected = !_selectedSpecified && selectContext.HaveModelExpression ?
             _modelHelper.GetModelValue(
                 ViewContext!,
-                selectContext.AspFor!.ModelExplorer,
-                selectContext.AspFor.Name) == Value :
+                selectContext.For!.ModelExplorer,
+                selectContext.For.Name) == Value :
             _selected;
 
         selectContext.AddItem(new SelectOptionsItem

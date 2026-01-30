@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class SelectContext(ModelExpression? aspFor) : FormGroupContext3
+internal class SelectContext(ModelExpression? @for) : FormGroupContext3
 {
     private readonly List<SelectOptionsItem> _items = [];
 
-    public ModelExpression? AspFor { get; } = aspFor;
+    public ModelExpression? For { get; } = @for;
 
-    public bool HaveModelExpression => AspFor is not null;
+    public bool HaveModelExpression => For is not null;
 
     public IReadOnlyCollection<SelectOptionsItem> Items => _items;
 

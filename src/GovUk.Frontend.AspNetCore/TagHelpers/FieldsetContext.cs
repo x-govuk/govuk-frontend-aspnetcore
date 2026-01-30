@@ -1,17 +1,18 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class FieldsetContext
 {
-    public (bool IsPageHeading, AttributeDictionary? Attributes, IHtmlContent Content)? Legend { get; private set; }
+    public (bool IsPageHeading, AttributeCollection Attributes, IHtmlContent Content)? Legend { get; private set; }
 
     public void SetLegend(
         bool isPageHeading,
-        AttributeDictionary? attributes,
+        AttributeCollection attributes,
         IHtmlContent content)
     {
+        ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);
 
         if (Legend is not null)

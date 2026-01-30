@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -52,7 +53,7 @@ public class FieldsetLegendTagHelperTests
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
-            attributes: null,
+            attributes: new AttributeCollection(),
             content: new HtmlString("Existing legend"));
 
         var context = new TagHelperContext(

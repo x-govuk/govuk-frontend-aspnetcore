@@ -16,7 +16,6 @@ public class ErrorMessageTagHelper : TagHelper
 {
     internal const string TagName = "govuk-error-message";
 
-    private const string AspForAttributeName = "asp-for";
     private const string ForAttributeName = "for";
     private const string VisuallyHiddenTextAttributeName = "visually-hidden-text";
 
@@ -38,18 +37,6 @@ public class ErrorMessageTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(componentGenerator);
         _componentGenerator = componentGenerator;
         _modelHelper = modelHelper ?? new DefaultModelHelper();
-    }
-
-    /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
     }
 
     /// <summary>
@@ -93,7 +80,7 @@ public class ErrorMessageTagHelper : TagHelper
         if (content is null && For is null)
         {
             throw new InvalidOperationException(
-                $"Cannot determine content. Element must contain content if the '{AspForAttributeName}' attribute is not specified.");
+                $"Cannot determine content. Element must contain content if the '{ForAttributeName}' attribute is not specified.");
         }
 
         var resolvedContent = content.ToTemplateString();

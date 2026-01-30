@@ -35,7 +35,6 @@ public class TextAreaTagHelper : TagHelper
 {
     internal const string TagName = "govuk-textarea";
 
-    private const string AspForAttributeName = "asp-for";
     private const string AttributesPrefix = "textarea-";
     private const string AutoCompleteAttributeName = "autocomplete";
     private const string DescribedByAttributeName = "described-by";
@@ -67,18 +66,6 @@ public class TextAreaTagHelper : TagHelper
 
         _componentGenerator = componentGenerator;
         _modelHelper = modelHelper;
-    }
-
-    /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
     }
 
     /// <summary>

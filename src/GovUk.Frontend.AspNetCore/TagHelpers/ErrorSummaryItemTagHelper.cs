@@ -19,7 +19,6 @@ public class ErrorSummaryItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-error-summary-item";
 
-    private const string AspForAttributeName = "asp-for";
     private const string ForAttributeName = "for";
     private const string LinkAttributesPrefix = "link-";
 
@@ -44,18 +43,6 @@ public class ErrorSummaryItemTagHelper : TagHelper
 
         _optionsAccessor = optionsAccessor;
         _modelHelper = modelHelper;
-    }
-
-    /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
     }
 
     /// <summary>

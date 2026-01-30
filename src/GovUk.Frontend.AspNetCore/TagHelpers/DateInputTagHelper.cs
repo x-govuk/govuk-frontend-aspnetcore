@@ -39,7 +39,6 @@ public class DateInputTagHelper : TagHelper
     private const string DefaultMonthLabel = "Month";
     private const string DefaultYearLabel = "Year";
 
-    private const string AspForAttributeName = "asp-for";
     private const string DateInputAttributesPrefix = "date-input-";
     private const string DisabledAttributeName = "disabled";
     private const string ErrorMessagePrefixAttributeName = "error-message-prefix";
@@ -83,18 +82,6 @@ public class DateInputTagHelper : TagHelper
     }
 
     /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
-    }
-
-    /// <summary>
     /// Additional attributes for the container element that wraps the items.
     /// </summary>
     [HtmlAttributeName(DictionaryAttributePrefix = DateInputAttributesPrefix)]
@@ -129,7 +116,7 @@ public class DateInputTagHelper : TagHelper
     public string? Id { get; set; }
 
     /// <summary>
-    /// Whether the <see cref="ModelStateEntry.Errors"/> for the <see cref="AspFor"/> expression should be used
+    /// Whether the <see cref="ModelStateEntry.Errors"/> for the <see cref="For"/> expression should be used
     /// to deduce an error message.
     /// </summary>
     /// <remarks>

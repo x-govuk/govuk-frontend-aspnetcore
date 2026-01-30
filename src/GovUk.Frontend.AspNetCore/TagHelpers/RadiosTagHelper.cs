@@ -27,7 +27,6 @@ public class RadiosTagHelper : TagHelper
     internal const string HintTagName = "govuk-radios-hint";
     internal const string TagName = "govuk-radios";
 
-    private const string AspForAttributeName = "asp-for";
     private const string AttributesPrefix = "radios-";
     private const string ForAttributeName = "for";
     private const string IdPrefixAttributeName = "id-prefix";
@@ -52,18 +51,6 @@ public class RadiosTagHelper : TagHelper
 
         _componentGenerator = componentGenerator;
         _modelHelper = modelHelper;
-    }
-
-    /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
     }
 
     /// <summary>

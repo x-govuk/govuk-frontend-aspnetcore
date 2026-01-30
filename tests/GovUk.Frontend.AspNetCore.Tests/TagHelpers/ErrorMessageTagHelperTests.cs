@@ -212,7 +212,7 @@ public class ErrorMessageTagHelperTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Cannot determine content. Element must contain content if the 'asp-for' attribute is not specified.", ex.Message);
+        Assert.Equal("Cannot determine content. Element must contain content if the 'for' attribute is not specified.", ex.Message);
     }
 
     private class Model

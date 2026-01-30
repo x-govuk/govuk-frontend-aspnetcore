@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -32,7 +31,6 @@ public class CharacterCountTagHelper : TagHelper
 {
     internal const string TagName = "govuk-character-count";
 
-    private const string AspForAttributeName = "asp-for";
     private const string AutoCompleteAttributeName = "autocomplete";
     private const string CountMessageAttributesPrefix = "count-message-";
     private const string DisabledAttributeName = "disabled";
@@ -75,18 +73,6 @@ public class CharacterCountTagHelper : TagHelper
     }
 
     /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
-    }
-
-    /// <summary>
     /// The <c>autocomplete</c> attribute for the generated <c>textarea</c> element.
     /// </summary>
     [HtmlAttributeName(AutoCompleteAttributeName)]
@@ -126,7 +112,7 @@ public class CharacterCountTagHelper : TagHelper
     public string? Id { get; set; }
 
     /// <summary>
-    /// Whether the <see cref="ModelStateEntry.Errors"/> for the <see cref="AspFor"/> expression should be used
+    /// Whether the <see cref="ModelStateEntry.Errors"/> for the <see cref="For"/> expression should be used
     /// to deduce an error message.
     /// </summary>
     /// <remarks>
@@ -191,7 +177,7 @@ public class CharacterCountTagHelper : TagHelper
     /// The <c>name</c> attribute for the generated <c>textarea</c> element.
     /// </summary>
     /// <remarks>
-    /// Required unless <see cref="AspFor"/> is specified.
+    /// Required unless <see cref="For"/> is specified.
     /// </remarks>
     [HtmlAttributeName(NameAttributeName)]
     public string? Name { get; set; }
@@ -276,7 +262,7 @@ public class CharacterCountTagHelper : TagHelper
         var name = ResolveName();
         var id = ResolveId(name);
         var value = ResolveValue(characterCountContext);
-        var labelOptions = characterCountContext.GetLabelOptions(For, ViewContext!, _modelHelper, id, AspForAttributeName);
+        var labelOptions = characterCountContext.GetLabelOptions(For, ViewContext!, _modelHelper, id, ForAttributeName);
         var hintOptions = characterCountContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = characterCountContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
@@ -361,7 +347,7 @@ public class CharacterCountTagHelper : TagHelper
         Name is null && For is null
             ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
-                AspForAttributeName)
+                ForAttributeName)
             : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
 
     private TemplateString ResolveValue(CharacterCountContext characterCountContext) =>

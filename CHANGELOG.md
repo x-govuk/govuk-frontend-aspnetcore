@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Breaking changes
+
+The deprecated `asp-for` attribute has been removed; the `for` attribute should be used instead.
+
 ### New features
 
 Adds support for the password tag helper's show/hide customisation.

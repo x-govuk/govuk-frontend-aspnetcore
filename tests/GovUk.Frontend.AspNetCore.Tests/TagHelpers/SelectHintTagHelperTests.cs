@@ -9,7 +9,7 @@ public class SelectHintTagHelperTests
     public async Task ProcessAsync_SetsHintOnContext()
     {
         // Arrange
-        var selectContext = new SelectContext(aspFor: null);
+        var selectContext = new SelectContext(@for: null);
 
         var context = new TagHelperContext(
             tagName: SelectHintTagHelper.TagName,

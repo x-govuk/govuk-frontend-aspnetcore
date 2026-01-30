@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -38,7 +37,6 @@ public class TextInputTagHelper : TagHelper
 {
     internal const string TagName = "govuk-input";
 
-    private const string AspForAttributeName = "asp-for";
     private const string AttributesPrefix = "input-";
     private const string AutoCompleteAttributeName = "autocomplete";
     private const string AutocapitalizeAttributeName = "autocapitalize";
@@ -78,18 +76,6 @@ public class TextInputTagHelper : TagHelper
 
         _componentGenerator = componentGenerator;
         _modelHelper = modelHelper;
-    }
-
-    /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
     }
 
     /// <summary>

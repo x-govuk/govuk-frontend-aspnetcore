@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -27,7 +26,6 @@ public class CheckboxesTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes";
 
-    private const string AspForAttributeName = "asp-for";
     private const string AttributesPrefix = "checkboxes-";
     private const string DescribedByAttributeName = "described-by";
     private const string ForAttributeName = "for";
@@ -53,18 +51,6 @@ public class CheckboxesTagHelper : TagHelper
 
         _componentGenerator = componentGenerator;
         _modelHelper = modelHelper;
-    }
-
-    /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
     }
 
     /// <summary>

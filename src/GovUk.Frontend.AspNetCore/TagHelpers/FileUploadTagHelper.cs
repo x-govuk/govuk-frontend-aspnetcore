@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -29,7 +28,6 @@ public class FileUploadTagHelper : TagHelper
 {
     internal const string TagName = "govuk-file-upload";
 
-    private const string AspForAttributeName = "asp-for";
     private const string AttributesPrefix = "input-";
     private const string DescribedByAttributeName = "described-by";
     private const string DisabledAttributeName = "disabled";
@@ -62,18 +60,6 @@ public class FileUploadTagHelper : TagHelper
     }
 
     /// <summary>
-    /// An expression to be evaluated against the current model.
-    /// </summary>
-    [HtmlAttributeName(AspForAttributeName)]
-    [Obsolete("Use the 'for' attribute instead.", DiagnosticId = DiagnosticIds.UseForAttributeInstead)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ModelExpression? AspFor
-    {
-        get => For;
-        set => For = value;
-    }
-
-    /// <summary>
     /// One or more element IDs to add to the <c>aria-describedby</c> attribute of the generated <c>input</c> element.
     /// </summary>
     [HtmlAttributeName(DescribedByAttributeName)]
@@ -101,7 +87,7 @@ public class FileUploadTagHelper : TagHelper
     public string? Id { get; set; }
 
     /// <summary>
-    /// Whether the <see cref="ModelStateEntry.Errors"/> for the <see cref="AspFor"/> expression should be used
+    /// Whether the <see cref="ModelStateEntry.Errors"/> for the <see cref="For"/> expression should be used
     /// to deduce an error message.
     /// </summary>
     /// <remarks>
@@ -170,7 +156,7 @@ public class FileUploadTagHelper : TagHelper
 
         var name = ResolveName();
         var id = ResolveId(name);
-        var labelOptions = fileUploadContext.GetLabelOptions(For, ViewContext!, _modelHelper, id, AspForAttributeName);
+        var labelOptions = fileUploadContext.GetLabelOptions(For, ViewContext!, _modelHelper, id, ForAttributeName);
         var hintOptions = fileUploadContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = fileUploadContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
@@ -231,7 +217,7 @@ public class FileUploadTagHelper : TagHelper
         return Name is null && For is null
             ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
-                AspForAttributeName)
+                ForAttributeName)
             : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
     }
 }

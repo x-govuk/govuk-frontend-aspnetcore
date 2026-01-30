@@ -84,7 +84,7 @@ public class ButtonTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var content = (await output.GetChildContentAsync()).Snapshot();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

@@ -33,7 +33,7 @@ public class BreadcrumbsItemTagHelper : TagHelper
 
         var breadcrumbsContext = context.GetContextItem<BreadcrumbsContext>();
 
-        var content = (await output.GetChildContentAsync()).Snapshot();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

@@ -26,7 +26,7 @@ public class DetailsSummaryTagHelper : TagHelper
             content = output.Content;
         }
 
-        detailsContext.SetSummary(new AttributeCollection(output.Attributes), content.Snapshot());
+        detailsContext.SetSummary(new AttributeCollection(output.Attributes), content);
 
         output.SuppressOutput();
     }

@@ -93,10 +93,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.css">
+    <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.css" Visible="false">
       <LinkedName>govuk-frontend.min.css</LinkedName>
     </_CompiledAssets>
-    <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.js">
+    <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.js" Visible="false">
       <LinkedName>govuk-frontend.min.js</LinkedName>
     </_CompiledAssets>
 

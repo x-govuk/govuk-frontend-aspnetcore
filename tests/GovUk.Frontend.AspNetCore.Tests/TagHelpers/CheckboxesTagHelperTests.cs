@@ -32,7 +32,7 @@ public class CheckboxesTagHelperTests
                 checkboxesContext.SetHint(
                     attributes: new AttributeCollection(),
                     html: new TemplateString(hintContent),
-                    tagName: CheckboxesTagHelper.HintTagName);
+                    tagName: CheckboxesHintTagHelper.TagName);
 
                 checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
@@ -127,7 +127,7 @@ public class CheckboxesTagHelperTests
                     visuallyHiddenText: null,
                     attributes: new AttributeCollection(),
                     html: new TemplateString(errorContent),
-                    tagName: CheckboxesTagHelper.ErrorMessageTagName);
+                    tagName: CheckboxesErrorMessageTagHelper.TagName);
 
                 checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
@@ -416,7 +416,7 @@ public class CheckboxesTagHelperTests
                 checkboxesContext.SetHint(
                     attributes: new AttributeCollection(),
                     html: new TemplateString(hintContent),
-                    tagName: CheckboxesTagHelper.HintTagName);
+                    tagName: CheckboxesHintTagHelper.TagName);
 
                 checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {

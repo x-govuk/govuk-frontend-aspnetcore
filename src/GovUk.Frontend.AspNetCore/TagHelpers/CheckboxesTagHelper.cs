@@ -17,16 +17,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     CheckboxesFieldsetTagHelper.TagName,
     CheckboxesItemTagHelper.TagName,
     CheckboxesItemDividerTagHelper.TagName,
-    HintTagName,
-    ErrorMessageTagName,
+    CheckboxesHintTagHelper.TagName,
+    CheckboxesErrorMessageTagHelper.TagName,
     CheckboxesBeforeInputsTagHelper.TagName,
     CheckboxesAfterInputsTagHelper.TagName
 )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class CheckboxesTagHelper : TagHelper
 {
-    internal const string ErrorMessageTagName = "govuk-checkboxes-error-message";
-    internal const string HintTagName = "govuk-checkboxes-hint";
     internal const string TagName = "govuk-checkboxes";
 
     private const string AspForAttributeName = "asp-for";

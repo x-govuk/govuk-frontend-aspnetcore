@@ -8,14 +8,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
 #if SHORT_TAG_NAMES
-[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = CheckboxesTagHelper.TagName)]
 #endif
 [RestrictChildren(
     CheckboxesFieldsetLegendTagHelper.TagName,
     CheckboxesItemTagHelper.TagName,
     CheckboxesItemDividerTagHelper.TagName,
-    CheckboxesTagHelper.HintTagName,
-    CheckboxesTagHelper.ErrorMessageTagName
+    CheckboxesHintTagHelper.TagName,
+    CheckboxesErrorMessageTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupHintTagHelperBase.ShortTagName,

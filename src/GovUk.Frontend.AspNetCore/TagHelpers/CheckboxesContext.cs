@@ -22,13 +22,13 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
 
     public CheckboxesFieldsetContext? Fieldset { get; private set; }
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } = [CheckboxesTagHelper.ErrorMessageTagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => CheckboxesErrorMessageTagHelper.AllTagNames;
 
     protected string FieldsetTagName => CheckboxesFieldsetTagHelper.TagName;
 
     protected string ItemTagName => CheckboxesItemTagHelper.TagName;
 
-    protected override IReadOnlyCollection<string> HintTagNames { get; } = [CheckboxesTagHelper.HintTagName];
+    protected override IReadOnlyCollection<string> HintTagNames => CheckboxesHintTagHelper.AllTagNames;
 
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 

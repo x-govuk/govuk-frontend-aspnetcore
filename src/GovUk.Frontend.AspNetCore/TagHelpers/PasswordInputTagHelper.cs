@@ -259,7 +259,6 @@ public class PasswordInputTagHelper : TagHelper
 
         var passwordInputContext = context.GetContextItem<PasswordInputContext>();
 
-        context.SetContextItem(passwordInputContext);
         context.SetContextItem(typeof(FormGroupContext3), passwordInputContext);
         _ = await output.GetChildContentAsync();
 

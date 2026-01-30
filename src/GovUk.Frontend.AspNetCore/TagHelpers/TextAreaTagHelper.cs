@@ -174,7 +174,6 @@ public class TextAreaTagHelper : TagHelper
 
         var textAreaContext = context.GetContextItem<TextAreaContext>();
 
-        context.SetContextItem(textAreaContext);
         context.SetContextItem(typeof(FormGroupContext3), textAreaContext);
         _ = await output.GetChildContentAsync();
 

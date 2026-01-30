@@ -111,7 +111,6 @@ public class RadiosTagHelper : TagHelper
 
         var radiosContext = context.GetContextItem<RadiosContext>();
 
-        context.SetContextItem(radiosContext);
         context.SetContextItem(typeof(FormGroupContext3), radiosContext);
         _ = await output.GetChildContentAsync();
 

@@ -227,7 +227,6 @@ public class TextInputTagHelper : TagHelper
 
         var textInputContext = context.GetContextItem<TextInputContext>();
 
-        context.SetContextItem(textInputContext);
         context.SetContextItem(typeof(FormGroupContext3), textInputContext);
         _ = await output.GetChildContentAsync();
 

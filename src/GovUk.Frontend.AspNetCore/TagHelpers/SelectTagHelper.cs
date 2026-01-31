@@ -17,12 +17,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     SelectItemTagHelper.TagName,
     SelectLabelTagHelper.TagName,
     SelectHintTagHelper.TagName,
-    SelectErrorMessageTagHelper.TagName
+    SelectErrorMessageTagHelper.TagName,
+    SelectBeforeInputTagHelper.TagName,
+    SelectAfterInputTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupLabelTagHelperBase.ShortTagName,
     FormGroupHintTagHelperBase.ShortTagName,
-    FormGroupErrorMessageTagHelperBase.ShortTagName
+    FormGroupErrorMessageTagHelperBase.ShortTagName,
+    ShortTagNames.BeforeInput,
+    ShortTagNames.AfterInput
 #endif
 )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
@@ -158,7 +162,19 @@ public class SelectTagHelper : TagHelper
         var formGroupOptions = new SelectFormGroupOptions
         {
             Attributes = formGroupAttributes,
-            Classes = formGroupClasses
+            Classes = formGroupClasses,
+            BeforeInput = selectContext.BeforeInput is TemplateString beforeInput ?
+                new SelectOptionsBeforeInput
+                {
+                    Html = beforeInput
+                } :
+                null,
+            AfterInput = selectContext.AfterInput is TemplateString afterInput ?
+                new SelectOptionsAfterInput
+                {
+                    Html = afterInput
+                } :
+                null
         };
 
         var attributes = new AttributeCollection(SelectAttributes);

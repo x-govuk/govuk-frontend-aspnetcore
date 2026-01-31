@@ -7,12 +7,18 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 {
     private bool _fieldsetIsOpen;
     private readonly List<RadiosOptionsItem> _items = [];
+    private (TemplateString Content, string TagName)? _beforeInputs;
+    private (TemplateString Content, string TagName)? _afterInputs;
 
     public string? Name { get; } = name;
 
     public ModelExpression? For { get; } = @for;
 
     public IReadOnlyCollection<RadiosOptionsItem> Items => _items;
+
+    public TemplateString? BeforeInputs => _beforeInputs?.Content;
+
+    public TemplateString? AfterInputs => _afterInputs?.Content;
 
     public AttributeCollection? Attributes { get; private set; }
 
@@ -29,6 +35,10 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
     protected override string RootTagName => RadiosTagHelper.TagName;
+
+    private IReadOnlyCollection<string> BeforeInputsTagNames => RadiosBeforeInputsTagHelper.AllTagNames;
+
+    private IReadOnlyCollection<string> AfterInputsTagNames => RadiosAfterInputsTagHelper.AllTagNames;
 
     public void AddItem(RadiosOptionsItem item)
     {
@@ -79,6 +89,50 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         _fieldsetIsOpen = false;
     }
 
+    public void SetBeforeInputs(TemplateString content, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (BeforeInputs is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                BeforeInputsTagNames,
+                RootTagName);
+        }
+
+        if (Items.Count > 0)
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                ItemTagName);
+        }
+
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                afterInputsTagName);
+        }
+
+        _beforeInputs = (content, tagName);
+    }
+
+    public void SetAfterInputs(TemplateString content, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (AfterInputs is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                AfterInputsTagNames,
+                RootTagName);
+        }
+
+        _afterInputs = (content, tagName);
+    }
+
     public override void SetErrorMessage(
         TemplateString? visuallyHiddenText,
         AttributeCollection attributes,
@@ -90,9 +144,19 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
+        if (_beforeInputs is var (_, beforeInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, beforeInputsTagName);
+        }
+
         if (Items.Count > 0)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, ItemTagName);
+        }
+
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, afterInputsTagName);
         }
 
         base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
@@ -105,9 +169,19 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
+        if (_beforeInputs is var (_, beforeInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, beforeInputsTagName);
+        }
+
         if (Items.Count > 0)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, ItemTagName);
+        }
+
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, afterInputsTagName);
         }
 
         base.SetHint(attributes, html, tagName);

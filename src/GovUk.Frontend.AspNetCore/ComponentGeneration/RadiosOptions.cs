@@ -30,8 +30,8 @@ public record RadiosOptionsBeforeInputs
 
 public record RadiosOptionsAfterInputs
 {
-    public string? Text { get; set; }
-    public string? Html { get; set; }
+    public TemplateString? Text { get; set; }
+    public TemplateString? Html { get; set; }
 }
 
 public record RadiosOptionsItem

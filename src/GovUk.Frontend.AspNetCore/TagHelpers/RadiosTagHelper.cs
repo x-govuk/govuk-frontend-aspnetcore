@@ -17,7 +17,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     RadiosItemTagHelper.TagName,
     RadiosItemDividerTagHelper.TagName,
     HintTagName,
-    ErrorMessageTagName
+    ErrorMessageTagName,
+    RadiosBeforeInputsTagHelper.TagName,
+    RadiosAfterInputsTagHelper.TagName
 )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class RadiosTagHelper : TagHelper
@@ -126,6 +128,20 @@ public class RadiosTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new RadiosOptionsFormGroup
         {
+            BeforeInputs = radiosContext.BeforeInputs is TemplateString beforeInputs ?
+                new RadiosOptionsBeforeInputs
+                {
+                    Text = null,
+                    Html = beforeInputs
+                } :
+                null,
+            AfterInputs = radiosContext.AfterInputs is TemplateString afterInputs ?
+                new RadiosOptionsAfterInputs
+                {
+                    Text = null,
+                    Html = afterInputs
+                } :
+                null,
             Attributes = formGroupAttributes,
             Classes = formGroupClasses
         };

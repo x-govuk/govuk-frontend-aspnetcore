@@ -256,4 +256,40 @@ public class CheckboxesContextTests
         // Assert
         Assert.IsType<NotSupportedException>(ex);
     }
+
+    [Fact]
+    public void SetBeforeInputs_OutsideOfFieldset_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var context = new CheckboxesContext(name: null, @for: null);
+
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
+
+        // Act
+        var ex = Record.Exception(() => context.SetBeforeInputs(new TemplateString("Before"), tagName: "govuk-checkboxes-before-inputs"));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal("<govuk-checkboxes-before-inputs> must be inside <govuk-checkboxes-fieldset>.", ex.Message);
+    }
+
+    [Fact]
+    public void SetAfterInputs_OutsideOfFieldset_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var context = new CheckboxesContext(name: null, @for: null);
+
+        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
+
+        // Act
+        var ex = Record.Exception(() => context.SetAfterInputs(new TemplateString("After"), tagName: "govuk-checkboxes-after-inputs"));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal("<govuk-checkboxes-after-inputs> must be inside <govuk-checkboxes-fieldset>.", ex.Message);
+    }
 }

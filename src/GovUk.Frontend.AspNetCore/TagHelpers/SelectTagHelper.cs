@@ -162,7 +162,19 @@ public class SelectTagHelper : TagHelper
         var formGroupOptions = new SelectFormGroupOptions
         {
             Attributes = formGroupAttributes,
-            Classes = formGroupClasses
+            Classes = formGroupClasses,
+            BeforeInput = selectContext.BeforeInput is TemplateString beforeInput ?
+                new SelectOptionsBeforeInput
+                {
+                    Html = beforeInput
+                } :
+                null,
+            AfterInput = selectContext.AfterInput is TemplateString afterInput ?
+                new SelectOptionsAfterInput
+                {
+                    Html = afterInput
+                } :
+                null
         };
 
         var attributes = new AttributeCollection(SelectAttributes);

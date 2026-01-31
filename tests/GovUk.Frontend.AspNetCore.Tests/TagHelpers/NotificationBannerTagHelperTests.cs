@@ -26,6 +26,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<NotificationBannerOptions>(nameof(IComponentGenerator.GenerateNotificationBannerAsync));
 
         var tagHelper = new NotificationBannerTagHelper(componentGenerator);
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -63,6 +64,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
         {
             Type = NotificationBannerType.Success
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -98,6 +100,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
             DisableAutoFocus = true,
             Type = NotificationBannerType.Success
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -132,6 +135,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
         {
             Role = role
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -167,6 +171,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<NotificationBannerOptions>(nameof(IComponentGenerator.GenerateNotificationBannerAsync));
 
         var tagHelper = new NotificationBannerTagHelper(componentGenerator);
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

@@ -40,9 +40,10 @@ public class RadiosFieldsetLegendTagHelper : TagHelper
         }
 
         fieldsetContext.SetLegend(
-            IsPageHeading ?? false,
+            IsPageHeading,
             new AttributeCollection(output.Attributes),
-            html: content.ToTemplateString());
+            html: content.ToTemplateString(),
+            TagName);
 
         output.SuppressOutput();
     }

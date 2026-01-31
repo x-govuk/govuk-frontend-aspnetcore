@@ -41,16 +41,21 @@ public class FieldsetTagHelper : TagHelper
     public string? Role { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new FieldsetContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var fieldsetContext = new FieldsetContext();
+        var fieldsetContext = context.GetContextItem<FieldsetContext>();
 
         IHtmlContent content;
 
-        context.SetContextItem(fieldsetContext);
         content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)

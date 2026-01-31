@@ -111,7 +111,6 @@ public class RadiosTagHelper : TagHelper
 
         var radiosContext = context.GetContextItem<RadiosContext>();
 
-        context.SetContextItem(radiosContext);
         context.SetContextItem(typeof(FormGroupContext3), radiosContext);
         _ = await output.GetChildContentAsync();
 
@@ -121,7 +120,7 @@ public class RadiosTagHelper : TagHelper
         var hintOptions = radiosContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = radiosContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
-        var fieldsetOptions = radiosContext.Fieldset?.GetFieldsetOptions(_modelHelper);
+        var fieldsetOptions = radiosContext.GetFieldsetOptions(_modelHelper);
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);

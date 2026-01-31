@@ -139,7 +139,6 @@ public class SelectTagHelper : TagHelper
 
         var selectContext = context.GetContextItem<SelectContext>();
 
-        context.SetContextItem(selectContext);
         context.SetContextItem(typeof(FormGroupContext3), selectContext);
         _ = await output.GetChildContentAsync();
 

@@ -3,60 +3,34 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal abstract class FormGroupFieldsetContext2
+internal abstract class FormGroupFieldsetContext2(string? describedBy, string? legendClass, ModelExpression? @for)
 {
     public record LegendInfo(bool? IsPageHeading, AttributeCollection Attributes, TemplateString? Html);
 
-    private readonly string _fieldsetTagName;
-    private readonly string _legendTagName;
-    private readonly string? _describedBy;
-    private readonly string? _legendClass;
-    private readonly AttributeCollection _attributes;
-    private readonly ModelExpression? _for;
-
-    protected FormGroupFieldsetContext2(
-        string fieldsetTagName,
-        string legendTagName,
-        string? describedBy,
-        string? legendClass,
-        AttributeCollection attributes,
-        ModelExpression? @for)
-    {
-        ArgumentNullException.ThrowIfNull(fieldsetTagName);
-        ArgumentNullException.ThrowIfNull(legendTagName);
-        ArgumentNullException.ThrowIfNull(attributes);
-
-        _fieldsetTagName = fieldsetTagName;
-        _legendTagName = legendTagName;
-        _describedBy = describedBy;
-        _legendClass = legendClass;
-        _attributes = attributes;
-        _for = @for;
-    }
-
     public LegendInfo? Legend { get; private set; }
 
-    public FieldsetOptions GetFieldsetOptions(IModelHelper modelHelper)
+    private protected abstract string FieldsetTagName { get; }
+
+    public FieldsetOptions GetFieldsetOptions(IModelHelper modelHelper, AttributeCollection attributes)
     {
         ArgumentNullException.ThrowIfNull(modelHelper);
+        ArgumentNullException.ThrowIfNull(attributes);
 
-        ThrowIfNotComplete();
-
-        var attributes = _attributes.Clone();
-        attributes.Remove("class", out var classes);
+        var clonedAttributes = attributes.Clone();
+        clonedAttributes.Remove("class", out var classes);
 
         var legendAttributes = Legend?.Attributes.Clone() ?? [];
         legendAttributes.Remove("class", out var legendClasses);
 
-        if (_legendClass is not null)
+        if (legendClass is not null)
         {
-            legendClasses = legendClasses.AppendCssClasses(_legendClass);
+            legendClasses = legendClasses.AppendCssClasses(legendClass);
         }
 
         var html = Legend?.Html;
-        if (html is null && _for is not null)
+        if (html is null && @for is not null)
         {
-            html = modelHelper.GetDisplayName(_for.ModelExplorer, _for.Name);
+            html = modelHelper.GetDisplayName(@for.ModelExplorer, @for.Name);
         }
 
         var legendOptions = new FieldsetOptionsLegend
@@ -70,32 +44,35 @@ internal abstract class FormGroupFieldsetContext2
 
         return new FieldsetOptions
         {
-            DescribedBy = _describedBy,
+            DescribedBy = describedBy,
             Legend = legendOptions,
             Role = "group",
             Html = null,
             Classes = classes,
-            Attributes = attributes
+            Attributes = clonedAttributes
         };
     }
 
-    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, TemplateString? html)
+    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string legendTagName)
     {
         ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentNullException.ThrowIfNull(legendTagName);
 
         if (Legend is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(_legendTagName, _fieldsetTagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(legendTagName, FieldsetTagName);
         }
 
         Legend = new(isPageHeading, attributes, html);
     }
 
-    public void ThrowIfNotComplete()
+    public void ThrowIfNotComplete(string legendTagName)
     {
-        if (Legend is null && _for is null)
+        ArgumentNullException.ThrowIfNull(legendTagName);
+
+        if (Legend is null && @for is null)
         {
-            throw ExceptionHelper.AChildElementMustBeProvided(_legendTagName);
+            throw ExceptionHelper.AChildElementMustBeProvided(legendTagName);
         }
     }
 }

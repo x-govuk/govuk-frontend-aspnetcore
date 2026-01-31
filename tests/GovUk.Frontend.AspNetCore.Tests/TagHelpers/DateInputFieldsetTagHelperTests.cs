@@ -21,7 +21,7 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading, attributes: [], html: legendContent);
+                fieldsetContext.SetLegend(isPageHeading, attributes: [], html: legendContent, DateInputFieldsetLegendTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -46,10 +46,10 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
         // Arrange
         var dateInputContext = new DateInputContext(haveExplicitValue: false, @for: null);
 
-        dateInputContext.OpenFieldset();
-        var checkboxesFieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for: null);
-        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new HtmlString("Existing legend"));
-        dateInputContext.CloseFieldset(checkboxesFieldsetContext);
+        var checkboxesFieldsetContext = new DateInputFieldsetContext(describedBy: null, @for: null);
+        dateInputContext.OpenFieldset(checkboxesFieldsetContext, []);
+        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new HtmlString("Existing legend"), DateInputFieldsetLegendTagHelper.TagName);
+        dateInputContext.CloseFieldset();
 
         var context = CreateTagHelperContext(contexts: dateInputContext);
 
@@ -57,7 +57,7 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: [], html: "New legend");
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: [], html: "New legend", DateInputFieldsetLegendTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -65,10 +65,12 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
 
         var tagHelper = new DateInputFieldsetTagHelper();
 
-        tagHelper.Init(context);
-
         // Act
-        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+        var ex = await Record.ExceptionAsync(() =>
+        {
+            tagHelper.Init(context);
+            return tagHelper.ProcessAsync(context, output);
+        });
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

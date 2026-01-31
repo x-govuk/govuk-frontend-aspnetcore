@@ -35,6 +35,7 @@ public class DetailsTagHelperTests
             });
 
         var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator());
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -82,6 +83,7 @@ public class DetailsTagHelperTests
         {
             Open = true
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -117,6 +119,7 @@ public class DetailsTagHelperTests
         {
             Open = true
         };
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
@@ -154,6 +157,7 @@ public class DetailsTagHelperTests
         {
             Open = true
         };
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
@@ -193,6 +197,7 @@ public class DetailsTagHelperTests
             });
 
         var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator());
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -234,6 +239,7 @@ public class DetailsTagHelperTests
             });
 
         var tagHelper = new DetailsTagHelper(TestUtils.CreateComponentGenerator());
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

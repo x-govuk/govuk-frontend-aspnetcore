@@ -112,6 +112,12 @@ public class AccordionTagHelper : TagHelper
     public string? ShowSectionAriaLabelText { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new AccordionContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -128,9 +134,8 @@ public class AccordionTagHelper : TagHelper
                 $"The '{nameof(HeadingLevelAttributeName)}' attribute must be between 1 and 6.");
         }
 
-        var accordionContext = new AccordionContext();
+        var accordionContext = context.GetContextItem<AccordionContext>();
 
-        context.SetContextItem(accordionContext);
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);

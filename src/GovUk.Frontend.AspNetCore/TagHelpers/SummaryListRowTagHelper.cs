@@ -13,15 +13,20 @@ public class SummaryListRowTagHelper : TagHelper
     internal const string TagName = "govuk-summary-list-row";
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new SummaryListRowContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
         var summaryListContext = context.GetContextItem<SummaryListContext>();
-        var rowContext = new SummaryListRowContext();
+        var rowContext = context.GetContextItem<SummaryListRowContext>();
 
-        context.SetContextItem(rowContext);
         _ = await output.GetChildContentAsync();
 
         rowContext.ThrowIfIncomplete();

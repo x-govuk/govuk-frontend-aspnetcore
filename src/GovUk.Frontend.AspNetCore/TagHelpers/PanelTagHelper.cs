@@ -51,16 +51,21 @@ public class PanelTagHelper : TagHelper
     }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new PanelContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var panelContext = new PanelContext();
+        var panelContext = context.GetContextItem<PanelContext>();
 
         TagHelperContent content;
 
-        context.SetContextItem(panelContext);
         content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)

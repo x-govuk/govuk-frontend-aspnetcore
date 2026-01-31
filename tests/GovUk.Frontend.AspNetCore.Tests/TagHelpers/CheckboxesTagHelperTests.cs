@@ -409,9 +409,9 @@ public class CheckboxesTagHelperTests
             {
                 var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-                checkboxesContext.OpenFieldset();
-                var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
-                checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString(legendContent));
+                var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
+                checkboxesContext.OpenFieldset(checkboxesFieldsetContext, new AttributeCollection());
+                checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString(legendContent), CheckboxesFieldsetLegendTagHelper.TagName);
 
                 checkboxesContext.SetHint(
                     attributes: new AttributeCollection(),
@@ -436,7 +436,7 @@ public class CheckboxesTagHelperTests
                     Value = new TemplateString("second")
                 });
 
-                checkboxesContext.CloseFieldset(checkboxesFieldsetContext);
+                checkboxesContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

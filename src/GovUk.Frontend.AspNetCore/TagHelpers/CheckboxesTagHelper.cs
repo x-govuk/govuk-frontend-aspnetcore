@@ -118,7 +118,6 @@ public class CheckboxesTagHelper : TagHelper
 
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
 
-        context.SetContextItem(checkboxesContext);
         _ = await output.GetChildContentAsync();
 
         var idPrefix = ResolveIdPrefix();
@@ -127,7 +126,7 @@ public class CheckboxesTagHelper : TagHelper
         var hintOptions = checkboxesContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = checkboxesContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
-        var fieldsetOptions = checkboxesContext.Fieldset?.GetFieldsetOptions(_modelHelper);
+        var fieldsetOptions = checkboxesContext.GetFieldsetOptions(_modelHelper);
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);

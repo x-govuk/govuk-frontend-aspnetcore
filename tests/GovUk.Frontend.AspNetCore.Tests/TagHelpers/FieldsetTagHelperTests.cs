@@ -49,6 +49,8 @@ public class FieldsetTagHelperTests
             Role = role
         };
 
+        tagHelper.Init(context);
+
         // Act
         await tagHelper.ProcessAsync(context, output);
 
@@ -109,6 +111,8 @@ public class FieldsetTagHelperTests
             Role = role
         };
 
+        tagHelper.Init(context);
+
         // Act
         await tagHelper.ProcessAsync(context, output);
 
@@ -153,6 +157,8 @@ public class FieldsetTagHelperTests
             DescribedBy = "describedby",
             Role = "therole"
         };
+
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
@@ -209,6 +215,8 @@ public class FieldsetTagHelperTests
             DescribedBy = describedBy,
             Role = role
         };
+
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

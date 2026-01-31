@@ -73,6 +73,7 @@ public class FileUploadTagHelperTests
                 { "data-foo", dataFooAttrValue },
             }
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -150,6 +151,7 @@ public class FileUploadTagHelperTests
             Name = name,
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -234,6 +236,7 @@ public class FileUploadTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -311,6 +314,7 @@ public class FileUploadTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -384,6 +388,7 @@ public class FileUploadTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -464,6 +469,7 @@ public class FileUploadTagHelperTests
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -536,6 +542,7 @@ public class FileUploadTagHelperTests
             ViewContext = new ViewContext(),
             IgnoreModelStateErrors = true
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -617,6 +624,7 @@ public class FileUploadTagHelperTests
             IgnoreModelStateErrors = true,
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -673,6 +681,7 @@ public class FileUploadTagHelperTests
             Name = name,
             ViewContext = TestUtils.CreateViewContext()
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

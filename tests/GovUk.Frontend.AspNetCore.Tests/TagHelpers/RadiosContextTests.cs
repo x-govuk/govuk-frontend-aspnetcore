@@ -37,9 +37,9 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        context.OpenFieldset();
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
-        context.CloseFieldset(fieldsetContext);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
 
         // Act
         var ex = Record.Exception(() => context.AddItem(item));
@@ -55,10 +55,10 @@ public class RadiosContextTests
         // Arrange
         var context = new RadiosContext(name: null, @for: null);
 
-        context.OpenFieldset();
+        context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection());
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -71,11 +71,12 @@ public class RadiosContextTests
         // Arrange
         var context = new RadiosContext(name: null, @for: null);
 
-        context.OpenFieldset();
-        context.CloseFieldset(new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null));
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -97,7 +98,7 @@ public class RadiosContextTests
         context.AddItem(item);
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -112,7 +113,7 @@ public class RadiosContextTests
         context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-radios-hint");
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -127,7 +128,7 @@ public class RadiosContextTests
         context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-radios-error-message");
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -141,7 +142,8 @@ public class RadiosContextTests
         var context = new RadiosContext(name: null, @for: null);
 
         // Act
-        var ex = Record.Exception(() => context.CloseFieldset(new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null)));
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var ex = Record.Exception(() => context.CloseFieldset());
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -183,9 +185,9 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        context.OpenFieldset();
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
-        context.CloseFieldset(fieldsetContext);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
 
         // Act
         var ex = Record.Exception(
@@ -230,9 +232,9 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        context.OpenFieldset();
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, attributes: new AttributeCollection(), @for: null);
-        context.CloseFieldset(fieldsetContext);
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
 
         // Act
         var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-radios-hint"));

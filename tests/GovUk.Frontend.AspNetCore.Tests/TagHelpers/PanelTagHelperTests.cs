@@ -37,6 +37,7 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         {
             HeadingLevel = headingLevel
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -75,6 +76,7 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<PanelOptions>(nameof(IComponentGenerator.GeneratePanelAsync));
 
         var tagHelper = new PanelTagHelper(componentGenerator);
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -107,6 +109,7 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<PanelOptions>(nameof(IComponentGenerator.GeneratePanelAsync));
 
         var tagHelper = new PanelTagHelper(componentGenerator);
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -140,6 +143,7 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<PanelOptions>(nameof(IComponentGenerator.GeneratePanelAsync));
 
         var tagHelper = new PanelTagHelper(componentGenerator);
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -173,6 +177,7 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<PanelOptions>(nameof(IComponentGenerator.GeneratePanelAsync));
 
         var tagHelper = new PanelTagHelper(componentGenerator);
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
@@ -202,6 +207,7 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         {
             HeadingLevel = 3
         };
+        tagHelper.Init(context);
 
         // Act
         var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));

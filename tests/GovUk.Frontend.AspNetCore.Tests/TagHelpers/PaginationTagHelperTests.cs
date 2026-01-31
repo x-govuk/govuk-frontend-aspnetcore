@@ -79,6 +79,7 @@ public class PaginationTagHelperTests
         {
             LandmarkLabel = landmarkLabel
         };
+        tagHelper.Init(context);
 
         // Act
         await tagHelper.ProcessAsync(context, output);

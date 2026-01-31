@@ -24,16 +24,20 @@ public class AccordionItemTagHelper : TagHelper
     public bool? Expanded { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new AccordionItemContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
         var accordionContext = context.GetContextItem<AccordionContext>();
+        var itemContext = context.GetContextItem<AccordionItemContext>();
 
-        var itemContext = new AccordionItemContext();
-
-        context.SetContextItem(itemContext);
         _ = await output.GetChildContentAsync();
 
         itemContext.ThrowIfIncomplete();

@@ -20,15 +20,20 @@ public class SummaryListRowActionsTagHelper : TagHelper
     }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new SummaryListRowActionsContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
         var rowContext = context.GetContextItem<SummaryListRowContext>();
-        var actionsContext = new SummaryListRowActionsContext();
+        var actionsContext = context.GetContextItem<SummaryListRowActionsContext>();
 
-        context.SetContextItem(actionsContext);
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);

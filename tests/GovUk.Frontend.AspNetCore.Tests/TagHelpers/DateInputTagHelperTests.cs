@@ -133,11 +133,11 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                var fieldsetContext = new DateInputFieldsetContext(fieldsetDescribedBy, new(fieldsetAttributes), @for: null);
+                var fieldsetContext = new DateInputFieldsetContext(fieldsetDescribedBy, @for: null);
+                dateInputContext.OpenFieldset(fieldsetContext, new(fieldsetAttributes));
 
-                dateInputContext.OpenFieldset();
-                fieldsetContext.SetLegend(legendIsPageHeading, new(legendAttributes), legendContent);
-                dateInputContext.CloseFieldset(fieldsetContext);
+                fieldsetContext.SetLegend(legendIsPageHeading, new(legendAttributes), legendContent, DateInputFieldsetLegendTagHelper.TagName);
+                dateInputContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -186,11 +186,11 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for);
+                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for);
+                dateInputContext.OpenFieldset(fieldsetContext, []);
 
-                dateInputContext.OpenFieldset();
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: null);
-                dateInputContext.CloseFieldset(fieldsetContext);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: null, DateInputFieldsetLegendTagHelper.TagName);
+                dateInputContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -230,11 +230,11 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
 
-                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, attributes: [], @for);
+                var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for);
+                dateInputContext.OpenFieldset(fieldsetContext, []);
 
-                dateInputContext.OpenFieldset();
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: legendContent);
-                dateInputContext.CloseFieldset(fieldsetContext);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: legendContent, DateInputFieldsetLegendTagHelper.TagName);
+                dateInputContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

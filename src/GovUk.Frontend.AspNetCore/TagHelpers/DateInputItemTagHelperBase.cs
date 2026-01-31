@@ -32,6 +32,11 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     }
 
     /// <summary>
+    /// Gets the tag name for this date input item.
+    /// </summary>
+    private protected abstract string ItemTagName { get; }
+
+    /// <summary>
     /// The <c>autocomplete</c> attribute for the generated <c>input</c> element.
     /// </summary>
     [HtmlAttributeName(AutoCompleteAttributeName)]
@@ -91,15 +96,20 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new DateInputItemContext(ItemTagName, _labelTagName));
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
         var dateInputContext = context.GetContextItem<DateInputContext>();
-        var dateInputItemContext = new DateInputItemContext(output.TagName, _labelTagName);
+        var dateInputItemContext = context.GetContextItem<DateInputItemContext>();
 
-        context.SetContextItem(dateInputItemContext);
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);

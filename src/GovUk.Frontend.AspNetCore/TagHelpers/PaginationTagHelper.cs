@@ -44,14 +44,19 @@ public class PaginationTagHelper : TagHelper
     public string? LandmarkLabel { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new PaginationContext());
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var paginationContext = new PaginationContext();
+        var paginationContext = context.GetContextItem<PaginationContext>();
 
-        context.SetContextItem(paginationContext);
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);

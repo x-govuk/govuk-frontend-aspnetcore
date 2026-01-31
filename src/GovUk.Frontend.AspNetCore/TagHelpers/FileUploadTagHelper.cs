@@ -141,15 +141,21 @@ public class FileUploadTagHelper : TagHelper
     public ViewContext? ViewContext { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        var fileUploadContext = new FileUploadContext();
+        context.SetContextItem(fileUploadContext);
+        context.SetContextItem(typeof(FormGroupContext3), fileUploadContext);
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var fileUploadContext = new FileUploadContext();
+        var fileUploadContext = context.GetContextItem<FileUploadContext>();
 
-        context.SetContextItem(fileUploadContext);
-        context.SetContextItem(typeof(FormGroupContext3), fileUploadContext);
         _ = await output.GetChildContentAsync();
 
         var name = ResolveName();

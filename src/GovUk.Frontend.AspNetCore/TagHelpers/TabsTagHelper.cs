@@ -54,14 +54,19 @@ public class TabsTagHelper : TagHelper
     public string? Title { get; set; }
 
     /// <inheritdoc/>
+    public override void Init(TagHelperContext context)
+    {
+        context.SetContextItem(new TabsContext(haveIdPrefix: IdPrefix is not null));
+    }
+
+    /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var tabsContext = new TabsContext(haveIdPrefix: IdPrefix is not null);
+        var tabsContext = context.GetContextItem<TabsContext>();
 
-        context.SetContextItem(tabsContext);
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);

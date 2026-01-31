@@ -11,7 +11,6 @@ public class RadiosFieldsetLegendTagHelperTests
     {
         // Arrange
         var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset-legend",
@@ -50,14 +49,12 @@ public class RadiosFieldsetLegendTagHelperTests
     {
         // Arrange
         var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
             attributes: new AttributeCollection(),
             html: new TemplateString("Existing legend"),
-            RadiosFieldsetLegendTagHelper.TagName,
-            RadiosFieldsetTagHelper.TagName);
+            RadiosFieldsetLegendTagHelper.TagName);
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset-legend",

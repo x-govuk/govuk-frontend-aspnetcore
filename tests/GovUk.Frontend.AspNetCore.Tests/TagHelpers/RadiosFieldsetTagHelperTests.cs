@@ -27,7 +27,7 @@ public class RadiosFieldsetTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), RadiosFieldsetLegendTagHelper.TagName, RadiosFieldsetTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), RadiosFieldsetLegendTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -51,11 +51,10 @@ public class RadiosFieldsetTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: null, @for: null);
 
-        radiosContext.OpenFieldset();
         var radiosFieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
-        radiosFieldsetContext.SetAttributes(new AttributeCollection());
-        radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString("Existing legend"), RadiosFieldsetLegendTagHelper.TagName, RadiosFieldsetTagHelper.TagName);
-        radiosContext.CloseFieldset(radiosFieldsetContext);
+        radiosContext.OpenFieldset(radiosFieldsetContext, new AttributeCollection());
+        radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString("Existing legend"), RadiosFieldsetLegendTagHelper.TagName);
+        radiosContext.CloseFieldset();
 
         var context = new TagHelperContext(
             tagName: "govuk-radios-fieldset",
@@ -72,7 +71,7 @@ public class RadiosFieldsetTagHelperTests
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), RadiosFieldsetLegendTagHelper.TagName, RadiosFieldsetTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), RadiosFieldsetLegendTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

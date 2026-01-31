@@ -14,7 +14,6 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
         var attributes = CreateDummyDataAttributes();
 
         var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes([]);
 
         var context = CreateTagHelperContext(
             attributes: attributes,
@@ -51,9 +50,8 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
     {
         // Arrange
         var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes([]);
 
-        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legend", DateInputFieldsetLegendTagHelper.TagName, DateInputFieldsetTagHelper.TagName);
+        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legend", DateInputFieldsetLegendTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 

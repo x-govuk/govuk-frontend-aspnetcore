@@ -422,10 +422,9 @@ public class RadiosTagHelperTests
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                radiosContext.OpenFieldset();
                 var radiosFieldsetContext = new RadiosFieldsetContext(describedBy, @for: null);
-                radiosFieldsetContext.SetAttributes(new AttributeCollection());
-                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString(legendContent), RadiosFieldsetLegendTagHelper.TagName, RadiosFieldsetTagHelper.TagName);
+                radiosContext.OpenFieldset(radiosFieldsetContext, new AttributeCollection());
+                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString(legendContent), RadiosFieldsetLegendTagHelper.TagName);
 
                 radiosContext.SetHint(
                     attributes: new AttributeCollection(),
@@ -450,7 +449,7 @@ public class RadiosTagHelperTests
                     Value = new TemplateString("second")
                 });
 
-                radiosContext.CloseFieldset(radiosFieldsetContext);
+                radiosContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

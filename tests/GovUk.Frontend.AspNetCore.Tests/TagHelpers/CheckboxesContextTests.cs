@@ -37,10 +37,9 @@ public class CheckboxesContextTests
             Value = new TemplateString("item1")
         };
 
-        context.OpenFieldset();
         var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
-        context.CloseFieldset(fieldsetContext);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
 
         // Act
         var ex = Record.Exception(() => context.AddItem(item));
@@ -56,10 +55,10 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, @for: null);
 
-        context.OpenFieldset();
+        context.OpenFieldset(new CheckboxesFieldsetContext(describedBy: null, @for: null), new AttributeCollection());
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new CheckboxesFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -72,13 +71,12 @@ public class CheckboxesContextTests
         // Arrange
         var context = new CheckboxesContext(name: null, @for: null);
 
-        context.OpenFieldset();
         var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
-        context.CloseFieldset(fieldsetContext);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new CheckboxesFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -100,7 +98,7 @@ public class CheckboxesContextTests
         context.AddItem(item);
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new CheckboxesFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -115,7 +113,7 @@ public class CheckboxesContextTests
         context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-checkboxes-hint");
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new CheckboxesFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -130,7 +128,7 @@ public class CheckboxesContextTests
         context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-checkboxes-error-message");
 
         // Act
-        var ex = Record.Exception(context.OpenFieldset);
+        var ex = Record.Exception(() => context.OpenFieldset(new CheckboxesFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -145,8 +143,7 @@ public class CheckboxesContextTests
 
         // Act
         var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
-        var ex = Record.Exception(() => context.CloseFieldset(fieldsetContext));
+        var ex = Record.Exception(() => context.CloseFieldset());
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -188,10 +185,9 @@ public class CheckboxesContextTests
             Value = new TemplateString("item1")
         };
 
-        context.OpenFieldset();
         var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
-        context.CloseFieldset(fieldsetContext);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
 
         // Act
         var ex = Record.Exception(
@@ -236,10 +232,9 @@ public class CheckboxesContextTests
             Value = new TemplateString("item1")
         };
 
-        context.OpenFieldset();
         var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
-        context.CloseFieldset(fieldsetContext);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
 
         // Act
         var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-checkboxes-hint"));

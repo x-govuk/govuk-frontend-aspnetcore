@@ -12,7 +12,6 @@ public class CheckboxesFieldsetLegendTagHelperTests
     {
         // Arrange
         var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset-legend",
@@ -51,14 +50,12 @@ public class CheckboxesFieldsetLegendTagHelperTests
     {
         // Arrange
         var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
-        fieldsetContext.SetAttributes(new AttributeCollection());
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
             attributes: new AttributeCollection(),
             html: new HtmlString("Existing legend"),
-            CheckboxesFieldsetLegendTagHelper.TagName,
-            CheckboxesFieldsetTagHelper.TagName);
+            CheckboxesFieldsetLegendTagHelper.TagName);
 
         var context = new TagHelperContext(
             tagName: "govuk-checkboxes-fieldset-legend",

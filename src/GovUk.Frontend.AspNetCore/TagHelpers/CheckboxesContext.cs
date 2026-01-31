@@ -101,6 +101,11 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
                 RootTagName);
         }
 
+        if (Fieldset is not null && !_fieldsetIsOpen)
+        {
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
+        }
+
         if (Items.Count > 0)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
@@ -128,6 +133,11 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
                 AfterInputsTagNames,
                 RootTagName);
+        }
+
+        if (Fieldset is not null && !_fieldsetIsOpen)
+        {
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
         _afterInputs = (content, tagName);

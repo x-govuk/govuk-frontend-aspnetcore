@@ -256,4 +256,40 @@ public class RadiosContextTests
         // Assert
         Assert.IsType<NotSupportedException>(ex);
     }
+
+    [Fact]
+    public void SetBeforeInputs_OutsideOfFieldset_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var context = new RadiosContext(name: null, @for: null);
+
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
+
+        // Act
+        var ex = Record.Exception(() => context.SetBeforeInputs(new TemplateString("Before"), tagName: "govuk-radios-before-inputs"));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal("<govuk-radios-before-inputs> must be inside <govuk-radios-fieldset>.", ex.Message);
+    }
+
+    [Fact]
+    public void SetAfterInputs_OutsideOfFieldset_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var context = new RadiosContext(name: null, @for: null);
+
+        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        context.OpenFieldset(fieldsetContext, new AttributeCollection());
+        context.CloseFieldset();
+
+        // Act
+        var ex = Record.Exception(() => context.SetAfterInputs(new TemplateString("After"), tagName: "govuk-radios-after-inputs"));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal("<govuk-radios-after-inputs> must be inside <govuk-radios-fieldset>.", ex.Message);
+    }
 }

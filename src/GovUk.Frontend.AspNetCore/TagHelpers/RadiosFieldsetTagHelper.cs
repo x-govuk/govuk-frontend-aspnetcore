@@ -12,7 +12,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     RadiosItemTagHelper.TagName,
     RadiosItemDividerTagHelper.TagName,
     RadiosTagHelper.HintTagName,
-    RadiosTagHelper.ErrorMessageTagName
+    RadiosTagHelper.ErrorMessageTagName,
+    RadiosBeforeInputsTagHelper.TagName,
+    RadiosAfterInputsTagHelper.TagName
 )]
 public class RadiosFieldsetTagHelper : TagHelper
 {

@@ -8,6 +8,8 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 {
     private bool _fieldsetIsOpen;
     private readonly SortedDictionary<DateInputItemTypes, DateInputContextItem> _items = [];
+    private (TemplateString Content, string TagName)? _beforeInputs;
+    private (TemplateString Content, string TagName)? _afterInputs;
 
     public ModelExpression? For { get; } = @for;
 
@@ -18,6 +20,10 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
     public IReadOnlyDictionary<DateInputItemTypes, DateInputContextItem> Items => _items;
 
     public DateInputItemTypes? ErrorFields { get; private set; }
+
+    public TemplateString? BeforeInputs => _beforeInputs?.Content;
+
+    public TemplateString? AfterInputs => _afterInputs?.Content;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
         [/*, DateInputErrorMessageTagHelper.ShortTagName, */DateInputErrorMessageTagHelper.TagName];
@@ -30,6 +36,10 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
     protected override string RootTagName { get; } = DateInputTagHelper.TagName;
+
+    private IReadOnlyCollection<string> BeforeInputsTagNames => DateInputBeforeInputsTagHelper.AllTagNames;
+
+    private IReadOnlyCollection<string> AfterInputsTagNames => DateInputAfterInputsTagHelper.AllTagNames;
 
     public void OpenFieldset(DateInputFieldsetContext fieldsetContext, AttributeCollection attributes)
     {
@@ -123,10 +133,20 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
+        if (_beforeInputs is var (_, beforeInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, beforeInputsTagName);
+        }
+
         if (Items.Count > 0)
         {
             var firstItemTagName = _items.First().Value.TagName;
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, firstItemTagName!);
+        }
+
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, afterInputsTagName);
         }
 
         base.SetHint(attributes, html, tagName);
@@ -144,10 +164,20 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
+        if (_beforeInputs is var (_, beforeInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, beforeInputsTagName);
+        }
+
         if (Items.Count > 0)
         {
             var firstItemTagName = _items.First().Value.TagName!;
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, firstItemTagName);
+        }
+
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, afterInputsTagName);
         }
 
         ErrorFields = errorFields;
@@ -193,5 +223,50 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         }
 
         _items.Add(itemType, item);
+    }
+
+    public void SetBeforeInputs(TemplateString content, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (BeforeInputs is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                BeforeInputsTagNames,
+                RootTagName);
+        }
+
+        if (Items.Count > 0)
+        {
+            var firstItemTagName = _items.First().Value.TagName;
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                firstItemTagName!);
+        }
+
+        if (_afterInputs is var (_, afterInputsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                afterInputsTagName);
+        }
+
+        _beforeInputs = (content, tagName);
+    }
+
+    public void SetAfterInputs(TemplateString content, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (AfterInputs is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                AfterInputsTagNames,
+                RootTagName);
+        }
+
+        _afterInputs = (content, tagName);
     }
 }

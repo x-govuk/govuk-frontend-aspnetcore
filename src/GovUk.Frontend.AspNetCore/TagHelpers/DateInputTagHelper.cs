@@ -22,7 +22,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     DateInputErrorMessageTagHelper.TagName,
     DateInputDayTagHelper.TagName,
     DateInputMonthTagHelper.TagName,
-    DateInputYearTagHelper.TagName
+    DateInputYearTagHelper.TagName,
+    DateInputBeforeInputsTagHelper.TagName,
+    DateInputAfterInputsTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupHintTagHelperBase.ShortTagName,
@@ -203,6 +205,20 @@ public class DateInputTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new DateInputFormGroupOptions
         {
+            BeforeInputs = dateInputContext.BeforeInputs is TemplateString beforeInputs ?
+                new DateInputOptionsBeforeInputs
+                {
+                    Text = null,
+                    Html = beforeInputs.ToHtmlString()
+                } :
+                null,
+            AfterInputs = dateInputContext.AfterInputs is TemplateString afterInputs ?
+                new DateInputOptionsAfterInputs
+                {
+                    Text = null,
+                    Html = afterInputs.ToHtmlString()
+                } :
+                null,
             Attributes = formGroupAttributes,
             Classes = formGroupClasses
         };

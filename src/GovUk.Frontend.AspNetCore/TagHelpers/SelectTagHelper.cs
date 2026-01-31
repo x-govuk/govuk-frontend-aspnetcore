@@ -17,12 +17,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     SelectItemTagHelper.TagName,
     SelectLabelTagHelper.TagName,
     SelectHintTagHelper.TagName,
-    SelectErrorMessageTagHelper.TagName
+    SelectErrorMessageTagHelper.TagName,
+    SelectBeforeInputTagHelper.TagName,
+    SelectAfterInputTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupLabelTagHelperBase.ShortTagName,
     FormGroupHintTagHelperBase.ShortTagName,
-    FormGroupErrorMessageTagHelperBase.ShortTagName
+    FormGroupErrorMessageTagHelperBase.ShortTagName,
+    ShortTagNames.BeforeInput,
+    ShortTagNames.AfterInput
 #endif
 )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]

@@ -44,7 +44,7 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
     {
         ArgumentNullException.ThrowIfNull(item);
 
-        if (Fieldset is not null)
+        if (Fieldset is not null && !_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{ItemTagName}> must be inside <{FieldsetTagName}>.");
         }
@@ -164,7 +164,7 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
 
     public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
     {
-        if (Fieldset is not null)
+        if (Fieldset is not null && !_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }

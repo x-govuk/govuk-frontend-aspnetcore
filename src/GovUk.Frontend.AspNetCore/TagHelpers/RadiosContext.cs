@@ -34,7 +34,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
     {
         ArgumentNullException.ThrowIfNull(item);
 
-        if (Fieldset is not null)
+        if (Fieldset is not null && !_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{ItemTagName}> must be inside <{FieldsetTagName}>.");
         }
@@ -100,7 +100,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
     {
-        if (Fieldset is not null)
+        if (Fieldset is not null && !_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }

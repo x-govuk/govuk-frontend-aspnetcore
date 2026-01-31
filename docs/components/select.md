@@ -63,6 +63,16 @@ If you want to retain the generated content and specify additional attributes th
 |------------------------|----------|-----------------------------------------------------------------------------------|
 | `visually-hidden-text` | `string` | The visually hidden prefix used before the error message. The default is `Error`. |
 
+### `<govuk-select-before-input>`
+
+The content is the HTML to use before the generated `select` element.\
+Must be inside a `<govuk-select>` element.
+
+### `<govuk-select-after-input>`
+
+The content is the HTML to use after the generated `select` element.\
+Must be inside a `<govuk-select>` element.
+
 ### `<govuk-select-item>`
 
 The content is the HTML to use within the generated `option` element.\

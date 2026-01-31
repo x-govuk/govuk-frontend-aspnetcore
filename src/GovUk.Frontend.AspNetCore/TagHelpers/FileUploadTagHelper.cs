@@ -16,12 +16,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [RestrictChildren(
     FileUploadLabelTagHelper.TagName,
     FileUploadHintTagHelper.TagName,
-    FileUploadErrorMessageTagHelper.TagName
+    FileUploadErrorMessageTagHelper.TagName,
+    FileUploadBeforeInputTagHelper.TagName,
+    FileUploadAfterInputTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupLabelTagHelperBase.ShortTagName,
     FormGroupHintTagHelperBase.ShortTagName,
-    FormGroupErrorMessageTagHelperBase.ShortTagName
+    FormGroupErrorMessageTagHelperBase.ShortTagName,
+    FileUploadBeforeInputTagHelper.ShortTagName,
+    FileUploadAfterInputTagHelper.ShortTagName
 #endif
     )]
 public class FileUploadTagHelper : TagHelper
@@ -173,6 +177,18 @@ public class FileUploadTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new FileUploadOptionsFormGroup
         {
+            BeforeInput = fileUploadContext.BeforeInput is TemplateString beforeInput ?
+                new FileUploadOptionsBeforeInput
+                {
+                    Html = beforeInput.ToHtmlString()
+                } :
+                null,
+            AfterInput = fileUploadContext.AfterInput is TemplateString afterInput ?
+                new FileUploadOptionsAfterInput
+                {
+                    Html = afterInput.ToHtmlString()
+                } :
+                null,
             Attributes = formGroupAttributes,
             Classes = formGroupClasses
         };

@@ -56,7 +56,6 @@ public class CheckboxesFieldsetTagHelper : TagHelper
     public override void Init(TagHelperContext context)
     {
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
-        checkboxesContext.OpenFieldset();
 
         var fieldsetContext = new CheckboxesFieldsetContext(
             DescribedBy,
@@ -74,12 +73,12 @@ public class CheckboxesFieldsetTagHelper : TagHelper
         var checkboxesContext = context.GetContextItem<CheckboxesContext>();
         var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
 
-        fieldsetContext.SetAttributes(new AttributeCollection(output.Attributes));
+        checkboxesContext.OpenFieldset(fieldsetContext, new AttributeCollection(output.Attributes));
 
         _ = await output.GetChildContentAsync();
 
         fieldsetContext.ThrowIfNotComplete(CheckboxesFieldsetLegendTagHelper.TagName);
-        checkboxesContext.CloseFieldset(fieldsetContext);
+        checkboxesContext.CloseFieldset();
 
         output.SuppressOutput();
     }

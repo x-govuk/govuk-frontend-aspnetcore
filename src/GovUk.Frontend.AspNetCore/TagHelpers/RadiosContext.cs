@@ -14,6 +14,8 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     public IReadOnlyCollection<RadiosOptionsItem> Items => _items;
 
+    public AttributeCollection? Attributes { get; private set; }
+
     public RadiosFieldsetContext? Fieldset { get; private set; }
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => RadiosErrorMessageTagHelper.AllTagNames;
@@ -40,8 +42,13 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         _items.Add(item);
     }
 
-    public void OpenFieldset()
+    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) => Fieldset?.GetFieldsetOptions(modelHelper, Attributes!);
+
+    public void OpenFieldset(RadiosFieldsetContext fieldsetContext, AttributeCollection attributes)
     {
+        ArgumentNullException.ThrowIfNull(fieldsetContext);
+        ArgumentNullException.ThrowIfNull(attributes);
+
         if (_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{FieldsetTagName}> cannot be nested inside another <{FieldsetTagName}>.");
@@ -58,9 +65,11 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         }
 
         _fieldsetIsOpen = true;
+        Fieldset = fieldsetContext;
+        Attributes = attributes;
     }
 
-    public void CloseFieldset(RadiosFieldsetContext fieldsetContext)
+    public void CloseFieldset()
     {
         if (!_fieldsetIsOpen)
         {
@@ -68,7 +77,6 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         }
 
         _fieldsetIsOpen = false;
-        Fieldset = fieldsetContext;
     }
 
     public override void SetErrorMessage(

@@ -37,7 +37,6 @@ public class RadiosFieldsetTagHelper : TagHelper
     public override void Init(TagHelperContext context)
     {
         var radiosContext = context.GetContextItem<RadiosContext>();
-        radiosContext.OpenFieldset();
 
         var fieldsetContext = new RadiosFieldsetContext(
             DescribedBy,
@@ -55,12 +54,12 @@ public class RadiosFieldsetTagHelper : TagHelper
         var radiosContext = context.GetContextItem<RadiosContext>();
         var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
 
-        fieldsetContext.SetAttributes(new AttributeCollection(output.Attributes));
+        radiosContext.OpenFieldset(fieldsetContext, new AttributeCollection(output.Attributes));
 
         _ = await output.GetChildContentAsync();
 
         fieldsetContext.ThrowIfNotComplete(RadiosFieldsetLegendTagHelper.TagName);
-        radiosContext.CloseFieldset(fieldsetContext);
+        radiosContext.CloseFieldset();
 
         output.SuppressOutput();
     }

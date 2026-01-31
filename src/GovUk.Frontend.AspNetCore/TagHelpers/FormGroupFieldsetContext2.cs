@@ -3,57 +3,34 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal abstract class FormGroupFieldsetContext2
+internal abstract class FormGroupFieldsetContext2(string? describedBy, string? legendClass, ModelExpression? @for)
 {
     public record LegendInfo(bool? IsPageHeading, AttributeCollection Attributes, TemplateString? Html);
 
-    private readonly string? _describedBy;
-    private readonly string? _legendClass;
-    private readonly ModelExpression? _for;
-    private AttributeCollection? _attributes;
-
-    protected FormGroupFieldsetContext2(
-        string? describedBy,
-        string? legendClass,
-        ModelExpression? @for)
-    {
-        _describedBy = describedBy;
-        _legendClass = legendClass;
-        _for = @for;
-    }
-
     public LegendInfo? Legend { get; private set; }
 
-    public void SetAttributes(AttributeCollection attributes)
-    {
-        ArgumentNullException.ThrowIfNull(attributes);
-        _attributes = attributes;
-    }
+    private protected abstract string FieldsetTagName { get; }
 
-    public FieldsetOptions GetFieldsetOptions(IModelHelper modelHelper)
+    public FieldsetOptions GetFieldsetOptions(IModelHelper modelHelper, AttributeCollection attributes)
     {
         ArgumentNullException.ThrowIfNull(modelHelper);
+        ArgumentNullException.ThrowIfNull(attributes);
 
-        if (_attributes is null)
-        {
-            throw new InvalidOperationException("Attributes must be set before calling GetFieldsetOptions.");
-        }
-
-        var clonedAttributes = _attributes.Clone();
+        var clonedAttributes = attributes.Clone();
         clonedAttributes.Remove("class", out var classes);
 
         var legendAttributes = Legend?.Attributes.Clone() ?? [];
         legendAttributes.Remove("class", out var legendClasses);
 
-        if (_legendClass is not null)
+        if (legendClass is not null)
         {
-            legendClasses = legendClasses.AppendCssClasses(_legendClass);
+            legendClasses = legendClasses.AppendCssClasses(legendClass);
         }
 
         var html = Legend?.Html;
-        if (html is null && _for is not null)
+        if (html is null && @for is not null)
         {
-            html = modelHelper.GetDisplayName(_for.ModelExplorer, _for.Name);
+            html = modelHelper.GetDisplayName(@for.ModelExplorer, @for.Name);
         }
 
         var legendOptions = new FieldsetOptionsLegend
@@ -67,7 +44,7 @@ internal abstract class FormGroupFieldsetContext2
 
         return new FieldsetOptions
         {
-            DescribedBy = _describedBy,
+            DescribedBy = describedBy,
             Legend = legendOptions,
             Role = "group",
             Html = null,
@@ -76,15 +53,14 @@ internal abstract class FormGroupFieldsetContext2
         };
     }
 
-    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string legendTagName, string fieldsetTagName)
+    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string legendTagName)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(legendTagName);
-        ArgumentNullException.ThrowIfNull(fieldsetTagName);
 
         if (Legend is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(legendTagName, fieldsetTagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(legendTagName, FieldsetTagName);
         }
 
         Legend = new(isPageHeading, attributes, html);
@@ -94,7 +70,7 @@ internal abstract class FormGroupFieldsetContext2
     {
         ArgumentNullException.ThrowIfNull(legendTagName);
 
-        if (Legend is null && _for is null)
+        if (Legend is null && @for is null)
         {
             throw ExceptionHelper.AChildElementMustBeProvided(legendTagName);
         }

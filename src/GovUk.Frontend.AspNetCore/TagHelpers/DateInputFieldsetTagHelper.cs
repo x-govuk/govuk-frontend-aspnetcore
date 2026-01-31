@@ -57,7 +57,6 @@ public class DateInputFieldsetTagHelper : TagHelper
     public override void Init(TagHelperContext context)
     {
         var dateInputContext = context.GetContextItem<DateInputContext>();
-        dateInputContext.OpenFieldset();
 
         var fieldsetContext = new DateInputFieldsetContext(
             DescribedBy,
@@ -75,12 +74,12 @@ public class DateInputFieldsetTagHelper : TagHelper
         var dateInputContext = context.GetContextItem<DateInputContext>();
         var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
 
-        fieldsetContext.SetAttributes(new AttributeCollection(output.Attributes));
+        dateInputContext.OpenFieldset(fieldsetContext, new AttributeCollection(output.Attributes));
 
         _ = await output.GetChildContentAsync();
 
         fieldsetContext.ThrowIfNotComplete(DateInputFieldsetLegendTagHelper.TagName);
-        dateInputContext.CloseFieldset(fieldsetContext);
+        dateInputContext.CloseFieldset();
 
         output.SuppressOutput();
     }

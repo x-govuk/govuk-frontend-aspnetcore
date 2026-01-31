@@ -20,6 +20,8 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
 
     public TemplateString? AfterInputs => _afterInputs?.Content;
 
+    public AttributeCollection? Attributes { get; private set; }
+
     public CheckboxesFieldsetContext? Fieldset { get; private set; }
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => CheckboxesErrorMessageTagHelper.AllTagNames;
@@ -50,8 +52,13 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
         _items.Add(item);
     }
 
-    public void OpenFieldset()
+    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) => Fieldset?.GetFieldsetOptions(modelHelper, Attributes!);
+
+    public void OpenFieldset(CheckboxesFieldsetContext fieldsetContext, AttributeCollection attributes)
     {
+        ArgumentNullException.ThrowIfNull(fieldsetContext);
+        ArgumentNullException.ThrowIfNull(attributes);
+
         if (_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{FieldsetTagName}> cannot be nested inside another <{FieldsetTagName}>.");
@@ -68,9 +75,11 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
         }
 
         _fieldsetIsOpen = true;
+        Fieldset = fieldsetContext;
+        Attributes = attributes;
     }
 
-    public void CloseFieldset(CheckboxesFieldsetContext fieldsetContext)
+    public void CloseFieldset()
     {
         if (!_fieldsetIsOpen)
         {
@@ -78,7 +87,6 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
         }
 
         _fieldsetIsOpen = false;
-        Fieldset = fieldsetContext;
     }
 
     public void SetBeforeInputs(TemplateString content, string tagName)

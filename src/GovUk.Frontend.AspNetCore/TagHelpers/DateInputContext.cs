@@ -8,11 +8,12 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 {
     private bool _fieldsetIsOpen;
     private readonly SortedDictionary<DateInputItemTypes, DateInputContextItem> _items = [];
-    private readonly bool _haveValue = haveExplicitValue;
 
     public ModelExpression? For { get; } = @for;
 
     public DateInputFieldsetContext? Fieldset { get; private set; }
+
+    public AttributeCollection? Attributes { get; private set; }
 
     public IReadOnlyDictionary<DateInputItemTypes, DateInputContextItem> Items => _items;
 
@@ -30,8 +31,11 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     protected override string RootTagName { get; } = DateInputTagHelper.TagName;
 
-    public void OpenFieldset()
+    public void OpenFieldset(DateInputFieldsetContext fieldsetContext, AttributeCollection attributes)
     {
+        ArgumentNullException.ThrowIfNull(_fieldsetIsOpen);
+        ArgumentNullException.ThrowIfNull(attributes);
+
         if (_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{FieldsetTagName}> cannot be nested inside another <{FieldsetTagName}>.");
@@ -48,9 +52,11 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         }
 
         _fieldsetIsOpen = true;
+        Fieldset = fieldsetContext;
+        Attributes = attributes;
     }
 
-    public void CloseFieldset(DateInputFieldsetContext fieldsetContext)
+    public void CloseFieldset()
     {
         if (!_fieldsetIsOpen)
         {
@@ -58,7 +64,6 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         }
 
         _fieldsetIsOpen = false;
-        Fieldset = fieldsetContext;
     }
 
     public override ErrorMessageOptions GetErrorMessageOptions(
@@ -103,6 +108,8 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
         return CreateErrorMessageOptions(html);
     }
+
+    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) => Fieldset?.GetFieldsetOptions(modelHelper, Attributes!);
 
     public override void SetLabel(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string tagName)
     {
@@ -158,7 +165,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         ArgumentNullException.ThrowIfNull(itemType);
         ArgumentNullException.ThrowIfNull(item);
 
-        if (_haveValue && item.ValueSpecified)
+        if (haveExplicitValue && item.ValueSpecified)
         {
             throw new InvalidOperationException($"Value cannot be specified for both <{item.TagName}> and the parent <{RootTagName}>.");
         }

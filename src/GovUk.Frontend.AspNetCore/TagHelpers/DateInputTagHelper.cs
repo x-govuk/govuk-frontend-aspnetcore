@@ -207,7 +207,7 @@ public class DateInputTagHelper : TagHelper
             Classes = formGroupClasses
         };
 
-        var fieldsetOptions = dateInputContext.Fieldset?.GetFieldsetOptions(_modelHelper);
+        var fieldsetOptions = dateInputContext.GetFieldsetOptions(_modelHelper);
 
         var errorItems = GetFieldsWithErrors(dateInputContext);
 

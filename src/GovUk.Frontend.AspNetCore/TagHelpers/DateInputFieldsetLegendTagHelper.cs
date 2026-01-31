@@ -43,8 +43,7 @@ public class DateInputFieldsetLegendTagHelper : TagHelper
             IsPageHeading,
             new AttributeCollection(output.Attributes),
             html: content?.ToTemplateString(),
-            DateInputFieldsetLegendTagHelper.TagName,
-            DateInputFieldsetTagHelper.TagName);
+            TagName);
 
         output.SuppressOutput();
     }

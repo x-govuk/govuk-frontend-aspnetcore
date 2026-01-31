@@ -180,14 +180,12 @@ public class FileUploadTagHelper : TagHelper
             BeforeInput = fileUploadContext.BeforeInput is TemplateString beforeInput ?
                 new FileUploadOptionsBeforeInput
                 {
-                    Text = null,
                     Html = beforeInput.ToHtmlString()
                 } :
                 null,
             AfterInput = fileUploadContext.AfterInput is TemplateString afterInput ?
                 new FileUploadOptionsAfterInput
                 {
-                    Text = null,
                     Html = afterInput.ToHtmlString()
                 } :
                 null,

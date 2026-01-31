@@ -17,12 +17,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     CharacterCountLabelTagHelper.TagName,
     CharacterCountHintTagHelper.TagName,
     CharacterCountErrorMessageTagHelper.TagName,
+    CharacterCountBeforeInputTagHelper.TagName,
+    CharacterCountAfterInputTagHelper.TagName,
     CharacterCountValueTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupLabelTagHelperBase.ShortTagName,
     FormGroupHintTagHelperBase.ShortTagName,
     FormGroupErrorMessageTagHelperBase.ShortTagName,
+    ShortTagNames.BeforeInput,
+    ShortTagNames.AfterInput,
     CharacterCountValueTagHelper.ShortTagName
 #endif
     )]
@@ -279,6 +283,20 @@ public class CharacterCountTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new CharacterCountOptionsFormGroup
         {
+            BeforeInput = characterCountContext.BeforeInput is TemplateString beforeInput ?
+                new CharacterCountOptionsBeforeInput
+                {
+                    Text = null,
+                    Html = beforeInput.ToHtmlString()
+                } :
+                null,
+            AfterInput = characterCountContext.AfterInput is TemplateString afterInput ?
+                new CharacterCountOptionsAfterInput
+                {
+                    Text = null,
+                    Html = afterInput.ToHtmlString()
+                } :
+                null,
             Attributes = formGroupAttributes,
             Classes = formGroupClasses
         };

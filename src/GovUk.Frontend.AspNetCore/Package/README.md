@@ -1,7 +1,7 @@
 # ASP.NET Core integration for GOV.UK Design System
 
 This library simplifies setting up an ASP.NET Core application to use the [GOV.UK Design System](https://design-system.service.gov.uk/).
-It provides intuitive tag helpers that integrate seamlessly with ASP.NET Core's model binding, enabling you to build accessible, compliant services quickly.
+It provides tag helpers that integrate seamlessly with ASP.NET Core's model binding, enabling you to build accessible, compliant services quickly.
 All front-end assets—including fonts, images, CSS and JavaScript, are automatically hosted, so you can focus on building your application.
 
 ```razor

@@ -4,6 +4,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class CharacterCountContext : FormGroupContext3
 {
+    private (TemplateString Content, string TagName)? _beforeInput;
+    private (TemplateString Content, string TagName)? _afterInput;
+
     protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
         [/*CharacterCountErrorMessageTagHelper.ShortTagName, */CharacterCountErrorMessageTagHelper.TagName];
 
@@ -15,7 +18,15 @@ internal class CharacterCountContext : FormGroupContext3
 
     protected override string RootTagName { get; } = CharacterCountTagHelper.TagName;
 
+    public TemplateString? BeforeInput => _beforeInput?.Content;
+
+    public TemplateString? AfterInput => _afterInput?.Content;
+
     public TemplateString? Value { get; private set; }
+
+    private IReadOnlyCollection<string> BeforeInputTagNames => CharacterCountBeforeInputTagHelper.AllTagNames;
+
+    private IReadOnlyCollection<string> AfterInputTagNames => CharacterCountAfterInputTagHelper.AllTagNames;
 
     public override void SetErrorMessage(
         TemplateString? visuallyHiddenText,
@@ -23,6 +34,20 @@ internal class CharacterCountContext : FormGroupContext3
         TemplateString? html,
         string tagName)
     {
+        if (_beforeInput is var (_, beforeInputTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                beforeInputTagName);
+        }
+
+        if (_afterInput is var (_, afterInputTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                afterInputTagName);
+        }
+
         if (Value is not null)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
@@ -35,6 +60,20 @@ internal class CharacterCountContext : FormGroupContext3
 
     public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
     {
+        if (_beforeInput is var (_, beforeInputTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                beforeInputTagName);
+        }
+
+        if (_afterInput is var (_, afterInputTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                afterInputTagName);
+        }
+
         if (Value is not null)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
@@ -51,6 +90,20 @@ internal class CharacterCountContext : FormGroupContext3
         TemplateString? html,
         string tagName)
     {
+        if (_beforeInput is var (_, beforeInputTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                beforeInputTagName);
+        }
+
+        if (_afterInput is var (_, afterInputTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                afterInputTagName);
+        }
+
         if (Value is not null)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
@@ -59,6 +112,57 @@ internal class CharacterCountContext : FormGroupContext3
         }
 
         base.SetLabel(isPageHeading, attributes, html, tagName);
+    }
+
+    public void SetBeforeInput(TemplateString content, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (BeforeInput is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                BeforeInputTagNames,
+                RootTagName);
+        }
+
+        if (_afterInput is var (_, afterInputTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                afterInputTagName);
+        }
+
+        if (Value is not null)
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                CharacterCountValueTagHelper.TagName);
+        }
+
+        _beforeInput = (content, tagName);
+    }
+
+    public void SetAfterInput(TemplateString content, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (AfterInput is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                AfterInputTagNames,
+                RootTagName);
+        }
+
+        if (Value is not null)
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                CharacterCountValueTagHelper.TagName);
+        }
+
+        _afterInput = (content, tagName);
     }
 
     public void SetValue(TemplateString html, string tagName)

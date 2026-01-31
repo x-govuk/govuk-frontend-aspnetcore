@@ -16,7 +16,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     DateInputErrorMessageTagHelper.TagName,
     DateInputDayTagHelper.TagName,
     DateInputMonthTagHelper.TagName,
-    DateInputYearTagHelper.TagName
+    DateInputYearTagHelper.TagName,
+    DateInputBeforeInputsTagHelper.TagName,
+    DateInputAfterInputsTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupHintTagHelperBase.ShortTagName,

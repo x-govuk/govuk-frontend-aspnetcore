@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content before the inputs in a GDS checkboxes component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
+[HtmlTargetElement(TagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
 public class CheckboxesBeforeInputsTagHelper : TagHelper
 {
     private readonly ILogger<CheckboxesBeforeInputsTagHelper> _logger;

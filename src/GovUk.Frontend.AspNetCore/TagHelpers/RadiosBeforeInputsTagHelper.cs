@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content before the inputs in a GDS radios component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
+[HtmlTargetElement(TagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 public class RadiosBeforeInputsTagHelper : TagHelper
 {
     private readonly ILogger<RadiosBeforeInputsTagHelper> _logger;

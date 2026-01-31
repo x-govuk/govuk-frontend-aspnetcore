@@ -15,7 +15,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     CheckboxesItemTagHelper.TagName,
     CheckboxesItemDividerTagHelper.TagName,
     CheckboxesHintTagHelper.TagName,
-    CheckboxesErrorMessageTagHelper.TagName
+    CheckboxesErrorMessageTagHelper.TagName,
+    CheckboxesBeforeInputsTagHelper.TagName,
+    CheckboxesAfterInputsTagHelper.TagName
 #if SHORT_TAG_NAMES
     ,
     FormGroupHintTagHelperBase.ShortTagName,

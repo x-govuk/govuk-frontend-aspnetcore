@@ -237,6 +237,11 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
                 RootTagName);
         }
 
+        if (Fieldset is not null && !_fieldsetIsOpen)
+        {
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
+        }
+
         if (Items.Count > 0)
         {
             var firstItemTagName = _items.First().Value.TagName;
@@ -265,6 +270,11 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
                 AfterInputsTagNames,
                 RootTagName);
+        }
+
+        if (Fieldset is not null && !_fieldsetIsOpen)
+        {
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
         _afterInputs = (content, tagName);

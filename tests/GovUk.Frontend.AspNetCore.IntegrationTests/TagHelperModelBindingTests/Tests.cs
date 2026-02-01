@@ -303,6 +303,50 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
         var errorMessage = page.Locator(".govuk-error-message").First;
         Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
     }
+
+    [Fact]
+    public async Task Select_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/Select");
+
+        var select = page.Locator("select").First;
+        Assert.Equal("Option", await select.GetAttributeAsync("name"));
+        Assert.Equal("Option", await select.GetAttributeAsync("id"));
+        Assert.Equal("option2", await select.InputValueAsync());
+
+        var label = page.Locator("label").First;
+        Assert.Equal("Option", await label.GetAttributeAsync("for"));
+        Assert.Equal("ModelMetadata display name", await label.InnerTextAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("ModelMetadata description", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Model error message", await errorMessage.TextContentAsync());
+    }
+
+    [Fact]
+    public async Task SelectOverridden_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/SelectOverridden");
+
+        var select = page.Locator("select").First;
+        Assert.Equal("OverriddenName", await select.GetAttributeAsync("name"));
+        Assert.Equal("OverriddenId", await select.GetAttributeAsync("id"));
+        Assert.Equal("overridden-value", await select.InputValueAsync());
+
+        var label = page.Locator("label").First;
+        Assert.Equal("OverriddenId", await label.GetAttributeAsync("for"));
+        Assert.Equal("Overridden label", await label.InnerTextAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("Overridden hint", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
+    }
 }
 
 [Route("/[controller]/[action]")]
@@ -398,6 +442,20 @@ public class ModelBindingTestsController : Controller
         ModelState.AddModelError(nameof(FileUploadTestsModel.File), "Model error message");
         return View(new FileUploadTestsModel());
     }
+
+    [HttpGet]
+    public IActionResult Select()
+    {
+        ModelState.AddModelError(nameof(SelectTestsModel.Option), "Model error message");
+        return View(new SelectTestsModel { Option = "option2" });
+    }
+
+    [HttpGet]
+    public IActionResult SelectOverridden()
+    {
+        ModelState.AddModelError(nameof(SelectTestsModel.Option), "Model error message");
+        return View(new SelectTestsModel { Option = "option2" });
+    }
 }
 
 public record TextInputTestsModel
@@ -434,4 +492,10 @@ public record FileUploadTestsModel
 {
     [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
     public Microsoft.AspNetCore.Http.IFormFile? File { get; set; }
+}
+
+public record SelectTestsModel
+{
+    [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
+    public string? Option { get; set; }
 }

@@ -146,13 +146,32 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
         Assert.Equal("2024", await yearInput.GetAttributeAsync("value"));
 
         var legend = page.Locator(".govuk-fieldset__legend").First;
-        Assert.Equal("ModelMetadata display name", await legend.InnerTextAsync());
+        Assert.Equal("Overridden legend", await legend.InnerTextAsync());
 
         var hint = page.Locator(".govuk-hint").First;
-        Assert.Equal("ModelMetadata description", await hint.InnerTextAsync());
+        Assert.Equal("Overridden hint", await hint.InnerTextAsync());
 
         var errorMessage = page.Locator(".govuk-error-message").First;
-        Assert.Equal("Error: Model error message", await errorMessage.TextContentAsync());
+        Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
+    }
+
+    [Fact]
+    public async Task DateInputOverriddenItems_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/DateInputOverriddenItems");
+
+        var dayInput = page.Locator("input[name='OverriddenDayName']").First;
+        Assert.Equal("OverriddenDayId", await dayInput.GetAttributeAsync("id"));
+        Assert.Equal("1", await dayInput.GetAttributeAsync("value"));
+
+        var monthInput = page.Locator("input[name='OverriddenMonthName']").First;
+        Assert.Equal("OverriddenMonthId", await monthInput.GetAttributeAsync("id"));
+        Assert.Equal("2", await monthInput.GetAttributeAsync("value"));
+
+        var yearInput = page.Locator("input[name='OverriddenYearName']").First;
+        Assert.Equal("OverriddenYearId", await yearInput.GetAttributeAsync("id"));
+        Assert.Equal("2020", await yearInput.GetAttributeAsync("value"));
     }
 }
 
@@ -196,6 +215,13 @@ public class ModelBindingTestsController : Controller
 
     [HttpGet]
     public IActionResult DateInputOverridden()
+    {
+        ModelState.AddModelError(nameof(DateInputTestsModel.Date), "Model error message");
+        return View(new DateInputTestsModel { Date = new DateOnly(2024, 3, 15) });
+    }
+
+    [HttpGet]
+    public IActionResult DateInputOverriddenItems()
     {
         ModelState.AddModelError(nameof(DateInputTestsModel.Date), "Model error message");
         return View(new DateInputTestsModel { Date = new DateOnly(2024, 3, 15) });

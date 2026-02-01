@@ -128,7 +128,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
     {
-        if (Fieldset is not null)
+        if (Fieldset is not null && !_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
@@ -159,7 +159,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         TemplateString? html,
         string tagName)
     {
-        if (Fieldset is not null)
+        if (Fieldset is not null && !_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }

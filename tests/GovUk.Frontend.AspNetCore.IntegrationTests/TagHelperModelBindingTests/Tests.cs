@@ -261,6 +261,48 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
         var errorMessage = page.Locator(".govuk-error-message").First;
         Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
     }
+
+    [Fact]
+    public async Task FileUpload_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/FileUpload");
+
+        var input = page.Locator("input[type='file']").First;
+        Assert.Equal("File", await input.GetAttributeAsync("name"));
+        Assert.Equal("File", await input.GetAttributeAsync("id"));
+
+        var label = page.Locator("label").First;
+        Assert.Equal("File", await label.GetAttributeAsync("for"));
+        Assert.Equal("ModelMetadata display name", await label.InnerTextAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("ModelMetadata description", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Model error message", await errorMessage.TextContentAsync());
+    }
+
+    [Fact]
+    public async Task FileUploadOverridden_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/FileUploadOverridden");
+
+        var input = page.Locator("input[type='file']").First;
+        Assert.Equal("OverriddenName", await input.GetAttributeAsync("name"));
+        Assert.Equal("OverriddenId", await input.GetAttributeAsync("id"));
+
+        var label = page.Locator("label").First;
+        Assert.Equal("OverriddenId", await label.GetAttributeAsync("for"));
+        Assert.Equal("Overridden label", await label.InnerTextAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("Overridden hint", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
+    }
 }
 
 [Route("/[controller]/[action]")]
@@ -342,6 +384,20 @@ public class ModelBindingTestsController : Controller
         ModelState.AddModelError(nameof(CharacterCountTestsModel.Text), "Model error message");
         return View(new CharacterCountTestsModel { Text = "Model value" });
     }
+
+    [HttpGet]
+    public IActionResult FileUpload()
+    {
+        ModelState.AddModelError(nameof(FileUploadTestsModel.File), "Model error message");
+        return View(new FileUploadTestsModel());
+    }
+
+    [HttpGet]
+    public IActionResult FileUploadOverridden()
+    {
+        ModelState.AddModelError(nameof(FileUploadTestsModel.File), "Model error message");
+        return View(new FileUploadTestsModel());
+    }
 }
 
 public record TextInputTestsModel
@@ -372,4 +428,10 @@ public record CharacterCountTestsModel
 {
     [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
     public string? Text { get; set; }
+}
+
+public record FileUploadTestsModel
+{
+    [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
+    public Microsoft.AspNetCore.Http.IFormFile? File { get; set; }
 }

@@ -149,7 +149,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         TemplateString? html,
         string tagName)
     {
-        if (Fieldset is not null)
+        if (Fieldset is not null && !_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }

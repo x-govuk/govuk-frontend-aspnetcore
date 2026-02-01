@@ -347,6 +347,30 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
         var errorMessage = page.Locator(".govuk-error-message").First;
         Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
     }
+
+    [Fact]
+    public async Task Checkboxes_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/Checkboxes");
+
+        var checkbox1 = page.Locator("input[value='option1']").First;
+        Assert.Equal("Options", await checkbox1.GetAttributeAsync("name"));
+        Assert.Equal("Options", await checkbox1.GetAttributeAsync("id"));
+        Assert.False(await checkbox1.IsCheckedAsync());
+
+        var checkbox2 = page.Locator("input[value='option2']").First;
+        Assert.Equal("Options", await checkbox2.GetAttributeAsync("name"));
+        Assert.Equal("Options-2", await checkbox2.GetAttributeAsync("id"));
+        // This is the critical assertion that should pass with the fix
+        Assert.True(await checkbox2.IsCheckedAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("ModelMetadata description", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Model error message", await errorMessage.TextContentAsync());
+    }
 }
 
 [Route("/[controller]/[action]")]
@@ -456,6 +480,13 @@ public class ModelBindingTestsController : Controller
         ModelState.AddModelError(nameof(SelectTestsModel.Option), "Model error message");
         return View(new SelectTestsModel { Option = "option2" });
     }
+
+    [HttpGet]
+    public IActionResult Checkboxes()
+    {
+        ModelState.AddModelError(nameof(CheckboxesTestsModel.Options), "Model error message");
+        return View(new CheckboxesTestsModel { Options = ["option2"] });
+    }
 }
 
 public record TextInputTestsModel
@@ -498,4 +529,10 @@ public record SelectTestsModel
 {
     [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
     public string? Option { get; set; }
+}
+
+public record CheckboxesTestsModel
+{
+    [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
+    public List<string>? Options { get; set; }
 }

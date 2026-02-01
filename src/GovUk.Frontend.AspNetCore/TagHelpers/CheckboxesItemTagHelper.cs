@@ -181,9 +181,17 @@ public class CheckboxesItemTagHelper : TagHelper
 
             if (modelExpression.Metadata.IsEnumerableType)
             {
-                var value = ViewContext!.ModelState.TryGetValue(modelExpression.Name, out var entry) ?
-                    entry.RawValue :
-                    model;
+                // Try to get the value from ModelState first, but fall back to model if ModelState doesn't have a valid enumerable value
+                var value = model;
+                
+                if (ViewContext!.ModelState.TryGetValue(modelExpression.Name, out var entry) && entry.RawValue != null)
+                {
+                    // Only use RawValue if it looks like it's an enumerable collection
+                    if (entry.RawValue is IEnumerable && !(entry.RawValue is string))
+                    {
+                        value = entry.RawValue;
+                    }
+                }
 
                 var values = (value as IEnumerable)?.Cast<object>();
                 return values?.Any(v => v?.ToString() == Value) is true;

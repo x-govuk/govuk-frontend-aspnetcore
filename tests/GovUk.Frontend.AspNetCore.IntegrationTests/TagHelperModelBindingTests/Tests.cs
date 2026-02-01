@@ -77,7 +77,6 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
     {
         var page = await fixture.Browser!.NewPageAsync();
         await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/PasswordInputOverridden");
-        await page.PauseAsync();
 
         var input = page.Locator("input[type='password']").First;
         Assert.Equal("OverriddenName", await input.GetAttributeAsync("name"));

@@ -217,6 +217,50 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
         var errorMessage = page.Locator(".govuk-error-message").First;
         Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
     }
+
+    [Fact]
+    public async Task CharacterCount_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/CharacterCount");
+
+        var textarea = page.Locator("textarea").First;
+        Assert.Equal("Text", await textarea.GetAttributeAsync("name"));
+        Assert.Equal("Text", await textarea.GetAttributeAsync("id"));
+        Assert.Equal("Model value", await textarea.InputValueAsync());
+
+        var label = page.Locator("label").First;
+        Assert.Equal("Text", await label.GetAttributeAsync("for"));
+        Assert.Equal("ModelMetadata display name", await label.InnerTextAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("ModelMetadata description", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Model error message", await errorMessage.TextContentAsync());
+    }
+
+    [Fact]
+    public async Task CharacterCountOverridden_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/CharacterCountOverridden");
+
+        var textarea = page.Locator("textarea").First;
+        Assert.Equal("OverriddenName", await textarea.GetAttributeAsync("name"));
+        Assert.Equal("OverriddenId", await textarea.GetAttributeAsync("id"));
+        Assert.Equal("Overridden value", await textarea.InputValueAsync());
+
+        var label = page.Locator("label").First;
+        Assert.Equal("OverriddenId", await label.GetAttributeAsync("for"));
+        Assert.Equal("Overridden label", await label.InnerTextAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("Overridden hint", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
+    }
 }
 
 [Route("/[controller]/[action]")]
@@ -284,6 +328,20 @@ public class ModelBindingTestsController : Controller
         ModelState.AddModelError(nameof(TextareaTestsModel.Text), "Model error message");
         return View(new TextareaTestsModel { Text = "Model value" });
     }
+
+    [HttpGet]
+    public IActionResult CharacterCount()
+    {
+        ModelState.AddModelError(nameof(CharacterCountTestsModel.Text), "Model error message");
+        return View(new CharacterCountTestsModel { Text = "Model value" });
+    }
+
+    [HttpGet]
+    public IActionResult CharacterCountOverridden()
+    {
+        ModelState.AddModelError(nameof(CharacterCountTestsModel.Text), "Model error message");
+        return View(new CharacterCountTestsModel { Text = "Model value" });
+    }
 }
 
 public record TextInputTestsModel
@@ -305,6 +363,12 @@ public record DateInputTestsModel
 }
 
 public record TextareaTestsModel
+{
+    [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
+    public string? Text { get; set; }
+}
+
+public record CharacterCountTestsModel
 {
     [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
     public string? Text { get; set; }

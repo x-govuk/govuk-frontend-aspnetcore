@@ -173,6 +173,50 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
         Assert.Equal("OverriddenYearId", await yearInput.GetAttributeAsync("id"));
         Assert.Equal("2020", await yearInput.GetAttributeAsync("value"));
     }
+
+    [Fact]
+    public async Task Textarea_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/Textarea");
+
+        var textarea = page.Locator("textarea").First;
+        Assert.Equal("Text", await textarea.GetAttributeAsync("name"));
+        Assert.Equal("Text", await textarea.GetAttributeAsync("id"));
+        Assert.Equal("Model value", await textarea.InputValueAsync());
+
+        var label = page.Locator("label").First;
+        Assert.Equal("Text", await label.GetAttributeAsync("for"));
+        Assert.Equal("ModelMetadata display name", await label.InnerTextAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("ModelMetadata description", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Model error message", await errorMessage.TextContentAsync());
+    }
+
+    [Fact]
+    public async Task TextareaOverridden_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/TextareaOverridden");
+
+        var textarea = page.Locator("textarea").First;
+        Assert.Equal("OverriddenName", await textarea.GetAttributeAsync("name"));
+        Assert.Equal("OverriddenId", await textarea.GetAttributeAsync("id"));
+        Assert.Equal("Overridden value", await textarea.InputValueAsync());
+
+        var label = page.Locator("label").First;
+        Assert.Equal("OverriddenId", await label.GetAttributeAsync("for"));
+        Assert.Equal("Overridden label", await label.InnerTextAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("Overridden hint", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
+    }
 }
 
 [Route("/[controller]/[action]")]
@@ -226,6 +270,20 @@ public class ModelBindingTestsController : Controller
         ModelState.AddModelError(nameof(DateInputTestsModel.Date), "Model error message");
         return View(new DateInputTestsModel { Date = new DateOnly(2024, 3, 15) });
     }
+
+    [HttpGet]
+    public IActionResult Textarea()
+    {
+        ModelState.AddModelError(nameof(TextareaTestsModel.Text), "Model error message");
+        return View(new TextareaTestsModel { Text = "Model value" });
+    }
+
+    [HttpGet]
+    public IActionResult TextareaOverridden()
+    {
+        ModelState.AddModelError(nameof(TextareaTestsModel.Text), "Model error message");
+        return View(new TextareaTestsModel { Text = "Model value" });
+    }
 }
 
 public record TextInputTestsModel
@@ -244,4 +302,10 @@ public record DateInputTestsModel
 {
     [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
     public DateOnly? Date { get; set; }
+}
+
+public record TextareaTestsModel
+{
+    [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
+    public string? Text { get; set; }
 }

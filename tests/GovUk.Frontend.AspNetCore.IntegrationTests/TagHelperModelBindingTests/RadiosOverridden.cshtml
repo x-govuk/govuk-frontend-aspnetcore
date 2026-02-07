@@ -1,0 +1,13 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.TagHelperModelBindingTests.RadiosTestsModel
+
+<govuk-radios for="Option" id-prefix="OverriddenIdPrefix" name="OverriddenName">
+    <govuk-radios-fieldset>
+        <govuk-radios-fieldset-legend>
+            Overridden legend
+        </govuk-radios-fieldset-legend>
+        <govuk-radios-hint>Overridden hint</govuk-radios-hint>
+        <govuk-radios-error-message>Overridden error message</govuk-radios-error-message>
+        <govuk-radios-item value="option1" checked="true">Option 1</govuk-radios-item>
+        <govuk-radios-item value="option2" checked="false">Option 2</govuk-radios-item>
+    </govuk-radios-fieldset>
+</govuk-radios>

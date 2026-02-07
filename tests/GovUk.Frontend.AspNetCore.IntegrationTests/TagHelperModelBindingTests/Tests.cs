@@ -393,6 +393,52 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
         var errorMessage = page.Locator(".govuk-error-message").First;
         Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
     }
+
+    [Fact]
+    public async Task Radios_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/Radios");
+
+        var radio1 = page.Locator("input[value='option1']").First;
+        Assert.Equal("Option", await radio1.GetAttributeAsync("name"));
+        Assert.Equal("Option", await radio1.GetAttributeAsync("id"));
+        Assert.False(await radio1.IsCheckedAsync());
+
+        var radio2 = page.Locator("input[value='option2']").First;
+        Assert.Equal("Option", await radio2.GetAttributeAsync("name"));
+        Assert.Equal("Option-2", await radio2.GetAttributeAsync("id"));
+        Assert.True(await radio2.IsCheckedAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("ModelMetadata description", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Model error message", await errorMessage.TextContentAsync());
+    }
+
+    [Fact]
+    public async Task RadiosOverridden_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/RadiosOverridden");
+
+        var radio1 = page.Locator("input[value='option1']").First;
+        Assert.Equal("OverriddenName", await radio1.GetAttributeAsync("name"));
+        Assert.Equal("OverriddenIdPrefix", await radio1.GetAttributeAsync("id"));
+        Assert.True(await radio1.IsCheckedAsync());
+
+        var radio2 = page.Locator("input[value='option2']").First;
+        Assert.Equal("OverriddenName", await radio2.GetAttributeAsync("name"));
+        Assert.Equal("OverriddenIdPrefix-2", await radio2.GetAttributeAsync("id"));
+        Assert.False(await radio2.IsCheckedAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("Overridden hint", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
+    }
 }
 
 [Route("/[controller]/[action]")]
@@ -533,6 +579,22 @@ public class ModelBindingTestsController : Controller
         ModelState.AddModelError(nameof(CheckboxesTestsModel.Options), "Model error message");
         return View(new CheckboxesTestsModel { Options = ["option2"] });
     }
+
+    [HttpGet]
+    public IActionResult Radios()
+    {
+        ModelState.SetModelValue(nameof(RadiosTestsModel.Option), "option2", "option2");
+        ModelState.AddModelError(nameof(RadiosTestsModel.Option), "Model error message");
+        return View(new RadiosTestsModel { Option = "option2" });
+    }
+
+    [HttpGet]
+    public IActionResult RadiosOverridden()
+    {
+        ModelState.SetModelValue(nameof(RadiosTestsModel.Option), "option2", "option2");
+        ModelState.AddModelError(nameof(RadiosTestsModel.Option), "Model error message");
+        return View(new RadiosTestsModel { Option = "option2" });
+    }
 }
 
 public record TextInputTestsModel
@@ -581,4 +643,10 @@ public record CheckboxesTestsModel
 {
     [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
     public List<string>? Options { get; set; }
+}
+
+public record RadiosTestsModel
+{
+    [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
+    public string? Option { get; set; }
 }

@@ -347,6 +347,52 @@ public class Tests(TagHelperModelBindingTestsFixture fixture) : IClassFixture<Ta
         var errorMessage = page.Locator(".govuk-error-message").First;
         Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
     }
+
+    [Fact]
+    public async Task Checkboxes_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/Checkboxes");
+
+        var checkbox1 = page.Locator("input[value='option1']").First;
+        Assert.Equal("Options", await checkbox1.GetAttributeAsync("name"));
+        Assert.Equal("Options", await checkbox1.GetAttributeAsync("id"));
+        Assert.False(await checkbox1.IsCheckedAsync());
+
+        var checkbox2 = page.Locator("input[value='option2']").First;
+        Assert.Equal("Options", await checkbox2.GetAttributeAsync("name"));
+        Assert.Equal("Options-2", await checkbox2.GetAttributeAsync("id"));
+        Assert.True(await checkbox2.IsCheckedAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("ModelMetadata description", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Model error message", await errorMessage.TextContentAsync());
+    }
+
+    [Fact]
+    public async Task CheckboxesOverridden_RendersCorrectly()
+    {
+        var page = await fixture.Browser!.NewPageAsync();
+        await page.GotoAsync($"{ServerFixture.BaseUrl}/ModelBindingTests/CheckboxesOverridden");
+
+        var checkbox1 = page.Locator("input[value='option1']").First;
+        Assert.Equal("OverriddenName", await checkbox1.GetAttributeAsync("name"));
+        Assert.Equal("OverriddenIdPrefix", await checkbox1.GetAttributeAsync("id"));
+        Assert.True(await checkbox1.IsCheckedAsync());
+
+        var checkbox2 = page.Locator("input[value='option2']").First;
+        Assert.Equal("OverriddenName", await checkbox2.GetAttributeAsync("name"));
+        Assert.Equal("OverriddenIdPrefix-2", await checkbox2.GetAttributeAsync("id"));
+        Assert.False(await checkbox2.IsCheckedAsync());
+
+        var hint = page.Locator(".govuk-hint").First;
+        Assert.Equal("Overridden hint", await hint.InnerTextAsync());
+
+        var errorMessage = page.Locator(".govuk-error-message").First;
+        Assert.Equal("Error: Overridden error message", await errorMessage.TextContentAsync());
+    }
 }
 
 [Route("/[controller]/[action]")]
@@ -355,6 +401,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult TextInput()
     {
+        ModelState.SetModelValue(nameof(TextInputTestsModel.Text), "Model value", "Model value");
         ModelState.AddModelError(nameof(TextInputTestsModel.Text), "Model error message");
         return View(new TextInputTestsModel { Text = "Model value" });
     }
@@ -362,6 +409,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult TextInputOverridden()
     {
+        ModelState.SetModelValue(nameof(TextInputTestsModel.Text), "Model value", "Model value");
         ModelState.AddModelError(nameof(TextInputTestsModel.Text), "Model error message");
         return View(new TextInputTestsModel { Text = "Model value" });
     }
@@ -369,6 +417,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult PasswordInput()
     {
+        ModelState.SetModelValue(nameof(PasswordInputTestsModel.Password), "Model value", "Model value");
         ModelState.AddModelError(nameof(PasswordInputTestsModel.Password), "Model error message");
         return View(new PasswordInputTestsModel { Password = "Model value" });
     }
@@ -376,6 +425,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult PasswordInputOverridden()
     {
+        ModelState.SetModelValue(nameof(PasswordInputTestsModel.Password), "Model value", "Model value");
         ModelState.AddModelError(nameof(PasswordInputTestsModel.Password), "Model error message");
         return View(new PasswordInputTestsModel { Password = "Model value" });
     }
@@ -383,6 +433,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult DateInput()
     {
+        ModelState.SetModelValue(nameof(DateInputTestsModel.Date), new DateOnly(2024, 3, 15), "15,3,2024");
         ModelState.AddModelError(nameof(DateInputTestsModel.Date), "Model error message");
         return View(new DateInputTestsModel { Date = new DateOnly(2024, 3, 15) });
     }
@@ -390,6 +441,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult DateInputOverridden()
     {
+        ModelState.SetModelValue(nameof(DateInputTestsModel.Date), new DateOnly(2024, 3, 15), "15,3,2024");
         ModelState.AddModelError(nameof(DateInputTestsModel.Date), "Model error message");
         return View(new DateInputTestsModel { Date = new DateOnly(2024, 3, 15) });
     }
@@ -397,6 +449,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult DateInputOverriddenItems()
     {
+        ModelState.SetModelValue(nameof(DateInputTestsModel.Date), new DateOnly(2024, 3, 15), "15,3,2024");
         ModelState.AddModelError(nameof(DateInputTestsModel.Date), "Model error message");
         return View(new DateInputTestsModel { Date = new DateOnly(2024, 3, 15) });
     }
@@ -404,6 +457,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult Textarea()
     {
+        ModelState.SetModelValue(nameof(TextareaTestsModel.Text), "Model value", "Model value");
         ModelState.AddModelError(nameof(TextareaTestsModel.Text), "Model error message");
         return View(new TextareaTestsModel { Text = "Model value" });
     }
@@ -411,6 +465,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult TextareaOverridden()
     {
+        ModelState.SetModelValue(nameof(TextareaTestsModel.Text), "Model value", "Model value");
         ModelState.AddModelError(nameof(TextareaTestsModel.Text), "Model error message");
         return View(new TextareaTestsModel { Text = "Model value" });
     }
@@ -418,6 +473,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult CharacterCount()
     {
+        ModelState.SetModelValue(nameof(CharacterCountTestsModel.Text), "Model value", "Model value");
         ModelState.AddModelError(nameof(CharacterCountTestsModel.Text), "Model error message");
         return View(new CharacterCountTestsModel { Text = "Model value" });
     }
@@ -425,6 +481,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult CharacterCountOverridden()
     {
+        ModelState.SetModelValue(nameof(CharacterCountTestsModel.Text), "Model value", "Model value");
         ModelState.AddModelError(nameof(CharacterCountTestsModel.Text), "Model error message");
         return View(new CharacterCountTestsModel { Text = "Model value" });
     }
@@ -432,6 +489,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult FileUpload()
     {
+        ModelState.SetModelValue(nameof(FileUploadTestsModel.File), "", "");
         ModelState.AddModelError(nameof(FileUploadTestsModel.File), "Model error message");
         return View(new FileUploadTestsModel());
     }
@@ -439,6 +497,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult FileUploadOverridden()
     {
+        ModelState.SetModelValue(nameof(FileUploadTestsModel.File), "", "");
         ModelState.AddModelError(nameof(FileUploadTestsModel.File), "Model error message");
         return View(new FileUploadTestsModel());
     }
@@ -446,6 +505,7 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult Select()
     {
+        ModelState.SetModelValue(nameof(SelectTestsModel.Option), "option2", "option2");
         ModelState.AddModelError(nameof(SelectTestsModel.Option), "Model error message");
         return View(new SelectTestsModel { Option = "option2" });
     }
@@ -453,8 +513,25 @@ public class ModelBindingTestsController : Controller
     [HttpGet]
     public IActionResult SelectOverridden()
     {
+        ModelState.SetModelValue(nameof(SelectTestsModel.Option), "option2", "option2");
         ModelState.AddModelError(nameof(SelectTestsModel.Option), "Model error message");
         return View(new SelectTestsModel { Option = "option2" });
+    }
+
+    [HttpGet]
+    public IActionResult Checkboxes()
+    {
+        ModelState.SetModelValue(nameof(CheckboxesTestsModel.Options), new[] { "option2" }, null);
+        ModelState.AddModelError(nameof(CheckboxesTestsModel.Options), "Model error message");
+        return View(new CheckboxesTestsModel { Options = ["option2"] });
+    }
+
+    [HttpGet]
+    public IActionResult CheckboxesOverridden()
+    {
+        ModelState.SetModelValue(nameof(CheckboxesTestsModel.Options), new[] { "option2" }, null);
+        ModelState.AddModelError(nameof(CheckboxesTestsModel.Options), "Model error message");
+        return View(new CheckboxesTestsModel { Options = ["option2"] });
     }
 }
 
@@ -491,11 +568,17 @@ public record CharacterCountTestsModel
 public record FileUploadTestsModel
 {
     [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
-    public Microsoft.AspNetCore.Http.IFormFile? File { get; set; }
+    public IFormFile? File { get; set; }
 }
 
 public record SelectTestsModel
 {
     [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
     public string? Option { get; set; }
+}
+
+public record CheckboxesTestsModel
+{
+    [Display(Name = "ModelMetadata display name", Description = "ModelMetadata description")]
+    public List<string>? Options { get; set; }
 }

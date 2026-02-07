@@ -33,7 +33,7 @@ public class CheckboxesErrorMessageTagHelper : FormGroupErrorMessageTagHelperBas
         var attributes = new AttributeCollection(output.Attributes);
 
         checkboxesContext.SetErrorMessage(
-            VisuallyHiddenText,
+            VisuallyHiddenText is not null ? new TemplateString(VisuallyHiddenText) : null,
             attributes,
             content?.ToTemplateString(),
             output.TagName);

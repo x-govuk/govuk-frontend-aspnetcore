@@ -1,0 +1,13 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.TagHelperModelBindingTests.CheckboxesTestsModel
+
+<govuk-checkboxes for="Options" id-prefix="OverriddenIdPrefix" name="OverriddenName">
+    <govuk-checkboxes-fieldset>
+        <govuk-checkboxes-fieldset-legend>
+            Overridden legend
+        </govuk-checkboxes-fieldset-legend>
+        <govuk-checkboxes-hint>Overridden hint</govuk-checkboxes-hint>
+        <govuk-checkboxes-error-message>Overridden error message</govuk-checkboxes-error-message>
+        <govuk-checkboxes-item value="option1" checked="true">Option 1</govuk-checkboxes-item>
+        <govuk-checkboxes-item value="option2" checked="false">Option 2</govuk-checkboxes-item>
+    </govuk-checkboxes-fieldset>
+</govuk-checkboxes>

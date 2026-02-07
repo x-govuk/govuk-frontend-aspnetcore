@@ -31,7 +31,7 @@ public class RadiosErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
         var attributes = new AttributeCollection(output.Attributes);
 
         radiosContext.SetErrorMessage(
-            VisuallyHiddenText,
+            VisuallyHiddenText is not null ? new TemplateString(VisuallyHiddenText) : null,
             attributes,
             content?.ToTemplateString(),
             output.TagName);

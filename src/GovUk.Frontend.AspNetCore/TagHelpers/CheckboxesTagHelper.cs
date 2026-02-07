@@ -107,7 +107,9 @@ public class CheckboxesTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new CheckboxesContext(Name, For));
+        var checkboxesContext = new CheckboxesContext(Name, For);
+        context.SetContextItem(checkboxesContext);
+        context.SetContextItem<FormGroupContext3>(checkboxesContext);
     }
 
     /// <inheritdoc/>

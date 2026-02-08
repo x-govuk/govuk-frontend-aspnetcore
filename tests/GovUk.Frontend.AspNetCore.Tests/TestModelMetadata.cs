@@ -9,6 +9,8 @@ namespace GovUk.Frontend.AspNetCore.Tests;
 internal class TestModelMetadata : ModelMetadata
 {
     private string? _displayName;
+    private string? _dataTypeName;
+    private string? _templateHint;
 
     public TestModelMetadata(Type modelType)
         : base(ModelMetadataIdentity.ForType(modelType))
@@ -59,8 +61,7 @@ internal class TestModelMetadata : ModelMetadata
     public override bool ConvertEmptyStringToNull =>
         throw new NotImplementedException();
 
-    public override string DataTypeName =>
-        throw new NotImplementedException();
+    public override string DataTypeName => _dataTypeName ?? throw new NotImplementedException();
 
     public override string Description =>
         throw new NotImplementedException();
@@ -136,8 +137,7 @@ internal class TestModelMetadata : ModelMetadata
     public override string SimpleDisplayProperty =>
         throw new NotImplementedException();
 
-    public override string TemplateHint =>
-        throw new NotImplementedException();
+    public override string TemplateHint => _templateHint ?? throw new NotImplementedException();
 
     public override IPropertyValidationFilter PropertyValidationFilter =>
         throw new NotImplementedException();
@@ -164,4 +164,8 @@ internal class TestModelMetadata : ModelMetadata
         throw new NotImplementedException();
 
     public void SetDisplayName(string? displayName) => _displayName = displayName;
+    
+    public void SetDataTypeName(string? dataTypeName) => _dataTypeName = dataTypeName;
+    
+    public void SetTemplateHint(string? templateHint) => _templateHint = templateHint;
 }

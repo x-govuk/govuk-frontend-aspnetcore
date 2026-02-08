@@ -1,10 +1,15 @@
+using System.ComponentModel.DataAnnotations;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -792,8 +797,353 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             });
     }
 
+    [Theory]
+    [InlineData("EmailAddress", "email")]
+    [InlineData("PhoneNumber", "tel")]
+    [InlineData("Url", "url")]
+    [InlineData("Password", "password")]
+    public async Task ProcessAsync_WithForAndDataTypeName_DeducesCorrectInputType(string dataTypeName, string expectedType)
+    {
+        // Arrange
+        var context = new TagHelperContext(
+            tagName: "govuk-input",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-input",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var modelHelperMock = new Mock<IModelHelper>();
+
+        modelHelperMock
+            .Setup(mock => mock.GetFullHtmlFieldName(
+                It.IsAny<ViewContext>(),
+                It.IsAny<string>()))
+            .Returns("TestProperty");
+
+        modelHelperMock
+            .Setup(mock => mock.GetDisplayName(
+                It.IsAny<ModelExplorer>(),
+                It.IsAny<string>()))
+            .Returns("Label");
+
+        var metadata = new TestModelMetadata(typeof(string));
+        metadata.SetDataTypeName(dataTypeName);
+        metadata.SetDisplayName("Label");
+        
+        var modelExplorer = new ModelExplorer(
+            new EmptyModelMetadataProvider(),
+            new EmptyModelMetadataProvider().GetMetadataForType(typeof(string)),
+            metadata,
+            null);
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        InputOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
+            .Callback<InputOptions>(o => actualOptions = o);
+
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        {
+            For = new ModelExpression("TestProperty", modelExplorer),
+            ViewContext = TestUtils.CreateViewContext()
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.NotNull(actualOptions);
+        Assert.Equal(expectedType, actualOptions.Type);
+    }
+
+    [Theory]
+    [InlineData(nameof(ModelWithNumericTypes.ByteProperty), "number")]
+    [InlineData(nameof(ModelWithNumericTypes.SByteProperty), "number")]
+    [InlineData(nameof(ModelWithNumericTypes.ShortProperty), "number")]
+    [InlineData(nameof(ModelWithNumericTypes.UShortProperty), "number")]
+    [InlineData(nameof(ModelWithNumericTypes.IntProperty), "number")]
+    [InlineData(nameof(ModelWithNumericTypes.UIntProperty), "number")]
+    [InlineData(nameof(ModelWithNumericTypes.LongProperty), "number")]
+    [InlineData(nameof(ModelWithNumericTypes.ULongProperty), "number")]
+    public async Task ProcessAsync_WithForAndNumericType_DeducesNumberInputType(string propertyName, string expectedType)
+    {
+        // Arrange
+        var context = new TagHelperContext(
+            tagName: "govuk-input",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-input",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var modelHelperMock = new Mock<IModelHelper>();
+
+        modelHelperMock
+            .Setup(mock => mock.GetFullHtmlFieldName(
+                It.IsAny<ViewContext>(),
+                It.IsAny<string>()))
+            .Returns(propertyName);
+
+        modelHelperMock
+            .Setup(mock => mock.GetDisplayName(
+                It.IsAny<ModelExplorer>(),
+                It.IsAny<string>()))
+            .Returns("Label");
+
+        var modelExplorer = CreateModelExplorer(new ModelWithNumericTypes(), propertyName);
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        InputOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
+            .Callback<InputOptions>(o => actualOptions = o);
+
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        {
+            For = new ModelExpression(propertyName, modelExplorer),
+            ViewContext = TestUtils.CreateViewContext()
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.NotNull(actualOptions);
+        Assert.Equal(expectedType, actualOptions.Type);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_WithForAndStringType_DefaultsToTextInputType()
+    {
+        // Arrange
+        var context = new TagHelperContext(
+            tagName: "govuk-input",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-input",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var modelHelperMock = new Mock<IModelHelper>();
+
+        modelHelperMock
+            .Setup(mock => mock.GetFullHtmlFieldName(
+                It.IsAny<ViewContext>(),
+                It.IsAny<string>()))
+            .Returns(nameof(Model.SimpleProperty));
+
+        modelHelperMock
+            .Setup(mock => mock.GetDisplayName(
+                It.IsAny<ModelExplorer>(),
+                It.IsAny<string>()))
+            .Returns("Label");
+
+        var modelExplorer = CreateModelExplorer(new Model(), nameof(Model.SimpleProperty));
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        InputOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
+            .Callback<InputOptions>(o => actualOptions = o);
+
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        {
+            For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
+            ViewContext = TestUtils.CreateViewContext()
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.NotNull(actualOptions);
+        Assert.Equal("text", actualOptions.Type);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_WithExplicitType_OverridesMetadataDeduction()
+    {
+        // Arrange
+        var explicitType = "custom-type";
+
+        var context = new TagHelperContext(
+            tagName: "govuk-input",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-input",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var modelHelperMock = new Mock<IModelHelper>();
+
+        modelHelperMock
+            .Setup(mock => mock.GetFullHtmlFieldName(
+                It.IsAny<ViewContext>(),
+                It.IsAny<string>()))
+            .Returns(nameof(ModelWithDataTypes.EmailProperty));
+
+        modelHelperMock
+            .Setup(mock => mock.GetDisplayName(
+                It.IsAny<ModelExplorer>(),
+                It.IsAny<string>()))
+            .Returns("Label");
+
+        var modelExplorer = CreateModelExplorer(new ModelWithDataTypes(), nameof(ModelWithDataTypes.EmailProperty));
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        InputOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
+            .Callback<InputOptions>(o => actualOptions = o);
+
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        {
+            For = new ModelExpression(nameof(ModelWithDataTypes.EmailProperty), modelExplorer),
+            ViewContext = TestUtils.CreateViewContext(),
+            Type = explicitType
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.NotNull(actualOptions);
+        Assert.Equal(explicitType, actualOptions.Type);
+    }
+
+    [Theory]
+    [InlineData(nameof(ModelWithTemplateHint.SearchProperty), "search")]
+    [InlineData(nameof(ModelWithTemplateHint.WeekProperty), "week")]
+    [InlineData(nameof(ModelWithTemplateHint.MonthProperty), "month")]
+    public async Task ProcessAsync_WithForAndTemplateHint_DeducesCorrectInputType(string propertyName, string expectedType)
+    {
+        // Arrange
+        var context = new TagHelperContext(
+            tagName: "govuk-input",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-input",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var modelHelperMock = new Mock<IModelHelper>();
+
+        modelHelperMock
+            .Setup(mock => mock.GetFullHtmlFieldName(
+                It.IsAny<ViewContext>(),
+                It.IsAny<string>()))
+            .Returns(propertyName);
+
+        modelHelperMock
+            .Setup(mock => mock.GetDisplayName(
+                It.IsAny<ModelExplorer>(),
+                It.IsAny<string>()))
+            .Returns("Label");
+
+        var modelExplorer = CreateModelExplorer(new ModelWithTemplateHint(), propertyName);
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        InputOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
+            .Callback<InputOptions>(o => actualOptions = o);
+
+        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        {
+            For = new ModelExpression(propertyName, modelExplorer),
+            ViewContext = TestUtils.CreateViewContext()
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.NotNull(actualOptions);
+        Assert.Equal(expectedType, actualOptions.Type);
+    }
+
     private class Model
     {
         public string? SimpleProperty { get; set; }
+    }
+
+    private class ModelWithDataTypes
+    {
+        [DataType(DataType.EmailAddress)]
+        public string? EmailProperty { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        public string? PhoneProperty { get; set; }
+
+        [DataType(DataType.Url)]
+        public string? UrlProperty { get; set; }
+
+        [DataType(DataType.Password)]
+        public string? PasswordProperty { get; set; }
+    }
+
+    private class ModelWithNumericTypes
+    {
+        public byte ByteProperty { get; set; }
+        public sbyte SByteProperty { get; set; }
+        public short ShortProperty { get; set; }
+        public ushort UShortProperty { get; set; }
+        public int IntProperty { get; set; }
+        public uint UIntProperty { get; set; }
+        public long LongProperty { get; set; }
+        public ulong ULongProperty { get; set; }
+    }
+
+    private class ModelWithTemplateHint
+    {
+        [UIHint("Search")]
+        public string? SearchProperty { get; set; }
+
+        [UIHint("Week")]
+        public string? WeekProperty { get; set; }
+
+        [UIHint("Month")]
+        public string? MonthProperty { get; set; }
     }
 }

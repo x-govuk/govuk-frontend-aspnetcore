@@ -840,7 +840,6 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         
         var modelExplorer = new ModelExplorer(
             new EmptyModelMetadataProvider(),
-            new EmptyModelMetadataProvider().GetMetadataForType(typeof(string)),
             metadata,
             null);
 
@@ -866,15 +865,15 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
     }
 
     [Theory]
-    [InlineData(nameof(ModelWithNumericTypes.ByteProperty), "number")]
-    [InlineData(nameof(ModelWithNumericTypes.SByteProperty), "number")]
-    [InlineData(nameof(ModelWithNumericTypes.ShortProperty), "number")]
-    [InlineData(nameof(ModelWithNumericTypes.UShortProperty), "number")]
-    [InlineData(nameof(ModelWithNumericTypes.IntProperty), "number")]
-    [InlineData(nameof(ModelWithNumericTypes.UIntProperty), "number")]
-    [InlineData(nameof(ModelWithNumericTypes.LongProperty), "number")]
-    [InlineData(nameof(ModelWithNumericTypes.ULongProperty), "number")]
-    public async Task ProcessAsync_WithForAndNumericType_DeducesNumberInputType(string propertyName, string expectedType)
+    [InlineData(typeof(byte), "number")]
+    [InlineData(typeof(sbyte), "number")]
+    [InlineData(typeof(short), "number")]
+    [InlineData(typeof(ushort), "number")]
+    [InlineData(typeof(int), "number")]
+    [InlineData(typeof(uint), "number")]
+    [InlineData(typeof(long), "number")]
+    [InlineData(typeof(ulong), "number")]
+    public async Task ProcessAsync_WithForAndNumericType_DeducesNumberInputType(Type numericType, string expectedType)
     {
         // Arrange
         var context = new TagHelperContext(
@@ -898,7 +897,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             .Setup(mock => mock.GetFullHtmlFieldName(
                 It.IsAny<ViewContext>(),
                 It.IsAny<string>()))
-            .Returns(propertyName);
+            .Returns("TestProperty");
 
         modelHelperMock
             .Setup(mock => mock.GetDisplayName(
@@ -906,7 +905,13 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 It.IsAny<string>()))
             .Returns("Label");
 
-        var modelExplorer = CreateModelExplorer(new ModelWithNumericTypes(), propertyName);
+        var metadata = new TestModelMetadata(numericType);
+        metadata.SetDisplayName("Label");
+        
+        var modelExplorer = new ModelExplorer(
+            new EmptyModelMetadataProvider(),
+            metadata,
+            null);
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
@@ -915,7 +920,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
-            For = new ModelExpression(propertyName, modelExplorer),
+            For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
         };
 
@@ -954,7 +959,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             .Setup(mock => mock.GetFullHtmlFieldName(
                 It.IsAny<ViewContext>(),
                 It.IsAny<string>()))
-            .Returns(nameof(Model.SimpleProperty));
+            .Returns("TestProperty");
 
         modelHelperMock
             .Setup(mock => mock.GetDisplayName(
@@ -962,7 +967,13 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 It.IsAny<string>()))
             .Returns("Label");
 
-        var modelExplorer = CreateModelExplorer(new Model(), nameof(Model.SimpleProperty));
+        var metadata = new TestModelMetadata(typeof(string));
+        metadata.SetDisplayName("Label");
+        
+        var modelExplorer = new ModelExplorer(
+            new EmptyModelMetadataProvider(),
+            metadata,
+            null);
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
@@ -971,7 +982,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
-            For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
+            For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
         };
 
@@ -1012,7 +1023,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             .Setup(mock => mock.GetFullHtmlFieldName(
                 It.IsAny<ViewContext>(),
                 It.IsAny<string>()))
-            .Returns(nameof(ModelWithDataTypes.EmailProperty));
+            .Returns("TestProperty");
 
         modelHelperMock
             .Setup(mock => mock.GetDisplayName(
@@ -1020,7 +1031,14 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 It.IsAny<string>()))
             .Returns("Label");
 
-        var modelExplorer = CreateModelExplorer(new ModelWithDataTypes(), nameof(ModelWithDataTypes.EmailProperty));
+        var metadata = new TestModelMetadata(typeof(string));
+        metadata.SetDataTypeName("EmailAddress");
+        metadata.SetDisplayName("Label");
+        
+        var modelExplorer = new ModelExplorer(
+            new EmptyModelMetadataProvider(),
+            metadata,
+            null);
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
@@ -1029,7 +1047,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
-            For = new ModelExpression(nameof(ModelWithDataTypes.EmailProperty), modelExplorer),
+            For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext(),
             Type = explicitType
         };
@@ -1045,10 +1063,10 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
     }
 
     [Theory]
-    [InlineData(nameof(ModelWithTemplateHint.SearchProperty), "search")]
-    [InlineData(nameof(ModelWithTemplateHint.WeekProperty), "week")]
-    [InlineData(nameof(ModelWithTemplateHint.MonthProperty), "month")]
-    public async Task ProcessAsync_WithForAndTemplateHint_DeducesCorrectInputType(string propertyName, string expectedType)
+    [InlineData("Search", "search")]
+    [InlineData("Week", "week")]
+    [InlineData("Month", "month")]
+    public async Task ProcessAsync_WithForAndTemplateHint_DeducesCorrectInputType(string templateHint, string expectedType)
     {
         // Arrange
         var context = new TagHelperContext(
@@ -1072,7 +1090,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             .Setup(mock => mock.GetFullHtmlFieldName(
                 It.IsAny<ViewContext>(),
                 It.IsAny<string>()))
-            .Returns(propertyName);
+            .Returns("TestProperty");
 
         modelHelperMock
             .Setup(mock => mock.GetDisplayName(
@@ -1080,7 +1098,14 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 It.IsAny<string>()))
             .Returns("Label");
 
-        var modelExplorer = CreateModelExplorer(new ModelWithTemplateHint(), propertyName);
+        var metadata = new TestModelMetadata(typeof(string));
+        metadata.SetTemplateHint(templateHint);
+        metadata.SetDisplayName("Label");
+        
+        var modelExplorer = new ModelExplorer(
+            new EmptyModelMetadataProvider(),
+            metadata,
+            null);
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         InputOptions? actualOptions = null;
@@ -1089,7 +1114,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
         {
-            For = new ModelExpression(propertyName, modelExplorer),
+            For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
         };
 
@@ -1106,44 +1131,5 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
     private class Model
     {
         public string? SimpleProperty { get; set; }
-    }
-
-    private class ModelWithDataTypes
-    {
-        [DataType(DataType.EmailAddress)]
-        public string? EmailProperty { get; set; }
-
-        [DataType(DataType.PhoneNumber)]
-        public string? PhoneProperty { get; set; }
-
-        [DataType(DataType.Url)]
-        public string? UrlProperty { get; set; }
-
-        [DataType(DataType.Password)]
-        public string? PasswordProperty { get; set; }
-    }
-
-    private class ModelWithNumericTypes
-    {
-        public byte ByteProperty { get; set; }
-        public sbyte SByteProperty { get; set; }
-        public short ShortProperty { get; set; }
-        public ushort UShortProperty { get; set; }
-        public int IntProperty { get; set; }
-        public uint UIntProperty { get; set; }
-        public long LongProperty { get; set; }
-        public ulong ULongProperty { get; set; }
-    }
-
-    private class ModelWithTemplateHint
-    {
-        [UIHint("Search")]
-        public string? SearchProperty { get; set; }
-
-        [UIHint("Week")]
-        public string? WeekProperty { get; set; }
-
-        [UIHint("Month")]
-        public string? MonthProperty { get; set; }
     }
 }

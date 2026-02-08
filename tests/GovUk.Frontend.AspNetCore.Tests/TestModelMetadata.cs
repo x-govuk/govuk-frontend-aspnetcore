@@ -61,7 +61,7 @@ internal class TestModelMetadata : ModelMetadata
     public override bool ConvertEmptyStringToNull =>
         throw new NotImplementedException();
 
-    public override string DataTypeName => _dataTypeName ?? throw new NotImplementedException();
+    public override string DataTypeName => _dataTypeName;
 
     public override string Description =>
         throw new NotImplementedException();
@@ -137,7 +137,7 @@ internal class TestModelMetadata : ModelMetadata
     public override string SimpleDisplayProperty =>
         throw new NotImplementedException();
 
-    public override string TemplateHint => _templateHint ?? throw new NotImplementedException();
+    public override string TemplateHint => _templateHint;
 
     public override IPropertyValidationFilter PropertyValidationFilter =>
         throw new NotImplementedException();

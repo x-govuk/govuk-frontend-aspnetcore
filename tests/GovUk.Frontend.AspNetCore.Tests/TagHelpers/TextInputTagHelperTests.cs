@@ -1,15 +1,10 @@
-using System.ComponentModel.DataAnnotations;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -837,7 +832,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var metadata = new TestModelMetadata(typeof(string));
         metadata.SetDataTypeName(dataTypeName);
         metadata.SetDisplayName("Label");
-        
+
         var modelExplorer = new ModelExplorer(
             new EmptyModelMetadataProvider(),
             metadata,
@@ -907,7 +902,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var metadata = new TestModelMetadata(numericType);
         metadata.SetDisplayName("Label");
-        
+
         var modelExplorer = new ModelExplorer(
             new EmptyModelMetadataProvider(),
             metadata,
@@ -969,7 +964,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var metadata = new TestModelMetadata(typeof(string));
         metadata.SetDisplayName("Label");
-        
+
         var modelExplorer = new ModelExplorer(
             new EmptyModelMetadataProvider(),
             metadata,
@@ -1034,7 +1029,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var metadata = new TestModelMetadata(typeof(string));
         metadata.SetDataTypeName("EmailAddress");
         metadata.SetDisplayName("Label");
-        
+
         var modelExplorer = new ModelExplorer(
             new EmptyModelMetadataProvider(),
             metadata,
@@ -1101,7 +1096,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var metadata = new TestModelMetadata(typeof(string));
         metadata.SetTemplateHint(templateHint);
         metadata.SetDisplayName("Label");
-        
+
         var modelExplorer = new ModelExplorer(
             new EmptyModelMetadataProvider(),
             metadata,

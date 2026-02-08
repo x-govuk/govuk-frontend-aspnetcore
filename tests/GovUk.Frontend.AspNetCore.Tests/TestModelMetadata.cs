@@ -164,8 +164,8 @@ internal class TestModelMetadata : ModelMetadata
         throw new NotImplementedException();
 
     public void SetDisplayName(string? displayName) => _displayName = displayName;
-    
+
     public void SetDataTypeName(string? dataTypeName) => _dataTypeName = dataTypeName;
-    
+
     public void SetTemplateHint(string? templateHint) => _templateHint = templateHint;
 }

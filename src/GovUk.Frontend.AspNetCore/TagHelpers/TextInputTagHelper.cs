@@ -55,6 +55,18 @@ public class TextInputTagHelper : TagHelper
     private const string TypeAttributeName = "type";
     private const string ValueAttributeName = "value";
 
+    private static readonly HashSet<Type> _numberModelTypes = new()
+    {
+        typeof(byte),
+        typeof(sbyte),
+        typeof(short),
+        typeof(ushort),
+        typeof(int),
+        typeof(uint),
+        typeof(long),
+        typeof(ulong)
+    };
+
     private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
 
@@ -233,6 +245,7 @@ public class TextInputTagHelper : TagHelper
         var name = ResolveName();
         var id = ResolveId(name);
         var value = ResolveValue();
+        var type = ResolveType();
         var labelOptions = textInputContext.GetLabelOptions(For, ViewContext!, _modelHelper, id, ForAttributeName);
         var hintOptions = textInputContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = textInputContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
@@ -279,7 +292,7 @@ public class TextInputTagHelper : TagHelper
         {
             Id = id,
             Name = name,
-            Type = Type,
+            Type = type,
             InputMode = InputMode,
             Value = value,
             Disabled = Disabled,
@@ -316,17 +329,73 @@ public class TextInputTagHelper : TagHelper
     private string ResolveId(string name) =>
         Id ?? TagBuilder.CreateSanitizedId(name, Constants.IdAttributeDotReplacement);
 
-    private string ResolveName()
-    {
-        return Name is null && For is null
+    private string ResolveName() =>
+        Name is null && For is null
             ? throw ExceptionHelper.AtLeastOneOfAttributesMustBeProvided(
                 NameAttributeName,
                 ForAttributeName)
             : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
-    }
 
-    private string? ResolveValue()
+    private string? ResolveValue() =>
+        _valueSpecified ? _value : For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null;
+
+    private TemplateString ResolveType()
     {
-        return _valueSpecified ? _value : For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null;
+        if (Type is not null)
+        {
+            return Type;
+        }
+
+        if (For is not null)
+        {
+            if (For.Metadata.TemplateHint is { } templateHint && TryGetInputType(templateHint, out var inputType))
+            {
+                return inputType;
+            }
+
+            if (For.Metadata.DataTypeName is { } dataTypeName && TryGetInputType(dataTypeName, out inputType))
+            {
+                return inputType;
+            }
+
+            var underlyingModelType = For.Metadata.UnderlyingOrModelType;
+            if (_numberModelTypes.Contains(underlyingModelType))
+            {
+                return "number";
+            }
+        }
+
+        return "text";
+
+        bool TryGetInputType(string dataTypeName, out string inputType)
+        {
+            switch (dataTypeName)
+            {
+                case "EmailAddress":
+                    inputType = "email";
+                    return true;
+                case "Month":
+                    inputType = "month";
+                    return true;
+                case "Password":
+                    inputType = "password";
+                    return true;
+                case "PhoneNumber":
+                    inputType = "tel";
+                    return true;
+                case "Search":
+                    inputType = "search";
+                    return true;
+                case "Url":
+                    inputType = "url";
+                    return true;
+                case "Week":
+                    inputType = "week";
+                    return true;
+                default:
+                    inputType = "";
+                    return false;
+            }
+        }
     }
 }

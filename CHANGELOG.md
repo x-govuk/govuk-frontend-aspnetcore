@@ -10,6 +10,8 @@ The deprecated `asp-for` attribute has been removed; the `for` attribute should 
 
 Adds support for the password tag helper's show/hide customisation.
 
+Infer `type` attribute on `<govuk-input>` from the model metadata when `type` is not specified.
+
 ### Fixes
 
 Fix error summary when items are specified with an explicit `href` attribute.

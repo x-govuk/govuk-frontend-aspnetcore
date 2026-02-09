@@ -23,11 +23,19 @@ public class RadiosItemTagHelper : TagHelper
     private const string LabelAttributesPrefix = "label-";
     private const string ValueAttributeName = "value";
 
+    private readonly IModelHelper _modelHelper;
+
     /// <summary>
     /// Creates a new <see cref="RadiosItemTagHelper"/>.
     /// </summary>
     public RadiosItemTagHelper()
+        : this(modelHelper: null)
     {
+    }
+
+    internal RadiosItemTagHelper(IModelHelper? modelHelper = null)
+    {
+        _modelHelper = modelHelper ?? new DefaultModelHelper();
     }
 
     /// <summary>
@@ -105,16 +113,14 @@ public class RadiosItemTagHelper : TagHelper
         var radiosContext = context.GetContextItem<RadiosContext>();
         var itemContext = context.GetContextItem<RadiosItemContext>();
 
-        TagHelperContent content;
-        content = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
             content = output.Content;
         }
 
-        var resolvedChecked = Checked ??
-            (radiosContext.For is not null ? DoesModelMatchItemValue() : null);
+        var @checked = Checked ?? (radiosContext.For is { } @for ? ItemMatchesModelValue(@for) : null);
 
         var itemAttributes = new AttributeCollection(output.Attributes);
 
@@ -135,7 +141,7 @@ public class RadiosItemTagHelper : TagHelper
                 Attributes = labelAttributes
             },
             Hint = itemContext.Hint?.Options,
-            Checked = resolvedChecked,
+            Checked = @checked,
             Conditional = itemContext.Conditional?.Options,
             Disabled = Disabled,
             Attributes = inputAttributes,
@@ -143,14 +149,12 @@ public class RadiosItemTagHelper : TagHelper
         });
 
         output.SuppressOutput();
+    }
 
-        bool DoesModelMatchItemValue()
-        {
-            Debug.Assert(radiosContext.For is not null);
-            Debug.Assert(ViewContext is not null);
+    private bool ItemMatchesModelValue(ModelExpression @for)
+    {
+        Debug.Assert(ViewContext is not null);
 
-            var modelValue = radiosContext.For?.Model?.ToString();
-            return modelValue == Value;
-        }
+        return _modelHelper.GetModelValue(ViewContext!, @for.ModelExplorer, @for.Name) == Value;
     }
 }

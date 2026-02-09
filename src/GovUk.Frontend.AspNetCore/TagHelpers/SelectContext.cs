@@ -11,8 +11,6 @@ internal class SelectContext(ModelExpression? @for) : FormGroupContext3
 
     public ModelExpression? For { get; } = @for;
 
-    public bool HaveModelExpression => For is not null;
-
     public IReadOnlyCollection<SelectOptionsItem> Items => _items;
 
     public TemplateString? BeforeInput => _beforeInput?.Content;

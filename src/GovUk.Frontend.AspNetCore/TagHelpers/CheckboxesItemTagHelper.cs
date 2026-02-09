@@ -130,16 +130,14 @@ public class CheckboxesItemTagHelper : TagHelper
             throw new InvalidOperationException($"The '{NameAttributeName}' attribute must be specified on each item when not specified on the parent <{CheckboxesTagHelper.TagName}>.");
         }
 
-        TagHelperContent content;
-        content = await output.GetChildContentAsync();
+        var content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {
             content = output.Content;
         }
 
-        var resolvedChecked = Checked ??
-            (checkboxesContext.For is not null ? DoesModelMatchItemValue() : null);
+        var @checked = Checked ?? (checkboxesContext.For is { } @for ? ItemMatchesModelValue(@for) : null);
 
         var itemAttributes = new AttributeCollection(output.Attributes);
 
@@ -161,7 +159,7 @@ public class CheckboxesItemTagHelper : TagHelper
                 Attributes = labelAttributes
             },
             Hint = itemContext.Hint?.Options,
-            Checked = resolvedChecked,
+            Checked = @checked,
             Conditional = itemContext.Conditional?.Options,
             Behaviour = Behavior is CheckboxesItemBehavior.Exclusive ? "exclusive" : null,
             Disabled = Disabled,
@@ -170,26 +168,25 @@ public class CheckboxesItemTagHelper : TagHelper
         });
 
         output.SuppressOutput();
+    }
 
-        bool DoesModelMatchItemValue()
+    private bool ItemMatchesModelValue(ModelExpression @for)
+    {
+        Debug.Assert(ViewContext is not null);
+
+        var modelExpression = @for;
+        object model = modelExpression.Model;
+
+        if (modelExpression.Metadata.IsEnumerableType)
         {
-            Debug.Assert(checkboxesContext.For is not null);
-            Debug.Assert(ViewContext is not null);
+            var value = ViewContext!.ModelState.TryGetValue(modelExpression.Name, out var entry) ?
+                entry.RawValue :
+                model;
 
-            var modelExpression = checkboxesContext.For!;
-            object model = modelExpression.Model;
-
-            if (modelExpression.Metadata.IsEnumerableType)
-            {
-                var value = ViewContext!.ModelState.TryGetValue(modelExpression.Name, out var entry) ?
-                    entry.RawValue :
-                    model;
-
-                var values = (value as IEnumerable)?.Cast<object>();
-                return values?.Any(v => v?.ToString() == Value) is true;
-            }
-
-            return model?.ToString() == Value;
+            var values = (value as IEnumerable)?.Cast<object>();
+            return values?.Any(v => v?.ToString() == Value) is true;
         }
+
+        return model?.ToString() == Value;
     }
 }

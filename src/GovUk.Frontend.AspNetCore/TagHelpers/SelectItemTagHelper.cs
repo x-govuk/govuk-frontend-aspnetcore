@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -79,12 +80,7 @@ public class SelectItemTagHelper : TagHelper
             content = output.Content;
         }
 
-        var selected = Selected ?? (selectContext.HaveModelExpression ?
-            _modelHelper.GetModelValue(
-                ViewContext!,
-                selectContext.For!.ModelExplorer,
-                selectContext.For.Name) == Value :
-            null);
+        var selected = Selected ?? (selectContext.For is { } @for ? ItemMatchesModelValue(@for) : null);
 
         selectContext.AddItem(new SelectOptionsItem
         {
@@ -96,5 +92,12 @@ public class SelectItemTagHelper : TagHelper
         });
 
         output.SuppressOutput();
+    }
+
+    private bool ItemMatchesModelValue(ModelExpression @for)
+    {
+        Debug.Assert(ViewContext is not null);
+
+        return _modelHelper.GetModelValue(ViewContext!, @for.ModelExplorer, @for.Name) == Value;
     }
 }

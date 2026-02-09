@@ -19,8 +19,6 @@ public class SelectItemTagHelper : TagHelper
     private const string ValueAttributeName = "value";
 
     private readonly IModelHelper _modelHelper;
-    private bool? _selected;
-    private bool _selectedSpecified;
 
     /// <summary>
     /// Creates a new <see cref="SelectItemTagHelper"/>.
@@ -50,15 +48,7 @@ public class SelectItemTagHelper : TagHelper
     /// attribute with the model expression's value.
     /// </remarks>
     [HtmlAttributeName(SelectedAttributeName)]
-    public bool? Selected
-    {
-        get => _selected;
-        set
-        {
-            _selectedSpecified = value is not null;
-            _selected = value;
-        }
-    }
+    public bool? Selected { get; set; }
 
     /// <summary>
     /// The <c>value</c> attribute for the item.
@@ -89,19 +79,19 @@ public class SelectItemTagHelper : TagHelper
             content = output.Content;
         }
 
-        var resolvedSelected = !_selectedSpecified && selectContext.HaveModelExpression ?
+        var selected = Selected ?? (selectContext.HaveModelExpression ?
             _modelHelper.GetModelValue(
                 ViewContext!,
                 selectContext.For!.ModelExplorer,
                 selectContext.For.Name) == Value :
-            _selected;
+            null);
 
         selectContext.AddItem(new SelectOptionsItem
         {
             Attributes = new AttributeCollection(output.Attributes),
             Text = content.ToTemplateString(),
             Disabled = Disabled,
-            Selected = resolvedSelected,
+            Selected = selected,
             Value = Value
         });
 

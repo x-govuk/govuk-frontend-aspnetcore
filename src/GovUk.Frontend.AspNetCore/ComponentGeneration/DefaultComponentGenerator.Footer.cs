@@ -19,7 +19,6 @@ internal partial class DefaultComponentGenerator
         containerTag.InnerHtml.AppendHtml(GenerateLogo(new LogoOptions
         {
             Classes = "govuk-footer__crown",
-            Rebrand = true,
             UseLogotype = false
         }));
 

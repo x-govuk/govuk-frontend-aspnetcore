@@ -40,8 +40,7 @@ internal partial class DefaultComponentGenerator
             logoLink.InnerHtml.AppendHtml(GenerateLogo(new LogoOptions
             {
                 Classes = "govuk-header__logotype",
-                AriaLabelText = "GOV.UK",
-                Rebrand = true
+                AriaLabelText = "GOV.UK"
             }));
 
             if (!options.ProductName.IsEmpty())

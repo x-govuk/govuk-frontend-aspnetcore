@@ -2,7 +2,17 @@
 
 ## Unreleased
 
+### `_GovUkPageTemplate` view changes
+
+Additional sections and `ViewData` keys have been added.
+
 ### Breaking changes
+
+If you are using the `_GovUkPageTemplate` view, you may need to update your views to use the new section names.
+Specifically, if you where using the `Header` section, consider using the `GovUkHeader` and/or `GovUkServiceNavigation` sections instead.
+Similarly, if you were using the `Footer` section, consider using the `GovUkFooter` section instead.
+
+See `src/GovUk.Frontend.AspNetCore/Views/_GovUkPageTemplate.cshtml` for the complete view implementation.
 
 The deprecated `asp-for` attribute has been removed; the `for` attribute should be used instead.
 

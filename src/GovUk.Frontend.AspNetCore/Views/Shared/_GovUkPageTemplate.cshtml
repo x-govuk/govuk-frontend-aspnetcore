@@ -1,25 +1,73 @@
-﻿@using GovUk.Frontend.AspNetCore
+﻿@using System.Text
+@using GovUk.Frontend.AspNetCore
+@using GovUk.Frontend.AspNetCore.ComponentGeneration
+@using Microsoft.AspNetCore.Html
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.WebUtilities
 @using Microsoft.Extensions.Options
+@using static GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants;
+@inject IComponentGenerator ComponentGenerator
 @inject IOptions<GovUkFrontendOptions> OptionsAccessor
 @addTagHelper *, GovUk.Frontend.AspNetCore
 @{
-    var rebrand = true;
+    var assetPath = ViewData[ViewDataKeys.AssetPath] as PathString? ??
+        Context.Request.PathBase + PageTemplateHelper.DefaultAssetsPath;
 
-    PathString assetPath = ViewBag.AssetPath ??
-        Context.Request.PathBase + PageTemplateHelper.DefaultAssetsPath + (rebrand ? "/rebrand" : "");
+    var cspNonce = ViewData[ViewDataKeys.CspNonce] as string ?? OptionsAccessor.Value.GetCspNonceForRequest?.Invoke(ViewContext.HttpContext);
 
-    var cspNonce = ViewBag.CspNonce as string ?? OptionsAccessor.Value.GetCspNonceForRequest?.Invoke(ViewContext.HttpContext);
-
-    var htmlLang = ViewBag.HtmlLang ?? "en";
-    var themeColor = ViewBag.ThemeColor ?? (rebrand ? "#1d70b8" : "#0b0c0c");
-    var ogImage = ViewBag.OpengraphImageUrl ??
+    var htmlLang = ViewData[ViewDataKeys.HtmlLang] ?? "en";
+    var themeColor = ViewData[ViewDataKeys.ThemeColor] ?? "#1d70b8";
+    var ogImage = ViewData[ViewDataKeys.OpengraphImageUrl] ??
         $"{Context.Request.Scheme}://{Context.Request.Host}{GetStaticAssetUrl("images/govuk-opengraph-image.png")}";
 
-    static string Classes(params string[] classes)
+    static string Classes(params string?[] classes)
     {
         return string.Join(" ", classes.Where(c => !string.IsNullOrWhiteSpace(c)));
+    }
+
+    static IHtmlContent? Attributes(AttributeDictionary? attributes)
+    {
+        if (attributes is null || attributes.Count == 0)
+        {
+            return null;
+        }
+
+        var builder = new HtmlContentBuilder();
+
+        foreach (var attribute in attributes)
+        {
+            builder.Append(" ");
+            builder.Append(attribute.Key);
+            if (attribute.Value is not null)
+            {
+                builder.AppendHtml("=\"");
+                builder.Append(attribute.Value);
+                builder.AppendHtml("\"");
+            }
+        }
+
+        return builder;
+    }
+
+    async Task<IHtmlContent> CaptureSectionContentAsync(string sectionName)
+    {
+        var buffer = new StringBuilder();
+        await using var writer = new StringWriter(buffer);
+
+        var oldWriter = ViewContext.Writer;
+        ViewContext.Writer = writer;
+
+        try
+        {
+            await RenderSectionAsync(sectionName);
+        }
+        finally
+        {
+            ViewContext.Writer = oldWriter;
+        }
+
+        await writer.FlushAsync();
+        return new HtmlString(buffer.ToString());
     }
 
     string GetStaticAssetUrl(string url)
@@ -35,22 +83,26 @@
     }
 }
 <!DOCTYPE html>
-<html lang="@htmlLang" class="@Classes("govuk-template", rebrand ? "govuk-template--rebranded" : string.Empty, ViewBag.HtmlClasses)">
+<html lang="@htmlLang" class="@Classes("govuk-template", ViewData[ViewDataKeys.HtmlClasses] as string)">
 
 <head>
     <meta charset="utf-8">
-    <title lang="@ViewBag.TitleLang">@ViewBag.Title</title>
+    <title lang="@ViewData[ViewDataKeys.TitleLang]">@ViewData[ViewDataKeys.Title]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    @if (rebrand)
+    <meta name="theme-color" content="@themeColor">
+
+    @if (IsSectionDefined(SectionNames.Head))
     {
-        <meta name="theme-color" content="">
+        @await RenderSectionAsync(SectionNames.Head)
+    }
+    else
+    {
+        @Html.GovUkFrontendStyleImports()
     }
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    @if (IsSectionDefined("HeadIcons"))
+    @if (IsSectionDefined(SectionNames.HeadIcons))
     {
-        @RenderSection("HeadIcons")
+        @await RenderSectionAsync(SectionNames.HeadIcons)
     }
     else
     {
@@ -61,55 +113,130 @@
         <link rel="manifest" href="@(GetStaticAssetUrl("manifest.json"))">
     }
 
-    @if (IsSectionDefined("Head"))
-    {
-        @RenderSection("Head")
-    }
-    else
-    {
-        @Html.GovUkFrontendStyleImports()
-    }
-
     <meta property="og:image" content="@(ogImage)">
 </head>
 
-<body class="@Classes("govuk-template__body", ViewBag.BodyClasses)">
+<!body class="@Classes("govuk-template__body", ViewData[ViewDataKeys.BodyClasses] as string)"@Attributes(ViewData[ViewDataKeys.BodyAttributes] as AttributeDictionary)>
     @Html.GovUkFrontendJsEnabledScript(cspNonce)
-    @RenderSection("BodyStart", required: false)
+    @await RenderSectionAsync(SectionNames.BodyStart, required: false)
 
-    @if (IsSectionDefined("SkipLink"))
+    @if (IsSectionDefined(SectionNames.SkipLink))
     {
-        @RenderSection("SkipLink")
+        @await RenderSectionAsync(SectionNames.SkipLink)
     }
     else
     {
         <govuk-skip-link href="#main-content">Skip to main content</govuk-skip-link>
     }
 
-    @RenderSection("Header", required: false)
-
-    <div class="@Classes("govuk-width-container", ViewBag.ContainerClasses)">
-        @RenderSection("BeforeContent", required: false)
-        <main class="@Classes("govuk-main-wrapper", ViewBag.MainClasses)" id="main-content" role="main" lang="@ViewBag.MainLang" prepend-error-summary="false">
-            @if (!Context.GetContainerErrorContext().ErrorSummaryHasBeenRendered)
-            {
-                <govuk-error-summary />
-            }
-
-            @RenderBody()
-        </main>
-    </div>
-
-    @RenderSection("Footer", required: false)
-
-    @if (IsSectionDefined("BodyEnd"))
+    @if (IsSectionDefined(SectionNames.Header))
     {
-        @RenderSection("BodyEnd")
+        @await RenderSectionAsync(SectionNames.Header)
+    }
+    else
+    {
+        var headerContent = new HtmlContentBuilder();
+
+        if (IsSectionDefined(SectionNames.HeaderStart))
+        {
+            headerContent.AppendHtml(await RenderSectionAsync(SectionNames.HeaderStart));
+        }
+
+        headerContent.AppendHtml(
+            IsSectionDefined(SectionNames.GovUkHeader) ?
+                await CaptureSectionContentAsync(SectionNames.GovUkHeader) :
+                await ComponentGenerator.GenerateHeaderAsync(new HeaderOptions()));
+
+        headerContent.AppendHtml(
+            IsSectionDefined(SectionNames.GovUkServiceNavigation) ?
+                await CaptureSectionContentAsync(SectionNames.GovUkServiceNavigation) :
+                ViewData[ViewDataKeys.ServiceName] is string serviceName ?
+                await ComponentGenerator.GenerateServiceNavigationAsync(new ServiceNavigationOptions
+                {
+                    ServiceName = serviceName,
+                    ServiceUrl = ViewData[ViewDataKeys.ServiceUrl] as string
+                }) :
+                HtmlString.Empty);
+
+        if (IsSectionDefined(SectionNames.HeaderEnd))
+        {
+            headerContent.AppendHtml(await CaptureSectionContentAsync(SectionNames.HeaderEnd));
+        }
+
+        if (!headerContent.IsEmpty())
+        {
+            <header class="@Classes("govuk-template__header", ViewData[ViewDataKeys.HeaderClasses] as string)"@Attributes(ViewData[ViewDataKeys.HeaderAttributes] as AttributeDictionary)>
+                @headerContent
+            </header>
+        }
+    }
+
+    @if (IsSectionDefined(SectionNames.Container))
+    {
+        IgnoreBody();
+        @await RenderSectionAsync(SectionNames.Container)
+    }
+    else
+    {
+        <div class="@Classes("govuk-width-container", ViewData[ViewDataKeys.ContainerClasses] as string)"@Attributes(ViewData[ViewDataKeys.ContainerAttributes] as AttributeDictionary)>
+            @if (IsSectionDefined(SectionNames.ContainerStart))
+            {
+                @await RenderSectionAsync(SectionNames.ContainerStart)
+            }
+            else if (IsSectionDefined("BeforeContent"))
+            {
+                @await RenderSectionAsync("BeforeContent")
+            }
+            <!main class="@Classes("govuk-main-wrapper", ViewData[ViewDataKeys.MainClasses] as string)" id="main-content" role="main" lang="@ViewData[ViewDataKeys.MainLang]"@Attributes(ViewData[ViewDataKeys.MainAttributes] as AttributeDictionary)>
+                @if (!Context.GetContainerErrorContext().ErrorSummaryHasBeenRendered)
+                {
+                    <govuk-error-summary/>
+                }
+
+                @RenderBody()
+            </!main>
+            @await RenderSectionAsync(SectionNames.ContainerEnd, required: false)
+        </div>
+    }
+
+    @if (IsSectionDefined(SectionNames.Footer))
+    {
+        @await RenderSectionAsync(SectionNames.Footer)
+    }
+    else
+    {
+        var footerContent = new HtmlContentBuilder();
+
+        if (IsSectionDefined(SectionNames.FooterStart))
+        {
+            footerContent.AppendHtml(await CaptureSectionContentAsync(SectionNames.FooterStart));
+        }
+
+        footerContent.AppendHtml(
+            IsSectionDefined(SectionNames.GovUkFooter) ?
+                await CaptureSectionContentAsync(SectionNames.GovUkFooter) :
+                await ComponentGenerator.GenerateFooterAsync(new FooterOptions()));
+
+        if (IsSectionDefined(SectionNames.FooterEnd))
+        {
+            footerContent.AppendHtml(await CaptureSectionContentAsync(SectionNames.FooterEnd));
+        }
+
+        if (!footerContent.IsEmpty())
+        {
+            <footer class="@Classes("govuk-template__footer", ViewData[ViewDataKeys.FooterClasses] as string)"@Attributes(ViewData[ViewDataKeys.FooterAttributes] as AttributeDictionary)>
+                @footerContent
+            </footer>
+        }
+    }
+
+    @if (IsSectionDefined(SectionNames.BodyEnd))
+    {
+        @await RenderSectionAsync(SectionNames.BodyEnd)
     }
     else
     {
         @Html.GovUkFrontendScriptImports(cspNonce)
     }
-</body>
-
+</!body>
 </html>

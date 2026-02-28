@@ -8,7 +8,7 @@ public class Startup(IConfiguration configuration)
     {
         services.AddRazorPages();
 
-        services.AddGovUkFrontend(options => options.Rebrand = true);
+        services.AddGovUkFrontend();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

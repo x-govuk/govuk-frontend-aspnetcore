@@ -5,7 +5,7 @@
 @inject IOptions<GovUkFrontendOptions> OptionsAccessor
 @addTagHelper *, GovUk.Frontend.AspNetCore
 @{
-    var rebrand = OptionsAccessor.Value.Rebrand;
+    var rebrand = true;
 
     PathString assetPath = ViewBag.AssetPath ??
         Context.Request.PathBase + PageTemplateHelper.DefaultAssetsPath + (rebrand ? "/rebrand" : "");

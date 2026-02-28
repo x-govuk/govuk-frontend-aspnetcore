@@ -192,22 +192,6 @@ services.AddGovUkFrontend(options =>
 See the `Samples.MvcStarter` project for an example of this working.
 
 
-## GOV.UK rebrand
-
-The 25 June 2025 rebrand can be enabled by setting `Rebrand` to `true` on `GovUkOptions`:
-```cs
-services.AddGovUkFrontend(options => options.Rebrand = true);
-```
-
-If you're using [the _GovUkPageTemplate view](#using-the-_GovUkPageTemplate-razor-view),
-the [GOV.UK header](docs/components/header.md) and
-the [GOV.UK footer](docs/components/footer.md) tag helpers
-you don't need to do anything more.
-
-If not, reference [the GOV.UK Frontend release notes](https://github.com/alphagov/govuk-frontend/releases/tag/v5.10.0)
-to see what needs to be changed.
-
-
 ## GOV.UK Frontend assets
 
 By default, static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend package will be hosted automatically.

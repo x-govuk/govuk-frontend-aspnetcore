@@ -6,6 +6,8 @@
 
 The deprecated `asp-for` attribute has been removed; the `for` attribute should be used instead.
 
+The `Rebrand` option has been removed from `GovUkFrontendOptions`.
+
 ### New features
 
 Adds support for the password tag helper's show/hide customisation.

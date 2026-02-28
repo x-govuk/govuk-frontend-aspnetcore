@@ -61,31 +61,4 @@ public class FooterTagHelperTests : TagHelperTestBase<FooterTagHelper>
         Assert.Equal(className, actualOptions.Classes);
         AssertContainsAttributes(attributes, actualOptions.Attributes);
     }
-
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public async Task ProcessAsync_PassesRebrandFromOptions(bool rebrand)
-    {
-        // Arrange
-        var context = CreateTagHelperContext();
-
-        var output = CreateTagHelperOutput();
-
-        var options = CreateOptions(options => options.Rebrand = rebrand);
-
-        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FooterOptions>(nameof(IComponentGenerator.GenerateFooterAsync));
-
-        var tagHelper = new FooterTagHelper(componentGenerator, options);
-
-        tagHelper.Init(context);
-
-        // Act
-        await tagHelper.ProcessAsync(context, output);
-
-        // Assert
-        var actualOptions = getActualOptions();
-        Assert.NotNull(actualOptions);
-        Assert.Equal(rebrand, actualOptions.Rebrand);
-    }
 }

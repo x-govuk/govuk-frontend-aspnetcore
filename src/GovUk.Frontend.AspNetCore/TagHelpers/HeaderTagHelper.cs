@@ -87,8 +87,7 @@ public class HeaderTagHelper : TagHelper
             ContainerAttributes = containerAttributes,
             Classes = classes,
             Attributes = attributes,
-            UseTudorCrown = true,
-            Rebrand = _optionsAccessor.Value.Rebrand
+            UseTudorCrown = true
         });
 
         component.ApplyToTagHelper(output);

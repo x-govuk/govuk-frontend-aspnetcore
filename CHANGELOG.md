@@ -6,7 +6,7 @@
 
 The deprecated `asp-for` attribute has been removed; the `for` attribute should be used instead.
 
-The `Rebrand` option has been removed from `GovUkFrontendOptions`.
+The `Rebrand` option has been removed from `GovUkFrontendOptions`. The `_GovUkPageTemplate` view now always uses the GOV.UK v6 design.
 
 ### New features
 

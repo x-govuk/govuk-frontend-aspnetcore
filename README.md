@@ -140,7 +140,7 @@ The view can be customised by defining the following sections and `ViewData`/`Vi
 | MainLang          | `string` | Set the language of the `<main>` element if it's different to `HtmlLang`.                                                                                                                       |
 | OpengraphImageUrl | `string` | Set the URL for the Open Graph image meta tag. The URL must be absolute, including the protocol and domain name.                                                                                |
 | Title             | `string` | Override the default page title (`<title>` element).                                                                                                                                            |
-| ThemeColor        | `string` | Set the toolbar [colour on some devices](https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android).                                                   |
+| ThemeColor        | `string` | Set the toolbar [colour on some devices](https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android). Defaults to `#1d70b8`.                            |
 
 #### Create your own Razor view
 

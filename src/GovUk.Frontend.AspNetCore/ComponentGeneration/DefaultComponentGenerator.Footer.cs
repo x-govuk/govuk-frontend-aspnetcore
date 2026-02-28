@@ -9,22 +9,19 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var footerTag = new HtmlTag("footer", attrs => attrs
+        var footerTag = new HtmlTag("div", attrs => attrs
             .WithClasses("govuk-footer", options.Classes)
             .With(options.Attributes));
 
         var containerTag = new HtmlTag("div", attrs => attrs
             .WithClasses("govuk-width-container", options.ContainerClasses));
 
-        if (options.Rebrand is true)
+        containerTag.InnerHtml.AppendHtml(GenerateLogo(new LogoOptions
         {
-            containerTag.InnerHtml.AppendHtml(GenerateLogo(new LogoOptions
-            {
-                Classes = "govuk-footer__crown",
-                Rebrand = true,
-                UseLogotype = false
-            }));
-        }
+            Classes = "govuk-footer__crown",
+            Rebrand = true,
+            UseLogotype = false
+        }));
 
         if (options.Navigation is not null && options.Navigation.Count > 0)
         {

@@ -6,12 +6,10 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var rebrand = options.Rebrand ?? false;
         var menuButtonText = options.MenuButtonText ?? "Menu";
 
-        var headerTag = new HtmlTag("header", attrs => attrs
+        var headerTag = new HtmlTag("div", attrs => attrs
             .WithClasses("govuk-header", options.Classes)
-            .With("data-module", "govuk-header")
             .With(options.Attributes));
 
         var containerTag = new HtmlTag("div", attrs => attrs
@@ -36,15 +34,13 @@ internal partial class DefaultComponentGenerator
             var logoDiv = new HtmlTag("div", attrs => attrs.WithClasses("govuk-header__logo"));
 
             var logoLink = new HtmlTag("a", attrs => attrs
-                .With("href", options.HomePageUrl ?? "/")
-                .WithClasses("govuk-header__link", "govuk-header__link--homepage"));
+                .With("href", options.HomePageUrl ?? "//gov.uk")
+                .WithClasses("govuk-header__homepage-link"));
 
             logoLink.InnerHtml.AppendHtml(GenerateLogo(new LogoOptions
             {
                 Classes = "govuk-header__logotype",
-                AriaLabelText = "GOV.UK",
-                UseTudorCrown = options.UseTudorCrown,
-                Rebrand = rebrand
+                AriaLabelText = "GOV.UK"
             }));
 
             if (!options.ProductName.IsEmpty())

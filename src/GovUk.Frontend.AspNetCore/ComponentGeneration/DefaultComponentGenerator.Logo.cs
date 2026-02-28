@@ -10,21 +10,11 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var rebrand = options.Rebrand ?? false;
         var useLogotype = options.UseLogotype ?? true;
         var useTudorCrown = options.UseTudorCrown ?? true;
 
-        if (rebrand)
-        {
-            useTudorCrown = true;
-        }
-
         var svgWidth = useTudorCrown ? 32 : 36;
-        if (useLogotype && !rebrand)
-        {
-            svgWidth += 116;
-        }
-        else if (useLogotype && rebrand)
+        if (useLogotype)
         {
             svgWidth += 130;
         }
@@ -59,14 +49,7 @@ internal partial class DefaultComponentGenerator
 
         if (useLogotype)
         {
-            if (rebrand)
-            {
-                svgTag.InnerHtml.AppendHtml(GetDotLogotype());
-            }
-            else
-            {
-                svgTag.InnerHtml.AppendHtml(GetLogotype(useTudorCrown));
-            }
+            svgTag.InnerHtml.AppendHtml(GetDotLogotype());
         }
 
         return svgTag;
@@ -156,7 +139,6 @@ internal partial class DefaultComponentGenerator
 internal record LogoOptions
 {
     public TemplateString? Classes { get; set; }
-    public bool? Rebrand { get; set; }
     public bool? UseLogotype { get; set; }
     public bool? UseTudorCrown { get; set; }
     public string? AriaLabelText { get; set; }

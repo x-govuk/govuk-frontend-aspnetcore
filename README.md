@@ -1,6 +1,6 @@
 # GOV.UK Frontend for ASP.NET Core
 
-[![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-5.14.0-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v5.14.0)
+[![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-6.0.0-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v6.0.0)
 [![Build](https://github.com/x-govuk/govuk-frontend-aspnetcore/actions/workflows/build.yml/badge.svg)](https://github.com/x-govuk/govuk-frontend-aspnetcore/actions/workflows/build.yml)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/GovUk.Frontend.AspNetCore)](https://www.nuget.org/packages/GovUk.Frontend.AspNetCore)
 
@@ -90,9 +90,11 @@ In your `_Layout.cshtml` file:
     </govuk-cookie-banner>
 }
 
-@section Header {
+@section GovUkHeader {
     <govuk-header home-page-url="https://gov.uk/" />
+}
 
+@section GovUkServiceNavigation {
     <govuk-service-navigation service-name="Service name" service-url="#">
         <govuk-service-navigation-nav>
             <govuk-service-navigation-nav-item href="#">Navigation item 1</govuk-service-navigation-nav-item>
@@ -104,7 +106,7 @@ In your `_Layout.cshtml` file:
 
 @RenderBody()
 
-@section Footer {
+@section GovUkFooter {
     <govuk-footer>
         <govuk-footer-meta>
             <govuk-footer-meta-items>
@@ -117,30 +119,52 @@ In your `_Layout.cshtml` file:
 }
 ```
 
-The view can be customised by defining the following sections and `ViewData`/`ViewBag` variables.
+The view can be customised by defining the following sections and `ViewData`/`ViewBag` entries.
 
-| Section name  | Description                                                                                                                                                                                                                                                     |
-|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| BeforeContent | Add content that needs to appear outside the `<main>` element. <br /> For example: The [back link](docs/components/back-link.md) component, [breadcrumbs](docs/components/breadcrumbs.md) component, [phase banner](docs/components/phase-banner.md) component. |
-| BodyEnd       | Add content just before the closing `</body>` element.                                                                                                                                                                                                          |
-| BodyStart     | Add content after the opening `<body>` element. <br/> For example: The cookie banner component.                                                                                                                                                                 |
-| Footer        | Defines the footer content.                                                                                                                                                                                                                                     |
-| Head          | Add additional items inside the `<head>` element. <br /> For example: `<meta name="description" content="My page description">`                                                                                                                                 |
-| Header        | Defines the header content.                                                                                                                                                                                                                                     |
-| HeadIcons     | Override the default icons used for GOV.UK branded pages. <br /> For example: `<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />`                                                                                                             |
-| SkipLink      | Override the default [skip link](docs/components/skip-link.md) component.                                                                                                                                                                                       |
+| Section name           | Description                                                                                                                                                                                                                                                     |
+|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| BeforeContent          | Add content that needs to appear outside the `<main>` element. <br /> For example: The [back link](docs/components/back-link.md) component, [breadcrumbs](docs/components/breadcrumbs.md) component, [phase banner](docs/components/phase-banner.md) component. |
+| BodyEnd                | Add content just before the closing `</body>` element.                                                                                                                                                                                                          |
+| BodyStart              | Add content after the opening `<body>` element. <br/> For example: The cookie banner component.                                                                                                                                                                 |
+| Container              | Replaces the entire container. The ContainerStart, BeforeContent and ContainerEnd sections will be ignored if this section is defined.                                                                                                                          |
+| ContainerStart         | Add content at the start of the container.                                                                                                                                                                                                                      |
+| ContainerEnd           | Add content at the end of the container.                                                                                                                                                                                                                        |
+| Footer                 | Defines the footer content. The GovUkFooter, FooterStart and FooterEnd sections will be ignored if this section is defined.                                                                                                                                     |
+| FooterStart            | Add content at the start of the footer.                                                                                                                                                                                                                         |
+| FooterEnd              | Add content at the end of the footer.                                                                                                                                                                                                                           |
+| GovUkFooter            | Defines the [GOV.UK footer](docs/components/footer.md).                                                                                                                                                                                                         |
+| GovUkHeader            | Defines the [GOV.UK header](docs/components/header.md).                                                                                                                                                                                                         |
+| GovUkServiceNavigation | Defines the [service navigation](docs/components/service-navigation.md).                                                                                                                                                                                        |
+| Head                   | Add additional items inside the `<head>` element. <br /> For example: `<meta name="description" content="My page description">`                                                                                                                                 |
+| Header                 | Defines the header content. The HeaderStart, HeaderEnd and GovUkServiceNavigation sections will be ignored if this section is defined.                                                                                                                          |
+| HeaderStart            | Add content at the start of the header.                                                                                                                                                                                                                         |
+| HeaderEnd              | Add content at the end of the header.                                                                                                                                                                                                                           |
+| HeadIcons              | Override the default icons used for GOV.UK branded pages. <br /> For example: `<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />`                                                                                                             |
+| SkipLink               | Override the default [skip link](docs/components/skip-link.md) component.                                                                                                                                                                                       |
 
-| `ViewData` key    | Type     | Description                                                                                                                                                                                     |
-|-------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| BodyClasses       | `string` | Add class(es) to the `<body>` element.                                                                                                                                                          |
-| ContainerClasses  | `string` | Add class(es) to the container. This is useful if you want to make the page wrapper a fixed width.                                                                                              |
-| HtmlClasses       | `string` | Add class(es) to the `<html>` element.                                                                                                                                                          |
-| HtmlLang          | `string` | Set the language of the whole document. If your `<title>` and `<main>` element are in a different language to the rest of the page, use `HtmlLang` to set the language of the rest of the page. |
-| MainClasses       | `string` | Add class(es) to the `<main>` element.                                                                                                                                                          |
-| MainLang          | `string` | Set the language of the `<main>` element if it's different to `HtmlLang`.                                                                                                                       |
-| OpengraphImageUrl | `string` | Set the URL for the Open Graph image meta tag. The URL must be absolute, including the protocol and domain name.                                                                                |
-| Title             | `string` | Override the default page title (`<title>` element).                                                                                                                                            |
-| ThemeColor        | `string` | Set the toolbar [colour on some devices](https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android).                                                   |
+| `ViewData` key      | Type                  | Description                                                                                                                                                                                     |
+|---------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| AssetPath           | `string`              | Override the default path (`/assets`) for the GOV.UK Frontend assets.                                                                                                                           |
+| BodyAttributes      | `AttributeDictionary` | Add attributes to the `<body>` element.                                                                                                                                                         |
+| BodyClasses         | `string`              | Add class(es) to the `<body>` element.                                                                                                                                                          |
+| ContainerAttributes | `AttributeDictionary` | Add attributes to the container element.                                                                                                                                                        |
+| ContainerClasses    | `string`              | Add class(es) to the container. This is useful if you want to make the page wrapper a fixed width.                                                                                              |
+| CspNonce            | `string`              | Set the `nonce` attribute for the inline scripts used by the page template.                                                                                                                     |
+| FooterAttributes    | `AttributeDictionary` | Add attributes to the `<footer>` element.                                                                                                                                                       |
+| FooterClasses       | `string`              | Add class(es) to the `<footer>` element.                                                                                                                                                        |
+| HeaderAttributes    | `AttributeDictionary` | Add attributes to the `<header>` element.                                                                                                                                                       |
+| HeaderClasses       | `string`              | Add class(es) to the `<header>` element.                                                                                                                                                        |
+| HtmlClasses         | `string`              | Add class(es) to the `<html>` element.                                                                                                                                                          |
+| HtmlLang            | `string`              | Set the language of the whole document. If your `<title>` and `<main>` element are in a different language to the rest of the page, use `HtmlLang` to set the language of the rest of the page. |
+| MainAttributes      | `AttributeDictionary` | Add attributes to the `<main>` element.                                                                                                                                                         |
+| MainClasses         | `string`              | Add class(es) to the `<main>` element.                                                                                                                                                          |
+| MainLang            | `string`              | Set the language of the `<main>` element if it's different to `HtmlLang`.                                                                                                                       |
+| OpengraphImageUrl   | `string`              | Set the URL for the Open Graph image meta tag. The URL must be absolute, including the protocol and domain name.                                                                                |
+| ServiceName         | `string`              | Set the service name used in generated [service navigation](docs/components/service-navigation.md).                                                                                             |
+| ServiceUrl          | `string`              | Set the service URL used in generated [service navigation](docs/components/service-navigation.md).                                                                                              |
+| ThemeColor          | `string`              | Set the toolbar [colour on some devices](https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android).                                                   |
+| Title               | `string`              | Override the default page title (`<title>` element).                                                                                                                                            |
+| TitleLang           | `string`              | Set the language of the `<title>` element if it's different to `HtmlLang`.                                                                                                                      |
 
 #### Create your own Razor view
 
@@ -190,22 +214,6 @@ services.AddGovUkFrontend(options =>
 ```
 
 See the `Samples.MvcStarter` project for an example of this working.
-
-
-## GOV.UK rebrand
-
-The 25 June 2025 rebrand can be enabled by setting `Rebrand` to `true` on `GovUkOptions`:
-```cs
-services.AddGovUkFrontend(options => options.Rebrand = true);
-```
-
-If you're using [the _GovUkPageTemplate view](#using-the-_GovUkPageTemplate-razor-view),
-the [GOV.UK header](docs/components/header.md) and
-the [GOV.UK footer](docs/components/footer.md) tag helpers
-you don't need to do anything more.
-
-If not, reference [the GOV.UK Frontend release notes](https://github.com/alphagov/govuk-frontend/releases/tag/v5.10.0)
-to see what needs to be changed.
 
 
 ## GOV.UK Frontend assets

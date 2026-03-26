@@ -9,7 +9,7 @@ internal partial class DefaultComponentGenerator
         var content = HtmlOrText(options.Html, options.Text);
 
         var outerTag = new HtmlTag("div", attrs => attrs
-            .WithClasses("govuk-phase-banner", options.Classes)
+            .WithClasses("govuk-phase-banner", "govuk-width-container", options.Classes)
             .With(options.Attributes));
 
         var contentTag = new HtmlTag("p", attrs => attrs

@@ -72,8 +72,7 @@ public class FooterTagHelper : TagHelper
             Copyright = footerContext.Copyright?.Options,
             ContainerClasses = ContainerClass,
             Classes = classes,
-            Attributes = attributes,
-            Rebrand = _optionsAccessor.Value.Rebrand
+            Attributes = attributes
         });
 
         component.ApplyToTagHelper(output);

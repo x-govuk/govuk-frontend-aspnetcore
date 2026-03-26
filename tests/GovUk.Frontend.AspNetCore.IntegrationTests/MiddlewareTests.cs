@@ -34,8 +34,6 @@ public class MiddlewareTests
     [InlineData("images/govuk-crest.svg")]
     [InlineData("fonts/bold-affa96571d-v2.woff")]
     [InlineData("manifest.json")]
-    [InlineData("rebrand/images/favicon.ico")]
-    [InlineData("rebrand/manifest.json")]
     public async Task HostsStaticAssets(string fileName)
     {
         // Arrange

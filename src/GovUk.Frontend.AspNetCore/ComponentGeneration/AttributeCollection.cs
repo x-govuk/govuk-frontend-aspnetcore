@@ -86,7 +86,21 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
     {
         ArgumentNullException.ThrowIfNull(attribute);
 
-        _attributes.Add(attribute.Name, attribute);
+        var attributeName = attribute.Name;
+
+        if (!_attributes.TryAdd(attributeName, attribute))
+        {
+            if (attribute.Name is "class" or "aria-describedby")
+            {
+                var existingAttribute = _attributes[attributeName];
+                var newAttributeValue = TemplateString.Join(" ", existingAttribute.ToTemplateString(), attribute.ToTemplateString());
+                _attributes[attributeName] = new Attribute(attributeName, newAttributeValue, Optional: false);
+            }
+            else
+            {
+                throw new ArgumentException($"An attribute with the name '{attributeName}' already exists.", nameof(attribute));
+            }
+        }
     }
 
     internal void Add(string name, TemplateString templateString)
@@ -95,7 +109,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         ArgumentNullException.ThrowIfNull(templateString);
 
         var attribute = new Attribute(name, templateString, Optional: false);
-        _attributes.Add(name, attribute);
+        Add(attribute);
     }
 
     internal void AddBoolean(string name)

@@ -200,7 +200,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
             throw new InvalidOperationException($"Value cannot be specified for both <{item.TagName}> and the parent <{RootTagName}>.");
         }
 
-        if (Fieldset is not null)
+        if (Fieldset is not null && !_fieldsetIsOpen)
         {
             throw new InvalidOperationException($"<{item.TagName}> must be inside <{FieldsetTagName}>.");
         }

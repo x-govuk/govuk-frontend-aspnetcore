@@ -72,6 +72,30 @@
 
 ![Date input](../images/date-input-with-custom-values.png)
 
+## Example - with day and month only
+
+```razor
+<govuk-date-input item-types="DateInputItemTypes.DayAndMonth" id="birthday" name-prefix="birthday" error-message-prefix="Your birthday">
+    <govuk-date-input-fieldset>
+        <govuk-date-input-fieldset-legend>What is your birthday?</govuk-date-input-fieldset-legend>
+    </govuk-date-input-fieldset>
+</govuk-date-input>
+```
+
+![Date input](../images/date-input-with-day-and-month.png)
+
+## Example - with month and year only
+
+```razor
+<govuk-date-input item-types="DateInputItemTypes.MonthAndYear" id="date-moved" name-prefix="DateMoved" error-message-prefix="The date you moved into this property">
+    <govuk-date-input-fieldset>
+        <govuk-date-input-fieldset-legend>When did you move into this property?</govuk-date-input-fieldset-legend>
+    </govuk-date-input-fieldset>
+</govuk-date-input>
+```
+
+![Date input](../images/date-input-with-month-and-year.png)
+
 
 ## API
 
@@ -79,17 +103,18 @@
 
 The content is the HTML to use within the generated component.
 
-| Attribute                  | Type              | Description                                                                                                                                                                                                                                                                                                                         |
-|----------------------------|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `date-input-`*`            |                   | Additional attributes for the container element that wraps the items.                                                                                                                                                                                                                                                               |
-| `disabled`                 | `bool?`           | Whether the inputs should be disabled. The default is `false`.                                                                                                                                                                                                                                                                      |
-| `error-message-prefix`     | `string`          | The prefix to use in generated error messages.                                                                                                                                                                                                                                                                                      |
-| `for`                      | `ModelExpression` | The model expression used to generate the `name-prefix`, `id` and `value` attributes as well as the error message content. The model type should be a `Date`, `DateTime` or a type that has a custom converter registered. See [custom date types](#custom-date-types) and [documentation on forms](forms.md) for more information. |
-| `id`                       | `string`          | The `id` attribute for the main component. Required unless the `for` attribute is specified.                                                                                                                                                                                                                                        |
-| `ignore-modelstate-errors` | `bool`            | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.                                                                                                                                                                       |
-| `name-prefix`              | `string`          | Optional prefix for the `name` attribute on each item's input.                                                                                                                                                                                                                                                                      |
-| `readonly`                 | `bool?`           | Whether the inputs should be read-only. The default is `false`.                                                                                                                                                                                                                                                                     |
-| `value`                    | `object`          | The date to populate the item values with. The value should be a `Date`, `DateTime` or a type that has a custom converter registered. See [custom date types](#custom-date-types) for more information.                                                                                                                             |
+| Attribute                  | Type                  | Description                                                                                                                                                                                                                                                                                                                         |
+|----------------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `date-input-`*`            |                       | Additional attributes for the container element that wraps the items.                                                                                                                                                                                                                                                               |
+| `disabled`                 | `bool?`               | Whether the inputs should be disabled. The default is `false`.                                                                                                                                                                                                                                                                      |
+| `error-message-prefix`     | `string`              | The prefix to use in generated error messages.                                                                                                                                                                                                                                                                                      |
+| `for`                      | `ModelExpression`     | The model expression used to generate the `name-prefix`, `id` and `value` attributes as well as the error message content. The model type should be a `Date`, `DateTime` or a type that has a custom converter registered. See [custom date types](#custom-date-types) and [documentation on forms](forms.md) for more information. |
+| `id`                       | `string`              | The `id` attribute for the main component. Required unless the `for` attribute is specified.                                                                                                                                                                                                                                        |
+| `ignore-modelstate-errors` | `bool`                | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.                                                                                                                                                                       |
+| `item-types`               | `DateInputItemTypes?` | The date components to generate inputs for. The default is `DateInputItemTypes.All` (day, month and year).                                                                                                                                                                                                                          |
+| `name-prefix`              | `string`              | Optional prefix for the `name` attribute on each item's input.                                                                                                                                                                                                                                                                      |
+| `readonly`                 | `bool?`               | Whether the inputs should be read-only. The default is `false`.                                                                                                                                                                                                                                                                     |
+| `value`                    | `object`              | The date to populate the item values with. The value should be a `Date`, `DateTime` or a type that has a custom converter registered. See [date types](#date-types) for more information.                                                                                                                                           |
 
 ### `<govuk-date-input-hint>`
 
@@ -151,8 +176,30 @@ Must be inside `<govuk-date-input-day>`, `<govuk-date-input-month>`, `<govuk-dat
 The content is the HTML to use within the item's label.
 
 
-## Custom date types
+## Date types
 
-By default `System.DateTime` and `GovUk.Frontend.AspNetCore.Date` instances can be used as values for this component. A model binder converts the three inputs into a single instance of whatever model type is required. The model binder also tracks which components were invalid so that the correct items can be highlighted and a useful error message can be provided.
+By default `System.DateTime` and `System.DateOnly` instances can be used as values for this component.
+A model binder converts the three inputs into a single instance of whatever model type is required.
+The model binder also tracks which components were invalid so that the correct items can be highlighted and a useful error message can be provided.
 
-You can add support for additional types by implementing `GovUk.Frontend.AspNetCore.DateInputModelConverter`. See the sample at `samples/DateInput/` for an example with NodaTime.
+### Partial dates
+
+For partial dates, the `value` attribute or `for` model expression should be a `ValueTuple<int, int>`.
+(See [custom date types](#custom-date-types) for how to add support for other types.)
+
+If a `for` model expression is specified, the item types can be specified by using an attribute on the bound property. For example:
+
+```csharp
+public class MyModel
+{
+    [DateInputItemTypes(DateInputItemTypes.MonthAndYear)]
+    public (int Month, int Year) Birthday { get; set; }
+}
+```
+
+Otherwise, the `item-types` attribute must be specified.
+
+### Custom date types
+
+You can add support for additional types by implementing `GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter`.
+See the sample at `samples/Samples.DateInput/` for a example implementations for NodaTime's `LocalDate` and `YearMonth` types.

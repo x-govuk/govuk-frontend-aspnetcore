@@ -177,6 +177,11 @@ public class CheckboxesItemTagHelper : TagHelper
         var modelExpression = @for;
         object model = modelExpression.Model;
 
+        if (model is null or "")
+        {
+            return false;
+        }
+
         if (modelExpression.Metadata.IsEnumerableType)
         {
             var value = ViewContext!.ModelState.TryGetValue(modelExpression.Name, out var entry) ?
@@ -187,6 +192,6 @@ public class CheckboxesItemTagHelper : TagHelper
             return values?.Any(v => v?.ToString() == Value) is true;
         }
 
-        return model?.ToString() == Value;
+        return model.ToString() == Value;
     }
 }

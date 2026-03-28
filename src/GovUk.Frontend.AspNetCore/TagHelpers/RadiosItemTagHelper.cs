@@ -155,6 +155,13 @@ public class RadiosItemTagHelper : TagHelper
     {
         Debug.Assert(ViewContext is not null);
 
-        return _modelHelper.GetModelValue(ViewContext!, @for.ModelExplorer, @for.Name) == Value;
+        var model = _modelHelper.GetModelValue(ViewContext!, @for.ModelExplorer, @for.Name);
+
+        if (model is null or "")
+        {
+            return false;
+        }
+
+        return model == Value;
     }
 }

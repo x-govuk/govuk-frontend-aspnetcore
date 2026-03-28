@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateErrorMessageAsync(ErrorMessageOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateErrorMessageAsync(ErrorMessageOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

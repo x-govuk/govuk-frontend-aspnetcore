@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateTagAsync(TagOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateTagAsync(TagOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

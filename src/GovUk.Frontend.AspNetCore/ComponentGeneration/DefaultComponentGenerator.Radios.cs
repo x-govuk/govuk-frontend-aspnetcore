@@ -5,7 +5,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateRadiosAsync(RadiosOptions options)
+    public virtual async ValueTask<GovUkComponent> GenerateRadiosAsync(RadiosOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

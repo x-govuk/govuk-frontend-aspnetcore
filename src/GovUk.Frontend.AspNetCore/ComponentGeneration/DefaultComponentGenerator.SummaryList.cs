@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateSummaryListAsync(SummaryListOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateSummaryListAsync(SummaryListOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

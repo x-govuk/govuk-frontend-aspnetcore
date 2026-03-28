@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateTextareaAsync(TextareaOptions options)
+    public virtual async ValueTask<GovUkComponent> GenerateTextareaAsync(TextareaOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

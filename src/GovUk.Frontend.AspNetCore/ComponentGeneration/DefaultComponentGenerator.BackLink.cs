@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateBackLinkAsync(BackLinkOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateBackLinkAsync(BackLinkOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

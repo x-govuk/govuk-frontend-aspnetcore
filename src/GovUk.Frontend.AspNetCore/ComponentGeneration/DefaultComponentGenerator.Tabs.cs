@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateTabsAsync(TabsOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateTabsAsync(TabsOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

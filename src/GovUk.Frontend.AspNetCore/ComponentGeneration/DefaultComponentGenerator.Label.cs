@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateLabelAsync(LabelOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateLabelAsync(LabelOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 
@@ -11,9 +11,7 @@ internal partial class DefaultComponentGenerator
         // Only generate label if there is content
         if (content.IsEmpty())
         {
-#pragma warning disable VSTHRD003
-            return EmptyComponentTask;
-#pragma warning restore VSTHRD003
+            return ValueTask.FromResult<GovUkComponent>(EmptyComponent.Instance);
         }
 
         var label = new HtmlTag("label", attrs => attrs

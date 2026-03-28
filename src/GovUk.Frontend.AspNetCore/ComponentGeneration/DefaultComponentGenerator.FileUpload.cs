@@ -5,7 +5,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
+    public virtual async ValueTask<GovUkComponent> GenerateFileUploadAsync(FileUploadOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

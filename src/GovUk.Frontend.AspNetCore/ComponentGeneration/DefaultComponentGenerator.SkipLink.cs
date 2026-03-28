@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateSkipLinkAsync(SkipLinkOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateSkipLinkAsync(SkipLinkOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

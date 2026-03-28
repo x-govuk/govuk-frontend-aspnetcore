@@ -5,7 +5,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateCheckboxesAsync(CheckboxesOptions options)
+    public virtual async ValueTask<GovUkComponent> GenerateCheckboxesAsync(CheckboxesOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

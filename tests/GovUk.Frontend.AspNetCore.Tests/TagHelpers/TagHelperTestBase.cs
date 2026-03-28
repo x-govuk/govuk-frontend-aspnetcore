@@ -157,7 +157,7 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
     {
         var componentGenerator = TestUtils.CreateComponentGeneratorMock();
 
-        Expression<Func<DefaultComponentGenerator, Task<GovUkComponent>>> CreateExpression()
+        Expression<Func<DefaultComponentGenerator, ValueTask<GovUkComponent>>> CreateExpression()
         {
             var generatorParameter = Expression.Parameter(typeof(DefaultComponentGenerator));
 
@@ -167,7 +167,7 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
                 instance: null,
                 typeof(It).GetMethod("IsAny")!.MakeGenericMethod(typeof(TOptions)));
 
-            return (Expression<Func<DefaultComponentGenerator, Task<GovUkComponent>>>)Expression.Lambda(
+            return (Expression<Func<DefaultComponentGenerator, ValueTask<GovUkComponent>>>)Expression.Lambda(
                 Expression.Call(
                     generatorParameter,
                     method,

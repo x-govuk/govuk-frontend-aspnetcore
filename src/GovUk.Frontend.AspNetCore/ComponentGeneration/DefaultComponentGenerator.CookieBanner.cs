@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateCookieBannerAsync(CookieBannerOptions options)
+    public virtual async ValueTask<GovUkComponent> GenerateCookieBannerAsync(CookieBannerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

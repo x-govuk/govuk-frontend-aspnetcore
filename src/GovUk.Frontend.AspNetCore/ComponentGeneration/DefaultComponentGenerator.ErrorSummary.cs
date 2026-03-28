@@ -4,7 +4,7 @@ internal partial class DefaultComponentGenerator
 {
     internal const string DefaultErrorSummaryTitleHtml = "There is a problem";
 
-    public virtual Task<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

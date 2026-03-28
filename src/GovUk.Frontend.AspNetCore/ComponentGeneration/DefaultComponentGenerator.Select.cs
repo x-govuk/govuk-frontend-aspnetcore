@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual async Task<GovUkComponent> GenerateSelectInputAsync(SelectOptions options)
+    public virtual async ValueTask<GovUkComponent> GenerateSelectInputAsync(SelectOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

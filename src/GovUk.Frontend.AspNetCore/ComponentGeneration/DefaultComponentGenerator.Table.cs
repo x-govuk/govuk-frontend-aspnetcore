@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    public virtual Task<GovUkComponent> GenerateTableAsync(TableOptions options)
+    public virtual ValueTask<GovUkComponent> GenerateTableAsync(TableOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 

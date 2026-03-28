@@ -162,6 +162,59 @@ public class SelectItemTagHelperTests
             });
     }
 
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public async Task ProcessAsync_WithNullOrEmptyModelValue_IsNotSelected(string? modelValue)
+    {
+        // Arrange
+        var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model() { SimpleProperty = modelValue })
+            .GetExplorerForProperty(nameof(Model.SimpleProperty));
+        var viewContext = new ViewContext();
+        var modelExpression = nameof(Model.SimpleProperty);
+
+        var modelHelper = new Mock<IModelHelper>();
+        modelHelper.Setup(mock => mock.GetModelValue(viewContext, modelExplorer, modelExpression)).Returns(modelValue);
+
+        var selectContext = new SelectContext(@for: new ModelExpression(modelExpression, modelExplorer));
+
+        var context = new TagHelperContext(
+            tagName: "govuk-select-item",
+            allAttributes: [],
+            items: new Dictionary<object, object>()
+            {
+                { typeof(SelectContext), selectContext }
+            },
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-select-item",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                tagHelperContent.AppendHtml(new HtmlString("Item text"));
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var tagHelper = new SelectItemTagHelper(modelHelper.Object)
+        {
+            Value = "",
+            ViewContext = viewContext
+        };
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.Collection(
+            selectContext.Items,
+            item =>
+            {
+                Assert.False(item.Selected);
+            });
+    }
+
     private class Model
     {
         public string? SimpleProperty { get; set; }

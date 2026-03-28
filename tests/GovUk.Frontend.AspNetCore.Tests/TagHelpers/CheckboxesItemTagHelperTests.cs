@@ -171,6 +171,63 @@ public class CheckboxesItemTagHelperTests
     }
 
     [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public async Task ProcessAsync_WithNullOrEmptySimpleModelExpression_IsNotChecked(string? modelValue)
+    {
+        // Arrange
+        var model = new Model()
+        {
+            Foo = modelValue
+        };
+
+        var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), model)
+            .GetExplorerForProperty(nameof(Model.Foo));
+        var viewContext = new ViewContext();
+        var modelExpression = nameof(Model.Foo);
+
+        var checkboxesContext = new CheckboxesContext(name: "test", @for: new ModelExpression(modelExpression, modelExplorer));
+
+        var context = new TagHelperContext(
+            tagName: "govuk-checkboxes-item",
+            allAttributes: [],
+            items: new Dictionary<object, object>()
+            {
+                { typeof(CheckboxesContext), checkboxesContext },
+                { typeof(CheckboxesItemContext), new CheckboxesItemContext() }
+            },
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-checkboxes-item",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var tagHelper = new CheckboxesItemTagHelper()
+        {
+            Checked = null,
+            Value = "",
+            ViewContext = viewContext
+        };
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.Collection(
+            checkboxesContext.Items,
+            item =>
+            {
+                var checkboxesItem = Assert.IsType<CheckboxesOptionsItem>(item);
+                Assert.False(checkboxesItem.Checked);
+            });
+    }
+
+    [Theory]
     [InlineData("bar", true)]
     [InlineData("baz", false)]
     public async Task ProcessAsync_WithSimpleModelExpression_DeducesCheckedFromModelExpression(string modelValue, bool expectedChecked)

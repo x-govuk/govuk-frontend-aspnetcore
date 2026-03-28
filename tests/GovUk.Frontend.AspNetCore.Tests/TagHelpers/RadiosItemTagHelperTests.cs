@@ -241,6 +241,61 @@ public class RadiosItemTagHelperTests
             });
     }
 
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public async Task ProcessAsync_WithNullOrEmptyModelValue_IsNotChecked(string? modelValue)
+    {
+        // Arrange
+        var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model() { Foo = modelValue })
+            .GetExplorerForProperty(nameof(Model.Foo));
+        var viewContext = new ViewContext();
+        var modelExpression = nameof(Model.Foo);
+
+        var modelHelper = new Mock<IModelHelper>();
+        modelHelper.Setup(mock => mock.GetModelValue(viewContext, modelExplorer, modelExpression)).Returns(modelValue);
+
+        var radiosContext = new RadiosContext(name: "test", @for: new ModelExpression(modelExpression, modelExplorer));
+
+        var context = new TagHelperContext(
+            tagName: "govuk-radios-item",
+            allAttributes: [],
+            items: new Dictionary<object, object>()
+            {
+                { typeof(RadiosContext), radiosContext },
+                { typeof(RadiosItemContext), new RadiosItemContext() }
+            },
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-radios-item",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var tagHelper = new RadiosItemTagHelper(modelHelper.Object)
+        {
+            Checked = null,
+            Value = "",
+            ViewContext = viewContext
+        };
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.Collection(
+            radiosContext.Items,
+            item =>
+            {
+                var radiosItem = Assert.IsType<RadiosOptionsItem>(item);
+                Assert.False(radiosItem.Checked);
+            });
+    }
+
     [Fact]
     public async Task ProcessAsync_WithHint_SetsHintOnContext()
     {

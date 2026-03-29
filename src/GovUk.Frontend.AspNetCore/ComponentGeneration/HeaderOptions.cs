@@ -20,7 +20,6 @@ public record HeaderOptions
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
     public bool? UseTudorCrown { get; set; }
-    public bool? Rebrand { get; set; }
 
     [NonStandardParameter]
     public AttributeCollection? ContainerAttributes { get; set; }

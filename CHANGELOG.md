@@ -8,6 +8,9 @@ Additional sections and `ViewData` keys have been added.
 
 ### Breaking changes
 
+The content licence and copyright sections are no longer included in the footer by default with the `<govuk-footer>` tag helper.
+Use empty `<govuk-footer-content-licence>` and `<govuk-footer-content-copyright>` elements to include these sections if needed.
+
 If you are using the `_GovUkPageTemplate` view, you may need to update your views to use the new section names.
 Specifically, if you where using the `Header` section, consider using the `GovUkHeader` and/or `GovUkServiceNavigation` sections instead.
 Similarly, if you were using the `Footer` section, consider using the `GovUkFooter` section instead.

@@ -562,6 +562,23 @@ public partial class DefaultComponentGeneratorTests
     }
 
     [Fact]
+    public async Task Footer_NullCopyright_DoesNotRenderCopyrightElement()
+    {
+        // Arrange
+        var options = new FooterOptions
+        {
+            Copyright = null
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateFooterAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.DoesNotContain("Crown copyright", html);
+    }
+
+    [Fact]
     public async Task Header_ContainerAttributes_IsIncludedInOutput()
     {
         // Arrange

@@ -107,7 +107,7 @@ internal partial class DefaultComponentGenerator
                 .WithClasses("govuk-footer__meta")
                 .With(meta?.Attributes));
 
-            var metaItemGrowTag = new HtmlTag("div", attrs => attrs
+            var metaItemTag = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-footer__meta-item", "govuk-footer__meta-item--grow"));
 
             if (meta is not null)
@@ -116,7 +116,7 @@ internal partial class DefaultComponentGenerator
                 var h2Tag = new HtmlTag("h2", attrs => attrs
                     .WithClasses("govuk-visually-hidden"));
                 h2Tag.InnerHtml.AppendHtml(visuallyHiddenTitle);
-                metaItemGrowTag.InnerHtml.AppendHtml(h2Tag);
+                metaItemTag.InnerHtml.AppendHtml(h2Tag);
 
                 if (meta.Items is not null && meta.Items.Count > 0)
                 {
@@ -145,7 +145,7 @@ internal partial class DefaultComponentGenerator
                         ulTag.InnerHtml.AppendHtml(liTag);
                     }
 
-                    metaItemGrowTag.InnerHtml.AppendHtml(ulTag);
+                    metaItemTag.InnerHtml.AppendHtml(ulTag);
                 }
 
                 if (meta.Text is not null || meta.Html is not null)
@@ -154,54 +154,62 @@ internal partial class DefaultComponentGenerator
                         .WithClasses("govuk-footer__meta-custom")
                         .With(meta.ContentAttributes));
                     customDivTag.InnerHtml.AppendHtml(HtmlOrText(meta.Html, meta.Text));
-                    metaItemGrowTag.InnerHtml.AppendHtml(customDivTag);
+                    metaItemTag.InnerHtml.AppendHtml(customDivTag);
                 }
             }
 
-            metaItemGrowTag.InnerHtml.AppendHtml(GenerateOglLicenceLogo());
-
-            var licenceSpanTag = new HtmlTag("span", attrs => attrs
-                .WithClasses("govuk-footer__licence-description")
-                .With(contentLicence?.Attributes));
-
-            if (contentLicence?.Html is not null || contentLicence?.Text is not null)
+            if (options.ContentLicence is not null)
             {
-                licenceSpanTag.InnerHtml.AppendHtml(HtmlOrText(contentLicence.Html, contentLicence.Text));
-            }
-            else
-            {
-                licenceSpanTag.InnerHtml.AppendHtml("All content is available under the ");
-                var licenceLink = new HtmlTag("a", attrs => attrs
-                    .WithClasses("govuk-footer__link")
-                    .With("href", "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/")
-                    .With("rel", "license"));
-                licenceLink.InnerHtml.AppendHtml("Open Government Licence v3.0");
-                licenceSpanTag.InnerHtml.AppendHtml(licenceLink);
-                licenceSpanTag.InnerHtml.AppendHtml(", except where otherwise stated");
-            }
+                metaItemTag.InnerHtml.AppendHtml(GenerateOglLicenceLogo());
 
-            metaItemGrowTag.InnerHtml.AppendHtml(licenceSpanTag);
-            metaTag.InnerHtml.AppendHtml(metaItemGrowTag);
+                var licenceSpanTag = new HtmlTag("span", attrs => attrs
+                    .WithClasses("govuk-footer__licence-description")
+                    .With(contentLicence?.Attributes));
 
-            var copyrightItemTag = new HtmlTag("div", attrs => attrs
-                .WithClasses("govuk-footer__meta-item")
-                .With(copyright?.Attributes));
+                if (contentLicence?.Html is not null || contentLicence?.Text is not null)
+                {
+                    licenceSpanTag.InnerHtml.AppendHtml(HtmlOrText(contentLicence.Html, contentLicence.Text));
+                }
+                else
+                {
+                    licenceSpanTag.InnerHtml.AppendHtml("All content is available under the ");
+                    var licenceLink = new HtmlTag("a", attrs => attrs
+                        .WithClasses("govuk-footer__link")
+                        .With("href", "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/")
+                        .With("rel", "license"));
+                    licenceLink.InnerHtml.AppendHtml("Open Government Licence v3.0");
+                    licenceSpanTag.InnerHtml.AppendHtml(licenceLink);
+                    licenceSpanTag.InnerHtml.AppendHtml(", except where otherwise stated");
+                }
 
-            var copyrightLink = new HtmlTag("a", attrs => attrs
-                .WithClasses("govuk-footer__link", "govuk-footer__copyright-logo")
-                .With("href", "https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"));
-
-            if (copyright?.Html is not null || copyright?.Text is not null)
-            {
-                copyrightLink.InnerHtml.AppendHtml(HtmlOrText(copyright.Html, copyright.Text));
-            }
-            else
-            {
-                copyrightLink.InnerHtml.AppendHtml("&#xA9; Crown copyright");
+                metaItemTag.InnerHtml.AppendHtml(licenceSpanTag);
             }
 
-            copyrightItemTag.InnerHtml.AppendHtml(copyrightLink);
-            metaTag.InnerHtml.AppendHtml(copyrightItemTag);
+            metaTag.InnerHtml.AppendHtml(metaItemTag);
+
+            if (options.Copyright is not null)
+            {
+                var copyrightItemTag = new HtmlTag("div", attrs => attrs
+                    .WithClasses("govuk-footer__meta-item")
+                    .With(copyright?.Attributes));
+
+                var copyrightLink = new HtmlTag("a", attrs => attrs
+                    .WithClasses("govuk-footer__link", "govuk-footer__copyright-logo")
+                    .With("href",
+                        "https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"));
+
+                if (copyright?.Html is not null || copyright?.Text is not null)
+                {
+                    copyrightLink.InnerHtml.AppendHtml(HtmlOrText(copyright.Html, copyright.Text));
+                }
+                else
+                {
+                    copyrightLink.InnerHtml.AppendHtml("&#xA9; Crown copyright");
+                }
+
+                copyrightItemTag.InnerHtml.AppendHtml(copyrightLink);
+                metaTag.InnerHtml.AppendHtml(copyrightItemTag);
+            }
 
             return metaTag;
         }

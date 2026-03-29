@@ -8,8 +8,7 @@ Additional sections and `ViewData` keys have been added.
 
 ### Breaking changes
 
-The content licence and copyright sections are no longer included in the footer by default with the `<govuk-footer>` tag helper.
-Use empty `<govuk-footer-content-licence>` and `<govuk-footer-content-copyright>` elements to include these sections if needed.
+#### Page template
 
 If you are using the `_GovUkPageTemplate` view, you may need to update your views to use the new section names.
 Specifically, if you where using the `Header` section, consider using the `GovUkHeader` and/or `GovUkServiceNavigation` sections instead.
@@ -17,9 +16,21 @@ Similarly, if you were using the `Footer` section, consider using the `GovUkFoot
 
 See `src/GovUk.Frontend.AspNetCore/Views/_GovUkPageTemplate.cshtml` for the complete view implementation.
 
-The deprecated `asp-for` attribute has been removed; the `for` attribute should be used instead.
+#### Tag helpers
 
-The `Rebrand` option has been removed from `GovUkFrontendOptions`.
+The deprecated `asp-for` attribute has been removed from the tag helpers that generate form elements; the `for` attribute should be used instead.
+
+The content licence and copyright sections are no longer included in the footer by default with the `<govuk-footer>` tag helper.
+Use empty `<govuk-footer-content-licence>` and `<govuk-footer-content-copyright>` elements to include these sections if needed.
+
+The deprecated `gfa-error-prefix` attribute on `<title>` elements has been removed; the `error-prefix` attribute should be used instead.
+
+The deprecated `is-current` attribute on `<govuk-pagination-item>` has been removed; the `current` attribute should be used instead.
+
+#### `GovUkFrontEndOptions`
+
+The deprecated `StaticAssetsContentPath`, `CompiledContentPath`, `PrependErrorSummary` properties on `GovUkFrontendOptions` have been removed.
+The `Rebrand` option has also been removed.
 
 ### New features
 

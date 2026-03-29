@@ -8,24 +8,15 @@ namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 public class GeneratedErrorSummaryTagHelperTests
 {
     [Theory]
-    [InlineData(false, null, false)]
-    [InlineData(false, false, false)]
-    [InlineData(false, true, true)]
-    [InlineData(true, null, true)]
-    [InlineData(true, false, false)]
-    [InlineData(true, true, true)]
+    [InlineData(null, false)]
+    [InlineData(false, false)]
+    [InlineData(true, true)]
     public async Task ProcessAsync_RendersWhenExpected(
-        bool prepentErrorSummaryToFormsOption,
         bool? prependErrorSummary,
         bool expectErrorSummary)
     {
         // Arrange
-        var options = Options.Create(new GovUkFrontendOptions()
-        {
-#pragma warning disable GFA0005
-            PrependErrorSummaryToForms = prepentErrorSummaryToFormsOption
-#pragma warning restore GFA0005
-        });
+        var options = Options.Create(new GovUkFrontendOptions());
 
         var errorHtml = "Error message";
         var errorHref = "#Field";

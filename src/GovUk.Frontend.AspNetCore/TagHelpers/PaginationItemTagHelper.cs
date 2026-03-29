@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -28,21 +27,6 @@ public class PaginationItemTagHelper : TagHelper
     /// </remarks>
     [HtmlAttributeName(CurrentAttributeName)]
     public bool? Current { get; set; }
-
-    /// <summary>
-    /// Whether this item is the current page the user is on.
-    /// </summary>
-    /// <remarks>
-    /// By default, this is determined by comparing the current URL to this item's generated <c>href</c> attribute.
-    /// </remarks>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [HtmlAttributeName("is-current")]
-    [Obsolete("Use the 'current' attribute instead.", DiagnosticId = DiagnosticIds.UseCurrentAttributeInstead)]
-    public bool? IsCurrent
-    {
-        get => Current;
-        set => Current = value;
-    }
 
     /// <summary>
     /// The visually hidden text for the pagination item.

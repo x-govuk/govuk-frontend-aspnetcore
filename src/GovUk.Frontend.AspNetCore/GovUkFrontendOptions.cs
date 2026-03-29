@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Http;
@@ -48,66 +47,6 @@ public class GovUkFrontendOptions
     /// </remarks>
     public bool AddNovalidateAttributeToForms { get; set; }
 
-    /// <summary>
-    /// The path to serve GOV.UK Frontend static assets at.
-    /// </summary>
-    /// <remarks>
-    /// <para>If this is <c>null</c> the static assets will not be served.</para>
-    /// <para>The default is <c>/assets</c>.</para>
-    /// </remarks>
-    [Obsolete($"Use {nameof(FrontendPackageHostingOptions)} instead.")]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public PathString? StaticAssetsContentPath
-    {
-        get => FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets) ? PageTemplateHelper.DefaultAssetsPath : null;
-        set
-        {
-            if (value is not null && value != PageTemplateHelper.DefaultAssetsPath)
-            {
-                throw new ArgumentException($"Value must be {PageTemplateHelper.DefaultAssetsPath} or null.", nameof(value));
-            }
-
-            if (value is null)
-            {
-                FrontendPackageHostingOptions &= ~FrontendPackageHostingOptions.HostAssets;
-            }
-            else
-            {
-                FrontendPackageHostingOptions |= FrontendPackageHostingOptions.HostAssets;
-            }
-        }
-    }
-
-    /// <summary>
-    /// The path to serve GOV.UK Frontend compiled JavaScript and CSS at.
-    /// </summary>
-    /// <remarks>
-    /// <para>If this is <c>null</c> the compiled assets will not be served.</para>
-    /// <para>If this is <c></c> (the default) the compiled assets will be served at the root.</para>
-    /// </remarks>
-    [Obsolete($"Use {nameof(FrontendPackageHostingOptions)} instead.")]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public PathString? CompiledContentPath
-    {
-        get => FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles) ? PageTemplateHelper.DefaultCompiledContentPath : null;
-        set
-        {
-            if (value is not null && value != PageTemplateHelper.DefaultCompiledContentPath)
-            {
-                throw new ArgumentException($"Value must be empty or null.", nameof(value));
-            }
-
-            if (value is null)
-            {
-                FrontendPackageHostingOptions &= ~FrontendPackageHostingOptions.HostCompiledFiles;
-            }
-            else
-            {
-                FrontendPackageHostingOptions |= FrontendPackageHostingOptions.HostCompiledFiles;
-            }
-        }
-    }
-
     /// <inheritdoc cref="AspNetCore.FrontendPackageHostingOptions"/>
     public FrontendPackageHostingOptions FrontendPackageHostingOptions { get; set; }
 
@@ -128,30 +67,6 @@ public class GovUkFrontendOptions
     /// This is invoked when the page template utilities generate style and script import tags to add a <c>nonce</c> attribute.
     /// </remarks>
     public Func<HttpContext, string?>? GetCspNonceForRequest { get; set; }
-
-    /// <summary>
-    /// Whether to prepend an error summary component to forms.
-    /// </summary>
-    /// <remarks>
-    /// <para>This can be overriden on a form-by-form basis by setting the <c>gfa-prepend-error-summary</c> attribute.</para>
-    /// <para>The default is <c>false</c>.</para>
-    /// </remarks>
-    [Obsolete("Use GenerateErrorSummaries instead.", DiagnosticId = DiagnosticIds.UseGenerateErrorSummariesInstead)]
-    public bool PrependErrorSummaryToForms
-    {
-        get => ErrorSummaryGeneration.HasFlag(ErrorSummaryGenerationOptions.PrependToFormElements);
-        set
-        {
-            if (value)
-            {
-                ErrorSummaryGeneration |= ErrorSummaryGenerationOptions.PrependToFormElements;
-            }
-            else
-            {
-                ErrorSummaryGeneration &= ~ErrorSummaryGenerationOptions.PrependToFormElements;
-            }
-        }
-    }
 
     /// <summary>
     /// Configures automatic error summary generation.

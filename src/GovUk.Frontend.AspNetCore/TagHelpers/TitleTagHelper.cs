@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -39,21 +38,6 @@ public class TitleTagHelper : TagHelper
     /// </remarks>
     [HtmlAttributeName(ErrorPrefixAttributeName)]
     public string? ErrorPrefix { get; set; }
-
-    /// <summary>
-    /// The prefix to add to the <c>title</c> when the page has errors.
-    /// </summary>
-    /// <remarks>
-    ///  The default is <c>Error:</c>.
-    /// </remarks>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("Use the 'error-prefix' attribute instead.", DiagnosticId = DiagnosticIds.UseErrorPrefixAttributeInstead)]
-    [HtmlAttributeName("gfa-" + ErrorPrefixAttributeName)]
-    public string? GfaErrorPrefix
-    {
-        get => ErrorPrefix;
-        set => ErrorPrefix = value;
-    }
 
     /// <summary>
     /// Gets the <see cref="ViewContext"/> of the executing view.

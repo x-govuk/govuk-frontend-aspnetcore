@@ -19,9 +19,11 @@
     </govuk-cookie-banner>
 }
 
-@section Header {
-    <govuk-header home-page-url="https://gov.uk/" />
+@section GovUkHeader {
+    <govuk-header home-page-url="https://gov.uk/"/>
+}
 
+@section GovUkServiceNavigation {
     <govuk-service-navigation service-name="Service name" service-url="#">
         <govuk-service-navigation-nav>
             <govuk-service-navigation-nav-item href="#">Navigation item 1</govuk-service-navigation-nav-item>
@@ -33,7 +35,7 @@
 
 @RenderBody()
 
-@section Footer {
+@section GovUkFooter {
     <govuk-footer>
         <govuk-footer-nav width="two-thirds" columns="2">
             <govuk-footer-nav-title>Two column list</govuk-footer-nav-title>
@@ -54,5 +56,7 @@
                 <govuk-footer-nav-item href="#">Navigation item 3</govuk-footer-nav-item>
             </govuk-footer-nav-items>
         </govuk-footer-nav>
+        <govuk-footer-content-licence />
+        <govuk-footer-copyright />
     </govuk-footer>
 }

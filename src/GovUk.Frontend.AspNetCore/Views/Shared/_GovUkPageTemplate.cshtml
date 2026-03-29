@@ -51,6 +51,8 @@
 
     async Task<IHtmlContent> CaptureSectionContentAsync(string sectionName)
     {
+        IgnoreSection(sectionName);
+
         var buffer = new StringBuilder();
         await using var writer = new StringWriter(buffer);
 

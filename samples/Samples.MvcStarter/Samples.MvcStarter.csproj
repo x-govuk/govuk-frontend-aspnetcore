@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GovUk.Frontend.AspNetCore" Version="3.2.*-*" />
+    <PackageReference Include="GovUk.Frontend.AspNetCore" Version="4.0.*-*" />
     <PackageReference Include="Joonasw.AspNetCore.SecurityHeaders" Version="4.0.1" />
   </ItemGroup>
 

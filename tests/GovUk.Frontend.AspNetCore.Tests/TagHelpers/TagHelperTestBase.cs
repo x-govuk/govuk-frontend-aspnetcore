@@ -65,6 +65,7 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
         string? tagName = null,
         string? className = null,
         IDictionary<string, string?>? attributes = null,
+        TagMode tagMode = TagMode.StartTagAndEndTag,
         Func<bool, HtmlEncoder, Task<TagHelperContent>>? getChildContentAsync = null)
     {
         var tagHelperAttributes = new TagHelperAttributeList();
@@ -93,7 +94,8 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            }));
+            }))
+        { TagMode = tagMode };
     }
 
     protected ViewContext CreateViewContext() =>

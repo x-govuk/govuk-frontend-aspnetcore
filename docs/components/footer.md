@@ -8,7 +8,10 @@
 <img alt="Footer without links example" src="../images/footer-without-links-example.png" />
 
 ```razor
-<govuk-footer />
+<govuk-footer>
+    <govuk-footer-content-licence />
+    <govuk-footer-copyright />
+</govuk-footer>
 ```
 
 
@@ -24,6 +27,8 @@
             <govuk-footer-meta-item href="#">Item 3</govuk-footer-meta-item>
         </govuk-footer-meta-items>
     </govuk-footer-meta>
+    <govuk-footer-content-licence />
+    <govuk-footer-copyright />
 </govuk-footer>
 ```
 
@@ -52,6 +57,8 @@
             <govuk-footer-nav-item href="#">Navigation item 3</govuk-footer-nav-item>
         </govuk-footer-nav-items>
     </govuk-footer-nav>
+    <govuk-footer-content-licence />
+    <govuk-footer-copyright />
 </govuk-footer>
 ```
 
@@ -103,7 +110,17 @@
         </govuk-footer-meta-items>
         <govuk-footer-meta-content>Built by the <a href="#" class="govuk-footer__link">Government Digital Service</a></govuk-footer-meta-content>
     </govuk-footer-meta>
+    <govuk-footer-content-licence />
+    <govuk-footer-copyright />
 </govuk-footer>
+```
+
+
+### Example with no content licence or copyright
+<img alt="Footer with no content licence or copyright example" src="../images/footer-with-no-content-licence-or-copyright-example.png" />
+
+```razor
+<govuk-footer />
 ```
 
 

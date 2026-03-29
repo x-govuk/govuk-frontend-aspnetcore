@@ -106,10 +106,7 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GenerateFileUploadAsync(options));
 
     [Theory]
-    [ComponentFixtureData(
-        "footer",
-        typeof(FooterOptions),
-        exclude: ["with no content licence", "with only custom meta", "with only meta links"])]  // TEMP until v4 as requires breaking change
+    [ComponentFixtureData("footer", typeof(FooterOptions))]
     public Task Footer(ComponentTestCaseData<FooterOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,

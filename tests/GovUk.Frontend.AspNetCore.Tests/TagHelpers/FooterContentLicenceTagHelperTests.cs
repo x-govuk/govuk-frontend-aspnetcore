@@ -101,4 +101,28 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal($"<{TagName}> must be specified before <{copyrightTagName}>.", ex.Message);
     }
+
+    [Fact]
+    public async Task ProcessAsync_TagModeIsSelfClosing_SetsContentLicenceContentToNull()
+    {
+        // Arrange
+        var footerContext = new FooterContext();
+
+        var context = CreateTagHelperContext(contexts: footerContext);
+
+        var output = CreateTagHelperOutput(tagMode: TagMode.SelfClosing);
+
+        var tagHelper = new FooterContentLicenceTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var contentLicenceOptions = footerContext.ContentLicence?.Options;
+        Assert.NotNull(contentLicenceOptions);
+        Assert.Null(contentLicenceOptions.Html);
+        Assert.Null(contentLicenceOptions.Text);
+    }
 }

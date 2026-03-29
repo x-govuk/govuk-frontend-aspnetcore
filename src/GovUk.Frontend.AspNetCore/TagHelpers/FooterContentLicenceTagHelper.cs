@@ -29,11 +29,18 @@ public class FooterContentLicenceTagHelper : TagHelper
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, copyrightTagName);
         }
 
-        var content = await output.GetChildContentAsync();
+        TemplateString? resolvedContent = null;
 
-        if (output.Content.IsModified)
+        if (output.TagMode == TagMode.StartTagAndEndTag)
         {
-            content = output.Content;
+            var content = await output.GetChildContentAsync();
+
+            if (output.Content.IsModified)
+            {
+                content = output.Content;
+            }
+
+            resolvedContent = content.ToTemplateString();
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -42,7 +49,7 @@ public class FooterContentLicenceTagHelper : TagHelper
             new FooterOptionsContentLicence
             {
                 Text = null,
-                Html = content.ToTemplateString(),
+                Html = resolvedContent,
                 Attributes = attributes
             },
             output.TagName);

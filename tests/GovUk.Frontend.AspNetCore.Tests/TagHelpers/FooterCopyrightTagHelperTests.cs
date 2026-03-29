@@ -71,4 +71,28 @@ public class FooterCopyrightTagHelperTests : TagHelperTestBase<FooterCopyrightTa
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
+
+    [Fact]
+    public async Task ProcessAsync_TagModeIsSelfClosing_SetsCopyrightContentToNull()
+    {
+        // Arrange
+        var footerContext = new FooterContext();
+
+        var context = CreateTagHelperContext(contexts: footerContext);
+
+        var output = CreateTagHelperOutput(tagMode: TagMode.SelfClosing);
+
+        var tagHelper = new FooterCopyrightTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var copyrightOptions = footerContext.Copyright?.Options;
+        Assert.NotNull(copyrightOptions);
+        Assert.Null(copyrightOptions.Html);
+        Assert.Null(copyrightOptions.Text);
+    }
 }

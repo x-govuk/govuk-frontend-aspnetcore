@@ -4,6 +4,12 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 public record FooterOptions
 {
+    public FooterOptions()
+    {
+        ContentLicence = new();
+        Copyright = new();
+    }
+
     public FooterOptionsMeta? Meta { get; set; }
     public IReadOnlyCollection<FooterOptionsNavigation?>? Navigation { get; set; }
     public FooterOptionsContentLicence? ContentLicence { get; set; }
@@ -11,7 +17,6 @@ public record FooterOptions
     public TemplateString? ContainerClasses { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
-    public bool? Rebrand { get; set; }
 }
 
 public record FooterOptionsMeta

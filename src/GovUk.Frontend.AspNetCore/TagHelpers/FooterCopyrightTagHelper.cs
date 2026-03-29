@@ -24,11 +24,18 @@ public class FooterCopyrightTagHelper : TagHelper
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterTagHelper.TagName);
         }
 
-        var content = await output.GetChildContentAsync();
+        TemplateString? resolvedContent = null;
 
-        if (output.Content.IsModified)
+        if (output.TagMode == TagMode.StartTagAndEndTag)
         {
-            content = output.Content;
+            var content = await output.GetChildContentAsync();
+
+            if (output.Content.IsModified)
+            {
+                content = output.Content;
+            }
+
+            resolvedContent = content.ToTemplateString();
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -37,7 +44,7 @@ public class FooterCopyrightTagHelper : TagHelper
             new FooterOptionsCopyright
             {
                 Text = null,
-                Html = content.ToTemplateString(),
+                Html = resolvedContent,
                 Attributes = attributes
             },
             output.TagName);

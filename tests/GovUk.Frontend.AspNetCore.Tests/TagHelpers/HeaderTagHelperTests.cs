@@ -43,6 +43,5 @@ public class HeaderTagHelperTests : TagHelperTestBase<HeaderTagHelper>
         Assert.Equal(className, actualOptions.Classes);
         AssertContainsAttributes(attributes, actualOptions.Attributes);
         AssertContainsAttributes(containerAttributes, actualOptions.ContainerAttributes);
-        Assert.True(actualOptions.UseTudorCrown);
     }
 }

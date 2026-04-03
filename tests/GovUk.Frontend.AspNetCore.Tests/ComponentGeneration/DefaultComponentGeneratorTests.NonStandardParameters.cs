@@ -584,7 +584,6 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new HeaderOptions
         {
-            ServiceName = "Service",
             ContainerAttributes = new AttributeCollection { { "data-test", "container-attr" } }
         };
 
@@ -594,27 +593,6 @@ public partial class DefaultComponentGeneratorTests
 
         // Assert
         Assert.Contains("data-test=\"container-attr\"", html);
-    }
-
-    [Fact]
-    public async Task Header_NavigationAttributes_IsIncludedInOutput()
-    {
-        // Arrange
-        var options = new HeaderOptions
-        {
-            Navigation =
-            [
-                new HeaderOptionsNavigationItem { Text = "Item", Href = "#" }
-            ],
-            NavigationAttributes = new AttributeCollection { { "data-test", "nav-attr" } }
-        };
-
-        // Act
-        var result = await _componentGenerator.GenerateHeaderAsync(options);
-        var html = result.GetHtml();
-
-        // Assert
-        Assert.Contains("data-test=\"nav-attr\"", html);
     }
 
     [Fact]

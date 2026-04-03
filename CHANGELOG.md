@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+Removes some redundant properties from `HeaderOptions`.
+
 ## 4.0.0
 
 ### `_GovUkPageTemplate` view changes

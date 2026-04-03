@@ -63,8 +63,6 @@ public class HeaderTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        _ = await output.GetChildContentAsync();
-
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
@@ -75,19 +73,10 @@ public class HeaderTagHelper : TagHelper
         {
             HomePageUrl = HomePageUrl,
             ProductName = ProductName,
-            ServiceName = null,
-            ServiceUrl = null,
-            Navigation = null,
-            NavigationAttributes = null,
-            NavigationClasses = null,
-            NavigationLabel = null,
-            MenuButtonLabel = null,
-            MenuButtonText = null,
             ContainerClasses = containerClasses,
             ContainerAttributes = containerAttributes,
             Classes = classes,
-            Attributes = attributes,
-            UseTudorCrown = true
+            Attributes = attributes
         });
 
         component.ApplyToTagHelper(output);

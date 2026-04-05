@@ -931,4 +931,27 @@ public partial class DefaultComponentGeneratorTests
         // Assert
         Assert.Contains("data-test=\"item-attr\"", html);
     }
+
+    [Fact]
+    public async Task ServiceNavigation_ItemAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new ServiceNavigationOptions()
+        {
+            Navigation =
+            [
+                new ServiceNavigationOptionsNavigationItem
+                {
+                    ItemAttributes = new AttributeCollection { { "data-test", "item-attr" } }
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateServiceNavigationAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("data-test=\"item-attr\"", html);
+    }
 }

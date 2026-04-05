@@ -26,6 +26,7 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
 
     private const string ActiveAttributeName = "active";
     private const string CurrentAttributeName = "current";
+    private const string LinkAttributesPrefix = "link-";
 
     /// <summary>
     /// Whether the user is within this group of pages in the navigation hierarchy.
@@ -42,6 +43,12 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
     /// </remarks>
     [HtmlAttributeName(CurrentAttributeName)]
     public bool? Current { get; set; }
+
+    /// <summary>
+    /// Additional attributes to add to the generated <c>&lt;a&gt;</c> element.
+    /// </summary>
+    [HtmlAttributeName(DictionaryAttributePrefix = LinkAttributesPrefix)]
+    public IDictionary<string, string?> LinkAttributes { get; set; } = new Dictionary<string, string?>();
 
     /// <summary>
     /// Gets the <see cref="ViewContext"/> of the executing view.
@@ -84,7 +91,8 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
             Html = content.ToTemplateString(),
             Text = null,
             Href = href,
-            Attributes = attributes
+            Attributes = new(LinkAttributes),
+            ItemAttributes = attributes
         };
 
         if (navContext.Items.Count == 0)

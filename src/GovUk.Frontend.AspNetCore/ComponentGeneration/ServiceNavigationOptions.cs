@@ -30,6 +30,8 @@ public record ServiceNavigationOptionsNavigationItem
     public TemplateString? Text { get; set; }
     public TemplateString? Href { get; set; }
     public AttributeCollection? Attributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? ItemAttributes { get; set; }
 }
 
 public record ServiceNavigationOptionsSlots

@@ -2,7 +2,12 @@
 
 ## Unreleased
 
+### Fixes
+
 Removes some redundant properties from `HeaderOptions`.
+
+Amends attribute propagation on `<govuk-service-navigation-nav-item>` to copy extra attributes onto generated `<li>` instead of the inner link.
+Attributes for the `<a>` element can still be specified by using `link-*` attributes.
 
 ## 4.0.0
 

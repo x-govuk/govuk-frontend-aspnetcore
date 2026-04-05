@@ -14,6 +14,7 @@ public class ServiceNavigationNavItemTagHelperTests : TagHelperTestBase<ServiceN
         var content = "Content";
         var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
+        var linkAttributes = CreateDummyDataAttributes();
 
         var navContext = new ServiceNavigationNavContext();
 
@@ -35,7 +36,8 @@ public class ServiceNavigationNavItemTagHelperTests : TagHelperTestBase<ServiceN
         var tagHelper = new ServiceNavigationNavItemTagHelper()
         {
             Active = active,
-            Current = current
+            Current = current,
+            LinkAttributes = linkAttributes
         };
 
         tagHelper.Init(context);
@@ -48,7 +50,8 @@ public class ServiceNavigationNavItemTagHelperTests : TagHelperTestBase<ServiceN
             navContext.Items,
             item =>
             {
-                AssertContainsAttributes(attributes, item.Attributes);
+                AssertContainsAttributes(attributes, item.ItemAttributes);
+                AssertContainsAttributes(linkAttributes, item.Attributes);
                 Assert.Equal(active, item.Active);
                 Assert.Equal(current, item.Current);
                 Assert.Equal(content, item.Html);

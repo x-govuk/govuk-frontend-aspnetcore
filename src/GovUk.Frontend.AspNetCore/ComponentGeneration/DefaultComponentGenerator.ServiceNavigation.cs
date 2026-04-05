@@ -150,7 +150,8 @@ internal partial class DefaultComponentGenerator
             var liTag = new HtmlTag("li", attrs => attrs
                 .WithClasses(
                     "govuk-service-navigation__item",
-                    isActive ? "govuk-service-navigation__item--active" : null));
+                    isActive ? "govuk-service-navigation__item--active" : null)
+                .With(item.ItemAttributes));
 
             var linkInnerContent = CreateLinkInnerContent(item);
 

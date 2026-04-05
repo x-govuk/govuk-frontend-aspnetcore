@@ -68,6 +68,7 @@ Must be inside a `<govuk-service-navigation-nav>` element.
 | --- | --- | --- |
 | `active` | `bool?` | Whether the user is within this group of pages in the navigation hierarchy. |
 | `current` | `bool?` | Whether the user is currently on this page. This takes precedence over the `active` attribute. By default, this is determined by comparing the current URL to this item's generated `href` attribute. |
+| `link-*` |  | Additional attributes to add to the generated `<a>` element. |
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 

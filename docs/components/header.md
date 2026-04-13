@@ -21,8 +21,7 @@
 
 #### `<govuk-header>`
 
-> [!NOTE]
-> This tag helper should not have any child content.
+The content is the HTML to use after the logo and product name.
 
 | Attribute | Type | Description |
 | --- | --- | --- |

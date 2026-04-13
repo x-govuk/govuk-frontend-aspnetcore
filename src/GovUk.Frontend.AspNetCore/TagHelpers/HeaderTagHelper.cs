@@ -1,14 +1,14 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
 /// Generates a GDS header component.
 /// </summary>
-[HtmlTargetElement(TagName, TagStructure = TagStructure.WithoutEndTag)]
+[HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Header)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the logo and product name.")]
 public class HeaderTagHelper : TagHelper
 {
     internal const string TagName = "govuk-header";
@@ -18,20 +18,15 @@ public class HeaderTagHelper : TagHelper
     private const string ProductNameAttributeName = "product-name";
 
     private readonly IComponentGenerator _componentGenerator;
-    private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
 
     /// <summary>
     /// Creates a new <see cref="HeaderTagHelper"/>.
     /// </summary>
-    public HeaderTagHelper(
-        IComponentGenerator componentGenerator,
-        IOptions<GovUkFrontendOptions> optionsAccessor)
+    public HeaderTagHelper(IComponentGenerator componentGenerator)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
-        ArgumentNullException.ThrowIfNull(optionsAccessor);
 
         _componentGenerator = componentGenerator;
-        _optionsAccessor = optionsAccessor;
     }
 
     /// <summary>
@@ -63,6 +58,13 @@ public class HeaderTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
+        var content = await output.GetChildContentAsync();
+
+        if (output.Content.IsModified)
+        {
+            content = output.Content;
+        }
+
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
@@ -76,7 +78,8 @@ public class HeaderTagHelper : TagHelper
             ContainerClasses = containerClasses,
             ContainerAttributes = containerAttributes,
             Classes = classes,
-            Attributes = attributes
+            Attributes = attributes,
+            Html = content.ToTemplateString()
         });
 
         component.ApplyToTagHelper(output);

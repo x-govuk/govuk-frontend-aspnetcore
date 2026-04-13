@@ -596,6 +596,23 @@ public partial class DefaultComponentGeneratorTests
     }
 
     [Fact]
+    public async Task Header_Html_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new HeaderOptions
+        {
+            Html = "<div class=\"extra-content\">Extra content</div>"
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateHeaderAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("<div class=\"extra-content\">Extra content</div>", html);
+    }
+
+    [Fact]
     public async Task Pagination_Previous_ContainerAttributes_IsIncludedInOutput()
     {
         // Arrange

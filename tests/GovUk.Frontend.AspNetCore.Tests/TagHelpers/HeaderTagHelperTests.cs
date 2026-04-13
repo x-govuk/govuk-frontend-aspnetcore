@@ -1,5 +1,6 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -14,16 +15,23 @@ public class HeaderTagHelperTests : TagHelperTestBase<HeaderTagHelper>
         var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
         var containerAttributes = CreateDummyDataAttributes();
+        var content = "Additional content";
 
         var context = CreateTagHelperContext(className: className, attributes: attributes);
 
-        var output = CreateTagHelperOutput(className: className, attributes: attributes);
-
-        var options = CreateOptions();
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                tagHelperContent.SetContent(content);
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<HeaderOptions>(nameof(IComponentGenerator.GenerateHeaderAsync));
 
-        var tagHelper = new HeaderTagHelper(componentGenerator, options)
+        var tagHelper = new HeaderTagHelper(componentGenerator)
         {
             HomePageUrl = homePageUrl,
             ProductName = productName,
@@ -43,5 +51,6 @@ public class HeaderTagHelperTests : TagHelperTestBase<HeaderTagHelper>
         Assert.Equal(className, actualOptions.Classes);
         AssertContainsAttributes(attributes, actualOptions.Attributes);
         AssertContainsAttributes(containerAttributes, actualOptions.ContainerAttributes);
+        Assert.Equal(content, actualOptions.Html);
     }
 }

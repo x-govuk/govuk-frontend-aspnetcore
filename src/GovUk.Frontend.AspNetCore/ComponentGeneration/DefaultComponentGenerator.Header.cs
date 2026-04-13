@@ -39,7 +39,7 @@ internal partial class DefaultComponentGenerator
 
         if (!options.Html.IsEmpty())
         {
-            containerTag.InnerHtml.AppendHtml(options.Html);
+            containerTag.InnerHtml.AppendHtml(options.Html.GetRawHtml());
         }
 
         headerTag.InnerHtml.AppendHtml(containerTag);

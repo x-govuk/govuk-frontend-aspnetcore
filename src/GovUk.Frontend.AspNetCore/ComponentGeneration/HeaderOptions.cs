@@ -15,4 +15,6 @@ public record HeaderOptions
 
     [NonStandardParameter]
     public AttributeCollection? ContainerAttributes { get; set; }
+    [NonStandardParameter]
+    public TemplateString? Html { get; set; }
 }

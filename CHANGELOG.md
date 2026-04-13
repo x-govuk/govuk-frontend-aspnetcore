@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+`<govuk-header>` can now have additional content specified.
+
 ## 4.0.1
 
 ### Fixes

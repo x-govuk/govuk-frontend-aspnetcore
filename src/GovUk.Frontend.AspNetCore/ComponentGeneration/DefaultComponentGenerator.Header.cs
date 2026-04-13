@@ -37,6 +37,11 @@ internal partial class DefaultComponentGenerator
         logoDiv.InnerHtml.AppendHtml(logoLink);
         containerTag.InnerHtml.AppendHtml(logoDiv);
 
+        if (!options.Html.IsEmpty())
+        {
+            containerTag.InnerHtml.AppendHtml(options.Html);
+        }
+
         headerTag.InnerHtml.AppendHtml(containerTag);
 
         return GenerateFromHtmlTagAsync(headerTag);

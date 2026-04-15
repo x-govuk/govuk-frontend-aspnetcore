@@ -2,80 +2,87 @@ using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class SummaryListRowContext
+internal class SummaryListRowContext(string rowTagName)
 {
-    public SummaryListOptionsRowKey? Key { get; private set; }
+    private (SummaryListOptionsRowKey Options, string TagName)? _key;
+    private (SummaryListOptionsRowValue Options, string TagName)? _value;
+    private (SummaryListOptionsRowActions Options, string TagName)? _actions;
 
-    public SummaryListOptionsRowValue? Value { get; private set; }
+    public SummaryListOptionsRowKey? Key => _key?.Options;
 
-    public SummaryListOptionsRowActions? Actions { get; private set; }
+    public SummaryListOptionsRowValue? Value => _value?.Options;
 
-    public void SetActions(SummaryListOptionsRowActions actions)
+    public SummaryListOptionsRowActions? Actions => _actions?.Options;
+
+    public void SetActions(SummaryListOptionsRowActions options, string tagName)
     {
-        ArgumentNullException.ThrowIfNull(actions);
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(tagName);
 
-        if (Actions is not null)
+        if (_actions is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                SummaryListRowActionsTagHelper.TagName,
-                SummaryListRowTagHelper.TagName);
+                [SummaryListRowActionsTagHelper.ShortTagName, SummaryListRowActionsTagHelper.TagName],
+                rowTagName);
         }
 
-        Actions = actions;
+        _actions = (options, tagName);
     }
 
-    public void SetKey(SummaryListOptionsRowKey key)
+    public void SetKey(SummaryListOptionsRowKey options, string tagName)
     {
-        ArgumentNullException.ThrowIfNull(key);
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(tagName);
 
-        if (Key is not null)
+        if (_key is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                SummaryListRowKeyTagHelper.TagName,
-                SummaryListRowTagHelper.TagName);
+                [SummaryListRowKeyTagHelper.ShortTagName, SummaryListRowKeyTagHelper.TagName],
+                rowTagName);
         }
 
-        if (Value is not null)
+        if (_value is var (_, valueTagName))
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryListRowKeyTagHelper.TagName,
-                SummaryListRowValueTagHelper.TagName);
+                tagName,
+                valueTagName);
         }
 
-        if (Actions is not null)
+        if (_actions is var (_, actionsTagName))
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryListRowKeyTagHelper.TagName,
-                SummaryListRowActionsTagHelper.TagName);
+                tagName,
+                actionsTagName);
         }
 
-        Key = key;
+        _key = (options, tagName);
     }
 
-    public void SetValue(SummaryListOptionsRowValue value)
+    public void SetValue(SummaryListOptionsRowValue value, string tagName)
     {
         ArgumentNullException.ThrowIfNull(value);
+        ArgumentNullException.ThrowIfNull(tagName);
 
-        if (Value is not null)
+        if (_value is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                SummaryListRowValueTagHelper.TagName,
-                SummaryListRowTagHelper.TagName);
+                [SummaryListRowValueTagHelper.ShortTagName, SummaryListRowValueTagHelper.TagName],
+                rowTagName);
         }
 
-        if (Actions is not null)
+        if (_actions is var (_, actionsTagName))
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryListRowValueTagHelper.TagName,
-                SummaryListRowActionsTagHelper.TagName);
+                tagName,
+                actionsTagName);
         }
 
-        Value = value;
+        _value = (value, tagName);
     }
 
     public void ThrowIfIncomplete()
     {
-        if (Key is null)
+        if (_key is null)
         {
             throw ExceptionHelper.AChildElementMustBeProvided(SummaryListRowKeyTagHelper.TagName);
         }

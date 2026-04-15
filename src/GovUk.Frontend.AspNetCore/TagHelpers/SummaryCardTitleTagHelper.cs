@@ -7,9 +7,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the title in the GDS summary card component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryCardTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = SummaryCardTagHelper.TagName)]
 public class SummaryCardTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card-title";
+    internal const string ShortTagName = ShortTagNames.Title;
 
     private const int MinHeadingLevel = 1;
     private const int MaxHeadingLevel = 6;
@@ -57,14 +59,16 @@ public class SummaryCardTitleTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        cardContext.SetTitle(new SummaryListOptionsCardTitle
-        {
-            Text = null,
-            Html = content.ToTemplateString(),
-            HeadingLevel = HeadingLevel,
-            Classes = classes,
-            Attributes = attributes
-        });
+        cardContext.SetTitle(
+            new SummaryListOptionsCardTitle
+            {
+                Text = null,
+                Html = content.ToTemplateString(),
+                HeadingLevel = HeadingLevel,
+                Classes = classes,
+                Attributes = attributes
+            },
+            context.TagName);
 
         output.SuppressOutput();
     }

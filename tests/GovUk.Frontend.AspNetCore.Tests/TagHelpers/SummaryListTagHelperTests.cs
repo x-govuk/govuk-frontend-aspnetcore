@@ -76,7 +76,7 @@ public class SummaryListTagHelperTests : TagHelperTestBase<SummaryListTagHelper>
     {
         // Arrange
         var cardContext = new SummaryCardContext();
-        cardContext.SetSummaryList(new());
+        cardContext.SetSummaryList(new(), SummaryListTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: cardContext);
 

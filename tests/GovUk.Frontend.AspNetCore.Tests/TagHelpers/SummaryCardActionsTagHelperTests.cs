@@ -68,7 +68,7 @@ public class SummaryCardActionsTagHelperTests : TagHelperTestBase<SummaryCardAct
     {
         // Arrange
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetActions(new());
+        summaryCardContext.SetActions(new(), TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 
@@ -97,7 +97,7 @@ public class SummaryCardActionsTagHelperTests : TagHelperTestBase<SummaryCardAct
     {
         // Arrange
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetSummaryList(new());
+        summaryCardContext.SetSummaryList(new(), TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 

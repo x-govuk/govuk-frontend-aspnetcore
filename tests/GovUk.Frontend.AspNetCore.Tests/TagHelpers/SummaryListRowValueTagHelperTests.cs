@@ -15,7 +15,7 @@ public class SummaryListRowValueTagHelperTests : TagHelperTestBase<SummaryListRo
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext();
+        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
 
         var context = CreateTagHelperContext(
             className: className,
@@ -54,8 +54,8 @@ public class SummaryListRowValueTagHelperTests : TagHelperTestBase<SummaryListRo
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext();
-        rowContext.SetValue(new());
+        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
+        rowContext.SetValue(new(), SummaryListRowValueTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 
@@ -88,8 +88,8 @@ public class SummaryListRowValueTagHelperTests : TagHelperTestBase<SummaryListRo
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext();
-        rowContext.SetActions(new());
+        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
+        rowContext.SetActions(new(), SummaryListRowActionsTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 

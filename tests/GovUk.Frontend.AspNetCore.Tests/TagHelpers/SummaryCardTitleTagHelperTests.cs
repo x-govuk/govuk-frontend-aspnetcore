@@ -53,7 +53,7 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         var headingLevel = 3;
 
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetTitle(new());
+        summaryCardContext.SetTitle(new(), TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 
@@ -89,7 +89,7 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         var headingLevel = 3;
 
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetActions(new());
+        summaryCardContext.SetActions(new(), SummaryCardActionsTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 
@@ -125,7 +125,7 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         var headingLevel = 3;
 
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetSummaryList(new());
+        summaryCardContext.SetSummaryList(new(), SummaryListTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 

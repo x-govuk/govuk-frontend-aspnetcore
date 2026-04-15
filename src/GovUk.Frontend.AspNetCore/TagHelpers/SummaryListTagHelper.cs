@@ -7,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS summary list component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(SummaryListRowTagHelper.TagName)]
+[RestrictChildren(SummaryListRowTagHelper.TagName, SummaryListRowTagHelper.ShortTagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryList)]
 public class SummaryListTagHelper : TagHelper
 {
@@ -41,7 +41,7 @@ public class SummaryListTagHelper : TagHelper
 
         var summaryListContext = context.GetContextItem<SummaryListContext>();
 
-        _ = await output.GetChildContentAsync();
+        await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
@@ -57,7 +57,7 @@ public class SummaryListTagHelper : TagHelper
         if (summaryListContext.HaveCard)
         {
             var cardContext = context.GetContextItem<SummaryCardContext>();
-            cardContext.SetSummaryList(componentOptions);
+            cardContext.SetSummaryList(componentOptions, context.TagName);
             output.SuppressOutput();
             return;
         }

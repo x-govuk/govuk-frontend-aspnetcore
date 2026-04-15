@@ -4,73 +4,80 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class SummaryCardContext
 {
-    public SummaryListOptionsCardTitle? Title { get; private set; }
+    private (SummaryListOptionsCardTitle Options, string TagName)? _title;
+    private (SummaryListOptionsCardActions Options, string TagName)? _actions;
+    private (SummaryListOptions Options, string TagName)? _summaryList;
 
-    public SummaryListOptionsCardActions? Actions { get; private set; }
+    public SummaryListOptionsCardTitle? Title => _title?.Options;
 
-    public SummaryListOptions? SummaryList { get; private set; }
+    public SummaryListOptionsCardActions? Actions => _actions?.Options;
 
-    public void SetTitle(SummaryListOptionsCardTitle title)
-    {
-        ArgumentNullException.ThrowIfNull(title);
+    public SummaryListOptions? SummaryList => _summaryList?.Options;
 
-        if (Title is not null)
-        {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                SummaryCardTitleTagHelper.TagName,
-                SummaryCardTagHelper.TagName);
-        }
-
-        if (Actions is not null)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryCardTitleTagHelper.TagName,
-                SummaryCardActionsTagHelper.TagName);
-        }
-
-        if (SummaryList is not null)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryCardTitleTagHelper.TagName,
-                SummaryListTagHelper.TagName);
-        }
-
-        Title = title;
-    }
-
-    public void SetActions(SummaryListOptionsCardActions actions)
-    {
-        ArgumentNullException.ThrowIfNull(actions);
-
-        if (Actions is not null)
-        {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                SummaryCardActionsTagHelper.TagName,
-                SummaryCardTagHelper.TagName);
-        }
-
-        if (SummaryList is not null)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                SummaryCardActionsTagHelper.TagName,
-                SummaryListTagHelper.TagName);
-        }
-
-        Actions = actions;
-    }
-
-    public void SetSummaryList(SummaryListOptions options)
+    public void SetTitle(SummaryListOptionsCardTitle options, string tagName)
     {
         ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (_title is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                [SummaryCardTitleTagHelper.ShortTagName, SummaryCardTitleTagHelper.TagName],
+                SummaryCardTagHelper.TagName);
+        }
+
+        if (_actions is var (_, actionsTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                actionsTagName);
+        }
+
+        if (_summaryList is var (_, summaryListTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                summaryListTagName);
+        }
+
+        _title = (options, tagName);
+    }
+
+    public void SetActions(SummaryListOptionsCardActions options, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(tagName);
+
+        if (_actions is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                [SummaryCardActionsTagHelper.ShortTagName, SummaryCardActionsTagHelper.TagName],
+                SummaryCardTagHelper.TagName);
+        }
+
+        if (_summaryList is var (_, summaryListTagName))
+        {
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
+                tagName,
+                summaryListTagName);
+        }
+
+        _actions = (options, tagName);
+    }
+
+    public void SetSummaryList(SummaryListOptions options, string tagName)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(tagName);
 
         if (SummaryList is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                SummaryListTagHelper.TagName,
+                [SummaryListTagHelper.TagName],
                 SummaryCardTagHelper.TagName);
         }
 
-        SummaryList = options;
+        _summaryList = (options, tagName);
     }
 
     public void ThrowIfNotComplete()

@@ -7,10 +7,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the actions wrapper in a GDS summary card.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryCardTagHelper.TagName)]
-[RestrictChildren(SummaryCardActionTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = SummaryCardTagHelper.TagName)]
+[RestrictChildren(SummaryCardActionTagHelper.TagName, SummaryCardActionTagHelper.ShortTagName)]
 public class SummaryCardActionsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card-actions";
+    internal const string ShortTagName = ShortTagNames.CardActions;
 
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
@@ -32,12 +34,14 @@ public class SummaryCardActionsTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        cardContext.SetActions(new SummaryListOptionsCardActions
-        {
-            Classes = classes,
-            Items = actionsContext.Items,
-            Attributes = attributes
-        });
+        cardContext.SetActions(
+            new SummaryListOptionsCardActions
+            {
+                Classes = classes,
+                Items = actionsContext.Items,
+                Attributes = attributes
+            },
+            context.TagName);
 
         output.SuppressOutput();
     }

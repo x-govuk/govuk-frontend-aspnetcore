@@ -30,9 +30,9 @@ public class SummaryListRowTagHelperTests : TagHelperTestBase<SummaryListRowTagH
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var rowContext = context.GetContextItem<SummaryListRowContext>();
-                rowContext.SetKey(key);
-                rowContext.SetValue(value);
-                rowContext.SetActions(actions);
+                rowContext.SetKey(key, SummaryListRowKeyTagHelper.TagName);
+                rowContext.SetValue(value, SummaryListRowValueTagHelper.TagName);
+                rowContext.SetActions(actions, SummaryListRowActionsTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

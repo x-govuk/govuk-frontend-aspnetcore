@@ -24,9 +24,9 @@ public class SummaryCardTagHelperTests : TagHelperTestBase<SummaryCardTagHelper>
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var summaryCardContext = context.GetContextItem<SummaryCardContext>();
-                summaryCardContext.SetTitle(title);
-                summaryCardContext.SetActions(actions);
-                summaryCardContext.SetSummaryList(summaryList);
+                summaryCardContext.SetTitle(title, SummaryCardTitleTagHelper.TagName);
+                summaryCardContext.SetActions(actions, SummaryCardActionsTagHelper.TagName);
+                summaryCardContext.SetSummaryList(summaryList, SummaryListTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

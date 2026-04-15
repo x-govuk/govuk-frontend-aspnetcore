@@ -128,19 +128,6 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(ServiceNavigationNavItemTagHelper.TagName, Attributes = "asp-route")]
 [HtmlTargetElement(ServiceNavigationNavItemTagHelper.TagName, Attributes = "asp-all-route-data")]
 [HtmlTargetElement(ServiceNavigationNavItemTagHelper.TagName, Attributes = "asp-route-*")]
-#if SHORT_TAG_NAMES
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-action")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-controller")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-area")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-page")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-page-handler")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-fragment")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-host")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-protocol")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-route")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-all-route-data")]
-[HtmlTargetElement(ServiceNavigationNavItemTagHelper.ShortTagName, Attributes = "asp-route-*")]
-#endif
 [HtmlTargetElement(SummaryCardActionTagHelper.TagName, Attributes = "asp-action")]
 [HtmlTargetElement(SummaryCardActionTagHelper.TagName, Attributes = "asp-controller")]
 [HtmlTargetElement(SummaryCardActionTagHelper.TagName, Attributes = "asp-area")]
@@ -163,6 +150,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(SummaryListRowActionTagHelper.TagName, Attributes = "asp-route")]
 [HtmlTargetElement(SummaryListRowActionTagHelper.TagName, Attributes = "asp-all-route-data")]
 [HtmlTargetElement(SummaryListRowActionTagHelper.TagName, Attributes = "asp-route-*")]
-public class AnchorTagHelper(IHtmlGenerator generator) : Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper(generator)
-{
-}
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-action")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-controller")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-area")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-page")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-page-handler")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-fragment")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-host")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-protocol")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-route")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-all-route-data")]
+[HtmlTargetElement(ShortTagNames.Action, Attributes = "asp-route-*")]
+public class AnchorTagHelper(IHtmlGenerator generator) : Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper(generator);

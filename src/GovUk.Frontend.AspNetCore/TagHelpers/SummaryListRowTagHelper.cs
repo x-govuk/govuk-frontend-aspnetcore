@@ -7,15 +7,25 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents a row in a GDS summary list component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryListTagHelper.TagName)]
-[RestrictChildren(SummaryListRowKeyTagHelper.TagName, SummaryListRowValueTagHelper.TagName, SummaryListRowActionsTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = SummaryListTagHelper.TagName)]
+[RestrictChildren(
+    SummaryListRowKeyTagHelper.TagName,
+    SummaryListRowKeyTagHelper.ShortTagName,
+    SummaryListRowValueTagHelper.TagName,
+    SummaryListRowValueTagHelper.ShortTagName,
+    SummaryListRowActionsTagHelper.TagName,
+    SummaryListRowActionsTagHelper.ShortTagName)]
 public class SummaryListRowTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-list-row";
+    internal const string ShortTagName = ShortTagNames.Row;
 
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new SummaryListRowContext());
+        ArgumentNullException.ThrowIfNull(context);
+
+        context.SetContextItem(new SummaryListRowContext(context.TagName));
     }
 
     /// <inheritdoc/>
@@ -27,7 +37,7 @@ public class SummaryListRowTagHelper : TagHelper
         var summaryListContext = context.GetContextItem<SummaryListContext>();
         var rowContext = context.GetContextItem<SummaryListRowContext>();
 
-        _ = await output.GetChildContentAsync();
+        await output.GetChildContentAsync();
 
         rowContext.ThrowIfIncomplete();
 

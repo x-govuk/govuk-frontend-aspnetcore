@@ -18,7 +18,7 @@ public class SummaryListRowActionTagHelperTests : TagHelperTestBase<SummaryListR
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext();
+        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
 
         var actionsContext = new SummaryListRowActionsContext();
 

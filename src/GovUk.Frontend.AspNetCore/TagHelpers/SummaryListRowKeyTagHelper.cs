@@ -7,9 +7,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the value in a GDS summary list component row.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryListRowTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = SummaryListRowTagHelper.ShortTagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the key for the row.")]
 public class SummaryListRowKeyTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-list-row-key";
+    internal const string ShortTagName = ShortTagNames.Key;
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -29,13 +32,15 @@ public class SummaryListRowKeyTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        summaryListRowContext.SetKey(new SummaryListOptionsRowKey
-        {
-            Text = null,
-            Html = content.ToTemplateString(),
-            Classes = classes,
-            Attributes = attributes
-        });
+        summaryListRowContext.SetKey(
+            new SummaryListOptionsRowKey
+            {
+                Text = null,
+                Html = content.ToTemplateString(),
+                Classes = classes,
+                Attributes = attributes
+            },
+            context.TagName);
 
         output.SuppressOutput();
     }

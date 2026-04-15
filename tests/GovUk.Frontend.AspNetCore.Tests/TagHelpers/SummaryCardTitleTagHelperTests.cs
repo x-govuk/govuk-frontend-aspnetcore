@@ -53,7 +53,7 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         var headingLevel = 3;
 
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetTitle(new());
+        summaryCardContext.SetTitle(new(), TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 
@@ -77,7 +77,9 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{SummaryCardTitleTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 
     [Theory]
@@ -89,7 +91,7 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         var headingLevel = 3;
 
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetActions(new());
+        summaryCardContext.SetActions(new(), SummaryCardActionsTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 
@@ -125,7 +127,7 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         var headingLevel = 3;
 
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetSummaryList(new());
+        summaryCardContext.SetSummaryList(new(), SummaryListTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 

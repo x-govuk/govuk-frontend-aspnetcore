@@ -4,7 +4,11 @@
 
 Targets GOV.UK Frontend v6.1.0.
 
+### Tag helpers
+
 `<govuk-header>` can now have additional content specified.
+
+The summary list tag helpers now support short tag name syntax.
 
 ## 4.0.1
 

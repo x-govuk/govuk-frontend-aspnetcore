@@ -7,7 +7,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GOV.UK summary card component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(SummaryCardTitleTagHelper.TagName, SummaryCardActionsTagHelper.TagName, SummaryListTagHelper.TagName)]
+[RestrictChildren(
+    SummaryCardTitleTagHelper.TagName,
+    SummaryCardTitleTagHelper.ShortTagName,
+    SummaryCardActionsTagHelper.TagName,
+    SummaryCardActionsTagHelper.ShortTagName,
+    SummaryListTagHelper.TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryCard)]
 public class SummaryCardTagHelper : TagHelper
 {

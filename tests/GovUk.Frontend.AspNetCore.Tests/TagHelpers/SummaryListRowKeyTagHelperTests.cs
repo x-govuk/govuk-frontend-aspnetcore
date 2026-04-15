@@ -15,7 +15,7 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext();
+        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
 
         var context = CreateTagHelperContext(
             className: className,
@@ -54,8 +54,8 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext();
-        rowContext.SetKey(new());
+        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
+        rowContext.SetKey(new(), SummaryListRowKeyTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 
@@ -76,7 +76,9 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{SummaryListRowKeyTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 
     [Theory]
@@ -88,8 +90,8 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext();
-        rowContext.SetValue(new());
+        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
+        rowContext.SetValue(new(), SummaryListRowValueTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 
@@ -122,8 +124,8 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext();
-        rowContext.SetActions(new());
+        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
+        rowContext.SetActions(new(), SummaryListRowActionsTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 

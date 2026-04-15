@@ -35,13 +35,24 @@ public class TagHelperApiProvider
         var tagHelperClassName = $"{TagHelperNamespace}.{tagHelperName}";
         var tagHelperType = typeof(GovUkFrontendOptions).Assembly.GetType(tagHelperClassName) ??
             throw new ArgumentException($"Could not find '{tagHelperClassName}'.", nameof(tagHelperName));
-        var htmlTargetElementAttr = tagHelperType.GetCustomAttribute<HtmlTargetElementAttribute>()!;
-        var tagName = htmlTargetElementAttr.Tag;
-        var tagStructure = htmlTargetElementAttr.TagStructure;
+        var htmlTargetElementAttrs = tagHelperType.GetCustomAttributes<HtmlTargetElementAttribute>().ToArray();
+        if (htmlTargetElementAttrs.Length == 0)
+        {
+            throw new ArgumentException($"Could not find HtmlTargetElementAttribute on '{tagHelperClassName}'.", nameof(tagHelperName));
+        }
+
+        var tagName = htmlTargetElementAttrs.Single(e => e.Tag.StartsWith("govuk")).Tag;
+        var shortTagName = htmlTargetElementAttrs.SingleOrDefault(e => !e.Tag.StartsWith("govuk-"))?.Tag;
+        var tagStructure = htmlTargetElementAttrs.Select(e => e.TagStructure).Distinct().Single();
 
         var documentationAttr = tagHelperType.GetCustomAttribute<TagHelperDocumentationAttribute>();
 
-        string[] parentTagNames = htmlTargetElementAttr.ParentTag is string parentTag ? [parentTag] : [];
+        var parentTagNames = htmlTargetElementAttrs
+            .Select(a => a.ParentTag)
+            .OfType<string>()
+            .Where(t => t.Length > 0)
+            .Distinct()
+            .ToArray();
 
         IEnumerable<TagHelperApiAttribute> GetAttributesForType(Type type)
         {
@@ -112,7 +123,7 @@ public class TagHelperApiProvider
             attributes.Add(new("(link attributes)", "", "See [documentation on links](../links.md) for more information."));
         }
 
-        return new TagHelperApi(tagName, attributes, tagStructure, parentTagNames, documentationAttr?.ContentDescription);
+        return new TagHelperApi(tagName, shortTagName, attributes, tagStructure, parentTagNames, documentationAttr?.ContentDescription);
     }
 
     private static XDocument LoadDocs()
@@ -136,6 +147,7 @@ public class TagHelperApiProvider
 
 public record TagHelperApi(
     string TagName,
+    string? ShortTagName,
     IReadOnlyCollection<TagHelperApiAttribute> Attributes,
     TagStructure TagStructure,
     string[] ParentTagNames,

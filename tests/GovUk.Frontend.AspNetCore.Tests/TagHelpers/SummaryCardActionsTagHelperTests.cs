@@ -88,7 +88,9 @@ public class SummaryCardActionsTagHelperTests : TagHelperTestBase<SummaryCardAct
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{SummaryCardActionsTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 
     [Theory]
@@ -97,7 +99,7 @@ public class SummaryCardActionsTagHelperTests : TagHelperTestBase<SummaryCardAct
     {
         // Arrange
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetSummaryList(new(), TagName);
+        summaryCardContext.SetSummaryList(new(), SummaryListTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 

@@ -76,7 +76,9 @@ public class SummaryListRowValueTagHelperTests : TagHelperTestBase<SummaryListRo
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{SummaryListRowValueTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 
     [Theory]

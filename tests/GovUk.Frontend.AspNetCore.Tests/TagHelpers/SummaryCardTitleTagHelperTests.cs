@@ -77,7 +77,9 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{SummaryCardTitleTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 
     [Theory]

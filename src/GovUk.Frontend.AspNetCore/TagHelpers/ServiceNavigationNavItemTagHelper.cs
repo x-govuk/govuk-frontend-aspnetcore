@@ -68,7 +68,7 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
 
         if (navContext.NavigationEndSlot is var (_, navigationEndTagName))
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, navigationEndTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, navigationEndTagName);
         }
 
         var content = await output.GetChildContentAsync();
@@ -97,7 +97,7 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
 
         if (navContext.Items.Count == 0)
         {
-            navContext.FirstItemTagName = output.TagName;
+            navContext.FirstItemTagName = context.TagName;
         }
 
         navContext.Items.Add(item);

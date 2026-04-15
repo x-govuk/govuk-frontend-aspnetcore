@@ -116,7 +116,7 @@ public abstract class DateInputItemTagHelperBase : TagHelper
 
         var itemContext = new DateInputContextItem
         {
-            TagName = output.TagName,
+            TagName = context.TagName,
             Attributes = attributes,
             AutoComplete = AutoComplete,
             Id = Id,

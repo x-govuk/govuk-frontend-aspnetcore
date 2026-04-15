@@ -116,10 +116,10 @@ public class ServiceNavigationNavTagHelper : TagHelper
 
         if (serviceNavigationContext.EndSlot is var (_, endSlotTagName))
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, endSlotTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, endSlotTagName);
         }
 
-        navContext.TagName = output.TagName;
+        navContext.TagName = context.TagName;
 
         _ = await output.GetChildContentAsync();
 

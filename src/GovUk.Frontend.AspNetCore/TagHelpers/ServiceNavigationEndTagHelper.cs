@@ -51,7 +51,7 @@ public class ServiceNavigationEndTagHelper : TagHelper
             throw ExceptionHelper.AttributesNotSupported();
         }
 
-        serviceNavigationContext.EndSlot = (content.ToTemplateString(), output.TagName);
+        serviceNavigationContext.EndSlot = (content.ToTemplateString(), context.TagName);
 
         output.SuppressOutput();
     }

@@ -55,6 +55,6 @@ public abstract class FormGroupErrorMessageTagHelperBase : TagHelper
             VisuallyHiddenText is not null ? new TemplateString(VisuallyHiddenText) : null,
             new AttributeCollection(output.Attributes),
             content?.ToTemplateString(),
-            output.TagName);
+            context.TagName);
     }
 }

@@ -38,7 +38,7 @@ public class PhaseBannerTagTagHelper : TagHelper
                 Classes = classes,
                 Attributes = attributes
             },
-            output.TagName);
+            context.TagName);
 
         output.SuppressOutput();
     }

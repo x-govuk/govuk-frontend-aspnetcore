@@ -34,7 +34,7 @@ public class RadiosItemConditionalTagHelper : TagHelper
             Html = content.ToTemplateString()
         };
 
-        itemContext.SetConditional(conditionalOptions, output.TagName);
+        itemContext.SetConditional(conditionalOptions, context.TagName);
 
         output.SuppressOutput();
     }

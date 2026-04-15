@@ -47,10 +47,10 @@ public class CheckboxesAfterInputsTagHelper : TagHelper
 
         if (output.Attributes.Count > 0)
         {
-            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(output.TagName);
+            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        checkboxesContext.SetAfterInputs(content.ToTemplateString(), output.TagName);
+        checkboxesContext.SetAfterInputs(content.ToTemplateString(), context.TagName);
 
         output.SuppressOutput();
     }

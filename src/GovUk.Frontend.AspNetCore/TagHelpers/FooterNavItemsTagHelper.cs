@@ -29,14 +29,14 @@ public class FooterNavItemsTagHelper : TagHelper
 
         if (navContext.Items is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterNavTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterNavTagHelper.TagName);
         }
 
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        navContext.Items = (itemsContext.Items, attributes, output.TagName);
+        navContext.Items = (itemsContext.Items, attributes, context.TagName);
 
         output.SuppressOutput();
     }

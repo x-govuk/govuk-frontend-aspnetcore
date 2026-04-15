@@ -29,19 +29,19 @@ public class FooterMetaItemsTagHelper : TagHelper
 
         if (metaContext.Items is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterMetaTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterMetaTagHelper.TagName);
         }
 
         if (metaContext.Content?.TagName is string contentTagName)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, contentTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, contentTagName);
         }
 
         _ = await output.GetChildContentAsync();
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        metaContext.Items = (itemsContext.Items, attributes, output.TagName);
+        metaContext.Items = (itemsContext.Items, attributes, context.TagName);
 
         output.SuppressOutput();
     }

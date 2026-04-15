@@ -36,7 +36,7 @@ public class FormGroupHintTagHelperBase : TagHelper
         formGroupContext.SetHint(
             new AttributeCollection(output.Attributes),
             content?.ToTemplateString(),
-            output.TagName);
+            context.TagName);
 
         output.SuppressOutput();
     }

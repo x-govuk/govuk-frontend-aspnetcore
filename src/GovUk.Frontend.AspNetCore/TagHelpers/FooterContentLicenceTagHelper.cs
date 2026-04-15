@@ -21,12 +21,12 @@ public class FooterContentLicenceTagHelper : TagHelper
 
         if (footerContext.ContentLicence is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterTagHelper.TagName);
         }
 
         if (footerContext.Copyright?.TagName is string copyrightTagName)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, copyrightTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, copyrightTagName);
         }
 
         TemplateString? resolvedContent = null;
@@ -52,7 +52,7 @@ public class FooterContentLicenceTagHelper : TagHelper
                 Html = resolvedContent,
                 Attributes = attributes
             },
-            output.TagName);
+            context.TagName);
 
         output.SuppressOutput();
     }

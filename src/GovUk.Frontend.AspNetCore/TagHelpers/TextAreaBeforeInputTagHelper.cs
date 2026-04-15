@@ -56,10 +56,10 @@ public class TextAreaBeforeInputTagHelper : TagHelper
 
         if (output.Attributes.Count > 0)
         {
-            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(output.TagName);
+            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        textAreaContext.SetBeforeInput(content.ToTemplateString(), output.TagName);
+        textAreaContext.SetBeforeInput(content.ToTemplateString(), context.TagName);
 
         output.SuppressOutput();
     }

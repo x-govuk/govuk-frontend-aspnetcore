@@ -47,10 +47,10 @@ public class RadiosAfterInputsTagHelper : TagHelper
 
         if (output.Attributes.Count > 0)
         {
-            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(output.TagName);
+            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        radiosContext.SetAfterInputs(content.ToTemplateString(), output.TagName);
+        radiosContext.SetAfterInputs(content.ToTemplateString(), context.TagName);
 
         output.SuppressOutput();
     }

@@ -50,10 +50,10 @@ public class DateInputBeforeInputsTagHelper : TagHelper
 
         if (output.Attributes.Count > 0)
         {
-            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(output.TagName);
+            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        dateInputContext.SetBeforeInputs(content.ToTemplateString(), output.TagName);
+        dateInputContext.SetBeforeInputs(content.ToTemplateString(), context.TagName);
 
         output.SuppressOutput();
     }

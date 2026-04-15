@@ -45,7 +45,7 @@ public abstract class FormGroupLabelTagHelperBase : TagHelper
             IsPageHeading,
             new AttributeCollection(output.Attributes),
             content?.ToTemplateString(),
-            output.TagName);
+            context.TagName);
 
         output.SuppressOutput();
     }

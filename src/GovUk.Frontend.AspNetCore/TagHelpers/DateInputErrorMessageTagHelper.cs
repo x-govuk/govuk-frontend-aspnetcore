@@ -49,6 +49,6 @@ public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
             VisuallyHiddenText is not null ? new TemplateString(VisuallyHiddenText) : null,
             attributes,
             content?.ToTemplateString(),
-            output.TagName);
+            context.TagName);
     }
 }

@@ -51,7 +51,7 @@ public class TextInputSuffixTagHelper : TagHelper
                 Classes = classes,
                 Attributes = attributes
             },
-            output.TagName);
+            context.TagName);
 
         output.SuppressOutput();
     }

@@ -43,12 +43,12 @@ public class ServiceNavigationNavStartTagHelper : TagHelper
 
         if (navContext.Items.Count > 0)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, navContext.FirstItemTagName!);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, navContext.FirstItemTagName!);
         }
 
         if (navContext.NavigationEndSlot is var (_, endTagName))
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, endTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, endTagName);
         }
 
         var content = await output.GetChildContentAsync();
@@ -63,7 +63,7 @@ public class ServiceNavigationNavStartTagHelper : TagHelper
             throw ExceptionHelper.AttributesNotSupported();
         }
 
-        navContext.NavigationStartSlot = (content.ToTemplateString(), output.TagName);
+        navContext.NavigationStartSlot = (content.ToTemplateString(), context.TagName);
 
         output.SuppressOutput();
     }

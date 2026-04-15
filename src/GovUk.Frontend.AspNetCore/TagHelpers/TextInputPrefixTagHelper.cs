@@ -52,7 +52,7 @@ public class TextInputPrefixTagHelper : TagHelper
                 Classes = classes,
                 Attributes = attributes
             },
-            output.TagName);
+            context.TagName);
 
         output.SuppressOutput();
     }

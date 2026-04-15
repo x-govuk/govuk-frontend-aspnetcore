@@ -21,7 +21,7 @@ public class FooterCopyrightTagHelper : TagHelper
 
         if (footerContext.Copyright is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterTagHelper.TagName);
         }
 
         TemplateString? resolvedContent = null;
@@ -47,7 +47,7 @@ public class FooterCopyrightTagHelper : TagHelper
                 Html = resolvedContent,
                 Attributes = attributes
             },
-            output.TagName);
+            context.TagName);
 
         output.SuppressOutput();
     }

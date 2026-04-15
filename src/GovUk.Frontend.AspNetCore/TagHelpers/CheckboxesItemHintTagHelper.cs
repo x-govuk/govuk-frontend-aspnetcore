@@ -36,7 +36,7 @@ public class CheckboxesItemHintTagHelper : TagHelper
             Html = content.ToTemplateString()
         };
 
-        itemContext.SetHint(hintOptions, output.TagName);
+        itemContext.SetHint(hintOptions, context.TagName);
 
         output.SuppressOutput();
     }

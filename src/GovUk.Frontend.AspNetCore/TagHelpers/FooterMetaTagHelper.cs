@@ -40,17 +40,17 @@ public class FooterMetaTagHelper : TagHelper
 
         if (footerContext.Meta is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterTagHelper.TagName);
         }
 
         if (footerContext.ContentLicence?.TagName is string contentLicenceTagName)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, contentLicenceTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, contentLicenceTagName);
         }
 
         if (footerContext.Copyright?.TagName is string copyrightTagName)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, copyrightTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, copyrightTagName);
         }
 
         _ = await output.GetChildContentAsync();
@@ -68,7 +68,7 @@ public class FooterMetaTagHelper : TagHelper
                 Attributes = attributes,
                 ContentAttributes = metaContext.Content?.Attributes
             },
-            output.TagName);
+            context.TagName);
 
         output.SuppressOutput();
     }

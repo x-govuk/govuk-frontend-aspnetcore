@@ -33,17 +33,17 @@ public class CookieBannerMessageHeadingTagHelper : TagHelper
 
         if (messageContext.Content is not null)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, messageContext.Content.Value.TagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, messageContext.Content.Value.TagName);
         }
 
         if (messageContext.Actions is not null)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, CookieBannerMessageActionsTagHelper.TagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, CookieBannerMessageActionsTagHelper.TagName);
         }
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        messageContext.Heading = new(content.ToTemplateString(), output.TagName, attributes);
+        messageContext.Heading = new(content.ToTemplateString(), context.TagName, attributes);
 
         output.SuppressOutput();
     }

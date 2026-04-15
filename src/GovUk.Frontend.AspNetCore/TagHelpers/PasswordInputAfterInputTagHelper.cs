@@ -57,10 +57,10 @@ public class PasswordInputAfterInputTagHelper : TagHelper
 
         if (output.Attributes.Count > 0)
         {
-            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(output.TagName);
+            _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        inputContext.SetAfterInput(content.ToTemplateString(), output.TagName);
+        inputContext.SetAfterInput(content.ToTemplateString(), context.TagName);
 
         output.SuppressOutput();
     }

@@ -21,7 +21,7 @@ public class FooterMetaContentTagHelper : TagHelper
 
         if (metaContext.Content is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterMetaTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterMetaTagHelper.TagName);
         }
 
         var content = await output.GetChildContentAsync();
@@ -33,6 +33,6 @@ public class FooterMetaContentTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        metaContext.Content = (content.ToTemplateString(), attributes, output.TagName);
+        metaContext.Content = (content.ToTemplateString(), attributes, context.TagName);
     }
 }

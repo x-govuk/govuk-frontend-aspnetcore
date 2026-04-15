@@ -33,12 +33,12 @@ public class CookieBannerMessageContentTagHelper : TagHelper
 
         if (messageContext.Actions is not null)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, CookieBannerMessageActionsTagHelper.TagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, CookieBannerMessageActionsTagHelper.TagName);
         }
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        messageContext.Content = new(content.ToTemplateString(), output.TagName, attributes);
+        messageContext.Content = new(content.ToTemplateString(), context.TagName, attributes);
 
         output.SuppressOutput();
     }

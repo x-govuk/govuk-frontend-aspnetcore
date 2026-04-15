@@ -41,12 +41,12 @@ public class ServiceNavigationStartTagHelper : TagHelper
 
         if (serviceNavigationContext.Nav is not null)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, serviceNavigationContext.Nav.TagName!);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, serviceNavigationContext.Nav.TagName!);
         }
 
         if (serviceNavigationContext.EndSlot is var (_, endTagName))
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, endTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, endTagName);
         }
 
         var content = await output.GetChildContentAsync();
@@ -61,7 +61,7 @@ public class ServiceNavigationStartTagHelper : TagHelper
             throw ExceptionHelper.AttributesNotSupported();
         }
 
-        serviceNavigationContext.StartSlot = (content.ToTemplateString(), output.TagName);
+        serviceNavigationContext.StartSlot = (content.ToTemplateString(), context.TagName);
 
         output.SuppressOutput();
     }

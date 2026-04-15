@@ -21,12 +21,12 @@ public class FooterNavTitleTagHelper : TagHelper
 
         if (navContext.Title is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(output.TagName, FooterNavTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterNavTagHelper.TagName);
         }
 
         if (navContext.Items?.TagName is string itemsTagName)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(output.TagName, itemsTagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, itemsTagName);
         }
 
         var content = await output.GetChildContentAsync();
@@ -38,7 +38,7 @@ public class FooterNavTitleTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        navContext.Title = (content.ToTemplateString(), attributes, output.TagName);
+        navContext.Title = (content.ToTemplateString(), attributes, context.TagName);
 
         output.SuppressOutput();
     }

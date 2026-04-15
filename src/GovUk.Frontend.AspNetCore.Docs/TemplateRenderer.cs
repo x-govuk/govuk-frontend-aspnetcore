@@ -111,8 +111,11 @@ public class TemplateRenderer
 
         if (tagHelperApi.ParentTagNames is not [])
         {
+            // Show the short tag name before the full one
+            var orderedParentTagNames = tagHelperApi.ParentTagNames.OrderByDescending(tn => !tn.StartsWith("govuk-")).ThenBy(tn => tn).ToArray();
+
             sb.AppendLine();
-            sb.AppendLine($"Must be inside a {string.Join(" or ", tagHelperApi.ParentTagNames.Select(t => $"`<{t}>`"))} element.");
+            sb.AppendLine($"Must be inside a {string.Join(" or ", orderedParentTagNames.Select(t => $"`<{t}>`"))} element.");
         }
 
         if (tagHelperApi.Attributes.Count > 0)

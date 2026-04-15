@@ -108,28 +108,28 @@ Must be inside a `<govuk-summary-list>` element.
 
 The content is the HTML to use within the key for the row.
 
-Must be inside a `<govuk-summary-list-row>` or `<row>` element.
+Must be inside a `<row>` or `<govuk-summary-list-row>` element.
 
 
 #### `<govuk-summary-list-row-value>`
 
 The content is the HTML to use within the value for the row.
 
-Must be inside a `<govuk-summary-list-row>` or `<row>` element.
+Must be inside a `<row>` or `<govuk-summary-list-row>` element.
 
 
 #### `<govuk-summary-list-row-actions>`
 
 The container element for the row's actions.
 
-Must be inside a `<govuk-summary-list-row>` or `<row>` element.
+Must be inside a `<row>` or `<govuk-summary-list-row>` element.
 
 
 #### `<govuk-summary-list-row-action>`
 
 The content is the HTML to use within the generated link.
 
-Must be inside a `<govuk-summary-list-row-actions>` or `<row-actions>` element.
+Must be inside a `<row-actions>` or `<govuk-summary-list-row-actions>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |
@@ -158,7 +158,7 @@ Must be inside a `<govuk-summary-card>` element.
 
 #### `<govuk-summary-card-action>`
 
-Must be inside a `<govuk-summary-card-actions>` or `<card-actions>` element.
+Must be inside a `<card-actions>` or `<govuk-summary-card-actions>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |

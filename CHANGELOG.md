@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+Targets GOV.UK Frontend v6.1.0.
+
 `<govuk-header>` can now have additional content specified.
 
 ## 4.0.1
@@ -14,6 +16,8 @@ Amends attribute propagation on `<govuk-service-navigation-nav-item>` to copy ex
 Attributes for the `<a>` element can still be specified by using `link-*` attributes.
 
 ## 4.0.0
+
+Targets GOV.UK Frontend v6.0.0.
 
 ### `_GovUkPageTemplate` view changes
 

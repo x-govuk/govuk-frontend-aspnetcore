@@ -5,7 +5,7 @@
     <RepoRoot>$([MSBuild]::EnsureTrailingSlash('$(MSBuildThisFileDirectory)'))</RepoRoot>
     <Nullable>enable</Nullable>
     <PackageOutputPath>$([MSBuild]::NormalizeDirectory('$(RepoRoot)', 'packages'))</PackageOutputPath>
-    <GovUkFrontendVersion>6.0.0</GovUkFrontendVersion>
+    <GovUkFrontendVersion>6.1.0</GovUkFrontendVersion>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('Tests'))">true</IsTestProject>
 

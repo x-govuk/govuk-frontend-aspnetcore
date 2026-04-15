@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryListRowActionsTagHelper.TagName)]
 [HtmlTargetElement(ShortTagName, ParentTag = SummaryListRowActionsTagHelper.ShortTagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the generated link.")]
 public class SummaryListRowActionTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-list-row-action";

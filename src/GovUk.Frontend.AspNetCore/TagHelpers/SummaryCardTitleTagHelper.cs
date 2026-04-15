@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = SummaryCardTagHelper.TagName)]
 [HtmlTargetElement(ShortTagName, ParentTag = SummaryCardTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use for the card's title.")]
 public class SummaryCardTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card-title";

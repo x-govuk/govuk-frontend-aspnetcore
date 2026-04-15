@@ -41,9 +41,9 @@ public class TagHelperApiProvider
             throw new ArgumentException($"Could not find HtmlTargetElementAttribute on '{tagHelperClassName}'.", nameof(tagHelperName));
         }
 
-        var preferredTagName = tagHelperType.GetField("TagName", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)?
-            .GetRawConstantValue() as string;
-        var htmlTargetElementAttr = htmlTargetElementAttrs.FirstOrDefault(a => a.Tag == preferredTagName) ?? htmlTargetElementAttrs[0];
+        var htmlTargetElementAttr = htmlTargetElementAttrs
+            .OrderByDescending(a => a.Tag.StartsWith("govuk-", StringComparison.Ordinal))
+            .First();
 
         var tagName = htmlTargetElementAttr.Tag;
         var tagStructure = htmlTargetElementAttr.TagStructure;
@@ -52,8 +52,8 @@ public class TagHelperApiProvider
 
         var parentTagNames = htmlTargetElementAttrs
             .Select(a => a.ParentTag)
-            .Where(t => !string.IsNullOrEmpty(t))
-            .Cast<string>()
+            .OfType<string>()
+            .Where(t => t.Length > 0)
             .Distinct()
             .ToArray();
 

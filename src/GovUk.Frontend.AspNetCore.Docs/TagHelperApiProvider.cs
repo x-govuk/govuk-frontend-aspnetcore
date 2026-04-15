@@ -35,13 +35,27 @@ public class TagHelperApiProvider
         var tagHelperClassName = $"{TagHelperNamespace}.{tagHelperName}";
         var tagHelperType = typeof(GovUkFrontendOptions).Assembly.GetType(tagHelperClassName) ??
             throw new ArgumentException($"Could not find '{tagHelperClassName}'.", nameof(tagHelperName));
-        var htmlTargetElementAttr = tagHelperType.GetCustomAttribute<HtmlTargetElementAttribute>()!;
+        var htmlTargetElementAttrs = tagHelperType.GetCustomAttributes<HtmlTargetElementAttribute>().ToArray();
+        if (htmlTargetElementAttrs.Length == 0)
+        {
+            throw new ArgumentException($"Could not find HtmlTargetElementAttribute on '{tagHelperClassName}'.", nameof(tagHelperName));
+        }
+
+        var preferredTagName = tagHelperType.GetField("TagName", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)?
+            .GetRawConstantValue() as string;
+        var htmlTargetElementAttr = htmlTargetElementAttrs.FirstOrDefault(a => a.Tag == preferredTagName) ?? htmlTargetElementAttrs[0];
+
         var tagName = htmlTargetElementAttr.Tag;
         var tagStructure = htmlTargetElementAttr.TagStructure;
 
         var documentationAttr = tagHelperType.GetCustomAttribute<TagHelperDocumentationAttribute>();
 
-        string[] parentTagNames = htmlTargetElementAttr.ParentTag is string parentTag ? [parentTag] : [];
+        var parentTagNames = htmlTargetElementAttrs
+            .Select(a => a.ParentTag)
+            .Where(t => !string.IsNullOrEmpty(t))
+            .Cast<string>()
+            .Distinct()
+            .ToArray();
 
         IEnumerable<TagHelperApiAttribute> GetAttributesForType(Type type)
         {

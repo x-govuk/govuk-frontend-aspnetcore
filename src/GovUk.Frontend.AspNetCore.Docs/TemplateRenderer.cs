@@ -89,7 +89,12 @@ public class TemplateRenderer
 
         var sb = new StringBuilder();
 
-        sb.Append($"#### `<{tagHelperApi.TagName}>`");
+        sb.Append($"####");
+        if (tagHelperApi.ShortTagName is not null)
+        {
+            sb.Append($" `<{tagHelperApi.ShortTagName}>` /");
+        }
+        sb.Append($" `<{tagHelperApi.TagName}>`");
         sb.AppendLine();
 
         if (tagHelperApi.TagStructure == TagStructure.WithoutEndTag)

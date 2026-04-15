@@ -99,33 +99,33 @@
 #### `<govuk-summary-list>`
 
 
-#### `<govuk-summary-list-row>`
+#### `<row>` / `<govuk-summary-list-row>`
 
 Must be inside a `<govuk-summary-list>` element.
 
 
-#### `<govuk-summary-list-row-key>`
+#### `<key>` / `<govuk-summary-list-row-key>`
 
 The content is the HTML to use within the key for the row.
 
 Must be inside a `<row>` or `<govuk-summary-list-row>` element.
 
 
-#### `<govuk-summary-list-row-value>`
+#### `<value>` / `<govuk-summary-list-row-value>`
 
 The content is the HTML to use within the value for the row.
 
 Must be inside a `<row>` or `<govuk-summary-list-row>` element.
 
 
-#### `<govuk-summary-list-row-actions>`
+#### `<row-actions>` / `<govuk-summary-list-row-actions>`
 
 The container element for the row's actions.
 
 Must be inside a `<row>` or `<govuk-summary-list-row>` element.
 
 
-#### `<govuk-summary-list-row-action>`
+#### `<action>` / `<govuk-summary-list-row-action>`
 
 The content is the HTML to use within the generated link.
 
@@ -140,7 +140,7 @@ Must be inside a `<row-actions>` or `<govuk-summary-list-row-actions>` element.
 #### `<govuk-summary-card>`
 
 
-#### `<govuk-summary-card-title>`
+#### `<title>` / `<govuk-summary-card-title>`
 
 The content is the HTML to use for the card's title.
 
@@ -151,12 +151,12 @@ Must be inside a `<govuk-summary-card>` element.
 | `heading-level` | `System.Int32?` | The heading level. Must be between `1` and `6` (inclusive). The default is `2`. |
 
 
-#### `<govuk-summary-card-actions>`
+#### `<card-actions>` / `<govuk-summary-card-actions>`
 
 Must be inside a `<govuk-summary-card>` element.
 
 
-#### `<govuk-summary-card-action>`
+#### `<action>` / `<govuk-summary-card-action>`
 
 Must be inside a `<card-actions>` or `<govuk-summary-card-actions>` element.
 

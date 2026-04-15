@@ -41,12 +41,9 @@ public class TagHelperApiProvider
             throw new ArgumentException($"Could not find HtmlTargetElementAttribute on '{tagHelperClassName}'.", nameof(tagHelperName));
         }
 
-        var htmlTargetElementAttr = htmlTargetElementAttrs
-            .OrderByDescending(a => a.Tag.StartsWith("govuk-", StringComparison.Ordinal))
-            .First();
-
-        var tagName = htmlTargetElementAttr.Tag;
-        var tagStructure = htmlTargetElementAttr.TagStructure;
+        var tagName = htmlTargetElementAttrs.Single(e => e.Tag.StartsWith("govuk")).Tag;
+        var shortTagName = htmlTargetElementAttrs.SingleOrDefault(e => !e.Tag.StartsWith("govuk-"))?.Tag;
+        var tagStructure = htmlTargetElementAttrs.Select(e => e.TagStructure).Distinct().Single();
 
         var documentationAttr = tagHelperType.GetCustomAttribute<TagHelperDocumentationAttribute>();
 
@@ -126,7 +123,7 @@ public class TagHelperApiProvider
             attributes.Add(new("(link attributes)", "", "See [documentation on links](../links.md) for more information."));
         }
 
-        return new TagHelperApi(tagName, attributes, tagStructure, parentTagNames, documentationAttr?.ContentDescription);
+        return new TagHelperApi(tagName, shortTagName, attributes, tagStructure, parentTagNames, documentationAttr?.ContentDescription);
     }
 
     private static XDocument LoadDocs()
@@ -150,6 +147,7 @@ public class TagHelperApiProvider
 
 public record TagHelperApi(
     string TagName,
+    string? ShortTagName,
     IReadOnlyCollection<TagHelperApiAttribute> Attributes,
     TagStructure TagStructure,
     string[] ParentTagNames,

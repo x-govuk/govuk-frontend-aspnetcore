@@ -268,6 +268,7 @@ see the [SASS sample](samples/Samples.Sass) for an example of how to set up your
 - [Service navigation](docs/components/service-navigation.md)
 - [Skip link](docs/components/skip-link.md)
 - [Summary list](docs/components/summary-list.md)
+- [Table](docs/components/table.md)
 - [Tabs](docs/components/tabs.md)
 - [Tag](docs/components/tag.md)
 - [Textarea](docs/components/textarea.md)

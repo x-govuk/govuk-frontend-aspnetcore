@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 4.1.0
 
 Targets GOV.UK Frontend v6.1.0.
 

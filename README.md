@@ -115,6 +115,8 @@ In your `_Layout.cshtml` file:
                 <govuk-footer-meta-item href="#">Item 3</govuk-footer-meta-item>
             </govuk-footer-meta-items>
         </govuk-footer-meta>
+        <govuk-footer-content-licence />
+        <govuk-footer-copyright />
     </govuk-footer>
 }
 ```

@@ -53,7 +53,7 @@ public class TitleTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
+        var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
 
         if (_optionsAccessor.Value.PrependErrorToTitle && containerErrorContext.ErrorSummaryHasBeenRendered)
         {

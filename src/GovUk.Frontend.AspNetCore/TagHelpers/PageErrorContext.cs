@@ -6,9 +6,7 @@ internal class PageErrorContext
 {
     private readonly List<(TemplateString Html, TemplateString? Href)> _errors = [];
 
-    public IReadOnlyCollection<(TemplateString Html, TemplateString? Href)> Errors => _errors.AsReadOnly();
-
-    public bool ErrorSummaryHasBeenRendered { get; set; }
+    internal bool ErrorSummaryHasBeenRendered { get; set; }
 
     public void AddError(TemplateString html, TemplateString? href)
     {
@@ -17,8 +15,8 @@ internal class PageErrorContext
         _errors.Add((html, href));
     }
 
-    public IReadOnlyCollection<ErrorSummaryOptionsErrorItem> GetErrorList() =>
-        Errors
+    public IReadOnlyCollection<ErrorSummaryOptionsErrorItem> GetErrorSummaryItems() =>
+        _errors
             .Select(i => new ErrorSummaryOptionsErrorItem
             {
                 Href = i.Href,

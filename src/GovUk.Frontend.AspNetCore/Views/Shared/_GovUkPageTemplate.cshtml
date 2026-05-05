@@ -190,7 +190,7 @@
                 @await RenderSectionAsync("BeforeContent")
             }
             <!main class="@Classes("govuk-main-wrapper", ViewData[ViewDataKeys.MainClasses] as string)" id="main-content" role="main" lang="@ViewData[ViewDataKeys.MainLang]"@Attributes(ViewData[ViewDataKeys.MainAttributes] as AttributeDictionary)>
-                @if (!Context.GetContainerErrorContext().ErrorSummaryHasBeenRendered)
+                @if (!Context.GetPageErrorContext().ErrorSummaryHasBeenRendered)
                 {
                     <govuk-error-summary/>
                 }

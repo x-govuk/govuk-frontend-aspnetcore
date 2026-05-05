@@ -794,7 +794,7 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
 
         // Assert
         Assert.Collection(
-            tagHelper.ViewContext.HttpContext.GetContainerErrorContext().Errors,
+            tagHelper.ViewContext.HttpContext.GetPageErrorContext().Errors,
             error =>
             {
                 Assert.Equal(errorHtml, error.Html);

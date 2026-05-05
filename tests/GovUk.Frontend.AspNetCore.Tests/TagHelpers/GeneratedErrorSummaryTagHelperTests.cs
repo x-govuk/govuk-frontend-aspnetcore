@@ -41,7 +41,7 @@ public class GeneratedErrorSummaryTagHelperTests
         componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
 
         var viewContext = TestUtils.CreateViewContext();
-        var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
+        var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.AddError(errorHtml, errorHref);
 
         var tagHelper = new GeneratedErrorSummaryTagHelper(componentGeneratorMock.Object, options)

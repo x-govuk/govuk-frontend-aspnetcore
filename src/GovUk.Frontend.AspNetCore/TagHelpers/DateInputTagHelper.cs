@@ -302,7 +302,7 @@ public class DateInputTagHelper : TagHelper
                 .First(i => i.Classes?.Contains("govuk-input--error") is true)
                 .Id;
 
-            var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
+            var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
             containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + firstFieldWithError!);
         }
 

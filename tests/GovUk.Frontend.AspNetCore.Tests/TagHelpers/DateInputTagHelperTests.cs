@@ -1163,7 +1163,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         // Assert
         Assert.Collection(
-            tagHelper.ViewContext.HttpContext.GetContainerErrorContext().Errors,
+            tagHelper.ViewContext.HttpContext.GetPageErrorContext().Errors,
             error =>
             {
                 Assert.Equal("Error", error.Html);

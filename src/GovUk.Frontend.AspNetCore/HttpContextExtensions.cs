@@ -28,14 +28,16 @@ public static class HttpContextExtensions
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        if (context.Items.TryGetValue(typeof(PageErrorContext), out var containerErrorContextObj) &&
+        var itemsKey = typeof(PageErrorContext);
+
+        if (context.Items.TryGetValue(itemsKey, out var containerErrorContextObj) &&
             containerErrorContextObj is PageErrorContext pageErrorContext)
         {
             return pageErrorContext;
         }
 
         pageErrorContext = new PageErrorContext();
-        context.Items[typeof(PageErrorContext)] = new PageErrorContext();
+        context.Items[itemsKey] = pageErrorContext;
         return pageErrorContext;
     }
 }

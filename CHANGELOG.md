@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 4.1.1
 
 Adds `AddPageError` extension method to `HttpContext`.
 

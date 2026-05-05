@@ -6,6 +6,8 @@ internal class PageErrorContext
 {
     private readonly List<(TemplateString Html, TemplateString? Href)> _errors = [];
 
+    internal IReadOnlyCollection<(TemplateString Html, TemplateString? Href)> Errors => _errors;
+
     internal bool ErrorSummaryHasBeenRendered { get; set; }
 
     public void AddError(TemplateString html, TemplateString? href)

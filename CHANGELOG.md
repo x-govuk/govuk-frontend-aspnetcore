@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+Adds `AddPageError` extension method to `HttpContext`.
+
 ## 4.1.0
 
 Targets GOV.UK Frontend v6.1.0.

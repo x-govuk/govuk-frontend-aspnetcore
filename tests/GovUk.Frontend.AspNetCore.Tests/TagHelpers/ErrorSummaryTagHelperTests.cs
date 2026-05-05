@@ -45,7 +45,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             });
 
         var viewContext = TestUtils.CreateViewContext();
-        var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
+        var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
         ErrorSummaryOptions? actualOptions = null;
@@ -181,7 +181,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             });
 
         var viewContext = TestUtils.CreateViewContext();
-        var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
+        var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
@@ -233,7 +233,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             });
 
         var viewContext = TestUtils.CreateViewContext();
-        var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
+        var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
 
         var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
@@ -277,7 +277,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             });
 
         var viewContext = TestUtils.CreateViewContext();
-        var containerErrorContext = viewContext.HttpContext.GetContainerErrorContext();
+        var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
 
         var (componentGenerator, _) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 

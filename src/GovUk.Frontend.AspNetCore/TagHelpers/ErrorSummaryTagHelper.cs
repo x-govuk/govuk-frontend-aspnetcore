@@ -59,7 +59,7 @@ public class ErrorSummaryTagHelper : TagHelper
 
         _ = await output.GetChildContentAsync();
 
-        var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
+        var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
 
         IReadOnlyCollection<ErrorSummaryOptionsErrorItem> errorList = errorSummaryContext.HaveExplicitItems
             ? errorSummaryContext.Items
@@ -72,7 +72,7 @@ public class ErrorSummaryTagHelper : TagHelper
                     ItemAttributes = i.ItemAttributes
                 })
                 .ToArray()
-            : containerErrorContext.GetErrorList();
+            : containerErrorContext.GetErrorSummaryItems();
         if (errorSummaryContext.Title is null &&
             errorSummaryContext.Description is null &&
             errorList.Count == 0)

@@ -55,7 +55,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        _ = await output.GetChildContentAsync();
+        await output.GetChildContentAsync();
 
         var generateErrorSummariesOptions = _optionsAccessor.Value.ErrorSummaryGeneration;
 
@@ -68,8 +68,10 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
             return;
         }
 
-        var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
-        if (containerErrorContext.Errors.Count == 0)
+        var pageErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
+        var errorSummaryItems = pageErrorContext.GetErrorSummaryItems();
+
+        if (errorSummaryItems.Count == 0)
         {
             return;
         }
@@ -82,7 +84,7 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
             TitleHtml = DefaultComponentGenerator.DefaultErrorSummaryTitleHtml,
             DescriptionText = null,
             DescriptionHtml = null,
-            ErrorList = containerErrorContext.GetErrorList(),
+            ErrorList = errorSummaryItems,
             Classes = null,
             Attributes = null,
             DisableAutoFocus = disableAutoFocus,
@@ -92,6 +94,6 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
 
         output.PreContent.AppendHtml(errorSummary.GetContent());
 
-        containerErrorContext.ErrorSummaryHasBeenRendered = true;
+        pageErrorContext.ErrorSummaryHasBeenRendered = true;
     }
 }

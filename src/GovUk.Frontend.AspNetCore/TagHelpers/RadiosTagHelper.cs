@@ -170,7 +170,7 @@ public class RadiosTagHelper : TagHelper
         if (errorMessageOptions is not null)
         {
             Debug.Assert(errorMessageOptions.Html is not null);
-            var containerErrorContext = ViewContext!.HttpContext.GetContainerErrorContext();
+            var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
             containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + idPrefix);
         }
     }

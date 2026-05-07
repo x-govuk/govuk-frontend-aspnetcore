@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+Fixes default navigation ID and menu button text on service navigation components.
+
 ## 4.1.1
 
 Adds `AddPageError` extension method to `HttpContext`.

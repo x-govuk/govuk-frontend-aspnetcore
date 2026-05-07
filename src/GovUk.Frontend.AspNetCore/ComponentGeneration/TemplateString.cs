@@ -321,7 +321,6 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         return thisHtml.Contains(otherHtml, StringComparison.Ordinal);
     }
 
-    // TEMP
     internal IHtmlContent GetRawHtml()
     {
         if (_value is string str)
@@ -369,6 +368,13 @@ public static class TemplateStringExtensions
     /// <param name="content">The <see cref="IHtmlContent"/> to create the <see cref="TemplateString"/> from.</param>
     /// <returns>A new <see cref="TemplateString"/> wrapping the specified <see cref="IHtmlContent"/>.</returns>
     public static TemplateString ToTemplateString(this IHtmlContent? content) => new(content);
+
+    internal static TemplateString WithEmptyFallback(this TemplateString? templateString, TemplateString? fallback)
+    {
+        ArgumentNullException.ThrowIfNull(fallback);
+
+        return !templateString.IsEmpty() ? templateString : fallback;
+    }
 }
 
 /// <summary>

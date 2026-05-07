@@ -8,8 +8,8 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var menuButtonText = options.MenuButtonText ?? "Menu";
-        var navigationId = options.NavigationId ?? "navigation";
+        var menuButtonText = options.MenuButtonText.WithEmptyFallback("Menu");
+        var navigationId = options.NavigationId.WithEmptyFallback("navigation");
 
         var innerContent = CreateInnerContent();
 

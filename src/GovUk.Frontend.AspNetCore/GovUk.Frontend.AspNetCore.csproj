@@ -46,16 +46,6 @@
           LogStandardErrorAsError="true" />
   </Target>
 
-  <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
-    <ItemGroup>
-      <_PackageFiles Include="$(_NpmLibDirectory)\dist\govuk\**\*">
-        <PackagePath>content\govuk-frontend\%(RecursiveDir)</PackagePath>
-        <Visible>false</Visible>
-        <BuildAction>Content</BuildAction>
-      </_PackageFiles>
-    </ItemGroup>
-  </Target>
-
   <Target Name="CopyXmlDocToDocsProject" AfterTargets="Build">
     <ItemGroup>
       <_XmlDocFile Include="$(OutputPath)GovUk.Frontend.AspNetCore.xml" />
@@ -88,32 +78,15 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.css" Visible="false">
-      <LinkedName>govuk-frontend.min.css</LinkedName>
-    </_CompiledAssets>
-    <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.js" Visible="false">
-      <LinkedName>govuk-frontend.min.js</LinkedName>
-    </_CompiledAssets>
-
-    <EmbeddedResource Include="$(GovUkFrontendLibrary)assets\**\*">
-      <Link>Content/Assets/%(RecursiveDir)%(Filename)%(Extension)</Link>
-      <LogicalName>Content/Assets/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="@(_CompiledAssets)">
-      <Link>Content/Compiled/%(LinkedName)</Link>
-      <LogicalName>Content/Compiled/%(LinkedName)</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ComponentGeneration\Templates\*.liquid" />
-    <EmbeddedResource Include="ComponentGeneration\Templates\*.liquid" />
-  </ItemGroup>
+  <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
+    <ItemGroup>
+      <_PackageFiles Include="$(_NpmLibDirectory)\dist\govuk\**\*">
+        <PackagePath>content\govuk-frontend\%(RecursiveDir)</PackagePath>
+        <Visible>false</Visible>
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+  </Target>
 
   <ItemGroup>
     <Content Include="Package\**\*" Pack="true" PackagePath="$(RecursiveDir)" />

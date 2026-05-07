@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <RestoreGovUkFrontendNpmPackage Condition="'$(RestoreGovUkFrontendNpmPackage)' == ''">false</RestoreGovUkFrontendNpmPackage>
-    <GovUkFrontendNpmPackageLocation Condition="'$(GovUkFrontendNpmPackageLocation)' == ''">govuk-frontend</GovUkFrontendNpmPackageLocation>
-    <CopyGovUkFrontendAssetsToWebRoot Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == ''">true</CopyGovUkFrontendAssetsToWebRoot>
+    <!-- Backward-compat with older property names -->
+    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == '' And '$(RestoreGovUkFrontendNpmPackage)' == 'true'">
+      $(GovUkFrontendNpmPackageLocation)
+    </GovUkFrontendNpmPackageDirectory>
+
+    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == ''">true</EnableGovUkFrontendSupport>
+    <GovUkFrontendAssetsDirectory Condition="'$(GovUkFrontendAssetsDirectory)' == ''">wwwroot/assets</GovUkFrontendAssetsDirectory>
+    <GovUkFrontendJavaScriptDirectory Condition="'$(GovUkFrontendJavaScriptDirectory)' == ''">wwwroot</GovUkFrontendJavaScriptDirectory>
+    <GovUkFrontendStylesheetDirectory Condition="'$(GovUkFrontendStylesheetDirectory)' == ''">wwwroot</GovUkFrontendStylesheetDirectory>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(ImplicitUsings)' == 'enable'">
+    <Using Include="GovUk.Frontend.AspNetCore" />
+  </ItemGroup>
 </Project>

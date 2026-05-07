@@ -27,5 +27,6 @@ public enum FrontendPackageHostingOptions
     /// <summary>
     /// Whether source map references should be removed from the compiled CSS and JavaScript files.
     /// </summary>
+    [Obsolete("This property is no longer used.")]
     RemoveSourceMapReferences = 1 << 2
 }

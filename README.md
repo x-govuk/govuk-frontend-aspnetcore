@@ -220,28 +220,25 @@ See the `Samples.MvcStarter` project for an example of this working.
 
 ## GOV.UK Frontend assets
 
-By default, static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend package will be hosted automatically.
+By default, static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend NPM package will be automatically copied
+into the `wwwroot` folder of your project.
 
-To disable hosting of these assets or to only serve a subset of the assets, override `FrontendPackageHostingOptions`:
-```cs
-services.AddGovUkFrontend(options =>
-{
-    // Host both static assets and compiled assets (the default)
-    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets | FrontendPackageHostingOptions.HostCompiledFiles;
+You can adjust the behaviour of the asset copying by setting the following MSBuild properties in your project file:
 
-    // Don't host anything
-    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.None;
+| MSBuild property                   | Description                                                   | Default          |
+|------------------------------------|---------------------------------------------------------------|------------------|
+| `GovUkFrontendAssetsDirectory`     | The directory to copy the static assets into.                 | `wwwroot/assets` |
+| `GovUkFrontendJavaScriptDirectory` | The directory to copy the `govuk-frontend.min.js` file into.  | `wwwroot`        |
+| `GovUkFrontendStylesheetDirectory` | The directory to copy the `govuk-frontend.min.css` file into. | `wwwroot`        |
 
-    // Only host static assets
-    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets;
+Setting an empty value for any of the above properties will prevent the corresponding assets from being copied into your project.
 
-    // Only host compiled assets (JavaScript and CSS)
-    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostCompiledFiles;
-});
-```
+If you want the entire `govuk-frontend` NPM package to be copied into your project e.g. so you can reference SASS files from your own stylesheet,
+set `GovUkFrontendNpmPackageDirectory` to a non-empty value e.g. `lib/govuk-frontend`.
+See the [SASS sample](samples/Samples.Sass) for a full example of how to set up your project with SASS integration.
 
-If you're using SASS and want to be able to reference the `govuk-frontend` SASS variables, mixins and functions in your own SASS files,
-see the [SASS sample](samples/Samples.Sass) for an example of how to set up your project.
+You can disable the automatic copying of all assets by setting `EnableGovUkFrontendSupport` to `false`.
+This is useful if you want to manage the assets yourself e.g. by referencing them directly from the `node_modules` folder or by using a CDN.
 
 ## Components
 

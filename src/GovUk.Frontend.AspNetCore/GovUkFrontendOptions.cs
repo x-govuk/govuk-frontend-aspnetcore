@@ -26,9 +26,6 @@ public class GovUkFrontendOptions
 
         ErrorSummaryGeneration = ErrorSummaryGenerationOptions.PrependToMainElement;
         PrependErrorToTitle = true;
-        FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets |
-            FrontendPackageHostingOptions.HostCompiledFiles |
-            FrontendPackageHostingOptions.RemoveSourceMapReferences;
     }
 
     /// <summary>
@@ -48,6 +45,7 @@ public class GovUkFrontendOptions
     public bool AddNovalidateAttributeToForms { get; set; }
 
     /// <inheritdoc cref="AspNetCore.FrontendPackageHostingOptions"/>
+    [Obsolete(message: "Use GovUkFrontend MSBuild properties instead.", error: true, DiagnosticId = DiagnosticIds.UseGovUkFrontendMsBuildPropertiesInstead)]
     public FrontendPackageHostingOptions FrontendPackageHostingOptions { get; set; }
 
     /// <summary>
@@ -80,6 +78,8 @@ public class GovUkFrontendOptions
     /// The default is <c>true</c>.
     /// </remarks>
     public bool PrependErrorToTitle { get; set; }
+
+    internal string AssetsPath { get; set; } = "/assets";
 
     /// <summary>
     /// Registers a <see cref="DateInputModelConverter"/> for the specified <see cref="Type"/>.

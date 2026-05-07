@@ -13,14 +13,14 @@ namespace GovUk.Frontend.AspNetCore;
 public class PageTemplateHelper
 {
     private const string JsEnabledScript = "document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');";
+    private const string ScriptFileName = "govuk-frontend.min.js";
+    private const string StylesheetFileName = "govuk-frontend.min.css";
 
     /// <summary>
     /// Gets the version of the GOV.UK Frontend library.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static string GovUkFrontendVersion => GovUkFrontendInfo.Version;
-
-    internal static PathString DefaultAssetsPath => new("/assets");
 
     internal static PathString DefaultCompiledContentPath => new("");
 
@@ -92,7 +92,7 @@ public class PageTemplateHelper
 
         TagBuilder GenerateImportScript()
         {
-            var src = $"{pathBase}/{GetScriptFileName()}";
+            var src = $"{pathBase}/{ScriptFileName}";
 
             var tagBuilder = new TagBuilder("script");
             tagBuilder.MergeAttribute("type", "module");
@@ -133,11 +133,8 @@ public class PageTemplateHelper
     /// </remarks>
     /// <param name="pathBase">The base path that the stylesheet is hosted under.</param>
     /// <returns><see cref="IHtmlContent"/> containing the <c>link</c> tags.</returns>
-    public IHtmlContent GenerateStyleImports(PathString pathBase)
-    {
-        var fileName = GetStylesheetFileName();
-        return new HtmlString($"<link href=\"{pathBase}/{fileName}\" rel=\"stylesheet\">");
-    }
+    public IHtmlContent GenerateStyleImports(PathString pathBase) =>
+        new HtmlString($"<link href=\"{pathBase}/{StylesheetFileName}\" rel=\"stylesheet\">");
 
     /// <summary>
     /// Gets all the CSP hashes for the inline scripts used in the page template.
@@ -172,11 +169,8 @@ public class PageTemplateHelper
     public string GetInitScriptCspHash(PathString pathBase) =>
         GenerateCspHash(GetInitScriptContents(pathBase));
 
-    private string GetInitScriptContents(PathString pathBase)
-    {
-        var fileName = GetScriptFileName();
-        return $"\nimport {{ initAll }} from '{pathBase}/{fileName}'\ninitAll()\n";
-    }
+    private string GetInitScriptContents(PathString pathBase) =>
+        $"\nimport {{ initAll }} from '{pathBase}/{ScriptFileName}'\ninitAll()\n";
 
     private static string GenerateCspHash(string value)
     {
@@ -186,10 +180,4 @@ public class PageTemplateHelper
 #pragma warning restore CA1850
         return $"'sha256-{Convert.ToBase64String(hash)}'";
     }
-
-    private static string GetScriptFileName() =>
-        $"govuk-frontend.min.js?{HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendVersion}";
-
-    private static string GetStylesheetFileName() =>
-        $"govuk-frontend.min.css?{HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendVersion}";
 }

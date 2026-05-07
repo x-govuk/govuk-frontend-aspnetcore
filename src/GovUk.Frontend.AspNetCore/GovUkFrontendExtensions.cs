@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore;
@@ -46,7 +45,6 @@ public static class GovUkFrontendExtensions
         services.TryAddSingleton<IComponentGenerator, DefaultComponentGenerator>();
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
-        services.AddSingleton<IConfigureOptions<GovUkFrontendOptions>, ConfigureGovUkFrontendOptions>();
         services.AddTransient<PageTemplateHelper>();
         services.AddSingleton<ITagHelperInitializer<ButtonTagHelper>, ButtonTagHelperInitializer>();
         services.AddSingleton<ITagHelperInitializer<FileUploadTagHelper>, FileUploadTagHelperInitializer>();
@@ -63,40 +61,6 @@ public static class GovUkFrontendExtensions
     public static IApplicationBuilder UseGovUkFrontend(this IApplicationBuilder app)
     {
         ArgumentNullException.ThrowIfNull(app);
-
-        var options = app.ApplicationServices.GetRequiredService<IOptions<GovUkFrontendOptions>>();
-
-        if (options.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
-        {
-            var fileProvider = new ManifestEmbeddedFileProvider(
-                typeof(GovUkFrontendExtensions).Assembly,
-                root: "Content/Assets");
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = fileProvider,
-                RequestPath = PageTemplateHelper.DefaultAssetsPath,
-                OnPrepareResponse = ctx =>
-                {
-                    var hasVersionQueryParam =
-                        ctx.Context.Request.Query[HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName].Count != 0;
-
-                    if (hasVersionQueryParam)
-                    {
-                        ctx.Context.Response.Headers.CacheControl = "Cache-Control: public, max-age=31536000, immutable";
-                    }
-                }
-            });
-        }
-
-        if (options.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles))
-        {
-            var fileProvider = new ManifestEmbeddedFileProvider(
-                typeof(GovUkFrontendExtensions).Assembly,
-                root: "Content/Compiled");
-
-            app.UseMiddleware<HostCompiledAssetsMiddleware>(fileProvider);
-        }
 
         return app;
     }

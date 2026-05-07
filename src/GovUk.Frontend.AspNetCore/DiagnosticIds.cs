@@ -7,4 +7,5 @@ internal static class DiagnosticIds
     public const string UsePrependErrorSummaryAttributeInstead = "GFA0003";
     public const string UseErrorPrefixAttributeInstead = "GFA0004";
     public const string UseGenerateErrorSummariesInstead = "GFA0005";
+    public const string UseGovUkFrontendMsBuildPropertiesInstead = "GFA0006";
 }

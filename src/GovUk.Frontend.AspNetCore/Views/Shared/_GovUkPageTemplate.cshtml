@@ -11,7 +11,7 @@
 @addTagHelper *, GovUk.Frontend.AspNetCore
 @{
     var assetPath = ViewData[ViewDataKeys.AssetPath] as PathString? ??
-        Context.Request.PathBase + PageTemplateHelper.DefaultAssetsPath;
+        Context.Request.PathBase + OptionsAccessor.Value.AssetsPath;
 
     var cspNonce = ViewData[ViewDataKeys.CspNonce] as string ?? OptionsAccessor.Value.GetCspNonceForRequest?.Invoke(ViewContext.HttpContext);
 
@@ -72,17 +72,7 @@
         return new HtmlString(buffer.ToString());
     }
 
-    string GetStaticAssetUrl(string url)
-    {
-        var result = assetPath + "/" + url;
-
-        if (OptionsAccessor.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
-        {
-            result = QueryHelpers.AddQueryString(result, HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName, GovUkFrontendInfo.Version);
-        }
-
-        return result;
-    }
+    string GetStaticAssetUrl(string url) => assetPath + "/" + url;
 }
 <!DOCTYPE html>
 <html lang="@htmlLang" class="@Classes("govuk-template", ViewData[ViewDataKeys.HtmlClasses] as string)">
@@ -108,11 +98,11 @@
     }
     else
     {
-        <link rel="icon" sizes="48x48" href="@(GetStaticAssetUrl("images/favicon.ico"))">
-        <link rel="icon" sizes="any" href="@(GetStaticAssetUrl("images/favicon.svg"))" type="image/svg+xml">
-        <link rel="mask-icon" href="@(GetStaticAssetUrl("images/govuk-icon-mask.svg"))" color="@themeColor">
-        <link rel="apple-touch-icon" href="@(GetStaticAssetUrl("images/govuk-icon-180.png"))">
-        <link rel="manifest" href="@(GetStaticAssetUrl("manifest.json"))">
+        <link rel="icon" sizes="48x48" href="~@(GetStaticAssetUrl("images/favicon.ico"))">
+        <link rel="icon" sizes="any" href="~@(GetStaticAssetUrl("images/favicon.svg"))" type="image/svg+xml">
+        <link rel="mask-icon" href="~@(GetStaticAssetUrl("images/govuk-icon-mask.svg"))" color="@themeColor">
+        <link rel="apple-touch-icon" href="~@(GetStaticAssetUrl("images/govuk-icon-180.png"))">
+        <link rel="manifest" href="~@(GetStaticAssetUrl("manifest.json"))">
     }
 
     <meta property="og:image" content="@(ogImage)">

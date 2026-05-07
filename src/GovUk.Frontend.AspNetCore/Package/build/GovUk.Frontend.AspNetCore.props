@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <RestoreGovUkFrontendNpmPackage Condition="'$(RestoreGovUkFrontendNpmPackage)' == ''">false</RestoreGovUkFrontendNpmPackage>
-    <GovUkFrontendNpmPackageLocation Condition="'$(GovUkFrontendNpmPackageLocation)' == ''">govuk-frontend</GovUkFrontendNpmPackageLocation>
+    <GovUkFrontendNpmPackageLocation Condition="'$(GovUkFrontendNpmPackageLocation)' == ''">lib\govuk-frontend</GovUkFrontendNpmPackageLocation>
     <CopyGovUkFrontendAssetsToWebRoot Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == ''">true</CopyGovUkFrontendAssetsToWebRoot>
   </PropertyGroup>
 </Project>

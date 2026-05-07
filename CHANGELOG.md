@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### `RestoreGovUkFrontendNpmPackage` changes
+
+> [!NOTE]
+> These changes only apply if you have enabled `RestoreGovUkFrontendNpmPackage` in your project file.
+
+The default location for copying static assets from the `govuk-frontend` package has been changed from `govuk-frontend` to `/lib/govuk-frontend`.
+
 ### Fixes
 
 Fixes default navigation ID and menu button text on service navigation components.

@@ -1,19 +1,28 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using GovUk.Frontend.AspNetCore;
+using NodaTime;
+using Samples.DateInput;
 
-namespace Samples.DateInput;
+var builder = WebApplication.CreateBuilder(args);
 
-public class Program
+builder.Services.AddRazorPages();
+
+builder.Services.AddGovUkFrontend(options =>
 {
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args).Build().Run();
-    }
+    options.RegisterDateInputModelConverter(typeof(LocalDate), new LocalDateDateInputModelConverter());
+    options.RegisterDateInputModelConverter(typeof(YearMonth), new YearMonthDateInputModelConverter());
+});
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
-}
+var app = builder.Build();
+
+app.UseGovUkFrontend();
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapRazorPages();
+
+app.Run();

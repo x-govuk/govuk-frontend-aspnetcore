@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Backward compatibility - RestoreGovUkFrontendNpmPackage -->
+  <PropertyGroup Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
+    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == ''">govuk-frontend</GovUkFrontendNpmPackageDirectory>
+    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == ''">true</EnableGovUkFrontendSupport>
+  </PropertyGroup>
+
+  <!-- Backward compatibility - GovUkFrontendNpmPackageLocation -->
+  <PropertyGroup Condition="'$(GovUkFrontendNpmPackageLocation)' == 'true'">
+    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == ''">$(GovUkFrontendNpmPackageLocation)</GovUkFrontendNpmPackageDirectory>
+  </PropertyGroup>
+
+  <!-- Backward compatibility - CopyGovUkFrontendAssetsToWebRoot -->
+  <PropertyGroup Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' != '' And '$(GovUkFrontendAssetsDirectory)' == ''">
+    <GovUkFrontendAssetsDirectory Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'true'">wwwroot/assets</GovUkFrontendAssetsDirectory>
+  </PropertyGroup>
+
   <PropertyGroup>
-    <RestoreGovUkFrontendNpmPackage Condition="'$(RestoreGovUkFrontendNpmPackage)' == ''">false</RestoreGovUkFrontendNpmPackage>
-    <GovUkFrontendNpmPackageLocation Condition="'$(GovUkFrontendNpmPackageLocation)' == ''">govuk-frontend</GovUkFrontendNpmPackageLocation>
-    <CopyGovUkFrontendAssetsToWebRoot Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == ''">true</CopyGovUkFrontendAssetsToWebRoot>
+    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == ''">false</EnableGovUkFrontendSupport>
+    <GovUkFrontendAssetsDirectory Condition="'$(GovUkFrontendAssetsDirectory)' == ''">wwwroot/assets</GovUkFrontendAssetsDirectory>
+    <GovUkFrontendJavaScriptDirectory Condition="'$(GovUkFrontendJavaScriptDirectory)' == ''">wwwroot</GovUkFrontendJavaScriptDirectory>
+    <GovUkFrontendStylesheetDirectory Condition="'$(GovUkFrontendStylesheetDirectory)' == ''">wwwroot</GovUkFrontendStylesheetDirectory>
   </PropertyGroup>
 </Project>

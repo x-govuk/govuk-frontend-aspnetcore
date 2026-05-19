@@ -45,7 +45,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGovUkFrontend();
 
 var app = builder.Build();
-app.UseGovUkFrontend();
+app.UseGovUkFrontend();  // Add this before UseStaticFiles() or MapStaticAssets()
 //...
 ```
 
@@ -220,28 +220,40 @@ See the `Samples.MvcStarter` project for an example of this working.
 
 ## GOV.UK Frontend assets
 
-By default, static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend package will be hosted automatically.
+Update your project file to copy `govuk-frontend` assets into your application.
+```diff
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
++    <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
+  </PropertyGroup>
+</Project>
+```
 
-To disable hosting of these assets or to only serve a subset of the assets, override `FrontendPackageHostingOptions`:
+By default, this will copy assets into your `wwwroot` folder.
+The table below shows the additional MSBuild properties you can set to configure which assets are copied into your project and where they are copied to.
+
+| MSBuild property                   | Description                                                   | Default          |
+|------------------------------------|---------------------------------------------------------------|------------------|
+| `GovUkFrontendAssetsDirectory`     | The directory to copy the static assets into.                 | `wwwroot/assets` |
+| `GovUkFrontendJavaScriptDirectory` | The directory to copy the `govuk-frontend.min.js` file into.  | `wwwroot`        |
+| `GovUkFrontendStylesheetDirectory` | The directory to copy the `govuk-frontend.min.css` file into. | `wwwroot`        |
+
+If you want the entire `govuk-frontend` NPM package to be available e.g. so you can reference SASS files from your own stylesheet,
+set `GovUkFrontendNpmPackageDirectory` to the location to copy the package to e.g. `lib/govuk-frontend`.
+See the [SASS sample](samples/Samples.Sass) for a full example of how to set up your project with SASS integration.
+
+If `EnableGovUkFrontendSupport` is not set to `true` in your project file,
+static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend package will be hosted automatically.
+This behaviour may be removed in a future version.
+
+If you do not want any assets to be automatically hosted, set `FrontendPackageHostingOptions` to `None`:
 ```cs
 services.AddGovUkFrontend(options =>
 {
-    // Host both static assets and compiled assets (the default)
-    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets | FrontendPackageHostingOptions.HostCompiledFiles;
-
-    // Don't host anything
     options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.None;
-
-    // Only host static assets
-    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets;
-
-    // Only host compiled assets (JavaScript and CSS)
-    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostCompiledFiles;
 });
 ```
 
-If you're using SASS and want to be able to reference the `govuk-frontend` SASS variables, mixins and functions in your own SASS files,
-see the [SASS sample](samples/Samples.Sass) for an example of how to set up your project.
 
 ## Components
 

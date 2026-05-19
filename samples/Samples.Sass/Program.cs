@@ -7,6 +7,11 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddGovUkFrontend();
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSassCompiler();
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -18,6 +23,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseGovUkFrontend();
+
 app.UseStaticFiles();
 
 app.UseRouting();

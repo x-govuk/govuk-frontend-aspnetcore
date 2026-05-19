@@ -111,11 +111,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ComponentGeneration\Templates\*.liquid" />
-    <EmbeddedResource Include="ComponentGeneration\Templates\*.liquid" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Package\**\*" Pack="true" PackagePath="$(RecursiveDir)" />
   </ItemGroup>
 

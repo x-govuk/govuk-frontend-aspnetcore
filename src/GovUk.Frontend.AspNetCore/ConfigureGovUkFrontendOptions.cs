@@ -14,14 +14,14 @@ internal class ConfigureGovUkFrontendOptions(ApplicationPartManager applicationP
             .Where(attr => attr is not null)
             .ToArray();
 
-        if (buildInfoAttributes.Length != 1)
+        if (buildInfoAttributes.Length is 0)
         {
             return;
         }
 
         var buildInfo = buildInfoAttributes.Single()!;
 
-        if (buildInfo.FrontendNpmPackageRestored)
+        if (buildInfo.EnableGovUkFrontendSupport)
         {
             options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.None;
         }

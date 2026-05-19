@@ -6,7 +6,21 @@ namespace GovUk.Frontend.AspNetCore;
 
 [AttributeUsage(AttributeTargets.Assembly)]
 [EditorBrowsable(EditorBrowsableState.Never)]
-public sealed class GovUkFrontendBuildInfoAttribute(bool frontendNpmPackageRestored) : Attribute
+public sealed class GovUkFrontendBuildInfoAttribute(
+    bool enableGovUkFrontendSupport,
+    string? govUkFrontendNpmPackageDirectory,
+    string? govUkFrontendAssetsDirectory,
+    string? govUkFrontendJavaScriptDirectory,
+    string? govUkFrontendStylesheetDirectory) :
+    Attribute
 {
-    public bool FrontendNpmPackageRestored { get; } = frontendNpmPackageRestored;
+    public bool EnableGovUkFrontendSupport { get; } = enableGovUkFrontendSupport;
+
+    public string? GovUkFrontendNpmPackageDirectory { get; } = govUkFrontendNpmPackageDirectory;
+
+    public string? GovUkFrontendAssetsDirectory { get; } = govUkFrontendAssetsDirectory;
+
+    public string? GovUkFrontendJavaScriptDirectory { get; } = govUkFrontendJavaScriptDirectory;
+
+    public string? GovUkFrontendStylesheetDirectory { get; } = govUkFrontendStylesheetDirectory;
 }

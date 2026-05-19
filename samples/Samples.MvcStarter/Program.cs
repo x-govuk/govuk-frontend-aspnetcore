@@ -30,6 +30,8 @@ app.UseHttpsRedirection();
 
 app.UseGovUkFrontend();
 
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();

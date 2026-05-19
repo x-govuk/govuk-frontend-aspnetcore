@@ -1,4 +1,4 @@
-govuk-frontend
+lib/govuk-frontend
 wwwroot/assets
-wwwroot/site.css
-wwwroot/govuk-frontend.min.js
+wwwroot/css/
+wwwroot/govuk-frontend.min.js*

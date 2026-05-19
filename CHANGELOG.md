@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### `govuk-frontend` asset support
+
+> [!NOTE]
+> These changes only apply if you have enabled `RestoreGovUkFrontendNpmPackage` in your project file.
+
+The `RestoreGovUkFrontendNpmPackage`, `GovUkFrontendNpmPackageLocation` and `CopyGovUkFrontendAssetsToWebRoot` MSBuild properties have been deprecated.
+In their place is `EnableGovUkFrontendSupport`, `GovUkFrontendNpmPackageDirectory`, `GovUkFrontendAssetsDirectory`, `GovUkFrontendJavaScriptDirectory` and
+`GovUkFrontendStylesheetDirectory`, enabling more fine-grained control over assets.
+
 ### Fixes
 
 Fixes default navigation ID and menu button text on service navigation components.

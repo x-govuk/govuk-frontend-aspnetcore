@@ -4,23 +4,25 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RestoreGovUkFrontendNpmPackage>true</RestoreGovUkFrontendNpmPackage>
-    <EnableDefaultSassItems>false</EnableDefaultSassItems>
+    <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
+    <GovUkFrontendNpmPackageDirectory>lib\govuk-frontend</GovUkFrontendNpmPackageDirectory>
+    <GovUkFrontendStylesheetDirectory />
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DartSassBuilder" Version="1.1.0" />
-    <PackageReference Include="GovUk.Frontend.AspNetCore" Version="4.0.*-*" />
+    <PackageReference Include="AspNetCore.SassCompiler" Version="1.99.0" />
+    <PackageReference Include="GovUk.Frontend.AspNetCore" Version="*-*" />
   </ItemGroup>
 
   <ItemGroup>
-    <SassFile Include="wwwroot/site.scss" Exclude="govuk-frontend/**/*.css" />
+    <Content Update="Styles\site.scss">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Styles\site.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
-
-  <Target Name="CopyJavaScriptToWwwroot" BeforeTargets="Build">
-    <Copy SourceFiles="govuk-frontend/govuk-frontend.min.js"
-          DestinationFolder="wwwroot"
-          SkipUnchangedFiles="true" />
-  </Target>
 
 </Project>

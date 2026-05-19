@@ -1,37 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="RestoreGovUkFrontendNpmPackage">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="_WarnOnDeprecatedGovUkProperties;RestoreGovUkFrontend">
+  <Target Name="_WarnOnDeprecatedGovUkProperties">
+    <Warning Text="The RestoreGovUkFrontendNpmPackage property is deprecated; use GovUkFrontendNpmPackageDirectory instead."
+             Condition="'$(RestoreGovUkFrontendNpmPackage)' != ''" />
+
+    <Warning Text="The GovUkFrontendNpmPackageLocation property is deprecated; use GovUkFrontendNpmPackageDirectory instead."
+             Condition="'$(GovUkFrontendNpmPackageLocation)' != ''" />
+
+    <Warning Text="The CopyGovUkFrontendAssetsToWebRoot property is deprecated; use GovUkFrontendAssetsDirectory instead."
+             Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' != ''" />
+  </Target>
+
   <Target Name="AddGovUkFrontendBuildInfoAttribute" BeforeTargets="BeforeBuild">
     <PropertyGroup>
-      <_frontendNpmPackageRestored>false</_frontendNpmPackageRestored>
-      <_frontendNpmPackageRestored Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">true</_frontendNpmPackageRestored>
+      <_EnableGovUkFrontendSupport>false</_EnableGovUkFrontendSupport>
+      <_EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == 'true'">true</_EnableGovUkFrontendSupport>
     </PropertyGroup>
 
     <ItemGroup>
       <AssemblyAttribute Include="GovUk.Frontend.AspNetCore.GovUkFrontendBuildInfoAttribute">
-        <_Parameter1>$(_frontendNpmPackageRestored)</_Parameter1>
+        <_Parameter1>$(_EnableGovUkFrontendSupport)</_Parameter1>
         <_Parameter1_IsLiteral>true</_Parameter1_IsLiteral>
+        <_Parameter2>$(GovUkFrontendNpmPackageDirectory)</_Parameter2>
+        <_Parameter2_IsLiteral>false</_Parameter2_IsLiteral>
+        <_Parameter3>$(GovUkFrontendAssetsDirectory)</_Parameter3>
+        <_Parameter3_IsLiteral>false</_Parameter3_IsLiteral>
+        <_Parameter4>$(GovUkFrontendJavaScriptDirectory)</_Parameter4>
+        <_Parameter4_IsLiteral>false</_Parameter4_IsLiteral>
+        <_Parameter5>$(GovUkFrontendStylesheetDirectory)</_Parameter5>
+        <_Parameter5_IsLiteral>false</_Parameter5_IsLiteral>
       </AssemblyAttribute>
     </ItemGroup>
   </Target>
 
-  <Target Name="RestoreGovUkFrontendNpmPackage" Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
+  <Target Name="RestoreGovUkFrontend" Condition="'$(EnableGovUkFrontendSupport)' == 'true'">
     <ItemGroup>
       <_PackageFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\**\*" />
       <_AssetFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\assets\**\*" />
+      <_JavascriptFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\govuk-frontend.min.js*" />
+      <_CssFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\govuk-frontend.min.css*" />
     </ItemGroup>
 
     <Copy SourceFiles="@(_PackageFiles)"
-          DestinationFolder="$(GovUkFrontendNpmPackageLocation)\%(RecursiveDir)"
-          SkipUnchangedFiles="true" />
+          DestinationFolder="$(GovUkFrontendNpmPackageDirectory)\%(RecursiveDir)"
+          SkipUnchangedFiles="true"
+          Condition="'$(GovUkFrontendNpmPackageDirectory)' != ''" />
+
+    <ItemGroup Condition="'$(GovUkFrontendNpmPackageDirectory)' != ''">
+      <Content Remove="$(GovUkFrontendNpmPackageDirectory)\**\*" />
+      <None Include="$(GovUkFrontendNpmPackageDirectory)\**\*" />
+    </ItemGroup>
 
     <Copy SourceFiles="@(_AssetFiles)"
-          DestinationFolder="wwwroot\assets\%(RecursiveDir)"
+          DestinationFolder="$(GovUkFrontendAssetsDirectory)\%(RecursiveDir)"
           SkipUnchangedFiles="true"
-          Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'true'" />
+          Condition="'$(GovUkFrontendAssetsDirectory)' != ''" />
 
-    <ItemGroup>
-      <Content Remove="$(GovUkFrontendNpmPackageLocation)\**\*" />
-      <None Include="$(GovUkFrontendNpmPackageLocation)\**\*" />
-    </ItemGroup>
+    <Copy SourceFiles="@(_JavascriptFiles)"
+          DestinationFolder="$(GovUkFrontendJavaScriptDirectory)\%(RecursiveDir)"
+          SkipUnchangedFiles="true"
+          Condition="'$(GovUkFrontendJavaScriptDirectory)' != ''" />
+
+    <Copy SourceFiles="@(_CssFiles)"
+          DestinationFolder="$(GovUkFrontendStylesheetDirectory)\%(RecursiveDir)"
+          SkipUnchangedFiles="true"
+          Condition="'$(GovUkFrontendStylesheetDirectory)' != ''" />
   </Target>
 </Project>

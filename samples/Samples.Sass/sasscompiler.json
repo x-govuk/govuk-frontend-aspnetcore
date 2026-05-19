@@ -1,0 +1,8 @@
+{
+  "Source": "Styles",
+  "Destination": "wwwroot/css",
+  "Arguments": "--style=compressed --quiet-deps",
+  "IncludePaths": [
+    "lib"
+  ]
+}

@@ -14,41 +14,62 @@ To replicate this setup in your own project, follow these steps:
     builder.Services.AddGovUkFrontend();
     ```
 
-3. Enable `govuk-frontend` package restore on build by adding the following to your `.csproj` file:
+3. Add middleware:
+    ```cs
+    app.UseGovUkFrontend();
+    ```
+
+4. Restore `govuk-frontend` assets on build by adding the following to your `.csproj` file:
    ```xml
    <PropertyGroup>
-     <RestoreGovUkFrontendNpmPackage>true</RestoreGovUkFrontendNpmPackage>
+     <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
+     <GovUkFrontendNpmPackageDirectory>lib\govuk-frontend</GovUkFrontendNpmPackageDirectory>
+     <GovUkFrontendStylesheetDirectory />
    </PropertyGroup>
    ```
-This will copy the contents of the `govuk-frontend` NPM package into your project.
-
-> [!WARNING]
-> When you enable `RestoreGovUkFrontendNpmPackage`, the automatic hosting of `govuk-frontend` files is disabled.
-> By default, the static assets will be copied to `wwwroot/assets`.
-> You must ensure that the required CSS and JavaScript is available.
 
 > [!NOTE]
-> Add `wwwroot/assets` and `govuk-frontend` to your `.gitignore` file to avoid committing the copied files to your repository.
+> Add `wwwroot/assets`, `wwwroot/govuk-frontend.min.js` and `lib/govuk-frontend` to your `.gitignore` file to avoid committing the copied files to your repository.
 
-4. Install the `DartSassBuilder` package:
+4. Install the `AspNetCore.SassCompiler` package:
    ```shell
-   dotnet add package DartSassBuilder
+   dotnet add package AspNetCore.SassCompiler
    ```
 
-5. Configure SASS compilation by adding the following to your `.csproj` file:
-   ```xml
-   <PropertyGroup>
-     <EnableDefaultSassItems>false</EnableDefaultSassItems>
-   </PropertyGroup>
+5. Watch SCSS files for changes:
+   ```cs
+   #if DEBUG
+   builder.Services.AddSassCompiler();
+   #endif
 
-   <ItemGroup>
-     <SassFile Include="wwwroot/*.scss" Exclude="govuk-frontend/**/*.css" />
-   </ItemGroup>
+6. Add a `sasscompiler.json` file:
+   ```json
+   {
+     "Source": "Styles",
+     "Destination": "wwwroot/css",
+     "Arguments": "--style=compressed --quiet-deps",
+     "IncludePaths": [
+       "lib"
+     ]
+   }
    ```
 
-6. Create your SASS files in the `wwwroot` directory. From there you can import the govuk-frontend styles. For example, create a file named `main.scss` in the `wwwroot` directory with the following content:
+7. Create your SASS files in the `Styles` directory. From there you can import the govuk-frontend styles. For example, create a `site.scss` file with the following content:
    ```scss
-   @import "govuk-frontend/govuk/all";
+   @use "govuk-frontend/index";
 
    /* your custom styles here */
    ```
+
+8. Create a Razor Layout view in `Pages/Shared/_Layout.cshtml` or `Views/Shared/_Layout.cshtml` that imports the compiled stylesheet:
+   ```razor
+   @{
+     Layout = "_GovUkPageTemplate";
+   }
+
+   @section Head {
+     <link rel="stylesheet" asp-href-include="~/css/site.css" asp-append-version="true">
+   }
+
+   @RenderBody()
+    ```

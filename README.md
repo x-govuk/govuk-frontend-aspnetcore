@@ -33,32 +33,44 @@ Or via the .NET Core command line interface:
 
     dotnet add package GovUk.Frontend.AspNetCore
 
-### 2. Configure your ASP.NET Core application
+### 2. Update your project file to copy `govuk-frontend` assets into your application.
+```diff
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
++    <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
+  </PropertyGroup>
+</Project>
+```
+
+### 3. Configure your ASP.NET Core application
 
 Add services and middleware to your application:
 
-```cs
-using GovUk.Frontend.AspNetCore;
+```diff
++using GovUk.Frontend.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
-//...
-builder.Services.AddGovUkFrontend();
+
++builder.Services.AddGovUkFrontend();
 
 var app = builder.Build();
-app.UseGovUkFrontend();  // Add this before UseStaticFiles() or MapStaticAssets()
+
++app.UseGovUkFrontend();
+
+app.UseStaticFiles();
 //...
 ```
 
-### 3. Register tag helpers
+### 4. Register tag helpers
 
 In your `_ViewImports.cshtml` file:
 
-```razor
-@using GovUk.Frontend.AspNetCore
-@addTagHelper *, GovUk.Frontend.AspNetCore
+```diff
++@using GovUk.Frontend.AspNetCore
++@addTagHelper *, GovUk.Frontend.AspNetCore
 ```
 
-### 4. Configure your page template
+### 5. Configure your page template
 
 You have several options for configuring your [page template](https://design-system.service.gov.uk/styles/page-template/).
 
@@ -220,16 +232,7 @@ See the `Samples.MvcStarter` project for an example of this working.
 
 ## GOV.UK Frontend assets
 
-Update your project file to copy `govuk-frontend` assets into your application.
-```diff
-<Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-+    <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
-  </PropertyGroup>
-</Project>
-```
-
-By default, this will copy assets into your `wwwroot` folder.
+Assets will be copied into your `wwwroot` folder by default.
 The table below shows the additional MSBuild properties you can set to configure which assets are copied into your project and where they are copied to.
 
 | MSBuild property                   | Description                                                   | Default          |
@@ -242,9 +245,11 @@ If you want the entire `govuk-frontend` NPM package to be available e.g. so you 
 set `GovUkFrontendNpmPackageDirectory` to the location to copy the package to e.g. `lib/govuk-frontend`.
 See the [SASS sample](samples/Samples.Sass) for a full example of how to set up your project with SASS integration.
 
-If `EnableGovUkFrontendSupport` is not set to `true` in your project file,
-static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend package will be hosted automatically.
-This behaviour may be removed in a future version.
+> [!NOTE]
+> If `EnableGovUkFrontendSupport` is not set to `true` in your project file,
+static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend package will be hosted automatically
+i.e. without the assets being copied into your `wwwroot`.
+This behaviour will be removed in a future version.
 
 If you do not want any assets to be automatically hosted, set `FrontendPackageHostingOptions` to `None`:
 ```cs

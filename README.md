@@ -287,6 +287,7 @@ services.AddGovUkFrontend(options =>
 - [Service navigation](docs/components/service-navigation.md)
 - [Skip link](docs/components/skip-link.md)
 - [Summary list](docs/components/summary-list.md)
+- [Table](docs/components/table.md)
 - [Tabs](docs/components/tabs.md)
 - [Tag](docs/components/tag.md)
 - [Textarea](docs/components/textarea.md)

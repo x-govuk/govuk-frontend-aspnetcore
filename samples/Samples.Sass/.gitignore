@@ -1,4 +1,5 @@
 lib/govuk-frontend
+lib/govuk-frontend-aspnetcore
 wwwroot/assets
-wwwroot/css
+wwwroot/app.css*
 wwwroot/govuk-frontend.min.js*

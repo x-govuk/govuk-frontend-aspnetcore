@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor" InitialTargets="InstallGovUkFrontendPackage">
+<Project Sdk="Microsoft.NET.Sdk.Razor" InitialTargets="InstallGovUkFrontendPackage;GenerateScssConstants">
 
   <PropertyGroup>
     <TargetFrameworks>net8.0</TargetFrameworks>
@@ -44,6 +44,17 @@
     <Exec Command="dotnet libman install govuk-frontend@$(GovUkFrontendVersion) --files dist/govuk/**"
           WorkingDirectory="$(_NpmLibDirectory)"
           LogStandardErrorAsError="true" />
+  </Target>
+
+  <Target Name="GenerateScssConstants">
+    <ItemGroup>
+      <_ScssConstants Include="$GOVUK_VERSION: &quot;$(GovUkFrontendVersion)&quot;;" />
+    </ItemGroup>
+
+    <WriteLinesToFile File="Package\content\support\_constants.scss"
+                      Lines="@(_ScssConstants)"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
   </Target>
 
   <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">

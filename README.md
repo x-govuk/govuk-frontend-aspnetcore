@@ -235,15 +235,21 @@ See the `Samples.MvcStarter` project for an example of this working.
 Assets will be copied into your `wwwroot` folder by default.
 The table below shows the additional MSBuild properties you can set to configure which assets are copied into your project and where they are copied to.
 
-| MSBuild property                   | Description                                                   | Default          |
-|------------------------------------|---------------------------------------------------------------|------------------|
-| `GovUkFrontendAssetsDirectory`     | The directory to copy the static assets into.                 | `wwwroot/assets` |
-| `GovUkFrontendJavaScriptDirectory` | The directory to copy the `govuk-frontend.min.js` file into.  | `wwwroot`        |
-| `GovUkFrontendStylesheetDirectory` | The directory to copy the `govuk-frontend.min.css` file into. | `wwwroot`        |
+| MSBuild property                       | Description                                                   | Default          |
+|----------------------------------------|---------------------------------------------------------------|------------------|
+| `GovUkFrontendAssetsDirectory`         | The directory to copy the static assets into.                 | `wwwroot/assets` |
+| `GovUkFrontendJavaScriptDirectory`     | The directory to copy the `govuk-frontend.min.js` file into.  | `wwwroot`        |
+| `GovUkFrontendStylesheetDirectory`     | The directory to copy the `govuk-frontend.min.css` file into. | `wwwroot`        |
+| `GovUkFrontendSupportPackageDirectory` | The directory to copy support files into.                     | ``               |
 
 If you want the entire `govuk-frontend` NPM package to be available e.g. so you can reference SASS files from your own stylesheet,
 set `GovUkFrontendNpmPackageDirectory` to the location to copy the package to e.g. `lib/govuk-frontend`.
-See the [SASS sample](samples/Samples.Sass) for a full example of how to set up your project with SASS integration.
+See [the SASS sample](samples/Samples.Sass) for a full example of how to set up your project with SASS integration.
+
+> [!IMPORTANT]
+> If you're hosting your application within an IIS virtual application, you should follow the SASS integration guide in [the SASS sample](samples/Samples.Sass)
+> and ensure the `$govuk-assets-path` SASS variable is set appropriately.
+> Typically it is sufficient to use `assets/` (i.e. the default location but without the leading `/`).
 
 > [!NOTE]
 > If `EnableGovUkFrontendSupport` is not set to `true` in your project file,

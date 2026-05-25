@@ -6,23 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
     <GovUkFrontendNpmPackageDirectory>lib\govuk-frontend</GovUkFrontendNpmPackageDirectory>
+    <GovUkFrontendSupportPackageDirectory>lib\govuk-frontend-aspnetcore</GovUkFrontendSupportPackageDirectory>
     <GovUkFrontendStylesheetDirectory />
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.SassCompiler" Version="1.99.0" />
     <PackageReference Include="GovUk.Frontend.AspNetCore" Version="*-*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Styles\site.scss">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Styles\site.css">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

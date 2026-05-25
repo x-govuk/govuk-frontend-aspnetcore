@@ -1,0 +1,7 @@
+@use "sass:meta";
+@use "./_asset-helper";
+
+@forward "govuk-frontend" with (
+  $govuk-font-url-function: meta.get-function("font-url", $module: "asset-helper"),
+  $govuk-image-url-function: meta.get-function("image-url", $module: "asset-helper")
+);

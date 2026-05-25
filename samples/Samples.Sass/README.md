@@ -24,12 +24,10 @@ To replicate this setup in your own project, follow these steps:
    <PropertyGroup>
      <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
      <GovUkFrontendNpmPackageDirectory>lib\govuk-frontend</GovUkFrontendNpmPackageDirectory>
+     <GovUkFrontendSupportPackageDirectory>lib\govuk-frontend-aspnetcore</GovUkFrontendSupportPackageDirectory>
      <GovUkFrontendStylesheetDirectory />
    </PropertyGroup>
    ```
-
-> [!NOTE]
-> Add `wwwroot/assets`, `wwwroot/govuk-frontend.min.js` and `lib/govuk-frontend` to your `.gitignore` file to avoid committing the copied files to your repository.
 
 4. Install the `AspNetCore.SassCompiler` package:
    ```shell
@@ -45,8 +43,8 @@ To replicate this setup in your own project, follow these steps:
 6. Add a `sasscompiler.json` file:
    ```json
    {
-     "Source": "Styles",
-     "Destination": "wwwroot/css",
+     "Source": "Styles/app.scss",
+     "Target": "wwwroot/app.css",
      "Arguments": "--style=compressed --quiet-deps",
      "IncludePaths": [
        "lib"
@@ -54,12 +52,20 @@ To replicate this setup in your own project, follow these steps:
    }
    ```
 
-7. Create your SASS files in the `Styles` directory. From there you can import the govuk-frontend styles. For example, create a `site.scss` file with the following content:
+7. Create an `app.scss` file in the `Styles` directory:
    ```scss
-   @use "govuk-frontend/index";
+   @use "govuk-frontend-aspnetcore" as *;
 
    /* your custom styles here */
    ```
+
+> [!NOTE]
+> If you're not hosting assets at `/assets`, you should override the `$govuk-assets-path` variable before `@use "govuk-frontend-aspnetcore"` e.g.
+> ```scss
+> @use "govuk-frontend/settings/assets" as * with (
+>   $govuk-assets-path: "static/"
+> );
+> ```
 
 8. Create a Razor Layout view in `Pages/Shared/_Layout.cshtml` or `Views/Shared/_Layout.cshtml` that imports the compiled stylesheet:
    ```razor
@@ -68,8 +74,11 @@ To replicate this setup in your own project, follow these steps:
    }
 
    @section Head {
-     <link rel="stylesheet" asp-href-include="~/css/site.css" asp-append-version="true">
+     <link rel="stylesheet" asp-href-include="~/app.css" asp-append-version="true">
    }
 
    @RenderBody()
     ```
+
+> [!NOTE]
+> Ensure `wwwroot/app.css`, `wwwroot/assets`, `wwwroot/govuk-frontend.min.js` and `lib/govuk-frontend*` are covered in your `.gitignore` file.

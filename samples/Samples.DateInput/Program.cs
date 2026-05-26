@@ -14,14 +14,13 @@ builder.Services.AddGovUkFrontend(options =>
 
 var app = builder.Build();
 
+app.UseRouting();
+
+app.UseAuthorization();
+
 app.UseGovUkFrontend();
 
 app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapRazorPages();
 

@@ -51,6 +51,7 @@ public static class GovUkFrontendExtensions
         services.AddSingleton<ITagHelperInitializer<ButtonTagHelper>, ButtonTagHelperInitializer>();
         services.AddSingleton<ITagHelperInitializer<FileUploadTagHelper>, FileUploadTagHelperInitializer>();
         services.AddHttpContextAccessor();
+        services.AddSingleton<VersionedAssetMiddleware>();
 
         services.Configure(setupAction);
 
@@ -58,15 +59,20 @@ public static class GovUkFrontendExtensions
     }
 
     /// <summary>
-    /// Adds middleware to the request pipeline that serves the static assets and compiled files of the govuk-frontend NPM package.
+    /// Adds middleware to the request pipeline to handle the govuk-frontend assets.
     /// </summary>
     public static IApplicationBuilder UseGovUkFrontend(this IApplicationBuilder app)
     {
         ArgumentNullException.ThrowIfNull(app);
 
-        var options = app.ApplicationServices.GetRequiredService<IOptions<GovUkFrontendOptions>>();
+        var options = app.ApplicationServices.GetRequiredService<IOptions<GovUkFrontendOptions>>().Value;
 
-        if (options.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
+        if (options.BuildInfo?.EnableGovUkFrontendSupport is true)
+        {
+            app.UseMiddleware<VersionedAssetMiddleware>();
+        }
+
+        if (options.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
         {
             var fileProvider = new ManifestEmbeddedFileProvider(
                 typeof(GovUkFrontendExtensions).Assembly,
@@ -89,7 +95,7 @@ public static class GovUkFrontendExtensions
             });
         }
 
-        if (options.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles))
+        if (options.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles))
         {
             var fileProvider = new ManifestEmbeddedFileProvider(
                 typeof(GovUkFrontendExtensions).Assembly,

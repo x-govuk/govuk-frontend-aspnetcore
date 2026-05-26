@@ -12,6 +12,9 @@ namespace GovUk.Frontend.AspNetCore;
 /// </summary>
 public class PageTemplateHelper
 {
+    internal const string JavascriptFileName = "govuk-frontend.min.js";
+    internal const string StylesheetFileName = "govuk-frontend.min.css";
+
     private const string JsEnabledScript = "document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');";
 
     /// <summary>
@@ -188,8 +191,8 @@ public class PageTemplateHelper
     }
 
     private static string GetScriptFileName() =>
-        $"govuk-frontend.min.js?{HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendVersion}";
+        $"{JavascriptFileName}?{HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendVersion}";
 
     private static string GetStylesheetFileName() =>
-        $"govuk-frontend.min.css?{HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendVersion}";
+        $"{StylesheetFileName}?{HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName}={GovUkFrontendVersion}";
 }

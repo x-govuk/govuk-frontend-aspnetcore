@@ -9,32 +9,24 @@ public class TestCompositeMetadataDetailsProvider : ICompositeMetadataDetailsPro
 
     public void SetDisplayNameForProperty(ModelMetadataIdentity identity, string? displayName)
     {
-        ArgumentNullException.ThrowIfNull(identity);
-
         _entries.TryAdd(identity, new Entry());
         _entries[identity].DisplayName = displayName;
     }
 
     public void SetDescriptionForProperty(ModelMetadataIdentity identity, string? description)
     {
-        ArgumentNullException.ThrowIfNull(identity);
-
         _entries.TryAdd(identity, new Entry());
         _entries[identity].Description = description;
     }
 
     public void SetDateInputErrorMessagePrefixForProperty(ModelMetadataIdentity identity, string? errorMessagePrefix)
     {
-        ArgumentNullException.ThrowIfNull(identity);
-
         _entries.TryAdd(identity, new Entry());
         _entries[identity].DateInputErrorMessagePrefix = errorMessagePrefix;
     }
 
     public void SetDateInputItemTypesForProperty(ModelMetadataIdentity identity, DateInputItemTypes? itemTypes)
     {
-        ArgumentNullException.ThrowIfNull(identity);
-
         _entries.TryAdd(identity, new Entry());
         _entries[identity].DateInputItemTypes = itemTypes;
     }

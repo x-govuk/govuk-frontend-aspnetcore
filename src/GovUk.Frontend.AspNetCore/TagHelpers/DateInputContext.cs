@@ -43,7 +43,6 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public void OpenFieldset(DateInputFieldsetContext fieldsetContext, AttributeCollection attributes)
     {
-        ArgumentNullException.ThrowIfNull(_fieldsetIsOpen);
         ArgumentNullException.ThrowIfNull(attributes);
 
         if (_fieldsetIsOpen)
@@ -192,7 +191,6 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public void SetItem(DateInputItemTypes itemType, DateInputContextItem item)
     {
-        ArgumentNullException.ThrowIfNull(itemType);
         ArgumentNullException.ThrowIfNull(item);
 
         if (haveExplicitValue && item.ValueSpecified)

@@ -27,10 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: jdx/mise-action@v3
-
-      - name: Install tools
-        run: just install-tools
+      - uses: ./.github/workflows/actions/setup-tools
 
       - name: Format
         run: just format --verify-no-changes
@@ -42,10 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: jdx/mise-action@v3
-
-      - name: Install tools
-        run: just install-tools
+      - uses: ./.github/workflows/actions/setup-tools
 
       - name: Restore
         run: just restore
@@ -71,10 +65,7 @@ jobs:
           fetch-depth: 0 # required for minver to create the right version number
           filter: tree:0
 
-      - uses: jdx/mise-action@v3
-
-      - name: Install tools
-        run: just install-tools
+      - uses: ./.github/workflows/actions/setup-tools
 
       - name: Restore
         run: just restore
@@ -137,10 +128,7 @@ jobs:
           fetch-depth: 0
           filter: tree:0
 
-      - uses: jdx/mise-action@v3
-
-      - name: Install tools
-        run: just install-tools
+      - uses: ./.github/workflows/actions/setup-tools
 
       - name: Build samples
         run: just build-samples --configuration Release
@@ -153,10 +141,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: jdx/mise-action@v3
-
-      - name: Install tools
-        run: just install-tools
+      - uses: ./.github/workflows/actions/setup-tools
 
       - name: Check component documentation
         run: |
@@ -204,7 +189,9 @@ jobs:
       id-token: write
 
     steps:
-      - uses: jdx/mise-action@v3
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/workflows/actions/setup-tools
 
       - name: Download package artifact
         uses: actions/download-artifact@v7

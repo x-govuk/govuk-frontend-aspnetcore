@@ -9,10 +9,10 @@ internal class DefaultModelHelper : IModelHelper
     private delegate string GetFullHtmlFieldNameDelegate(ViewContext viewContext, string expression);
 
     private static readonly GetFullHtmlFieldNameDelegate _getFullHtmlFieldNameDelegate =
-        (GetFullHtmlFieldNameDelegate)typeof(IHtmlGenerator).Assembly
+        typeof(IHtmlGenerator).Assembly
             .GetType("Microsoft.AspNetCore.Mvc.ViewFeatures.NameAndIdProvider", throwOnError: true)!
             .GetMethod("GetFullHtmlFieldName", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)!
-            .CreateDelegate(typeof(GetFullHtmlFieldNameDelegate));
+            .CreateDelegate<GetFullHtmlFieldNameDelegate>();
 
     public virtual string? GetDescription(ModelExplorer modelExplorer) => modelExplorer.Metadata.Description;
 

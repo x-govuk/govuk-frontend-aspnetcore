@@ -61,8 +61,6 @@ public class DateInputConvertToModelContext
     public DateInputConvertToModelContext(Type modelType, DateInputItemTypes itemTypes, DateInputItemValues itemValues)
     {
         ArgumentNullException.ThrowIfNull(modelType);
-        ArgumentNullException.ThrowIfNull(itemTypes);
-        ArgumentNullException.ThrowIfNull(itemValues);
 
         ModelType = modelType;
         ItemTypes = itemTypes;
@@ -96,7 +94,6 @@ public class DateInputConvertFromModelContext
     public DateInputConvertFromModelContext(Type modelType, DateInputItemTypes itemTypes, object model)
     {
         ArgumentNullException.ThrowIfNull(modelType);
-        ArgumentNullException.ThrowIfNull(itemTypes);
         ArgumentNullException.ThrowIfNull(model);
 
         ModelType = modelType;

@@ -57,8 +57,5 @@ internal static class ExceptionHelper
             $"<{tagNames.Single()}>" :
             string.Join(
                 conjunction,
-                [
-                    string.Join(", ", tagNames.SkipLast(1).Select(t => $"<{t}>")),
-                    tagNames.TakeLast(1).Select(t => $"<{t}>").Single()
-                ]);
+                string.Join(", ", tagNames.SkipLast(1).Select(t => $"<{t}>")), tagNames.TakeLast(1).Select(t => $"<{t}>").Single());
 }

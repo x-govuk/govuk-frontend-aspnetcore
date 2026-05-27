@@ -76,7 +76,7 @@ internal partial class HostCompiledAssetsMiddleware
             var hasVersionQueryParam = context.Request.Query[StaticAssetVersionQueryParamName].Count != 0;
             if (hasVersionQueryParam)
             {
-                context.Response.Headers.CacheControl = "Cache-Control: public, max-age=31536000, immutable";
+                context.Response.Headers.CacheControl = "public, max-age=31536000, immutable";
             }
 
             await context.Response.WriteAsync(css);
@@ -104,7 +104,7 @@ internal partial class HostCompiledAssetsMiddleware
             var hasVersionQueryParam = context.Request.Query[StaticAssetVersionQueryParamName].Count != 0;
             if (hasVersionQueryParam)
             {
-                context.Response.Headers.CacheControl = "Cache-Control: max-age=31536000, immutable";
+                context.Response.Headers.CacheControl = "public, max-age=31536000, immutable";
             }
 
             await context.Response.WriteAsync(js);

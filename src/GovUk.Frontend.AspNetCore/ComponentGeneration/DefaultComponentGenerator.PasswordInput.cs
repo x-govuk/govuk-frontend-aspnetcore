@@ -8,7 +8,7 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var id = options.Id ?? options.Name;
+        var id = options.Id.WithEmptyFallback(options.Name);
 
         var describedByParts = new List<TemplateString>();
         if (options.DescribedBy is var describedBy && !describedBy.IsEmpty())
@@ -88,7 +88,7 @@ internal partial class DefaultComponentGenerator
             .WithClasses(inputClasses)
             .With("value", options.Value)
             .With("aria-describedby", TemplateString.Join(" ", describedByParts))
-            .With("autocomplete", options.AutoComplete ?? "current-password")
+            .With("autocomplete", options.AutoComplete.WithEmptyFallback("current-password"))
             .With("autocapitalize", "none")
             .WithBoolean("disabled", options.Disabled is true)
             .With(options.Attributes)
@@ -112,10 +112,10 @@ internal partial class DefaultComponentGenerator
             .WithClasses(buttonClasses)
             .With("data-module", "govuk-button")
             .With("aria-controls", id)
-            .With("aria-label", options.ShowPasswordAriaLabelText ?? "Show password")
+            .With("aria-label", options.ShowPasswordAriaLabelText.WithEmptyFallback("Show password"))
             .WithBoolean("hidden"));
 
-        buttonElement.InnerHtml.Append((options.ShowPasswordText ?? "Show").ToHtmlString());
+        buttonElement.InnerHtml.Append(options.ShowPasswordText.WithEmptyFallback("Show").ToHtmlString());
 
         wrapperDiv.InnerHtml.AppendHtml(buttonElement);
 

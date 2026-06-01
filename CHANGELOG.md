@@ -17,6 +17,8 @@ Fixes default navigation ID and menu button text on service navigation component
 
 Fixes `Cache-Control` header value for hosted stylesheet, javascript and static assets.
 
+Fixes default button content on `<govuk-password-input>`.
+
 ## 4.1.1
 
 Adds `AddPageError` extension method to `HttpContext`.

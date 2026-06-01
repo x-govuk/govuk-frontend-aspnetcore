@@ -31,6 +31,13 @@
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">$(DefineConstants);SHORT_TAG_NAMES</DefineConstants>
   </PropertyGroup>
 
+  <!-- https://github.com/dotnet/aspnetcore/issues/63719 -->
+  <Target Name="_DontPruneFileProvidersEmbedded" AfterTargets="AddPrunePackageReferences">
+    <ItemGroup>
+      <PrunePackageReference Remove="Microsoft.Extensions.FileProviders.Embedded" />
+    </ItemGroup>
+  </Target>
+
   <Target Name="InstallGovUkFrontendPackage" Condition="!Exists('$(GovUkFrontendLibrary)')">
     <Message Text="Restoring govuk-frontend@$(GovUkFrontendVersion)" />
 

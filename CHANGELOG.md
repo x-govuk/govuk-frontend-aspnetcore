@@ -15,6 +15,8 @@ In their place is `EnableGovUkFrontendSupport`, `GovUkFrontendNpmPackageDirector
 
 Fixes default navigation ID and menu button text on service navigation components.
 
+Fixes `Cache-Control` header value for hosted stylesheet, javascript and static assets.
+
 ## 4.1.1
 
 Adds `AddPageError` extension method to `HttpContext`.

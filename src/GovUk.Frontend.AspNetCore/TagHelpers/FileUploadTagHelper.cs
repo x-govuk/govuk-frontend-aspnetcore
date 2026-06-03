@@ -33,15 +33,22 @@ public class FileUploadTagHelper : TagHelper
     internal const string TagName = "govuk-file-upload";
 
     private const string AttributesPrefix = "input-";
+    private const string ChooseFilesButtonTextAttributeName = "choose-files-button-text";
     private const string DescribedByAttributeName = "described-by";
     private const string DisabledAttributeName = "disabled";
+    private const string DropInstructionTextAttributeName = "drop-instruction-text";
+    private const string EnteredDropZoneTextAttributeName = "entered-drop-zone-text";
     private const string ForAttributeName = "for";
     private const string IdAttributeName = "id";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
     private const string JavaScriptEnhancementsAttributeName = "javascript-enhancements";
     private const string LabelClassAttributeName = "label-class";
+    private const string LeftDropZoneTextAttributeName = "left-drop-zone-text";
     private const string MultipleAttributeName = "multiple";
+    private const string MultipleFilesChosenTextOneAttributeName = "multiple-files-chosen-text-one";
+    private const string MultipleFilesChosenTextOtherAttributeName = "multiple-files-chosen-text-other";
     private const string NameAttributeName = "name";
+    private const string NoFileChosenTextAttributeName = "no-file-chosen-text";
     private const string WrapperAttributesPrefix = "wrapper-";
 
     private readonly IComponentGenerator _componentGenerator;
@@ -127,6 +134,48 @@ public class FileUploadTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(MultipleAttributeName)]
     public bool? Multiple { get; set; }
+
+    /// <summary>
+    /// Text for the button that opens the file picker.
+    /// </summary>
+    [HtmlAttributeName(ChooseFilesButtonTextAttributeName)]
+    public string? ChooseFilesButtonText { get; set; }
+
+    /// <summary>
+    /// Text instructing users to drop files in the drop zone.
+    /// </summary>
+    [HtmlAttributeName(DropInstructionTextAttributeName)]
+    public string? DropInstructionText { get; set; }
+
+    /// <summary>
+    /// Text announced when a user enters the drop zone while dragging files.
+    /// </summary>
+    [HtmlAttributeName(EnteredDropZoneTextAttributeName)]
+    public string? EnteredDropZoneText { get; set; }
+
+    /// <summary>
+    /// Text announced when a user leaves the drop zone while dragging files.
+    /// </summary>
+    [HtmlAttributeName(LeftDropZoneTextAttributeName)]
+    public string? LeftDropZoneText { get; set; }
+
+    /// <summary>
+    /// Text shown when exactly one file has been chosen (used when <see cref="Multiple"/> is <c>true</c>).
+    /// </summary>
+    [HtmlAttributeName(MultipleFilesChosenTextOneAttributeName)]
+    public string? MultipleFilesChosenTextOne { get; set; }
+
+    /// <summary>
+    /// Text shown when more than one file has been chosen (used when <see cref="Multiple"/> is <c>true</c>).
+    /// </summary>
+    [HtmlAttributeName(MultipleFilesChosenTextOtherAttributeName)]
+    public string? MultipleFilesChosenTextOther { get; set; }
+
+    /// <summary>
+    /// Text shown when no file has been chosen.
+    /// </summary>
+    [HtmlAttributeName(NoFileChosenTextAttributeName)]
+    public string? NoFileChosenText { get; set; }
 
     /// <summary>
     /// The <c>name</c> attribute for the generated <c>input</c> element.
@@ -218,12 +267,18 @@ public class FileUploadTagHelper : TagHelper
             ErrorMessage = errorMessageOptions,
             FormGroup = formGroupOptions,
             JavaScript = JavaScriptEnhancements,
-            ChooseFilesButtonText = null,
-            DropInstructionText = null,
-            MultipleFilesChosenText = null,
-            NoFileChosenText = null,
-            EnteredDropZoneText = null,
-            LeftDropZoneText = null,
+            ChooseFilesButtonText = ChooseFilesButtonText,
+            DropInstructionText = DropInstructionText,
+            MultipleFilesChosenText = MultipleFilesChosenTextOne is not null || MultipleFilesChosenTextOther is not null
+                ? new FileUploadOptionsMultipleFilesChosenText
+                {
+                    One = MultipleFilesChosenTextOne,
+                    Other = MultipleFilesChosenTextOther
+                }
+                : null,
+            NoFileChosenText = NoFileChosenText,
+            EnteredDropZoneText = EnteredDropZoneText,
+            LeftDropZoneText = LeftDropZoneText,
             WrapperClasses = wrapperClasses,
             WrapperAttributes = wrapperAttributes,
             Classes = classes,

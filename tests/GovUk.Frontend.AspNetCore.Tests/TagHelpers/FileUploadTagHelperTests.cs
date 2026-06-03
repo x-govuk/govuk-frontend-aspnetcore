@@ -712,6 +712,80 @@ public class FileUploadTagHelperTests
             });
     }
 
+    [Fact]
+    public async Task ProcessAsync_WithTextProperties_GeneratesOptionsWithTextProperties()
+    {
+        // Arrange
+        var id = "my-id";
+        var name = "my-name";
+        var labelHtml = "The label";
+        var chooseFilesButtonText = "Choose files";
+        var dropInstructionText = "Drop files here";
+        var enteredDropZoneText = "You are in the drop zone";
+        var leftDropZoneText = "You have left the drop zone";
+        var multipleFilesChosenTextOne = "1 file chosen";
+        var multipleFilesChosenTextOther = "{count} files chosen";
+        var noFileChosenText = "No file chosen";
+
+        var context = new TagHelperContext(
+            tagName: "govuk-input",
+            allAttributes: [],
+            items: new Dictionary<object, object>(),
+            uniqueId: "test");
+
+        var output = new TagHelperOutput(
+            "govuk-input",
+            attributes: [],
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var inputContext = context.GetContextItem<FileUploadContext>();
+
+                inputContext.SetLabel(
+                    isPageHeading: false,
+                    attributes: [],
+                    labelHtml,
+                    FileUploadLabelTagHelper.TagName);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var modelHelperMock = new Mock<IModelHelper>();
+
+        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        FileUploadOptions? actualOptions = null;
+        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+
+        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        {
+            Id = id,
+            Name = name,
+            ViewContext = new ViewContext(),
+            ChooseFilesButtonText = chooseFilesButtonText,
+            DropInstructionText = dropInstructionText,
+            EnteredDropZoneText = enteredDropZoneText,
+            LeftDropZoneText = leftDropZoneText,
+            MultipleFilesChosenTextOne = multipleFilesChosenTextOne,
+            MultipleFilesChosenTextOther = multipleFilesChosenTextOther,
+            NoFileChosenText = noFileChosenText,
+        };
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.NotNull(actualOptions);
+        Assert.Equal(chooseFilesButtonText, actualOptions.ChooseFilesButtonText);
+        Assert.Equal(dropInstructionText, actualOptions.DropInstructionText);
+        Assert.Equal(enteredDropZoneText, actualOptions.EnteredDropZoneText);
+        Assert.Equal(leftDropZoneText, actualOptions.LeftDropZoneText);
+        Assert.NotNull(actualOptions.MultipleFilesChosenText);
+        Assert.Equal(multipleFilesChosenTextOne, actualOptions.MultipleFilesChosenText.One);
+        Assert.Equal(multipleFilesChosenTextOther, actualOptions.MultipleFilesChosenText.Other);
+        Assert.Equal(noFileChosenText, actualOptions.NoFileChosenText);
+    }
+
     private class Model
     {
         public string? SimpleProperty { get; set; }

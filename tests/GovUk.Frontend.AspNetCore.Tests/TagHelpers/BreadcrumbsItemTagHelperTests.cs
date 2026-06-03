@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class BreadcrumbsItemTagHelperTests
+public class BreadcrumbsItemTagHelperTests : TagHelperTestBase<BreadcrumbsItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_NoLink_AddsItemToContext()
@@ -13,18 +13,9 @@ public class BreadcrumbsItemTagHelperTests
 
         var breadcrumbsContext = new BreadcrumbsContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-breadcrumbs-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(BreadcrumbsContext), breadcrumbsContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: breadcrumbsContext);
 
-        var output = new TagHelperOutput(
-            "govuk-breadcrumbs-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -52,14 +43,7 @@ public class BreadcrumbsItemTagHelperTests
 
         var breadcrumbsContext = new BreadcrumbsContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-breadcrumbs-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(BreadcrumbsContext), breadcrumbsContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: breadcrumbsContext);
 
         var attributes = new TagHelperAttributeList();
         var output = new TagHelperOutput(

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CheckboxesFieldsetLegendTagHelperTests
+public class CheckboxesFieldsetLegendTagHelperTests : TagHelperTestBase<CheckboxesFieldsetLegendTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsLegendToContext()
@@ -13,18 +13,9 @@ public class CheckboxesFieldsetLegendTagHelperTests
         // Arrange
         var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-checkboxes-fieldset-legend",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(CheckboxesFieldsetContext), fieldsetContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: fieldsetContext);
 
-        var output = new TagHelperOutput(
-            "govuk-checkboxes-fieldset-legend",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -57,18 +48,9 @@ public class CheckboxesFieldsetLegendTagHelperTests
             html: new HtmlString("Existing legend"),
             CheckboxesFieldsetLegendTagHelper.TagName);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-checkboxes-fieldset-legend",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(CheckboxesFieldsetContext), fieldsetContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: fieldsetContext);
 
-        var output = new TagHelperOutput(
-            "govuk-checkboxes-fieldset-legend",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

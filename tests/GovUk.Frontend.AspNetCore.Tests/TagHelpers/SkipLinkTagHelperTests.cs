@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SkipLinkTagHelperTests
+public class SkipLinkTagHelperTests : TagHelperTestBase<SkipLinkTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -13,15 +13,9 @@ public class SkipLinkTagHelperTests
         var content = "Link content";
         var href = "#";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-skip-link",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-skip-link",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

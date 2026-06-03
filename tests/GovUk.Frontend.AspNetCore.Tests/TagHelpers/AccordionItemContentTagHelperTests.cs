@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class AccordionItemContentTagHelperTests
+public class AccordionItemContentTagHelperTests : TagHelperTestBase<AccordionItemContentTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsContentToContext()
@@ -13,19 +13,9 @@ public class AccordionItemContentTagHelperTests
         var accordionContext = new AccordionContext();
         var itemContext = new AccordionItemContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-accordion-item-content",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(AccordionContext), accordionContext },
-                { typeof(AccordionItemContext), itemContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [accordionContext, itemContext]);
 
-        var output = new TagHelperOutput(
-            "govuk-accordion-item-content",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -51,19 +41,9 @@ public class AccordionItemContentTagHelperTests
         var itemContext = new AccordionItemContext();
         itemContext.SetContent(new AttributeCollection(), content: new TemplateString("Existing content"));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-accordion-item-content",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(AccordionContext), accordionContext },
-                { typeof(AccordionItemContext), itemContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [accordionContext, itemContext]);
 
-        var output = new TagHelperOutput(
-            "govuk-accordion-item-content",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

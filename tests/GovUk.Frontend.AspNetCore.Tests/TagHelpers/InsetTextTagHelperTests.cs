@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class InsetTextTagHelperTests
+public class InsetTextTagHelperTests : TagHelperTestBase<InsetTextTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -13,15 +13,9 @@ public class InsetTextTagHelperTests
         var content = "Inset text";
         var id = "id";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-inset-text",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-inset-text",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

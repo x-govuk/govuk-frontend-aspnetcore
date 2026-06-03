@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PaginationTagHelperTests
+public class PaginationTagHelperTests : TagHelperTestBase<PaginationTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -25,15 +25,9 @@ public class PaginationTagHelperTests
         var nextLabelText = "6 of 9";
         var nextText = "Next page";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-pagination",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-pagination",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var paginationContext = context.GetContextItem<PaginationContext>();

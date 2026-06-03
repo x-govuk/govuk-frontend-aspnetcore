@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ErrorSummaryTitleTagHelperTests
+public class ErrorSummaryTitleTagHelperTests : TagHelperTestBase<ErrorSummaryTitleTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsTitleToContext()
@@ -14,18 +14,9 @@ public class ErrorSummaryTitleTagHelperTests
 
         var errorSummaryContext = new ErrorSummaryContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-error-summary-title",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(ErrorSummaryContext), errorSummaryContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: errorSummaryContext);
 
-        var output = new TagHelperOutput(
-            "govuk-error-summary-title",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

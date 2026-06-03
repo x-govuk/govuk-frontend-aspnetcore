@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FieldsetTagHelperTests
+public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -16,15 +16,9 @@ public class FieldsetTagHelperTests
         var legendText = "Legend text";
         var mainContent = "Main content";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-fieldset",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-fieldset",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FieldsetContext>();
@@ -78,15 +72,9 @@ public class FieldsetTagHelperTests
         var legendText = "Legend text";
         var mainContent = "Main content";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-fieldset",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-fieldset",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FieldsetContext>();
@@ -132,15 +120,9 @@ public class FieldsetTagHelperTests
     public async Task ProcessAsync_MissingLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-fieldset",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-fieldset",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FieldsetContext>();
@@ -176,22 +158,14 @@ public class FieldsetTagHelperTests
         var role = "therole";
         var legendText = "Legend text";
         var mainContent = "Main content";
-        var customClass = "custom-class";
-        var dataFooAttrValue = "bar";
+        var customClass = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-fieldset",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext(className: customClass, attributes: attributes);
 
-        var output = new TagHelperOutput(
-            "govuk-fieldset",
-            attributes: new TagHelperAttributeList()
-            {
-                { "class", customClass },
-                { "data-foo", dataFooAttrValue }
-            },
+        var output = CreateTagHelperOutput(
+            className: customClass,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FieldsetContext>();
@@ -232,11 +206,6 @@ public class FieldsetTagHelperTests
         Assert.NotNull(actualOptions.Legend.Attributes);
         Assert.Empty(actualOptions.Legend.Attributes);
         Assert.Equal(customClass, actualOptions.Classes);
-        Assert.NotNull(actualOptions.Attributes);
-        Assert.Collection(actualOptions.Attributes, kvp =>
-        {
-            Assert.Equal("data-foo", kvp.Key);
-            Assert.Equal(dataFooAttrValue, kvp.Value);
-        });
+        AssertContainsAttributes(attributes, actualOptions.Attributes);
     }
 }

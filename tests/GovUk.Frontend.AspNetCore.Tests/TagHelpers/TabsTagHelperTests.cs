@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TabsTagHelperTests
+public class TabsTagHelperTests : TagHelperTestBase<TabsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -19,15 +19,9 @@ public class TabsTagHelperTests
         var secondItemLabel = "Second";
         var secondItemContent = "second content";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-tabs",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-tabs",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tabsContext = context.GetContextItem<TabsContext>();

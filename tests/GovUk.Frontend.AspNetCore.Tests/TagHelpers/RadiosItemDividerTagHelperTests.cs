@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosItemDividerTagHelperTests
+public class RadiosItemDividerTagHelperTests : TagHelperTestBase<RadiosItemDividerTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsDividerToContextItems()
@@ -12,18 +12,9 @@ public class RadiosItemDividerTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: null, @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-divider",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: radiosContext);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-divider",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

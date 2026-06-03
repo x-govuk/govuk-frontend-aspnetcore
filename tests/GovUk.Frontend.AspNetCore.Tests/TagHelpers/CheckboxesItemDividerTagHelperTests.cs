@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CheckboxesItemDividerTagHelperTests
+public class CheckboxesItemDividerTagHelperTests : TagHelperTestBase<CheckboxesItemDividerTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsDividerToContextItems()
@@ -13,18 +13,9 @@ public class CheckboxesItemDividerTagHelperTests
         // Arrange
         var checkboxesContext = new CheckboxesContext(name: null, @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-checkboxes-divider",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(CheckboxesContext), checkboxesContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: checkboxesContext);
 
-        var output = new TagHelperOutput(
-            "govuk-checkboxes-divider",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CharacterCountTagHelperTests
+public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -34,15 +34,9 @@ public class CharacterCountTagHelperTests
         var labelHtml = "The label";
         var hintHtml = "The hint";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -143,15 +137,9 @@ public class CharacterCountTagHelperTests
         var maxWords = 42;
         var labelHtml = "The label";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -199,15 +187,9 @@ public class CharacterCountTagHelperTests
         var errorVht = "visually hidden text";
         var errorDataFooAttribute = "bar";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -269,15 +251,9 @@ public class CharacterCountTagHelperTests
         var description = "The hint";
         var modelStateError = "The error message";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -351,15 +327,9 @@ public class CharacterCountTagHelperTests
         var modelStateDisplayName = "ModelState label";
         var value = "Explicit value";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -420,15 +390,9 @@ public class CharacterCountTagHelperTests
         var modelStateDisplayName = "ModelState label";
         var labelHtml = "Explicit label";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -494,15 +458,9 @@ public class CharacterCountTagHelperTests
         var modelStateDescription = "The hint";
         var hintHtml = "Explicit hint";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -568,15 +526,9 @@ public class CharacterCountTagHelperTests
         var modelStateError = "ModelState error";
         var errorHtml = "Explicit error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -648,15 +600,9 @@ public class CharacterCountTagHelperTests
         var displayName = "The label";
         var modelStateError = "ModelState error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -722,15 +668,9 @@ public class CharacterCountTagHelperTests
         var modelStateError = "ModelState error";
         var errorHtml = "Explicit error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();
@@ -804,15 +744,9 @@ public class CharacterCountTagHelperTests
         var labelHtml = "The label";
         var errorHtml = "The error message";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-character-count",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var characterCountContext = context.GetContextItem<CharacterCountContext>();

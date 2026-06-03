@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosItemTagHelperTests
+public class RadiosItemTagHelperTests : TagHelperTestBase<RadiosItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsItemToContext()
@@ -15,19 +15,9 @@ public class RadiosItemTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: "test", @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -64,19 +54,9 @@ public class RadiosItemTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: "test", @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -99,19 +79,9 @@ public class RadiosItemTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: "parent", @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -148,19 +118,9 @@ public class RadiosItemTagHelperTests
 
         var radiosContext = new RadiosContext(name: "test", @for: new ModelExpression(modelExpression, modelExplorer));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -203,19 +163,9 @@ public class RadiosItemTagHelperTests
 
         var radiosContext = new RadiosContext(name: "test", @for: new ModelExpression(modelExpression, modelExplorer));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -257,19 +207,9 @@ public class RadiosItemTagHelperTests
 
         var radiosContext = new RadiosContext(name: "test", @for: new ModelExpression(modelExpression, modelExplorer));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -302,19 +242,9 @@ public class RadiosItemTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: "test", @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<RadiosItemContext>();
@@ -349,19 +279,9 @@ public class RadiosItemTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: "test", @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -392,19 +312,9 @@ public class RadiosItemTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: "test", @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<RadiosItemContext>();
@@ -439,19 +349,9 @@ public class RadiosItemTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: "test", @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext },
-                { typeof(RadiosItemContext), new RadiosItemContext() }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: [radiosContext, new RadiosItemContext()]);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

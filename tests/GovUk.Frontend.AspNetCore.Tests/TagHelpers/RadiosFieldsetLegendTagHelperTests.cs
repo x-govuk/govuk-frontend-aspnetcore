@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosFieldsetLegendTagHelperTests
+public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFieldsetLegendTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsLegendToContext()
@@ -12,18 +12,9 @@ public class RadiosFieldsetLegendTagHelperTests
         // Arrange
         var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-fieldset-legend",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosFieldsetContext), fieldsetContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: fieldsetContext);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-fieldset-legend",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -56,18 +47,9 @@ public class RadiosFieldsetLegendTagHelperTests
             html: new TemplateString("Existing legend"),
             RadiosFieldsetLegendTagHelper.TagName);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-fieldset-legend",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosFieldsetContext), fieldsetContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: fieldsetContext);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-fieldset-legend",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

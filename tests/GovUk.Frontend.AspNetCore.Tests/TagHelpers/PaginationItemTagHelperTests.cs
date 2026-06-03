@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PaginationItemTagHelperTests
+public class PaginationItemTagHelperTests : TagHelperTestBase<PaginationItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsItemToContextItems()
@@ -13,18 +13,9 @@ public class PaginationItemTagHelperTests
         // Arrange
         var paginationContext = new PaginationContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-pagination-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(PaginationContext), paginationContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: paginationContext);
 
-        var output = new TagHelperOutput(
-            "govuk-pagination-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

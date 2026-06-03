@@ -5,9 +5,9 @@ using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class GeneratedErrorSummaryTagHelperTests
+public class GeneratedErrorSummaryTagHelperTests : TagHelperTestBase<GeneratedErrorSummaryTagHelper>
 {
-    [Theory]
+    [Xunit.Theory]
     [InlineData(null, false)]
     [InlineData(false, false)]
     [InlineData(true, true)]
@@ -21,15 +21,9 @@ public class GeneratedErrorSummaryTagHelperTests
         var errorHtml = "Error message";
         var errorHref = "#Field";
 
-        var context = new TagHelperContext(
-            tagName: "form",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext(tagName: "form");
 
-        var output = new TagHelperOutput(
-            "form",
-            attributes: [],
+        var output = CreateTagHelperOutput(tagName: "form",
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

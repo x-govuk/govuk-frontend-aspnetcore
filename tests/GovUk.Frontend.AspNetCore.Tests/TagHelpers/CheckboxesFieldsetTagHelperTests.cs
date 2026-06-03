@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CheckboxesFieldsetTagHelperTests
+public class CheckboxesFieldsetTagHelperTests : TagHelperTestBase<CheckboxesFieldsetTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsFieldsetToContext()
@@ -13,18 +13,9 @@ public class CheckboxesFieldsetTagHelperTests
         // Arrange
         var checkboxesContext = new CheckboxesContext(name: null, @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-checkboxes-fieldset",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(CheckboxesContext), checkboxesContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: checkboxesContext);
 
-        var output = new TagHelperOutput(
-            "govuk-checkboxes-fieldset",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
@@ -57,18 +48,9 @@ public class CheckboxesFieldsetTagHelperTests
         checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString("Existing legend"), CheckboxesFieldsetLegendTagHelper.TagName);
         checkboxesContext.CloseFieldset();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-checkboxes-fieldset",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(CheckboxesContext), checkboxesContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: checkboxesContext);
 
-        var output = new TagHelperOutput(
-            "govuk-checkboxes-fieldset",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();

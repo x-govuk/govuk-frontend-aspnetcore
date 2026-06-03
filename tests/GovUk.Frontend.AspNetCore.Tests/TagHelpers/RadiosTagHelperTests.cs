@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosTagHelperTests
+public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -15,15 +15,9 @@ public class RadiosTagHelperTests
         var hintContent = "The hint";
         var className = "additional-class";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -109,15 +103,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var errorContent = "An error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -200,15 +188,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var itemHintContent = "First item hint";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -268,15 +250,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var conditionalContent = "Item 1 conditional";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -337,15 +313,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var conditionalContent = "Item 1 conditional";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -409,15 +379,9 @@ public class RadiosTagHelperTests
         var legendContent = "Legend";
         var describedBy = "described-by-value";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -509,15 +473,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var itemAttributeValue = "custom-value";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -573,15 +531,9 @@ public class RadiosTagHelperTests
         var conditionalContent = "Item conditional";
         var conditionalAttributeValue = "custom-conditional-value";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();

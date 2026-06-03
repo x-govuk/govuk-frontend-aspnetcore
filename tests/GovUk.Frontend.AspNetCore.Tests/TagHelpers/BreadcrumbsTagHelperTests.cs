@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class BreadcrumbsTagHelperTests
+public class BreadcrumbsTagHelperTests : TagHelperTestBase<BreadcrumbsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -31,15 +31,9 @@ public class BreadcrumbsTagHelperTests
         var collapseOnMobile = true;
         var labelText = "Label text";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-breadcrumbs",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-breadcrumbs",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var breadcrumbsContext = context.GetContextItem<BreadcrumbsContext>();

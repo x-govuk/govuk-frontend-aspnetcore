@@ -5,21 +5,15 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class DetailsTagHelperTests
+public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_GeneratesExpectedOutput()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-details",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-details",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
@@ -56,15 +50,9 @@ public class DetailsTagHelperTests
     public async Task ProcessAsync_WithOpenSpecified_AddsOpenAttributeToOutput()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-details",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-details",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
@@ -98,15 +86,9 @@ public class DetailsTagHelperTests
     public async Task ProcessAsync_MissingSummary_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-details",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-details",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
@@ -133,15 +115,9 @@ public class DetailsTagHelperTests
     public async Task ProcessAsync_MissingText_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-details",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-details",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
@@ -171,15 +147,9 @@ public class DetailsTagHelperTests
     public async Task ProcessAsync_WithSummaryAttributes_IncludesAttributesInOutput()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-details",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-details",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
@@ -213,15 +183,9 @@ public class DetailsTagHelperTests
     public async Task ProcessAsync_WithTextAttributes_IncludesAttributesInOutput()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-details",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-details",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];

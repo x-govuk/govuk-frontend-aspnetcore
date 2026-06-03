@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PaginationNextTagHelperTests
+public class PaginationNextTagHelperTests : TagHelperTestBase<PaginationNextTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsNextOnContext()
@@ -11,18 +11,9 @@ public class PaginationNextTagHelperTests
         // Arrange
         var paginationContext = new PaginationContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-pagination-next",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(PaginationContext), paginationContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: paginationContext);
 
-        var output = new TagHelperOutput(
-            "govuk-pagination-next",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

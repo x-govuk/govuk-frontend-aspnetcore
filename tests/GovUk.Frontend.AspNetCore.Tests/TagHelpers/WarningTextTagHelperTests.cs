@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class WarningTextTagHelperTests
+public class WarningTextTagHelperTests : TagHelperTestBase<WarningTextTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -14,15 +14,9 @@ public class WarningTextTagHelperTests
         var iconFallbackText = "Danger";
         var content = "Warning message";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-warning-text",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-warning-text",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

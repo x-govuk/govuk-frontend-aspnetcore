@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CharacterCountValueTagHelperTests
+public class CharacterCountValueTagHelperTests : TagHelperTestBase<CharacterCountValueTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsValueOnContext()
@@ -11,18 +11,9 @@ public class CharacterCountValueTagHelperTests
         // Arrange
         var characterCountContext = new CharacterCountContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-character-count-value",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(CharacterCountContext), characterCountContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: characterCountContext);
 
-        var output = new TagHelperOutput(
-            "govuk-character-count-value",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

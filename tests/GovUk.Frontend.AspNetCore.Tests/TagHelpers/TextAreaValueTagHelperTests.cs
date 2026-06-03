@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TextAreaValueTagHelperTests
+public class TextAreaValueTagHelperTests : TagHelperTestBase<TextAreaValueTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsValueOnContext()
@@ -11,18 +11,9 @@ public class TextAreaValueTagHelperTests
         // Arrange
         var textAreaContext = new TextAreaContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-textarea-value",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(TextAreaContext), textAreaContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: textAreaContext);
 
-        var output = new TagHelperOutput(
-            "govuk-textarea-value",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

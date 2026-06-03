@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class DetailsTextTagHelperTests
+public class DetailsTextTagHelperTests : TagHelperTestBase<DetailsTextTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsContentOnContext()
@@ -13,18 +13,9 @@ public class DetailsTextTagHelperTests
         var detailsContext = new DetailsContext();
         detailsContext.SetSummary([], new HtmlString("The summary"));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-details-text",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(DetailsContext), detailsContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: detailsContext);
 
-        var output = new TagHelperOutput(
-            "govuk-details-text",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -49,18 +40,9 @@ public class DetailsTextTagHelperTests
         detailsContext.SetSummary([], new HtmlString("The summary"));
         detailsContext.SetText([], new HtmlString("The text"));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-details-text",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(DetailsContext), detailsContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: detailsContext);
 
-        var output = new TagHelperOutput(
-            "govuk-details-text",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

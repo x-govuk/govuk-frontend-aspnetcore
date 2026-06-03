@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FileUploadTagHelperTests
+public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -26,15 +26,9 @@ public class FileUploadTagHelperTests
         var wrapperDataBarAttribute = "bar";
         var wrapperClasses = "wrapper-class";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -125,15 +119,9 @@ public class FileUploadTagHelperTests
         var errorVht = "visually hidden text";
         var errorDataFooAttribute = "bar";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -193,15 +181,9 @@ public class FileUploadTagHelperTests
         var description = "The hint";
         var modelStateError = "The error message";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -274,15 +256,9 @@ public class FileUploadTagHelperTests
         var modelStateDisplayName = "ModelState label";
         var labelHtml = "Explicit label";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -348,15 +324,9 @@ public class FileUploadTagHelperTests
         var modelStateDescription = "The hint";
         var hintHtml = "Explicit hint";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -422,15 +392,9 @@ public class FileUploadTagHelperTests
         var modelStateError = "ModelState error";
         var errorHtml = "Explicit error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -502,15 +466,9 @@ public class FileUploadTagHelperTests
         var displayName = "The label";
         var modelStateError = "ModelState error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -576,15 +534,9 @@ public class FileUploadTagHelperTests
         var modelStateError = "ModelState error";
         var errorHtml = "Explicit error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -658,15 +610,9 @@ public class FileUploadTagHelperTests
         var labelHtml = "The label";
         var errorHtml = "The error message";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -727,15 +673,9 @@ public class FileUploadTagHelperTests
         var multipleFilesChosenTextOther = "{count} files chosen";
         var noFileChosenText = "No file chosen";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();

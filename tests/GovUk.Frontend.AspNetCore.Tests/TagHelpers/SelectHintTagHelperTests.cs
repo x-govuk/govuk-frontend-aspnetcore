@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SelectHintTagHelperTests
+public class SelectHintTagHelperTests : TagHelperTestBase<SelectHintTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsHintOnContext()
@@ -11,17 +11,10 @@ public class SelectHintTagHelperTests
         // Arrange
         var selectContext = new SelectContext(@for: null);
 
-        var context = new TagHelperContext(
-            tagName: SelectHintTagHelper.TagName,
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
+        var context = CreateTagHelperContext();
         context.SetContextItem(typeof(FormGroupContext3), selectContext);
 
-        var output = new TagHelperOutput(
-            SelectHintTagHelper.TagName,
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

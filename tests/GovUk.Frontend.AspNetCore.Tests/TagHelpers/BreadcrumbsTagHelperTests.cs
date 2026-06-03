@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class BreadcrumbsTagHelperTests
+public class BreadcrumbsTagHelperTests : TagHelperTestBase<BreadcrumbsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -31,15 +31,9 @@ public class BreadcrumbsTagHelperTests
         var collapseOnMobile = true;
         var labelText = "Label text";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-breadcrumbs",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-breadcrumbs",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var breadcrumbsContext = context.GetContextItem<BreadcrumbsContext>();
@@ -53,11 +47,9 @@ public class BreadcrumbsTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        BreadcrumbsOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateBreadcrumbsAsync(It.IsAny<BreadcrumbsOptions>())).Callback<BreadcrumbsOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<BreadcrumbsOptions>(nameof(IComponentGenerator.GenerateBreadcrumbsAsync));
 
-        var tagHelper = new BreadcrumbsTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new BreadcrumbsTagHelper(componentGenerator)
         {
             CollapseOnMobile = collapseOnMobile,
             LabelText = labelText,
@@ -68,7 +60,7 @@ public class BreadcrumbsTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(collapseOnMobile, actualOptions.CollapseOnMobile);
         Assert.NotNull(actualOptions.Items);
         Assert.Collection(

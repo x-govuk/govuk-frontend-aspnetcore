@@ -3,17 +3,13 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TabsItemTagHelperTests
+public class TabsItemTagHelperTests : TagHelperTestBase<TabsItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_WithIdSpecified_AddsItemToContext()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-tabs-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
         var tabsContext = new TabsContext(haveIdPrefix: false);
         context.Items.Add(typeof(TabsContext), tabsContext);
@@ -21,9 +17,7 @@ public class TabsItemTagHelperTests
         var panelContent = new DefaultTagHelperContent();
         panelContent.SetContent("Panel");
 
-        var output = new TagHelperOutput(
-            "govuk-tabs-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 return Task.FromResult<TagHelperContent>(panelContent);
@@ -53,11 +47,7 @@ public class TabsItemTagHelperTests
     public async Task ProcessAsync_WithoutIdSpecified_AddsItemToContext()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-tabs-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
         var tabsContext = new TabsContext(haveIdPrefix: true);
         context.Items.Add(typeof(TabsContext), tabsContext);
@@ -65,9 +55,7 @@ public class TabsItemTagHelperTests
         var panelContent = new DefaultTagHelperContent();
         panelContent.SetContent("Panel");
 
-        var output = new TagHelperOutput(
-            "govuk-tabs-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 return Task.FromResult<TagHelperContent>(panelContent);
@@ -96,18 +84,12 @@ public class TabsItemTagHelperTests
     public async Task ProcessAsync_WithoutIdAndNoIdPrefix_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-tabs-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
         var tabsContext = new TabsContext(haveIdPrefix: false);
         context.Items.Add(typeof(TabsContext), tabsContext);
 
-        var output = new TagHelperOutput(
-            "govuk-tabs-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -131,18 +113,12 @@ public class TabsItemTagHelperTests
     public async Task ProcessAsync_LabelNotSpecified_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-tabs-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
         var tabsContext = new TabsContext(haveIdPrefix: false);
         context.Items.Add(typeof(TabsContext), tabsContext);
 
-        var output = new TagHelperOutput(
-            "govuk-tabs-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

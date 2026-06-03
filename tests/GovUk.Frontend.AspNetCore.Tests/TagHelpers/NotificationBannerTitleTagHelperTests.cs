@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class NotificationBannerTitleTagHelperTests
+public class NotificationBannerTitleTagHelperTests : TagHelperTestBase<NotificationBannerTitleTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsTitleOnContext()
@@ -11,18 +11,9 @@ public class NotificationBannerTitleTagHelperTests
         // Arrange
         var notificationBannerContext = new NotificationBannerContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-notification-banner-title",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(NotificationBannerContext), notificationBannerContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: notificationBannerContext);
 
-        var output = new TagHelperOutput(
-            "govuk-notification-banner-title",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

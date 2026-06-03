@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosTagHelperTests
+public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -15,15 +15,9 @@ public class RadiosTagHelperTests
         var hintContent = "The hint";
         var className = "additional-class";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -57,12 +51,9 @@ public class RadiosTagHelperTests
 
         output.Attributes.Add("class", className);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        RadiosOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateRadiosAsync(It.IsAny<RadiosOptions>()))
-            .Callback<RadiosOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<RadiosOptions>(nameof(IComponentGenerator.GenerateRadiosAsync));
 
-        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new RadiosTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -75,7 +66,7 @@ public class RadiosTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Equal(hintContent, actualOptions.Hint?.Html);
@@ -109,15 +100,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var errorContent = "An error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -150,12 +135,9 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        RadiosOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateRadiosAsync(It.IsAny<RadiosOptions>()))
-            .Callback<RadiosOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<RadiosOptions>(nameof(IComponentGenerator.GenerateRadiosAsync));
 
-        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new RadiosTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -168,7 +150,7 @@ public class RadiosTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.NotNull(actualOptions.ErrorMessage);
@@ -200,15 +182,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var itemHintContent = "First item hint";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -228,12 +204,9 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        RadiosOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateRadiosAsync(It.IsAny<RadiosOptions>()))
-            .Callback<RadiosOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<RadiosOptions>(nameof(IComponentGenerator.GenerateRadiosAsync));
 
-        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new RadiosTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -246,7 +219,7 @@ public class RadiosTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Single(actualOptions.Items!);
@@ -268,15 +241,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var conditionalContent = "Item 1 conditional";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -296,12 +263,9 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        RadiosOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateRadiosAsync(It.IsAny<RadiosOptions>()))
-            .Callback<RadiosOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<RadiosOptions>(nameof(IComponentGenerator.GenerateRadiosAsync));
 
-        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new RadiosTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -314,7 +278,7 @@ public class RadiosTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Single(actualOptions.Items!);
@@ -337,15 +301,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var conditionalContent = "Item 1 conditional";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -366,12 +324,9 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        RadiosOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateRadiosAsync(It.IsAny<RadiosOptions>()))
-            .Callback<RadiosOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<RadiosOptions>(nameof(IComponentGenerator.GenerateRadiosAsync));
 
-        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new RadiosTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -384,7 +339,7 @@ public class RadiosTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Single(actualOptions.Items!);
@@ -409,15 +364,9 @@ public class RadiosTagHelperTests
         var legendContent = "Legend";
         var describedBy = "described-by-value";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -455,12 +404,9 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        RadiosOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateRadiosAsync(It.IsAny<RadiosOptions>()))
-            .Callback<RadiosOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<RadiosOptions>(nameof(IComponentGenerator.GenerateRadiosAsync));
 
-        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new RadiosTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -473,7 +419,7 @@ public class RadiosTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.NotNull(actualOptions.Hint);
@@ -509,15 +455,9 @@ public class RadiosTagHelperTests
         var name = "testradios";
         var itemAttributeValue = "custom-value";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -537,12 +477,9 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        RadiosOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateRadiosAsync(It.IsAny<RadiosOptions>()))
-            .Callback<RadiosOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<RadiosOptions>(nameof(IComponentGenerator.GenerateRadiosAsync));
 
-        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new RadiosTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -555,7 +492,7 @@ public class RadiosTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Single(actualOptions.Items!);
 
         var item = actualOptions.Items!.ElementAt(0);
@@ -573,15 +510,9 @@ public class RadiosTagHelperTests
         var conditionalContent = "Item conditional";
         var conditionalAttributeValue = "custom-conditional-value";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-radios",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
@@ -605,12 +536,9 @@ public class RadiosTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        RadiosOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateRadiosAsync(It.IsAny<RadiosOptions>()))
-            .Callback<RadiosOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<RadiosOptions>(nameof(IComponentGenerator.GenerateRadiosAsync));
 
-        var tagHelper = new RadiosTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new RadiosTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -623,7 +551,7 @@ public class RadiosTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Single(actualOptions.Items!);
 
         var item = actualOptions.Items!.ElementAt(0);

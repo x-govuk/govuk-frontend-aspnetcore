@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FileUploadTagHelperTests
+public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -26,15 +26,9 @@ public class FileUploadTagHelperTests
         var wrapperDataBarAttribute = "bar";
         var wrapperClasses = "wrapper-class";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -56,11 +50,9 @@ public class FileUploadTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             DescribedBy = describedBy,
@@ -86,7 +78,7 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(id, actualOptions.Id);
         Assert.Equal(name, actualOptions.Name);
         Assert.Equal(multiple, actualOptions.Multiple);
@@ -125,15 +117,9 @@ public class FileUploadTagHelperTests
         var errorVht = "visually hidden text";
         var errorDataFooAttribute = "bar";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -157,11 +143,9 @@ public class FileUploadTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -173,7 +157,8 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions?.ErrorMessage);
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.ErrorMessage);
         Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
@@ -193,15 +178,9 @@ public class FileUploadTagHelperTests
         var description = "The hint";
         var modelStateError = "The error message";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -243,11 +222,9 @@ public class FileUploadTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -258,7 +235,7 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.Id);
         Assert.NotNull(actualOptions.Name);
         Assert.Equal(displayName, actualOptions.Label?.Html);
@@ -274,15 +251,9 @@ public class FileUploadTagHelperTests
         var modelStateDisplayName = "ModelState label";
         var labelHtml = "Explicit label";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -321,11 +292,9 @@ public class FileUploadTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -336,7 +305,8 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(labelHtml, actualOptions?.Label?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(labelHtml, actualOptions.Label?.Html);
     }
 
     [Fact]
@@ -348,15 +318,9 @@ public class FileUploadTagHelperTests
         var modelStateDescription = "The hint";
         var hintHtml = "Explicit hint";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -395,11 +359,9 @@ public class FileUploadTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -410,7 +372,8 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(hintHtml, actualOptions?.Hint?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
     }
 
     [Fact]
@@ -422,15 +385,9 @@ public class FileUploadTagHelperTests
         var modelStateError = "ModelState error";
         var errorHtml = "Explicit error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -476,11 +433,9 @@ public class FileUploadTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -491,7 +446,8 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(errorHtml, actualOptions?.ErrorMessage?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
     }
 
     [Fact]
@@ -502,15 +458,9 @@ public class FileUploadTagHelperTests
         var displayName = "The label";
         var modelStateError = "ModelState error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -548,11 +498,9 @@ public class FileUploadTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -564,7 +512,8 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Null(actualOptions?.ErrorMessage);
+        var actualOptions = getActualOptions();
+        Assert.Null(actualOptions.ErrorMessage);
     }
 
     [Fact]
@@ -576,15 +525,9 @@ public class FileUploadTagHelperTests
         var modelStateError = "ModelState error";
         var errorHtml = "Explicit error";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -630,11 +573,9 @@ public class FileUploadTagHelperTests
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             IgnoreModelStateErrors = true,
@@ -646,7 +587,8 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(errorHtml, actualOptions?.ErrorMessage?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
     }
 
     [Fact]
@@ -658,15 +600,9 @@ public class FileUploadTagHelperTests
         var labelHtml = "The label";
         var errorHtml = "The error message";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -689,9 +625,9 @@ public class FileUploadTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var (componentGenerator, _) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -727,15 +663,9 @@ public class FileUploadTagHelperTests
         var multipleFilesChosenTextOther = "{count} files chosen";
         var noFileChosenText = "No file chosen";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-input",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-input",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
@@ -752,11 +682,9 @@ public class FileUploadTagHelperTests
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FileUploadOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFileUploadAsync(It.IsAny<FileUploadOptions>())).Callback<FileUploadOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FileUploadOptions>(nameof(IComponentGenerator.GenerateFileUploadAsync));
 
-        var tagHelper = new FileUploadTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new FileUploadTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -775,7 +703,7 @@ public class FileUploadTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(chooseFilesButtonText, actualOptions.ChooseFilesButtonText);
         Assert.Equal(dropInstructionText, actualOptions.DropInstructionText);
         Assert.Equal(enteredDropZoneText, actualOptions.EnteredDropZoneText);

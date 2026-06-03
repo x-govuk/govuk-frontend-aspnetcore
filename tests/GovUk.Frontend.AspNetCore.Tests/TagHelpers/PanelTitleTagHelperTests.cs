@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PanelTitleTagHelperTests
+public class PanelTitleTagHelperTests : TagHelperTestBase<PanelTitleTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsTitleOnContext()
@@ -12,18 +12,9 @@ public class PanelTitleTagHelperTests
         // Arrange
         var panelContext = new PanelContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-panel-title",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(PanelContext), panelContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: panelContext);
 
-        var output = new TagHelperOutput(
-            "govuk-panel-title",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -48,18 +39,9 @@ public class PanelTitleTagHelperTests
         var panelContext = new PanelContext();
         panelContext.SetTitle(TemplateString.FromEncoded("The title"), null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-panel-title",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(PanelContext), panelContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: panelContext);
 
-        var output = new TagHelperOutput(
-            "govuk-panel-title",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -84,18 +66,9 @@ public class PanelTitleTagHelperTests
         var panelContext = new PanelContext();
         panelContext.SetBody(TemplateString.FromEncoded("The body"), null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-panel-title",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(PanelContext), panelContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: panelContext);
 
-        var output = new TagHelperOutput(
-            "govuk-panel-title",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

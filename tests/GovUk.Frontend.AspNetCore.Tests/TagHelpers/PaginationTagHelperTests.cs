@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PaginationTagHelperTests
+public class PaginationTagHelperTests : TagHelperTestBase<PaginationTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -25,15 +25,9 @@ public class PaginationTagHelperTests
         var nextLabelText = "6 of 9";
         var nextText = "Next page";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-pagination",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-pagination",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var paginationContext = context.GetContextItem<PaginationContext>();
@@ -71,11 +65,9 @@ public class PaginationTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PaginationOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePaginationAsync(It.IsAny<PaginationOptions>())).Callback<PaginationOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PaginationOptions>(nameof(IComponentGenerator.GeneratePaginationAsync));
 
-        var tagHelper = new PaginationTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new PaginationTagHelper(componentGenerator)
         {
             LandmarkLabel = landmarkLabel
         };
@@ -85,7 +77,7 @@ public class PaginationTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(landmarkLabel, actualOptions.LandmarkLabel?.ToHtmlString(HtmlEncoder.Default));
         Assert.NotNull(actualOptions.Items);
         Assert.NotNull(actualOptions.Previous);

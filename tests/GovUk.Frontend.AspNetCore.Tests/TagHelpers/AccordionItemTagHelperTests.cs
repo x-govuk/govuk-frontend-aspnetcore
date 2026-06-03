@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class AccordionItemTagHelperTests
+public class AccordionItemTagHelperTests : TagHelperTestBase<AccordionItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsItemToContext()
@@ -12,18 +12,9 @@ public class AccordionItemTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-accordion-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(AccordionContext), accordionContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: accordionContext);
 
-        var output = new TagHelperOutput(
-            "govuk-accordion-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
@@ -57,18 +48,9 @@ public class AccordionItemTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-accordion-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(AccordionContext), accordionContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: accordionContext);
 
-        var output = new TagHelperOutput(
-            "govuk-accordion-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
@@ -96,18 +78,9 @@ public class AccordionItemTagHelperTests
         // Arrange
         var accordionContext = new AccordionContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-accordion-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(AccordionContext), accordionContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: accordionContext);
 
-        var output = new TagHelperOutput(
-            "govuk-accordion-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CheckboxesItemConditionalTagHelperTests
+public class CheckboxesItemConditionalTagHelperTests : TagHelperTestBase<CheckboxesItemConditionalTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsConditionalOnContext()
@@ -11,18 +11,9 @@ public class CheckboxesItemConditionalTagHelperTests
         // Arrange
         var checkboxesItemContext = new CheckboxesItemContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-checkboxes-item-Conditional",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(CheckboxesItemContext), checkboxesItemContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: checkboxesItemContext);
 
-        var output = new TagHelperOutput(
-            "govuk-checkboxes-item-Conditional",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

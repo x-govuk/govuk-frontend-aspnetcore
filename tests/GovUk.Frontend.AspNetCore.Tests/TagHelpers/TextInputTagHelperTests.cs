@@ -58,11 +58,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             DescribedBy = describedBy,
@@ -90,7 +88,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(id, actualOptions.Id);
         Assert.Equal(name, actualOptions.Name);
         Assert.Equal(type, actualOptions.Type);
@@ -161,11 +159,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -178,7 +174,8 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions?.ErrorMessage);
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.ErrorMessage);
         Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
@@ -248,11 +245,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -264,7 +259,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.Id);
         Assert.NotNull(actualOptions.Name);
         Assert.Equal(modelStateValue, actualOptions.Value);
@@ -320,11 +315,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -337,7 +330,8 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(value, actualOptions?.Value);
+        var actualOptions = getActualOptions();
+        Assert.Equal(value, actualOptions.Value);
     }
 
     [Fact]
@@ -395,11 +389,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -411,7 +403,8 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(labelHtml, actualOptions?.Label?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(labelHtml, actualOptions.Label?.Html);
     }
 
     [Fact]
@@ -470,11 +463,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -486,7 +477,8 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(hintHtml, actualOptions?.Hint?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
     }
 
     [Fact]
@@ -552,11 +544,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -568,7 +558,8 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(errorHtml, actualOptions?.ErrorMessage?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
     }
 
     [Fact]
@@ -625,11 +616,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -642,7 +631,8 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Null(actualOptions?.ErrorMessage);
+        var actualOptions = getActualOptions();
+        Assert.Null(actualOptions.ErrorMessage);
     }
 
     [Fact]
@@ -708,11 +698,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>())).Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             IgnoreModelStateErrors = true,
@@ -725,7 +713,8 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(errorHtml, actualOptions?.ErrorMessage?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
     }
 
     [Fact]
@@ -768,9 +757,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var (componentGenerator, _) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -838,12 +827,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             metadata,
             null);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
-            .Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -855,7 +841,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(expectedType, actualOptions.Type);
     }
 
@@ -908,12 +894,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             metadata,
             null);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
-            .Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -925,7 +908,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(expectedType, actualOptions.Type);
     }
 
@@ -970,12 +953,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             metadata,
             null);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
-            .Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -987,7 +967,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal("text", actualOptions.Type);
     }
 
@@ -1035,12 +1015,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             metadata,
             null);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
-            .Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext(),
@@ -1053,7 +1030,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(explicitType, actualOptions.Type);
     }
 
@@ -1102,12 +1079,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             metadata,
             null);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        InputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateInputAsync(It.IsAny<InputOptions>()))
-            .Callback<InputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<InputOptions>(nameof(IComponentGenerator.GenerateInputAsync));
 
-        var tagHelper = new TextInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextInputTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression("TestProperty", modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -1119,7 +1093,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(expectedType, actualOptions.Type);
     }
 

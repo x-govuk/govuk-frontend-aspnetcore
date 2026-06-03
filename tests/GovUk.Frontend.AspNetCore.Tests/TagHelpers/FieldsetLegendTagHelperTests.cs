@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class FieldsetLegendTagHelperTests
+public class FieldsetLegendTagHelperTests : TagHelperTestBase<FieldsetLegendTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsLegendToContext()
@@ -13,18 +13,9 @@ public class FieldsetLegendTagHelperTests
         // Arrange
         var fieldsetContext = new FieldsetContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-fieldset-legend",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(FieldsetContext), fieldsetContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: fieldsetContext);
 
-        var output = new TagHelperOutput(
-            "govuk-fieldset-legend",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -56,18 +47,9 @@ public class FieldsetLegendTagHelperTests
             attributes: new AttributeCollection(),
             content: new HtmlString("Existing legend"));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-fieldset-legend",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(FieldsetContext), fieldsetContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: fieldsetContext);
 
-        var output = new TagHelperOutput(
-            "govuk-fieldset-legend",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

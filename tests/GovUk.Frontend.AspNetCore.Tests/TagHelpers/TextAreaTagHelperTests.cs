@@ -56,11 +56,9 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        TextareaOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateTextareaAsync(It.IsAny<TextareaOptions>())).Callback<TextareaOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<TextareaOptions>(nameof(IComponentGenerator.GenerateTextareaAsync));
 
-        var tagHelper = new TextAreaTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextAreaTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             DescribedBy = describedBy,
@@ -85,7 +83,7 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(id, actualOptions.Id);
         Assert.Equal(name, actualOptions.Name);
         Assert.Equal(rows, actualOptions.Rows);
@@ -151,11 +149,9 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        TextareaOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateTextareaAsync(It.IsAny<TextareaOptions>())).Callback<TextareaOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<TextareaOptions>(nameof(IComponentGenerator.GenerateTextareaAsync));
 
-        var tagHelper = new TextAreaTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new TextAreaTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -168,7 +164,7 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);

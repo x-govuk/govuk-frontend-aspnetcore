@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PanelBodyTagHelperTests
+public class PanelBodyTagHelperTests : TagHelperTestBase<PanelBodyTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsBodyOnContext()
@@ -12,18 +12,9 @@ public class PanelBodyTagHelperTests
         // Arrange
         var panelContext = new PanelContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-panel-body",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(PanelContext), panelContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: panelContext);
 
-        var output = new TagHelperOutput(
-            "govuk-panel-body",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -48,18 +39,9 @@ public class PanelBodyTagHelperTests
         var panelContext = new PanelContext();
         panelContext.SetBody(TemplateString.FromEncoded("The body"), null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-panel-body",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(PanelContext), panelContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: panelContext);
 
-        var output = new TagHelperOutput(
-            "govuk-panel-body",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

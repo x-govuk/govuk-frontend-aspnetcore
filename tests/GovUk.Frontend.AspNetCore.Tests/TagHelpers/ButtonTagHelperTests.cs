@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ButtonTagHelperTests
+public class ButtonTagHelperTests : TagHelperTestBase<ButtonTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -18,23 +18,15 @@ public class ButtonTagHelperTests
         var preventDoubleClick = true;
         var type = "button";
         var value = "Value";
-        var classes = "custom-class";
-        var dataFooAttrValue = "bar";
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
         var content = "Button text";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-button",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext(className: className, attributes: attributes);
 
-        var output = new TagHelperOutput(
-            "govuk-button",
-            attributes: new TagHelperAttributeList()
-            {
-                { "class", classes },
-                { "data-foo", dataFooAttrValue },
-            },
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -42,11 +34,9 @@ public class ButtonTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        ButtonOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateButtonAsync(It.IsAny<ButtonOptions>())).Callback<ButtonOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<ButtonOptions>(nameof(IComponentGenerator.GenerateButtonAsync));
 
-        var tagHelper = new ButtonTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new ButtonTagHelper(componentGenerator)
         {
             Disabled = disabled,
             Id = id,
@@ -61,8 +51,8 @@ public class ButtonTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal("button", actualOptions!.Element);
+        var actualOptions = getActualOptions();
+        Assert.Equal("button", actualOptions.Element);
         Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html);
         Assert.Null(actualOptions.Text);
         Assert.Equal(name, actualOptions.Name);
@@ -70,9 +60,8 @@ public class ButtonTagHelperTests
         Assert.Equal(value, actualOptions.Value);
         Assert.Equal(disabled, actualOptions.Disabled);
         Assert.Null(actualOptions.Href);
-        Assert.Equal(classes, actualOptions.Classes);
-        Assert.NotNull(actualOptions.Attributes);
-        Assert.Contains(actualOptions.Attributes, kvp => kvp.Key == "data-foo" && kvp.Value == dataFooAttrValue);
+        Assert.Equal(className, actualOptions.Classes);
+        AssertContainsAttributes(attributes, actualOptions.Attributes);
         Assert.Equal(preventDoubleClick, actualOptions.PreventDoubleClick);
         Assert.Equal(isStartButton, actualOptions.IsStartButton);
         Assert.Equal(id, actualOptions.Id);

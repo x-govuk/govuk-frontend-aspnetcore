@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class WarningTextTagHelperTests
+public class WarningTextTagHelperTests : TagHelperTestBase<WarningTextTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -14,15 +14,9 @@ public class WarningTextTagHelperTests
         var iconFallbackText = "Danger";
         var content = "Warning message";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-warning-text",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-warning-text",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -30,11 +24,9 @@ public class WarningTextTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        WarningTextOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateWarningTextAsync(It.IsAny<WarningTextOptions>())).Callback<WarningTextOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<WarningTextOptions>(nameof(IComponentGenerator.GenerateWarningTextAsync));
 
-        var tagHelper = new WarningTextTagHelper(componentGeneratorMock.Object, HtmlEncoder.Default)
+        var tagHelper = new WarningTextTagHelper(componentGenerator, HtmlEncoder.Default)
         {
             IconFallbackText = iconFallbackText
         };
@@ -43,8 +35,8 @@ public class WarningTextTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal(content, actualOptions!.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(content, actualOptions.Html);
         Assert.Null(actualOptions.Text);
         Assert.Equal(iconFallbackText, actualOptions.IconFallbackText);
     }

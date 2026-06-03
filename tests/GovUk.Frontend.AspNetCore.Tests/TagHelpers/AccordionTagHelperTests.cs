@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class AccordionTagHelperTests
+public class AccordionTagHelperTests : TagHelperTestBase<AccordionTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -19,8 +19,8 @@ public class AccordionTagHelperTests
         var showAllSectionsText = "Expand all";
         var showSectionText = "Expand";
         var showSectionAriaLabelText = "Expand this";
-        var classes = "custom-class";
-        var dataFooAttrValue = "bar";
+        var className = CreateDummyClassName();
+        var attributes = CreateDummyDataAttributes();
 
         var items = new[]
         {
@@ -39,19 +39,11 @@ public class AccordionTagHelperTests
             }
         };
 
-        var context = new TagHelperContext(
-            tagName: "govuk-accordion",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext(className: className, attributes: attributes);
 
-        var output = new TagHelperOutput(
-            "govuk-accordion",
-            attributes: new TagHelperAttributeList()
-            {
-                { "class", classes },
-                { "data-foo", dataFooAttrValue }
-            },
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var accordionContext = context.GetContextItem<AccordionContext>();
@@ -65,11 +57,9 @@ public class AccordionTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        AccordionOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateAccordionAsync(It.IsAny<AccordionOptions>())).Callback<AccordionOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<AccordionOptions>(nameof(IComponentGenerator.GenerateAccordionAsync));
 
-        var tagHelper = new AccordionTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new AccordionTagHelper(componentGenerator)
         {
             Id = id,
             HeadingLevel = headingLevel,
@@ -87,7 +77,7 @@ public class AccordionTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(id, actualOptions.Id);
         Assert.Equal(headingLevel, actualOptions.HeadingLevel);
         Assert.Equal(rememberExpanded, actualOptions.RememberExpanded);
@@ -97,13 +87,8 @@ public class AccordionTagHelperTests
         Assert.Equal(showAllSectionsText, actualOptions.ShowAllSectionsText);
         Assert.Equal(showSectionText, actualOptions.ShowSectionText);
         Assert.Equal(showSectionAriaLabelText, actualOptions.ShowSectionAriaLabelText);
-        Assert.Equal(classes, actualOptions.Classes);
-        Assert.NotNull(actualOptions.Attributes);
-        Assert.Collection(actualOptions.Attributes, kvp =>
-        {
-            Assert.Equal("data-foo", kvp.Key);
-            Assert.Equal(dataFooAttrValue, kvp.Value);
-        });
+        Assert.Equal(className, actualOptions.Classes);
+        AssertContainsAttributes(attributes, actualOptions.Attributes);
         Assert.NotNull(actualOptions.Items);
         Assert.Equal(2, actualOptions.Items.Count);
 
@@ -131,15 +116,9 @@ public class AccordionTagHelperTests
     public async Task ProcessAsync_NoId_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-accordion",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-accordion",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var accordionContext = context.GetContextItem<AccordionContext>();

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SkipLinkTagHelperTests
+public class SkipLinkTagHelperTests : TagHelperTestBase<SkipLinkTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -13,15 +13,9 @@ public class SkipLinkTagHelperTests
         var content = "Link content";
         var href = "#";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-skip-link",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-skip-link",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -29,11 +23,9 @@ public class SkipLinkTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        SkipLinkOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateSkipLinkAsync(It.IsAny<SkipLinkOptions>())).Callback<SkipLinkOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<SkipLinkOptions>(nameof(IComponentGenerator.GenerateSkipLinkAsync));
 
-        var tagHelper = new SkipLinkTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new SkipLinkTagHelper(componentGenerator)
         {
             Href = href
         };
@@ -42,8 +34,8 @@ public class SkipLinkTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal(content, actualOptions!.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(content, actualOptions.Html);
         Assert.Null(actualOptions.Text);
         Assert.Equal(href, actualOptions.Href);
     }

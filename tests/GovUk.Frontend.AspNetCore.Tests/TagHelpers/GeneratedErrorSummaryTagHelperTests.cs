@@ -5,9 +5,9 @@ using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class GeneratedErrorSummaryTagHelperTests
+public class GeneratedErrorSummaryTagHelperTests : TagHelperTestBase<GeneratedErrorSummaryTagHelper>
 {
-    [Theory]
+    [Xunit.Theory]
     [InlineData(null, false)]
     [InlineData(false, false)]
     [InlineData(true, true)]
@@ -21,30 +21,22 @@ public class GeneratedErrorSummaryTagHelperTests
         var errorHtml = "Error message";
         var errorHref = "#Field";
 
-        var context = new TagHelperContext(
-            tagName: "form",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext(tagName: "form");
 
-        var output = new TagHelperOutput(
-            "form",
-            attributes: [],
+        var output = CreateTagHelperOutput(tagName: "form",
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        ErrorSummaryOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.AddError(errorHtml, errorHref);
 
-        var tagHelper = new GeneratedErrorSummaryTagHelper(componentGeneratorMock.Object, options)
+        var tagHelper = new GeneratedErrorSummaryTagHelper(componentGenerator, options)
         {
             PrependErrorSummary = prependErrorSummary,
             ViewContext = viewContext
@@ -59,7 +51,7 @@ public class GeneratedErrorSummaryTagHelperTests
 
         if (expectErrorSummary)
         {
-            Assert.NotNull(actualOptions);
+            var actualOptions = getActualOptions();
             Assert.NotNull(actualOptions.ErrorList);
             Assert.True(containerErrorContext.ErrorSummaryHasBeenRendered);
 

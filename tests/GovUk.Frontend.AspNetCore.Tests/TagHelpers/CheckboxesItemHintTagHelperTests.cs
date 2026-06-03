@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CheckboxesItemHintTagHelperTests
+public class CheckboxesItemHintTagHelperTests : TagHelperTestBase<CheckboxesItemHintTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsHintOnContext()
@@ -11,18 +11,9 @@ public class CheckboxesItemHintTagHelperTests
         // Arrange
         var checkboxesItemContext = new CheckboxesItemContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-checkboxes-item-hint",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(CheckboxesItemContext), checkboxesItemContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: checkboxesItemContext);
 
-        var output = new TagHelperOutput(
-            "govuk-checkboxes-item-hint",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

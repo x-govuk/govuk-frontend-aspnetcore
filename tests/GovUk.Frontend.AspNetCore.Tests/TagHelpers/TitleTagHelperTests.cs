@@ -4,9 +4,9 @@ using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TitleTagHelperTests
+public class TitleTagHelperTests : TagHelperTestBase<TitleTagHelper>
 {
-    [Theory]
+    [Xunit.Theory]
     [InlineData(false, false, false)]
     [InlineData(true, false, false)]
     [InlineData(false, true, false)]
@@ -22,15 +22,9 @@ public class TitleTagHelperTests
             PrependErrorToTitle = prependErrorToTitleOption
         });
 
-        var context = new TagHelperContext(
-            tagName: "form",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext(tagName: "title");
 
-        var output = new TagHelperOutput(
-            "form",
-            attributes: [],
+        var output = CreateTagHelperOutput(tagName: "title",
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

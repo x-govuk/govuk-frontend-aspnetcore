@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class DetailsSummaryTagHelperTests
+public class DetailsSummaryTagHelperTests : TagHelperTestBase<DetailsSummaryTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsContentOnContext()
@@ -12,18 +12,9 @@ public class DetailsSummaryTagHelperTests
         // Arrange
         var detailsContext = new DetailsContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-details-summary",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(DetailsContext), detailsContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: detailsContext);
 
-        var output = new TagHelperOutput(
-            "govuk-details-summary",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -47,18 +38,9 @@ public class DetailsSummaryTagHelperTests
         var detailsContext = new DetailsContext();
         detailsContext.SetSummary([], new HtmlString("The summary"));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-details-summary",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(DetailsContext), detailsContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: detailsContext);
 
-        var output = new TagHelperOutput(
-            "govuk-details-summary",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -83,18 +65,9 @@ public class DetailsSummaryTagHelperTests
         var detailsContext = new DetailsContext();
         detailsContext.SetText([], new HtmlString("The text"));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-details-summary",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(DetailsContext), detailsContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: detailsContext);
 
-        var output = new TagHelperOutput(
-            "govuk-details-summary",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

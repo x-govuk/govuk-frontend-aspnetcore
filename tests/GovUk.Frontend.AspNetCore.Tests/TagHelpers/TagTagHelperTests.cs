@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TagTagHelperTests
+public class TagTagHelperTests : TagHelperTestBase<TagTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -13,15 +13,9 @@ public class TagTagHelperTests
         // Arrange
         var content = "A tag";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-tag",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-tag",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -29,17 +23,15 @@ public class TagTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        TagOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateTagAsync(It.IsAny<TagOptions>())).Callback<TagOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<TagOptions>(nameof(IComponentGenerator.GenerateTagAsync));
 
-        var tagHelper = new TagTagHelper(componentGeneratorMock.Object);
+        var tagHelper = new TagTagHelper(componentGenerator);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions!.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html);
     }
 }

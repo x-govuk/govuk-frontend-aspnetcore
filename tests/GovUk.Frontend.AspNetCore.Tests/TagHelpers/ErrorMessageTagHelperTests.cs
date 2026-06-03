@@ -6,21 +6,15 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ErrorMessageTagHelperTests
+public class ErrorMessageTagHelperTests : TagHelperTestBase<ErrorMessageTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_GeneratesExpectedOutput()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-error-message",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-message",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -47,15 +41,9 @@ public class ErrorMessageTagHelperTests
     public async Task ProcessAsync_WithVisuallyHiddenTextSpecified_GeneratesExpectedOutput()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-error-message",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-message",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -85,23 +73,15 @@ public class ErrorMessageTagHelperTests
     public async Task ProcessAsync_AspForSpecified_GeneratesExpectedContent()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-error-message",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-message",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            })
-        {
-            TagMode = TagMode.SelfClosing
-        };
+            },
+            tagMode: TagMode.SelfClosing);
 
         var modelHelperMock = new Mock<IModelHelper>();
 
@@ -138,23 +118,15 @@ public class ErrorMessageTagHelperTests
     public async Task ProcessAsync_AspForSpecifiedButNoError_GeneratesNoOutput()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-error-message",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-message",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            })
-        {
-            TagMode = TagMode.SelfClosing
-        };
+            },
+            tagMode: TagMode.SelfClosing);
 
         var modelHelperMock = new Mock<IModelHelper>();
 
@@ -185,23 +157,15 @@ public class ErrorMessageTagHelperTests
     public async Task ProcessAsync_NoAspForOrContent_ThrowsInvalidOperationException()
     {
         // Arrange
-        var context = new TagHelperContext(
-            tagName: "govuk-error-message",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-error-message",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
-            })
-        {
-            TagMode = TagMode.SelfClosing
-        };
+            },
+            tagMode: TagMode.SelfClosing);
 
         var htmlHelper = new Mock<IHtmlHelper>();
 

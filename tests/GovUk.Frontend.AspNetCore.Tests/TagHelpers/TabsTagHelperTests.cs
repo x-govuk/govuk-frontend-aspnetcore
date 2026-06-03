@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class TabsTagHelperTests
+public class TabsTagHelperTests : TagHelperTestBase<TabsTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_InvokesComponentGeneratorWithExpectedOptions()
@@ -19,15 +19,9 @@ public class TabsTagHelperTests
         var secondItemLabel = "Second";
         var secondItemContent = "second content";
 
-        var context = new TagHelperContext(
-            tagName: "govuk-tabs",
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
+        var context = CreateTagHelperContext();
 
-        var output = new TagHelperOutput(
-            "govuk-tabs",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tabsContext = context.GetContextItem<TabsContext>();
@@ -56,11 +50,9 @@ public class TabsTagHelperTests
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        TabsOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateTabsAsync(It.IsAny<TabsOptions>())).Callback<TabsOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<TabsOptions>(nameof(IComponentGenerator.GenerateTabsAsync));
 
-        var tagHelper = new TabsTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new TabsTagHelper(componentGenerator)
         {
             Id = id,
             Title = title
@@ -71,7 +63,7 @@ public class TabsTagHelperTests
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(id, actualOptions.Id);
         Assert.Equal(title, actualOptions.Title);
         Assert.NotNull(actualOptions.Items);

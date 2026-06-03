@@ -63,11 +63,9 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        SelectOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateSelectInputAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<SelectOptions>(nameof(IComponentGenerator.GenerateSelectInputAsync));
 
-        var tagHelper = new SelectTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new SelectTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             DescribedBy = describedBy,
@@ -88,7 +86,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(id, actualOptions.Id?.ToHtmlString());
         Assert.Equal(name, actualOptions.Name?.ToHtmlString());
         Assert.Equal(describedBy, actualOptions.DescribedBy?.ToHtmlString());
@@ -176,11 +174,9 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        SelectOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateSelectInputAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<SelectOptions>(nameof(IComponentGenerator.GenerateSelectInputAsync));
 
-        var tagHelper = new SelectTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new SelectTagHelper(componentGenerator, modelHelperMock.Object)
         {
             Id = id,
             Name = name,
@@ -193,7 +189,8 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions?.ErrorMessage);
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.ErrorMessage);
         Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html?.ToHtmlString());
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText?.ToHtmlString());
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
@@ -277,11 +274,9 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        SelectOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateSelectInputAsync(It.IsAny<SelectOptions>())).Callback<SelectOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<SelectOptions>(nameof(IComponentGenerator.GenerateSelectInputAsync));
 
-        var tagHelper = new SelectTagHelper(componentGeneratorMock.Object, modelHelperMock.Object)
+        var tagHelper = new SelectTagHelper(componentGenerator, modelHelperMock.Object)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -293,7 +288,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.Id);
         Assert.NotNull(actualOptions.Name);
         Assert.Equal(displayName, actualOptions.Label?.Html?.ToHtmlString());

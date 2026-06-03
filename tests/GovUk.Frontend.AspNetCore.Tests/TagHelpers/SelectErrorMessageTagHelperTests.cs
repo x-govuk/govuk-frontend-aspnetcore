@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SelectErrorMessageTagHelperTests
+public class SelectErrorMessageTagHelperTests : TagHelperTestBase<SelectErrorMessageTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsErrorMessageOnContext()
@@ -11,17 +11,10 @@ public class SelectErrorMessageTagHelperTests
         // Arrange
         var selectContext = new SelectContext(@for: null);
 
-        var context = new TagHelperContext(
-            tagName: SelectErrorMessageTagHelper.TagName,
-            allAttributes: [],
-            items: new Dictionary<object, object>(),
-            uniqueId: "test");
-
+        var context = CreateTagHelperContext();
         context.SetContextItem(typeof(FormGroupContext3), selectContext);
 
-        var output = new TagHelperOutput(
-            SelectErrorMessageTagHelper.TagName,
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

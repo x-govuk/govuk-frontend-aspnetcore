@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosFieldsetTagHelperTests
+public class RadiosFieldsetTagHelperTests : TagHelperTestBase<RadiosFieldsetTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsFieldsetToContext()
@@ -12,18 +12,9 @@ public class RadiosFieldsetTagHelperTests
         // Arrange
         var radiosContext = new RadiosContext(name: null, @for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-fieldset",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: radiosContext);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-fieldset",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
@@ -56,18 +47,9 @@ public class RadiosFieldsetTagHelperTests
         radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString("Existing legend"), RadiosFieldsetLegendTagHelper.TagName);
         radiosContext.CloseFieldset();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-fieldset",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosContext), radiosContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: radiosContext);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-fieldset",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();

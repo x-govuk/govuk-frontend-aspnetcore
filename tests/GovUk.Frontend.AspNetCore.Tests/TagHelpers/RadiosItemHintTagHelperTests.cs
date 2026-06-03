@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosItemHintTagHelperTests
+public class RadiosItemHintTagHelperTests : TagHelperTestBase<RadiosItemHintTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsHintOnContext()
@@ -11,18 +11,9 @@ public class RadiosItemHintTagHelperTests
         // Arrange
         var radiosItemContext = new RadiosItemContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-radios-item-hint",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(RadiosItemContext), radiosItemContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: radiosItemContext);
 
-        var output = new TagHelperOutput(
-            "govuk-radios-item-hint",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

@@ -47,11 +47,9 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        ErrorSummaryOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
         {
             DisableAutoFocus = disableAutoFocus,
             ViewContext = viewContext
@@ -62,7 +60,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorList);
         Assert.Collection(
             actualOptions.ErrorList,
@@ -104,11 +102,9 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        ErrorSummaryOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
         {
             ViewContext = TestUtils.CreateViewContext()
         };
@@ -118,7 +114,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("There is a problem", actualOptions?.TitleHtml);
+        Assert.Equal("There is a problem", getActualOptions().TitleHtml);
     }
 
     [Fact]
@@ -184,11 +180,9 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        ErrorSummaryOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
         {
             ViewContext = viewContext
         };
@@ -198,7 +192,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorList);
         Assert.Collection(
             actualOptions.ErrorList,
@@ -236,11 +230,9 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        ErrorSummaryOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
         {
             ViewContext = viewContext
         };
@@ -250,7 +242,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorList);
         Assert.Collection(
             actualOptions.ErrorList,

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PaginationEllipsisItemTagHelperTests
+public class PaginationEllipsisItemTagHelperTests : TagHelperTestBase<PaginationEllipsisItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsItemToContextItems()
@@ -12,18 +12,9 @@ public class PaginationEllipsisItemTagHelperTests
         // Arrange
         var paginationContext = new PaginationContext();
 
-        var context = new TagHelperContext(
-            tagName: "govuk-pagination-ellipsis",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(PaginationContext), paginationContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: paginationContext);
 
-        var output = new TagHelperOutput(
-            "govuk-pagination-ellipsis",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

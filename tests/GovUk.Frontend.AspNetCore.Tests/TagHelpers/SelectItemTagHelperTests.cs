@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class SelectItemTagHelperTests
+public class SelectItemTagHelperTests : TagHelperTestBase<SelectItemTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddItemsToContext()
@@ -15,18 +15,9 @@ public class SelectItemTagHelperTests
         // Arrange
         var selectContext = new SelectContext(@for: null);
 
-        var context = new TagHelperContext(
-            tagName: "govuk-select-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SelectContext), selectContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: selectContext);
 
-        var output = new TagHelperOutput(
-            "govuk-select-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -72,18 +63,9 @@ public class SelectItemTagHelperTests
 
         var selectContext = new SelectContext(@for: new ModelExpression(modelExpression, modelExplorer));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-select-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SelectContext), selectContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: selectContext);
 
-        var output = new TagHelperOutput(
-            "govuk-select-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -124,18 +106,9 @@ public class SelectItemTagHelperTests
 
         var selectContext = new SelectContext(@for: new ModelExpression(modelExpression, modelExplorer));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-select-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SelectContext), selectContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: selectContext);
 
-        var output = new TagHelperOutput(
-            "govuk-select-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -178,18 +151,9 @@ public class SelectItemTagHelperTests
 
         var selectContext = new SelectContext(@for: new ModelExpression(modelExpression, modelExplorer));
 
-        var context = new TagHelperContext(
-            tagName: "govuk-select-item",
-            allAttributes: [],
-            items: new Dictionary<object, object>()
-            {
-                { typeof(SelectContext), selectContext }
-            },
-            uniqueId: "test");
+        var context = CreateTagHelperContext(contexts: selectContext);
 
-        var output = new TagHelperOutput(
-            "govuk-select-item",
-            attributes: [],
+        var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();

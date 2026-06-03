@@ -13,6 +13,12 @@ The `RestoreGovUkFrontendNpmPackage`, `GovUkFrontendNpmPackageLocation` and `Cop
 In their place is `EnableGovUkFrontendSupport`, `GovUkFrontendNpmPackageDirectory`, `GovUkFrontendAssetsDirectory`, `GovUkFrontendJavaScriptDirectory` and
 `GovUkFrontendStylesheetDirectory`, enabling more fine-grained control over assets.
 
+### Tag helpers
+
+`<govuk-file-upload>` now supports attributes for customising the text used by the JavaScript-enhanced file upload component:
+`choose-files-button-text`, `drop-instruction-text`, `entered-drop-zone-text`, `left-drop-zone-text`,
+`multiple-files-chosen-text-one`, `multiple-files-chosen-text-other` and `no-file-chosen-text`.
+
 ### Fixes
 
 Fixes default navigation ID and menu button text on service navigation components.

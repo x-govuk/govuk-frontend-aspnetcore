@@ -40,17 +40,24 @@
 
 | Attribute                  | Type              | Description                                                                                                                                                             |
 |----------------------------|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `described-by`             | `string`          | One or more element IDs to add to the `aria-describedby` attribute of the generated `input` element.                                                                    |
-| `disabled`                 | `bool`            | Whether the input should be disabled. The default is `false`.                                                                                                           |
-| `for`                      | `ModelExpression` | The model expression used to generate the `name` and `id` attributes as well as the error message content. See [documentation on forms](forms.md) for more information. |
-| `id`                       | `string`          | The `id` attribute for the generated `input` element. If not specified then a value is generated from the `name` attribute.                                             |
-| `ignore-modelstate-errors` | `bool`            | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.           |
-| `input-*`                  |                   | Additional attributes to add to the generated `input` element.                                                                                                          |
-| `javascript-enhancements`  | `bool?`           | Whether to enable JavaScript enhancements for the component.                                                                                                            |
-| `label-class`              | `string`          | Additional classes for the generated `label` element.                                                                                                                   |
-| `multiple`                 | `bool?`           | The `multiple` attribute for the generated `input` element.                                                                                                             |
-| `name`                     | `string`          | The `name` attribute for the generated `input` element. Required unless the `for` attribute is specified.                                                               |
-| `wrapper-*`                |                   | Additional attributes to add to the Javascript enhanced component's wrapper element.                                                                                    |
+| `choose-files-button-text`        | `string`          | Text for the button that opens the file picker. Only applies when JavaScript enhancements are enabled.                                                                  |
+| `described-by`                    | `string`          | One or more element IDs to add to the `aria-describedby` attribute of the generated `input` element.                                                                    |
+| `disabled`                        | `bool`            | Whether the input should be disabled. The default is `false`.                                                                                                           |
+| `drop-instruction-text`           | `string`          | Text instructing users to drop files in the drop zone. Only applies when JavaScript enhancements are enabled.                                                           |
+| `entered-drop-zone-text`          | `string`          | Text announced to screen reader users when a user drags files into the drop zone. Only applies when JavaScript enhancements are enabled.                                |
+| `for`                             | `ModelExpression` | The model expression used to generate the `name` and `id` attributes as well as the error message content. See [documentation on forms](forms.md) for more information. |
+| `id`                              | `string`          | The `id` attribute for the generated `input` element. If not specified then a value is generated from the `name` attribute.                                             |
+| `ignore-modelstate-errors`        | `bool`            | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.           |
+| `input-*`                         |                   | Additional attributes to add to the generated `input` element.                                                                                                          |
+| `javascript-enhancements`         | `bool?`           | Whether to enable JavaScript enhancements for the component.                                                                                                            |
+| `label-class`                     | `string`          | Additional classes for the generated `label` element.                                                                                                                   |
+| `left-drop-zone-text`             | `string`          | Text announced to screen reader users when a user drags files out of the drop zone. Only applies when JavaScript enhancements are enabled.                              |
+| `multiple`                        | `bool?`           | The `multiple` attribute for the generated `input` element.                                                                                                             |
+| `multiple-files-chosen-text-one`  | `string`          | Text shown when exactly one file has been chosen. Only applies when `multiple` is `true` and JavaScript enhancements are enabled.                                       |
+| `multiple-files-chosen-text-other`| `string`          | Text shown when more than one file has been chosen. Only applies when `multiple` is `true` and JavaScript enhancements are enabled.                                     |
+| `name`                            | `string`          | The `name` attribute for the generated `input` element. Required unless the `for` attribute is specified.                                                               |
+| `no-file-chosen-text`             | `string`          | Text shown when no file has been chosen. Only applies when JavaScript enhancements are enabled.                                                                         |
+| `wrapper-*`                       |                   | Additional attributes to add to the Javascript enhanced component's wrapper element.                                                                                    |
 
 ### `<govuk-file-upload-label>`
 

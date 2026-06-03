@@ -65,31 +65,32 @@ internal partial class DefaultComponentGenerator
 
             if (options.JavaScript is true)
             {
-                var dropZoneDiv = new HtmlTag("div", attrs => attrs
-                    .WithClasses("govuk-drop-zone")
+                var wrapperDiv = new HtmlTag("div", attrs => attrs
+                    .WithClasses("govuk-file-upload-wrapper", options.WrapperClasses)
                     .With("data-module", "govuk-file-upload")
                     .With("data-i18n.choose-files-button", options.ChooseFilesButtonText)
                     .With("data-i18n.no-file-chosen", options.NoFileChosenText)
                     .With("data-i18n.drop-instruction", options.DropInstructionText)
                     .With("data-i18n.entered-drop-zone", options.EnteredDropZoneText)
-                    .With("data-i18n.left-drop-zone", options.LeftDropZoneText));
+                    .With("data-i18n.left-drop-zone", options.LeftDropZoneText)
+                    .With(options.WrapperAttributes));
 
                 if (options.MultipleFilesChosenText is { } multipleFilesChosenText)
                 {
                     if (!multipleFilesChosenText.One.IsEmpty())
                     {
-                        dropZoneDiv.Attributes.Set("data-i18n.multiple-files-chosen.one", multipleFilesChosenText.One);
+                        wrapperDiv.Attributes.Set("data-i18n.multiple-files-chosen.one", multipleFilesChosenText.One);
                     }
                     if (!multipleFilesChosenText.Other.IsEmpty())
                     {
-                        dropZoneDiv.Attributes.Set("data-i18n.multiple-files-chosen.other", multipleFilesChosenText.Other);
+                        wrapperDiv.Attributes.Set("data-i18n.multiple-files-chosen.other", multipleFilesChosenText.Other);
                     }
                 }
 
                 var inputTag = CreateFileInputTag();
-                dropZoneDiv.InnerHtml.AppendHtml(inputTag);
+                wrapperDiv.InnerHtml.AppendHtml(inputTag);
 
-                innerHtmlBuilder.AppendHtml(dropZoneDiv);
+                innerHtmlBuilder.AppendHtml(wrapperDiv);
             }
             else
             {
@@ -118,7 +119,6 @@ internal partial class DefaultComponentGenerator
                 .WithClasses("govuk-file-upload", options.Classes, options.ErrorMessage is not null ? "govuk-file-upload--error" : null)
                 .WithBoolean("disabled", options.Disabled is true)
                 .WithBoolean("multiple", options.Multiple is true)
-                .With("value", options.Value)
                 .With("aria-describedby", describedByParts.Count > 0 ? TemplateString.Join(" ", describedByParts) : null)
                 .With(options.Attributes))
             {

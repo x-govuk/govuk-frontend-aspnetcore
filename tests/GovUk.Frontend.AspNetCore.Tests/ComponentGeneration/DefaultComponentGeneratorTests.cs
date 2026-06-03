@@ -99,7 +99,7 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GenerateFieldsetAsync(options));
 
     [Theory]
-    [ComponentFixtureData("file-upload", typeof(FileUploadOptions), only: "translated")]
+    [ComponentFixtureData("file-upload", typeof(FileUploadOptions))]
     public Task FileUpload(ComponentTestCaseData<FileUploadOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,

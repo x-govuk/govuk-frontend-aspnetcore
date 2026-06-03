@@ -44,12 +44,13 @@
 | `disabled`                 | `bool`            | Whether the input should be disabled. The default is `false`.                                                                                                           |
 | `for`                      | `ModelExpression` | The model expression used to generate the `name` and `id` attributes as well as the error message content. See [documentation on forms](forms.md) for more information. |
 | `id`                       | `string`          | The `id` attribute for the generated `input` element. If not specified then a value is generated from the `name` attribute.                                             |
-| `ignore-modelstate-errors` | `bool`            | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.       |
+| `ignore-modelstate-errors` | `bool`            | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.           |
 | `input-*`                  |                   | Additional attributes to add to the generated `input` element.                                                                                                          |
-| `javascript-enhancements`  | `bool?`           |  Whether to enable JavaScript enhancements for the component.                                                                                                           |
+| `javascript-enhancements`  | `bool?`           | Whether to enable JavaScript enhancements for the component.                                                                                                            |
 | `label-class`              | `string`          | Additional classes for the generated `label` element.                                                                                                                   |
 | `multiple`                 | `bool?`           | The `multiple` attribute for the generated `input` element.                                                                                                             |
-| `name`                     | `string`          | The `name` attribute for the generated `input` element. Required unless the `for` attribute is specified.                                                           |
+| `name`                     | `string`          | The `name` attribute for the generated `input` element. Required unless the `for` attribute is specified.                                                               |
+| `wrapper-*`                |                   | Additional attributes to add to the Javascript enhanced component's wrapper element.                                                                                    |
 
 ### `<govuk-file-upload-label>`
 

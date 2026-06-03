@@ -54,15 +54,15 @@ To replicate this setup in your own project, follow these steps:
 
 7. Create an `app.scss` file in the `Styles` directory:
    ```scss
-   @use "govuk-frontend-aspnetcore" as *;
+   @use "govuk-frontend" as *;
 
    /* your custom styles here */
    ```
 
 > [!NOTE]
-> If you're not hosting assets at `/assets`, you should override the `$govuk-assets-path` variable before `@use "govuk-frontend-aspnetcore"` e.g.
+> If you're not hosting assets at `/assets`, you should override the `$govuk-assets-path` variable before e.g.
 > ```scss
-> @use "govuk-frontend/settings/assets" as * with (
+> @use "govuk-frontend" as * with (
 >   $govuk-assets-path: "static/"
 > );
 > ```

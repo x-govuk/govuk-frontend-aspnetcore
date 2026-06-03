@@ -1,4 +1,3 @@
-@use "govuk-frontend/settings/assets" as * with (
+@use "govuk-frontend" as * with (
   $govuk-assets-path: "/assets/"
 );
-@use "govuk-frontend-aspnetcore" as *;

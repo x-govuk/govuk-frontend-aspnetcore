@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+Targets GOV.UK Frontend v6.2.0.
+
 ### `govuk-frontend` asset support
 
 > [!NOTE]

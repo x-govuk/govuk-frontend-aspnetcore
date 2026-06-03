@@ -23,6 +23,8 @@ public class FileUploadTagHelperTests
         var dataFooAttrValue = "foo";
         var labelHtml = "The label";
         var hintHtml = "The hint";
+        var wrapperDataBarAttribute = "bar";
+        var wrapperClasses = "wrapper-class";
 
         var context = new TagHelperContext(
             tagName: "govuk-input",
@@ -71,6 +73,11 @@ public class FileUploadTagHelperTests
             {
                 { "class", classes },
                 { "data-foo", dataFooAttrValue },
+            },
+            WrapperAttributes = new Dictionary<string, string?>()
+            {
+                { "class", wrapperClasses },
+                { "data-bar", wrapperDataBarAttribute },
             }
         };
         tagHelper.Init(context);
@@ -95,6 +102,15 @@ public class FileUploadTagHelperTests
         {
             Assert.Equal("data-foo", kvp.Key);
             Assert.Equal(dataFooAttrValue, kvp.Value);
+        });
+
+        Assert.Equal(wrapperClasses, actualOptions.WrapperClasses);
+
+        Assert.NotNull(actualOptions.WrapperAttributes);
+        Assert.Collection(actualOptions.WrapperAttributes, kvp =>
+        {
+            Assert.Equal("data-bar", kvp.Key);
+            Assert.Equal(wrapperDataBarAttribute, kvp.Value);
         });
     }
 

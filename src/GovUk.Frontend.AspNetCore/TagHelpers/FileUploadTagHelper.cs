@@ -42,6 +42,7 @@ public class FileUploadTagHelper : TagHelper
     private const string LabelClassAttributeName = "label-class";
     private const string MultipleAttributeName = "multiple";
     private const string NameAttributeName = "name";
+    private const string WrapperAttributesPrefix = "wrapper-";
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
@@ -144,6 +145,12 @@ public class FileUploadTagHelper : TagHelper
     [DisallowNull]
     public ViewContext? ViewContext { get; set; }
 
+    /// <summary>
+    /// Additional attributes to add to the Javascript enhanced component's wrapper element.
+    /// </summary>
+    [HtmlAttributeName(DictionaryAttributePrefix = WrapperAttributesPrefix)]
+    public IDictionary<string, string?> WrapperAttributes { get; set; } = new Dictionary<string, string?>();
+
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
@@ -160,7 +167,7 @@ public class FileUploadTagHelper : TagHelper
 
         var fileUploadContext = context.GetContextItem<FileUploadContext>();
 
-        _ = await output.GetChildContentAsync();
+        await output.GetChildContentAsync();
 
         var name = ResolveName();
         var id = ResolveId(name);
@@ -193,6 +200,9 @@ public class FileUploadTagHelper : TagHelper
             Classes = formGroupClasses
         };
 
+        var wrapperAttributes = new AttributeCollection(WrapperAttributes);
+        wrapperAttributes.Remove("class", out var wrapperClasses);
+
         var attributes = new AttributeCollection(InputAttributes);
         attributes.Remove("class", out var classes);
 
@@ -214,6 +224,8 @@ public class FileUploadTagHelper : TagHelper
             NoFileChosenText = null,
             EnteredDropZoneText = null,
             LeftDropZoneText = null,
+            WrapperClasses = wrapperClasses,
+            WrapperAttributes = wrapperAttributes,
             Classes = classes,
             Attributes = attributes
         });

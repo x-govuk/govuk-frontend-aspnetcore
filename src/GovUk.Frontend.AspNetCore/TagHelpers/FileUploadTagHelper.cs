@@ -200,7 +200,6 @@ public class FileUploadTagHelper : TagHelper
         {
             Id = id,
             Name = name,
-            Value = null,
             Disabled = Disabled,
             Multiple = Multiple,
             DescribedBy = DescribedBy,

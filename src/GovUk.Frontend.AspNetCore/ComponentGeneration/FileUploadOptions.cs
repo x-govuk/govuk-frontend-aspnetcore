@@ -8,7 +8,6 @@ public record FileUploadOptions
 {
     public TemplateString? Id { get; set; }
     public TemplateString? Name { get; set; }
-    public TemplateString? Value { get; set; }
     public bool? Disabled { get; set; }
     public bool? Multiple { get; set; }
     public TemplateString? DescribedBy { get; set; }
@@ -24,6 +23,8 @@ public record FileUploadOptions
     public TemplateString? NoFileChosenText { get; set; }
     public TemplateString? EnteredDropZoneText { get; set; }
     public TemplateString? LeftDropZoneText { get; set; }
+    public TemplateString? WrapperClasses { get; set; }
+    public AttributeCollection? WrapperAttributes { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
 }

@@ -33,11 +33,9 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FieldsetOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFieldsetAsync(It.IsAny<FieldsetOptions>())).Callback<FieldsetOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FieldsetOptions>(nameof(IComponentGenerator.GenerateFieldsetAsync));
 
-        var tagHelper = new FieldsetTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new FieldsetTagHelper(componentGenerator)
         {
             DescribedBy = describedBy,
             Role = role
@@ -49,8 +47,8 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal(describedBy, actualOptions!.DescribedBy);
+        var actualOptions = getActualOptions();
+        Assert.Equal(describedBy, actualOptions.DescribedBy);
         Assert.Equal(role, actualOptions.Role);
         Assert.Equal(mainContent, actualOptions.Html);
         Assert.NotNull(actualOptions.Legend);
@@ -89,11 +87,9 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FieldsetOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFieldsetAsync(It.IsAny<FieldsetOptions>())).Callback<FieldsetOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FieldsetOptions>(nameof(IComponentGenerator.GenerateFieldsetAsync));
 
-        var tagHelper = new FieldsetTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new FieldsetTagHelper(componentGenerator)
         {
             DescribedBy = describedBy,
             Role = role
@@ -105,8 +101,8 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal(describedBy, actualOptions!.DescribedBy);
+        var actualOptions = getActualOptions();
+        Assert.Equal(describedBy, actualOptions.DescribedBy);
         Assert.Equal(role, actualOptions.Role);
         Assert.Equal(mainContent, actualOptions.Html);
         Assert.NotNull(actualOptions.Legend);
@@ -132,9 +128,9 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var (componentGenerator, _) = CreateComponentGenerator<FieldsetOptions>(nameof(IComponentGenerator.GenerateFieldsetAsync));
 
-        var tagHelper = new FieldsetTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new FieldsetTagHelper(componentGenerator)
         {
             DescribedBy = "describedby",
             Role = "therole"
@@ -180,11 +176,9 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        FieldsetOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateFieldsetAsync(It.IsAny<FieldsetOptions>())).Callback<FieldsetOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<FieldsetOptions>(nameof(IComponentGenerator.GenerateFieldsetAsync));
 
-        var tagHelper = new FieldsetTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new FieldsetTagHelper(componentGenerator)
         {
             DescribedBy = describedBy,
             Role = role
@@ -196,8 +190,8 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal(describedBy, actualOptions!.DescribedBy);
+        var actualOptions = getActualOptions();
+        Assert.Equal(describedBy, actualOptions.DescribedBy);
         Assert.Equal(role, actualOptions.Role);
         Assert.Equal(mainContent, actualOptions.Html);
         Assert.NotNull(actualOptions.Legend);

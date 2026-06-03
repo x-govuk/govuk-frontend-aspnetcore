@@ -24,11 +24,9 @@ public class WarningTextTagHelperTests : TagHelperTestBase<WarningTextTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        WarningTextOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateWarningTextAsync(It.IsAny<WarningTextOptions>())).Callback<WarningTextOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<WarningTextOptions>(nameof(IComponentGenerator.GenerateWarningTextAsync));
 
-        var tagHelper = new WarningTextTagHelper(componentGeneratorMock.Object, HtmlEncoder.Default)
+        var tagHelper = new WarningTextTagHelper(componentGenerator, HtmlEncoder.Default)
         {
             IconFallbackText = iconFallbackText
         };
@@ -37,8 +35,8 @@ public class WarningTextTagHelperTests : TagHelperTestBase<WarningTextTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal(content, actualOptions!.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(content, actualOptions.Html);
         Assert.Null(actualOptions.Text);
         Assert.Equal(iconFallbackText, actualOptions.IconFallbackText);
     }

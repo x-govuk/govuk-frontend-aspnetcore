@@ -65,11 +65,9 @@ public class PaginationTagHelperTests : TagHelperTestBase<PaginationTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PaginationOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePaginationAsync(It.IsAny<PaginationOptions>())).Callback<PaginationOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PaginationOptions>(nameof(IComponentGenerator.GeneratePaginationAsync));
 
-        var tagHelper = new PaginationTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new PaginationTagHelper(componentGenerator)
         {
             LandmarkLabel = landmarkLabel
         };
@@ -79,7 +77,7 @@ public class PaginationTagHelperTests : TagHelperTestBase<PaginationTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(landmarkLabel, actualOptions.LandmarkLabel?.ToHtmlString(HtmlEncoder.Default));
         Assert.NotNull(actualOptions.Items);
         Assert.NotNull(actualOptions.Previous);

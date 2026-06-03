@@ -23,17 +23,15 @@ public class TagTagHelperTests : TagHelperTestBase<TagTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        TagOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateTagAsync(It.IsAny<TagOptions>())).Callback<TagOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<TagOptions>(nameof(IComponentGenerator.GenerateTagAsync));
 
-        var tagHelper = new TagTagHelper(componentGeneratorMock.Object);
+        var tagHelper = new TagTagHelper(componentGenerator);
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
-        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions!.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html);
     }
 }

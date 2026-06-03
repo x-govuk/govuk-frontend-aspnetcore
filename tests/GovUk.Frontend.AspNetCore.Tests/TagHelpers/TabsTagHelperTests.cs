@@ -50,11 +50,9 @@ public class TabsTagHelperTests : TagHelperTestBase<TabsTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        TabsOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateTabsAsync(It.IsAny<TabsOptions>())).Callback<TabsOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<TabsOptions>(nameof(IComponentGenerator.GenerateTabsAsync));
 
-        var tagHelper = new TabsTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new TabsTagHelper(componentGenerator)
         {
             Id = id,
             Title = title
@@ -65,7 +63,7 @@ public class TabsTagHelperTests : TagHelperTestBase<TabsTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(id, actualOptions.Id);
         Assert.Equal(title, actualOptions.Title);
         Assert.NotNull(actualOptions.Items);

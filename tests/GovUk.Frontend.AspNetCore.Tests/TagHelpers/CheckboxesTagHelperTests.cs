@@ -52,12 +52,9 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
 
         output.Attributes.Add("class", className);
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        CheckboxesOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateCheckboxesAsync(It.IsAny<CheckboxesOptions>()))
-            .Callback<CheckboxesOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CheckboxesOptions>(nameof(IComponentGenerator.GenerateCheckboxesAsync));
 
-        var tagHelper = new CheckboxesTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -70,7 +67,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Equal(hintContent, actualOptions.Hint?.Html);
@@ -139,12 +136,9 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        CheckboxesOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateCheckboxesAsync(It.IsAny<CheckboxesOptions>()))
-            .Callback<CheckboxesOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CheckboxesOptions>(nameof(IComponentGenerator.GenerateCheckboxesAsync));
 
-        var tagHelper = new CheckboxesTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -157,7 +151,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Null(actualOptions.Hint);
@@ -197,12 +191,9 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        CheckboxesOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateCheckboxesAsync(It.IsAny<CheckboxesOptions>()))
-            .Callback<CheckboxesOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CheckboxesOptions>(nameof(IComponentGenerator.GenerateCheckboxesAsync));
 
-        var tagHelper = new CheckboxesTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -215,7 +206,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Single(actualOptions.Items!);
@@ -259,12 +250,9 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        CheckboxesOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateCheckboxesAsync(It.IsAny<CheckboxesOptions>()))
-            .Callback<CheckboxesOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CheckboxesOptions>(nameof(IComponentGenerator.GenerateCheckboxesAsync));
 
-        var tagHelper = new CheckboxesTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -277,7 +265,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Single(actualOptions.Items!);
@@ -323,12 +311,9 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        CheckboxesOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateCheckboxesAsync(It.IsAny<CheckboxesOptions>()))
-            .Callback<CheckboxesOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CheckboxesOptions>(nameof(IComponentGenerator.GenerateCheckboxesAsync));
 
-        var tagHelper = new CheckboxesTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(componentGenerator, new DefaultModelHelper())
         {
             IdPrefix = idPrefix,
             Name = name,
@@ -341,7 +326,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.Single(actualOptions.Items!);
@@ -406,12 +391,9 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        CheckboxesOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateCheckboxesAsync(It.IsAny<CheckboxesOptions>()))
-            .Callback<CheckboxesOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CheckboxesOptions>(nameof(IComponentGenerator.GenerateCheckboxesAsync));
 
-        var tagHelper = new CheckboxesTagHelper(componentGeneratorMock.Object, new DefaultModelHelper())
+        var tagHelper = new CheckboxesTagHelper(componentGenerator, new DefaultModelHelper())
         {
             DescribedBy = describedBy,
             IdPrefix = idPrefix,
@@ -425,7 +407,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.NotNull(actualOptions.Hint);

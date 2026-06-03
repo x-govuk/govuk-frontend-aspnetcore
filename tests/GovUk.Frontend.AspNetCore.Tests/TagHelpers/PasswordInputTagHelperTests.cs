@@ -62,11 +62,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             Id = id,
             DescribedBy = describedBy,
@@ -97,7 +95,7 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(id, actualOptions.Id);
         Assert.Equal(name, actualOptions.Name);
         Assert.Equal(buttonClass, actualOptions.Button?.Classes);
@@ -171,11 +169,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             Id = id,
             Name = name,
@@ -188,7 +184,8 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions?.ErrorMessage);
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.ErrorMessage);
         Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
@@ -258,11 +255,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -274,7 +269,7 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.Id);
         Assert.NotNull(actualOptions.Name);
         Assert.Equal(modelStateValue, actualOptions.Value);
@@ -330,11 +325,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -347,7 +340,8 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(value, actualOptions?.Value);
+        var actualOptions = getActualOptions();
+        Assert.Equal(value, actualOptions.Value);
     }
 
     [Fact]
@@ -405,11 +399,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -421,7 +413,8 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(labelHtml, actualOptions?.Label?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(labelHtml, actualOptions.Label?.Html);
     }
 
     [Fact]
@@ -480,11 +473,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -496,7 +487,8 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(hintHtml, actualOptions?.Hint?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
     }
 
     [Fact]
@@ -562,11 +554,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = TestUtils.CreateViewContext()
@@ -578,7 +568,8 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(errorHtml, actualOptions?.ErrorMessage?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
     }
 
     [Fact]
@@ -635,11 +626,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             ViewContext = new ViewContext(),
@@ -652,7 +641,8 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Null(actualOptions?.ErrorMessage);
+        var actualOptions = getActualOptions();
+        Assert.Null(actualOptions.ErrorMessage);
     }
 
     [Fact]
@@ -718,11 +708,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         var modelExplorer = new EmptyModelMetadataProvider().GetModelExplorerForType(typeof(Model), new Model())
             .GetExplorerForProperty(nameof(Model.SimpleProperty));
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        PasswordInputOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GeneratePasswordInputAsync(It.IsAny<PasswordInputOptions>())).Callback<PasswordInputOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             For = new ModelExpression(nameof(Model.SimpleProperty), modelExplorer),
             IgnoreModelStateErrors = true,
@@ -735,7 +723,8 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(errorHtml, actualOptions?.ErrorMessage?.Html);
+        var actualOptions = getActualOptions();
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
     }
 
     [Fact]
@@ -778,9 +767,9 @@ public class PasswordInputTagHelperTests : TagHelperTestBase<PasswordInputTagHel
 
         var modelHelperMock = new Mock<IModelHelper>();
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
+        var (componentGenerator, _) = CreateComponentGenerator<PasswordInputOptions>(nameof(IComponentGenerator.GeneratePasswordInputAsync));
 
-        var tagHelper = new PasswordInputTagHelper(componentGeneratorMock.Object, modelHelperMock.Object, HtmlEncoder.Default)
+        var tagHelper = new PasswordInputTagHelper(componentGenerator, modelHelperMock.Object, HtmlEncoder.Default)
         {
             Id = id,
             Name = name,

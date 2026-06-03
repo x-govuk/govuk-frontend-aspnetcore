@@ -47,11 +47,9 @@ public class BreadcrumbsTagHelperTests : TagHelperTestBase<BreadcrumbsTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        BreadcrumbsOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateBreadcrumbsAsync(It.IsAny<BreadcrumbsOptions>())).Callback<BreadcrumbsOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<BreadcrumbsOptions>(nameof(IComponentGenerator.GenerateBreadcrumbsAsync));
 
-        var tagHelper = new BreadcrumbsTagHelper(componentGeneratorMock.Object)
+        var tagHelper = new BreadcrumbsTagHelper(componentGenerator)
         {
             CollapseOnMobile = collapseOnMobile,
             LabelText = labelText,
@@ -62,7 +60,7 @@ public class BreadcrumbsTagHelperTests : TagHelperTestBase<BreadcrumbsTagHelper>
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.NotNull(actualOptions);
+        var actualOptions = getActualOptions();
         Assert.Equal(collapseOnMobile, actualOptions.CollapseOnMobile);
         Assert.NotNull(actualOptions.Items);
         Assert.Collection(

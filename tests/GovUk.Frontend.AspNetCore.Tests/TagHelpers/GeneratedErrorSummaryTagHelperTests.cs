@@ -30,15 +30,13 @@ public class GeneratedErrorSummaryTagHelperTests : TagHelperTestBase<GeneratedEr
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var componentGeneratorMock = TestUtils.CreateComponentGeneratorMock();
-        ErrorSummaryOptions? actualOptions = null;
-        componentGeneratorMock.Setup(mock => mock.GenerateErrorSummaryAsync(It.IsAny<ErrorSummaryOptions>())).Callback<ErrorSummaryOptions>(o => actualOptions = o);
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.AddError(errorHtml, errorHref);
 
-        var tagHelper = new GeneratedErrorSummaryTagHelper(componentGeneratorMock.Object, options)
+        var tagHelper = new GeneratedErrorSummaryTagHelper(componentGenerator, options)
         {
             PrependErrorSummary = prependErrorSummary,
             ViewContext = viewContext
@@ -53,7 +51,7 @@ public class GeneratedErrorSummaryTagHelperTests : TagHelperTestBase<GeneratedEr
 
         if (expectErrorSummary)
         {
-            Assert.NotNull(actualOptions);
+            var actualOptions = getActualOptions();
             Assert.NotNull(actualOptions.ErrorList);
             Assert.True(containerErrorContext.ErrorSummaryHasBeenRendered);
 

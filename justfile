@@ -45,6 +45,7 @@ format *ARGS:
 
 # Package the library
 pack *ARGS:
+  @rm -rf packages
   @dotnet pack src/GovUk.Frontend.AspNetCore/ {{ARGS}}
 
 # Run the docs app

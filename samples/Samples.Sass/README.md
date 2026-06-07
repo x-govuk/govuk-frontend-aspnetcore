@@ -54,16 +54,22 @@ To replicate this setup in your own project, follow these steps:
 
 7. Create an `app.scss` file in the `Styles` directory:
    ```scss
-   @use "govuk-frontend" as *;
+   @use "sass:meta";
+   @use "govuk-frontend-aspnetcore";
+   @use "govuk-frontend" as * with (
+     $govuk-font-url-function: meta.get-function("versioned-font-url", $module: "govuk-frontend-aspnetcore"),
+     $govuk-image-url-function: meta.get-function("versioned-image-url", $module: "govuk-frontend-aspnetcore")
+   );
 
    /* your custom styles here */
    ```
 
 > [!NOTE]
-> If you're not hosting assets at `/assets`, you should override the `$govuk-assets-path` variable before e.g.
+> If you're not hosting assets at `/assets`, you should override the `$govuk-fonts-path` and `$govuk-images-path` variables e.g.
 > ```scss
-> @use "govuk-frontend" as * with (
->   $govuk-assets-path: "static/"
+> @use "govuk-frontend-aspnetcore" as * with (
+>   $govuk-fonts-path: "/static/fonts",
+>   $govuk-images-path: "/static/images"
 > );
 > ```
 

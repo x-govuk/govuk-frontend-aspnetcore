@@ -6,8 +6,16 @@ Targets GOV.UK Frontend v6.2.0.
 
 ### `govuk-frontend` asset support
 
+#### SASS support
+
+A SASS module has been added that provides functions for creating image and font URLs with a versioned query parameter.
+When this query parameter is included in a request URL, middleware will add long-lived cache headers to the response, allowing aggressive caching of assets.
+See [the SASS sample](samples/Samples.Sass) for an example of how to use this.
+
+#### MSBuild property changes
+
 > [!NOTE]
-> These changes only apply if you have enabled `RestoreGovUkFrontendNpmPackage` in your project file.
+> The following changes only apply if you have enabled `RestoreGovUkFrontendNpmPackage` in your project file.
 
 The `RestoreGovUkFrontendNpmPackage`, `GovUkFrontendNpmPackageLocation` and `CopyGovUkFrontendAssetsToWebRoot` MSBuild properties have been deprecated.
 In their place is `EnableGovUkFrontendSupport`, `GovUkFrontendNpmPackageDirectory`, `GovUkFrontendAssetsDirectory`, `GovUkFrontendJavaScriptDirectory` and

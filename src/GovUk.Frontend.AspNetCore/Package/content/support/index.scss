@@ -1,7 +1,16 @@
-@use "sass:meta";
-@use "./_asset-helper";
+@use "./_constants" as *;
 
-@forward "govuk-frontend" with (
-  $govuk-font-url-function: meta.get-function("font-url", $module: "asset-helper"),
-  $govuk-image-url-function: meta.get-function("image-url", $module: "asset-helper")
-);
+$govuk-fonts-path: "/assets/fonts/" !default;
+$govuk-images-path: "/assets/images/" !default;
+
+@function _versioned_asset-url($dirname, $filename) {
+  @return url($dirname + $filename + "?v=" + $GOVUK_VERSION);
+}
+
+@function versioned-font-url($filename) {
+  @return _versioned_asset-url($govuk-fonts-path, $filename);
+}
+
+@function versioned-image-url($filename) {
+  @return _versioned_asset-url($govuk-images-path, $filename);
+}

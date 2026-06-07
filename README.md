@@ -248,8 +248,8 @@ See [the SASS sample](samples/Samples.Sass) for a full example of how to set up 
 
 > [!IMPORTANT]
 > If you're hosting your application within an IIS virtual application, you should follow the SASS integration guide in [the SASS sample](samples/Samples.Sass)
-> and ensure the `$govuk-assets-path` SASS variable is set appropriately.
-> Typically it is sufficient to use `assets/` (i.e. the default location but without the leading `/`).
+> and ensure the `$govuk-fonts-path` and `$govuk-images-path` SASS variables are set appropriately.
+> Typically it is sufficient to use `assets/fonts/` and `assets/images/` (i.e. the default location but without the leading `/`).
 
 > [!NOTE]
 > If `EnableGovUkFrontendSupport` is not set to `true` in your project file,

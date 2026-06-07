@@ -29,6 +29,7 @@
     <AnalysisMode>All</AnalysisMode>
     <NoWarn>$(NoWarn);CA1859</NoWarn>
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">$(DefineConstants);SHORT_TAG_NAMES</DefineConstants>
+    <SassCompilerEnableWatcher>false</SassCompilerEnableWatcher>
   </PropertyGroup>
 
   <!-- https://github.com/dotnet/aspnetcore/issues/63719 -->
@@ -74,6 +75,16 @@
     </ItemGroup>
   </Target>
 
+  <Target Name="PackCssFile" AfterTargets="Compile Sass" BeforeTargets="GenerateNuspec">
+    <ItemGroup>
+      <_PackageFiles Include="Package\content\govuk-frontend.min.css">
+        <PackagePath>content</PackagePath>
+        <Visible>false</Visible>
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+  </Target>
+
   <Target Name="CopyXmlDocToDocsProject" AfterTargets="Build">
     <ItemGroup>
       <_XmlDocFile Include="$(OutputPath)GovUk.Frontend.AspNetCore.xml" />
@@ -95,6 +106,7 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="AspNetCore.SassCompiler" Version="1.99.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.61">
       <PrivateAssets>all</PrivateAssets>
@@ -138,6 +150,10 @@
 
   <ItemGroup>
     <Content Include="Package\**\*" Pack="true" PackagePath="$(RecursiveDir)" />
+
+    <!-- Remove the generated CSS file from content (to avoid duplicate with item added by the PackCssFile target) -->
+    <Content Remove="Package\content\govuk-frontend.min.css" />
+    <None Include="Package\content\govuk-frontend.min.css" Visible="false" />
   </ItemGroup>
 
 </Project>

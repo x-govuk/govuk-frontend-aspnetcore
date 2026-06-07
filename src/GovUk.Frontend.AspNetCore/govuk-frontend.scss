@@ -1,0 +1,6 @@
+@use "sass:meta";
+@use "Package/content/support" as support;
+@use "../../lib/govuk-frontend-6.2.0/dist/govuk" as * with (
+  $govuk-font-url-function: meta.get-function("versioned-font-url", $module: "support"),
+  $govuk-image-url-function: meta.get-function("versioned-image-url", $module: "support")
+);

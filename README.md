@@ -41,6 +41,8 @@ Or via the .NET Core command line interface:
   </PropertyGroup>
 </Project>
 ```
+> [!NOTE]
+> Add `wwwroot/assets`, `wwwroot/govuk-frontend.min.css` and `wwwroot/govuk-frontend.min.css` to your `.gitignore` file.
 
 ### 3. Configure your ASP.NET Core application
 

@@ -49,8 +49,6 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// </summary>
     public TemplateString(TemplateStringInterpolatedStringHandler builder)
     {
-        ArgumentNullException.ThrowIfNull(builder);
-
         _value = new HtmlString(builder.GetFormattedText());
     }
 

@@ -81,6 +81,8 @@ public class GovUkFrontendOptions
     /// </remarks>
     public bool PrependErrorToTitle { get; set; }
 
+    internal GovUkFrontendBuildInfoAttribute? BuildInfo { get; set; }
+
     /// <summary>
     /// Registers a <see cref="DateInputModelConverter"/> for the specified <see cref="Type"/>.
     /// </summary>

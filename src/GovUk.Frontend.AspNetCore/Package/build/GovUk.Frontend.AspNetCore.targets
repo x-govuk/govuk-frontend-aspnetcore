@@ -38,8 +38,8 @@
       <_PackageFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\**\*" />
       <_SupportFiles Include="$(MSBuildThisFileDirectory)..\content\support\**\*" />
       <_AssetFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\assets\**\*" />
-      <_JavascriptFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\govuk-frontend.min.js*" />
-      <_CssFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\govuk-frontend.min.css*" />
+      <_JavascriptFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend\govuk-frontend.min.js" />
+      <_CssFiles Include="$(MSBuildThisFileDirectory)..\content\govuk-frontend.min.css" />
     </ItemGroup>
 
     <Copy SourceFiles="@(_PackageFiles)"

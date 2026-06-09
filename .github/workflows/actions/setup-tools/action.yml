@@ -1,0 +1,16 @@
+name: Setup tools
+
+runs:
+  using: composite
+
+  steps:
+    - run: mv global.json global.json.bak
+      shell: bash
+
+    - uses: jdx/mise-action@v3
+
+    - run: mv global.json.bak global.json
+      shell: bash
+
+    - run: just install-tools
+      shell: bash

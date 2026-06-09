@@ -28,13 +28,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseGovUkFrontend();
-
-app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseGovUkFrontend();
+
+app.UseStaticFiles();
 
 app.UseCsp(csp =>
 {

@@ -1,0 +1,8 @@
+{
+  "Source": "govuk-frontend.scss",
+  "Target": "Package/content/govuk-frontend.min.css",
+  "Arguments": "--style=compressed --quiet-deps --no-source-map",
+  "IncludePaths": [
+    "lib"
+  ]
+}

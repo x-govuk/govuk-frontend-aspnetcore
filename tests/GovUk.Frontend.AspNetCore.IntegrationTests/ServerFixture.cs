@@ -5,7 +5,14 @@ namespace GovUk.Frontend.AspNetCore.IntegrationTests;
 
 public class ServerFixture : IAsyncLifetime
 {
-    public const string BaseUrl = "http://localhost:55342";
+    // TFM specific ports so tests can run concurrently
+#if NET8_0
+    public const string BaseUrl = "http://localhost:55348";
+#elif NET9_0
+    public const string BaseUrl = "http://localhost:55349";
+#elif NET10_0
+    public const string BaseUrl = "http://localhost:55350";
+#endif
 
     private IHost? _host;
     private IPlaywright? _playright;

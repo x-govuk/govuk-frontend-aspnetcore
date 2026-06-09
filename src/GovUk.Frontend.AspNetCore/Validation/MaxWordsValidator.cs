@@ -40,7 +40,7 @@ public class MaxWordsValidator
     {
         ArgumentNullException.ThrowIfNull(value);
 
-        var wordCount = _pattern.Matches(value).Count;
+        var wordCount = _pattern.Count(value);
         return wordCount <= MaxWords;
     }
 }

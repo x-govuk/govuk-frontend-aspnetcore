@@ -31,7 +31,7 @@
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">$(DefineConstants);SHORT_TAG_NAMES</DefineConstants>
     <SassCompilerEnableWatcher>false</SassCompilerEnableWatcher>
   </PropertyGroup>
-
+  
   <!-- https://github.com/dotnet/aspnetcore/issues/63719 -->
   <Target Name="_DontPruneFileProvidersEmbedded" AfterTargets="AddPrunePackageReferences">
     <ItemGroup>
@@ -61,6 +61,13 @@
 
     <WriteLinesToFile File="Package\content\support\_constants.scss"
                       Lines="@(_ScssConstants)"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <Target Name="UpdateScssImports" BeforeTargets="Compile Sass">
+    <WriteLinesToFile File="govuk-frontend.scss"
+                      Lines="$([System.Text.RegularExpressions.Regex]::Replace($([System.IO.File]::ReadAllText('govuk-frontend.scss')), 'govuk-frontend-\d+\.\d+\.\d+', 'govuk-frontend-$(GovUkFrontendVersion)'))"
                       Overwrite="true"
                       WriteOnlyWhenDifferent="true" />
   </Target>

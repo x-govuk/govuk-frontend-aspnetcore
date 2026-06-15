@@ -63,6 +63,74 @@ public class PageTemplateHelperTests
     }
 
     [Fact]
+    public void GenerateScriptImports_WithPathBase_UsesPathBaseAndVersionInScriptSrc()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var pathBase = new PathString("/foo");
+
+        // Act
+        var result = pageTemplateHelper.GenerateScriptImports(pathBase, cspNonce: null);
+
+        // Assert
+        var importScriptElement = result.RenderToElements().First();
+        Assert.Equal(
+            $"/foo/{PageTemplateHelper.JavascriptFileName}?v={GovUkFrontendInfo.Version}",
+            importScriptElement.GetAttribute("src"));
+    }
+
+    [Fact]
+    public void GenerateScriptImports_WithPathBaseAndNonce_AppendsNonceToScript()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var pathBase = new PathString("/foo");
+        var nonce = "nonce123";
+
+        // Act
+        var result = pageTemplateHelper.GenerateScriptImports(pathBase, nonce);
+
+        // Assert
+        var inlineScriptElement = result.RenderToElements().Last();
+        Assert.Equal(nonce, inlineScriptElement.GetAttribute("nonce"));
+    }
+
+    [Fact]
+    public void GenerateStyleImports_RendersStylesheetLinkWithVersion()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+
+        // Act
+        var result = pageTemplateHelper.GenerateStyleImports();
+
+        // Assert
+        var element = result.RenderToElement();
+        Assert.Equal("link", element.TagName, ignoreCase: true);
+        Assert.Equal("stylesheet", element.GetAttribute("rel"));
+        Assert.Equal(
+            $"/{PageTemplateHelper.StylesheetFileName}?v={GovUkFrontendInfo.Version}",
+            element.GetAttribute("href"));
+    }
+
+    [Fact]
+    public void GenerateStyleImports_WithPathBase_UsesPathBaseAndVersionInHref()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var pathBase = new PathString("/foo");
+
+        // Act
+        var result = pageTemplateHelper.GenerateStyleImports(pathBase);
+
+        // Assert
+        var element = result.RenderToElement();
+        Assert.Equal(
+            $"/foo/{PageTemplateHelper.StylesheetFileName}?v={GovUkFrontendInfo.Version}",
+            element.GetAttribute("href"));
+    }
+
+    [Fact]
     public void GetCspScriptHashes()
     {
         // Arrange
@@ -70,6 +138,20 @@ public class PageTemplateHelperTests
 
         // Act
         var result = pageTemplateHelper.GetCspScriptHashes();
+
+        // Assert
+        Assert.NotEmpty(result);
+    }
+
+    [Fact]
+    public void GetCspScriptHashes_WithPathBase_ReturnsHashes()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var pathBase = new PathString("/foo");
+
+        // Act
+        var result = pageTemplateHelper.GetCspScriptHashes(pathBase);
 
         // Assert
         Assert.NotEmpty(result);
@@ -96,6 +178,20 @@ public class PageTemplateHelperTests
 
         // Act
         var result = pageTemplateHelper.GetInitScriptCspHash();
+
+        // Assert
+        Assert.NotEmpty(result);
+    }
+
+    [Fact]
+    public void GetInitScriptCspHash_WithPathBase_ReturnsHash()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var pathBase = new PathString("/foo");
+
+        // Act
+        var result = pageTemplateHelper.GetInitScriptCspHash(pathBase);
 
         // Assert
         Assert.NotEmpty(result);

@@ -21,6 +21,10 @@ The `RestoreGovUkFrontendNpmPackage`, `GovUkFrontendNpmPackageLocation` and `Cop
 In their place is `EnableGovUkFrontendSupport`, `GovUkFrontendNpmPackageDirectory`, `GovUkFrontendAssetsDirectory`, `GovUkFrontendJavaScriptDirectory` and
 `GovUkFrontendStylesheetDirectory`, enabling more fine-grained control over assets.
 
+#### Static file support
+
+The `_GovUkPageTemplate.cshtml` layout view now supports [static files](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/static-files?view=aspnetcore-10.0).
+
 ### Tag helpers
 
 `<govuk-file-upload>` now supports attributes for customising the text used by the JavaScript-enhanced file upload component:

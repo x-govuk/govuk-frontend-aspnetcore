@@ -8,11 +8,9 @@
 @using static GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants;
 @inject IComponentGenerator ComponentGenerator
 @inject IOptions<GovUkFrontendOptions> OptionsAccessor
+@inject PageTemplateHelper PageTemplateHelper
 @addTagHelper *, GovUk.Frontend.AspNetCore
 @{
-    var assetPath = ViewData[ViewDataKeys.AssetPath] as PathString? ??
-        Context.Request.PathBase + PageTemplateHelper.DefaultAssetsPath;
-
     var cspNonce = ViewData[ViewDataKeys.CspNonce] as string ?? OptionsAccessor.Value.GetCspNonceForRequest?.Invoke(ViewContext.HttpContext);
 
     var htmlLang = ViewData[ViewDataKeys.HtmlLang] ?? "en";
@@ -72,16 +70,11 @@
         return new HtmlString(buffer.ToString());
     }
 
-    string GetStaticAssetUrl(string url)
+    string GetStaticAssetUrl(string path)
     {
-        var result = assetPath + "/" + url;
-
-        if (OptionsAccessor.Value.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
-        {
-            result = QueryHelpers.AddQueryString(result, HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName, GovUkFrontendInfo.Version);
-        }
-
-        return result;
+        var assetPath = ViewData[ViewDataKeys.AssetPath] as PathString? ?? PageTemplateHelper.DefaultAssetsPath;
+        var fullPath = assetPath + "/" + path;
+        return PageTemplateHelper.ResolveContentUrl(ViewContext, fullPath);
     }
 }
 <!DOCTYPE html>

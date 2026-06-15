@@ -20,7 +20,7 @@ public static class HtmlHelperExtensions
 
         var httpContext = htmlHelper.ViewContext.HttpContext;
         var pageTemplateHelper = httpContext.RequestServices.GetRequiredService<PageTemplateHelper>();
-        return pageTemplateHelper.GetCspScriptHashes();
+        return pageTemplateHelper.GetCspScriptHashes(htmlHelper.ViewContext);
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public static class HtmlHelperExtensions
 
         var httpContext = htmlHelper.ViewContext.HttpContext;
         var pageTemplateHelper = httpContext.RequestServices.GetRequiredService<PageTemplateHelper>();
-        return pageTemplateHelper.GenerateScriptImports(httpContext.Request.PathBase, cspNonce);
+        return pageTemplateHelper.GenerateScriptImports(htmlHelper.ViewContext, cspNonce);
     }
 
     /// <summary>
@@ -99,6 +99,6 @@ public static class HtmlHelperExtensions
 
         var httpContext = htmlHelper.ViewContext.HttpContext;
         var pageTemplateHelper = httpContext.RequestServices.GetRequiredService<PageTemplateHelper>();
-        return pageTemplateHelper.GenerateStyleImports(httpContext.Request.PathBase);
+        return pageTemplateHelper.GenerateStyleImports(htmlHelper.ViewContext);
     }
 }

@@ -3,6 +3,8 @@ using Joonasw.AspNetCore.SecurityHeaders;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.WebHost.UseStaticWebAssets();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -34,7 +36,7 @@ app.UseAuthorization();
 
 app.UseGovUkFrontend();
 
-app.UseStaticFiles();
+app.MapStaticAssets();
 
 app.UseCsp(csp =>
 {
@@ -49,8 +51,8 @@ app.UseCsp(csp =>
         .From(pageTemplateHelper.GetCspScriptHashes(pathBase: ""));
 });
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllers().WithStaticAssets();
+
+app.MapDefaultControllerRoute();
 
 app.Run();

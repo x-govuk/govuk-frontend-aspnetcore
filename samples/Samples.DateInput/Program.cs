@@ -20,8 +20,8 @@ app.UseAuthorization();
 
 app.UseGovUkFrontend();
 
-app.UseStaticFiles();
+app.MapStaticAssets();
 
-app.MapRazorPages();
+app.MapRazorPages().WithStaticAssets();
 
 app.Run();

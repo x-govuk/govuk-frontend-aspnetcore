@@ -4,22 +4,9 @@ This sample demonstrates how to set up a project with SASS that can reference th
 
 To replicate this setup in your own project, follow these steps:
 
-1. Install the `GovUk.Frontend.AspNetCore` package:
-   ```shell
-   dotnet add package GovUk.Frontend.AspNetCore
-   ```
+1. Follow the main [installation guide](../../../README.md#installation).
 
-2. Add services to your application:
-    ```cs
-    builder.Services.AddGovUkFrontend();
-    ```
-
-3. Add middleware:
-    ```cs
-    app.UseGovUkFrontend();
-    ```
-
-4. Restore `govuk-frontend` assets on build by adding the following to your `.csproj` file:
+2. Restore `govuk-frontend` assets on build by adding the following to your `.csproj` file:
    ```xml
    <PropertyGroup>
      <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
@@ -29,30 +16,19 @@ To replicate this setup in your own project, follow these steps:
    </PropertyGroup>
    ```
 
-4. Install the `AspNetCore.SassCompiler` package:
+3. Install the `AspNetCore.SassCompiler` package:
    ```shell
    dotnet add package AspNetCore.SassCompiler
    ```
 
-5. Watch SCSS files for changes:
+4. Watch SCSS files for changes:
    ```cs
-   #if DEBUG
-   builder.Services.AddSassCompiler();
-   #endif
-
-6. Add a `sasscompiler.json` file:
-   ```json
+   if (builder.Environment.IsDevelopment())
    {
-     "Source": "Styles/app.scss",
-     "Target": "wwwroot/app.css",
-     "Arguments": "--style=compressed --quiet-deps",
-     "IncludePaths": [
-       "lib"
-     ]
+       builder.Services.AddSassCompiler();
    }
-   ```
 
-7. Create an `app.scss` file in the `Styles` directory:
+5. Create an `app.scss` file in the `Styles` directory:
    ```scss
    @use "sass:meta";
    @use "govuk-frontend-aspnetcore";
@@ -73,7 +49,19 @@ To replicate this setup in your own project, follow these steps:
 > );
 > ```
 
-8. Create a Razor Layout view in `Pages/Shared/_Layout.cshtml` or `Views/Shared/_Layout.cshtml` that imports the compiled stylesheet:
+6. Add a `sasscompiler.json` file:
+   ```json
+   {
+     "Source": "Styles/app.scss",
+     "Target": "wwwroot/app.css",
+     "Arguments": "--style=compressed --quiet-deps",
+     "IncludePaths": [
+       "lib"
+     ]
+   }
+   ```
+
+7. Create a Razor Layout view in `Pages/Shared/_Layout.cshtml` or `Views/Shared/_Layout.cshtml` that imports the compiled stylesheet:
    ```razor
    @{
      Layout = "_GovUkPageTemplate";

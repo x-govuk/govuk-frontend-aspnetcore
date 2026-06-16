@@ -63,9 +63,9 @@ app.UseAuthorization();
 
 +app.UseGovUkFrontend();
 
-app.UseStaticFiles();
+app.MapStaticAssets();  // or app.UseStaticFiles();
 
-app.MapControllers();  // or app.MapRazorPages();
+app.MapControllers().WithStaticAssets();  // or app.MapRazorPages().WithStaticAssets();
 //...
 ```
 

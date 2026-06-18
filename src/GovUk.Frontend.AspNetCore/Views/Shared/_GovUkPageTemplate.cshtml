@@ -74,7 +74,7 @@
     {
         var assetPath = ViewData[ViewDataKeys.AssetPath] as PathString? ?? PageTemplateHelper.DefaultAssetsPath;
         var fullPath = assetPath + "/" + path;
-        return PageTemplateHelper.ResolveContentUrl(ViewContext, fullPath);
+        return PageTemplateHelper.ResolveContentUrl(ViewContext.HttpContext, fullPath);
     }
 }
 <!DOCTYPE html>

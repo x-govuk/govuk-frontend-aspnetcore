@@ -1,21 +1,21 @@
 using GovUk.Frontend.AspNetCore;
 using Joonasw.AspNetCore.SecurityHeaders;
+using Joonasw.AspNetCore.SecurityHeaders.Csp;
 
 var builder = WebApplication.CreateBuilder(args);
-
-//builder.WebHost.UseStaticWebAssets();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddCsp();
+
 builder.Services.AddGovUkFrontend(options =>
 {
-    // Un-comment this block if you want to use a CSP nonce instead of hashes
-    //options.GetCspNonceForRequest = context =>
-    //{
-    //    var cspService = context.RequestServices.GetRequiredService<ICspNonceService>();
-    //    return cspService.GetNonce();
-    //};
+    options.GetCspNonceForRequest = context =>
+    {
+        var cspService = context.RequestServices.GetRequiredService<ICspNonceService>();
+        return cspService.GetNonce();
+    };
 });
 
 var app = builder.Build();
@@ -40,15 +40,12 @@ app.MapStaticAssets();
 
 app.UseCsp(csp =>
 {
-    var pageTemplateHelper = app.Services.GetRequiredService<PageTemplateHelper>();
-
     csp.ByDefaultAllow
         .FromSelf();
 
     csp.AllowScripts
         .FromSelf()
-        //.AddNonce()
-        .From(pageTemplateHelper.GetCspScriptHashes(pathBase: ""));
+        .AddNonce();
 });
 
 app.MapControllers().WithStaticAssets();

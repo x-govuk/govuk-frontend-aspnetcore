@@ -4,13 +4,17 @@ runs:
   using: composite
 
   steps:
-    - run: mv global.json global.json.bak
+    - run: sed -i '/^dotnet/d' mise.toml  # Remove dotnet from mise.toml
       shell: bash
 
     - uses: jdx/mise-action@v3
 
-    - run: mv global.json.bak global.json
-      shell: bash
+    - uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: |
+          8.0.416
+          9.0.314
+          10.0.100
 
     - run: just install-tools
       shell: bash

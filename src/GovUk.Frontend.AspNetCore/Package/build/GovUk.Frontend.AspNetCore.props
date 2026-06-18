@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!-- Backward compatibility - RestoreGovUkFrontendNpmPackage -->
-  <PropertyGroup Condition="'$(RestoreGovUkFrontendNpmPackage)' == 'true'">
-    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == ''">govuk-frontend</GovUkFrontendNpmPackageDirectory>
-    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == ''">true</EnableGovUkFrontendSupport>
-  </PropertyGroup>
-
-  <!-- Backward compatibility - GovUkFrontendNpmPackageLocation -->
-  <PropertyGroup Condition="'$(GovUkFrontendNpmPackageLocation)' == 'true'">
-    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == ''">$(GovUkFrontendNpmPackageLocation)</GovUkFrontendNpmPackageDirectory>
-  </PropertyGroup>
-
-  <!-- Backward compatibility - CopyGovUkFrontendAssetsToWebRoot -->
-  <PropertyGroup Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' != '' And '$(GovUkFrontendAssetsDirectory)' == ''">
-    <GovUkFrontendAssetsDirectory Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'true'">wwwroot/assets</GovUkFrontendAssetsDirectory>
-  </PropertyGroup>
-
   <PropertyGroup>
+    <!-- Backward compatibility - CopyGovUkFrontendAssetsToWebRoot -->
+    <RestoreGovUkFrontendAssets Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'false' And '$(RestoreGovUkFrontendAssets)' == ''">false</RestoreGovUkFrontendAssets>
+
+    <!-- Backward compatibility - assign EnableGovUkFrontendSupport if RestoreGovUkFrontendNpmPackage or CopyGovUkFrontendAssetsToWebRoot are set -->
+    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == '' And ('$(RestoreGovUkFrontendNpmPackage)' == 'true' Or '$(CopyGovUkFrontendAssetsToWebRoot)' == 'true')">true</EnableGovUkFrontendSupport>
+
+    <RestoreGovUkFrontendSupportPackage Condition="'$(RestoreGovUkFrontendSupportPackage)' == '' And '$(GovUkFrontendSupportPackageDirectory)' != ''">true</RestoreGovUkFrontendSupportPackage>
+
+    <!-- Defaults -->
     <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == ''">false</EnableGovUkFrontendSupport>
-    <GovUkFrontendAssetsDirectory Condition="'$(GovUkFrontendAssetsDirectory)' == ''">wwwroot/assets</GovUkFrontendAssetsDirectory>
+
+    <RestoreGovUkFrontendNpmPackage Condition="'$(RestoreGovUkFrontendNpmPackage)' == ''">false</RestoreGovUkFrontendNpmPackage>
+    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == ''">lib\govuk-frontend</GovUkFrontendNpmPackageDirectory>
+
+    <RestoreGovUkFrontendAssets Condition="'$(RestoreGovUkFrontendAssets)' == ''">true</RestoreGovUkFrontendAssets>
+    <GovUkFrontendAssetsDirectory Condition="'$(GovUkFrontendAssetsDirectory)' == ''">wwwroot\assets</GovUkFrontendAssetsDirectory>
+
+    <RestoreGovUkFrontendJavascript Condition="'$(RestoreGovUkFrontendJavascript)' == ''">true</RestoreGovUkFrontendJavascript>
     <GovUkFrontendJavaScriptDirectory Condition="'$(GovUkFrontendJavaScriptDirectory)' == ''">wwwroot</GovUkFrontendJavaScriptDirectory>
+
+    <RestoreGovUkFrontendStylesheet Condition="'$(RestoreGovUkFrontendStylesheet)' == ''">true</RestoreGovUkFrontendStylesheet>
     <GovUkFrontendStylesheetDirectory Condition="'$(GovUkFrontendStylesheetDirectory)' == ''">wwwroot</GovUkFrontendStylesheetDirectory>
+
+    <RestoreGovUkFrontendSupportPackage Condition="'$(RestoreGovUkFrontendSupportPackage)' == ''">false</RestoreGovUkFrontendSupportPackage>
+    <GovUkFrontendSupportPackageDirectory Condition="'$(GovUkFrontendSupportPackageDirectory)' == ''">lib\govuk-frontend-aspnetcore</GovUkFrontendSupportPackageDirectory>
   </PropertyGroup>
 </Project>

@@ -240,18 +240,25 @@ See the `Samples.MvcStarter` project for an example of this working.
 
 ## GOV.UK Frontend assets
 
-Assets will be copied into your `wwwroot` folder by default.
+Assets will be copied into your `wwwroot` folder when `EnableGovUkFrontendSupport` is `true` in your project file.
 The table below shows the additional MSBuild properties you can set to configure which assets are copied into your project and where they are copied to.
+Each category of files has a `Restore*` boolean to enable or disable copying it and a `*Directory` to control where the files are copied to.
 
-| MSBuild property                       | Description                                                   | Default          |
-|----------------------------------------|---------------------------------------------------------------|------------------|
-| `GovUkFrontendAssetsDirectory`         | The directory to copy the static assets into.                 | `wwwroot/assets` |
-| `GovUkFrontendJavaScriptDirectory`     | The directory to copy the `govuk-frontend.min.js` file into.  | `wwwroot`        |
-| `GovUkFrontendStylesheetDirectory`     | The directory to copy the `govuk-frontend.min.css` file into. | `wwwroot`        |
-| `GovUkFrontendSupportPackageDirectory` | The directory to copy support files into.                     | ``               |
+| MSBuild property                       | Description                                                                | Default                         |
+|----------------------------------------|----------------------------------------------------------------------------|---------------------------------|
+| `RestoreGovUkFrontendAssets`           | Whether to copy the static assets (fonts, images, icons etc.).             | `true`                          |
+| `GovUkFrontendAssetsDirectory`         | The directory to copy the static assets into.                              | `wwwroot/assets`                |
+| `RestoreGovUkFrontendJavascript`       | Whether to copy the `govuk-frontend.min.js` file.                          | `true`                          |
+| `GovUkFrontendJavaScriptDirectory`     | The directory to copy the `govuk-frontend.min.js` file into.               | `wwwroot`                       |
+| `RestoreGovUkFrontendStylesheet`       | Whether to copy the `govuk-frontend.min.css` file.                         | `true`                          |
+| `GovUkFrontendStylesheetDirectory`     | The directory to copy the `govuk-frontend.min.css` file into.              | `wwwroot`                       |
+| `RestoreGovUkFrontendNpmPackage`       | Whether to copy the entire `govuk-frontend` NPM package.                   | `false`                         |
+| `GovUkFrontendNpmPackageDirectory`     | The directory to copy the `govuk-frontend` NPM package into.               | `lib/govuk-frontend`            |
+| `RestoreGovUkFrontendSupportPackage`   | Whether to copy support files.                                             | `false`                         |
+| `GovUkFrontendSupportPackageDirectory` | The directory to copy support files into.                                  | `lib/govuk-frontend-aspnetcore` |
 
 If you want the entire `govuk-frontend` NPM package to be available e.g. so you can reference SASS files from your own stylesheet,
-set `GovUkFrontendNpmPackageDirectory` to the location to copy the package to e.g. `lib/govuk-frontend`.
+set `RestoreGovUkFrontendNpmPackage` to `true` (and optionally override `GovUkFrontendNpmPackageDirectory`).
 See [the SASS sample](samples/Samples.Sass) for a full example of how to set up your project with SASS integration.
 
 > [!IMPORTANT]

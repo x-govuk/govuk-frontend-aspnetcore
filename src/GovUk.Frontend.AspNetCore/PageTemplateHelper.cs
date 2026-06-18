@@ -105,14 +105,14 @@ public class PageTemplateHelper
     /// Use the <see cref="GetJsEnabledScriptCspHash"/> method to retrieve a CSP hash if you are not specifying <paramref name="cspNonce"/>.
     /// </para>
     /// </remarks>
-    /// <param name="viewContext">The <see cref="ViewContext"/> for the current request.</param>
+    /// <param name="httpContext">The current <see cref="HttpContext"/>.</param>
     /// <param name="cspNonce">The CSP nonce attribute to be added to the generated <c>script</c> tag.</param>
     /// <returns><see cref="IHtmlContent"/> containing the <c>script</c> tag.</returns>
-    public IHtmlContent GenerateScriptImports(ViewContext viewContext, string? cspNonce = null)
+    public IHtmlContent GenerateScriptImports(HttpContext httpContext, string? cspNonce = null)
     {
-        ArgumentNullException.ThrowIfNull(viewContext);
+        ArgumentNullException.ThrowIfNull(httpContext);
 
-        var scriptPath = ResolveContentUrl(viewContext, JavascriptFileName);
+        var scriptPath = ResolveContentUrl(httpContext, JavascriptFileName);
         return GenerateScriptImports(scriptPath, cspNonce);
     }
 
@@ -145,13 +145,13 @@ public class PageTemplateHelper
     /// <remarks>
     /// The contents of this property should be inserted in the <c>head</c> tag.
     /// </remarks>
-    /// <param name="viewContext">The <see cref="ViewContext"/> for the request.</param>
+    /// <param name="httpContext">The current <see cref="HttpContext"/>.</param>
     /// <returns><see cref="IHtmlContent"/> containing the <c>link</c> tags.</returns>
-    public IHtmlContent GenerateStyleImports(ViewContext viewContext)
+    public IHtmlContent GenerateStyleImports(HttpContext httpContext)
     {
-        ArgumentNullException.ThrowIfNull(viewContext);
+        ArgumentNullException.ThrowIfNull(httpContext);
 
-        var fileName = ResolveContentUrl(viewContext, StylesheetFileName);
+        var fileName = ResolveContentUrl(httpContext, StylesheetFileName);
         return GenerateStyleImports(fileName);
     }
 
@@ -159,7 +159,7 @@ public class PageTemplateHelper
     /// Gets all the CSP hashes for the inline scripts used in the page template.
     /// </summary>
     /// <returns>A list of hashes to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
-    public string GetCspScriptHashes() => GetCspScriptHashes(pathBase: "/");
+    public string GetCspScriptHashes() => GetCspScriptHashes(pathBase: "");
 
     /// <summary>
     /// Gets all the CSP hashes for the inline scripts used in the page template.
@@ -171,9 +171,9 @@ public class PageTemplateHelper
     /// <summary>
     /// Gets all the CSP hashes for the inline scripts used in the page template.
     /// </summary>
-    /// <param name="viewContext">The <see cref="ViewContext"/> for the current request.</param>
+    /// <param name="httpContext">The current <see cref="HttpContext"/>.</param>
     /// <returns>A list of hashes to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
-    public string GetCspScriptHashes(ViewContext viewContext) => $"{GetInitScriptCspHash(viewContext)} {GetJsEnabledScriptCspHash()}";
+    public string GetCspScriptHashes(HttpContext httpContext) => $"{GetInitScriptCspHash(httpContext)} {GetJsEnabledScriptCspHash()}";
 
     /// <summary>
     /// Gets the CSP hash for the script that adds a <c>js-enabled</c> CSS class.
@@ -185,7 +185,7 @@ public class PageTemplateHelper
     /// Gets the CSP hash for the GOV.UK Frontend initialization script.
     /// </summary>
     /// <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
-    public string GetInitScriptCspHash() => GetInitScriptCspHash(pathBase: "/");
+    public string GetInitScriptCspHash() => GetInitScriptCspHash(pathBase: "");
 
     /// <summary>
     /// Gets the CSP hash for the GOV.UK Frontend initialization script.
@@ -198,31 +198,31 @@ public class PageTemplateHelper
     /// <summary>
     /// Gets the CSP hash for the GOV.UK Frontend initialization script.
     /// </summary>
-    /// <param name="viewContext">The <see cref="ViewContext"/> for the current request.</param>
+    /// <param name="httpContext">The current <see cref="HttpContext"/>.</param>
     /// <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
-    public string GetInitScriptCspHash(ViewContext viewContext)
+    public string GetInitScriptCspHash(HttpContext httpContext)
     {
-        ArgumentNullException.ThrowIfNull(viewContext);
+        ArgumentNullException.ThrowIfNull(httpContext);
 
-        var scriptPath = ResolveContentUrl(viewContext, JavascriptFileName);
+        var scriptPath = ResolveContentUrl(httpContext, JavascriptFileName);
         return GenerateCspHash(GetInitScriptContents(scriptPath));
     }
 
-    internal string ResolveContentUrl(ViewContext viewContext, string path)
+    internal string ResolveContentUrl(HttpContext httpContext, string path)
     {
-        ArgumentNullException.ThrowIfNull(viewContext);
+        ArgumentNullException.ThrowIfNull(httpContext);
         ArgumentNullException.ThrowIfNull(path);
 
         path = "/" + path.TrimStart('/');
 
 #if NET9_0_OR_GREATER
-        if (ResourceCollectionUtilities.TryResolveFromAssetCollection(viewContext, path, out var resolvedUrl))
+        if (ResourceCollectionUtilities.TryResolveFromAssetCollection(httpContext, path, out var resolvedUrl))
         {
             return resolvedUrl;
         }
 #endif
 
-        return GetVersionedUrl(viewContext.HttpContext.Request.PathBase + path);
+        return GetVersionedUrl(httpContext.Request.PathBase + path);
     }
 
     private static IHtmlContent GenerateScriptImports(string scriptPath, string? cspNonce)
@@ -281,13 +281,14 @@ public class PageTemplateHelper
 
 #if NET9_0_OR_GREATER
 #nullable disable
-    // https://github.com/dotnet/aspnetcore/blob/v9.0.0/src/Mvc/Mvc.TagHelpers/src/ResourceCollectionUtilities.cs
+    // Copy of https://github.com/dotnet/aspnetcore/blob/v9.0.0/src/Mvc/Mvc.TagHelpers/src/ResourceCollectionUtilities.cs
+    // but tweaked to pass an HttpContext instead of a ViewContext
     internal static class ResourceCollectionUtilities
     {
-        internal static bool TryResolveFromAssetCollection(ViewContext viewContext, string url, out string resolvedUrl)
+        internal static bool TryResolveFromAssetCollection(HttpContext httpContext, string url, out string resolvedUrl)
         {
-            var pathBase = viewContext.HttpContext.Request.PathBase;
-            var assetCollection = viewContext.HttpContext.GetEndpoint()?.Metadata.GetMetadata<ResourceAssetCollection>();
+            var pathBase = httpContext.Request.PathBase;
+            var assetCollection = httpContext.GetEndpoint()?.Metadata.GetMetadata<ResourceAssetCollection>();
             if (assetCollection != null)
             {
                 var value = url.StartsWith('/') ? url[1..] : url;

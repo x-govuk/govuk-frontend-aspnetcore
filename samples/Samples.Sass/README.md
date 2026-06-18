@@ -10,9 +10,9 @@ To replicate this setup in your own project, follow these steps:
    ```xml
    <PropertyGroup>
      <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
-     <GovUkFrontendNpmPackageDirectory>lib\govuk-frontend</GovUkFrontendNpmPackageDirectory>
-     <GovUkFrontendSupportPackageDirectory>lib\govuk-frontend-aspnetcore</GovUkFrontendSupportPackageDirectory>
-     <GovUkFrontendStylesheetDirectory />
+     <RestoreGovUkFrontendStylesheet>false</RestoreGovUkFrontendStylesheet>
+     <RestoreGovUkFrontendNpmPackage>true</RestoreGovUkFrontendNpmPackage>
+     <RestoreGovUkFrontendSupportPackage>true</RestoreGovUkFrontendSupportPackage>
    </PropertyGroup>
    ```
 

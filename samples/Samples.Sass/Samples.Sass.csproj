@@ -5,13 +5,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
-    <GovUkFrontendNpmPackageDirectory>lib\govuk-frontend</GovUkFrontendNpmPackageDirectory>
-    <GovUkFrontendSupportPackageDirectory>lib\govuk-frontend-aspnetcore</GovUkFrontendSupportPackageDirectory>
-    <GovUkFrontendStylesheetDirectory />
+    <RestoreGovUkFrontendStylesheet>false</RestoreGovUkFrontendStylesheet>
+    <RestoreGovUkFrontendNpmPackage>true</RestoreGovUkFrontendNpmPackage>
+    <RestoreGovUkFrontendSupportPackage>true</RestoreGovUkFrontendSupportPackage>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.SassCompiler" Version="1.99.0" />
+    <PackageReference Include="AspNetCore.SassCompiler" Version="1.101.0" />
     <PackageReference Include="GovUk.Frontend.AspNetCore" Version="*-*" />
   </ItemGroup>
 

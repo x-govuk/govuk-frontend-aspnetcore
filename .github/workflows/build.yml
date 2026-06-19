@@ -194,7 +194,7 @@ jobs:
       - uses: ./.github/workflows/actions/setup-tools
 
       - name: Download package artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: GovUk.Frontend.AspNetCore.nupkg
 

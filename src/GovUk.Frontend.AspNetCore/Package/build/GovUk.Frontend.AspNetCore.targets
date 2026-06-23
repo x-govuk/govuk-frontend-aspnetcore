@@ -53,7 +53,16 @@
 
     <Copy SourceFiles="@(_AssetFiles)"
           DestinationFolder="$(GovUkFrontendAssetsDirectory)\%(RecursiveDir)"
-          SkipUnchangedFiles="true" />
+          SkipUnchangedFiles="true">
+      <Output TaskParameter="CopiedFiles"
+              ItemName="CopiedAssetFiles" />
+    </Copy>
+
+    <ItemGroup>
+      <None Remove="@(CopiedAssetFiles)" />
+      <_NewCopiedAssetFiles Include="@(CopiedAssetFiles)" Exclude="@(Content)" />
+      <Content Include="@(_NewCopiedAssetFiles)" />
+    </ItemGroup>
   </Target>
 
   <Target Name="_RestoreJs">
@@ -63,7 +72,16 @@
 
     <Copy SourceFiles="@(_JavascriptFiles)"
           DestinationFolder="$(GovUkFrontendJavaScriptDirectory)\%(RecursiveDir)"
-          SkipUnchangedFiles="true" />
+          SkipUnchangedFiles="true">
+      <Output TaskParameter="CopiedFiles"
+              ItemName="CopiedJsFiles" />
+    </Copy>
+
+    <ItemGroup>
+      <None Remove="@(CopiedJsFiles)" />
+      <_NewCopiedJsFiles Include="@(CopiedJsFiles)" Exclude="@(Content)" />
+      <Content Include="@(_NewCopiedJsFiles)" />
+    </ItemGroup>
   </Target>
 
   <Target Name="_RestoreCss">
@@ -73,7 +91,16 @@
 
     <Copy SourceFiles="@(_CssFiles)"
           DestinationFolder="$(GovUkFrontendStylesheetDirectory)\%(RecursiveDir)"
-          SkipUnchangedFiles="true" />
+          SkipUnchangedFiles="true">
+      <Output TaskParameter="CopiedFiles"
+              ItemName="CopiedCssFiles" />
+    </Copy>
+
+    <ItemGroup>
+      <None Remove="@(CopiedCssFiles)" />
+      <_NewCopiedCssFiles Include="@(CopiedCssFiles)" Exclude="@(Content)" />
+      <Content Include="@(_NewCopiedCssFiles)" />
+    </ItemGroup>
   </Target>
 
   <Target Name="_RestoreNpmPackage">

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+Fixes including copied assets in static asset manifest generation.
+
 ## 4.2.0
 
 Targets GOV.UK Frontend v6.2.0.

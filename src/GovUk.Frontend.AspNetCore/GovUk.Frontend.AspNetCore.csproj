@@ -31,7 +31,7 @@
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">$(DefineConstants);SHORT_TAG_NAMES</DefineConstants>
     <SassCompilerEnableWatcher>false</SassCompilerEnableWatcher>
   </PropertyGroup>
-  
+
   <!-- https://github.com/dotnet/aspnetcore/issues/63719 -->
   <Target Name="_DontPruneFileProvidersEmbedded" AfterTargets="AddPrunePackageReferences">
     <ItemGroup>
@@ -70,16 +70,6 @@
                       Lines="$([System.Text.RegularExpressions.Regex]::Replace($([System.IO.File]::ReadAllText('govuk-frontend.scss')), 'govuk-frontend-\d+\.\d+\.\d+', 'govuk-frontend-$(GovUkFrontendVersion)'))"
                       Overwrite="true"
                       WriteOnlyWhenDifferent="true" />
-  </Target>
-
-  <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
-    <ItemGroup>
-      <_PackageFiles Include="$(_NpmLibDirectory)\dist\govuk\**\*">
-        <PackagePath>content\govuk-frontend\%(RecursiveDir)</PackagePath>
-        <Visible>false</Visible>
-        <BuildAction>Content</BuildAction>
-      </_PackageFiles>
-    </ItemGroup>
   </Target>
 
   <Target Name="PackCssFile" AfterTargets="Compile Sass" BeforeTargets="GenerateNuspec">
@@ -156,11 +146,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Package\**\*" Pack="true" PackagePath="$(RecursiveDir)" />
+    <Content Include="$(_NpmLibDirectory)\dist\govuk\**\*"
+             Pack="true"
+             PackagePath="content\govuk-frontend\$(RecursiveDir)"
+             Link="Package\content\govuk-frontend\%(RecursiveDir)%(Filename)%(Extension)" />
 
-    <!-- Remove the generated CSS file from content (to avoid duplicate with item added by the PackCssFile target) -->
-    <Content Remove="Package\content\govuk-frontend.min.css" />
-    <None Include="Package\content\govuk-frontend.min.css" Visible="false" />
+    <Content Include="Package\**\*"
+             Exclude="Package\content\**"
+             Pack="true"
+             PackagePath="$(RecursiveDir)" />
+
+    <Content Include="Package\content\support\**"
+             Pack="true"
+             PackagePath="content\support\$(RecursiveDir)" />
   </ItemGroup>
 
 </Project>

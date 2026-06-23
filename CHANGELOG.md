@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 4.2.1
 
 Fixes including copied assets in static asset manifest generation.
 

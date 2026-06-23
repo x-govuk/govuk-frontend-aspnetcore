@@ -15,4 +15,9 @@
     <PackageReference Include="GovUk.Frontend.AspNetCore" Version="*-*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="sasscompiler.json" />
+    <None Include="sasscompiler.json" />
+  </ItemGroup>
+
 </Project>

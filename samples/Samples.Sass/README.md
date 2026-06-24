@@ -68,7 +68,7 @@ To replicate this setup in your own project, follow these steps:
    }
 
    @section Head {
-     <link rel="stylesheet" asp-href-include="~/app.css" asp-append-version="true">
+     <link rel="stylesheet" asp-href-include="~/app.css">
    }
 
    @RenderBody()

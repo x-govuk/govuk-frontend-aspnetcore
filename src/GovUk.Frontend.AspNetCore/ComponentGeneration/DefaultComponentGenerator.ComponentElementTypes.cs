@@ -24,6 +24,7 @@ internal partial class DefaultComponentGenerator
         public const string SkipLink = "a";
         public const string SummaryCard = "div";
         public const string SummaryList = "dl";
+        public const string Table = "table";
         public const string Tabs = "div";
         public const string Tag = "strong";
         public const string WarningText = "div";

@@ -90,7 +90,7 @@ public class PageTemplateHelper
     /// <returns><see cref="IHtmlContent"/> containing the <c>script</c> tag.</returns>
     public IHtmlContent GenerateScriptImports(PathString pathBase, string? cspNonce)
     {
-        var scriptPath = GetVersionedUrl(pathBase + "/" + JavascriptFileName);
+        var scriptPath = GetJavascriptFileName(pathBase);
         return GenerateScriptImports(scriptPath, cspNonce);
     }
 
@@ -112,7 +112,7 @@ public class PageTemplateHelper
     {
         ArgumentNullException.ThrowIfNull(httpContext);
 
-        var scriptPath = ResolveContentUrl(httpContext, JavascriptFileName);
+        var scriptPath = GetJavascriptFileName(httpContext);
         return GenerateScriptImports(scriptPath, cspNonce);
     }
 
@@ -135,7 +135,7 @@ public class PageTemplateHelper
     /// <returns><see cref="IHtmlContent"/> containing the <c>link</c> tags.</returns>
     public IHtmlContent GenerateStyleImports(PathString pathBase)
     {
-        var fileName = GetVersionedUrl(pathBase + "/" + StylesheetFileName);
+        var fileName = GetStylesheetFileName(pathBase);
         return GenerateStyleImports(fileName);
     }
 
@@ -151,7 +151,7 @@ public class PageTemplateHelper
     {
         ArgumentNullException.ThrowIfNull(httpContext);
 
-        var fileName = ResolveContentUrl(httpContext, StylesheetFileName);
+        var fileName = GetStylesheetFileName(httpContext);
         return GenerateStyleImports(fileName);
     }
 
@@ -192,8 +192,11 @@ public class PageTemplateHelper
     /// </summary>
     /// <param name="pathBase">The base path that the script is hosted under.</param>
     /// <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
-    public string GetInitScriptCspHash(PathString pathBase) =>
-        GenerateCspHash(GetInitScriptContents(pathBase));
+    public string GetInitScriptCspHash(PathString pathBase)
+    {
+        var scriptPath = pathBase + "/" + JavascriptFileName;
+        return GenerateCspHash(GetInitScriptContents(scriptPath));
+    }
 
     /// <summary>
     /// Gets the CSP hash for the GOV.UK Frontend initialization script.
@@ -206,6 +209,46 @@ public class PageTemplateHelper
 
         var scriptPath = ResolveContentUrl(httpContext, JavascriptFileName);
         return GenerateCspHash(GetInitScriptContents(scriptPath));
+    }
+
+    /// <summary>
+    /// Gets the URL to the GOV.UK Frontend JavaScript file.
+    /// </summary>
+    /// <param name="pathBase">The base path that the script is hosted under.</param>
+    /// <returns>The URL to the JavaScript file.</returns>
+    public string GetJavascriptFileName(PathString pathBase) =>
+        GetVersionedUrl(pathBase + "/" + JavascriptFileName);
+
+    /// <summary>
+    /// Gets the URL to the GOV.UK Frontend JavaScript file.
+    /// </summary>
+    /// <param name="httpContext">The current <see cref="HttpContext"/>.</param>
+    /// <returns>The URL to the JavaScript file.</returns>
+    public string GetJavascriptFileName(HttpContext httpContext)
+    {
+        ArgumentNullException.ThrowIfNull(httpContext);
+
+        return ResolveContentUrl(httpContext, JavascriptFileName);
+    }
+
+    /// <summary>
+    /// Gets the URL to the GOV.UK Frontend stylesheet file.
+    /// </summary>
+    /// <param name="pathBase">The base path that the stylesheet is hosted under.</param>
+    /// <returns>The URL to the stylesheet file.</returns>
+    public string GetStylesheetFileName(PathString pathBase) =>
+        GetVersionedUrl(pathBase + "/" + StylesheetFileName);
+
+    /// <summary>
+    /// Gets the URL to the GOV.UK Frontend stylesheet file.
+    /// </summary>
+    /// <param name="httpContext">The current <see cref="HttpContext"/>.</param>
+    /// <returns>The URL to the stylesheet file.</returns>
+    public string GetStylesheetFileName(HttpContext httpContext)
+    {
+        ArgumentNullException.ThrowIfNull(httpContext);
+
+        return ResolveContentUrl(httpContext, StylesheetFileName);
     }
 
     internal string ResolveContentUrl(HttpContext httpContext, string path)

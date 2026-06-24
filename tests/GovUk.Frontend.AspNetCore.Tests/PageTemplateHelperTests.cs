@@ -198,6 +198,72 @@ public class PageTemplateHelperTests
     }
 
     [Fact]
+    public void GetJavascriptFileName_WithPathBase_ReturnsPathBaseAndVersionedFileName()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var pathBase = new PathString("/foo");
+
+        // Act
+        var result = pageTemplateHelper.GetJavascriptFileName(pathBase);
+
+        // Assert
+        Assert.Equal(
+            $"/foo/{PageTemplateHelper.JavascriptFileName}?v={GovUkFrontendInfo.Version}",
+            result);
+    }
+
+    [Fact]
+    public void GetJavascriptFileName_WithHttpContext_ReturnsPathBaseAndVersionedFileName()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var httpContext = new DefaultHttpContext();
+        httpContext.Request.PathBase = "/foo";
+
+        // Act
+        var result = pageTemplateHelper.GetJavascriptFileName(httpContext);
+
+        // Assert
+        Assert.Equal(
+            $"/foo/{PageTemplateHelper.JavascriptFileName}?v={GovUkFrontendInfo.Version}",
+            result);
+    }
+
+    [Fact]
+    public void GetStylesheetFileName_WithPathBase_ReturnsPathBaseAndVersionedFileName()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var pathBase = new PathString("/foo");
+
+        // Act
+        var result = pageTemplateHelper.GetStylesheetFileName(pathBase);
+
+        // Assert
+        Assert.Equal(
+            $"/foo/{PageTemplateHelper.StylesheetFileName}?v={GovUkFrontendInfo.Version}",
+            result);
+    }
+
+    [Fact]
+    public void GetStylesheetFileName_WithHttpContext_ReturnsPathBaseAndVersionedFileName()
+    {
+        // Arrange
+        var pageTemplateHelper = new PageTemplateHelper();
+        var httpContext = new DefaultHttpContext();
+        httpContext.Request.PathBase = "/foo";
+
+        // Act
+        var result = pageTemplateHelper.GetStylesheetFileName(httpContext);
+
+        // Assert
+        Assert.Equal(
+            $"/foo/{PageTemplateHelper.StylesheetFileName}?v={GovUkFrontendInfo.Version}",
+            result);
+    }
+
+    [Fact]
     public void GetGovUkFrontendVersion_ReturnsVersion()
     {
         // Arrange

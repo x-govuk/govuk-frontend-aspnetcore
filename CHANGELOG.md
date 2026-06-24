@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+Added `GetJavascriptFileName()` and `GetStylesheetFileName()` methods to `PageTemplateHelper`.
+
 ## 4.2.1
 
 Fixes including copied assets in static asset manifest generation.

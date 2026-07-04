@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the summary in a GDS details component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DetailsTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the details summary.")]
 public class DetailsSummaryTagHelper : TagHelper
 {
     internal const string TagName = "govuk-details-summary";

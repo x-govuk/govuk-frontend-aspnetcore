@@ -1,35 +1,43 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/panel.liquid -->
 # Panel
 
-[GDS Panel component](https://design-system.service.gov.uk/components/panel/)
+[GOV.UK Design System panel component](https://design-system.service.gov.uk/components/panel/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Panel example" src="../images/panel-example.png" />
 
 ```razor
 <govuk-panel heading-level="2">
     <govuk-panel-title>Application complete</govuk-panel-title>
     <govuk-panel-body>
-        Your reference number<br><strong>HDJ2123F</strong>
+        Your reference number<br /><strong>HDJ2123F</strong>
     </govuk-panel-body>
 </govuk-panel>
 ```
 
-![Panel](../images/panel.png)
 
-## API
+### API
 
-### `<govuk-panel>`
+#### `<govuk-panel>`
 
-| Attribute       | Type  | Description                                                                     |
-|-----------------|-------|---------------------------------------------------------------------------------|
-| `heading-level` | `int` | The heading level. Must be between `1` and `6` (inclusive). The default is `1`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `heading-level` | `int?` | The heading level. Must be between `1` and `6` (inclusive). The default is `1`. |
 
-### `<govuk-panel-title>`
 
-*Required*\
-The content is the HTML to use within the panel title.\
+#### `<govuk-panel-title>`
+
+The content is the HTML to use within the panel title.
+
 Must be inside a `<govuk-panel>` element.
 
-### `<govuk-panel-body>`
 
-The content is the HTML to use within the panel content.\
+#### `<govuk-panel-body>`
+
+The content is the HTML to use within the panel body.
+
 Must be inside a `<govuk-panel>` element.
+

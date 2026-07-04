@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.InsetText)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the inset text.")]
 public class InsetTextTagHelper : TagHelper
 {
     internal const string TagName = "govuk-inset-text";

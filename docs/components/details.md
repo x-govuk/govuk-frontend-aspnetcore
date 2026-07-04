@@ -1,8 +1,13 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/details.liquid -->
 # Details
 
-[GDS Details component](https://design-system.service.gov.uk/components/details/)
+[GOV.UK Design System details component](https://design-system.service.gov.uk/components/details/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Details example" src="../images/details-example.png" />
 
 ```razor
 <govuk-details>
@@ -16,9 +21,9 @@
 </govuk-details>
 ```
 
-![Details](../images/details.png)
 
-## Example - expanded
+### Example expanded
+<img alt="Details expanded example" src="../images/details-expanded-example.png" />
 
 ```razor
 <govuk-details open="true">
@@ -32,24 +37,26 @@
 </govuk-details>
 ```
 
-![Details](../images/details-expanded.png)
 
-## API
+### API
 
-### `<govuk-details>`
+#### `<govuk-details>`
 
-| Attribute | Type   | Description                                                             |
-|-----------|--------|-------------------------------------------------------------------------|
-| `open`    | `bool` | Whether the details element should be expanded. The default is `false`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `open` | `bool?` | Whether the details element should be expanded. The default is `false`. |
 
-### `<govuk-details-summary>`
 
-*Required*\
-The content is the HTML to use within the generated summary element.\
+#### `<govuk-details-summary>`
+
+The content is the HTML to use within the details summary.
+
 Must be inside a `<govuk-details>` element.
 
-### `<govuk-details-text>`
 
-*Required*\
-The content is the HTML to use within the disclosed part of the details element.\
+#### `<govuk-details-text>`
+
+The content is the HTML to use within the disclosed part of the details element.
+
 Must be inside a `<govuk-details>` element.
+

@@ -10,6 +10,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = BreadcrumbsTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the breadcrumbs item.")]
 public class BreadcrumbsItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-breadcrumbs-item";

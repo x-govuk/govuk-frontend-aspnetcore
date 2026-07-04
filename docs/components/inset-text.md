@@ -1,8 +1,13 @@
-# Details
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/inset-text.liquid -->
+# Inset text
 
-[GDS Inset text component](https://design-system.service.gov.uk/components/inset-text/)
+[GOV.UK Design System inset text component](https://design-system.service.gov.uk/components/inset-text/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Inset text example" src="../images/inset-text-example.png" />
 
 ```razor
 <govuk-inset-text>
@@ -10,14 +15,14 @@
 </govuk-inset-text>
 ```
 
-![Inset text](../images/inset-text.png)
 
-## API
+### API
 
-### `<govuk-inset-text>`
+#### `<govuk-inset-text>`
 
-| Attribute | Type     | Description                            |
-|-----------|----------|----------------------------------------|
-| `id`      | `string` | The `id` attribute for the inset text. |
+The content is the HTML to use within the inset text.
 
-The content is the HTML to use within the generated component.
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | The `id` attribute. |
+

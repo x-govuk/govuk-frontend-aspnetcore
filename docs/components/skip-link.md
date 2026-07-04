@@ -1,25 +1,34 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/skip-link.liquid -->
 # Skip link
 
-[GDS Skip link component](https://design-system.service.gov.uk/components/skip-link/)
+[GOV.UK Design System skip link component](https://design-system.service.gov.uk/components/skip-link/)
 
-## Example - default href
+
+## Tag helpers
+
+### Example with default href
+<img alt="Skip link with default href example" src="../images/skip-link-with-default-href-example.png" />
 
 ```razor
 <govuk-skip-link>Skip to main content</govuk-skip-link>
 ```
 
-## Example - custom href
+
+### Example with custom href
+<img alt="Skip link with custom href example" src="../images/skip-link-with-custom-href-example.png" />
 
 ```razor
 <govuk-skip-link href="#main">Skip to main content</govuk-skip-link>
 ```
 
-## API
 
-### `<govuk-skip-link>`
+### API
 
-The content is the HTML to use within the generated link.
+#### `<govuk-skip-link>`
 
-| Attribute | Type     | Description                                                                              |
-|-----------|----------|------------------------------------------------------------------------------------------|
-| `href`    | `string` | The 'href' attribute for the link. The default is '#content'. Cannot be `null` or empty. |
+The content is the HTML to use within the skip link.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `href` | `string` | The `href` attribute for the link. The default is `"#content"`. |
+

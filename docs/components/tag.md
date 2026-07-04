@@ -1,26 +1,30 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/tag.liquid -->
 # Tag
 
-[GDS Tag component](https://design-system.service.gov.uk/components/tag/)
+[GOV.UK Design System tag component](https://design-system.service.gov.uk/components/tag/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Tag example" src="../images/tag-example.png" />
 
 ```razor
 <govuk-tag>Active</govuk-tag>
 ```
 
-![Tag](../images/tag-default.png)
 
-## Example - with additional class
+### Example with additional class
+<img alt="Tag with additional class example" src="../images/tag-with-additional-class-example.png" />
 
 ```razor
 <govuk-tag class="govuk-tag--inactive">Inactive</govuk-tag>
 ```
 
-![Tag](../images/tag-with-class.png)
 
+### API
 
-## API
+#### `<govuk-tag>`
 
-### `<govuk-tag>`
+The content is the HTML to use within the tag.
 
-The content is the HTML to use within the generated component.

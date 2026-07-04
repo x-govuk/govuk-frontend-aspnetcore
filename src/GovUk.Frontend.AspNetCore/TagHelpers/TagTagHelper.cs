@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Tag)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the tag.")]
 public class TagTagHelper : TagHelper
 {
     internal const string TagName = "govuk-tag";

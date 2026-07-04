@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SkipLink)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the skip link.")]
 public class SkipLinkTagHelper : TagHelper
 {
     internal const string TagName = "govuk-skip-link";

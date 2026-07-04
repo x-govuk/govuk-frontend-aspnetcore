@@ -148,7 +148,7 @@ Must be inside a `<govuk-summary-card>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |
-| `heading-level` | `System.Int32?` | The heading level. Must be between `1` and `6` (inclusive). The default is `2`. |
+| `heading-level` | `int?` | The heading level. Must be between `1` and `6` (inclusive). The default is `2`. |
 
 
 #### `<card-actions>` / `<govuk-summary-card-actions>`

@@ -9,6 +9,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.BackLink)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the back link. The default is 'Back'.")]
 public class BackLinkTagHelper : TagHelper
 {
     internal const string TagName = "govuk-back-link";

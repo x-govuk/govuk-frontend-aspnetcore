@@ -17,6 +17,7 @@ if (publish)
 
 builder.Services.AddGovUkFrontend();
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -27,6 +28,7 @@ app.UseGovUkFrontend();
 app.UseRouting();
 
 app.MapRazorPages();
+app.MapControllers();
 
 using var cts = new CancellationTokenSource();
 var webAppTask = app.RunAsync(cts.Token);

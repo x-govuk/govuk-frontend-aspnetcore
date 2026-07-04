@@ -1,8 +1,13 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/fieldset.liquid -->
 # Fieldset
 
-[GDS Fieldset component](https://design-system.service.gov.uk/components/fieldset/)
+[GOV.UK Design System fieldset component](https://design-system.service.gov.uk/components/fieldset/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Fieldset example" src="../images/fieldset-example.png" />
 
 ```razor
 <govuk-fieldset>
@@ -10,24 +15,24 @@
 </govuk-fieldset>
 ```
 
-![Fieldset](../images/fieldset.png)
 
+### API
 
-## API
+#### `<govuk-fieldset>`
 
-### `<govuk-fieldset>`
-
-| Attribute      | Type     | Description                                                         |
-|----------------|----------|---------------------------------------------------------------------|
+| Attribute | Type | Description |
+| --- | --- | --- |
 | `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute. |
-| `role`         | `string` | The `role` attribute for the fieldset.                              |
+| `role` | `string` | The `role` attribute. |
 
-### `<govuk-fieldset-legend>`
 
-*Required*\
-The content is the HTML to use within the legend.\
+#### `<govuk-fieldset-legend>`
+
+The content is the HTML to use within the legend.
+
 Must be inside a `<govuk-fieldset>` element.
 
-| Attribute         | Type      | Description |
-|-------------------|-----------| --- |
-| `is-page-heading` | `boolean` | Whether the legend also acts as the heading for the page. The default is `false`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `is-page-heading` | `bool?` | Whether the legend also acts as the heading for the page. |
+

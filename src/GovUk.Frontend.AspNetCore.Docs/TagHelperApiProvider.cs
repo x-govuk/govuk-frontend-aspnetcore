@@ -140,6 +140,15 @@ public class TagHelperApiProvider
             {
                 "System.Boolean" => "bool",
                 "System.String" => "string",
+                "System.Int32" => "int",
+                "System.Int64" => "long",
+                "System.Int16" => "short",
+                "System.Byte" => "byte",
+                "System.Double" => "double",
+                "System.Single" => "float",
+                "System.Decimal" => "decimal",
+                "System.Char" => "char",
+                "System.Object" => "object",
                 _ => type.FullName ?? ""
             };
     }

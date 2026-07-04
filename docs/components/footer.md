@@ -139,7 +139,7 @@ Must be inside a `<govuk-footer>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |
-| `columns` | `System.Int32?` | The number of columns to display items in. |
+| `columns` | `int?` | The number of columns to display items in. |
 | `width` | `string` | The width of this navigation section. For example, `one-third`, `two-thirds` or `one-half`. If not specified, `full` will be used. |
 
 

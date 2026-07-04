@@ -41,8 +41,8 @@ public class TagHelperApiProvider
             throw new ArgumentException($"Could not find HtmlTargetElementAttribute on '{tagHelperClassName}'.", nameof(tagHelperName));
         }
 
-        var tagName = htmlTargetElementAttrs.Single(e => e.Tag.StartsWith("govuk")).Tag;
-        var shortTagName = htmlTargetElementAttrs.SingleOrDefault(e => !e.Tag.StartsWith("govuk-"))?.Tag;
+        var tagName = htmlTargetElementAttrs.Select(e => e.Tag).Distinct().Single(t => t.StartsWith("govuk"));
+        var shortTagName = htmlTargetElementAttrs.Select(e => e.Tag).Distinct().SingleOrDefault(t => !t.StartsWith("govuk-"));
         var tagStructure = htmlTargetElementAttrs.Select(e => e.TagStructure).Distinct().Single();
 
         var documentationAttr = tagHelperType.GetCustomAttribute<TagHelperDocumentationAttribute>();

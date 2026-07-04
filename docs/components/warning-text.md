@@ -1,8 +1,13 @@
-# Details
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/warning-text.liquid -->
+# Warning text
 
-[GDS Warning text component](https://design-system.service.gov.uk/components/warning-text/)
+[GOV.UK Design System warning text component](https://design-system.service.gov.uk/components/warning-text/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Warning text example" src="../images/warning-text-example.png" />
 
 ```razor
 <govuk-warning-text icon-fallback-text="Warning">
@@ -10,14 +15,14 @@
 </govuk-warning-text>
 ```
 
-![Warning text](../images/warning-text.png)
 
-## API
+### API
 
-### `<govuk-warning-text>`
+#### `<govuk-warning-text>`
 
-| Attribute            | Type     | Description                                                           |
-|----------------------|----------|-----------------------------------------------------------------------|
-| `icon-fallback-text` | `string` | *Required* The fallback text for the icon. Cannot be `null` or empty. |
+The content is the HTML to use within the warning text.
 
-The content is the HTML to use within the generated component.
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `icon-fallback-text` | `string` | The fallback text for the icon. |
+

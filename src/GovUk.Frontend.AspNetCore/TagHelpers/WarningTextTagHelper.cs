@@ -9,6 +9,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.WarningText)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the warning text.")]
 public class WarningTextTagHelper : TagHelper
 {
     internal const string TagName = "govuk-warning-text";

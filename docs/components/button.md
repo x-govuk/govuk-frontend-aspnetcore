@@ -1,81 +1,94 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/button.liquid -->
 # Button
 
-[GDS Button component](https://design-system.service.gov.uk/components/button/)
+[GOV.UK Design System button component](https://design-system.service.gov.uk/components/button/)
 
-There are two tag helpers for the button component. `<govuk-button>` generates a `<button>` element; `<govuk-button-link>` generates an 'a' element.
 
-## Example - default button
+## Tag helpers
+
+There are two tag helpers for the button component. `<govuk-button>` generates a `<button>` element; `<govuk-button-link>` generates an `<a>` element.
+
+### Default button
+<img alt="Default button example" src="../images/button-default-example.png" />
 
 ```razor
 <govuk-button type="submit">Save and continue</govuk-button>
 ```
 
-![Button](../images/button-default.png)
 
-## Example - secondary button
+### Secondary button
+<img alt="Secondary button example" src="../images/button-secondary-example.png" />
 
 ```razor
 <govuk-button class="govuk-button--secondary">Cancel</govuk-button>
 ```
 
-![Button](../images/button-secondary.png)
 
-## Example - start button
+### Start button
+<img alt="Start button example" src="../images/button-start-example.png" />
 
 ```razor
 <govuk-button-link is-start-button="true" href="/start">Start</govuk-button-link>
 ```
 
-![Button](../images/button-start.png)
 
-## Example - disabled
+### Disabled button
+<img alt="Disabled button example" src="../images/button-disabled-example.png" />
 
 ```razor
 <govuk-button disabled="true">Save and continue</govuk-button>
 ```
 
-![Button](../images/button-disabled.png)
 
-## Example - link
+### Link
+<img alt="Button link example" src="../images/button-link-example.png" />
 
 ```razor
 <govuk-button-link href="/">Confirm</govuk-button-link>
 ```
 
-## Example - generated link
+
+### Generated link
+<img alt="Button with generated link example" src="../images/button-with-generated-link-example.png" />
 
 ```razor
 <govuk-button-link asp-controller="Home" asp-action="Confirm">Confirm</govuk-button-link>
 ```
 
-## Example - generated formaction
+
+### Generated form action
+<img alt="Button with generated form action example" src="../images/button-with-generated-form-action-example.png" />
 
 ```razor
 <govuk-button type="submit" asp-controller="Home" asp-action="Confirm">Confirm</govuk-button>
 ```
 
-## API
 
-### `<govuk-button>`
+### API
 
-The content is the HTML to use within the generated button.
+#### `<govuk-button>`
 
-| Attribute              | Type     | Description                                                                                                                                                                                                                                    |
-|------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `disabled`             | `bool`   | Whether the button should be disabled. The default is `false`.                                                                                                                                                                                 |
-| `id`                   | `string` | The `id` attribute for the button.                                                                                                                                                                                                             |
-| `is-start-button`      | `bool`   | Whether this button is the main call to action on your service's start page. The default is `false`.                                                                                                                                           |
-| `prevent-double-click` | `bool`   | Whether to prevent accidental double clicks on submit buttons from submitting forms multiple times. The default is `false` but can be configured globally by setting the `DefaultButtonPreventDoubleClick` property on `GovUkFrontendOptions`. |
-| `type`                 | `string` | The `type` attribute for the generated `button` element.                                                                                                                                                                                       |
-| (link attributes)      |          | If specified generates a `formaction` attribute using the specified values. See [documentation on links](../links.md) for more information.                                                                                                    |
+The content is the HTML to use within the button.
 
-### `<govuk-button-link>`
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `disabled` | `bool?` | Whether the button should be disabled. |
+| `id` | `string` | The `id` attribute for the generated `button` element. |
+| `is-start-button` | `bool?` | Whether this button is the main call to action on your service's start page. |
+| `name` | `string` | The `name` attribute for the generated `button` element. |
+| `prevent-double-click` | `bool?` | Whether to prevent accidental double clicks on submit buttons from submitting forms multiple times. The default is set for the application in `DefaultButtonPreventDoubleClick`. |
+| `type` | `string` | The `type` attribute for the generated `button` element. |
+| `value` | `string` | The `value` attribute for the generated `button` element. |
+| (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
-The content is the HTML to use within the generated link.
 
-| Attribute         | Type     | Description                                                                                                                            |
-|-------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------|
-| `disabled`        | `bool`   | Whether the button should be disabled. The default is `false`.                                                                         |
-| `id`              | `string` | The `id` attribute for the button.                                                                                                     |
-| `is-start-button` | `bool`   | Whether this button is the main call to action on your service's start page. The default is `false`.                                   |
-| (link attributes) |          | If specified generates an `href` attribute using the specified values. See [documentation on links](../links.md) for more information. |
+#### `<govuk-button-link>`
+
+The content is the HTML to use within the button link.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | The `id` attribute for the generated `button` element.. |
+| `is-start-button` | `bool?` | Whether this button is the main call to action on your service's start page. |
+| (link attributes) |  | See [documentation on links](../links.md) for more information. |
+

@@ -11,6 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </remarks>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(Element)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the button link.")]
 public class ButtonLinkTagHelper : TagHelper
 {
     internal const string TagName = "govuk-button-link";

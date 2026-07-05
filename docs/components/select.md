@@ -1,8 +1,13 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/select.liquid -->
 # Select
 
-[GDS Select component](https://design-system.service.gov.uk/components/select/)
+[GOV.UK Design System select component](https://design-system.service.gov.uk/components/select/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Select example" src="../images/select-example.png" />
 
 ```razor
 <govuk-select name="Sort">
@@ -14,72 +19,75 @@
 </govuk-select>
 ```
 
-![Select](../images/select.png)
 
-## API
+### API
 
-### `<govuk-select>`
+#### `<govuk-select>`
 
-| Attribute                  | Type              | Description                                                                                                                                                                                                |
-|----------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `described-by`             | `string`          | One or more element IDs to add to the `aria-describedby` attribute of the generated `select` element.                                                                                                      |
-| `disabled`                 | `bool`            | Whether the element should be disabled. The default is `false`.                                                                                                                                            |
-| `for`                      | `ModelExpression` | The model expression used to generate the `name` and `id` attributes as well as the `selected` attribute for items and error message content. See [documentation on forms](forms.md) for more information. |
-| `id`                       | `string`          | The `id` attribute for the generated `select` element. If not specified then a value is generated from the `name` attribute.                                                                               |
-| `ignore-modelstate-errors` | `bool`            | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.                                              |
-| `label-class`              | `string`          | Additional classes for the generated `label` element.                                                                                                                                                      |
-| `name`                     | `string`          | The `name` attribute for the generated `select` element. Required unless the `for` attribute is specified.                                                                                                 |
-| `select-*`                 |                   | Additional attributes to add to the generated `select` element.                                                                                                                                            |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute of the generated `select` element. |
+| `disabled` | `bool?` | Whether the `disabled` attribute should be added to the generated `select` element. |
+| `for` | `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` | An expression to be evaluated against the current model. |
+| `id` | `string` | The `id` attribute for the generated `select` element. If not specified then a value is generated from the `name` attribute. |
+| `ignore-modelstate-errors` | `bool?` | Whether the `Errors` for the `For` expression should be used to deduce an error message. When there are multiple errors in the `ModelErrorCollection` the first is used. |
+| `label-class` | `string` | Additional classes for the generated `label` element. |
+| `name` | `string` | The `name` attribute for the generated `select` element. Required unless `For` is specified. |
+| `select-*` |  | Additional attributes to add to the generated `select` element. |
 
-### `<govuk-select-label>`
 
-The content is the HTML to use within the component's label.\
+#### `<govuk-select-label>`
+
+The content is the HTML to use within the component's label.
+
 Must be inside a `<govuk-select>` element.
 
-| Attribute         | Type   | Description                                                                      |
-|-------------------|--------|----------------------------------------------------------------------------------|
-| `is-page-heading` | `bool` | Whether the label also acts as the heading for the page. The default is `false`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `is-page-heading` | `bool?` | Whether the label also acts as the heading for the page. |
 
-### `<govuk-select-hint>`
 
-The content is the HTML to use within the component's hint.\
+#### `<govuk-select-hint>`
+
+The content is the HTML to use within the component's hint.
+
 Must be inside a `<govuk-select>` element.
 
-If the `for` attribute is specified on the parent `<govuk-select>` then content for the hint will be generated from the model expression.\
-If you want to retain the generated content and specify additional attributes then use a self-closing tag e.g.
-`<govuk-select-hint class="some-additional-class" />`.
 
-### `<govuk-select-error-message>`
+#### `<govuk-select-error-message>`
 
-The content is the HTML to use within the component's error message.\
+The content is the HTML to use within the component's error message.
+
 Must be inside a `<govuk-select>` element.
 
-If the `for` attribute is specified on the parent `<govuk-select>` then content for the error message will be generated from the model expression.
-(To prevent this set `ignore-modelstate-errors` on the parent `<govuk-select>` to `false`.) Specifying any content here will override any generated error message.\
-If you want to retain the generated content and specify additional attributes then use a self-closing tag e.g.
-`<govuk-select-error-message visually-hidden-text="Error" />`.
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
-| Attribute              | Type     | Description                                                                       |
-|------------------------|----------|-----------------------------------------------------------------------------------|
-| `visually-hidden-text` | `string` | The visually hidden prefix used before the error message. The default is `Error`. |
 
-### `<govuk-select-before-input>`
+#### `<govuk-select-before-input>`
 
-The content is the HTML to use before the generated `select` element.\
+The content is the HTML to use before the generated select element.
+
 Must be inside a `<govuk-select>` element.
 
-### `<govuk-select-after-input>`
 
-The content is the HTML to use after the generated `select` element.\
+#### `<govuk-select-after-input>`
+
+The content is the HTML to use after the generated select element.
+
 Must be inside a `<govuk-select>` element.
 
-### `<govuk-select-item>`
 
-The content is the HTML to use within the generated `option` element.\
+#### `<govuk-select-item>`
+
+The content is the HTML to use within the generated option element.
+
 Must be inside a `<govuk-select>` element.
 
-| Attribute  | Type     | Description                                                                                                                                                                                                                                     |
-|------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `disabled` | `bool`   | Whether the item should be disabled. The default is `false`.                                                                                                                                                                                    |
-| `selected` | `bool`   | Whether the item should be selected. If this attribute is not specified but the `for` attribute is specified on the parent then this value will be computed by comparing the `value` attribute with the model value. The default is `false`.    |
-| `value`    | `string` | The `value` attribute for the generated `option` element.                                                                                                                                                                                       |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `disabled` | `bool?` | Whether the `disabled` attribute should be added to the generated `option` element. |
+| `selected` | `bool?` | Whether the item should be selected. If not specified and `For` is not `null` on the parent `SelectTagHelper` then this value will be computed by comparing the `Value` attribute with the model expression's value. |
+| `value` | `string` | The `value` attribute for the item. |
+

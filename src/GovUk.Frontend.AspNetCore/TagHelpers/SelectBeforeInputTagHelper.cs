@@ -11,6 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = SelectTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use before the generated select element.")]
 public class SelectBeforeInputTagHelper : TagHelper
 {
     private readonly ILogger<SelectBeforeInputTagHelper> _logger;

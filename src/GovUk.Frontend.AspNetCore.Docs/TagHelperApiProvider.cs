@@ -17,6 +17,7 @@ public class TagHelperApiProvider
     private readonly TemplatePublishOptions _publishOptions;
     private readonly XDocument _docs;
     private readonly Type _anchorTagHelper;
+    private readonly Type _formActionTagHelper;
 
     public TagHelperApiProvider(TemplatePublishOptions publishOptions)
     {
@@ -26,6 +27,7 @@ public class TagHelperApiProvider
         _docs = LoadDocs();
 
         _anchorTagHelper = typeof(GovUkFrontendOptions).Assembly.GetType($"{TagHelperNamespace}.AnchorTagHelper")!;
+        _formActionTagHelper = typeof(GovUkFrontendOptions).Assembly.GetType($"{TagHelperNamespace}.FormActionTagHelper")!;
     }
 
     public TagHelperApi GetTagHelperApi(string tagHelperName)
@@ -117,7 +119,9 @@ public class TagHelperApiProvider
             .OrderBy(a => a.Name)
             .ToList();
 
-        var canGenerateLinks = _anchorTagHelper.GetCustomAttributes<HtmlTargetElementAttribute>().Any(e => e.Tag == tagName);
+        var canGenerateLinks =
+            _anchorTagHelper.GetCustomAttributes<HtmlTargetElementAttribute>().Any(e => e.Tag == tagName) ||
+            _formActionTagHelper.GetCustomAttributes<HtmlTargetElementAttribute>().Any(e => e.Tag == tagName);
         if (canGenerateLinks)
         {
             attributes.Add(new("(link attributes)", "", "See [documentation on links](../links.md) for more information."));

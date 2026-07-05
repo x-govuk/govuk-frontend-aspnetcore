@@ -11,6 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.ErrorMessage)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the error message. Content is required if the 'for' attribute is not specified. If 'for' is specified and there are no errors in the model state then no output is generated; if there are multiple errors only the first is used.")]
 public class ErrorMessageTagHelper : TagHelper
 {
     internal const string TagName = "govuk-error-message";

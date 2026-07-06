@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.NotificationBanner)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the notification banner.")]
 public class NotificationBannerTagHelper : TagHelper
 {
     internal const string TagName = "govuk-notification-banner";

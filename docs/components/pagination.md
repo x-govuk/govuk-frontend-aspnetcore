@@ -1,8 +1,13 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/pagination.liquid -->
 # Pagination
 
-[GDS Pagination component](https://design-system.service.gov.uk/components/pagination/)
+[GOV.UK Design System pagination component](https://design-system.service.gov.uk/components/pagination/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Pagination example" src="../images/pagination-example.png" />
 
 ```razor
 <govuk-pagination>
@@ -14,9 +19,9 @@
 </govuk-pagination>
 ```
 
-![Pagination](../images/pagination.png)
 
-## Example - stacked
+### Example stacked
+<img alt="Pagination stacked example" src="../images/pagination-stacked-example.png" />
 
 ```razor
 <govuk-pagination>
@@ -25,9 +30,9 @@
 </govuk-pagination>
 ```
 
-![Pagination](../images/pagination-stacked.png)
 
-## Example - with ellipsis
+### Example with ellipsis
+<img alt="Pagination with ellipsis example" src="../images/pagination-with-ellipsis-example.png" />
 
 ```razor
 <govuk-pagination>
@@ -43,49 +48,59 @@
 </govuk-pagination>
 ```
 
-![Pagination](../images/pagination-with-ellipsis.png)
 
-## API
+### API
 
-### `<govuk-pagination>`
+#### `<govuk-pagination>`
 
-| Attribute        | Type     | Description                                                                                |
-|------------------|----------|--------------------------------------------------------------------------------------------|
-| `landmark-label` | `string` | The label for the navigation landmark that wraps the pagination. The default is `results`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `landmark-label` | `string` | The label for the navigation landmark that wraps the pagination. The default is `results`. Cannot be `null` or empty. |
 
-### `<govuk-pagination-previous>`
 
-| Attribute         | Type     | Description                                                                                                                              |
-|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------|
-| (link attributes) |          | If specified generates an `href` attribute using the specified values. See [documentation on links](../links.md) for more information.   |
-| `label-text`      | `string` | The optional label that goes underneath the link to the previous page, providing further context for the user about where the link goes. |
-| `link-*`          |          | Additional attributes to add to the generated `<a>` element.                                                                             |
+#### `<govuk-pagination-previous>`
 
-The content is the text for the link to the previous page. The default is `Previous page`.\
-Must be inside a `<govuk-pagination>` element.
-
-### `<govuk-pagination-item>`
-
-| Attribute              | Type     | Description                                                                                                                                                 |
-|------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| (link attributes)      |          | If specified generates an `href` attribute using the specified values. See [documentation on links](../links.md) for more information.                      |
-| `current`              | `bool`   | Whether this item is the current page the user is on. By default this is determined by comparing the current URL to this item's generated `href` attribute. |
-| `visually-hidden-text` | `string` | The visually hidden text for the pagination item. The default is `Page <pagination item text>`.                                                             |
-
-The content is the pagination item text - usually a page number.\
-Must be inside a `<govuk-pagination>` element.
-
-### `<govuk-pagination-ellipsis>`
+The content is the text for the link to the previous page. The default is 'Previous page'.
 
 Must be inside a `<govuk-pagination>` element.
 
-### `<govuk-pagination-next>`
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `label-text` | `string` | The optional label that goes underneath the link to the previous page, providing further context for the user about where the link goes. |
+| `link-*` |  | Additional attributes to add to the generated `a` element. |
+| (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
-| Attribute         | Type     | Description                                                                                                                            |
-|-------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------|
-| (link attributes) |          | If specified generates an `href` attribute using the specified values. See [documentation on links](../links.md) for more information. |
-| `label-text`      | `string` | The optional label that goes underneath the link to the next page, providing further context for the user about where the link goes.   |
-| `link-*`          |          | Additional attributes to add to the generated `<a>` element.                                                                           |
 
-The content is the text for the link to the next page. The default is `Next page`.\
+#### `<govuk-pagination-item>`
+
+The content is the pagination item text, usually a page number.
+
 Must be inside a `<govuk-pagination>` element.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `current` | `bool?` | Whether this item is the current page the user is on. By default, this is determined by comparing the current URL to this item's generated `href` attribute. |
+| `visually-hidden-text` | `string` | The visually hidden text for the pagination item. This should include the page number. The default is `Page <number>`. |
+| (link attributes) |  | See [documentation on links](../links.md) for more information. |
+
+
+#### `<govuk-pagination-ellipsis>`
+
+> [!NOTE]
+> This tag helper should not have any child content.
+
+Must be inside a `<govuk-pagination>` element.
+
+
+#### `<govuk-pagination-next>`
+
+The content is the text for the link to the next page. The default is 'Next page'.
+
+Must be inside a `<govuk-pagination>` element.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `label-text` | `string` | The optional label that goes underneath the link to the next page, providing further context for the user about where the link goes. |
+| `link-*` |  | Additional attributes to add to the generated `a` element. |
+| (link attributes) |  | See [documentation on links](../links.md) for more information. |
+

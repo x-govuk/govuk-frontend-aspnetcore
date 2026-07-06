@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the link to the next page in a GDS pagination component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PaginationTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the text for the link to the next page. The default is 'Next page'.")]
 public class PaginationNextTagHelper : TagHelper
 {
     internal const string TagName = "govuk-pagination-next";

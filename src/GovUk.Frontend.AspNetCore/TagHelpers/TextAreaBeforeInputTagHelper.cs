@@ -11,6 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = TextAreaTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use before the generated textarea element.")]
 public class TextAreaBeforeInputTagHelper : TagHelper
 {
     private readonly ILogger<TextAreaBeforeInputTagHelper> _logger;

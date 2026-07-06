@@ -9,6 +9,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = TextAreaTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the component's error message.")]
 public class TextAreaErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
 {
     internal const string TagName = "govuk-textarea-error-message";

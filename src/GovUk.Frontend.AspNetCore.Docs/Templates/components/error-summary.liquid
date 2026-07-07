@@ -1,0 +1,38 @@
+# Error summary
+
+[GOV.UK Design System error summary component](https://design-system.service.gov.uk/components/error-summary/)
+
+> [!NOTE]
+> By default an error summary will be added to the top of your `<main>` element containing links to all the errors on the page.
+> You can disable this by setting the `GenerateErrorSummaries` property on `GovUkFrontendOptions` to `GenerateErrorSummariesOptions.None`.
+
+
+## Tag helpers
+
+### Example
+{{ tag_helper_example(
+  "Examples/ErrorSummary/ErrorSummaryExample",
+  "error-summary-example.png",
+  "Error summary example") }}
+
+### Example with overridden title
+{{ tag_helper_example(
+  "Examples/ErrorSummary/ErrorSummaryWithTitleExample",
+  "error-summary-with-title-example.png",
+  "Error summary with overridden title example") }}
+
+### Example with model state error
+{{ tag_helper_example(
+  "Examples/ErrorSummary/ErrorSummaryWithModelStateErrorExample",
+  "error-summary-with-model-state-error-example.png",
+  "Error summary with model state error example") }}
+
+### API
+
+{{ tag_helper_api("ErrorSummaryTagHelper") }}
+
+{{ tag_helper_api("ErrorSummaryTitleTagHelper") }}
+
+{{ tag_helper_api("ErrorSummaryDescriptionTagHelper") }}
+
+{{ tag_helper_api("ErrorSummaryItemTagHelper") }}

@@ -1,12 +1,17 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/error-summary.liquid -->
 # Error summary
 
-[GDS Error summary component](https://design-system.service.gov.uk/components/error-summary/)
+[GOV.UK Design System error summary component](https://design-system.service.gov.uk/components/error-summary/)
 
 > [!NOTE]
-> By default an Error summary will be added to the top of your `<main>` element containing links to all the errors on the page.
-You can disable this by setting the `GenerateErrorSummaries` property on `GovUkFrontendOptions` to `GenerateErrorSummariesOptions.None`.
+> By default an error summary will be added to the top of your `<main>` element containing links to all the errors on the page.
+> You can disable this by setting the `GenerateErrorSummaries` property on `GovUkFrontendOptions` to `GenerateErrorSummariesOptions.None`.
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Error summary example" src="../images/error-summary-example.png" />
 
 ```razor
 <govuk-error-summary>
@@ -15,9 +20,9 @@ You can disable this by setting the `GenerateErrorSummaries` property on `GovUkF
 </govuk-error-summary>
 ```
 
-![Error message](../images/error-summary.png)
 
-## Example - overriden title
+### Example with overridden title
+<img alt="Error summary with overridden title example" src="../images/error-summary-with-title-example.png" />
 
 ```razor
 <govuk-error-summary>
@@ -27,9 +32,9 @@ You can disable this by setting the `GenerateErrorSummaries` property on `GovUkF
 </govuk-error-summary>
 ```
 
-![Error message](../images/error-summary-with-title.png)
 
-## Example - ModelState error
+### Example with model state error
+<img alt="Error summary with model state error example" src="../images/error-summary-with-model-state-error-example.png" />
 
 ```razor
 <govuk-error-summary>
@@ -37,36 +42,39 @@ You can disable this by setting the `GenerateErrorSummaries` property on `GovUkF
 </govuk-error-summary>
 ```
 
-![Error message](../images/error-summary-with-modelstate-error.png)
 
-## API
+### API
 
-### `<govuk-error-summary>`
+#### `<govuk-error-summary>`
 
-| Attribute            | Type   | Description                                                                                                 |
-|----------------------|--------|-------------------------------------------------------------------------------------------------------------|
-| `disable-auto-focus` | `bool` | Whether to disable the behavior that focuses the error summary when the page loads. The default is `false`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `disable-auto-focus` | `bool?` | Whether to disable the behavior that focuses the error summary when the page loads. |
 
-### `<govuk-error-summary-title>`
 
-The content is the HTML to use within the title for the error summary. If this element is not specified then the content is `There is a problem`.\
-Must be inside a `<govuk-error-summary>` element.
+#### `<govuk-error-summary-title>`
 
-### `<govuk-error-summary-description>`
-
-The content is the HTML to use within the description for the error summary.\
-Must be inside a `<govuk-error-summary>` element.
-
-### `<govuk-error-summary-item>`
-
-The content is the HTML to use within the error link item. Content is required if the `for` attribute is not specified.\
-
-If `for` is specified and there are no errors in `ModelState` then the item will not be rendered.
+The content is the HTML to use within the title for the error summary. If this element is not specified then the content is 'There is a problem'.
 
 Must be inside a `<govuk-error-summary>` element.
 
-| Attribute         | Type              | Description                                                                                                                                                                 |
-|-------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `for`             | `ModelExpression` | The model expression used to generate the error message. If content is specified this attribute is ignored. See [documentation on forms](../forms.md) for more information. |
-| `link-*`          |                   | Additional attributes to add to the generated `a` element.                                                                                                                  |
-| (link attributes) |                   | If specified generates an `href` attribute using the specified values. See [documentation on links](../links.md) for more information.                                      |
+
+#### `<govuk-error-summary-description>`
+
+The content is the HTML to use within the description for the error summary.
+
+Must be inside a `<govuk-error-summary>` element.
+
+
+#### `<govuk-error-summary-item>`
+
+The content is the HTML to use within the error link item. Content is required if the 'for' attribute is not specified. If 'for' is specified and there are no errors in the model state then the item will not be rendered.
+
+Must be inside a `<govuk-error-summary>` element.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `for` | `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` | An expression to be evaluated against the current model. |
+| `link-*` |  | Additional attributes to add to the generated `a` element. |
+| (link attributes) |  | See [documentation on links](../links.md) for more information. |
+

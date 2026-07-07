@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a GDS tabs component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TabsTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML of the panel.")]
 public class TabsItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-tabs-item";

@@ -9,6 +9,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the checkboxes.")]
 public class CheckboxesAfterInputsTagHelper : TagHelper
 {
     private readonly ILogger<CheckboxesAfterInputsTagHelper> _logger;

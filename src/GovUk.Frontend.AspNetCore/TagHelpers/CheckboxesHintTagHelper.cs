@@ -13,6 +13,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the component's hint.")]
 public class CheckboxesHintTagHelper : FormGroupHintTagHelperBase
 {
     internal const string TagName = "govuk-checkboxes-hint";

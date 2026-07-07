@@ -14,6 +14,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName, ParentTag = CheckboxesFieldsetTagHelper.ShortTagName)]
 [HtmlTargetElement(ShortTagName, ParentTag = CheckboxesFieldsetTagHelper.ShortTagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the component's error message.")]
 public class CheckboxesErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
 {
     internal const string TagName = "govuk-checkboxes-error-message";

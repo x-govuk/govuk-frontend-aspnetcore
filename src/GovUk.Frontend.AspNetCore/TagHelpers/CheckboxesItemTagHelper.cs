@@ -13,6 +13,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the label for the generated input element.")]
 public class CheckboxesItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes-item";

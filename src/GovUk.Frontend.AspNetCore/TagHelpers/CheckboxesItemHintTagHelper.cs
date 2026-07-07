@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the hint of a checkbox item in a GDS checkboxes component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesItemTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the item's hint.")]
 public class CheckboxesItemHintTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes-item-hint";

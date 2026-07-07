@@ -85,9 +85,15 @@ public class TagHelperApiProvider
                     continue;
                 }
 
+                var htmlAttributeName = member.GetCustomAttribute<HtmlAttributeNameAttribute>();
+                if (htmlAttributeName is null)
+                {
+                    // Not an HTML attribute (e.g. a convention-bound property without an explicit name).
+                    continue;
+                }
+
                 var typeName = GetNormalizedTypeName(member.PropertyType);
 
-                var htmlAttributeName = member.GetCustomAttribute<HtmlAttributeNameAttribute>()!;
                 var attributeName = htmlAttributeName.Name;
 
                 if (attributeName is null)

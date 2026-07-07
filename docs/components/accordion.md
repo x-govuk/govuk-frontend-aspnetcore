@@ -1,8 +1,13 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/accordion.liquid -->
 # Accordion
 
-[GDS Accordion component](https://design-system.service.gov.uk/components/accordion/)
+[GOV.UK Design System accordion component](https://design-system.service.gov.uk/components/accordion/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Accordion example" src="../images/accordion-example.png" />
 
 ```razor
 <govuk-accordion id="accordion-with-summary-sections" heading-level="3">
@@ -104,43 +109,50 @@
 </govuk-accordion>
 ```
 
-![Accordion](../images/accordion-with-summary-sections.png)
 
-## API
+### API
 
-### `<govuk-accordion>`
+#### `<govuk-accordion>`
 
-| Attribute                      | Type       | Description                                                                                                                                                                                   |
-|--------------------------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `id`                           | `string`   |  *Required* The `id` attribute for the accordion. Must be unique across the domain of your service. Cannot be `null` or empty.                                                                |
-| `heading-level`                | `int`      | The heading level. Must be between `1` and `6` (inclusive). The default is `2`.                                                                                                               |
-| `remember-expanded`            | `bool`     | Whether the expanded/collapsed state of the accordion should be saved when a user leaves the page and restored when they return. The default is `true`.                                       |
-| `hide-all-sections-text`       | `string`   | The text content of the 'Hide all sections' button at the top of the accordion when all sections are expanded.                                                                                |
-| `hide-section-text`            | `string`   | 	The text content of the 'Hide' button within each section of the accordion, which is visible when the section is expanded.                                                                   |
-| `hide-section-aria-label-text` | `string`   | The text made available to assistive technologies, like screen-readers, as the final part of the toggle's accessible name when the section is expanded. The defaults is 'Hide this section'.  |
-| `show-all-sections-text`       | `string`   | The text content of the 'Show all sections' button at the top of the accordion when at least one section is collapsed.                                                                        |
-| `show-section-text`            | `string`   | 	The text content of the 'Show' button within each section of the accordion, which is visible when the section is collapsed.                                                                  |
-| `hide-section-aria-label-text` | `string`   | The text made available to assistive technologies, like screen-readers, as the final part of the toggle's accessible name when the section is collapsed. The defaults is 'Show this section'. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `heading-level` | `int?` | The heading level. Must be between `1` and `6` (inclusive). The default is `2`. |
+| `hide-all-sections-text` | `string` | The text content of the "Hide all sections" button at the top of the accordion when all sections are expanded. |
+| `hide-section-aria-label-text` | `string` | The text made available to assistive technologies, like screen-readers, as the final part of the toggle's accessible name when the section is expanded. The default is `"Hide this section"`. |
+| `hide-section-text` | `string` | The text content of the "Hide" button within each section of the accordion, which is visible when the section is expanded. |
+| `id` | `string` | The `id` attribute for the accordion. Must be unique across the domain of your service if `RememberExpanded` is `true`. Cannot be `null` or empty. |
+| `remember-expanded` | `bool?` | Whether the expanded/collapsed state of the accordion should be saved when a user leaves the page and restored when they return. The default is `true`. |
+| `show-all-sections-text` | `string` | The text content of the "Show all sections" button at the top of the accordion, which is visible when the section is collapsed. |
+| `show-section-aria-label-text` | `string` | The text made available to assistive technologies, like screen-readers, as the final part of the toggle's accessible name when the section is collapsed. The defaults is `"Show this section"`. |
+| `show-section-text` | `string` | The text content of the "Show" button within each section of the accordion, which is visible when the section is collapsed. |
 
-### `<govuk-accordion-item>`
+
+#### `<govuk-accordion-item>`
 
 Must be inside a `<govuk-accordion>` element.
 
-| Attribute  | Type   | Description                                                                       |
-|------------|--------|-----------------------------------------------------------------------------------|
-| `expanded` | `bool` | Whether the section should be expanded upon initial load. The default is `false`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `expanded` | `bool?` | Whether the section should be expanded upon initial load. The default is `false`. |
 
-### `<govuk-accordion-item-heading>`
 
-The content is the HTML of the header for each section which is used both as the title for each section, and as the button to open or close each section.\
+#### `<govuk-accordion-item-heading>`
+
+The content is the HTML of the header for each section which is used both as the title for each section, and as the button to open or close each section.
+
 Must be inside a `<govuk-accordion-item>` element.
 
-### `<govuk-accordion-item-summary>`
 
-The content is the HTML for the summary line.\
+#### `<govuk-accordion-item-summary>`
+
+The content is the HTML for the summary line.
+
 Must be inside a `<govuk-accordion-item>` element.
 
-### `<govuk-accordion-item-content>`
 
-The content is the HTML of the section, which is hidden when the section is closed.\
+#### `<govuk-accordion-item-content>`
+
+The content is the HTML of the section, which is hidden when the section is closed.
+
 Must be inside a `<govuk-accordion-item>` element.
+

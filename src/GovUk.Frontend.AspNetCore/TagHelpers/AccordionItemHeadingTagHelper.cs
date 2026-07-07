@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the heading in a GDS accordion component item.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = AccordionItemTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML of the header for each section which is used both as the title for each section, and as the button to open or close each section.")]
 public class AccordionItemHeadingTagHelper : TagHelper
 {
     internal const string TagName = "govuk-accordion-item-heading";

@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the summary in a GDS accordion component item.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = AccordionItemTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML for the summary line.")]
 public class AccordionItemSummaryTagHelper : TagHelper
 {
     internal const string TagName = "govuk-accordion-item-summary";

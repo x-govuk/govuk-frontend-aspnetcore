@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content in a GDS accordion component item.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = AccordionItemTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML of the section, which is hidden when the section is closed.")]
 public class AccordionItemContentTagHelper : TagHelper
 {
     internal const string TagName = "govuk-accordion-item-content";

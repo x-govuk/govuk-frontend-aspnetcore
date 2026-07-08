@@ -12,6 +12,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the label for the generated input element.")]
 public class RadiosItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-item";

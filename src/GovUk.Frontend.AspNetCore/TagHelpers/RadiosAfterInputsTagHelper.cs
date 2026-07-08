@@ -9,6 +9,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the radios.")]
 public class RadiosAfterInputsTagHelper : TagHelper
 {
     private readonly ILogger<RadiosAfterInputsTagHelper> _logger;

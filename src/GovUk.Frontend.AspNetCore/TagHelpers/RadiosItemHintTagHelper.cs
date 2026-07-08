@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the hint of a radios item in a GDS radios component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosItemTagHelper.TagName)]
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the item's hint.")]
 public class RadiosItemHintTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-item-hint";

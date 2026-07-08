@@ -1,8 +1,13 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/radios.liquid -->
 # Radios
 
-[GDS Radios component](https://design-system.service.gov.uk/components/radios/)
+[GOV.UK Design System radios component](https://design-system.service.gov.uk/components/radios/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Radios example" src="../images/radios-example.png" />
 
 ```razor
 <govuk-radios name="where-do-you-live">
@@ -25,9 +30,9 @@
 </govuk-radios>
 ```
 
-![Radios](../images/radios.png)
 
-## Example - with conditional reveal
+### Example with conditional reveal
+<img alt="Radios with conditional reveal example" src="../images/radios-with-conditional-example.png" />
 
 ```razor
 <govuk-radios name="how-contacted" id-prefix="contact">
@@ -71,9 +76,9 @@
 </govuk-radios>
 ```
 
-![Radios](../images/radios-with-conditional.png)
 
-## Example - with error message
+### Example with error message
+<img alt="Radios with error message example" src="../images/radios-with-error-example.png" />
 
 ```razor
 <govuk-radios name="where-do-you-live">
@@ -98,80 +103,107 @@
 </govuk-radios>
 ```
 
-![Select](../images/radios-with-error.png)
 
-## API
+### API
 
-### `<govuk-radios>`
+#### `<govuk-radios>`
 
-| Attribute                  | Type              | Description                                                                                                                                                                                                             |
-|----------------------------|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `for`                      | `ModelExpression` | The model expression used to generate the `name` and `id` attributes as well as the `selected` attribute for items and error message content. See [documentation on forms](forms.md) for more information.              |
-| `id-prefix`                | `string`          | The prefix to use when generating IDs for the hint, error message and items. If not specified then a value is generated from the `name` attribute. Required unless the `for` attribute or `name` atribute is specified. |
-| `ignore-modelstate-errors` | `bool`            | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.                                                           |
-| `name`                     | `string`          | The `name` attribute for the generated `input` element. Required unless the `for` attribute or `id-prefix` attribute is specified.                                                                                      |
-| `radios-*`                 |                   | Additional attributes to add to the generated container element that wraps the items.                                                                                                                                   |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `for` | `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` | An expression to be evaluated against the current model. |
+| `id-prefix` | `string` | The prefix to use when generating IDs for the hint, error message and items. Required unless `For` or `Name` is specified. |
+| `ignore-modelstate-errors` | `bool?` | Whether the `Errors` for the `For` expression should be used to deduce an error message. |
+| `name` | `string` | The `name` attribute for the generated `input` elements. Required unless `For` or `IdPrefix` is specified. |
+| `radios-*` |  | Additional attributes for the container element that wraps the items. |
 
-### `<govuk-radios-fieldset>`
 
-A container element used when radios content should be contained with a `fieldset` element.
-When used every `<govuk-radios-hint>`, `<govuk-radios-error-message>`, `<govuk-radios-item>` and `<govuk-radios-divider>` must be placed inside this element, not the root `<govuk-radios>`.\
+#### `<govuk-radios-fieldset>`
+
+A container element used when the radios should be contained within a fieldset element. When used, every hint, error message, item and divider must be placed inside this element rather than the root radios element.
+
 Must be inside a `<govuk-radios>` element.
 
-### `<govuk-radios-fieldset-legend>`
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute. |
 
-*Required* when a `<govuk-radios-fieldset>` is specified\
-The content is the HTML to use within the legend.\
+
+#### `<govuk-radios-fieldset-legend>`
+
+The content is the HTML to use within the legend.
+
 Must be inside a `<govuk-radios-fieldset>` element.
 
-| Attribute         | Type      | Description                                                                       |
-|-------------------|-----------|-----------------------------------------------------------------------------------|
-| `is-page-heading` | `boolean` | Whether the legend also acts as the heading for the page. The default is `false`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `is-page-heading` | `bool?` | Whether the legend also acts as the heading for the page. The default is `false`. |
 
-### `<govuk-radios-hint>`
 
-The content is the HTML to use within the component's hint.\
+#### `<govuk-radios-hint>`
+
+The content is the HTML to use within the component's hint.
+
 Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 
-If the `for` attribute is specified on the parent `<govuk-radios>` then content for the hint will be generated from the model expression.\
-If you want to retain the generated content and specify additional attributes then use a self-closing tag e.g.
-`<govuk-radios-hint class="some-additional-class" />`.
 
-### `<govuk-radios-error-message>`
+#### `<govuk-radios-error-message>`
 
-The content is the HTML to use within the component's error message.\
+The content is the HTML to use within the component's error message.
+
 Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 
-If the `for` attribute is specified on the parent `<govuk-radios>` then content for the error message will be generated from the model expression.
-(To prevent this set `ignore-modelstate-errors` on the parent `<govuk-radios>` to `false`.) Specifying any content here will override any generated error message.\
-If you want to retain the generated content and specify additional attributes then use a self-closing tag e.g.
-`<govuk-radios-error-message visually-hidden-text="Error" />`.
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
-| Attribute              | Type     | Description                                                                       |
-|------------------------|----------|-----------------------------------------------------------------------------------|
-| `visually-hidden-text` | `string` | The visually hidden prefix used before the error message. The default is `Error`. |
 
-### `<govuk-radios-item>`
+#### `<govuk-radios-before-inputs>`
 
-The content is the HTML to use within the label for the generated `input` element.\
+The content is the HTML to use before the radios.
+
 Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 
-| Attribute  | Type     | Description                                                                                                                                                                                                                                                                                                                                             |
-|------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `checked`  | `bool`   | Whether the item should be checked. If this attribute is not specified but the `for` attribute is specified on the parent `<govuk-radios>` then this value will be computed by comparing the `value` attribute with the model value; if the `value` attribute matches the string representation of the model then `checked` will be inferred to `true`. |
-| `disabled` | `bool`   | Whether the item should be disabled. The default is `false`.                                                                                                                                                                                                                                                                                            |
-| `id`       | `string` | The `id` attribute for the generated `input` element. If not specified then a value is generated from the `name` attribute.                                                                                                                                                                                                                             |
-| `input-*`  |          | Additional attributes to add to the generated `input` element.                                                                                                                                                                                                                                                                                          |
-| `label-*`  |          | Additional attributes to add to the generated `label` element.                                                                                                                                                                                                                                                                                          |
-| `name`     | `string` | The `name` attribute for the generated `input` element. Required unless the `for` attribute or `name` attribute is specified on the parent `<govuk-radios>`.                                                                                                                                                                                            |
-| `value`    | `string` | *Required* The `value` attribute for the generated `input` element.                                                                                                                                                                                                                                                                                     |
 
-### `<govuk-radios-item-conditional>`
+#### `<govuk-radios-item>`
 
-The content is the HTML to use within the conditional reveal for the item.\
-Must be inside a `<govuk-radios-item>`.
+The content is the HTML to use within the label for the generated input element.
 
-### `<govuk-radios-divider>`
-
-The content is the HTML to use within item divider.\
 Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `checked` | `bool?` | Whether the item should be checked. If `null` and `For` is not `null` on the parent `RadiosTagHelper` then the value will be computed by comparing the specified model expression with `Value`. The default is `false`. |
+| `disabled` | `bool?` | Whether the `disabled` attribute should be added to the generated `input` element. The default is `false`. |
+| `id` | `string` | The `id` attribute for the generated `input` element. If not specified then a value is generated from the `name` attribute. |
+| `input-*` |  | Additional attributes to add to the generated `input` element. |
+| `label-*` |  | Additional attributes to add to the generated `label` element. |
+| `value` | `string` | The `value` attribute for the item. |
+
+
+#### `<govuk-radios-item-hint>`
+
+The content is the HTML to use within the item's hint.
+
+Must be inside a `<govuk-radios-item>` element.
+
+
+#### `<govuk-radios-item-conditional>`
+
+The content is the HTML to use within the conditional reveal for the item.
+
+Must be inside a `<govuk-radios-item>` element.
+
+
+#### `<govuk-radios-divider>`
+
+The content is the HTML to use within the item divider.
+
+Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
+
+
+#### `<govuk-radios-after-inputs>`
+
+The content is the HTML to use after the radios.
+
+Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
+

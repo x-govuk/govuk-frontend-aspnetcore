@@ -10,6 +10,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = CharacterCountTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the generated textarea.")]
 public class CharacterCountValueTagHelper : TagHelper
 {
     internal const string TagName = "govuk-character-count-value";

@@ -1,0 +1,104 @@
+# Date input
+
+[GOV.UK Design System date input component](https://design-system.service.gov.uk/components/date-input/)
+
+
+## Tag helpers
+
+### Example
+{{ tag_helper_example(
+  "Examples/DateInput/DateInputExample",
+  "date-input-example.png",
+  "Date input example") }}
+
+### Example with error message
+{{ tag_helper_example(
+  "Examples/DateInput/DateInputWithErrorMessageExample",
+  "date-input-with-error-message-example.png",
+  "Date input with error message example") }}
+
+### Example with fieldset
+{{ tag_helper_example(
+  "Examples/DateInput/DateInputWithFieldsetExample",
+  "date-input-with-fieldset-example.png",
+  "Date input with fieldset example") }}
+
+### Example with custom item labels
+{{ tag_helper_example(
+  "Examples/DateInput/DateInputWithCustomItemLabelsExample",
+  "date-input-with-custom-item-labels-example.png",
+  "Date input with custom item labels example") }}
+
+### Example with custom item values
+{{ tag_helper_example(
+  "Examples/DateInput/DateInputWithCustomItemValuesExample",
+  "date-input-with-custom-item-values-example.png",
+  "Date input with custom item values example") }}
+
+### Example with day and month only
+{{ tag_helper_example(
+  "Examples/DateInput/DateInputWithDayAndMonthOnlyExample",
+  "date-input-with-day-and-month-only-example.png",
+  "Date input with day and month only example") }}
+
+### Example with month and year only
+{{ tag_helper_example(
+  "Examples/DateInput/DateInputWithMonthAndYearOnlyExample",
+  "date-input-with-month-and-year-only-example.png",
+  "Date input with month and year only example") }}
+
+### API
+
+{{ tag_helper_api("DateInputTagHelper") }}
+
+{{ tag_helper_api("DateInputFieldsetTagHelper") }}
+
+{{ tag_helper_api("DateInputFieldsetLegendTagHelper") }}
+
+{{ tag_helper_api("DateInputHintTagHelper") }}
+
+{{ tag_helper_api("DateInputErrorMessageTagHelper") }}
+
+{{ tag_helper_api("DateInputBeforeInputsTagHelper") }}
+
+{{ tag_helper_api("DateInputDayTagHelper") }}
+
+{{ tag_helper_api("DateInputDayLabelTagHelper") }}
+
+{{ tag_helper_api("DateInputMonthTagHelper") }}
+
+{{ tag_helper_api("DateInputMonthLabelTagHelper") }}
+
+{{ tag_helper_api("DateInputYearTagHelper") }}
+
+{{ tag_helper_api("DateInputYearLabelTagHelper") }}
+
+{{ tag_helper_api("DateInputAfterInputsTagHelper") }}
+
+## Date types
+
+By default `System.DateTime` and `System.DateOnly` instances can be used as values for this component.
+A model binder converts the three inputs into a single instance of whatever model type is required.
+The model binder also tracks which components were invalid so that the correct items can be highlighted and a useful error message can be provided.
+
+### Partial dates
+
+For partial dates, the `value` attribute or `for` model expression should be a `ValueTuple<int, int>`.
+(See [custom date types](#custom-date-types) for how to add support for other types.)
+
+If a `for` model expression is specified, the item types can be specified by using an attribute on the bound property. For example:
+
+```csharp
+public class MyModel
+{
+    [DateInputItemTypes(DateInputItemTypes.MonthAndYear)]
+    public (int Month, int Year) Birthday { get; set; }
+}
+```
+
+Otherwise, the `item-types` attribute must be specified.
+
+### Custom date types
+
+You can add support for additional types by implementing `GovUk.Frontend.AspNetCore.ModelBinding.DateInputModelConverter`.
+See the sample at `samples/Samples.DateInput/` for a example implementations for NodaTime's `LocalDate` and `YearMonth` types.

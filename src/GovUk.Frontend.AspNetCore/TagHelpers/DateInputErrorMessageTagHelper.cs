@@ -14,6 +14,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
 [HtmlTargetElement(ShortTagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the component's error message.")]
 public class DateInputErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
 {
     internal const string TagName = "govuk-date-input-error-message";

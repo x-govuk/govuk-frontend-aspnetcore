@@ -12,6 +12,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the date input.")]
 public class DateInputAfterInputsTagHelper : TagHelper
 {
     private readonly ILogger<DateInputAfterInputsTagHelper> _logger;

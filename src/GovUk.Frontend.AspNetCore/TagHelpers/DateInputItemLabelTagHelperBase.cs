@@ -6,6 +6,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <summary>
 /// Represents the label in a GDS date input component item.
 /// </summary>
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the item's label.")]
 public abstract class DateInputItemLabelTagHelperBase : TagHelper
 {
     /// <summary>

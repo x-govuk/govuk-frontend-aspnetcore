@@ -25,6 +25,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     FormGroupErrorMessageTagHelperBase.ShortTagName
 #endif
     )]
+[TagHelperDocumentation(ContentDescription = "A container element used when the date input should be contained within a fieldset element. When used, every other child element must be placed inside this element rather than the root date input element.")]
 public class DateInputFieldsetTagHelper : TagHelper
 {
     internal const string TagName = "govuk-date-input-fieldset";

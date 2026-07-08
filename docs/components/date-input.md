@@ -1,16 +1,21 @@
+<!-- Generated from src/GovUk.Frontend.AspNetCore.Docs/Templates/components/date-input.liquid -->
 # Date input
 
-[GDS Date input component](https://design-system.service.gov.uk/components/date-input/)
+[GOV.UK Design System date input component](https://design-system.service.gov.uk/components/date-input/)
 
-## Example
+
+## Tag helpers
+
+### Example
+<img alt="Date input example" src="../images/date-input-example.png" />
 
 ```razor
 <govuk-date-input id="passport-issued" name-prefix="passport-issued" />
 ```
 
-![Date input](../images/date-input.png)
 
-## Example - with error message
+### Example with error message
+<img alt="Date input with error message example" src="../images/date-input-with-error-message-example.png" />
 
 ```razor
 <govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
@@ -20,9 +25,9 @@
 </govuk-date-input>
 ```
 
-![Date input](../images/date-input-with-error.png)
 
-## Example - with fieldset
+### Example with fieldset
+<img alt="Date input with fieldset example" src="../images/date-input-with-fieldset-example.png" />
 
 ```razor
 <govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
@@ -40,9 +45,9 @@
 </govuk-date-input>
 ```
 
-![Date input](../images/date-input-with-fieldset.png)
 
-## Example - with custom item labels
+### Example with custom item labels
+<img alt="Date input with custom item labels example" src="../images/date-input-with-custom-item-labels-example.png" />
 
 ```razor
 <govuk-date-input id="passport-issued" name-prefix="passport-issued">
@@ -58,9 +63,9 @@
 </govuk-date-input>
 ```
 
-![Date input](../images/date-input-with-custom-labels.png)
 
-## Example - with custom item values
+### Example with custom item values
+<img alt="Date input with custom item values example" src="../images/date-input-with-custom-item-values-example.png" />
 
 ```razor
 <govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
@@ -70,9 +75,9 @@
 </govuk-date-input>
 ```
 
-![Date input](../images/date-input-with-custom-values.png)
 
-## Example - with day and month only
+### Example with day and month only
+<img alt="Date input with day and month only example" src="../images/date-input-with-day-and-month-only-example.png" />
 
 ```razor
 <govuk-date-input item-types="DateInputItemTypes.DayAndMonth" id="birthday" name-prefix="birthday" error-message-prefix="Your birthday">
@@ -82,9 +87,9 @@
 </govuk-date-input>
 ```
 
-![Date input](../images/date-input-with-day-and-month.png)
 
-## Example - with month and year only
+### Example with month and year only
+<img alt="Date input with month and year only example" src="../images/date-input-with-month-and-year-only-example.png" />
 
 ```razor
 <govuk-date-input item-types="DateInputItemTypes.MonthAndYear" id="date-moved" name-prefix="DateMoved" error-message-prefix="The date you moved into this property">
@@ -94,86 +99,141 @@
 </govuk-date-input>
 ```
 
-![Date input](../images/date-input-with-month-and-year.png)
+
+### API
+
+#### `<govuk-date-input>`
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `date-input-*` |  | Additional attributes for the container element that wraps the items. |
+| `disabled` | `bool?` | Whether the `disabled` attribute should be added to the generated `input` elements. |
+| `error-message-prefix` | `string` | The prefix to use in generated error messages. |
+| `for` | `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` | An expression to be evaluated against the current model. |
+| `id` | `string` | The `id` attribute for the main component. Also used to generate an `id` for each item's `input` when the corresponding `Id` is not specified. |
+| `ignore-modelstate-errors` | `bool?` | Whether the `Errors` for the `For` expression should be used to deduce an error message. When there are multiple errors in the `ModelErrorCollection` the first is used. |
+| `item-types` | `GovUk.Frontend.AspNetCore.DateInputItemTypes?` | The `DateInputItemTypes` that this date input contains. This is required when creating a partial date input (e.g. a day and month only) and the value is a `ValueTuple`2`. |
+| `name-prefix` | `string` | Optional prefix for the `name` attribute on each item's `input`. |
+| `readonly` | `bool?` | Whether the `readonly` attribute should be added to the generated `input` elements. |
+| `value` | `object` | The date to populate the item values with. |
 
 
-## API
+#### `<govuk-date-input-fieldset>`
 
-### `<govuk-date-input>`
+A container element used when the date input should be contained within a fieldset element. When used, every other child element must be placed inside this element rather than the root date input element.
 
-The content is the HTML to use within the generated component.
-
-| Attribute                  | Type                  | Description                                                                                                                                                                                                                                                                                                                         |
-|----------------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `date-input-`*`            |                       | Additional attributes for the container element that wraps the items.                                                                                                                                                                                                                                                               |
-| `disabled`                 | `bool?`               | Whether the inputs should be disabled. The default is `false`.                                                                                                                                                                                                                                                                      |
-| `error-message-prefix`     | `string`              | The prefix to use in generated error messages.                                                                                                                                                                                                                                                                                      |
-| `for`                      | `ModelExpression`     | The model expression used to generate the `name-prefix`, `id` and `value` attributes as well as the error message content. The model type should be a `Date`, `DateTime` or a type that has a custom converter registered. See [custom date types](#custom-date-types) and [documentation on forms](forms.md) for more information. |
-| `id`                       | `string`              | The `id` attribute for the main component. Required unless the `for` attribute is specified.                                                                                                                                                                                                                                        |
-| `ignore-modelstate-errors` | `bool`                | Whether ModelState errors on the ModelExpression specified by the `for` attribute should be ignored when generating an error message. The default is `false`.                                                                                                                                                                       |
-| `item-types`               | `DateInputItemTypes?` | The date components to generate inputs for. The default is `DateInputItemTypes.All` (day, month and year).                                                                                                                                                                                                                          |
-| `name-prefix`              | `string`              | Optional prefix for the `name` attribute on each item's input.                                                                                                                                                                                                                                                                      |
-| `readonly`                 | `bool?`               | Whether the inputs should be read-only. The default is `false`.                                                                                                                                                                                                                                                                     |
-| `value`                    | `object`              | The date to populate the item values with. The value should be a `Date`, `DateTime` or a type that has a custom converter registered. See [date types](#date-types) for more information.                                                                                                                                           |
-
-### `<govuk-date-input-hint>`
-
-The content is the HTML to use within the component's hint.\
-Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
-
-If the `for` attribute is specified on the parent `<govuk-date-input>` then content for the hint will be generated from the model expression.\
-If you want to retain the generated content and specify additional attributes then use a self-closing tag e.g.
-`<govuk-date-input-hint class="some-additional-class" />`.
-
-### `<govuk-date-input-error-message>`
-
-The content is the HTML to use within the component's error message.\
-Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
-
-If the `for` attribute is specified on the parent `<govuk-date-input>` then content for the error message will be generated from the model expression.
-(To prevent this set `ignore-modelstate-errors` on the parent `<govuk-date-input>` to `false`.) Specifying any content here will override any generated error message.\
-If you want to retain the generated content and specify additional attributes then use a self-closing tag e.g.
-`<govuk-date-input-error-message visually-hidden-text="Error" />`.
-
-| Attribute              | Type                        | Description                                                                                                                                                                                                |
-|------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `error-items`          | `DateInputErrorComponents?` | The components of the date that have errors (day, month and/or year). By default this is resolved by looking up the errors that occurred on model binding. The fallback is `DateInputErrorComponents.All`. |
-| `visually-hidden-text` | `string`                    | The visually hidden prefix used before the error message. The default is `Error`.                                                                                                                          |
-
-### `<govuk-date-input-fieldset>`
-
-A container element used when date input content should be contained with a `fieldset` element.
-When used every other child element must be placed inside this element, not the root `<govuk-date-input>`.\
 Must be inside a `<govuk-date-input>` element.
 
-### `<govuk-date-input-fieldset-legend>`
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute. |
 
-*Required* when a `<govuk-date-input-fieldset>` is specified\
-The content is the HTML to use within the legend.\
+
+#### `<govuk-date-input-fieldset-legend>`
+
+The content is the HTML to use within the legend.
+
 Must be inside a `<govuk-date-input-fieldset>` element.
 
-| Attribute          | Type      | Description                                                                       |
-|--------------------|-----------|-----------------------------------------------------------------------------------|
-| `is-page-heading`  | `boolean` | Whether the legend also acts as the heading for the page. The default is `false`. |
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `is-page-heading` | `bool?` | Whether the legend also acts as the heading for the page. The default is `false`. |
 
-### `<govuk-date-input-day>`, `<govuk-date-input-month>`, `<govuk-date-input-year>`
+
+#### `<govuk-date-input-hint>`
+
+The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 
-| Attribute        | Type     | Description                                                                                   |
-|------------------|----------|-----------------------------------------------------------------------------------------------|
-| `autocomplete`   | `string` | The `autocomplete` attribute for the generated `input` element.                               |
-| `id`             | `string` | The `id` attribute for the item's geneated `input` element.                                   |
-| `inputmode`      | `string` | The `inputmode` attribute for the item's generated `input` element. The default is `numeric`. |
-| `name`           | `string` | The `name` attribute for the item's generated `input` element.                                |
-| `pattern`        | `string` | The `pattern` attribute for the item's generated `input` element. The default is `[0-9]*`.    |
-| `value`          | `string` | The `value` attribute for the item's generated `input` element.                               |
 
-### `<govuk-date-input-day-label>`, `<govuk-date-input-month-label>`, `<govuk-date-input-year-label>`
+#### `<govuk-date-input-error-message>`
 
-Must be inside `<govuk-date-input-day>`, `<govuk-date-input-month>`, `<govuk-date-input-year>` respectively.
+The content is the HTML to use within the component's error message.
+
+Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `error-items` | `GovUk.Frontend.AspNetCore.DateInputItemTypes?` | The components of the date that have errors (day, month and/or year). If the value for the parent `DateInputTagHelper` was specified using `For` then `ErrorItems` will be computed from model binding errors. |
+| `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
+
+
+#### `<govuk-date-input-before-inputs>`
+
+The content is the HTML to use before the date input.
+
+Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
+
+
+#### `<govuk-date-input-day>`
+
+Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `autocomplete` | `string` | The `autocomplete` attribute for the generated `input` element. |
+| `id` | `string` | The `id` attribute for the generated `input` element. By default the value will be generated from the parent's `Id`. |
+| `inputmode` | `string` | The `inputmode` attribute for the generated `input` element. The default is `numeric`. |
+| `name` | `string` | The `name` attribute for the generated `input` element. By default the value will be generated from the parent's `For` and/or `NamePrefix`. |
+| `pattern` | `string` | The `pattern` attribute for the generated `input` element. The default is `[0-9]*`. |
+| `value` | `string` | The `value` attribute for the generated `input` element. This cannot be specified if the `Value` property on the parent is also specified. |
+
+
+#### `<govuk-date-input-day-label>`
 
 The content is the HTML to use within the item's label.
+
+Must be inside a `<govuk-date-input-day>` element.
+
+
+#### `<govuk-date-input-month>`
+
+Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `autocomplete` | `string` | The `autocomplete` attribute for the generated `input` element. |
+| `id` | `string` | The `id` attribute for the generated `input` element. By default the value will be generated from the parent's `Id`. |
+| `inputmode` | `string` | The `inputmode` attribute for the generated `input` element. The default is `numeric`. |
+| `name` | `string` | The `name` attribute for the generated `input` element. By default the value will be generated from the parent's `For` and/or `NamePrefix`. |
+| `pattern` | `string` | The `pattern` attribute for the generated `input` element. The default is `[0-9]*`. |
+| `value` | `string` | The `value` attribute for the generated `input` element. This cannot be specified if the `Value` property on the parent is also specified. |
+
+
+#### `<govuk-date-input-month-label>`
+
+The content is the HTML to use within the item's label.
+
+Must be inside a `<govuk-date-input-month>` element.
+
+
+#### `<govuk-date-input-year>`
+
+Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `autocomplete` | `string` | The `autocomplete` attribute for the generated `input` element. |
+| `id` | `string` | The `id` attribute for the generated `input` element. By default the value will be generated from the parent's `Id`. |
+| `inputmode` | `string` | The `inputmode` attribute for the generated `input` element. The default is `numeric`. |
+| `name` | `string` | The `name` attribute for the generated `input` element. By default the value will be generated from the parent's `For` and/or `NamePrefix`. |
+| `pattern` | `string` | The `pattern` attribute for the generated `input` element. The default is `[0-9]*`. |
+| `value` | `string` | The `value` attribute for the generated `input` element. This cannot be specified if the `Value` property on the parent is also specified. |
+
+
+#### `<govuk-date-input-year-label>`
+
+The content is the HTML to use within the item's label.
+
+Must be inside a `<govuk-date-input-year>` element.
+
+
+#### `<govuk-date-input-after-inputs>`
+
+The content is the HTML to use after the date input.
+
+Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 
 
 ## Date types

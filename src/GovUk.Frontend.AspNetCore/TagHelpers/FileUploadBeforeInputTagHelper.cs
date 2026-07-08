@@ -11,6 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = FileUploadTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use before the generated input element.")]
 public class FileUploadBeforeInputTagHelper : TagHelper
 {
     private readonly ILogger<FileUploadBeforeInputTagHelper> _logger;

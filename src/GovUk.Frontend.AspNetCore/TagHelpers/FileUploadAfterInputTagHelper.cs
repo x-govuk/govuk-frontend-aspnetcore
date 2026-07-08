@@ -11,6 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = FileUploadTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the generated input element.")]
 public class FileUploadAfterInputTagHelper : TagHelper
 {
     private readonly ILogger<FileUploadAfterInputTagHelper> _logger;

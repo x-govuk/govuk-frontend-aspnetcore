@@ -9,6 +9,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = FileUploadTagHelper.TagName)]
 #endif
+[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the component's error message.")]
 public class FileUploadErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
 {
     internal const string TagName = "govuk-file-upload-error-message";

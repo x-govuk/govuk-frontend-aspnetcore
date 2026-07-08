@@ -68,7 +68,12 @@ public class TagHelperApiProvider
             foreach (var m in tagHelperMembers)
             {
                 var memberName = m.Attribute("name")!.Value[(className.Length + 3)..];
-                var member = tagHelperType.GetProperty(memberName)!;
+                var member = tagHelperType.GetProperty(memberName);
+                if (member is null)
+                {
+                    // Documented non-public member (e.g. an abstract helper property); not an HTML attribute.
+                    continue;
+                }
 
                 if (member.GetCustomAttribute<ViewContextAttribute>() is not null)
                 {

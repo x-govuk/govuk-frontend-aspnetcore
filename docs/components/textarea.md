@@ -10,7 +10,7 @@
 <img alt="Textarea example" src="../images/textarea-example.png" />
 
 ```razor
-<govuk-textarea name="more-detail">
+<govuk-textarea for="MoreDetail">
     <govuk-textarea-label class="govuk-label--l" is-page-heading="true">
         Can you provide more detail?
     </govuk-textarea-label>

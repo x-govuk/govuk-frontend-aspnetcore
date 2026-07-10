@@ -10,7 +10,7 @@
 <img alt="Checkboxes example" src="../images/checkboxes-example.png" />
 
 ```razor
-<govuk-checkboxes name="nationality">
+<govuk-checkboxes for="Nationalities">
     <govuk-checkboxes-fieldset>
         <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
             What is your nationality?
@@ -35,8 +35,8 @@
 <img alt="Checkboxes without fieldset example" src="../images/checkboxes-without-fieldset-example.png" />
 
 ```razor
-<govuk-checkboxes name="t-and-c">
-    <govuk-checkboxes-item value="yes">
+<govuk-checkboxes for="AcceptedTermsAndConditions">
+    <govuk-checkboxes-item value="true">
         I agree to the terms and conditions
     </govuk-checkboxes-item>
 </govuk-checkboxes>
@@ -47,7 +47,7 @@
 <img alt="Checkboxes with conditional reveal example" src="../images/checkboxes-with-conditional-example.png" />
 
 ```razor
-<govuk-checkboxes name="contact">
+<govuk-checkboxes for="ContactPreferences">
     <govuk-checkboxes-fieldset>
         <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
             How would you like to be contacted?
@@ -60,7 +60,7 @@
         <govuk-checkboxes-item value="email">
             Email
             <govuk-checkboxes-item-conditional>
-                <govuk-input name="contact-by-email" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
+                <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Email address</govuk-input-label>
                 </govuk-input>
             </govuk-checkboxes-item-conditional>
@@ -69,7 +69,7 @@
         <govuk-checkboxes-item value="phone">
             Phone
             <govuk-checkboxes-item-conditional>
-                <govuk-input name="contact-by-phone" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
+                <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Phone number</govuk-input-label>
                 </govuk-input>
             </govuk-checkboxes-item-conditional>
@@ -78,7 +78,7 @@
         <govuk-checkboxes-item value="text message">
             Text message
             <govuk-checkboxes-item-conditional>
-                <govuk-input name="contact-by-text" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
+                <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Mobile phone number</govuk-input-label>
                 </govuk-input>
             </govuk-checkboxes-item-conditional>
@@ -92,7 +92,7 @@
 <img alt="Checkboxes with &#x27;none&#x27; option example" src="../images/checkboxes-with-none-example.png" />
 
 ```razor
-<govuk-checkboxes name="countries">
+<govuk-checkboxes for="CountriesTravellingTo">
     <govuk-checkboxes-fieldset>
         <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
             Will you be travelling to any of these countries?

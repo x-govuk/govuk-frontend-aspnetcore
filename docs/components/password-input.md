@@ -10,7 +10,7 @@
 <img alt="Password input example" src="../images/password-input-example.png" />
 
 ```razor
-<govuk-password-input name="Password">
+<govuk-password-input for="Password">
     <govuk-password-input-label>Password</govuk-password-input-label>
 </govuk-password-input>
 ```

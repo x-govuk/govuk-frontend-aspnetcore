@@ -10,7 +10,7 @@
 <img alt="Text input example" src="../images/text-input-example.png" />
 
 ```razor
-<govuk-input name="AccountNumber" input-class="govuk-input--width-10" inputmode="numeric" pattern="[0-9]*" spellcheck="false">
+<govuk-input for="AccountNumber" input-class="govuk-input--width-10" inputmode="numeric" pattern="[0-9]*" spellcheck="false">
     <govuk-input-label is-page-heading="true" class="govuk-label--l">What is your account number?</govuk-input-label>
     <govuk-input-hint>Must be between 6 and 8 digits long</govuk-input-hint>
 </govuk-input>
@@ -33,7 +33,7 @@
 <img alt="Text input with prefix and suffix example" src="../images/text-input-with-prefix-and-suffix-example.png" />
 
 ```razor
-<govuk-input name="AccountNumber" input-class="govuk-input--width-5" spellcheck="false">
+<govuk-input for="CostPerItem" input-class="govuk-input--width-5" spellcheck="false">
     <govuk-input-label is-page-heading="true" class="govuk-label--l">What is the cost per item, in pounds?</govuk-input-label>
     <govuk-input-prefix>&pound;</govuk-input-prefix>
     <govuk-input-suffix>per item</govuk-input-suffix>

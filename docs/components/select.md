@@ -10,10 +10,10 @@
 <img alt="Select example" src="../images/select-example.png" />
 
 ```razor
-<govuk-select name="Sort">
+<govuk-select for="SortBy">
     <govuk-select-label>Sort by</govuk-select-label>
     <govuk-select-item value="published">Recently published</govuk-select-item>
-    <govuk-select-item value="updated" selected="true">Recently updated</govuk-select-item>
+    <govuk-select-item value="updated">Recently updated</govuk-select-item>
     <govuk-select-item value="views">Most views</govuk-select-item>
     <govuk-select-item value="comments">Most comments</govuk-select-item>
 </govuk-select>

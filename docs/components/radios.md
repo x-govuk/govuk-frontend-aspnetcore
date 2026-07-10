@@ -10,7 +10,7 @@
 <img alt="Radios example" src="../images/radios-example.png" />
 
 ```razor
-<govuk-radios name="where-do-you-live">
+<govuk-radios for="WhereDoYouLive">
     <govuk-radios-fieldset>
         <govuk-radios-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
             Where do you live?
@@ -35,7 +35,7 @@
 <img alt="Radios with conditional reveal example" src="../images/radios-with-conditional-example.png" />
 
 ```razor
-<govuk-radios name="how-contacted" id-prefix="contact">
+<govuk-radios for="HowContacted">
     <govuk-radios-fieldset>
         <govuk-radios-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
             How would you prefer to be contacted?
@@ -58,7 +58,7 @@
         <govuk-radios-item value="phone">
             Phone
             <govuk-radios-item-conditional>
-                <govuk-input id="contact-by-phone" name="contact-by-phone" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
+                <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
                     <govuk-input-label>Phone number</govuk-input-label>
                 </govuk-input>
             </govuk-radios-item-conditional>
@@ -67,7 +67,7 @@
         <govuk-radios-item value="text">
             Text message
             <govuk-radios-item-conditional>
-                <govuk-input id="contact-by-text" name="contact-by-text" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
+                <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
                     <govuk-input-label>Mobile phone number</govuk-input-label>
                 </govuk-input>
             </govuk-radios-item-conditional>

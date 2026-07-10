@@ -12,7 +12,7 @@ Check out the [max words validator](../validation/maxwords.md) for adding server
 <img alt="Character count example" src="../images/character-count-example.png" />
 
 ```razor
-<govuk-character-count name="more-detail" max-length="200">
+<govuk-character-count for="MoreDetail" max-length="200">
     <govuk-character-count-label class="govuk-label--l" is-page-heading="true">
         Can you provide more detail?
     </govuk-character-count-label>

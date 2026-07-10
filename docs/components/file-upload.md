@@ -10,7 +10,7 @@
 <img alt="File upload example" src="../images/file-upload-example.png" />
 
 ```razor
-<govuk-file-upload name="FileUpload1">
+<govuk-file-upload for="Document">
     <govuk-file-upload-label>Upload a file</govuk-file-upload-label>
 </govuk-file-upload>
 ```
@@ -31,7 +31,7 @@
 <img alt="File upload with JavaScript enhancements example" src="../images/file-upload-with-javascript-enhancements-example.png" />
 
 ```razor
-<govuk-file-upload name="FileUpload1" javascript-enhancements="true">
+<govuk-file-upload for="Document" javascript-enhancements="true">
     <govuk-file-upload-label>Upload a file</govuk-file-upload-label>
 </govuk-file-upload>
 ```

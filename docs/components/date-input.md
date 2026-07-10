@@ -10,7 +10,7 @@
 <img alt="Date input example" src="../images/date-input-example.png" />
 
 ```razor
-<govuk-date-input id="passport-issued" name-prefix="passport-issued" />
+<govuk-date-input for="PassportIssued" />
 ```
 
 
@@ -50,7 +50,7 @@
 <img alt="Date input with custom item labels example" src="../images/date-input-with-custom-item-labels-example.png" />
 
 ```razor
-<govuk-date-input id="passport-issued" name-prefix="passport-issued">
+<govuk-date-input for="PassportIssued">
     <govuk-date-input-day>
         <govuk-date-input-day-label>Dydd</govuk-date-input-day-label>
     </govuk-date-input-day>
@@ -68,7 +68,7 @@
 <img alt="Date input with custom item values example" src="../images/date-input-with-custom-item-values-example.png" />
 
 ```razor
-<govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
+<govuk-date-input for="PassportIssued" error-message-prefix="Your passport issue date">
     <govuk-date-input-day value="1" />
     <govuk-date-input-month value="4" />
     <govuk-date-input-year value="2022" />
@@ -80,7 +80,7 @@
 <img alt="Date input with day and month only example" src="../images/date-input-with-day-and-month-only-example.png" />
 
 ```razor
-<govuk-date-input item-types="DateInputItemTypes.DayAndMonth" id="birthday" name-prefix="birthday" error-message-prefix="Your birthday">
+<govuk-date-input for="Birthday" item-types="DateInputItemTypes.DayAndMonth" error-message-prefix="Your birthday">
     <govuk-date-input-fieldset>
         <govuk-date-input-fieldset-legend>What is your birthday?</govuk-date-input-fieldset-legend>
     </govuk-date-input-fieldset>
@@ -92,7 +92,7 @@
 <img alt="Date input with month and year only example" src="../images/date-input-with-month-and-year-only-example.png" />
 
 ```razor
-<govuk-date-input item-types="DateInputItemTypes.MonthAndYear" id="date-moved" name-prefix="DateMoved" error-message-prefix="The date you moved into this property">
+<govuk-date-input for="DateMovedIn" item-types="DateInputItemTypes.MonthAndYear" error-message-prefix="The date you moved into this property">
     <govuk-date-input-fieldset>
         <govuk-date-input-fieldset-legend>When did you move into this property?</govuk-date-input-fieldset-legend>
     </govuk-date-input-fieldset>

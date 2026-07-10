@@ -1,8 +1,9 @@
 @page
+@model CheckboxesWithoutFieldsetExampleModel
 
 <example>
-    <govuk-checkboxes name="t-and-c">
-        <govuk-checkboxes-item value="yes">
+    <govuk-checkboxes for="AcceptedTermsAndConditions">
+        <govuk-checkboxes-item value="true">
             I agree to the terms and conditions
         </govuk-checkboxes-item>
     </govuk-checkboxes>

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+Targets GOV.UK Frontend v6.3.0.
+
 Added `GetJavascriptFileName()` and `GetStylesheetFileName()` methods to `PageTemplateHelper`.
 
 ## 4.2.1

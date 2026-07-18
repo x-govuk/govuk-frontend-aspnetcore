@@ -15,6 +15,7 @@ internal partial class DefaultComponentGenerator
         public const string Fieldset = "fieldset";
         public const string Footer = "div";
         public const string FormGroup = "div";
+        public const string GenericHeader = "div";
         public const string Header = "div";
         public const string InsetText = "div";
         public const string NotificationBanner = "div";

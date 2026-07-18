@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Html;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -6,21 +8,9 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var headerTag = new HtmlTag("div", attrs => attrs
-            .WithClasses("govuk-header", options.Classes)
-            .With(options.Attributes));
+        var logoContent = new HtmlContentBuilder();
 
-        var containerTag = new HtmlTag("div", attrs => attrs
-            .WithClasses("govuk-header__container", options.ContainerClasses ?? "govuk-width-container")
-            .With(options.ContainerAttributes));
-
-        var logoDiv = new HtmlTag("div", attrs => attrs.WithClasses("govuk-header__logo"));
-
-        var logoLink = new HtmlTag("a", attrs => attrs
-            .With("href", options.HomePageUrl ?? "//gov.uk")
-            .WithClasses("govuk-header__homepage-link"));
-
-        logoLink.InnerHtml.AppendHtml(GenerateLogo(new LogoOptions
+        logoContent.AppendHtml(GenerateLogo(new LogoOptions
         {
             Classes = "govuk-header__logotype",
             AriaLabelText = "GOV.UK"
@@ -31,19 +21,19 @@ internal partial class DefaultComponentGenerator
             var productNameSpan = new HtmlTag("span", attrs => attrs
                 .WithClasses("govuk-header__product-name"));
             productNameSpan.InnerHtml.AppendHtml(options.ProductName);
-            logoLink.InnerHtml.AppendHtml(productNameSpan);
+            logoContent.AppendHtml(productNameSpan);
         }
 
-        logoDiv.InnerHtml.AppendHtml(logoLink);
-        containerTag.InnerHtml.AppendHtml(logoDiv);
-
-        if (!options.Html.IsEmpty())
+        return GenerateGenericHeaderAsync(new GenericHeaderOptions
         {
-            containerTag.InnerHtml.AppendHtml(options.Html.GetRawHtml());
-        }
-
-        headerTag.InnerHtml.AppendHtml(containerTag);
-
-        return GenerateFromHtmlTagAsync(headerTag);
+            Namespace = "govuk",
+            Url = options.HomePageUrl ?? "//gov.uk",
+            LogoHtml = logoContent.ToTemplateString(),
+            ContainerClasses = options.ContainerClasses,
+            ContainerAttributes = options.ContainerAttributes,
+            Classes = options.Classes,
+            Attributes = options.Attributes,
+            Html = options.Html
+        });
     }
 }

@@ -81,6 +81,11 @@ public interface IComponentGenerator
     ValueTask<GovUkComponent> GenerateFooterAsync(FooterOptions options);
 
     /// <summary>
+    /// Generates a generic header component.
+    /// </summary>
+    ValueTask<GovUkComponent> GenerateGenericHeaderAsync(GenericHeaderOptions options);
+
+    /// <summary>
     /// Generates a header component.
     /// </summary>
     ValueTask<GovUkComponent> GenerateHeaderAsync(HeaderOptions options);

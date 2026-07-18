@@ -579,6 +579,98 @@ public partial class DefaultComponentGeneratorTests
     }
 
     [Fact]
+    public async Task GenericHeader_LogoAndLinkAttributes_ArePlacedOnExpectedElements()
+    {
+        // Arrange
+        var options = new GenericHeaderOptions
+        {
+            LogoText = "My service",
+            LogoAttributes = new AttributeCollection { { "data-logo", "logo-attr" }, { "class", "custom-logo" } },
+            LinkAttributes = new AttributeCollection { { "data-link", "link-attr" }, { "class", "custom-link" } }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateGenericHeaderAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        AssertEx.HtmlEqual(
+            """
+            <div class="govuk-generic-header">
+              <div class="govuk-generic-header__container govuk-width-container">
+                <div class="govuk-generic-header__logo custom-logo" data-logo="logo-attr">
+                  <a href="/" class="govuk-generic-header__homepage-link custom-link" data-link="link-attr">
+                    My service
+                  </a>
+                </div>
+              </div>
+            </div>
+            """,
+            html);
+    }
+
+    [Fact]
+    public async Task GenericHeader_ContainerAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new GenericHeaderOptions
+        {
+            LogoText = "My service",
+            ContainerAttributes = new AttributeCollection { { "data-test", "container-attr" } }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateGenericHeaderAsync(options);
+        var element = HtmlHelper.ParseHtmlElement(result.GetHtml());
+
+        // Assert
+        var container = element.QuerySelector(".govuk-generic-header__container");
+        Assert.NotNull(container);
+        Assert.Equal("container-attr", container.GetAttribute("data-test"));
+    }
+
+    [Fact]
+    public async Task GenericHeader_Html_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new GenericHeaderOptions
+        {
+            LogoText = "My service",
+            Html = "<div class=\"extra-content\">Extra content</div>"
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateGenericHeaderAsync(options);
+        var element = HtmlHelper.ParseHtmlElement(result.GetHtml());
+
+        // Assert
+        var extraContent = element.QuerySelector(".govuk-generic-header__container > .extra-content");
+        Assert.NotNull(extraContent);
+        Assert.Equal("Extra content", extraContent.TextContent);
+    }
+
+    [Fact]
+    public async Task GenericHeader_Namespace_ChangesClassPrefix()
+    {
+        // Arrange
+        var options = new GenericHeaderOptions
+        {
+            Namespace = "govuk",
+            LogoText = "My service"
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateGenericHeaderAsync(options);
+        var element = HtmlHelper.ParseHtmlElement(result.GetHtml());
+
+        // Assert
+        Assert.Contains("govuk-header", element.ClassList);
+        Assert.NotNull(element.QuerySelector(".govuk-header__container"));
+        Assert.NotNull(element.QuerySelector(".govuk-header__logo"));
+        Assert.NotNull(element.QuerySelector(".govuk-header__homepage-link"));
+    }
+
+    [Fact]
     public async Task Header_ContainerAttributes_IsIncludedInOutput()
     {
         // Arrange

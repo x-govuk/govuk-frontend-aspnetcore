@@ -9,6 +9,10 @@ public record DateInputOptions
     public TemplateString? Id { get; set; }
     public TemplateString? NamePrefix { get; set; }
     public IReadOnlyCollection<DateInputOptionsItem>? Items { get; set; }
+    public DateInputOptionsItem? Day { get; set; }
+    public DateInputOptionsItem? Month { get; set; }
+    public DateInputOptionsItem? Year { get; set; }
+    public IReadOnlyDictionary<string, TemplateString?>? Values { get; set; }
     public HintOptions? Hint { get; set; }
     public ErrorMessageOptions? ErrorMessage { get; set; }
     public DateInputFormGroupOptions? FormGroup { get; set; }
@@ -23,6 +27,7 @@ public record DateInputOptionsItem
     public TemplateString? Name { get; set; }
     public TemplateString? Label { get; set; }
     public TemplateString? Value { get; set; }
+    public bool? Error { get; set; }
     [JsonPropertyName("autocomplete")]
     public TemplateString? AutoComplete { get; set; }
     [JsonPropertyName("inputmode")]

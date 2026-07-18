@@ -93,7 +93,18 @@ internal partial class DefaultComponentGenerator
 
         void AppendButtonContent(HtmlTag tag)
         {
-            tag.InnerHtml.AppendHtml(HtmlOrText(options.Html, options.Text));
+            // Start buttons use flexbox, which removes whitespace from between HTML elements
+            // inside of them, so wrap HTML content in a <span>.
+            if (options.IsStartButton is true && !options.Html.IsEmpty())
+            {
+                var span = new HtmlTag("span");
+                span.InnerHtml.AppendHtml(options.Html.GetRawHtml());
+                tag.InnerHtml.AppendHtml(span);
+            }
+            else
+            {
+                tag.InnerHtml.AppendHtml(HtmlOrText(options.Html, options.Text));
+            }
 
             if (options.IsStartButton is true)
             {

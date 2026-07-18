@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+Targets GOV.UK Frontend v6.4.0.
+
+Start buttons with HTML content now wrap that content in a `<span>` to match the updated component.
+
+The new date input options (`day`/`month`/`year`/`values` and per-item `error`) and the interruption panel variant introduced in v6.4.0 are not yet supported and are deferred to a follow-up.
+
 ## 4.3.0
 
 Targets GOV.UK Frontend v6.3.0.

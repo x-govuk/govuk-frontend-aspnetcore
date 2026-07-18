@@ -7,10 +7,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents a link action in a GDS panel component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PanelActionsTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the link.")]
 public class PanelActionLinkTagHelper : TagHelper
 {
     internal const string TagName = "govuk-panel-action-link";
+    internal const string ShortTagName = ShortTagNames.ActionLink;
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

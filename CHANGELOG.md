@@ -8,6 +8,8 @@ Start buttons with HTML content now wrap that content in a `<span>` to match the
 
 Added support for the interruption variant of the panel component, including the new `govuk-panel-actions`, `govuk-panel-action` and `govuk-panel-action-link` tag helpers. The action tag helpers take their content as the button/link text and support generated `formaction`/`href` attributes via the routing (`asp-*`) attributes.
 
+The panel tag helpers now also support short tag names: `<panel-title>`, `<panel-body>`, `<panel-actions>`, `<action>` and `<action-link>`. As with the summary list component, short and long tag names cannot be mixed.
+
 The new date input options (`day`/`month`/`year`/`values` and per-item `error`) introduced in v6.4.0 are not yet supported and are deferred to a follow-up.
 
 ## 4.3.0

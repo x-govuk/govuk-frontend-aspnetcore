@@ -11,10 +11,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <c>govuk-panel--interruption</c> class is applied).
 /// </remarks>
 [HtmlTargetElement(TagName, ParentTag = PanelTagHelper.TagName)]
-[RestrictChildren(PanelActionTagHelper.TagName, PanelActionLinkTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = PanelTagHelper.TagName)]
+[RestrictChildren(
+    PanelActionTagHelper.TagName,
+    PanelActionTagHelper.ShortTagName,
+    PanelActionLinkTagHelper.TagName,
+    PanelActionLinkTagHelper.ShortTagName)]
 public class PanelActionsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-panel-actions";
+    internal const string ShortTagName = ShortTagNames.PanelActions;
 
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)

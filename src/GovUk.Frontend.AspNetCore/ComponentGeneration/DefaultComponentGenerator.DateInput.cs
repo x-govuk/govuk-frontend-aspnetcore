@@ -9,13 +9,20 @@ internal partial class DefaultComponentGenerator
         ArgumentNullException.ThrowIfNull(options);
 
         var hasFieldset = options.Fieldset is not null;
+        var values = options.Values;
 
-        var dateInputItems = options.Items is null || options.Items.Count == 0 ?
-            [
-                new DateInputOptionsItem { Name = "day", Classes = "govuk-input--width-2" },
-                new DateInputOptionsItem { Name = "month", Classes = "govuk-input--width-2" },
-                new DateInputOptionsItem { Name = "year", Classes = "govuk-input--width-4" }
-            ] : options.Items;
+        // The day/month/year fields default to standard items whose value is taken from the
+        // `values` object, and are used only when an explicit `items` collection isn't supplied.
+        var dateInputDay = options.Day ??
+            new DateInputOptionsItem { Name = "day", Value = GetValue(values, "day"), Classes = "govuk-input--width-2" };
+        var dateInputMonth = options.Month ??
+            new DateInputOptionsItem { Name = "month", Value = GetValue(values, "month"), Classes = "govuk-input--width-2" };
+        var dateInputYear = options.Year ??
+            new DateInputOptionsItem { Name = "year", Value = GetValue(values, "year"), Classes = "govuk-input--width-4" };
+
+        var dateInputItems = options.Items is { Count: > 0 } ?
+            options.Items :
+            [dateInputDay, dateInputMonth, dateInputYear];
 
         var describedByParts = new List<TemplateString>();
         if (options.Fieldset?.DescribedBy is var describedBy && !describedBy.IsEmpty())
@@ -86,7 +93,7 @@ internal partial class DefaultComponentGenerator
                 }
             }
 
-            var anyItemHasError = dateInputItems.Any(i => ClassesContain(i.Classes, "govuk-input--error"));
+            var anyItemHasError = dateInputItems.Any(i => i.Error is true || ClassesContain(i.Classes, "govuk-input--error"));
 
             foreach (var item in dateInputItems)
             {
@@ -112,21 +119,48 @@ internal partial class DefaultComponentGenerator
             var itemDiv = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-date-input__item"));
 
-            var labelText = item.Label ?? Capitalize(item.Name);
-            var inputId = item.Id ?? new TemplateString($"{parentId}-{item.Name}");
-            var inputName = namePrefix.IsEmpty() ? item.Name : new TemplateString($"{namePrefix}-{item.Name}");
+            // Resolve the item's name, value and width. The day/month/year fields are matched by
+            // object identity (for the default items) or by their name, and the year field is wider.
+            var itemName = item.Name;
+            var itemValue = item.Value;
+            var itemWidth = 2;
 
-            // Add the error modifier when the item hasn't set one itself but the component has an
-            // error message and no item has opted into the error state via its classes.
+            if (ReferenceEquals(item, dateInputDay) || NameMatches(item.Name, "day", dateInputDay.Name))
+            {
+                itemName = item.Name ?? "day";
+                itemValue = item.Value ?? dateInputDay.Value;
+            }
+            else if (ReferenceEquals(item, dateInputMonth) || NameMatches(item.Name, "month", dateInputMonth.Name))
+            {
+                itemName = item.Name ?? "month";
+                itemValue = item.Value ?? dateInputMonth.Value;
+            }
+            else if (ReferenceEquals(item, dateInputYear) || NameMatches(item.Name, "year", dateInputYear.Name))
+            {
+                itemName = item.Name ?? "year";
+                itemValue = item.Value ?? dateInputYear.Value;
+                itemWidth = 4;
+            }
+
             var itemHasErrorClass = ClassesContain(item.Classes, "govuk-input--error");
-            var errorClass = !itemHasErrorClass && options.ErrorMessage is not null && !anyItemHasError ?
+            var itemHasError = item.Error is true || itemHasErrorClass;
+
+            // Add the error modifier when the item opts in (via `error` or its classes), or when the
+            // component has an error message and no item has opted in itself.
+            var errorClass = !itemHasErrorClass &&
+                (itemHasError || (item.Error != false && options.ErrorMessage is not null && !anyItemHasError)) ?
                 "govuk-input--error" : null;
 
-            // Default the width modifier from the field name when the item doesn't specify one.
+            // Default the width modifier from the field when the item doesn't specify one.
             var widthClass = !ClassesContain(item.Classes, "govuk-input--width-") ?
-                (item.Name == "year" ? "govuk-input--width-4" : "govuk-input--width-2") : null;
+                new TemplateString($"govuk-input--width-{itemWidth}") : null;
 
             var inputClasses = new TemplateString("govuk-date-input__input").AppendCssClasses(errorClass, widthClass, item.Classes);
+
+            var labelText = item.Label ?? Capitalize(itemName);
+            var inputId = item.Id ?? new TemplateString($"{parentId}-{itemName}");
+            var inputName = namePrefix.IsEmpty() ? itemName : new TemplateString($"{namePrefix}-{itemName}");
+            var inputValue = itemValue ?? GetValue(values, inputName?.ToHtmlString());
 
             var inputComponent = await GenerateInputAsync(new InputOptions
             {
@@ -134,7 +168,7 @@ internal partial class DefaultComponentGenerator
                 Id = inputId,
                 Classes = inputClasses,
                 Name = inputName,
-                Value = item.Value,
+                Value = inputValue,
                 Type = "text",
                 InputMode = item.InputMode ?? "numeric",
                 AutoComplete = item.AutoComplete,
@@ -150,4 +184,10 @@ internal partial class DefaultComponentGenerator
 
     private static bool ClassesContain(TemplateString? classes, string token) =>
         !classes.IsEmpty() && classes!.ToHtmlString().Contains(token, StringComparison.Ordinal);
+
+    private static bool NameMatches(TemplateString? name, string defaultName, TemplateString? fieldName) =>
+        !name.IsEmpty() && (name == defaultName || name == fieldName);
+
+    private static TemplateString? GetValue(IReadOnlyDictionary<string, TemplateString?>? values, string? key) =>
+        key is not null && values is not null && values.TryGetValue(key, out var value) ? value : null;
 }

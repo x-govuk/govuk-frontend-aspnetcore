@@ -10,7 +10,7 @@ Added support for the interruption variant of the panel component, including the
 
 The panel tag helpers now also support short tag names: `<panel-title>`, `<panel-body>`, `<panel-actions>`, `<action-button>` and `<action-link>`. As with the summary list component, short and long tag names cannot be mixed.
 
-The new date input options (`day`/`month`/`year`/`values` and per-item `error`) introduced in v6.4.0 are not yet supported and are deferred to a follow-up.
+Added the v6.4.0 date input options to `DateInputOptions` (`Day`/`Month`/`Year`/`Values`) and `DateInputOptionsItem` (`Error`). The date input tag helpers are unchanged.
 
 ## 4.3.0
 

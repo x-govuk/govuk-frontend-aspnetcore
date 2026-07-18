@@ -113,6 +113,13 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GenerateFooterAsync(options));
 
     [Theory]
+    [ComponentFixtureData("generic-header", typeof(GenericHeaderOptions))]
+    public Task GenericHeader(ComponentTestCaseData<GenericHeaderOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateGenericHeaderAsync(options));
+
+    [Theory]
     [ComponentFixtureData("header", typeof(HeaderOptions))]
     public Task Header(ComponentTestCaseData<HeaderOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(

@@ -3,6 +3,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 internal static class ShortTagNames
 {
     public const string Action = "action";
+    public const string ActionButton = "action-button";
     public const string ActionLink = "action-link";
     public const string AfterInput = "after-input";
     public const string BeforeInput = "before-input";

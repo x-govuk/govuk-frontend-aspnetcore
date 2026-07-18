@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class PanelActionTagHelperTests : TagHelperTestBase<PanelActionTagHelper>
+public class PanelActionButtonTagHelperTests : TagHelperTestBase<PanelActionButtonTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsButtonActionToContext()
@@ -31,7 +31,7 @@ public class PanelActionTagHelperTests : TagHelperTestBase<PanelActionTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new PanelActionTagHelper()
+        var tagHelper = new PanelActionButtonTagHelper()
         {
             Type = type
         };
@@ -75,7 +75,7 @@ public class PanelActionTagHelperTests : TagHelperTestBase<PanelActionTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new PanelActionTagHelper() { Type = "submit" };
+        var tagHelper = new PanelActionButtonTagHelper() { Type = "submit" };
         tagHelper.Init(context);
 
         // Act
@@ -102,7 +102,7 @@ public class PanelActionTagHelperTests : TagHelperTestBase<PanelActionTagHelper>
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new PanelActionTagHelper();
+        var tagHelper = new PanelActionButtonTagHelper();
         tagHelper.Init(context);
 
         // Act

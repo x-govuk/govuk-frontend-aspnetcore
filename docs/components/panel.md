@@ -29,7 +29,7 @@
         <p class="govuk-body">You entered your age as <strong>109</strong>.</p>
     </panel-body>
     <panel-actions>
-        <action type="button">Yes, this is correct</action>
+        <action-button type="button">Yes, this is correct</action-button>
         <action-link href="#">No, change my age</action-link>
     </panel-actions>
 </govuk-panel>
@@ -47,7 +47,7 @@ The `type="submit"` action generates a `formaction` attribute and the link actio
         <p class="govuk-body">You entered your age as <strong>109</strong>.</p>
     </panel-body>
     <panel-actions>
-        <action type="submit" asp-controller="Home" asp-action="Confirm">Yes, this is correct</action>
+        <action-button type="submit" asp-controller="Home" asp-action="Confirm">Yes, this is correct</action-button>
         <action-link asp-controller="Home" asp-action="Confirm">No, change my age</action-link>
     </panel-actions>
 </govuk-panel>
@@ -82,7 +82,7 @@ Must be inside a `<govuk-panel>` element.
 Must be inside a `<govuk-panel>` element.
 
 
-#### `<action>` / `<govuk-panel-action>`
+#### `<action-button>` / `<govuk-panel-action-button>`
 
 The content is the HTML to use within the button.
 

@@ -8,7 +8,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Panel)]
-[RestrictChildren(PanelTitleTagHelper.TagName, PanelBodyTagHelper.TagName, PanelActionsTagHelper.TagName)]
+[RestrictChildren(
+    PanelTitleTagHelper.TagName,
+    PanelTitleTagHelper.ShortTagName,
+    PanelBodyTagHelper.TagName,
+    PanelBodyTagHelper.ShortTagName,
+    PanelActionsTagHelper.TagName,
+    PanelActionsTagHelper.ShortTagName)]
 public class PanelTagHelper : TagHelper
 {
     internal const string TagName = "govuk-panel";

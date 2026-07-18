@@ -25,6 +25,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-route")]
 [HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-all-route-data")]
 [HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-route-*")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-action")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-controller")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-area")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-page")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-page-handler")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-fragment")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-route")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-all-route-data")]
+[HtmlTargetElement(PanelActionTagHelper.ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName, Attributes = "asp-route-*")]
 public class FormActionTagHelper(IUrlHelperFactory urlHelperFactory) : Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper(urlHelperFactory)
 {
 }

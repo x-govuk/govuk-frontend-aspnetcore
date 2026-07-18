@@ -7,10 +7,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the title in a GDS panel component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PanelTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = PanelTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the panel title.")]
 public class PanelTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-panel-title";
+    internal const string ShortTagName = ShortTagNames.PanelTitle;
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

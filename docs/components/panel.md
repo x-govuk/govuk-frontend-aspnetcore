@@ -11,10 +11,10 @@
 
 ```razor
 <govuk-panel heading-level="2">
-    <govuk-panel-title>Application complete</govuk-panel-title>
-    <govuk-panel-body>
+    <panel-title>Application complete</panel-title>
+    <panel-body>
         Your reference number<br /><strong>HDJ2123F</strong>
-    </govuk-panel-body>
+    </panel-body>
 </govuk-panel>
 ```
 
@@ -24,14 +24,14 @@
 
 ```razor
 <govuk-panel class="govuk-panel--interruption">
-    <govuk-panel-title>Is your age correct?</govuk-panel-title>
-    <govuk-panel-body>
+    <panel-title>Is your age correct?</panel-title>
+    <panel-body>
         <p class="govuk-body">You entered your age as <strong>109</strong>.</p>
-    </govuk-panel-body>
-    <govuk-panel-actions>
-        <govuk-panel-action type="button">Yes, this is correct</govuk-panel-action>
-        <govuk-panel-action-link href="#">No, change my age</govuk-panel-action-link>
-    </govuk-panel-actions>
+    </panel-body>
+    <panel-actions>
+        <action type="button">Yes, this is correct</action>
+        <action-link href="#">No, change my age</action-link>
+    </panel-actions>
 </govuk-panel>
 ```
 
@@ -42,14 +42,14 @@ The `type="submit"` action generates a `formaction` attribute and the link actio
 
 ```razor
 <govuk-panel class="govuk-panel--interruption">
-    <govuk-panel-title>Is your age correct?</govuk-panel-title>
-    <govuk-panel-body>
+    <panel-title>Is your age correct?</panel-title>
+    <panel-body>
         <p class="govuk-body">You entered your age as <strong>109</strong>.</p>
-    </govuk-panel-body>
-    <govuk-panel-actions>
-        <govuk-panel-action type="submit" asp-controller="Home" asp-action="Confirm">Yes, this is correct</govuk-panel-action>
-        <govuk-panel-action-link asp-controller="Home" asp-action="Confirm">No, change my age</govuk-panel-action-link>
-    </govuk-panel-actions>
+    </panel-body>
+    <panel-actions>
+        <action type="submit" asp-controller="Home" asp-action="Confirm">Yes, this is correct</action>
+        <action-link asp-controller="Home" asp-action="Confirm">No, change my age</action-link>
+    </panel-actions>
 </govuk-panel>
 ```
 
@@ -63,30 +63,30 @@ The `type="submit"` action generates a `formaction` attribute and the link actio
 | `heading-level` | `int?` | The heading level. Must be between `1` and `6` (inclusive). The default is `1`. |
 
 
-#### `<govuk-panel-title>`
+#### `<panel-title>` / `<govuk-panel-title>`
 
 The content is the HTML to use within the panel title.
 
 Must be inside a `<govuk-panel>` element.
 
 
-#### `<govuk-panel-body>`
+#### `<panel-body>` / `<govuk-panel-body>`
 
 The content is the HTML to use within the panel body.
 
 Must be inside a `<govuk-panel>` element.
 
 
-#### `<govuk-panel-actions>`
+#### `<panel-actions>` / `<govuk-panel-actions>`
 
 Must be inside a `<govuk-panel>` element.
 
 
-#### `<govuk-panel-action>`
+#### `<action>` / `<govuk-panel-action>`
 
 The content is the HTML to use within the button.
 
-Must be inside a `<govuk-panel-actions>` element.
+Must be inside a `<panel-actions>` or `<govuk-panel-actions>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |
@@ -94,11 +94,11 @@ Must be inside a `<govuk-panel-actions>` element.
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
-#### `<govuk-panel-action-link>`
+#### `<action-link>` / `<govuk-panel-action-link>`
 
 The content is the HTML to use within the link.
 
-Must be inside a `<govuk-panel-actions>` element.
+Must be inside a `<panel-actions>` or `<govuk-panel-actions>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |

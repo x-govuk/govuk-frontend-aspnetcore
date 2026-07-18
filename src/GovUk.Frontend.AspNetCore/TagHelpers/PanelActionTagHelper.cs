@@ -7,10 +7,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents a button action in a GDS panel component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PanelActionsTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the button.")]
 public class PanelActionTagHelper : TagHelper
 {
     internal const string TagName = "govuk-panel-action";
+    internal const string ShortTagName = ShortTagNames.Action;
 
     private const string TypeAttributeName = "type";
 

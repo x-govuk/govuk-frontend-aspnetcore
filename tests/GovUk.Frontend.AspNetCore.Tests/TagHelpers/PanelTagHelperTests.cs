@@ -188,6 +188,43 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
     }
 
     [Fact]
+    public async Task ProcessAsync_WithActions_InvokesComponentGeneratorWithExpectedOptions()
+    {
+        // Arrange
+        var titleContent = "Title";
+        var actions = new PanelActionsOptions
+        {
+            Items = [new PanelActionsItemOptions { Text = "Yes", Type = "button" }],
+            Classes = "actions-class"
+        };
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var panelContext = context.GetContextItem<PanelContext>();
+                panelContext.SetTitle(TemplateString.FromEncoded(titleContent), null);
+                panelContext.SetActions(actions);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<PanelOptions>(nameof(IComponentGenerator.GeneratePanelAsync));
+
+        var tagHelper = new PanelTagHelper(componentGenerator);
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.Same(actions, actualOptions.Actions);
+    }
+
+    [Fact]
     public async Task ProcessAsync_MissingTitle_ThrowsInvalidOperationException()
     {
         // Arrange

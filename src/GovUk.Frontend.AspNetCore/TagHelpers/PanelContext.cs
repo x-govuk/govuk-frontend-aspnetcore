@@ -6,6 +6,19 @@ internal class PanelContext
 {
     public (TemplateString? Content, AttributeCollection? Attributes)? Body { get; private set; }
     public (TemplateString? Content, AttributeCollection? Attributes)? Title { get; private set; }
+    public PanelActionsOptions? Actions { get; private set; }
+
+    public void SetActions(PanelActionsOptions actions)
+    {
+        ArgumentNullException.ThrowIfNull(actions);
+
+        if (Actions is not null)
+        {
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(PanelActionsTagHelper.TagName, PanelTagHelper.TagName);
+        }
+
+        Actions = actions;
+    }
 
     public void SetBody(TemplateString? content, AttributeCollection? attributes)
     {

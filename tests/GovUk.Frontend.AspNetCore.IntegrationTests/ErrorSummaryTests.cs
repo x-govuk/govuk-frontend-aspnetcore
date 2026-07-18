@@ -40,7 +40,7 @@ public class ErrorSummaryTests(EncodingsTestFixture fixture) : IClassFixture<Enc
             .Single()
             .GetElementsByTagName("li")
             .SelectMany(li => li.GetElementsByTagName("a"))
-            .Select(a => a.GetAttribute("href"));
+            .Select(a => a.GetAttribute("href")!);
 }
 
 public class ErrorSummaryTestFixture : ServerFixture

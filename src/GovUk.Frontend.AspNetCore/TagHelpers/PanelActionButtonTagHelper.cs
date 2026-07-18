@@ -9,10 +9,10 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName, ParentTag = PanelActionsTagHelper.TagName)]
 [HtmlTargetElement(ShortTagName, ParentTag = PanelActionsTagHelper.ShortTagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the button.")]
-public class PanelActionTagHelper : TagHelper
+public class PanelActionButtonTagHelper : TagHelper
 {
-    internal const string TagName = "govuk-panel-action";
-    internal const string ShortTagName = ShortTagNames.Action;
+    internal const string TagName = "govuk-panel-action-button";
+    internal const string ShortTagName = ShortTagNames.ActionButton;
 
     private const string TypeAttributeName = "type";
 

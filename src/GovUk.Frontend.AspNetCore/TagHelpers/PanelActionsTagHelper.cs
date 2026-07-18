@@ -13,8 +13,8 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName, ParentTag = PanelTagHelper.TagName)]
 [HtmlTargetElement(ShortTagName, ParentTag = PanelTagHelper.TagName)]
 [RestrictChildren(
-    PanelActionTagHelper.TagName,
-    PanelActionTagHelper.ShortTagName,
+    PanelActionButtonTagHelper.TagName,
+    PanelActionButtonTagHelper.ShortTagName,
     PanelActionLinkTagHelper.TagName,
     PanelActionLinkTagHelper.ShortTagName)]
 public class PanelActionsTagHelper : TagHelper

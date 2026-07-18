@@ -6,7 +6,7 @@ Targets GOV.UK Frontend v6.4.0.
 
 Start buttons with HTML content now wrap that content in a `<span>` to match the updated component.
 
-Added support for the interruption variant of the panel component, including the new `govuk-panel-actions`, `govuk-panel-action-button` and `govuk-panel-action-link` tag helpers. The action tag helpers take their content as the button/link text and support generated `formaction`/`href` attributes via the routing (`asp-*`) attributes.
+Added support for the interruption variant of the panel component, including the new `govuk-panel-actions`, `govuk-panel-action-button` and `govuk-panel-action-link` tag helpers. The action tag helpers take their content as the button/link text and support generated `formaction`/`href` attributes via the routing (`asp-*`) attributes. Specifying actions on a panel that isn't an interruption panel (i.e. without the `govuk-panel--interruption` class) now throws.
 
 The panel tag helpers now also support short tag names: `<panel-title>`, `<panel-body>`, `<panel-actions>`, `<action-button>` and `<action-link>`. As with the summary list component, short and long tag names cannot be mixed.
 

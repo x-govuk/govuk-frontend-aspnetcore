@@ -192,20 +192,22 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
     {
         // Arrange
         var titleContent = "Title";
+        var className = "govuk-panel--interruption";
         var actions = new PanelActionsOptions
         {
             Items = [new PanelActionsItemOptions { Text = "Yes", Type = "button" }],
             Classes = "actions-class"
         };
 
-        var context = CreateTagHelperContext();
+        var context = CreateTagHelperContext(className: className);
 
         var output = CreateTagHelperOutput(
+            className: className,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var panelContext = context.GetContextItem<PanelContext>();
                 panelContext.SetTitle(TemplateString.FromEncoded(titleContent), null);
-                panelContext.SetActions(actions);
+                panelContext.SetActions(actions, PanelActionsTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -222,6 +224,43 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.Same(actions, actualOptions.Actions);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_WithActionsButNotInterruptionVariant_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var panelContext = context.GetContextItem<PanelContext>();
+                panelContext.SetTitle(TemplateString.FromEncoded("Title"), null);
+
+                // Use the short tag name to verify the actual tag name is used in the message.
+                panelContext.SetActions(
+                    new PanelActionsOptions
+                    {
+                        Items = [new PanelActionsItemOptions { Text = "Yes", Type = "button" }]
+                    },
+                    PanelActionsTagHelper.ShortTagName);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var tagHelper = new PanelTagHelper(TestUtils.CreateComponentGenerator());
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal(
+            "The <panel-actions> element can only be used when the 'govuk-panel--interruption' class is specified on the <govuk-panel> element.",
+            ex.Message);
     }
 
     [Fact]

@@ -20,6 +20,7 @@ public class PanelTagHelper : TagHelper
     internal const string TagName = "govuk-panel";
 
     private const string HeadingLevelAttributeName = "heading-level";
+    private const string InterruptionClassName = "govuk-panel--interruption";
 
     private readonly IComponentGenerator _componentGenerator;
     private int? _headingLevel;
@@ -83,6 +84,18 @@ public class PanelTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
+
+        // Actions are only rendered for the interruption variant, so reject them otherwise
+        // rather than silently dropping them.
+        var isInterruption = !classes.IsEmpty() &&
+            classes!.ToHtmlString().Contains(InterruptionClassName, StringComparison.Ordinal);
+
+        if (panelContext.Actions is not null && !isInterruption)
+        {
+            throw new InvalidOperationException(
+                $"The <{panelContext.ActionsTagName}> element can only be used when the " +
+                $"'{InterruptionClassName}' class is specified on the <{TagName}> element.");
+        }
 
         var options = new PanelOptions
         {

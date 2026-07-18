@@ -8,9 +8,12 @@ internal class PanelContext
     public (TemplateString? Content, AttributeCollection? Attributes)? Title { get; private set; }
     public PanelActionsOptions? Actions { get; private set; }
 
-    public void SetActions(PanelActionsOptions actions)
+    public string? ActionsTagName { get; private set; }
+
+    public void SetActions(PanelActionsOptions actions, string tagName)
     {
         ArgumentNullException.ThrowIfNull(actions);
+        ArgumentNullException.ThrowIfNull(tagName);
 
         if (Actions is not null)
         {
@@ -18,6 +21,7 @@ internal class PanelContext
         }
 
         Actions = actions;
+        ActionsTagName = tagName;
     }
 
     public void SetBody(TemplateString? content, AttributeCollection? attributes)

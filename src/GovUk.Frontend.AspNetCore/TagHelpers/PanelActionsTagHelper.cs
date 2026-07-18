@@ -44,12 +44,14 @@ public class PanelActionsTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
-        panelContext.SetActions(new PanelActionsOptions
-        {
-            Items = actionsContext.Actions,
-            Classes = classes,
-            Attributes = attributes
-        });
+        panelContext.SetActions(
+            new PanelActionsOptions
+            {
+                Items = actionsContext.Actions,
+                Classes = classes,
+                Attributes = attributes
+            },
+            context.TagName);
 
         output.SuppressOutput();
     }

@@ -49,7 +49,7 @@ public class PanelActionsTagHelperTests : TagHelperTestBase<PanelActionsTagHelpe
     {
         // Arrange
         var panelContext = new PanelContext();
-        panelContext.SetActions(new PanelActionsOptions());
+        panelContext.SetActions(new PanelActionsOptions(), PanelActionsTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: [panelContext]);
 

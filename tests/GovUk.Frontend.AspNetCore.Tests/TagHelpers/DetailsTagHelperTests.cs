@@ -79,7 +79,7 @@ public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
         // Assert
         var element = output.RenderToElement();
 
-        Assert.Equal("", element.Attributes["open"].Value);
+        Assert.Equal("", element.Attributes["open"]!.Value);
     }
 
     [Fact]

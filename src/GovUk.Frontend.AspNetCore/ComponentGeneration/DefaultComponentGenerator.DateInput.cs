@@ -86,9 +86,11 @@ internal partial class DefaultComponentGenerator
                 }
             }
 
+            var anyItemHasError = dateInputItems.Any(i => ClassesContain(i.Classes, "govuk-input--error"));
+
             foreach (var item in dateInputItems)
             {
-                var itemDiv = await CreateDateInputItemAsync(item, options.Id, options.NamePrefix);
+                var itemDiv = await CreateDateInputItemAsync(item, options.Id, options.NamePrefix, anyItemHasError);
                 dateInputDiv.InnerHtml.AppendHtml(itemDiv);
             }
 
@@ -105,7 +107,7 @@ internal partial class DefaultComponentGenerator
             return innerHtmlBuilder;
         }
 
-        async Task<HtmlTag> CreateDateInputItemAsync(DateInputOptionsItem item, TemplateString? parentId, TemplateString? namePrefix)
+        async Task<HtmlTag> CreateDateInputItemAsync(DateInputOptionsItem item, TemplateString? parentId, TemplateString? namePrefix, bool anyItemHasError)
         {
             var itemDiv = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-date-input__item"));
@@ -113,7 +115,18 @@ internal partial class DefaultComponentGenerator
             var labelText = item.Label ?? Capitalize(item.Name);
             var inputId = item.Id ?? new TemplateString($"{parentId}-{item.Name}");
             var inputName = namePrefix.IsEmpty() ? item.Name : new TemplateString($"{namePrefix}-{item.Name}");
-            var inputClasses = new TemplateString("govuk-date-input__input").AppendCssClasses(item.Classes);
+
+            // Add the error modifier when the item hasn't set one itself but the component has an
+            // error message and no item has opted into the error state via its classes.
+            var itemHasErrorClass = ClassesContain(item.Classes, "govuk-input--error");
+            var errorClass = !itemHasErrorClass && options.ErrorMessage is not null && !anyItemHasError ?
+                "govuk-input--error" : null;
+
+            // Default the width modifier from the field name when the item doesn't specify one.
+            var widthClass = !ClassesContain(item.Classes, "govuk-input--width-") ?
+                (item.Name == "year" ? "govuk-input--width-4" : "govuk-input--width-2") : null;
+
+            var inputClasses = new TemplateString("govuk-date-input__input").AppendCssClasses(errorClass, widthClass, item.Classes);
 
             var inputComponent = await GenerateInputAsync(new InputOptions
             {
@@ -134,4 +147,7 @@ internal partial class DefaultComponentGenerator
             return itemDiv;
         }
     }
+
+    private static bool ClassesContain(TemplateString? classes, string token) =>
+        !classes.IsEmpty() && classes!.ToHtmlString().Contains(token, StringComparison.Ordinal);
 }

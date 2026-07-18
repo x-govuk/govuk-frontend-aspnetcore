@@ -9,8 +9,11 @@ internal partial class DefaultComponentGenerator
         var headingLevel = options.HeadingLevel ?? 1;
         var titleContent = HtmlOrText(options.TitleHtml, options.TitleText);
 
+        // The panel defaults to the confirmation variant unless the interruption variant is requested.
+        var isInterruption = ClassesContain(options.Classes, "govuk-panel--interruption");
+
         var outerTag = new HtmlTag("div", attrs => attrs
-            .WithClasses("govuk-panel", "govuk-panel--confirmation", options.Classes)
+            .WithClasses("govuk-panel", isInterruption ? null : "govuk-panel--confirmation", options.Classes)
             .With(options.Attributes));
 
         var headingTag = new HtmlTag($"h{headingLevel}", attrs => attrs

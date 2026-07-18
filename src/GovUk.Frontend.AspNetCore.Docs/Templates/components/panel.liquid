@@ -11,6 +11,19 @@
   "panel-example.png",
   "Panel example") }}
 
+### Interruption example
+{{ tag_helper_example(
+  "Examples/Panel/PanelInterruptionExample",
+  "panel-interruption-example.png",
+  "Panel interruption example") }}
+
+### Interruption example with generated actions
+The `type="submit"` action generates a `formaction` attribute and the link action generates an `href` attribute from the routing (`asp-*`) attributes.
+{{ tag_helper_example(
+  "Examples/Panel/PanelInterruptionWithGeneratedActionsExample",
+  "panel-interruption-with-generated-actions-example.png",
+  "Panel interruption with generated actions example") }}
+
 ### API
 
 {{ tag_helper_api("PanelTagHelper") }}
@@ -18,3 +31,9 @@
 {{ tag_helper_api("PanelTitleTagHelper") }}
 
 {{ tag_helper_api("PanelBodyTagHelper") }}
+
+{{ tag_helper_api("PanelActionsTagHelper") }}
+
+{{ tag_helper_api("PanelActionTagHelper") }}
+
+{{ tag_helper_api("PanelActionLinkTagHelper") }}

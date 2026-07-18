@@ -16,6 +16,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-route")]
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-all-route-data")]
 [HtmlTargetElement(ButtonTagHelper.TagName, Attributes = "asp-route-*")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-action")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-controller")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-area")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-page")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-page-handler")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-fragment")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-route")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-all-route-data")]
+[HtmlTargetElement(PanelActionTagHelper.TagName, Attributes = "asp-route-*")]
 public class FormActionTagHelper(IUrlHelperFactory urlHelperFactory) : Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper(urlHelperFactory)
 {
 }

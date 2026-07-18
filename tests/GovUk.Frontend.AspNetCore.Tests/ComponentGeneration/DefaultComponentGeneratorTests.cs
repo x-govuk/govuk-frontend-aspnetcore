@@ -199,21 +199,13 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GeneratePaginationAsync(options));
 
     [Theory]
-    // The v6.4.0 interruption panel actions are not yet exposed by the component generator;
-    // those fixtures are deferred to a follow-up.
+    // This fixture passes actions as a bare array rather than an object with an `items` property,
+    // which the reference template renders as an empty actions container. The typed Actions API
+    // can't express that shape, so it's excluded.
     [ComponentFixtureData(
         "panel",
         typeof(PanelOptions),
-        exclude:
-        [
-            "interruption",
-            "interruption, button link",
-            "interruption, no actions items",
-            "interruption, submit action",
-            "interruption, with actions classes and attributes",
-            "interruption-with-content-with-long-line-length",
-            "interruption-with-headings-content-and-lists"
-        ])]
+        exclude: "interruption-with-headings-content-and-lists")]
     public Task Panel(ComponentTestCaseData<PanelOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
             data,

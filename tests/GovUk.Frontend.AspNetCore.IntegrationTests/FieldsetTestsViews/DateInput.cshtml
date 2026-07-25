@@ -1,0 +1,46 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.FieldsetTestsModel
+
+@* A fieldset element with a legend element inside it *@
+<div data-testid="explicit-fieldset">
+    <govuk-date-input id="explicit" name-prefix="Explicit">
+        <govuk-date-input-fieldset class="explicit-fieldset-class" data-fieldset="explicit">
+            <govuk-date-input-fieldset-legend class="explicit-legend-class" data-legend="explicit">Explicit legend</govuk-date-input-fieldset-legend>
+        </govuk-date-input-fieldset>
+    </govuk-date-input>
+</div>
+
+@* A fieldset element with no legend element; the legend comes from the model metadata *@
+<div data-testid="explicit-fieldset-legend-from-model">
+    <govuk-date-input for="DateOfBirth">
+        <govuk-date-input-fieldset />
+    </govuk-date-input>
+</div>
+
+@* A legend element without a fieldset element *@
+<div data-testid="implicit-fieldset">
+    <govuk-date-input id="implicit" name-prefix="Implicit">
+        <govuk-date-input-fieldset-legend class="implicit-legend-class" data-legend="implicit">Implicit legend</govuk-date-input-fieldset-legend>
+    </govuk-date-input>
+</div>
+
+@* A legend element without a fieldset element, with attributes for the generated fieldset *@
+<div data-testid="implicit-fieldset-with-attributes">
+    <govuk-date-input id="implicit-with-attributes" name-prefix="ImplicitWithAttributes" fieldset-class="generated-fieldset-class" fieldset-data-fieldset="generated" legend-class="root-legend-class">
+        <govuk-date-input-fieldset-legend class="element-legend-class">Implicit legend</govuk-date-input-fieldset-legend>
+    </govuk-date-input>
+</div>
+
+@* No legend element; a fieldset is requested with the bare 'fieldset' attribute and the legend comes from the model metadata *@
+<div data-testid="fieldset-from-model-metadata">
+    <govuk-date-input for="DateOfBirth" fieldset />
+</div>
+
+@* No legend element; a fieldset is implied by the 'legend-class' attribute and the legend comes from the model metadata *@
+<div data-testid="fieldset-from-model-metadata-with-legend-class">
+    <govuk-date-input for="DateOfBirth" legend-class="govuk-fieldset__legend--l" legend-data-legend="generated" legend-is-page-heading="true" />
+</div>
+
+@* Nothing that implies a fieldset, so no fieldset is generated even though 'for' is specified *@
+<div data-testid="no-fieldset">
+    <govuk-date-input for="DateOfBirth" />
+</div>

@@ -114,9 +114,7 @@ public class AttributeBindingTestsFixture : ServerFixture
     public override async ValueTask InitializeAsync()
     {
         // Override to skip Playwright initialization - we only need HttpClient
-        var host = CreateHost();
-        await host.StartAsync();
-        SetHost(host);
+        await StartHostAsync();
     }
 
     public override ValueTask DisposeAsync()
@@ -140,22 +138,5 @@ public class AttributeBindingTestsFixture : ServerFixture
         base.ConfigureServices(services);
 
         services.AddRazorPages();
-    }
-
-    private IHost CreateHost() => Host.CreateDefaultBuilder(args: [])
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-            webBuilder
-                .UseUrls(BaseUrl)
-                .ConfigureLogging(logging => logging.SetMinimumLevel(LogLevel.Warning))
-                .ConfigureServices((context, services) => ConfigureServices(services))
-                .Configure(Configure);
-        })
-        .Build();
-
-    private void SetHost(IHost host)
-    {
-        var field = typeof(ServerFixture).GetField("_host", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        field?.SetValue(this, host);
     }
 }

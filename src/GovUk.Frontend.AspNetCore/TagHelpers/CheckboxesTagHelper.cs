@@ -14,6 +14,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     CheckboxesFieldsetTagHelper.TagName,
+    CheckboxesFieldsetLegendTagHelper.TagName,
     CheckboxesItemTagHelper.TagName,
     CheckboxesItemDividerTagHelper.TagName,
     CheckboxesHintTagHelper.TagName,
@@ -28,9 +29,13 @@ public class CheckboxesTagHelper : TagHelper
 
     private const string AttributesPrefix = "checkboxes-";
     private const string DescribedByAttributeName = "described-by";
+    private const string FieldsetAttributeName = FormGroupFieldsetHelper.FieldsetAttributeName;
+    private const string FieldsetAttributesPrefix = FormGroupFieldsetHelper.FieldsetAttributesPrefix;
     private const string ForAttributeName = "for";
     private const string IdPrefixAttributeName = "id-prefix";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
+    private const string LegendAttributesPrefix = FormGroupFieldsetHelper.LegendAttributesPrefix;
+    private const string LegendIsPageHeadingAttributeName = FormGroupFieldsetHelper.LegendIsPageHeadingAttributeName;
     private const string NameAttributeName = "name";
 
     private readonly IComponentGenerator _componentGenerator;
@@ -66,10 +71,51 @@ public class CheckboxesTagHelper : TagHelper
     public string? DescribedBy { get; set; }
 
     /// <summary>
+    /// Whether a <c>fieldset</c> should be generated to wrap the component.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// A <c>fieldset</c> is generated automatically when a <c>govuk-checkboxes-fieldset</c> element or a
+    /// <c>govuk-checkboxes-fieldset-legend</c> element is used, or when any <c>fieldset-*</c>, <c>legend-*</c>
+    /// or <c>legend-is-page-heading</c> attribute is specified; this attribute is only required when a <c>fieldset</c>
+    /// is wanted but none of those are used.
+    /// </para>
+    /// <para>The legend's content is deduced from the <see cref="For"/> expression's metadata.</para>
+    /// </remarks>
+    [HtmlAttributeName(FieldsetAttributeName)]
+    public bool Fieldset { get; set; }
+
+    /// <summary>
+    /// Additional attributes for the generated <c>fieldset</c> element.
+    /// </summary>
+    [HtmlAttributeName(DictionaryAttributePrefix = FieldsetAttributesPrefix)]
+    public IDictionary<string, string?>? FieldsetAttributes { get; set; } = new Dictionary<string, string?>();
+
+    /// <summary>
     /// An expression to be evaluated against the current model.
     /// </summary>
     [HtmlAttributeName(ForAttributeName)]
     public ModelExpression? For { get; set; }
+
+    /// <summary>
+    /// Additional attributes for the generated <c>fieldset</c>'s <c>legend</c> element.
+    /// </summary>
+    /// <remarks>
+    /// These are combined with any attributes specified on a <c>govuk-checkboxes-fieldset-legend</c> element;
+    /// where both specify the same attribute the one on the element wins, except for <c>class</c>, where the two
+    /// values are combined.
+    /// </remarks>
+    [HtmlAttributeName(DictionaryAttributePrefix = LegendAttributesPrefix)]
+    public IDictionary<string, string?>? LegendAttributes { get; set; } = new Dictionary<string, string?>();
+
+    /// <summary>
+    /// Whether the generated <c>fieldset</c>'s <c>legend</c> also acts as the heading for the page.
+    /// </summary>
+    /// <remarks>
+    /// An <c>is-page-heading</c> attribute on a <c>govuk-checkboxes-fieldset-legend</c> element takes precedence over this.
+    /// </remarks>
+    [HtmlAttributeName(LegendIsPageHeadingAttributeName)]
+    public bool? LegendIsPageHeading { get; set; }
 
     /// <summary>
     /// The prefix to use when generating IDs for the hint, error message and items.
@@ -110,6 +156,7 @@ public class CheckboxesTagHelper : TagHelper
         var checkboxesContext = new CheckboxesContext(Name, For);
         context.SetContextItem(checkboxesContext);
         context.SetContextItem<FormGroupContext3>(checkboxesContext);
+        context.SetContextItem(checkboxesContext.ImplicitFieldset);
     }
 
     /// <inheritdoc/>
@@ -128,7 +175,12 @@ public class CheckboxesTagHelper : TagHelper
         var hintOptions = checkboxesContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = checkboxesContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
-        var fieldsetOptions = checkboxesContext.GetFieldsetOptions(_modelHelper);
+        var fieldsetOptions = checkboxesContext.GetFieldsetOptions(
+            _modelHelper,
+            Fieldset,
+            new AttributeCollection(FieldsetAttributes),
+            new AttributeCollection(LegendAttributes),
+            LegendIsPageHeading);
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);

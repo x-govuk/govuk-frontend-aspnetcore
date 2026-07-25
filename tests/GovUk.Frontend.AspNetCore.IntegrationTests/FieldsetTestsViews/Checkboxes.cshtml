@@ -1,0 +1,57 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.FieldsetTestsModel
+
+@* A fieldset element with a legend element inside it *@
+<div data-testid="explicit-fieldset">
+    <govuk-checkboxes name="Explicit">
+        <govuk-checkboxes-fieldset class="explicit-fieldset-class" data-fieldset="explicit">
+            <govuk-checkboxes-fieldset-legend class="explicit-legend-class" data-legend="explicit">Explicit legend</govuk-checkboxes-fieldset-legend>
+            <govuk-checkboxes-item value="1">Item 1</govuk-checkboxes-item>
+        </govuk-checkboxes-fieldset>
+    </govuk-checkboxes>
+</div>
+
+@* A fieldset element with no legend element; the legend comes from the model metadata *@
+<div data-testid="explicit-fieldset-legend-from-model">
+    <govuk-checkboxes for="Countries">
+        <govuk-checkboxes-fieldset>
+            <govuk-checkboxes-item value="1">Item 1</govuk-checkboxes-item>
+        </govuk-checkboxes-fieldset>
+    </govuk-checkboxes>
+</div>
+
+@* A legend element without a fieldset element *@
+<div data-testid="implicit-fieldset">
+    <govuk-checkboxes name="Implicit">
+        <govuk-checkboxes-fieldset-legend class="implicit-legend-class" data-legend="implicit">Implicit legend</govuk-checkboxes-fieldset-legend>
+        <govuk-checkboxes-item value="1">Item 1</govuk-checkboxes-item>
+    </govuk-checkboxes>
+</div>
+
+@* A legend element without a fieldset element, with attributes for the generated fieldset *@
+<div data-testid="implicit-fieldset-with-attributes">
+    <govuk-checkboxes name="ImplicitWithAttributes" fieldset-class="generated-fieldset-class" fieldset-data-fieldset="generated" legend-class="root-legend-class">
+        <govuk-checkboxes-fieldset-legend class="element-legend-class">Implicit legend</govuk-checkboxes-fieldset-legend>
+        <govuk-checkboxes-item value="1">Item 1</govuk-checkboxes-item>
+    </govuk-checkboxes>
+</div>
+
+@* No legend element; a fieldset is requested with the bare 'fieldset' attribute and the legend comes from the model metadata *@
+<div data-testid="fieldset-from-model-metadata">
+    <govuk-checkboxes for="Countries" fieldset>
+        <govuk-checkboxes-item value="1">Item 1</govuk-checkboxes-item>
+    </govuk-checkboxes>
+</div>
+
+@* No legend element; a fieldset is implied by the 'legend-class' attribute and the legend comes from the model metadata *@
+<div data-testid="fieldset-from-model-metadata-with-legend-class">
+    <govuk-checkboxes for="Countries" legend-class="govuk-fieldset__legend--l" legend-data-legend="generated" legend-is-page-heading="true">
+        <govuk-checkboxes-item value="1">Item 1</govuk-checkboxes-item>
+    </govuk-checkboxes>
+</div>
+
+@* Nothing that implies a fieldset, so no fieldset is generated even though 'for' is specified *@
+<div data-testid="no-fieldset">
+    <govuk-checkboxes for="Countries">
+        <govuk-checkboxes-item value="1">Item 1</govuk-checkboxes-item>
+    </govuk-checkboxes>
+</div>

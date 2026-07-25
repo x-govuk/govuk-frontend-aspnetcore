@@ -47,11 +47,19 @@ public class ServerFixture : IAsyncLifetime
 
     public virtual async ValueTask InitializeAsync()
     {
-        _host = CreateHost();
-        await _host.StartAsync();
+        await StartHostAsync();
 
         _playright = await Playwright.CreateAsync();
         Browser = await _playright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = !Debugger.IsAttached });
+    }
+
+    /// <summary>
+    /// Starts the host without initializing Playwright, for fixtures that don't need a browser.
+    /// </summary>
+    protected async Task StartHostAsync()
+    {
+        _host = CreateHost();
+        await _host.StartAsync();
     }
 
     protected virtual void Configure(IApplicationBuilder app)

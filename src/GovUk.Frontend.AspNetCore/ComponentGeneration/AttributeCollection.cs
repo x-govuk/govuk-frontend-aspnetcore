@@ -120,6 +120,27 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         _attributes.Add(name, attribute);
     }
 
+    /// <summary>
+    /// Adds the attributes from <paramref name="other"/> to this instance. <c>class</c> and <c>aria-describedby</c>
+    /// attributes are combined with any existing values; any other attribute replaces the existing value.
+    /// </summary>
+    internal void Merge(AttributeCollection other)
+    {
+        ArgumentNullException.ThrowIfNull(other);
+
+        foreach (var attribute in other.GetAttributes())
+        {
+            if (_attributes.ContainsKey(attribute.Name) && attribute.Name is not ("class" or "aria-describedby"))
+            {
+                _attributes[attribute.Name] = attribute;
+            }
+            else
+            {
+                Add(attribute);
+            }
+        }
+    }
+
     internal void Set(string name, TemplateString templateString)
     {
         ArgumentNullException.ThrowIfNull(name);

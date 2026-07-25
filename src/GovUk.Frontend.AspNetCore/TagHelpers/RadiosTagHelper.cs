@@ -14,6 +14,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     RadiosFieldsetTagHelper.TagName,
+    RadiosFieldsetLegendTagHelper.TagName,
     RadiosItemTagHelper.TagName,
     RadiosItemDividerTagHelper.TagName,
     HintTagName,
@@ -29,9 +30,13 @@ public class RadiosTagHelper : TagHelper
     internal const string TagName = "govuk-radios";
 
     private const string AttributesPrefix = "radios-";
+    private const string FieldsetAttributeName = FormGroupFieldsetHelper.FieldsetAttributeName;
+    private const string FieldsetAttributesPrefix = FormGroupFieldsetHelper.FieldsetAttributesPrefix;
     private const string ForAttributeName = "for";
     private const string IdPrefixAttributeName = "id-prefix";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
+    private const string LegendAttributesPrefix = FormGroupFieldsetHelper.LegendAttributesPrefix;
+    private const string LegendIsPageHeadingAttributeName = FormGroupFieldsetHelper.LegendIsPageHeadingAttributeName;
     private const string NameAttributeName = "name";
 
     private readonly IComponentGenerator _componentGenerator;
@@ -55,6 +60,27 @@ public class RadiosTagHelper : TagHelper
     }
 
     /// <summary>
+    /// Whether a <c>fieldset</c> should be generated to wrap the component.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// A <c>fieldset</c> is generated automatically when a <c>govuk-radios-fieldset</c> element or a
+    /// <c>govuk-radios-fieldset-legend</c> element is used, or when any <c>fieldset-*</c>, <c>legend-*</c>
+    /// or <c>legend-is-page-heading</c> attribute is specified; this attribute is only required when a <c>fieldset</c>
+    /// is wanted but none of those are used.
+    /// </para>
+    /// <para>The legend's content is deduced from the <see cref="For"/> expression's metadata.</para>
+    /// </remarks>
+    [HtmlAttributeName(FieldsetAttributeName)]
+    public bool Fieldset { get; set; }
+
+    /// <summary>
+    /// Additional attributes for the generated <c>fieldset</c> element.
+    /// </summary>
+    [HtmlAttributeName(DictionaryAttributePrefix = FieldsetAttributesPrefix)]
+    public IDictionary<string, string?>? FieldsetAttributes { get; set; } = new Dictionary<string, string?>();
+
+    /// <summary>
     /// An expression to be evaluated against the current model.
     /// </summary>
     [HtmlAttributeName(ForAttributeName)]
@@ -75,6 +101,26 @@ public class RadiosTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(IgnoreModelStateErrorsAttributeName)]
     public bool? IgnoreModelStateErrors { get; set; }
+
+    /// <summary>
+    /// Additional attributes for the generated <c>fieldset</c>'s <c>legend</c> element.
+    /// </summary>
+    /// <remarks>
+    /// These are combined with any attributes specified on a <c>govuk-radios-fieldset-legend</c> element;
+    /// where both specify the same attribute the one on the element wins, except for <c>class</c>, where the two
+    /// values are combined.
+    /// </remarks>
+    [HtmlAttributeName(DictionaryAttributePrefix = LegendAttributesPrefix)]
+    public IDictionary<string, string?>? LegendAttributes { get; set; } = new Dictionary<string, string?>();
+
+    /// <summary>
+    /// Whether the generated <c>fieldset</c>'s <c>legend</c> also acts as the heading for the page.
+    /// </summary>
+    /// <remarks>
+    /// An <c>is-page-heading</c> attribute on a <c>govuk-radios-fieldset-legend</c> element takes precedence over this.
+    /// </remarks>
+    [HtmlAttributeName(LegendIsPageHeadingAttributeName)]
+    public bool? LegendIsPageHeading { get; set; }
 
     /// <summary>
     /// The <c>name</c> attribute for the generated <c>input</c> elements.
@@ -102,7 +148,9 @@ public class RadiosTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new RadiosContext(Name, For));
+        var radiosContext = new RadiosContext(Name, For);
+        context.SetContextItem(radiosContext);
+        context.SetContextItem(radiosContext.ImplicitFieldset);
     }
 
     /// <inheritdoc/>
@@ -122,7 +170,12 @@ public class RadiosTagHelper : TagHelper
         var hintOptions = radiosContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = radiosContext.GetErrorMessageOptions(For, ViewContext!, _modelHelper, IgnoreModelStateErrors);
 
-        var fieldsetOptions = radiosContext.GetFieldsetOptions(_modelHelper);
+        var fieldsetOptions = radiosContext.GetFieldsetOptions(
+            _modelHelper,
+            Fieldset,
+            new AttributeCollection(FieldsetAttributes),
+            new AttributeCollection(LegendAttributes),
+            LegendIsPageHeading);
 
         var formGroupAttributes = new AttributeCollection(output.Attributes);
         formGroupAttributes.Remove("class", out var formGroupClasses);

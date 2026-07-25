@@ -15,6 +15,10 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public FormGroupFieldsetContext2? Fieldset { get; private set; }
 
+    public FormGroupFieldsetContext2 ImplicitFieldset { get; } = new(DateInputTagHelper.TagName);
+
+    public string LegendTagName => DateInputFieldsetLegendTagHelper.TagName;
+
     public AttributeCollection? Attributes { get; private set; }
 
     public IReadOnlyDictionary<DateInputItemTypes, DateInputContextItem> Items => _items;
@@ -28,7 +32,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
     protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
         [/*, DateInputErrorMessageTagHelper.ShortTagName, */DateInputErrorMessageTagHelper.TagName];
 
-    protected string FieldsetTagName { get; } = DateInputFieldsetTagHelper.TagName;
+    public string FieldsetTagName { get; } = DateInputFieldsetTagHelper.TagName;
 
     protected override IReadOnlyCollection<string> HintTagNames { get; } =
         [/*DateInputHintTagHelper.ShortTagName, */DateInputHintTagHelper.TagName];
@@ -36,6 +40,8 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
     protected override string RootTagName { get; } = DateInputTagHelper.TagName;
+
+    string IFormGroupWithFieldset.RootTagName => RootTagName;
 
     private IReadOnlyCollection<string> BeforeInputsTagNames => DateInputBeforeInputsTagHelper.AllTagNames;
 
@@ -118,8 +124,19 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         return CreateErrorMessageOptions(html);
     }
 
-    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) =>
-        Fieldset?.GetFieldsetOptions(For, modelHelper, Attributes!);
+    public FieldsetOptions? GetFieldsetOptions(
+        IModelHelper modelHelper,
+        bool generateFieldset,
+        AttributeCollection fieldsetAttributes,
+        AttributeCollection legendAttributes,
+        bool? legendIsPageHeading) =>
+        FormGroupFieldsetHelper.GetFieldsetOptions(
+            this,
+            modelHelper,
+            generateFieldset,
+            fieldsetAttributes,
+            legendAttributes,
+            legendIsPageHeading);
 
     public override void SetLabel(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string tagName)
     {

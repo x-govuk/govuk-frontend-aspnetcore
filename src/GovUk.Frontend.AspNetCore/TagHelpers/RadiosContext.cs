@@ -24,9 +24,13 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     public FormGroupFieldsetContext2? Fieldset { get; private set; }
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames => RadiosErrorMessageTagHelper.AllTagNames;
+    public FormGroupFieldsetContext2 ImplicitFieldset { get; } = new(RadiosTagHelper.TagName);
 
-    protected string FieldsetTagName => RadiosFieldsetTagHelper.TagName;
+    public string FieldsetTagName => RadiosFieldsetTagHelper.TagName;
+
+    public string LegendTagName => RadiosFieldsetLegendTagHelper.TagName;
+
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => RadiosErrorMessageTagHelper.AllTagNames;
 
     protected string ItemTagName => RadiosItemTagHelper.TagName;
 
@@ -35,6 +39,8 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
     protected override string RootTagName => RadiosTagHelper.TagName;
+
+    string IFormGroupWithFieldset.RootTagName => RootTagName;
 
     private IReadOnlyCollection<string> BeforeInputsTagNames => RadiosBeforeInputsTagHelper.AllTagNames;
 
@@ -52,8 +58,19 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         _items.Add(item);
     }
 
-    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) =>
-        Fieldset?.GetFieldsetOptions(For, modelHelper, Attributes!);
+    public FieldsetOptions? GetFieldsetOptions(
+        IModelHelper modelHelper,
+        bool generateFieldset,
+        AttributeCollection fieldsetAttributes,
+        AttributeCollection legendAttributes,
+        bool? legendIsPageHeading) =>
+        FormGroupFieldsetHelper.GetFieldsetOptions(
+            this,
+            modelHelper,
+            generateFieldset,
+            fieldsetAttributes,
+            legendAttributes,
+            legendIsPageHeading);
 
     public void OpenFieldset(FormGroupFieldsetContext2 fieldsetContext, AttributeCollection attributes)
     {

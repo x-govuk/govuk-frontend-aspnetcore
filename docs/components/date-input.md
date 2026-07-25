@@ -31,18 +31,24 @@
 
 ```razor
 <govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
-    <govuk-date-input-fieldset>
-        <govuk-date-input-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
-            When was your passport issued?
-        </govuk-date-input-fieldset-legend>
-        <govuk-date-input-hint>
-            For example, 27 3 2007
-        </govuk-date-input-hint>
-        <govuk-date-input-error-message>
-            The date your passport was issued must be in the past
-        </govuk-date-input-error-message>
-    </govuk-date-input-fieldset>
+    <govuk-date-input-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+        When was your passport issued?
+    </govuk-date-input-fieldset-legend>
+    <govuk-date-input-hint>
+        For example, 27 3 2007
+    </govuk-date-input-hint>
+    <govuk-date-input-error-message>
+        The date your passport was issued must be in the past
+    </govuk-date-input-error-message>
 </govuk-date-input>
+```
+
+
+### Example with a fieldset generated from the model metadata
+<img alt="Date input with a generated fieldset example" src="../images/date-input-with-generated-fieldset-example.png" />
+
+```razor
+<govuk-date-input for="PassportIssued" fieldset legend-class="govuk-fieldset__legend--l" legend-is-page-heading="true" />
 ```
 
 
@@ -81,9 +87,7 @@
 
 ```razor
 <govuk-date-input for="Birthday" item-types="DateInputItemTypes.DayAndMonth" error-message-prefix="Your birthday">
-    <govuk-date-input-fieldset>
-        <govuk-date-input-fieldset-legend>What is your birthday?</govuk-date-input-fieldset-legend>
-    </govuk-date-input-fieldset>
+    <govuk-date-input-fieldset-legend>What is your birthday?</govuk-date-input-fieldset-legend>
 </govuk-date-input>
 ```
 
@@ -93,9 +97,7 @@
 
 ```razor
 <govuk-date-input for="DateMovedIn" item-types="DateInputItemTypes.MonthAndYear" error-message-prefix="The date you moved into this property">
-    <govuk-date-input-fieldset>
-        <govuk-date-input-fieldset-legend>When did you move into this property?</govuk-date-input-fieldset-legend>
-    </govuk-date-input-fieldset>
+    <govuk-date-input-fieldset-legend>When did you move into this property?</govuk-date-input-fieldset-legend>
 </govuk-date-input>
 ```
 
@@ -109,10 +111,14 @@
 | `date-input-*` |  | Additional attributes for the container element that wraps the items. |
 | `disabled` | `bool?` | Whether the `disabled` attribute should be added to the generated `input` elements. |
 | `error-message-prefix` | `string` | The prefix to use in generated error messages. |
+| `fieldset` | `bool` | Whether a `fieldset` should be generated to wrap the component. A `fieldset` is generated automatically when a `govuk-date-input-fieldset` element or a `govuk-date-input-fieldset-legend` element is used, or when any `fieldset-*`, `legend-*` or `legend-is-page-heading` attribute is specified; this attribute is only required when a `fieldset` is wanted but none of those are used.  The legend's content is deduced from the `For` expression's metadata. |
+| `fieldset-*` |  | Additional attributes for the generated `fieldset` element. |
 | `for` | `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` | An expression to be evaluated against the current model. |
 | `id` | `string` | The `id` attribute for the main component. Also used to generate an `id` for each item's `input` when the corresponding `Id` is not specified. |
 | `ignore-modelstate-errors` | `bool?` | Whether the `Errors` for the `For` expression should be used to deduce an error message. When there are multiple errors in the `ModelErrorCollection` the first is used. |
 | `item-types` | `GovUk.Frontend.AspNetCore.DateInputItemTypes?` | The `DateInputItemTypes` that this date input contains. This is required when creating a partial date input (e.g. a day and month only) and the value is a `ValueTuple`2`. |
+| `legend-*` |  | Additional attributes for the generated `fieldset`'s `legend` element. These are combined with any attributes specified on a `govuk-date-input-fieldset-legend` element; where both specify the same attribute the one on the element wins, except for `class`, where the two values are combined. |
+| `legend-is-page-heading` | `bool?` | Whether the generated `fieldset`'s `legend` also acts as the heading for the page. An `is-page-heading` attribute on a `govuk-date-input-fieldset-legend` element takes precedence over this. |
 | `name-prefix` | `string` | Optional prefix for the `name` attribute on each item's `input`. |
 | `readonly` | `bool?` | Whether the `readonly` attribute should be added to the generated `input` elements. |
 | `value` | `object` | The date to populate the item values with. |
@@ -131,9 +137,9 @@ Must be inside a `<govuk-date-input>` element.
 
 #### `<govuk-date-input-fieldset-legend>`
 
-The content is the HTML to use within the legend.
+The content is the HTML to use within the legend. When this element is specified directly inside the root date input element a fieldset is generated automatically.
 
-Must be inside a `<govuk-date-input-fieldset>` element.
+Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |

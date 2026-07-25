@@ -1,0 +1,57 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.FieldsetTestsModel
+
+@* A fieldset element with a legend element inside it *@
+<div data-testid="explicit-fieldset">
+    <govuk-radios name="Explicit">
+        <govuk-radios-fieldset class="explicit-fieldset-class" data-fieldset="explicit">
+            <govuk-radios-fieldset-legend class="explicit-legend-class" data-legend="explicit">Explicit legend</govuk-radios-fieldset-legend>
+            <govuk-radios-item value="1">Item 1</govuk-radios-item>
+        </govuk-radios-fieldset>
+    </govuk-radios>
+</div>
+
+@* A fieldset element with no legend element; the legend comes from the model metadata *@
+<div data-testid="explicit-fieldset-legend-from-model">
+    <govuk-radios for="Country">
+        <govuk-radios-fieldset>
+            <govuk-radios-item value="1">Item 1</govuk-radios-item>
+        </govuk-radios-fieldset>
+    </govuk-radios>
+</div>
+
+@* A legend element without a fieldset element *@
+<div data-testid="implicit-fieldset">
+    <govuk-radios name="Implicit">
+        <govuk-radios-fieldset-legend class="implicit-legend-class" data-legend="implicit">Implicit legend</govuk-radios-fieldset-legend>
+        <govuk-radios-item value="1">Item 1</govuk-radios-item>
+    </govuk-radios>
+</div>
+
+@* A legend element without a fieldset element, with attributes for the generated fieldset *@
+<div data-testid="implicit-fieldset-with-attributes">
+    <govuk-radios name="ImplicitWithAttributes" fieldset-class="generated-fieldset-class" fieldset-data-fieldset="generated" legend-class="root-legend-class">
+        <govuk-radios-fieldset-legend class="element-legend-class">Implicit legend</govuk-radios-fieldset-legend>
+        <govuk-radios-item value="1">Item 1</govuk-radios-item>
+    </govuk-radios>
+</div>
+
+@* No legend element; a fieldset is requested with the bare 'fieldset' attribute and the legend comes from the model metadata *@
+<div data-testid="fieldset-from-model-metadata">
+    <govuk-radios for="Country" fieldset>
+        <govuk-radios-item value="1">Item 1</govuk-radios-item>
+    </govuk-radios>
+</div>
+
+@* No legend element; a fieldset is implied by the 'legend-class' attribute and the legend comes from the model metadata *@
+<div data-testid="fieldset-from-model-metadata-with-legend-class">
+    <govuk-radios for="Country" legend-class="govuk-fieldset__legend--l" legend-data-legend="generated" legend-is-page-heading="true">
+        <govuk-radios-item value="1">Item 1</govuk-radios-item>
+    </govuk-radios>
+</div>
+
+@* Nothing that implies a fieldset, so no fieldset is generated even though 'for' is specified *@
+<div data-testid="no-fieldset">
+    <govuk-radios for="Country">
+        <govuk-radios-item value="1">Item 1</govuk-radios-item>
+    </govuk-radios>
+</div>

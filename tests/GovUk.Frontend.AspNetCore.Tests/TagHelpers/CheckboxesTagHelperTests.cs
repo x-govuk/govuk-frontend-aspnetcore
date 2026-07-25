@@ -434,4 +434,48 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         Assert.True(secondItem.Checked);
         Assert.False(secondItem.Disabled);
     }
+
+    [Fact]
+    public async Task ProcessAsync_WithLegendButNoFieldsetElement_InvokesComponentGeneratorWithFieldsetOptions()
+    {
+        // Arrange
+        var legendContent = "Legend";
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
+                fieldsetContext.SetLegend(
+                    isPageHeading: true,
+                    attributes: new AttributeCollection(),
+                    html: new HtmlString(legendContent),
+                    CheckboxesFieldsetLegendTagHelper.TagName);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CheckboxesOptions>(nameof(IComponentGenerator.GenerateCheckboxesAsync));
+
+        var tagHelper = new CheckboxesTagHelper(componentGenerator, new DefaultModelHelper())
+        {
+            Name = "testcheckboxes",
+            FieldsetAttributes = new Dictionary<string, string?>() { { "class", "fieldset-class" } },
+            ViewContext = TestUtils.CreateViewContext()
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.Fieldset);
+        Assert.Equal("fieldset-class", actualOptions.Fieldset.Classes?.ToHtmlString());
+        Assert.Equal(legendContent, actualOptions.Fieldset.Legend?.Html?.ToHtmlString());
+        Assert.True(actualOptions.Fieldset.Legend?.IsPageHeading);
+    }
 }

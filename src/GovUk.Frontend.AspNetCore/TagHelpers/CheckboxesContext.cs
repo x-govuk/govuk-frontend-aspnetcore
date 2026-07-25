@@ -24,9 +24,13 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
 
     public FormGroupFieldsetContext2? Fieldset { get; private set; }
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames => CheckboxesErrorMessageTagHelper.AllTagNames;
+    public FormGroupFieldsetContext2 ImplicitFieldset { get; } = new(CheckboxesTagHelper.TagName);
 
-    protected string FieldsetTagName => CheckboxesFieldsetTagHelper.TagName;
+    public string FieldsetTagName => CheckboxesFieldsetTagHelper.TagName;
+
+    public string LegendTagName => CheckboxesFieldsetLegendTagHelper.TagName;
+
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames => CheckboxesErrorMessageTagHelper.AllTagNames;
 
     protected string ItemTagName => CheckboxesItemTagHelper.TagName;
 
@@ -35,6 +39,8 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 
     protected override string RootTagName => CheckboxesTagHelper.TagName;
+
+    string IFormGroupWithFieldset.RootTagName => RootTagName;
 
     private IReadOnlyCollection<string> BeforeInputsTagNames => CheckboxesBeforeInputsTagHelper.AllTagNames;
 
@@ -52,8 +58,19 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
         _items.Add(item);
     }
 
-    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) =>
-        Fieldset?.GetFieldsetOptions(For, modelHelper, Attributes!);
+    public FieldsetOptions? GetFieldsetOptions(
+        IModelHelper modelHelper,
+        bool generateFieldset,
+        AttributeCollection fieldsetAttributes,
+        AttributeCollection legendAttributes,
+        bool? legendIsPageHeading) =>
+        FormGroupFieldsetHelper.GetFieldsetOptions(
+            this,
+            modelHelper,
+            generateFieldset,
+            fieldsetAttributes,
+            legendAttributes,
+            legendIsPageHeading);
 
     public void OpenFieldset(FormGroupFieldsetContext2 fieldsetContext, AttributeCollection attributes)
     {

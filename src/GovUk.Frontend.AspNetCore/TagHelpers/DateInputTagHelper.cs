@@ -18,6 +18,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     DateInputFieldsetTagHelper.TagName,
+    DateInputFieldsetLegendTagHelper.TagName,
     DateInputHintTagHelper.TagName,
     DateInputErrorMessageTagHelper.TagName,
     DateInputDayTagHelper.TagName,
@@ -43,10 +44,14 @@ public class DateInputTagHelper : TagHelper
     private const string DateInputAttributesPrefix = "date-input-";
     private const string DisabledAttributeName = "disabled";
     private const string ErrorMessagePrefixAttributeName = "error-message-prefix";
+    private const string FieldsetAttributeName = FormGroupFieldsetHelper.FieldsetAttributeName;
+    private const string FieldsetAttributesPrefix = FormGroupFieldsetHelper.FieldsetAttributesPrefix;
     private const string ForAttributeName = "for";
     private const string IdAttributeName = "id";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
     private const string ItemTypesAttributeName = "item-types";
+    private const string LegendAttributesPrefix = FormGroupFieldsetHelper.LegendAttributesPrefix;
+    private const string LegendIsPageHeadingAttributeName = FormGroupFieldsetHelper.LegendIsPageHeadingAttributeName;
     private const string NamePrefixAttributeName = "name-prefix";
     private const string ReadOnlyAttributeName = "readonly";
     private const string ValueAttributeName = "value";
@@ -101,6 +106,27 @@ public class DateInputTagHelper : TagHelper
     public string? ErrorMessagePrefix { get; set; }
 
     /// <summary>
+    /// Whether a <c>fieldset</c> should be generated to wrap the component.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// A <c>fieldset</c> is generated automatically when a <c>govuk-date-input-fieldset</c> element or a
+    /// <c>govuk-date-input-fieldset-legend</c> element is used, or when any <c>fieldset-*</c>, <c>legend-*</c>
+    /// or <c>legend-is-page-heading</c> attribute is specified; this attribute is only required when a <c>fieldset</c>
+    /// is wanted but none of those are used.
+    /// </para>
+    /// <para>The legend's content is deduced from the <see cref="For"/> expression's metadata.</para>
+    /// </remarks>
+    [HtmlAttributeName(FieldsetAttributeName)]
+    public bool Fieldset { get; set; }
+
+    /// <summary>
+    /// Additional attributes for the generated <c>fieldset</c> element.
+    /// </summary>
+    [HtmlAttributeName(DictionaryAttributePrefix = FieldsetAttributesPrefix)]
+    public IDictionary<string, string?>? FieldsetAttributes { get; set; } = new Dictionary<string, string?>();
+
+    /// <summary>
     /// An expression to be evaluated against the current model.
     /// </summary>
     [HtmlAttributeName(ForAttributeName)]
@@ -135,6 +161,26 @@ public class DateInputTagHelper : TagHelper
     /// </remarks>
     [HtmlAttributeName(ItemTypesAttributeName)]
     public DateInputItemTypes? ItemTypes { get; set; }
+
+    /// <summary>
+    /// Additional attributes for the generated <c>fieldset</c>'s <c>legend</c> element.
+    /// </summary>
+    /// <remarks>
+    /// These are combined with any attributes specified on a <c>govuk-date-input-fieldset-legend</c> element;
+    /// where both specify the same attribute the one on the element wins, except for <c>class</c>, where the two
+    /// values are combined.
+    /// </remarks>
+    [HtmlAttributeName(DictionaryAttributePrefix = LegendAttributesPrefix)]
+    public IDictionary<string, string?>? LegendAttributes { get; set; } = new Dictionary<string, string?>();
+
+    /// <summary>
+    /// Whether the generated <c>fieldset</c>'s <c>legend</c> also acts as the heading for the page.
+    /// </summary>
+    /// <remarks>
+    /// An <c>is-page-heading</c> attribute on a <c>govuk-date-input-fieldset-legend</c> element takes precedence over this.
+    /// </remarks>
+    [HtmlAttributeName(LegendIsPageHeadingAttributeName)]
+    public bool? LegendIsPageHeading { get; set; }
 
     /// <summary>
     /// Optional prefix for the <c>name</c> attribute on each item's <c>input</c>.
@@ -176,6 +222,7 @@ public class DateInputTagHelper : TagHelper
         var dateInputContext = new DateInputContext(_valueSpecified, For);
         context.SetContextItem(dateInputContext);
         context.SetContextItem<FormGroupContext3>(dateInputContext);
+        context.SetContextItem(dateInputContext.ImplicitFieldset);
     }
 
     /// <inheritdoc/>
@@ -223,7 +270,12 @@ public class DateInputTagHelper : TagHelper
             Classes = formGroupClasses
         };
 
-        var fieldsetOptions = dateInputContext.GetFieldsetOptions(_modelHelper);
+        var fieldsetOptions = dateInputContext.GetFieldsetOptions(
+            _modelHelper,
+            Fieldset,
+            new AttributeCollection(FieldsetAttributes),
+            new AttributeCollection(LegendAttributes),
+            LegendIsPageHeading);
 
         var errorItems = GetFieldsWithErrors(dateInputContext);
 

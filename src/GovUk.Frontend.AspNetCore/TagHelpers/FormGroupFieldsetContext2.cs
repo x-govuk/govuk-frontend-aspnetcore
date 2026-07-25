@@ -16,7 +16,9 @@ internal class FormGroupFieldsetContext2(string fieldsetTagName)
     public FieldsetOptions GetFieldsetOptions(
         ModelExpression? @for,
         IModelHelper modelHelper,
-        AttributeCollection attributes)
+        AttributeCollection attributes,
+        AttributeCollection? legendAttributes = null,
+        bool? legendIsPageHeading = null)
     {
         ArgumentNullException.ThrowIfNull(modelHelper);
         ArgumentNullException.ThrowIfNull(attributes);
@@ -24,8 +26,15 @@ internal class FormGroupFieldsetContext2(string fieldsetTagName)
         var clonedAttributes = attributes.Clone();
         clonedAttributes.Remove("class", out var classes);
 
-        var legendAttributes = Legend?.Attributes.Clone() ?? [];
-        legendAttributes.Remove("class", out var legendClasses);
+        // Attributes from a legend element are combined with any specified on the root element
+        var resolvedLegendAttributes = legendAttributes?.Clone() ?? [];
+
+        if (Legend?.Attributes is AttributeCollection legendElementAttributes)
+        {
+            resolvedLegendAttributes.Merge(legendElementAttributes);
+        }
+
+        resolvedLegendAttributes.Remove("class", out var legendClasses);
 
         var html = Legend?.Html;
         if (html is null && @for is not null)
@@ -37,9 +46,9 @@ internal class FormGroupFieldsetContext2(string fieldsetTagName)
         {
             Text = null,
             Html = html,
-            IsPageHeading = Legend?.IsPageHeading,
+            IsPageHeading = Legend?.IsPageHeading ?? legendIsPageHeading,
             Classes = legendClasses,
-            Attributes = legendAttributes
+            Attributes = resolvedLegendAttributes
         };
 
         return new FieldsetOptions

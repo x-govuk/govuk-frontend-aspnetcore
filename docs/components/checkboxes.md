@@ -11,22 +11,32 @@
 
 ```razor
 <govuk-checkboxes for="Nationalities">
-    <govuk-checkboxes-fieldset>
-        <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
-            What is your nationality?
-        </govuk-checkboxes-fieldset-legend>
+    <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+        What is your nationality?
+    </govuk-checkboxes-fieldset-legend>
 
-        <govuk-checkboxes-hint>
-            If you have dual nationality, select all options that are relevant to you.
-        </govuk-checkboxes-hint>
+    <govuk-checkboxes-hint>
+        If you have dual nationality, select all options that are relevant to you.
+    </govuk-checkboxes-hint>
 
-        <govuk-checkboxes-item value="british">
-            British
-            <govuk-checkboxes-item-hint>including English, Scottish, Welsh and Northern Irish</govuk-checkboxes-item-hint>
-        </govuk-checkboxes-item>
-        <govuk-checkboxes-item value="irish">Irish</govuk-checkboxes-item>
-        <govuk-checkboxes-item value="other">Citizen of another country</govuk-checkboxes-item>
-    </govuk-checkboxes-fieldset>
+    <govuk-checkboxes-item value="british">
+        British
+        <govuk-checkboxes-item-hint>including English, Scottish, Welsh and Northern Irish</govuk-checkboxes-item-hint>
+    </govuk-checkboxes-item>
+    <govuk-checkboxes-item value="irish">Irish</govuk-checkboxes-item>
+    <govuk-checkboxes-item value="other">Citizen of another country</govuk-checkboxes-item>
+</govuk-checkboxes>
+```
+
+
+### Example with a fieldset generated from the model metadata
+<img alt="Checkboxes with a generated fieldset example" src="../images/checkboxes-with-generated-fieldset-example.png" />
+
+```razor
+<govuk-checkboxes for="Nationalities" fieldset legend-class="govuk-fieldset__legend--l" legend-is-page-heading="true">
+    <govuk-checkboxes-item value="british">British</govuk-checkboxes-item>
+    <govuk-checkboxes-item value="irish">Irish</govuk-checkboxes-item>
+    <govuk-checkboxes-item value="other">Citizen of another country</govuk-checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -48,42 +58,40 @@
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
-    <govuk-checkboxes-fieldset>
-        <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
-            How would you like to be contacted?
-        </govuk-checkboxes-fieldset-legend>
+    <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+        How would you like to be contacted?
+    </govuk-checkboxes-fieldset-legend>
 
-        <govuk-checkboxes-hint>
-            Select all options that are relevant to you.
-        </govuk-checkboxes-hint>
+    <govuk-checkboxes-hint>
+        Select all options that are relevant to you.
+    </govuk-checkboxes-hint>
 
-        <govuk-checkboxes-item value="email">
-            Email
-            <govuk-checkboxes-item-conditional>
-                <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
-                    <govuk-input-label>Email address</govuk-input-label>
-                </govuk-input>
-            </govuk-checkboxes-item-conditional>
-        </govuk-checkboxes-item>
+    <govuk-checkboxes-item value="email">
+        Email
+        <govuk-checkboxes-item-conditional>
+            <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
+                <govuk-input-label>Email address</govuk-input-label>
+            </govuk-input>
+        </govuk-checkboxes-item-conditional>
+    </govuk-checkboxes-item>
 
-        <govuk-checkboxes-item value="phone">
-            Phone
-            <govuk-checkboxes-item-conditional>
-                <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
-                    <govuk-input-label>Phone number</govuk-input-label>
-                </govuk-input>
-            </govuk-checkboxes-item-conditional>
-        </govuk-checkboxes-item>
+    <govuk-checkboxes-item value="phone">
+        Phone
+        <govuk-checkboxes-item-conditional>
+            <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
+                <govuk-input-label>Phone number</govuk-input-label>
+            </govuk-input>
+        </govuk-checkboxes-item-conditional>
+    </govuk-checkboxes-item>
 
-        <govuk-checkboxes-item value="text message">
-            Text message
-            <govuk-checkboxes-item-conditional>
-                <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
-                    <govuk-input-label>Mobile phone number</govuk-input-label>
-                </govuk-input>
-            </govuk-checkboxes-item-conditional>
-        </govuk-checkboxes-item>
-    </govuk-checkboxes-fieldset>
+    <govuk-checkboxes-item value="text message">
+        Text message
+        <govuk-checkboxes-item-conditional>
+            <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
+                <govuk-input-label>Mobile phone number</govuk-input-label>
+            </govuk-input>
+        </govuk-checkboxes-item-conditional>
+    </govuk-checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -93,21 +101,19 @@
 
 ```razor
 <govuk-checkboxes for="CountriesTravellingTo">
-    <govuk-checkboxes-fieldset>
-        <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
-            Will you be travelling to any of these countries?
-        </govuk-checkboxes-fieldset-legend>
+    <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+        Will you be travelling to any of these countries?
+    </govuk-checkboxes-fieldset-legend>
 
-        <govuk-checkboxes-hint>
-            Select all countries that apply
-        </govuk-checkboxes-hint>
+    <govuk-checkboxes-hint>
+        Select all countries that apply
+    </govuk-checkboxes-hint>
 
-        <govuk-checkboxes-item value="france">France</govuk-checkboxes-item>
-        <govuk-checkboxes-item value="portugal">Portugal</govuk-checkboxes-item>
-        <govuk-checkboxes-item value="spain">Spain</govuk-checkboxes-item>
-        <govuk-checkboxes-divider>or</govuk-checkboxes-divider>
-        <govuk-checkboxes-item value="none" behavior="CheckboxesItemBehavior.Exclusive">No, I will not be travelling to any of these countries</govuk-checkboxes-item>
-    </govuk-checkboxes-fieldset>
+    <govuk-checkboxes-item value="france">France</govuk-checkboxes-item>
+    <govuk-checkboxes-item value="portugal">Portugal</govuk-checkboxes-item>
+    <govuk-checkboxes-item value="spain">Spain</govuk-checkboxes-item>
+    <govuk-checkboxes-divider>or</govuk-checkboxes-divider>
+    <govuk-checkboxes-item value="none" behavior="CheckboxesItemBehavior.Exclusive">No, I will not be travelling to any of these countries</govuk-checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -117,26 +123,24 @@
 
 ```razor
 <govuk-checkboxes name="nationality">
-    <govuk-checkboxes-fieldset>
-        <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
-            What is your nationality?
-        </govuk-checkboxes-fieldset-legend>
+    <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+        What is your nationality?
+    </govuk-checkboxes-fieldset-legend>
 
-        <govuk-checkboxes-hint>
-            If you have dual nationality, select all options that are relevant to you.
-        </govuk-checkboxes-hint>
+    <govuk-checkboxes-hint>
+        If you have dual nationality, select all options that are relevant to you.
+    </govuk-checkboxes-hint>
 
-        <govuk-checkboxes-error-message>
-            Select if you are British, Irish or a citizen of a different country
-        </govuk-checkboxes-error-message>
+    <govuk-checkboxes-error-message>
+        Select if you are British, Irish or a citizen of a different country
+    </govuk-checkboxes-error-message>
 
-        <govuk-checkboxes-item value="british">
-            British
-            <govuk-checkboxes-item-hint>including English, Scottish, Welsh and Northern Irish</govuk-checkboxes-item-hint>
-        </govuk-checkboxes-item>
-        <govuk-checkboxes-item value="irish">Irish</govuk-checkboxes-item>
-        <govuk-checkboxes-item value="other">Citizen of another country</govuk-checkboxes-item>
-    </govuk-checkboxes-fieldset>
+    <govuk-checkboxes-item value="british">
+        British
+        <govuk-checkboxes-item-hint>including English, Scottish, Welsh and Northern Irish</govuk-checkboxes-item-hint>
+    </govuk-checkboxes-item>
+    <govuk-checkboxes-item value="irish">Irish</govuk-checkboxes-item>
+    <govuk-checkboxes-item value="other">Citizen of another country</govuk-checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -149,9 +153,13 @@
 | --- | --- | --- |
 | `checkboxes-*` |  | Additional attributes for the container element that wraps the items. |
 | `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute of the generated elements. |
+| `fieldset` | `bool` | Whether a `fieldset` should be generated to wrap the component. A `fieldset` is generated automatically when a `govuk-checkboxes-fieldset` element or a `govuk-checkboxes-fieldset-legend` element is used, or when any `fieldset-*`, `legend-*` or `legend-is-page-heading` attribute is specified; this attribute is only required when a `fieldset` is wanted but none of those are used.  The legend's content is deduced from the `For` expression's metadata. |
+| `fieldset-*` |  | Additional attributes for the generated `fieldset` element. |
 | `for` | `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` | An expression to be evaluated against the current model. |
 | `id-prefix` | `string` | The prefix to use when generating IDs for the hint, error message and items. Required unless `For` or `Name` is specified. |
 | `ignore-modelstate-errors` | `bool?` | Whether the `Errors` for the `For` expression should be used to deduce an error message. |
+| `legend-*` |  | Additional attributes for the generated `fieldset`'s `legend` element. These are combined with any attributes specified on a `govuk-checkboxes-fieldset-legend` element; where both specify the same attribute the one on the element wins, except for `class`, where the two values are combined. |
+| `legend-is-page-heading` | `bool?` | Whether the generated `fieldset`'s `legend` also acts as the heading for the page. An `is-page-heading` attribute on a `govuk-checkboxes-fieldset-legend` element takes precedence over this. |
 | `name` | `string` | The `name` attribute for the generated `input` elements. Required unless `For` or `IdPrefix` is specified. |
 
 
@@ -168,9 +176,9 @@ Must be inside a `<govuk-checkboxes>` element.
 
 #### `<govuk-checkboxes-fieldset-legend>`
 
-The content is the HTML to use within the legend.
+The content is the HTML to use within the legend. When this element is specified directly inside the root checkboxes element a fieldset is generated automatically.
 
-Must be inside a `<govuk-checkboxes-fieldset>` element.
+Must be inside a `<govuk-checkboxes>` or `<govuk-checkboxes-fieldset>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |

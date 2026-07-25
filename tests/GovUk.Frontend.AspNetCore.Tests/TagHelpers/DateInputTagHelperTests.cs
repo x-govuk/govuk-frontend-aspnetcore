@@ -1410,6 +1410,51 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.StartsWith(errorMessagePrefix, actualOptions.ErrorMessage.Html?.ToHtmlString(HtmlEncoder.Default));
     }
 
+    [Fact]
+    public async Task ProcessAsync_WithLegendButNoFieldsetElement_InvokesComponentGeneratorWithFieldsetOptions()
+    {
+        // Arrange
+        var legendContent = "Legend";
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
+                fieldsetContext.SetLegend(
+                    isPageHeading: true,
+                    attributes: new AttributeCollection(),
+                    html: new TemplateString(legendContent),
+                    DateInputFieldsetLegendTagHelper.TagName);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
+        {
+            Id = "my-id",
+            NamePrefix = "my-id",
+            FieldsetAttributes = new Dictionary<string, string?>() { { "class", "fieldset-class" } },
+            ViewContext = TestUtils.CreateViewContext()
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.Fieldset);
+        Assert.Equal("fieldset-class", actualOptions.Fieldset.Classes?.ToHtmlString());
+        Assert.Equal(legendContent, actualOptions.Fieldset.Legend?.Html?.ToHtmlString());
+        Assert.True(actualOptions.Fieldset.Legend?.IsPageHeading);
+    }
+
     public static TheoryData<DateInputParseErrors, bool, bool, bool> DateInputParseErrorsWithExpectedErrorItemsData { get; } = new()
     {
         { DateInputParseErrors.MissingDay, true, false, false },

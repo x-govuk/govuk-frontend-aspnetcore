@@ -371,7 +371,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
             {
                 var radiosContext = context.GetContextItem<RadiosContext>();
 
-                var radiosFieldsetContext = new RadiosFieldsetContext(describedBy, @for: null);
+                var radiosFieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName) { DescribedBy = describedBy };
                 radiosContext.OpenFieldset(radiosFieldsetContext, new AttributeCollection());
                 radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString(legendContent), RadiosFieldsetLegendTagHelper.TagName);
 

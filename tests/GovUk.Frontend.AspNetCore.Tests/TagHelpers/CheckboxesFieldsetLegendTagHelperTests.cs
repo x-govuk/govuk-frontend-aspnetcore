@@ -11,7 +11,7 @@ public class CheckboxesFieldsetLegendTagHelperTests : TagHelperTestBase<Checkbox
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
-        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(CheckboxesFieldsetTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 
@@ -40,7 +40,7 @@ public class CheckboxesFieldsetLegendTagHelperTests : TagHelperTestBase<Checkbox
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(CheckboxesFieldsetTagHelper.TagName);
 
         fieldsetContext.SetLegend(
             isPageHeading: false,

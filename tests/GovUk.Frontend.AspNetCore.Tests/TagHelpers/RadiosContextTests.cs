@@ -37,7 +37,7 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         context.OpenFieldset(fieldsetContext, new AttributeCollection());
         context.CloseFieldset();
 
@@ -55,10 +55,10 @@ public class RadiosContextTests
         // Arrange
         var context = new RadiosContext(name: null, @for: null);
 
-        context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection());
+        context.OpenFieldset(new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName), new AttributeCollection());
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
+        var ex = Record.Exception(() => context.OpenFieldset(new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -71,12 +71,12 @@ public class RadiosContextTests
         // Arrange
         var context = new RadiosContext(name: null, @for: null);
 
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         context.OpenFieldset(fieldsetContext, new AttributeCollection());
         context.CloseFieldset();
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
+        var ex = Record.Exception(() => context.OpenFieldset(new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -98,7 +98,7 @@ public class RadiosContextTests
         context.AddItem(item);
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
+        var ex = Record.Exception(() => context.OpenFieldset(new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -113,7 +113,7 @@ public class RadiosContextTests
         context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-radios-hint");
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
+        var ex = Record.Exception(() => context.OpenFieldset(new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -128,7 +128,7 @@ public class RadiosContextTests
         context.SetErrorMessage(visuallyHiddenText: null, attributes: new AttributeCollection(), html: new TemplateString("Error"), tagName: "govuk-radios-error-message");
 
         // Act
-        var ex = Record.Exception(() => context.OpenFieldset(new RadiosFieldsetContext(describedBy: null, @for: null), new AttributeCollection()));
+        var ex = Record.Exception(() => context.OpenFieldset(new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName), new AttributeCollection()));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -142,7 +142,7 @@ public class RadiosContextTests
         var context = new RadiosContext(name: null, @for: null);
 
         // Act
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         var ex = Record.Exception(() => context.CloseFieldset());
 
         // Assert
@@ -185,7 +185,7 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         context.OpenFieldset(fieldsetContext, new AttributeCollection());
         context.CloseFieldset();
 
@@ -232,7 +232,7 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         context.OpenFieldset(fieldsetContext, new AttributeCollection());
         context.CloseFieldset();
 
@@ -263,7 +263,7 @@ public class RadiosContextTests
         // Arrange
         var context = new RadiosContext(name: null, @for: null);
 
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         context.OpenFieldset(fieldsetContext, new AttributeCollection());
         context.CloseFieldset();
 
@@ -281,7 +281,7 @@ public class RadiosContextTests
         // Arrange
         var context = new RadiosContext(name: null, @for: null);
 
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         context.OpenFieldset(fieldsetContext, new AttributeCollection());
         context.CloseFieldset();
 

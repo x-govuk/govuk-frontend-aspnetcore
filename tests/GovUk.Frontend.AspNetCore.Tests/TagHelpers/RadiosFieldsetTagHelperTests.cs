@@ -17,7 +17,7 @@ public class RadiosFieldsetTagHelperTests : TagHelperTestBase<RadiosFieldsetTagH
         var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
-                var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
+                var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
                 fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), RadiosFieldsetLegendTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -42,7 +42,7 @@ public class RadiosFieldsetTagHelperTests : TagHelperTestBase<RadiosFieldsetTagH
         // Arrange
         var radiosContext = new RadiosContext(name: null, @for: null);
 
-        var radiosFieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var radiosFieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         radiosContext.OpenFieldset(radiosFieldsetContext, new AttributeCollection());
         radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString("Existing legend"), RadiosFieldsetLegendTagHelper.TagName);
         radiosContext.CloseFieldset();
@@ -52,7 +52,7 @@ public class RadiosFieldsetTagHelperTests : TagHelperTestBase<RadiosFieldsetTagH
         var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
-                var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
+                var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
                 fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), RadiosFieldsetLegendTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();

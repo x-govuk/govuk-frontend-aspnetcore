@@ -1,4 +1,24 @@
 @page
 @model GovUk.Frontend.AspNetCore.Docs.Pages.Index
 
-<h1 class="govuk-heading-l">Docs</h1>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Docs</h1>
+
+        <h2 class="govuk-heading-m">Examples</h2>
+
+        @foreach (var group in Model.ExampleGroups)
+        {
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-2">@group.Name</h3>
+
+            <ul class="govuk-list govuk-!-margin-bottom-6">
+                @foreach (var example in group.Examples)
+                {
+                    <li>
+                        <a class="govuk-link" asp-page="@example.PagePath">@example.Name</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

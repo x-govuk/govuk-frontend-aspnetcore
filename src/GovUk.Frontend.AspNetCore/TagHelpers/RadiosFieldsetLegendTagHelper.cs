@@ -29,7 +29,7 @@ public class RadiosFieldsetLegendTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var fieldsetContext = context.GetContextItem<RadiosFieldsetContext>();
+        var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
 
         var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :

@@ -3,15 +3,20 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal abstract class FormGroupFieldsetContext2(string? describedBy, string? legendClass, ModelExpression? @for)
+internal class FormGroupFieldsetContext2(string fieldsetTagName)
 {
     public record LegendInfo(bool? IsPageHeading, AttributeCollection Attributes, TemplateString? Html);
 
+    public string? DescribedBy { get; set; }
+
     public LegendInfo? Legend { get; private set; }
 
-    private protected abstract string FieldsetTagName { get; }
+    public string FieldsetTagName => fieldsetTagName;
 
-    public FieldsetOptions GetFieldsetOptions(IModelHelper modelHelper, AttributeCollection attributes)
+    public FieldsetOptions GetFieldsetOptions(
+        ModelExpression? @for,
+        IModelHelper modelHelper,
+        AttributeCollection attributes)
     {
         ArgumentNullException.ThrowIfNull(modelHelper);
         ArgumentNullException.ThrowIfNull(attributes);
@@ -21,11 +26,6 @@ internal abstract class FormGroupFieldsetContext2(string? describedBy, string? l
 
         var legendAttributes = Legend?.Attributes.Clone() ?? [];
         legendAttributes.Remove("class", out var legendClasses);
-
-        if (legendClass is not null)
-        {
-            legendClasses = legendClasses.AppendCssClasses(legendClass);
-        }
 
         var html = Legend?.Html;
         if (html is null && @for is not null)
@@ -44,7 +44,7 @@ internal abstract class FormGroupFieldsetContext2(string? describedBy, string? l
 
         return new FieldsetOptions
         {
-            DescribedBy = describedBy,
+            DescribedBy = DescribedBy,
             Legend = legendOptions,
             Role = "group",
             Html = null,
@@ -66,7 +66,7 @@ internal abstract class FormGroupFieldsetContext2(string? describedBy, string? l
         Legend = new(isPageHeading, attributes, html);
     }
 
-    public void ThrowIfNotComplete(string legendTagName)
+    public void ThrowIfNotComplete(ModelExpression? @for, string legendTagName)
     {
         ArgumentNullException.ThrowIfNull(legendTagName);
 

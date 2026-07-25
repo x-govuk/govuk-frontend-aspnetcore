@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) : FormGroupContext3
+internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) : FormGroupContext3, IFormGroupWithFieldset
 {
     private bool _fieldsetIsOpen;
     private readonly SortedDictionary<DateInputItemTypes, DateInputContextItem> _items = [];
@@ -13,7 +13,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public ModelExpression? For { get; } = @for;
 
-    public DateInputFieldsetContext? Fieldset { get; private set; }
+    public FormGroupFieldsetContext2? Fieldset { get; private set; }
 
     public AttributeCollection? Attributes { get; private set; }
 
@@ -41,7 +41,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     private IReadOnlyCollection<string> AfterInputsTagNames => DateInputAfterInputsTagHelper.AllTagNames;
 
-    public void OpenFieldset(DateInputFieldsetContext fieldsetContext, AttributeCollection attributes)
+    public void OpenFieldset(FormGroupFieldsetContext2 fieldsetContext, AttributeCollection attributes)
     {
         ArgumentNullException.ThrowIfNull(attributes);
 
@@ -118,7 +118,8 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         return CreateErrorMessageOptions(html);
     }
 
-    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) => Fieldset?.GetFieldsetOptions(modelHelper, Attributes!);
+    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) =>
+        Fieldset?.GetFieldsetOptions(For, modelHelper, Attributes!);
 
     public override void SetLabel(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string tagName)
     {

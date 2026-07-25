@@ -11,7 +11,7 @@ public class DateInputContextTests
         // Arrange
         var context = new DateInputContext(haveExplicitValue: false, @for: null);
 
-        var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName);
         context.OpenFieldset(fieldsetContext, new AttributeCollection());
         context.CloseFieldset();
 
@@ -29,7 +29,7 @@ public class DateInputContextTests
         // Arrange
         var context = new DateInputContext(haveExplicitValue: false, @for: null);
 
-        var fieldsetContext = new DateInputFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName);
         context.OpenFieldset(fieldsetContext, new AttributeCollection());
         context.CloseFieldset();
 

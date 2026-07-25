@@ -29,7 +29,7 @@ public class CheckboxesFieldsetLegendTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
+        var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
 
         var content = output.TagMode == TagMode.StartTagAndEndTag ?
             await output.GetChildContentAsync() :

@@ -18,7 +18,7 @@ public class CheckboxesFieldsetTagHelperTests : TagHelperTestBase<CheckboxesFiel
         var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
-                var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
+                var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
                 fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new HtmlString("Legend"), CheckboxesFieldsetLegendTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -43,7 +43,7 @@ public class CheckboxesFieldsetTagHelperTests : TagHelperTestBase<CheckboxesFiel
         // Arrange
         var checkboxesContext = new CheckboxesContext(name: null, @for: null);
 
-        var checkboxesFieldsetContext = new CheckboxesFieldsetContext(describedBy: null, @for: null);
+        var checkboxesFieldsetContext = new FormGroupFieldsetContext2(CheckboxesFieldsetTagHelper.TagName);
         checkboxesContext.OpenFieldset(checkboxesFieldsetContext, new AttributeCollection());
         checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString("Existing legend"), CheckboxesFieldsetLegendTagHelper.TagName);
         checkboxesContext.CloseFieldset();
@@ -53,7 +53,7 @@ public class CheckboxesFieldsetTagHelperTests : TagHelperTestBase<CheckboxesFiel
         var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
             {
-                var fieldsetContext = context.GetContextItem<CheckboxesFieldsetContext>();
+                var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
                 fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new HtmlString("Legend"), CheckboxesFieldsetLegendTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();

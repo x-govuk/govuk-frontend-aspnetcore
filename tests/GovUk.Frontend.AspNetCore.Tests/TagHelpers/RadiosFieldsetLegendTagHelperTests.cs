@@ -10,7 +10,7 @@ public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFields
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 
@@ -39,7 +39,7 @@ public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFields
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new RadiosFieldsetContext(describedBy: null, @for: null);
+        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
 
         fieldsetContext.SetLegend(
             isPageHeading: false,

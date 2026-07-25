@@ -54,9 +54,7 @@ public class FieldsetTagHelper : TagHelper
 
         var fieldsetContext = context.GetContextItem<FieldsetContext>();
 
-        IHtmlContent content;
-
-        content = await output.GetChildContentAsync();
+        IHtmlContent content = await output.GetChildContentAsync();
 
         if (output.Content.IsModified)
         {

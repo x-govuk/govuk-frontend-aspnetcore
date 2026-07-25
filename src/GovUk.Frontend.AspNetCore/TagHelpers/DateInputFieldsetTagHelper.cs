@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,11 +6,10 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the fieldset in a GDS date input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
-#if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
-#endif
 [RestrictChildren(
     DateInputFieldsetLegendTagHelper.TagName,
+    DateInputFieldsetLegendTagHelper.ShortTagName,
     DateInputHintTagHelper.TagName,
     DateInputErrorMessageTagHelper.TagName,
     DateInputDayTagHelper.TagName,
@@ -26,21 +24,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 #endif
     )]
 [TagHelperDocumentation(ContentDescription = "A container element used when the date input should be contained within a fieldset element. When used, every other child element must be placed inside this element rather than the root date input element.")]
-public class DateInputFieldsetTagHelper : TagHelper
+public class DateInputFieldsetTagHelper : FormGroupFieldsetTagHelperBase
 {
     internal const string TagName = "govuk-date-input-fieldset";
-#if SHORT_TAG_NAMES
-    internal const string ShortTagName = ShortTagNames.Fieldset;
-#endif
-
-    private const string DescribedByAttributeName = "described-by";
 
     internal static IReadOnlyCollection<string> AllTagNames { get; } = [
-        TagName
-#if SHORT_TAG_NAMES
-        ,
+        TagName,
         ShortTagName
-#endif
     ];
 
     /// <summary>
@@ -50,40 +40,5 @@ public class DateInputFieldsetTagHelper : TagHelper
     {
     }
 
-    /// <summary>
-    /// One or more element IDs to add to the <c>aria-describedby</c> attribute.
-    /// </summary>
-    [HtmlAttributeName(DescribedByAttributeName)]
-    public string? DescribedBy { get; set; }
-
-    /// <inheritdoc/>
-    public override void Init(TagHelperContext context)
-    {
-        var dateInputContext = context.GetContextItem<DateInputContext>();
-
-        var fieldsetContext = new DateInputFieldsetContext(
-            DescribedBy,
-            dateInputContext.For);
-
-        context.SetContextItem(fieldsetContext);
-    }
-
-    /// <inheritdoc/>
-    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
-    {
-        ArgumentNullException.ThrowIfNull(context);
-        ArgumentNullException.ThrowIfNull(output);
-
-        var dateInputContext = context.GetContextItem<DateInputContext>();
-        var fieldsetContext = context.GetContextItem<DateInputFieldsetContext>();
-
-        dateInputContext.OpenFieldset(fieldsetContext, new AttributeCollection(output.Attributes));
-
-        _ = await output.GetChildContentAsync();
-
-        fieldsetContext.ThrowIfNotComplete(DateInputFieldsetLegendTagHelper.TagName);
-        dateInputContext.CloseFieldset();
-
-        output.SuppressOutput();
-    }
+    private protected override string LegendTagName => DateInputFieldsetLegendTagHelper.TagName;
 }

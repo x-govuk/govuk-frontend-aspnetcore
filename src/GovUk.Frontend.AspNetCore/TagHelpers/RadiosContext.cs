@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupContext3
+internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupContext3, IFormGroupWithFieldset
 {
     private bool _fieldsetIsOpen;
     private readonly List<RadiosOptionsItem> _items = [];
@@ -22,7 +22,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     public AttributeCollection? Attributes { get; private set; }
 
-    public RadiosFieldsetContext? Fieldset { get; private set; }
+    public FormGroupFieldsetContext2? Fieldset { get; private set; }
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => RadiosErrorMessageTagHelper.AllTagNames;
 
@@ -52,9 +52,10 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         _items.Add(item);
     }
 
-    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) => Fieldset?.GetFieldsetOptions(modelHelper, Attributes!);
+    public FieldsetOptions? GetFieldsetOptions(IModelHelper modelHelper) =>
+        Fieldset?.GetFieldsetOptions(For, modelHelper, Attributes!);
 
-    public void OpenFieldset(RadiosFieldsetContext fieldsetContext, AttributeCollection attributes)
+    public void OpenFieldset(FormGroupFieldsetContext2 fieldsetContext, AttributeCollection attributes)
     {
         ArgumentNullException.ThrowIfNull(fieldsetContext);
         ArgumentNullException.ThrowIfNull(attributes);

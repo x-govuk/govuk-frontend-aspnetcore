@@ -6,7 +6,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// <summary>
 /// Represents the hint in a GDS form component.
 /// </summary>
-public class FormGroupHintTagHelperBase : TagHelper
+public abstract class FormGroupHintTagHelperBase : TagHelper
 {
 #if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.Hint;

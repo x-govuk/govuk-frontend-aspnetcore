@@ -14,6 +14,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     CheckboxesFieldsetTagHelper.TagName,
+    CheckboxesFieldsetTagHelper.ShortTagName,
     CheckboxesItemTagHelper.TagName,
     CheckboxesItemDividerTagHelper.TagName,
     CheckboxesHintTagHelper.TagName,

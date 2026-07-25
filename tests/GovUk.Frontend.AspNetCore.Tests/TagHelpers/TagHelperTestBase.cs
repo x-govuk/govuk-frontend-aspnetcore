@@ -3,6 +3,7 @@ using System.Text.Encodings.Web;
 using AngleSharp.Dom;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
+using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -53,6 +54,12 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
         }
 
         var items = contexts.ToDictionary(object (c) => c.GetType(), c => c);
+
+        // Form group tag helpers register their context under FormGroupContext3 too
+        foreach (var formGroupContext in contexts.OfType<FormGroupContext3>())
+        {
+            items[typeof(FormGroupContext3)] = formGroupContext;
+        }
 
         return new TagHelperContext(
             tagName ?? TagName,

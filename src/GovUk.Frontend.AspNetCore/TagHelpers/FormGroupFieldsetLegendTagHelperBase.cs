@@ -4,34 +4,24 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Represents the legend in a GDS fieldset component.
+/// Represents the legend in a GDS form component's fieldset.
 /// </summary>
-[HtmlTargetElement(TagName, ParentTag = FieldsetTagHelper.TagName)]
-[HtmlTargetElement(ShortTagName, ParentTag = FieldsetTagHelper.TagName)]
-[TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the legend.")]
-public class FieldsetLegendTagHelper : TagHelper
+public abstract class FormGroupFieldsetLegendTagHelperBase : TagHelper
 {
-    internal const string TagName = "govuk-fieldset-legend";
+    private const string IsPageHeadingAttributeName = "is-page-heading";
 
     internal const string ShortTagName = ShortTagNames.Legend;
 
-    private const string IsPageHeadingAttributeName = "is-page-heading";
-
-    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
-        TagName,
-        ShortTagName
-    ];
-
-    /// <summary>
-    /// Creates a <see cref="FieldsetLegendTagHelper"/>.
-    /// </summary>
-    public FieldsetLegendTagHelper()
+    private protected FormGroupFieldsetLegendTagHelperBase()
     {
     }
 
     /// <summary>
     /// Whether the legend also acts as the heading for the page.
     /// </summary>
+    /// <remarks>
+    /// The default is <c>false</c>.
+    /// </remarks>
     [HtmlAttributeName(IsPageHeadingAttributeName)]
     public bool? IsPageHeading { get; set; }
 
@@ -41,9 +31,11 @@ public class FieldsetLegendTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var fieldsetContext = context.GetContextItem<FieldsetContext>();
+        var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
 
-        var content = await output.GetChildContentAsync();
+        var content = output.TagMode == TagMode.StartTagAndEndTag ?
+            await output.GetChildContentAsync() :
+            null;
 
         if (output.Content.IsModified)
         {
@@ -53,7 +45,8 @@ public class FieldsetLegendTagHelper : TagHelper
         fieldsetContext.SetLegend(
             IsPageHeading,
             new AttributeCollection(output.Attributes),
-            content.ToTemplateString());
+            content?.ToTemplateString(),
+            context.TagName);
 
         output.SuppressOutput();
     }

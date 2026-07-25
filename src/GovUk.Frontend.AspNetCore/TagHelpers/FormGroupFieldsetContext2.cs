@@ -66,13 +66,13 @@ internal class FormGroupFieldsetContext2(string fieldsetTagName)
         Legend = new(isPageHeading, attributes, html);
     }
 
-    public void ThrowIfNotComplete(ModelExpression? @for, string legendTagName)
+    public void ThrowIfNotComplete(ModelExpression? @for, IReadOnlyCollection<string> legendTagNames)
     {
-        ArgumentNullException.ThrowIfNull(legendTagName);
+        ArgumentNullException.ThrowIfNull(legendTagNames);
 
         if (Legend is null && @for is null)
         {
-            throw ExceptionHelper.AChildElementMustBeProvided(legendTagName);
+            throw ExceptionHelper.AChildElementMustBeProvided(legendTagNames);
         }
     }
 }

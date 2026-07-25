@@ -16,6 +16,7 @@ internal static class ShortTagNames
     public const string Item = "item";
     public const string Key = "key";
     public const string Label = "label";
+    public const string Legend = "legend";
     public const string Month = "month";
     public const string Nav = "nav";
     public const string PanelActions = "panel-actions";

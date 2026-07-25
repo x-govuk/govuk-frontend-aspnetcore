@@ -6,8 +6,10 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the fieldset in a GDS radios component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = RadiosTagHelper.TagName)]
 [RestrictChildren(
     RadiosFieldsetLegendTagHelper.TagName,
+    RadiosFieldsetLegendTagHelper.ShortTagName,
     RadiosItemTagHelper.TagName,
     RadiosItemDividerTagHelper.TagName,
     RadiosTagHelper.HintTagName,
@@ -19,6 +21,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 public class RadiosFieldsetTagHelper : FormGroupFieldsetTagHelperBase
 {
     internal const string TagName = "govuk-radios-fieldset";
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
+        TagName,
+        ShortTagName
+    ];
 
     /// <summary>
     /// Creates a <see cref="RadiosFieldsetTagHelper"/>.

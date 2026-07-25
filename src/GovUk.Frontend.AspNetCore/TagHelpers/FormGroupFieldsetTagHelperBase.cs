@@ -10,9 +10,7 @@ public abstract class FormGroupFieldsetTagHelperBase : TagHelper
 {
     private const string DescribedByAttributeName = "described-by";
 
-#if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.Fieldset;
-#endif
 
     private protected FormGroupFieldsetTagHelperBase()
     {
@@ -50,7 +48,7 @@ public abstract class FormGroupFieldsetTagHelperBase : TagHelper
 
         _ = await output.GetChildContentAsync();
 
-        fieldsetContext.ThrowIfNotComplete(formGroupContext.For, LegendTagName);
+        fieldsetContext.ThrowIfNotComplete(formGroupContext.For, [ShortTagNames.Legend, LegendTagName]);
         formGroupContext.CloseFieldset();
 
         output.SuppressOutput();

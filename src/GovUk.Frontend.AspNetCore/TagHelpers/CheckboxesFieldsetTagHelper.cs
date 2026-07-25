@@ -6,11 +6,10 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the fieldset in a GDS checkboxes component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
-#if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = CheckboxesTagHelper.TagName)]
-#endif
 [RestrictChildren(
     CheckboxesFieldsetLegendTagHelper.TagName,
+    CheckboxesFieldsetLegendTagHelper.ShortTagName,
     CheckboxesItemTagHelper.TagName,
     CheckboxesItemDividerTagHelper.TagName,
     CheckboxesHintTagHelper.TagName,
@@ -29,11 +28,8 @@ public class CheckboxesFieldsetTagHelper : FormGroupFieldsetTagHelperBase
     internal const string TagName = "govuk-checkboxes-fieldset";
 
     internal static IReadOnlyCollection<string> AllTagNames { get; } = [
-        TagName
-#if SHORT_TAG_NAMES
-        ,
+        TagName,
         ShortTagName
-#endif
     ];
 
     /// <summary>

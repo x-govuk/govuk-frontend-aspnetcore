@@ -1,21 +1,16 @@
 # Changelog
 
-## Unreleased
+## 4.4.0
 
 Targets GOV.UK Frontend v6.4.0.
 
-Start buttons with HTML content now wrap that content in a `<span>` to match the updated component.
-
-Added support for the interruption variant of the panel component, including the new `govuk-panel-actions`, `govuk-panel-action-button` and `govuk-panel-action-link` tag helpers. The action tag helpers take their content as the button/link text and support generated `formaction`/`href` attributes via the routing (`asp-*`) attributes. Specifying actions on a panel that isn't an interruption panel (i.e. without the `govuk-panel--interruption` class) now throws.
-
-The panel tag helpers now also support short tag names: `<panel-title>`, `<panel-body>`, `<panel-actions>`, `<action-button>` and `<action-link>`. As with the summary list component, short and long tag names cannot be mixed.
+Added support for the interruption variant of the panel component, including the new `govuk-panel-actions`, `govuk-panel-action-button` and `govuk-panel-action-link` tag helpers.
+Also adds short tag name support for the panel component.
 
 The checkboxes, date input and radios components can now generate a fieldset without the `<govuk-checkboxes-fieldset>`, `<govuk-date-input-fieldset>` and `<govuk-radios-fieldset>` elements.
 A `<govuk-checkboxes-fieldset-legend>`, `<govuk-date-input-fieldset-legend>` or `<govuk-radios-fieldset-legend>` element can now be placed directly inside the root element and the remaining child elements no longer have to be nested inside a fieldset element.
 The root elements have also gained `fieldset-*`, `legend-*` and `legend-is-page-heading` attributes for the generated fieldset and legend, along with a `fieldset` attribute for when a fieldset is wanted but none of the other attributes or elements are used;
 in that case the legend's content is deduced from the `for` attribute's `ModelMetadata`. The existing fieldset elements continue to work as before.
-
-Added the v6.4.0 date input options to `DateInputOptions` (`Day`/`Month`/`Year`/`Values`) and `DateInputOptionsItem` (`Error`). The date input tag helpers are unchanged.
 
 ## 4.3.0
 

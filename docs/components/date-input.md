@@ -10,7 +10,7 @@
 <img alt="Date input example" src="../images/date-input-example.png" />
 
 ```razor
-<govuk-date-input for="PassportIssued" />
+<govuk-date-input for="PassportIssued" error-message-prefix="Your passport issue date" />
 ```
 
 
@@ -48,7 +48,7 @@
 <img alt="Date input with a generated fieldset example" src="../images/date-input-with-generated-fieldset-example.png" />
 
 ```razor
-<govuk-date-input for="PassportIssued" fieldset legend-class="govuk-fieldset__legend--l" legend-is-page-heading="true" />
+<govuk-date-input for="PassportIssued" error-message-prefix="Your passport issue date" fieldset legend-class="govuk-fieldset__legend--l" legend-is-page-heading="true" />
 ```
 
 

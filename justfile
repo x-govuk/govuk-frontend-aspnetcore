@@ -26,7 +26,7 @@ build-samples *ARGS: (_clear-samples-package-cache) (pack '-c Release')
 [private]
 [working-directory: 'samples']
 _clear-samples-package-cache:
-  @rm -rf package_cache/govuk.frontend.aspnetcore
+  @pwsh -f Remove-CachedPackages.ps1
 
 # Run the tests
 test *ARGS: (unit-tests ARGS) (integration-tests ARGS)

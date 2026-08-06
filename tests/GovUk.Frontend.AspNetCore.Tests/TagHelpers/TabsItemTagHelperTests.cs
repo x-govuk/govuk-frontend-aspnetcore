@@ -39,7 +39,7 @@ public class TabsItemTagHelperTests : TagHelperTestBase<TabsItemTagHelper>
             {
                 Assert.Equal("item1", item.Id);
                 Assert.Equal("First", item.Label);
-                Assert.Equal(panelContent.ToHtmlString(), item.Panel?.Html);
+                Assert.Equal(panelContent.ToHtmlString(), item.Panel?.Html.ToHtmlString());
             });
     }
 
@@ -76,7 +76,7 @@ public class TabsItemTagHelperTests : TagHelperTestBase<TabsItemTagHelper>
             {
                 Assert.True(item.Id.IsEmpty());
                 Assert.Equal("First", item.Label);
-                Assert.Equal(panelContent.ToHtmlString(), item.Panel?.Html);
+                Assert.Equal(panelContent.ToHtmlString(), item.Panel?.Html.ToHtmlString());
             });
     }
 

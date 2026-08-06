@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -15,9 +16,9 @@ internal class ErrorSummaryContext
 
     public IReadOnlyCollection<ErrorSummaryContextItem> Items => _items;
 
-    public (AttributeCollection Attributes, TemplateString Html)? Description { get; private set; }
+    public (AttributeCollection Attributes, IHtmlContent Html)? Description { get; private set; }
 
-    public (AttributeCollection Attributes, TemplateString Html)? Title { get; private set; }
+    public (AttributeCollection Attributes, IHtmlContent Html)? Title { get; private set; }
 
     public void AddItem(ErrorSummaryContextItem item)
     {
@@ -27,7 +28,7 @@ internal class ErrorSummaryContext
         HaveExplicitItems = true;
     }
 
-    public void SetDescription(AttributeCollection attributes, TemplateString html)
+    public void SetDescription(AttributeCollection attributes, IHtmlContent html)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(html);
@@ -42,7 +43,7 @@ internal class ErrorSummaryContext
         Description = (attributes, html);
     }
 
-    public void SetTitle(AttributeCollection attributes, TemplateString html)
+    public void SetTitle(AttributeCollection attributes, IHtmlContent html)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(html);
@@ -60,6 +61,6 @@ internal class ErrorSummaryContext
 
 internal record ErrorSummaryContextItem(
     TemplateString? Href,
-    TemplateString Html,
+    IHtmlContent Html,
     AttributeCollection Attributes,
     AttributeCollection ItemAttributes);

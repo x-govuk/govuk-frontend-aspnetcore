@@ -34,7 +34,7 @@ public class GeneratedErrorSummaryTagHelperTests : TagHelperTestBase<GeneratedEr
 
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
-        containerErrorContext.AddError(errorHtml, errorHref);
+        containerErrorContext.AddError(new TemplateString(errorHtml), errorHref);
 
         var tagHelper = new GeneratedErrorSummaryTagHelper(componentGenerator, options)
         {
@@ -61,7 +61,7 @@ public class GeneratedErrorSummaryTagHelperTests : TagHelperTestBase<GeneratedEr
                 {
                     Assert.NotNull(error);
                     Assert.Equal(errorHref, error.Href);
-                    Assert.Equal(errorHtml, error.Html);
+                    Assert.Equal(errorHtml, error.Html.ToHtmlString());
                 });
         }
         else

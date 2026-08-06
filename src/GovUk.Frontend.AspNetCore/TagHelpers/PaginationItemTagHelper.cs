@@ -73,7 +73,7 @@ public class PaginationItemTagHelper : TagHelper
             Attributes = attributes,
             Href = href,
             Current = current,
-            Number = content.ToTemplateString(),
+            Number = new TemplateString(content.Snapshot()),
             VisuallyHiddenText = VisuallyHiddenText
         });
 

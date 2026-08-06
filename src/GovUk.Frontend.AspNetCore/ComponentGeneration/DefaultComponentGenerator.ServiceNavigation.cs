@@ -106,7 +106,7 @@ internal partial class DefaultComponentGenerator
                     }
                 });
 
-                buttonTag.InnerHtml.AppendHtml(menuButtonText);
+                buttonTag.InnerHtml.Append(menuButtonText);
                 navTag.InnerHtml.AppendHtml(buttonTag);
             }
 

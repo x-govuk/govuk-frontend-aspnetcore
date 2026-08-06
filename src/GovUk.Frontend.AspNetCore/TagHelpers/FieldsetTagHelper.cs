@@ -85,7 +85,7 @@ public class FieldsetTagHelper : TagHelper
             DescribedBy = DescribedBy,
             Role = Role,
             Legend = legend,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Classes = classes,
             Attributes = attributes
         });

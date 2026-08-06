@@ -283,14 +283,14 @@ public class CharacterCountTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new CharacterCountOptionsFormGroup
         {
-            BeforeInput = characterCountContext.BeforeInput is TemplateString beforeInput ?
+            BeforeInput = characterCountContext.BeforeInput is { } beforeInput ?
                 new CharacterCountOptionsBeforeInput
                 {
                     Text = null,
                     Html = beforeInput
                 } :
                 null,
-            AfterInput = characterCountContext.AfterInput is TemplateString afterInput ?
+            AfterInput = characterCountContext.AfterInput is { } afterInput ?
                 new CharacterCountOptionsAfterInput
                 {
                     Text = null,
@@ -356,9 +356,10 @@ public class CharacterCountTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
+            containerErrorContext.AddError(errorContent, href: "#" + id);
         }
     }
 
@@ -372,6 +373,8 @@ public class CharacterCountTagHelper : TagHelper
                 ForAttributeName)
             : Name ?? _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name);
 
-    private TemplateString ResolveValue(CharacterCountContext characterCountContext) =>
-        characterCountContext.Value ?? (For is not null ? _modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name) : null);
+    private TemplateString? ResolveValue(CharacterCountContext characterCountContext) =>
+        characterCountContext.Value is { } value ? new TemplateString(value) :
+        For is not null ? new TemplateString(_modelHelper.GetModelValue(ViewContext!, For.ModelExplorer, For.Name)) :
+        null;
 }

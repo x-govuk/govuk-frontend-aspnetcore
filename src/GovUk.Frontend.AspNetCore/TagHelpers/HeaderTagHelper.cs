@@ -79,7 +79,7 @@ public class HeaderTagHelper : TagHelper
             ContainerAttributes = containerAttributes,
             Classes = classes,
             Attributes = attributes,
-            Html = content.ToTemplateString()
+            Html = content.Snapshot()
         });
 
         component.ApplyToTagHelper(output);

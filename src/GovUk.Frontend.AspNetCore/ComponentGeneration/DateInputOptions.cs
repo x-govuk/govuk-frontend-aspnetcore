@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 using System.Text.Json.Serialization;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -25,7 +26,7 @@ public record DateInputOptionsItem
 {
     public TemplateString? Id { get; set; }
     public TemplateString? Name { get; set; }
-    public TemplateString? Label { get; set; }
+    public IHtmlContent? Label { get; set; }
     public TemplateString? Value { get; set; }
     public bool? Error { get; set; }
     [JsonPropertyName("autocomplete")]
@@ -45,16 +46,16 @@ public record DateInputFormGroupOptions : FormGroupOptions
 
 public record DateInputOptionsBeforeInputs
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }
 
 public record DateInputOptionsAfterInputs
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }

@@ -32,7 +32,7 @@ public class TabsTagHelperTests : TagHelperTestBase<TabsTagHelper>
                     Label = firstItemLabel,
                     Panel = new TabsOptionsItemPanel()
                     {
-                        Html = firstItemContent
+                        Html = new TemplateString(firstItemContent)
                     }
                 });
 
@@ -42,7 +42,7 @@ public class TabsTagHelperTests : TagHelperTestBase<TabsTagHelper>
                     Label = secondItemLabel,
                     Panel = new TabsOptionsItemPanel()
                     {
-                        Html = secondItemContent
+                        Html = new TemplateString(secondItemContent)
                     }
                 });
 
@@ -74,14 +74,14 @@ public class TabsTagHelperTests : TagHelperTestBase<TabsTagHelper>
                 Assert.NotNull(item);
                 Assert.Equal(firstItemId, item.Id);
                 Assert.Equal(firstItemLabel, item.Label);
-                Assert.Equal(firstItemContent, item.Panel?.Html);
+                Assert.Equal(firstItemContent, item.Panel?.Html.ToHtmlString());
             },
             item =>
             {
                 Assert.NotNull(item);
                 Assert.Equal(secondItemId, item.Id);
                 Assert.Equal(secondItemLabel, item.Label);
-                Assert.Equal(secondItemContent, item.Panel?.Html);
+                Assert.Equal(secondItemContent, item.Panel?.Html.ToHtmlString());
             });
     }
 }

@@ -15,16 +15,16 @@ public class BreadcrumbsTagHelperTests : TagHelperTestBase<BreadcrumbsTagHelper>
             new BreadcrumbsOptionsItem()
             {
                 Href = "first",
-                Html = "First"
+                Html = new TemplateString("First")
             },
             new BreadcrumbsOptionsItem()
             {
                 Href = "second",
-                Html = "Second"
+                Html = new TemplateString("Second")
             },
             new BreadcrumbsOptionsItem()
             {
-                Html = "Last"
+                Html = new TemplateString("Last")
             }
         ];
 

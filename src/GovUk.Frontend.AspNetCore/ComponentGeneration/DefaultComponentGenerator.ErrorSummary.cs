@@ -2,7 +2,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
-    internal const string DefaultErrorSummaryTitleHtml = "There is a problem";
+    internal const string DefaultErrorSummaryTitleText = "There is a problem";
 
     public virtual ValueTask<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
     {

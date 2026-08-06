@@ -43,7 +43,7 @@ public class GenericHeaderLogoTagHelper : TagHelper
         }
 
         headerContext.SetLogo(
-            content.ToTemplateString(),
+            content.Snapshot(),
             new AttributeCollection(output.Attributes),
             new AttributeCollection(LinkAttributes));
 

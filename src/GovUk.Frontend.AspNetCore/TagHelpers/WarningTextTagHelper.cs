@@ -54,7 +54,7 @@ public class WarningTextTagHelper : TagHelper
         var component = await _componentGenerator.GenerateWarningTextAsync(new WarningTextOptions
         {
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             IconFallbackText = IconFallbackText,
             Classes = classes,
             Attributes = attributes

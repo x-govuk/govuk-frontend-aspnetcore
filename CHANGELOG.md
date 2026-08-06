@@ -1,6 +1,24 @@
 # Changelog
 
-## Unreleased
+## Unreleased — 5.0.0
+
+`Text` and `Html` options are now typed for what they hold: `Text` is a `string` and is always HTML-encoded, `Html` is an `IHtmlContent` and is always emitted as-is.
+
+Both used to be `TemplateString`, which carries either text or markup and decides which by how it was constructed. That made it possible — and, in practice, easy — to put text in an `Html` slot, and the compiler had nothing to say about it. That is how validation messages came to be rendered as markup. Now `Html = someString` doesn't compile.
+
+The library works out which slot to use in the cases where it decides for you. Content deduced from model metadata or ModelState — a label from a display name, a hint from a description, an error message from a validation message — is text, and now goes in the text slot.
+
+### Breaking changes
+
+- `Text` properties on the component options are `string?`. Assigning a `string` still compiles; assigning a `TemplateString` no longer does.
+- `Html` properties are `IHtmlContent?`. A `TemplateString` is an `IHtmlContent`, so passing one still compiles; assigning a bare `string` no longer does. To supply markup from a string, use `TemplateString.FromEncoded(...)`; to supply text, use the `Text` property.
+- `HttpContext.AddPageError` takes an `IHtmlContent` rather than a `TemplateString`.
+- `SelectOptionsItem` gains an `Html` property, for content written inside `<govuk-select-item>`.
+- `DateInputOptionsItem.Label` and `FooterOptionsNavigation.Title` are `IHtmlContent?`, since both can hold content written in a view.
+
+`IHtmlContent.Snapshot()` is a new extension for holding on to content past the tag helper that produced it, carrying over the copy that `TemplateString` used to make internally.
+
+Also fixed: several places emitted a text option as raw markup, because `AppendHtml` has a `string` overload that does no encoding. Calling it is now a build error in this project.
 
 `TemplateString` now keeps track of whether it holds text or HTML through composition, instead of rendering eagerly.
 

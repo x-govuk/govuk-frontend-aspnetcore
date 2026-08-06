@@ -1,5 +1,6 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -54,7 +55,7 @@ public class ServiceNavigationNavItemTagHelperTests : TagHelperTestBase<ServiceN
                 AssertContainsAttributes(linkAttributes, item.Attributes);
                 Assert.Equal(active, item.Active);
                 Assert.Equal(current, item.Current);
-                Assert.Equal(content, item.Html);
+                Assert.Equal(content, item.Html.ToHtmlString());
                 Assert.Null(item.Text);
             });
     }
@@ -67,7 +68,7 @@ public class ServiceNavigationNavItemTagHelperTests : TagHelperTestBase<ServiceN
 
         var navContext = new ServiceNavigationNavContext
         {
-            NavigationEndSlot = new("End slot", ServiceNavigationNavEndTagHelper.TagName)
+            NavigationEndSlot = new(new TemplateString("End slot"), ServiceNavigationNavEndTagHelper.TagName)
         };
 
         var context = CreateTagHelperContext(contexts: navContext);

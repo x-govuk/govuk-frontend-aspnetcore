@@ -41,7 +41,7 @@ public class CookieBannerMessageTagHelperTests : TagHelperTestBase<CookieBannerM
             {
                 var messageContext = context.GetContextItem<CookieBannerMessageContext>();
 
-                messageContext.Heading = new(headingContent, CookieBannerMessageHeadingTagHelper.TagName, new(headingAttributes));
+                messageContext.Heading = new(new TemplateString(headingContent), CookieBannerMessageHeadingTagHelper.TagName, new(headingAttributes));
 
                 messageContext.Actions = new CookieBannerMessageActionsContext()
                 {
@@ -58,7 +58,7 @@ public class CookieBannerMessageTagHelperTests : TagHelperTestBase<CookieBannerM
                     Attributes = new(actionAttributes)
                 });
 
-                messageContext.Content = new(messageContent, CookieBannerMessageContentTagHelper.TagName, new(contentAttributes));
+                messageContext.Content = new(new TemplateString(messageContent), CookieBannerMessageContentTagHelper.TagName, new(contentAttributes));
 
                 TagHelperContent content = new DefaultTagHelperContent();
                 return Task.FromResult(content);
@@ -81,9 +81,9 @@ public class CookieBannerMessageTagHelperTests : TagHelperTestBase<CookieBannerM
             message =>
             {
                 Assert.Null(message.HeadingText);
-                Assert.Equal(headingContent, message.HeadingHtml);
+                Assert.Equal(headingContent, message.HeadingHtml.ToHtmlString());
                 Assert.Null(message.Text);
-                Assert.Equal(messageContent, message.Html);
+                Assert.Equal(messageContent, message.Html.ToHtmlString());
                 Assert.NotNull(message.Actions);
                 Assert.Collection(
                     message.Actions,

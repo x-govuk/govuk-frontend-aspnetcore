@@ -65,7 +65,7 @@ public class ButtonLinkTagHelper : TagHelper
         var component = await _componentGenerator.GenerateButtonAsync(new ButtonOptions
         {
             Element = Element,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Href = href,
             Classes = classes,
             Attributes = attributes,

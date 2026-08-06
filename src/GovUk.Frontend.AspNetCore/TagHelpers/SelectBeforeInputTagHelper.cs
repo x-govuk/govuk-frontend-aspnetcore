@@ -60,7 +60,7 @@ public class SelectBeforeInputTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        selectContext.SetBeforeInput(content.ToTemplateString(), context.TagName);
+        selectContext.SetBeforeInput(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

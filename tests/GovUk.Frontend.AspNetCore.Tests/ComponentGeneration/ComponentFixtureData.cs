@@ -2,7 +2,6 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
-using System.Text.Json.Serialization.Metadata;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Html;
 using Xunit.Sdk;
@@ -26,32 +25,6 @@ public class ComponentFixtureData(
         _serializerOptions.Converters.Add(new AttributeCollectionJsonConverter());
         _serializerOptions.Converters.Add(new TemplateStringJsonConverter());
 
-        // A converter can't see which property it's deserializing, so the *html parameters are picked
-        // out here instead. Without this every fixture value is labelled as text and the suite can't
-        // tell correctly-encoded output from raw markup that merely renders.
-        _serializerOptions.TypeInfoResolver = new DefaultJsonTypeInfoResolver
-        {
-            Modifiers = { UseEncodedTemplateStringForHtmlProperties }
-        };
-
-        static void UseEncodedTemplateStringForHtmlProperties(JsonTypeInfo typeInfo)
-        {
-            foreach (var property in typeInfo.Properties)
-            {
-                if (property.PropertyType != typeof(TemplateString))
-                {
-                    continue;
-                }
-
-                var isHtml = property.Name.EndsWith("html", StringComparison.OrdinalIgnoreCase) ||
-                    property.AttributeProvider?.IsDefined(typeof(HtmlParameterAttribute), inherit: false) is true;
-
-                if (isHtml)
-                {
-                    property.CustomConverter = TemplateStringJsonConverter.Encoded;
-                }
-            }
-        }
     }
 
     private readonly HashSet<string> _exclude = new(exclude);

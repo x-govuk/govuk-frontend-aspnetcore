@@ -80,8 +80,8 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
 
         var errorSummary = await _componentGenerator.GenerateErrorSummaryAsync(new ErrorSummaryOptions
         {
-            TitleText = null,
-            TitleHtml = DefaultComponentGenerator.DefaultErrorSummaryTitleHtml,
+            TitleText = DefaultComponentGenerator.DefaultErrorSummaryTitleText,
+            TitleHtml = null,
             DescriptionText = null,
             DescriptionHtml = null,
             ErrorList = errorSummaryItems,

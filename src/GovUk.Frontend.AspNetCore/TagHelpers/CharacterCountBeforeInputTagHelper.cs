@@ -60,7 +60,7 @@ public class CharacterCountBeforeInputTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        characterCountContext.SetBeforeInput(content.ToTemplateString(), context.TagName);
+        characterCountContext.SetBeforeInput(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

@@ -1,16 +1,17 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class PageErrorContext
 {
-    private readonly List<(TemplateString Html, TemplateString? Href)> _errors = [];
+    private readonly List<(IHtmlContent Html, TemplateString? Href)> _errors = [];
 
-    internal IReadOnlyCollection<(TemplateString Html, TemplateString? Href)> Errors => _errors;
+    internal IReadOnlyCollection<(IHtmlContent Html, TemplateString? Href)> Errors => _errors;
 
     internal bool ErrorSummaryHasBeenRendered { get; set; }
 
-    public void AddError(TemplateString html, TemplateString? href)
+    public void AddError(IHtmlContent html, TemplateString? href)
     {
         ArgumentNullException.ThrowIfNull(html);
 

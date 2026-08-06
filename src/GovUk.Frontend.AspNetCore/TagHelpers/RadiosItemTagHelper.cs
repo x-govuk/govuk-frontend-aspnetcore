@@ -133,7 +133,7 @@ public class RadiosItemTagHelper : TagHelper
         radiosContext.AddItem(new RadiosOptionsItem
         {
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Id = Id,
             Value = Value,
             Label = new LabelOptions

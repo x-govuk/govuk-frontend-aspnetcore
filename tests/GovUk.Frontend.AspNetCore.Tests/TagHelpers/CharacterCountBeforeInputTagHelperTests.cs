@@ -37,6 +37,6 @@ public class CharacterCountBeforeInputTagHelperTests : TagHelperTestBase<Charact
 
         // Assert
         Assert.NotNull(characterCountContext.BeforeInput);
-        Assert.Equal(content, characterCountContext.BeforeInput);
+        Assert.Equal(content, characterCountContext.BeforeInput.ToHtmlString());
     }
 }

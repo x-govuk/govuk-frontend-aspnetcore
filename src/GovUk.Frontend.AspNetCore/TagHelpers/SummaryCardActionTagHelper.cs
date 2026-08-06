@@ -45,7 +45,7 @@ public class SummaryCardActionTagHelper : TagHelper
         {
             Href = href,
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             VisuallyHiddenText = VisuallyHiddenText,
             Classes = classes,
             Attributes = attributes

@@ -86,7 +86,7 @@ public class SelectItemTagHelper : TagHelper
         selectContext.AddItem(new SelectOptionsItem
         {
             Attributes = new AttributeCollection(output.Attributes),
-            Text = content.ToTemplateString(),
+            Html = content,
             Disabled = Disabled,
             Selected = selected,
             Value = Value

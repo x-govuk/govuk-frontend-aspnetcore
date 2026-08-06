@@ -62,7 +62,7 @@ public class GenericHeaderTagHelperTests : TagHelperTestBase<GenericHeaderTagHel
         Assert.Equal(className, actualOptions.Classes);
         AssertContainsAttributes(attributes, actualOptions.Attributes);
         AssertContainsAttributes(containerAttributes, actualOptions.ContainerAttributes);
-        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal(content, actualOptions.Html.ToHtmlString());
     }
 
     [Fact]

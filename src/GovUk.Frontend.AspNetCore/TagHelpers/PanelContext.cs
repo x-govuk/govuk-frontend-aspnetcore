@@ -1,11 +1,12 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class PanelContext
 {
-    public (TemplateString? Content, AttributeCollection? Attributes)? Body { get; private set; }
-    public (TemplateString? Content, AttributeCollection? Attributes)? Title { get; private set; }
+    public (IHtmlContent? Content, AttributeCollection? Attributes)? Body { get; private set; }
+    public (IHtmlContent? Content, AttributeCollection? Attributes)? Title { get; private set; }
     public PanelActionsOptions? Actions { get; private set; }
 
     public string? ActionsTagName { get; private set; }
@@ -24,7 +25,7 @@ internal class PanelContext
         ActionsTagName = tagName;
     }
 
-    public void SetBody(TemplateString? content, AttributeCollection? attributes)
+    public void SetBody(IHtmlContent? content, AttributeCollection? attributes)
     {
         if (Body is not null)
         {
@@ -34,7 +35,7 @@ internal class PanelContext
         Body = (content, attributes);
     }
 
-    public void SetTitle(TemplateString? content, AttributeCollection? attributes)
+    public void SetTitle(IHtmlContent? content, AttributeCollection? attributes)
     {
         if (Title is not null)
         {

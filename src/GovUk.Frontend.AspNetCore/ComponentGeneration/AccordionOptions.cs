@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -9,12 +10,12 @@ public record AccordionOptions
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
     public bool? RememberExpanded { get; set; }
-    public TemplateString? HideAllSectionsText { get; set; }
-    public TemplateString? HideSectionText { get; set; }
-    public TemplateString? HideSectionAriaLabelText { get; set; }
-    public TemplateString? ShowAllSectionsText { get; set; }
-    public TemplateString? ShowSectionText { get; set; }
-    public TemplateString? ShowSectionAriaLabelText { get; set; }
+    public string? HideAllSectionsText { get; set; }
+    public string? HideSectionText { get; set; }
+    public string? HideSectionAriaLabelText { get; set; }
+    public string? ShowAllSectionsText { get; set; }
+    public string? ShowSectionText { get; set; }
+    public string? ShowSectionAriaLabelText { get; set; }
     public IReadOnlyCollection<AccordionOptionsItem?>? Items { get; set; }
 }
 
@@ -28,18 +29,18 @@ public record AccordionOptionsItem
 
 public record AccordionOptionsItemHeading
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
 }
 
 public record AccordionOptionsItemSummary
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
 }
 
 public record AccordionOptionsItemContent
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
 }

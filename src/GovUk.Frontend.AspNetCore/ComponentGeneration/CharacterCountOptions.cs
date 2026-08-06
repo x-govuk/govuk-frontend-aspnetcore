@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 using System.Text.Json.Serialization;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -23,12 +24,12 @@ public record CharacterCountOptions
     public bool? Spellcheck { get; set; }
     public AttributeCollection? Attributes { get; set; }
     public CharacterCountCountOptionsMessage? CountMessage { get; set; }
-    public TemplateString? TextareaDescriptionText { get; set; }
+    public string? TextareaDescriptionText { get; set; }
     public CharacterCountOptionsCharactersUnderLimitText? CharactersUnderLimitText { get; set; }
-    public TemplateString? CharactersAtLimitText { get; set; }
+    public string? CharactersAtLimitText { get; set; }
     public CharacterCountOptionsCharactersOverLimitText? CharactersOverLimitText { get; set; }
     public CharacterCountOptionsWordsUnderLimitText? WordsUnderLimitText { get; set; }
-    public TemplateString? WordsAtLimitText { get; set; }
+    public string? WordsAtLimitText { get; set; }
     public CharacterCountOptionsWordsOverLimitText? WordsOverLimitText { get; set; }
 }
 
@@ -72,16 +73,16 @@ public record CharacterCountOptionsFormGroup : FormGroupOptions
 
 public record CharacterCountOptionsBeforeInput
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }
 
 public record CharacterCountOptionsAfterInput
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }

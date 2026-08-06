@@ -16,18 +16,12 @@ internal partial class DefaultComponentGenerator
         var textareaDescriptionText = options.TextareaDescriptionText ??
             $"You can enter up to %{{count}} {(options.MaxWords.HasValue ? "words" : "characters")}";
 
-        TemplateString textareaDescriptionTextNoLimit;
-        if (!hasNoLimit && textareaDescriptionLength.HasValue)
-        {
-            textareaDescriptionTextNoLimit = ReplacePlaceholder(
-                textareaDescriptionText,
+        var textareaDescriptionTextNoLimit = !hasNoLimit && textareaDescriptionLength.HasValue
+            ? textareaDescriptionText.Replace(
                 "%{count}",
-                textareaDescriptionLength.Value.ToString(CultureInfo.InvariantCulture));
-        }
-        else
-        {
-            textareaDescriptionTextNoLimit = TemplateString.Empty;
-        }
+                textareaDescriptionLength.Value.ToString(CultureInfo.InvariantCulture),
+                StringComparison.Ordinal)
+            : null;
 
         var countMessageId = new TemplateString($"{id}-info");
         var countMessageClasses = new TemplateString("govuk-character-count__message")

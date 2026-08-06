@@ -34,7 +34,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
                 dateInputContext.SetHint(
                     attributes: new(hintAttributes),
-                    hintContent,
+                    new TemplateString(hintContent),
                     DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -64,7 +64,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.Equal(id, actualOptions.Id);
         Assert.Null(actualOptions.NamePrefix);
         Assert.Null(actualOptions.Fieldset);
-        Assert.Equal(hintContent, actualOptions.Hint?.Html);
+        Assert.Equal(hintContent, actualOptions.Hint?.Html.ToHtmlString());
         AssertContainsAttributes(hintAttributes, actualOptions.Hint?.Attributes);
         Assert.Null(actualOptions.ErrorMessage);
         Assert.NotNull(actualOptions.Attributes);
@@ -74,7 +74,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             actualOptions.Items,
             item =>
             {
-                Assert.Equal("Day", item.Label);
+                Assert.Equal("Day", item.Label.ToHtmlString());
                 Assert.Equal(value.Day.ToString(), item.Value);
                 Assert.Equal(namePrefix + ".Day", item.Name);
                 Assert.NotNull(item.Attributes);
@@ -87,7 +87,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             },
             item =>
             {
-                Assert.Equal("Month", item.Label);
+                Assert.Equal("Month", item.Label.ToHtmlString());
                 Assert.Equal(value.Month.ToString(), item.Value);
                 Assert.Equal(namePrefix + ".Month", item.Name);
                 Assert.NotNull(item.Attributes);
@@ -100,7 +100,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             },
             item =>
             {
-                Assert.Equal("Year", item.Label);
+                Assert.Equal("Year", item.Label.ToHtmlString());
                 Assert.Equal(value.Year.ToString(), item.Value);
                 Assert.Equal(namePrefix + ".Year", item.Name);
                 Assert.NotNull(item.Attributes);
@@ -136,7 +136,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 var fieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName) { DescribedBy = fieldsetDescribedBy };
                 dateInputContext.OpenFieldset(fieldsetContext, new(fieldsetAttributes));
 
-                fieldsetContext.SetLegend(legendIsPageHeading, new(legendAttributes), legendContent, DateInputFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(legendIsPageHeading, new(legendAttributes), new TemplateString(legendContent), DateInputFieldsetLegendTagHelper.TagName);
                 dateInputContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -168,7 +168,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.NotNull(actualOptions.Fieldset.Legend);
         Assert.Equal(legendIsPageHeading, actualOptions.Fieldset.Legend.IsPageHeading);
         AssertContainsAttributes(legendAttributes, actualOptions.Fieldset.Legend.Attributes);
-        Assert.Equal(legendContent, actualOptions.Fieldset.Legend.Html);
+        Assert.Equal(legendContent, actualOptions.Fieldset.Legend.Html.ToHtmlString());
     }
 
     [Fact]
@@ -211,7 +211,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(modelMetadataDisplayName, actualOptions.Fieldset?.Legend?.Html);
+        Assert.Equal(modelMetadataDisplayName, actualOptions.Fieldset?.Legend?.Text);
     }
 
     [Fact]
@@ -233,7 +233,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 var fieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName);
                 dateInputContext.OpenFieldset(fieldsetContext, []);
 
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: legendContent, DateInputFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new TemplateString(legendContent), DateInputFieldsetLegendTagHelper.TagName);
                 dateInputContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -255,7 +255,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(legendContent, actualOptions.Fieldset?.Legend?.Html);
+        Assert.Equal(legendContent, actualOptions.Fieldset?.Legend?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -285,7 +285,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(modelMetadataDescription, actualOptions.Hint?.Html);
+        Assert.Equal(modelMetadataDescription, actualOptions.Hint?.Text);
     }
 
     [Fact]
@@ -303,7 +303,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var dateInputContext = context.GetContextItem<DateInputContext>();
-                dateInputContext.SetHint(attributes: [], html: hintContent, tagName: DateInputHintTagHelper.TagName);
+                dateInputContext.SetHint(attributes: [], html: new TemplateString(hintContent), tagName: DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -324,7 +324,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(hintContent, actualOptions.Hint?.Html);
+        Assert.Equal(hintContent, actualOptions.Hint?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -349,7 +349,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: null,
                     visuallyHiddenText: errorVht,
                     attributes: new(errorAttributes),
-                    html: errorContent,
+                    html: new TemplateString(errorContent),
                     DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -373,7 +373,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.Equal(errorContent, actualOptions.ErrorMessage.Html);
+        Assert.Equal(errorContent, actualOptions.ErrorMessage.Html.ToHtmlString());
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         AssertContainsAttributes(errorAttributes, actualOptions.ErrorMessage.Attributes);
         AssertAllItemsHaveErrorClass(actualOptions);
@@ -407,7 +407,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.Equal(modelStateErrorMessage, actualOptions.ErrorMessage.Html);
+        Assert.Equal(modelStateErrorMessage, actualOptions.ErrorMessage.Text);
         AssertAllItemsHaveErrorClass(actualOptions);
     }
 
@@ -431,7 +431,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: null,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: errorContent,
+                    html: new TemplateString(errorContent),
                     DateInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -454,7 +454,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.Equal(errorContent, actualOptions.ErrorMessage.Html);
+        Assert.Equal(errorContent, actualOptions.ErrorMessage.Html.ToHtmlString());
         AssertAllItemsHaveErrorClass(actualOptions);
     }
 
@@ -580,7 +580,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     TagName = DateInputDayTagHelper.TagName,
                     Id = dayId,
                     Name = dayName,
-                    LabelHtml = dayLabel,
+                    LabelHtml = new TemplateString(dayLabel),
                     Value = dayValue,
                     ValueSpecified = true
                 });
@@ -590,7 +590,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     TagName = DateInputMonthTagHelper.TagName,
                     Id = monthId,
                     Name = monthName,
-                    LabelHtml = monthLabel,
+                    LabelHtml = new TemplateString(monthLabel),
                     Value = monthValue,
                     ValueSpecified = true
                 });
@@ -600,7 +600,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     TagName = DateInputYearTagHelper.TagName,
                     Id = yearId,
                     Name = yearName,
-                    LabelHtml = yearLabel,
+                    LabelHtml = new TemplateString(yearLabel),
                     Value = yearValue,
                     ValueSpecified = true
                 });
@@ -633,21 +633,21 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 Assert.Equal(dayValue, item.Value);
                 Assert.Equal(dayId, item.Id);
                 Assert.Equal(dayName, item.Name);
-                Assert.Equal(dayLabel, item.Label);
+                Assert.Equal(dayLabel, item.Label.ToHtmlString());
             },
             item =>
             {
                 Assert.Equal(monthValue, item.Value);
                 Assert.Equal(monthId, item.Id);
                 Assert.Equal(monthName, item.Name);
-                Assert.Equal(monthLabel, item.Label);
+                Assert.Equal(monthLabel, item.Label.ToHtmlString());
             },
             item =>
             {
                 Assert.Equal(yearValue, item.Value);
                 Assert.Equal(yearId, item.Id);
                 Assert.Equal(yearName, item.Name);
-                Assert.Equal(yearLabel, item.Label);
+                Assert.Equal(yearLabel, item.Label.ToHtmlString());
             });
     }
 
@@ -684,7 +684,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     TagName = DateInputDayTagHelper.TagName,
                     Id = dayId,
                     Name = dayName,
-                    LabelHtml = dayLabel,
+                    LabelHtml = new TemplateString(dayLabel),
                     Value = dayValue,
                     ValueSpecified = true
                 });
@@ -694,7 +694,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     TagName = DateInputMonthTagHelper.TagName,
                     Id = monthId,
                     Name = monthName,
-                    LabelHtml = monthLabel,
+                    LabelHtml = new TemplateString(monthLabel),
                     Value = monthValue,
                     ValueSpecified = true
                 });
@@ -704,7 +704,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     TagName = DateInputYearTagHelper.TagName,
                     Id = yearId,
                     Name = yearName,
-                    LabelHtml = yearLabel,
+                    LabelHtml = new TemplateString(yearLabel),
                     Value = yearValue,
                     ValueSpecified = true
                 });
@@ -738,21 +738,21 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 Assert.Equal(dayValue, item.Value);
                 Assert.Equal(dayId, item.Id);
                 Assert.Equal(dayName, item.Name);
-                Assert.Equal(dayLabel, item.Label);
+                Assert.Equal(dayLabel, item.Label.ToHtmlString());
             },
             item =>
             {
                 Assert.Equal(monthValue, item.Value);
                 Assert.Equal(monthId, item.Id);
                 Assert.Equal(monthName, item.Name);
-                Assert.Equal(monthLabel, item.Label);
+                Assert.Equal(monthLabel, item.Label.ToHtmlString());
             },
             item =>
             {
                 Assert.Equal(yearValue, item.Value);
                 Assert.Equal(yearId, item.Id);
                 Assert.Equal(yearName, item.Name);
-                Assert.Equal(yearLabel, item.Label);
+                Assert.Equal(yearLabel, item.Label.ToHtmlString());
             });
     }
 
@@ -907,7 +907,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     specifiedErrorFields,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Error",
+                    html: new TemplateString("Error"),
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -963,7 +963,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: null,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Error",
+                    html: new TemplateString("Error"),
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1021,7 +1021,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: null,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Error",
+                    html: new TemplateString("Error"),
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1075,7 +1075,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     errorFields: DateInputItemTypes.Month | DateInputItemTypes.Year,
                     visuallyHiddenText: null,
                     attributes: [],
-                    html: "Error",
+                    html: new TemplateString("Error"),
                     tagName: DateInputErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1137,7 +1137,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                      errorFields,
                      visuallyHiddenText: null,
                      attributes: [],
-                     html: "Error",
+                     html: new TemplateString("Error"),
                      tagName: DateInputErrorMessageTagHelper.TagName);
 
                  var tagHelperContent = new DefaultTagHelperContent();
@@ -1166,7 +1166,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             tagHelper.ViewContext.HttpContext.GetPageErrorContext().Errors,
             error =>
             {
-                Assert.Equal("Error", error.Html);
+                Assert.Equal("Error", error.Html.ToHtmlString());
                 Assert.Equal("#" + expectedErrorFieldId, error.Href);
             });
     }
@@ -1202,8 +1202,8 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.NotNull(actualOptions.Items);
         Assert.Collection(
             actualOptions.Items,
-            item => Assert.Equal("Day", item.Label),
-            item => Assert.Equal("Month", item.Label));
+            item => Assert.Equal("Day", item.Label.ToHtmlString()),
+            item => Assert.Equal("Month", item.Label.ToHtmlString()));
     }
 
     [Fact]
@@ -1236,8 +1236,8 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.NotNull(actualOptions.Items);
         Assert.Collection(
             actualOptions.Items,
-            item => Assert.Equal("Day", item.Label),
-            item => Assert.Equal("Month", item.Label));
+            item => Assert.Equal("Day", item.Label.ToHtmlString()),
+            item => Assert.Equal("Month", item.Label.ToHtmlString()));
     }
 
     [Fact(Skip = "Skipped until we figure out how to do this")]
@@ -1277,8 +1277,8 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         Assert.NotNull(actualOptions.Items);
         Assert.Collection(
             actualOptions.Items,
-            item => Assert.Equal("Day", item.Label),
-            item => Assert.Equal("Month", item.Label));
+            item => Assert.Equal("Day", item.Label.ToHtmlString()),
+            item => Assert.Equal("Month", item.Label.ToHtmlString()));
     }
 
     [Fact(Skip = "Skipped until we figure out how to do this")]
@@ -1407,7 +1407,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.StartsWith(errorMessagePrefix, actualOptions.ErrorMessage.Html?.ToHtmlString(HtmlEncoder.Default));
+        Assert.StartsWith(errorMessagePrefix, actualOptions.ErrorMessage.Text);
     }
 
     [Fact]

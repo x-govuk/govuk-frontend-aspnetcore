@@ -27,7 +27,7 @@ internal partial class DefaultComponentGenerator
         var hasBeforeInput = !(options.FormGroup?.BeforeInput?.Html).IsEmpty() || !(options.FormGroup?.BeforeInput?.Text).IsEmpty();
         var hasAfterInput = !(options.FormGroup?.AfterInput?.Html).IsEmpty() || !(options.FormGroup?.AfterInput?.Text).IsEmpty();
 
-        IHtmlContent CreateAffixItem(TemplateString? html, TemplateString? text, TemplateString? classes, AttributeCollection? attributes, string type)
+        IHtmlContent CreateAffixItem(IHtmlContent? html, string? text, TemplateString? classes, AttributeCollection? attributes, string type)
         {
             var affixDiv = new HtmlTag("div", attrs => attrs
                 .WithClasses(new TemplateString($"govuk-input__{type}"), classes)

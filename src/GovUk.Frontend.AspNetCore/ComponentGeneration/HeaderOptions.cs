@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 using System.Text.Json.Serialization;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -16,5 +17,5 @@ public record HeaderOptions
     [NonStandardParameter]
     public AttributeCollection? ContainerAttributes { get; set; }
     [NonStandardParameter]
-    public TemplateString? Html { get; set; }
+    public IHtmlContent? Html { get; set; }
 }

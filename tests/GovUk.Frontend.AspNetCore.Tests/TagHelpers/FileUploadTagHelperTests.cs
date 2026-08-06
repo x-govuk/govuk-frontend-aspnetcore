@@ -36,12 +36,12 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     attributes: [],
-                    labelHtml,
+                    new TemplateString(labelHtml),
                     FileUploadLabelTagHelper.TagName);
 
                 inputContext.SetHint(
                     attributes: [],
-                    hintHtml,
+                    new TemplateString(hintHtml),
                     FileUploadHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -84,8 +84,8 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
         Assert.Equal(multiple, actualOptions.Multiple);
         Assert.Equal(disabled, actualOptions.Disabled);
         Assert.Equal(describedBy, actualOptions.DescribedBy);
-        Assert.Equal(labelHtml, actualOptions.Label?.Html);
-        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
+        Assert.Equal(labelHtml, actualOptions.Label?.Html.ToHtmlString());
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html.ToHtmlString());
         Assert.Null(actualOptions.ErrorMessage);
         Assert.Equal(classes, actualOptions.Classes);
 
@@ -127,14 +127,14 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     [],
-                    labelHtml,
+                    new TemplateString(labelHtml),
                     FileUploadLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: errorVht,
                     attributes: new AttributeCollection(
                         new AttributeCollection.Attribute("data-foo", errorDataFooAttribute, Optional: false)),
-                    errorHtml,
+                    new TemplateString(errorHtml),
                     FileUploadErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -159,7 +159,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html.ToHtmlString());
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
         Assert.Collection(actualOptions.ErrorMessage.Attributes, kvp =>
@@ -238,9 +238,9 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.Id);
         Assert.NotNull(actualOptions.Name);
-        Assert.Equal(displayName, actualOptions.Label?.Html);
-        Assert.Equal(description, actualOptions.Hint?.Html);
-        Assert.Equal(modelStateError, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(displayName, actualOptions.Label?.Text);
+        Assert.Equal(description, actualOptions.Hint?.Text);
+        Assert.Equal(modelStateError, actualOptions.ErrorMessage?.Text);
     }
 
     [Fact]
@@ -261,7 +261,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     [],
-                    labelHtml,
+                    new TemplateString(labelHtml),
                     FileUploadLabelTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -306,7 +306,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(labelHtml, actualOptions.Label?.Html);
+        Assert.Equal(labelHtml, actualOptions.Label?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -325,7 +325,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
             {
                 var inputContext = context.GetContextItem<FileUploadContext>();
 
-                inputContext.SetHint([], hintHtml, FileUploadHintTagHelper.TagName);
+                inputContext.SetHint([], new TemplateString(hintHtml), FileUploadHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -373,7 +373,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -395,7 +395,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     [],
-                    errorHtml,
+                    new TemplateString(errorHtml),
                     FileUploadErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -447,7 +447,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -535,7 +535,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     [],
-                    errorHtml,
+                    new TemplateString(errorHtml),
                     FileUploadErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -588,7 +588,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -610,13 +610,13 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     [],
-                    labelHtml,
+                    new TemplateString(labelHtml),
                     FileUploadLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
                     visuallyHiddenText: null,
                     [],
-                    errorHtml,
+                    new TemplateString(errorHtml),
                     FileUploadErrorMessageTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -643,7 +643,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
             tagHelper.ViewContext.HttpContext.GetPageErrorContext().Errors,
             error =>
             {
-                Assert.Equal(errorHtml, error.Html);
+                Assert.Equal(errorHtml, error.Html.ToHtmlString());
                 Assert.Equal($"#{id}", error.Href);
             });
     }
@@ -673,7 +673,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     attributes: [],
-                    labelHtml,
+                    new TemplateString(labelHtml),
                     FileUploadLabelTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();

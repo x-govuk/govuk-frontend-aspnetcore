@@ -56,7 +56,7 @@ public class PhaseBannerTagHelper : TagHelper
         var component = await _componentGenerator.GeneratePhaseBannerAsync(new PhaseBannerOptions
         {
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Tag = phaseBannerContext.Tag?.Options,
             Classes = classes,
             Attributes = attributes

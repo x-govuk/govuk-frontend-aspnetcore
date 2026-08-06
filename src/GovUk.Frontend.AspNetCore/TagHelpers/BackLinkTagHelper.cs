@@ -51,7 +51,7 @@ public class BackLinkTagHelper : TagHelper
 
         var component = await _componentGenerator.GenerateBackLinkAsync(new BackLinkOptions
         {
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Href = href,
             Classes = classes,
             Attributes = attributes

@@ -76,7 +76,7 @@ public class EncodingTests
         var component = await _componentGenerator.GenerateErrorSummaryAsync(new ErrorSummaryOptions
         {
             TitleText = "There is a problem",
-            ErrorList = [new ErrorSummaryOptionsErrorItem { Html = errorMessage, Href = "#age" }]
+            ErrorList = [new ErrorSummaryOptionsErrorItem { Html = new TemplateString(errorMessage), Href = "#age" }]
         });
 
         // Assert
@@ -93,7 +93,7 @@ public class EncodingTests
         // Act
         var component = await _componentGenerator.GenerateErrorMessageAsync(new ErrorMessageOptions
         {
-            Html = errorMessage
+            Html = new TemplateString(errorMessage)
         });
 
         // Assert

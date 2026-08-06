@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -5,8 +6,8 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 public record GenericHeaderOptions
 {
     public TemplateString? Url { get; set; }
-    public TemplateString? LogoText { get; set; }
-    public TemplateString? LogoHtml { get; set; }
+    public string? LogoText { get; set; }
+    public IHtmlContent? LogoHtml { get; set; }
     public TemplateString? ContainerClasses { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
@@ -19,5 +20,5 @@ public record GenericHeaderOptions
     [NonStandardParameter]
     public AttributeCollection? LinkAttributes { get; set; }
     [NonStandardParameter]
-    public TemplateString? Html { get; set; }
+    public IHtmlContent? Html { get; set; }
 }

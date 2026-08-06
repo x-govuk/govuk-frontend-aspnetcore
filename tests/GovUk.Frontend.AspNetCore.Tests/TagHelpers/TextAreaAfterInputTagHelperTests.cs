@@ -37,6 +37,6 @@ public class TextAreaAfterInputTagHelperTests : TagHelperTestBase<TextAreaAfterI
 
         // Assert
         Assert.NotNull(textAreaContext.AfterInput);
-        Assert.Equal(content, textAreaContext.AfterInput);
+        Assert.Equal(content, textAreaContext.AfterInput.ToHtmlString());
     }
 }

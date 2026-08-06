@@ -36,7 +36,7 @@ public class SummaryListRowKeyTagHelper : TagHelper
             new SummaryListOptionsRowKey
             {
                 Text = null,
-                Html = content.ToTemplateString(),
+                Html = content.Snapshot(),
                 Classes = classes,
                 Attributes = attributes
             },

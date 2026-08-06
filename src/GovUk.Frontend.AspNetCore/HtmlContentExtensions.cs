@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore;
 
@@ -28,6 +29,24 @@ public static class HtmlContentExtensions
         content.WriteTo(writer, encoder);
         return writer.ToString();
     }
+
+    /// <summary>
+    /// Takes a copy of <paramref name="content"/> if it needs one to stay valid after the tag helper
+    /// that produced it has finished.
+    /// </summary>
+    /// <remarks>
+    /// Razor reuses <see cref="TagHelperContent"/> instances once a tag helper has rendered, so content
+    /// held beyond that point has to be snapshotted or it ends up with somebody else's markup in it.
+    /// </remarks>
+    [return: NotNullIfNotNull(nameof(content))]
+    public static IHtmlContent? Snapshot(this IHtmlContent? content) =>
+        content is TagHelperContent tagHelperContent ? new HtmlString(tagHelperContent.GetContent()) : content;
+
+    /// <summary>
+    /// Whether <paramref name="value"/> has no content, matching how the <see cref="IHtmlContent"/>
+    /// overload treats content that renders as nothing but whitespace.
+    /// </summary>
+    internal static bool IsEmpty([NotNullWhen(false)] this string? value) => string.IsNullOrWhiteSpace(value);
 
     internal static bool IsEmpty([NotNullWhen(false)] this IHtmlContent? content, HtmlEncoder? encoder = null)
     {

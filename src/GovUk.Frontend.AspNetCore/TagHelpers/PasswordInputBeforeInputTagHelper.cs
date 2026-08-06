@@ -60,7 +60,7 @@ public class PasswordInputBeforeInputTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        inputContext.SetBeforeInput(content.ToTemplateString(), context.TagName);
+        inputContext.SetBeforeInput(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

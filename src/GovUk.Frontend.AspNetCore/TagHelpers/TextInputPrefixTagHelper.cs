@@ -49,7 +49,7 @@ public class TextInputPrefixTagHelper : TagHelper
             new InputOptionsPrefix
             {
                 Text = null,
-                Html = content.ToTemplateString(),
+                Html = content.Snapshot(),
                 Classes = classes,
                 Attributes = attributes
             },

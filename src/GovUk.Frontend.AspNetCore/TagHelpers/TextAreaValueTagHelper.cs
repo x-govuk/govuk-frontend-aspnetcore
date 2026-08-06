@@ -27,7 +27,7 @@ public class TextAreaValueTagHelper : TagHelper
             content = output.Content;
         }
 
-        textAreaContext.SetValue(content.ToTemplateString(), context.TagName);
+        textAreaContext.SetValue(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

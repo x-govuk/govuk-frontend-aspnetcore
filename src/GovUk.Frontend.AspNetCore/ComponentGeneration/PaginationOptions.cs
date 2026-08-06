@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -15,7 +16,7 @@ public record PaginationOptions
 public record PaginationOptionsItem
 {
     public TemplateString? Number { get; set; }
-    public TemplateString? VisuallyHiddenText { get; set; }
+    public string? VisuallyHiddenText { get; set; }
     public TemplateString? Href { get; set; }
     public bool? Current { get; set; }
     public bool? Ellipsis { get; set; }
@@ -24,9 +25,9 @@ public record PaginationOptionsItem
 
 public record PaginationOptionsPrevious
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
-    public TemplateString? LabelText { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
+    public string? LabelText { get; set; }
     public TemplateString? Href { get; set; }
     public AttributeCollection? Attributes { get; set; }
 
@@ -36,9 +37,9 @@ public record PaginationOptionsPrevious
 
 public record PaginationOptionsNext
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
-    public TemplateString? LabelText { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
+    public string? LabelText { get; set; }
     public TemplateString? Href { get; set; }
     public AttributeCollection? Attributes { get; set; }
 

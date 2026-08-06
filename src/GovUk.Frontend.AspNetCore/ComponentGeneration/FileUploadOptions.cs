@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 using System.Text.Json.Serialization;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -17,12 +18,12 @@ public record FileUploadOptions
     public FileUploadOptionsFormGroup? FormGroup { get; set; }
     [JsonPropertyName("javascript")]
     public bool? JavaScript { get; set; }
-    public TemplateString? ChooseFilesButtonText { get; set; }
-    public TemplateString? DropInstructionText { get; set; }
+    public string? ChooseFilesButtonText { get; set; }
+    public string? DropInstructionText { get; set; }
     public FileUploadOptionsMultipleFilesChosenText? MultipleFilesChosenText { get; set; }
-    public TemplateString? NoFileChosenText { get; set; }
-    public TemplateString? EnteredDropZoneText { get; set; }
-    public TemplateString? LeftDropZoneText { get; set; }
+    public string? NoFileChosenText { get; set; }
+    public string? EnteredDropZoneText { get; set; }
+    public string? LeftDropZoneText { get; set; }
     public TemplateString? WrapperClasses { get; set; }
     public AttributeCollection? WrapperAttributes { get; set; }
     public TemplateString? Classes { get; set; }
@@ -37,16 +38,16 @@ public record FileUploadOptionsFormGroup : FormGroupOptions
 
 public record FileUploadOptionsBeforeInput
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }
 
 public record FileUploadOptionsAfterInput
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }

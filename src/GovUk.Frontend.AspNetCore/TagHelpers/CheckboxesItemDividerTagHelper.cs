@@ -30,7 +30,7 @@ public class CheckboxesItemDividerTagHelper : TagHelper
 
         checkboxesContext.AddItem(new CheckboxesOptionsItem
         {
-            Divider = content.ToTemplateString()
+            Divider = new TemplateString(content.Snapshot())
         });
 
         output.SuppressOutput();

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 using System.Text.Json.Serialization;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -31,12 +32,12 @@ public record TextareaOptionsFormGroup : FormGroupOptions
 
 public record TextareaOptionsBeforeInput
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
 }
 
 public record TextareaOptionsAfterInput
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
 }

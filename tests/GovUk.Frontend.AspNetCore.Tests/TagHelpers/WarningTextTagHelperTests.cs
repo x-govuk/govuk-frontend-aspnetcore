@@ -36,7 +36,7 @@ public class WarningTextTagHelperTests : TagHelperTestBase<WarningTextTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal(content, actualOptions.Html.ToHtmlString());
         Assert.Null(actualOptions.Text);
         Assert.Equal(iconFallbackText, actualOptions.IconFallbackText);
     }

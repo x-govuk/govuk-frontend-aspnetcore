@@ -1,5 +1,6 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -36,7 +37,7 @@ public class FooterMetaContentTagHelperTests : TagHelperTestBase<FooterMetaConte
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(content, footerMetaContext.Content?.Html);
+        Assert.Equal(content, footerMetaContext.Content?.Html.ToHtmlString());
         AssertContainsAttributes(attributes, footerMetaContext.Content?.Attributes);
     }
 
@@ -47,7 +48,7 @@ public class FooterMetaContentTagHelperTests : TagHelperTestBase<FooterMetaConte
         var footerContext = new FooterContext();
         var footerMetaContext = new FooterMetaContext
         {
-            Content = new("Content", [], TagName)
+            Content = new(new TemplateString("Content"), [], TagName)
         };
 
         var context = CreateTagHelperContext(contexts: [footerContext, footerMetaContext]);

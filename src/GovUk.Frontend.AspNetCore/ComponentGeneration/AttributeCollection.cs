@@ -94,7 +94,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
             if (attribute.Name is "class" or "aria-describedby")
             {
                 var existingAttribute = _attributes[attributeName];
-                var newAttributeValue = TemplateString.Join(" ", existingAttribute.ToTemplateString(), attribute.ToTemplateString());
+                var newAttributeValue = TemplateString.Join(" ", new TemplateString(existingAttribute), new TemplateString(attribute));
                 _attributes[attributeName] = new Attribute(attributeName, newAttributeValue, Optional: false);
             }
             else

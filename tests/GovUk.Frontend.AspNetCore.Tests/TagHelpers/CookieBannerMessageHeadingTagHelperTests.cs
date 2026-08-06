@@ -37,7 +37,7 @@ public class CookieBannerMessageHeadingTagHelperTests : TagHelperTestBase<Cookie
 
         // Assert
         Assert.NotNull(messageContext.Heading);
-        Assert.Equal(heading, messageContext.Heading?.Html);
+        Assert.Equal(heading, messageContext.Heading?.Html.ToHtmlString());
         AssertContainsAttributes(attributes, messageContext.Heading?.Attributes);
     }
 }

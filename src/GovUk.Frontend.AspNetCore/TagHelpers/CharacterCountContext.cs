@@ -1,11 +1,12 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class CharacterCountContext : FormGroupContext3
 {
-    private (TemplateString Content, string TagName)? _beforeInput;
-    private (TemplateString Content, string TagName)? _afterInput;
+    private (IHtmlContent Content, string TagName)? _beforeInput;
+    private (IHtmlContent Content, string TagName)? _afterInput;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
         [/*CharacterCountErrorMessageTagHelper.ShortTagName, */CharacterCountErrorMessageTagHelper.TagName];
@@ -18,20 +19,20 @@ internal class CharacterCountContext : FormGroupContext3
 
     protected override string RootTagName { get; } = CharacterCountTagHelper.TagName;
 
-    public TemplateString? BeforeInput => _beforeInput?.Content;
+    public IHtmlContent? BeforeInput => _beforeInput?.Content;
 
-    public TemplateString? AfterInput => _afterInput?.Content;
+    public IHtmlContent? AfterInput => _afterInput?.Content;
 
-    public TemplateString? Value { get; private set; }
+    public IHtmlContent? Value { get; private set; }
 
     private IReadOnlyCollection<string> BeforeInputTagNames => CharacterCountBeforeInputTagHelper.AllTagNames;
 
     private IReadOnlyCollection<string> AfterInputTagNames => CharacterCountAfterInputTagHelper.AllTagNames;
 
     public override void SetErrorMessage(
-        TemplateString? visuallyHiddenText,
+        string? visuallyHiddenText,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -58,7 +59,7 @@ internal class CharacterCountContext : FormGroupContext3
         base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
     }
 
-    public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
+    public override void SetHint(AttributeCollection attributes, IHtmlContent? html, string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
         {
@@ -87,7 +88,7 @@ internal class CharacterCountContext : FormGroupContext3
     public override void SetLabel(
         bool? isPageHeading,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -114,7 +115,7 @@ internal class CharacterCountContext : FormGroupContext3
         base.SetLabel(isPageHeading, attributes, html, tagName);
     }
 
-    public void SetBeforeInput(TemplateString content, string tagName)
+    public void SetBeforeInput(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);
@@ -143,7 +144,7 @@ internal class CharacterCountContext : FormGroupContext3
         _beforeInput = (content, tagName);
     }
 
-    public void SetAfterInput(TemplateString content, string tagName)
+    public void SetAfterInput(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);
@@ -165,7 +166,7 @@ internal class CharacterCountContext : FormGroupContext3
         _afterInput = (content, tagName);
     }
 
-    public void SetValue(TemplateString html, string tagName)
+    public void SetValue(IHtmlContent html, string tagName)
     {
         if (Value is not null)
         {

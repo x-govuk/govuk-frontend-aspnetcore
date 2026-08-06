@@ -59,7 +59,7 @@ public class NotificationBannerTitleTagHelper : TagHelper
         notificationBannerContext.SetTitle(
             Id,
             HeadingLevel,
-            content.ToTemplateString());
+            content.Snapshot());
 
         output.SuppressOutput();
     }

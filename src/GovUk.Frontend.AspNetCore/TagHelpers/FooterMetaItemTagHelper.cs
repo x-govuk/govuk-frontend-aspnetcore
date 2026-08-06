@@ -41,7 +41,7 @@ public class FooterMetaItemTagHelper : TagHelper
         metaItemsContext.Items.Add(new FooterOptionsMetaItem
         {
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Href = href,
             Attributes = new(LinkAttributes),
             ItemAttributes = attributes

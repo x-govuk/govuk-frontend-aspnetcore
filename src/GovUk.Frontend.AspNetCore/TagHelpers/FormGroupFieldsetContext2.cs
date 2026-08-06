@@ -1,11 +1,12 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class FormGroupFieldsetContext2(string fieldsetTagName)
 {
-    public record LegendInfo(bool? IsPageHeading, AttributeCollection Attributes, TemplateString? Html);
+    public record LegendInfo(bool? IsPageHeading, AttributeCollection Attributes, IHtmlContent? Html);
 
     public string? DescribedBy { get; set; }
 
@@ -37,14 +38,11 @@ internal class FormGroupFieldsetContext2(string fieldsetTagName)
         resolvedLegendAttributes.Remove("class", out var legendClasses);
 
         var html = Legend?.Html;
-        if (html is null && @for is not null)
-        {
-            html = modelHelper.GetDisplayName(@for.ModelExplorer, @for.Name);
-        }
+        var text = html is null && @for is not null ? modelHelper.GetDisplayName(@for.ModelExplorer, @for.Name) : null;
 
         var legendOptions = new FieldsetOptionsLegend
         {
-            Text = null,
+            Text = text,
             Html = html,
             IsPageHeading = Legend?.IsPageHeading ?? legendIsPageHeading,
             Classes = legendClasses,
@@ -62,7 +60,7 @@ internal class FormGroupFieldsetContext2(string fieldsetTagName)
         };
     }
 
-    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string legendTagName)
+    public void SetLegend(bool? isPageHeading, AttributeCollection attributes, IHtmlContent? html, string legendTagName)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(legendTagName);

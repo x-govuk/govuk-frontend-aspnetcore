@@ -83,29 +83,26 @@ public class ErrorMessageTagHelper : TagHelper
                 $"Cannot determine content. Element must contain content if the '{ForAttributeName}' attribute is not specified.");
         }
 
-        var resolvedContent = content.ToTemplateString();
-        if (resolvedContent.IsEmpty() && For is not null)
-        {
-            var validationMessage = _modelHelper.GetValidationMessage(
-                ViewContext!,
-                For.ModelExplorer,
-                For.Name);
+        // The content written in the view is markup; a validation message is a plain string. Keeping
+        // them in separate slots is what stops a message containing markup being rendered as markup.
+        var resolvedHtml = content;
+        string? resolvedText = null;
 
-            if (validationMessage is not null)
-            {
-                resolvedContent = validationMessage;
-            }
+        if (resolvedHtml.IsEmpty() && For is not null)
+        {
+            resolvedText = _modelHelper.GetValidationMessage(ViewContext!, For.ModelExplorer, For.Name);
         }
 
-        if (!resolvedContent.IsEmpty())
+        if (!resolvedHtml.IsEmpty() || !resolvedText.IsEmpty())
         {
             var attributes = new ComponentGeneration.AttributeCollection(output.Attributes);
             attributes.Remove("class", out var classes);
 
             var component = await _componentGenerator.GenerateErrorMessageAsync(new ErrorMessageOptions
             {
-                Html = resolvedContent,
-                VisuallyHiddenText = VisuallyHiddenText is not null ? new TemplateString(VisuallyHiddenText) : null,
+                Html = resolvedHtml,
+                Text = resolvedText,
+                VisuallyHiddenText = VisuallyHiddenText,
                 Classes = classes,
                 Attributes = attributes
             });

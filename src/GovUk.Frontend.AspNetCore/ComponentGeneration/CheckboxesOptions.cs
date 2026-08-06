@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -25,20 +26,20 @@ public record CheckboxesOptionsFormGroup : FormGroupOptions
 
 public record CheckboxesOptionsBeforeInputs
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
 }
 
 public record CheckboxesOptionsAfterInputs
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
 }
 
 public record CheckboxesOptionsItem
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     public TemplateString? Id { get; set; }
     public TemplateString? Name { get; set; }
     public TemplateString? Value { get; set; }
@@ -56,7 +57,7 @@ public record CheckboxesOptionsItem
 
 public record CheckboxesOptionsItemConditional
 {
-    public TemplateString? Html { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }

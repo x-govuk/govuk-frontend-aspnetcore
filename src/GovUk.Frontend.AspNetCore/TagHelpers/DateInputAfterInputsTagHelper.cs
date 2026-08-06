@@ -54,7 +54,7 @@ public class DateInputAfterInputsTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        dateInputContext.SetAfterInputs(content.ToTemplateString(), context.TagName);
+        dateInputContext.SetAfterInputs(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

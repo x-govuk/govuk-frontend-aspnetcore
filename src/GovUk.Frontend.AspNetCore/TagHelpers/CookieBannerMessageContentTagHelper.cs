@@ -38,7 +38,7 @@ public class CookieBannerMessageContentTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        messageContext.Content = new(content.ToTemplateString(), context.TagName, attributes);
+        messageContext.Content = new(content.Snapshot(), context.TagName, attributes);
 
         output.SuppressOutput();
     }

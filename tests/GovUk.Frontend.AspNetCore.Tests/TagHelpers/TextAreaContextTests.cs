@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -11,10 +12,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var beforeInputTagName = TextAreaBeforeInputTagHelper.TagName;
         var errorMessageTagName = TextAreaErrorMessageTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -28,10 +29,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var valueTagName = TextAreaValueTagHelper.TagName;
         var errorMessageTagName = TextAreaErrorMessageTagHelper.TagName;
-        context.SetValue("Value", valueTagName);
+        context.SetValue(new TemplateString("Value"), valueTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -45,10 +46,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var afterInputTagName = TextAreaAfterInputTagHelper.TagName;
         var errorMessageTagName = TextAreaErrorMessageTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetErrorMessage(null, [], "Error", errorMessageTagName));
+        var ex = Record.Exception(() => context.SetErrorMessage(null, [], new TemplateString("Error"), errorMessageTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -62,10 +63,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var beforeInputTagName = TextAreaBeforeInputTagHelper.TagName;
         var hintTagName = TextAreaHintTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -79,10 +80,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var valueTagName = TextAreaValueTagHelper.TagName;
         var hintTagName = TextAreaHintTagHelper.TagName;
-        context.SetValue("Value", valueTagName);
+        context.SetValue(new TemplateString("Value"), valueTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -96,10 +97,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var afterInputTagName = TextAreaAfterInputTagHelper.TagName;
         var hintTagName = TextAreaHintTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetHint([], "Error", hintTagName));
+        var ex = Record.Exception(() => context.SetHint([], new TemplateString("Error"), hintTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -113,10 +114,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var beforeInputTagName = TextAreaBeforeInputTagHelper.TagName;
         var labelTagName = TextAreaLabelTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -130,10 +131,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var valueTagName = TextAreaValueTagHelper.TagName;
         var labelTagName = TextAreaLabelTagHelper.TagName;
-        context.SetValue("Value", valueTagName);
+        context.SetValue(new TemplateString("Value"), valueTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -147,10 +148,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var afterInputTagName = TextAreaAfterInputTagHelper.TagName;
         var labelTagName = TextAreaLabelTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetLabel(false, [], "Error", labelTagName));
+        var ex = Record.Exception(() => context.SetLabel(false, [], new TemplateString("Error"), labelTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -164,10 +165,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var valueTagName = TextAreaValueTagHelper.TagName;
         var beforeInputTagName = TextAreaBeforeInputTagHelper.TagName;
-        context.SetValue("Value", valueTagName);
+        context.SetValue(new TemplateString("Value"), valueTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -181,10 +182,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var afterInputTagName = TextAreaAfterInputTagHelper.TagName;
         var beforeInputTagName = TextAreaBeforeInputTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -197,10 +198,10 @@ public class TextAreaContextTests
         // Arrange
         var context = new TextAreaContext();
         var beforeInputTagName = TextAreaBeforeInputTagHelper.TagName;
-        context.SetBeforeInput("Content", beforeInputTagName);
+        context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetBeforeInput("Content", beforeInputTagName));
+        var ex = Record.Exception(() => context.SetBeforeInput(new TemplateString("Content"), beforeInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -216,10 +217,10 @@ public class TextAreaContextTests
         // Arrange
         var context = new TextAreaContext();
         var afterInputTagName = TextAreaAfterInputTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetAfterInput("Content", afterInputTagName));
+        var ex = Record.Exception(() => context.SetAfterInput(new TemplateString("Content"), afterInputTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -235,10 +236,10 @@ public class TextAreaContextTests
         // Arrange
         var context = new TextAreaContext();
         var valueTagName = TextAreaValueTagHelper.TagName;
-        context.SetValue("Existing value", valueTagName);
+        context.SetValue(new TemplateString("Existing value"), valueTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetValue("Value", valueTagName));
+        var ex = Record.Exception(() => context.SetValue(new TemplateString("Value"), valueTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -254,10 +255,10 @@ public class TextAreaContextTests
         var context = new TextAreaContext();
         var afterInputTagName = TextAreaAfterInputTagHelper.TagName;
         var valueTagName = TextAreaValueTagHelper.TagName;
-        context.SetAfterInput("Content", afterInputTagName);
+        context.SetAfterInput(new TemplateString("Content"), afterInputTagName);
 
         // Act
-        var ex = Record.Exception(() => context.SetValue("Value", valueTagName));
+        var ex = Record.Exception(() => context.SetValue(new TemplateString("Value"), valueTagName));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);

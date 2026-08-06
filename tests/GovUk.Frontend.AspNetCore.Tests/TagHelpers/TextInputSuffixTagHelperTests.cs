@@ -36,6 +36,6 @@ public class TextInputSuffixTagHelperTests : TagHelperTestBase<TextInputSuffixTa
 
         // Assert
         Assert.NotNull(inputContext.Suffix);
-        Assert.Equal(content, inputContext.Suffix!.Html);
+        Assert.Equal(content, inputContext.Suffix!.Html.ToHtmlString());
     }
 }

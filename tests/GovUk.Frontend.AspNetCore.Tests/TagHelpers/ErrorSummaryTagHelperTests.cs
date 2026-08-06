@@ -23,20 +23,20 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle([], "Title");
-                errorSummaryContext.SetDescription([], "Description");
+                errorSummaryContext.SetTitle([], new TemplateString("Title"));
+                errorSummaryContext.SetDescription([], new TemplateString("Description"));
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         firstErrorHref,
-                        firstErrorHtml,
+                        new TemplateString(firstErrorHtml),
                         [],
                         []));
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         secondErrorHref,
-                        secondErrorHtml,
+                        new TemplateString(secondErrorHtml),
                         [],
                         []));
 
@@ -68,13 +68,13 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 Assert.NotNull(error);
                 Assert.Equal(firstErrorHref, error.Href);
-                Assert.Equal(firstErrorHtml, error.Html);
+                Assert.Equal(firstErrorHtml, error.Html.ToHtmlString());
             },
             error =>
             {
                 Assert.NotNull(error);
                 Assert.Equal(secondErrorHref, error.Href);
-                Assert.Equal(secondErrorHtml, error.Html);
+                Assert.Equal(secondErrorHtml, error.Html.ToHtmlString());
             });
         Assert.Equal(disableAutoFocus, actualOptions.DisableAutoFocus);
         Assert.True(containerErrorContext.ErrorSummaryHasBeenRendered);
@@ -94,7 +94,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         "#Href",
-                        "Content",
+                        new TemplateString("Content"),
                         [],
                         []));
 
@@ -114,7 +114,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("There is a problem", getActualOptions().TitleHtml);
+        Assert.Equal("There is a problem", getActualOptions().TitleText);
     }
 
     [Fact]
@@ -162,13 +162,13 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle([], "Title");
-                errorSummaryContext.SetDescription([], "Description");
+                errorSummaryContext.SetTitle([], new TemplateString("Title"));
+                errorSummaryContext.SetDescription([], new TemplateString("Description"));
 
                 errorSummaryContext.AddItem(
                     new ErrorSummaryContextItem(
                         itemErrorHref,
-                        itemErrorHtml,
+                        new TemplateString(itemErrorHtml),
                         [],
                         []));
 
@@ -178,7 +178,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
-        containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
+        containerErrorContext.AddError(new TemplateString(containerErrorContextErrorHtml), containerErrorContextErrorHref);
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
@@ -200,7 +200,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 Assert.NotNull(error);
                 Assert.Equal(itemErrorHref, error.Href);
-                Assert.Equal(itemErrorHtml, error.Html);
+                Assert.Equal(itemErrorHtml, error.Html.ToHtmlString());
             });
         Assert.True(containerErrorContext.ErrorSummaryHasBeenRendered);
     }
@@ -219,8 +219,8 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)];
 
-                errorSummaryContext.SetTitle([], "Title");
-                errorSummaryContext.SetDescription([], "Description");
+                errorSummaryContext.SetTitle([], new TemplateString("Title"));
+                errorSummaryContext.SetDescription([], new TemplateString("Description"));
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -228,7 +228,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var viewContext = TestUtils.CreateViewContext();
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
-        containerErrorContext.AddError(containerErrorContextErrorHtml, containerErrorContextErrorHref);
+        containerErrorContext.AddError(new TemplateString(containerErrorContextErrorHtml), containerErrorContextErrorHref);
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
@@ -250,7 +250,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 Assert.NotNull(error);
                 Assert.Equal(containerErrorContextErrorHref, error.Href);
-                Assert.Equal(containerErrorContextErrorHtml, error.Html);
+                Assert.Equal(containerErrorContextErrorHtml, error.Html.ToHtmlString());
             });
         Assert.True(containerErrorContext.ErrorSummaryHasBeenRendered);
     }

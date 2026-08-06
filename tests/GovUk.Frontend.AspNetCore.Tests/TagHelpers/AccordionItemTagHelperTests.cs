@@ -35,11 +35,11 @@ public class AccordionItemTagHelperTests : TagHelperTestBase<AccordionItemTagHel
         // Assert
         var item = Assert.Single(accordionContext.Items);
         Assert.NotNull(item.Heading);
-        Assert.Equal("Heading", item.Heading.Html);
+        Assert.Equal("Heading", item.Heading.Html.ToHtmlString());
         Assert.NotNull(item.Summary);
-        Assert.Equal("Summary", item.Summary.Html);
+        Assert.Equal("Summary", item.Summary.Html.ToHtmlString());
         Assert.NotNull(item.Content);
-        Assert.Equal("Content", item.Content.Html);
+        Assert.Equal("Content", item.Content.Html.ToHtmlString());
     }
 
     [Fact]

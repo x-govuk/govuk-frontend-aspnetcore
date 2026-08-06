@@ -34,7 +34,7 @@ public abstract class DateInputItemLabelTagHelperBase : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
 
         dateInputItemContext.SetLabel(
-            content.ToTemplateString(),
+            content.Snapshot(),
             attributes,
             context.TagName);
 

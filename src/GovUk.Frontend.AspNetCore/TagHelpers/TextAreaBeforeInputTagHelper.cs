@@ -60,7 +60,7 @@ public class TextAreaBeforeInputTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        textAreaContext.SetBeforeInput(content.ToTemplateString(), context.TagName);
+        textAreaContext.SetBeforeInput(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

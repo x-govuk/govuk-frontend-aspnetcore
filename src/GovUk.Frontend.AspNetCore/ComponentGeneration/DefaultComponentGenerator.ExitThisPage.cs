@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Html;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -39,7 +41,7 @@ internal partial class DefaultComponentGenerator
 
         return await GenerateFromHtmlTagAsync(container);
 
-        static TemplateString CreateButtonContent(ExitThisPageOptions options)
+        static IHtmlContent CreateButtonContent(ExitThisPageOptions options)
         {
             if (!options.Html.IsEmpty())
             {
@@ -48,7 +50,7 @@ internal partial class DefaultComponentGenerator
 
             if (!options.Text.IsEmpty())
             {
-                return options.Text;
+                return new TemplateString(options.Text);
             }
 
             return TemplateString.FromEncoded("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page");

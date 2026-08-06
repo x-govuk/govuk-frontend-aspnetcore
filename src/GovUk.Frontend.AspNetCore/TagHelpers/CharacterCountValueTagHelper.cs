@@ -33,7 +33,7 @@ public class CharacterCountValueTagHelper : TagHelper
 
         var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
-        characterCountContext.SetValue(content.ToTemplateString(), context.TagName);
+        characterCountContext.SetValue(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

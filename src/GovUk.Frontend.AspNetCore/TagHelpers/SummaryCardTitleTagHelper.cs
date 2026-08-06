@@ -64,7 +64,7 @@ public class SummaryCardTitleTagHelper : TagHelper
             new SummaryListOptionsCardTitle
             {
                 Text = null,
-                Html = content.ToTemplateString(),
+                Html = content.Snapshot(),
                 HeadingLevel = HeadingLevel,
                 Classes = classes,
                 Attributes = attributes

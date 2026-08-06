@@ -1,5 +1,6 @@
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
@@ -26,7 +27,7 @@ public abstract class DateInputItemTagHelperBaseTests<T> : TagHelperTestBase<T>
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<DateInputItemContext>();
-                itemContext.SetLabel(html: labelContent, attributes: [], tagName: TagName);
+                itemContext.SetLabel(html: new TemplateString(labelContent), attributes: [], tagName: TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -55,7 +56,7 @@ public abstract class DateInputItemTagHelperBaseTests<T> : TagHelperTestBase<T>
                 Assert.Equal(autoComplete, item.AutoComplete);
                 Assert.Equal(id, item.Id);
                 Assert.Equal(inputMode, item.InputMode);
-                Assert.Equal(labelContent, item.LabelHtml);
+                Assert.Equal(labelContent, item.LabelHtml.ToHtmlString());
                 Assert.Equal(name, item.Name);
                 Assert.Equal(pattern, item.Pattern);
                 Assert.Equal(value, item.Value);

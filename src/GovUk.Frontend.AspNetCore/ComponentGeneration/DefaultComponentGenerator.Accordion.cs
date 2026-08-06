@@ -82,7 +82,7 @@ internal partial class DefaultComponentGenerator
                 else if (item.Content?.Text is { } contentText)
                 {
                     var pTag = new HtmlTag("p", attrs => attrs.WithClasses("govuk-body"));
-                    pTag.InnerHtml.AppendHtml(contentText);
+                    pTag.InnerHtml.Append(contentText);
                     contentTag.InnerHtml.AppendHtml(pTag);
                 }
 

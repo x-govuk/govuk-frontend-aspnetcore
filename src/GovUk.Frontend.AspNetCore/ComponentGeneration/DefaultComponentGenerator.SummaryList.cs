@@ -24,7 +24,7 @@ internal partial class DefaultComponentGenerator
 
                 if (!action.VisuallyHiddenText.IsEmpty())
                 {
-                    spanTag.InnerHtml.AppendHtml(action.VisuallyHiddenText);
+                    spanTag.InnerHtml.Append(action.VisuallyHiddenText);
                 }
 
                 if (cardTitle is not null)
@@ -58,7 +58,7 @@ internal partial class DefaultComponentGenerator
 
                 if (!action.VisuallyHiddenText.IsEmpty())
                 {
-                    spanTag.InnerHtml.AppendHtml(action.VisuallyHiddenText);
+                    spanTag.InnerHtml.Append(action.VisuallyHiddenText);
                 }
 
                 if (cardTitle is not null)

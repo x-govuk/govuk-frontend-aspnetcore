@@ -37,6 +37,6 @@ public class RadiosBeforeInputsTagHelperTests : TagHelperTestBase<RadiosBeforeIn
 
         // Assert
         Assert.NotNull(radiosContext.BeforeInputs);
-        Assert.Equal(content, radiosContext.BeforeInputs);
+        Assert.Equal(content, radiosContext.BeforeInputs.ToHtmlString());
     }
 }

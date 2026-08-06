@@ -28,7 +28,7 @@ internal partial class DefaultComponentGenerator
         {
             Namespace = "govuk",
             Url = options.HomePageUrl ?? "//gov.uk",
-            LogoHtml = logoContent.ToTemplateString(),
+            LogoHtml = logoContent.Snapshot(),
             ContainerClasses = options.ContainerClasses,
             ContainerAttributes = options.ContainerAttributes,
             Classes = options.Classes,

@@ -51,7 +51,7 @@ internal partial class DefaultComponentGenerator
 
         return GenerateFromHtmlTagAsync(navTag);
 
-        IHtmlContent GetLinkContent(TemplateString? html, TemplateString? text, string defaultText, string visuallyHiddenSuffix)
+        IHtmlContent GetLinkContent(IHtmlContent? html, string? text, string defaultText, string visuallyHiddenSuffix)
         {
             if (!html.IsEmpty() || !text.IsEmpty())
             {
@@ -100,7 +100,7 @@ internal partial class DefaultComponentGenerator
                 };
                 aTag.InnerHtml.AppendHtml(colonTag);
                 var labelTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-pagination__link-label"));
-                labelTag.InnerHtml.AppendHtml(link.LabelText);
+                labelTag.InnerHtml.Append(link.LabelText);
                 aTag.InnerHtml.AppendHtml(labelTag);
             }
 
@@ -139,7 +139,7 @@ internal partial class DefaultComponentGenerator
                 };
                 aTag.InnerHtml.AppendHtml(colonTag);
                 var labelTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-pagination__link-label"));
-                labelTag.InnerHtml.AppendHtml(link.LabelText);
+                labelTag.InnerHtml.Append(link.LabelText);
                 aTag.InnerHtml.AppendHtml(labelTag);
             }
 

@@ -51,7 +51,7 @@ public class CheckboxesAfterInputsTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        checkboxesContext.SetAfterInputs(content.ToTemplateString(), context.TagName);
+        checkboxesContext.SetAfterInputs(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

@@ -54,7 +54,7 @@ public class PaginationPreviousTagHelper : TagHelper
             ContainerAttributes = attributes,
             Href = href,
             LabelText = LabelText,
-            Html = content?.ToTemplateString(),
+            Html = content?.Snapshot(),
             Text = null
         });
 

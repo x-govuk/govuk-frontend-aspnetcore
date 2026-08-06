@@ -44,7 +44,7 @@ public class TagTagHelper : TagHelper
         var component = await _componentGenerator.GenerateTagAsync(new TagOptions
         {
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Attributes = attributes,
             Classes = classes
         });

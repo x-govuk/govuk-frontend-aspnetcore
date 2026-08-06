@@ -17,7 +17,7 @@ public class TabsContextTests
             Label = "Label",
             Panel = new TabsOptionsItemPanel()
             {
-                Html = "Panel"
+                Html = new TemplateString("Panel")
             }
         };
 
@@ -31,7 +31,7 @@ public class TabsContextTests
             {
                 Assert.Equal("item1", item.Id);
                 Assert.Equal("Label", item.Label);
-                Assert.Equal("Panel", item.Panel?.Html);
+                Assert.Equal("Panel", item.Panel?.Html.ToHtmlString());
             });
     }
 
@@ -47,7 +47,7 @@ public class TabsContextTests
             Label = "Label",
             Panel = new TabsOptionsItemPanel()
             {
-                Html = "Panel"
+                Html = new TemplateString("Panel")
             }
         };
 
@@ -60,7 +60,7 @@ public class TabsContextTests
             item =>
             {
                 Assert.Equal("Label", item.Label);
-                Assert.Equal("Panel", item.Panel?.Html);
+                Assert.Equal("Panel", item.Panel?.Html.ToHtmlString());
             });
     }
 }

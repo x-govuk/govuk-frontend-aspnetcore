@@ -1,15 +1,16 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class PasswordInputContext : FormGroupContext3
 {
-    private (TemplateString Content, string TagName)? _beforeInput;
-    private (TemplateString Content, string TagName)? _afterInput;
+    private (IHtmlContent Content, string TagName)? _beforeInput;
+    private (IHtmlContent Content, string TagName)? _afterInput;
 
-    public TemplateString? BeforeInput => _beforeInput?.Content;
+    public IHtmlContent? BeforeInput => _beforeInput?.Content;
 
-    public TemplateString? AfterInput => _afterInput?.Content;
+    public IHtmlContent? AfterInput => _afterInput?.Content;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => PasswordInputErrorMessageTagHelper.AllTagNames;
 
@@ -24,9 +25,9 @@ internal class PasswordInputContext : FormGroupContext3
     protected override string RootTagName => PasswordInputTagHelper.TagName;
 
     public override void SetErrorMessage(
-        TemplateString? visuallyHiddenText,
+        string? visuallyHiddenText,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -48,7 +49,7 @@ internal class PasswordInputContext : FormGroupContext3
 
     public override void SetHint(
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -71,7 +72,7 @@ internal class PasswordInputContext : FormGroupContext3
     public override void SetLabel(
         bool? isPageHeading,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -91,7 +92,7 @@ internal class PasswordInputContext : FormGroupContext3
         base.SetLabel(isPageHeading, attributes, html, tagName);
     }
 
-    public void SetBeforeInput(TemplateString content, string tagName)
+    public void SetBeforeInput(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);
@@ -113,7 +114,7 @@ internal class PasswordInputContext : FormGroupContext3
         _beforeInput = (content, tagName);
     }
 
-    public void SetAfterInput(TemplateString content, string tagName)
+    public void SetAfterInput(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);

@@ -163,13 +163,13 @@ public class SelectTagHelper : TagHelper
         {
             Attributes = formGroupAttributes,
             Classes = formGroupClasses,
-            BeforeInput = selectContext.BeforeInput is TemplateString beforeInput ?
+            BeforeInput = selectContext.BeforeInput is { } beforeInput ?
                 new SelectOptionsBeforeInput
                 {
                     Html = beforeInput
                 } :
                 null,
-            AfterInput = selectContext.AfterInput is TemplateString afterInput ?
+            AfterInput = selectContext.AfterInput is { } afterInput ?
                 new SelectOptionsAfterInput
                 {
                     Html = afterInput
@@ -203,9 +203,10 @@ public class SelectTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
+            containerErrorContext.AddError(errorContent, href: "#" + id);
         }
     }
 

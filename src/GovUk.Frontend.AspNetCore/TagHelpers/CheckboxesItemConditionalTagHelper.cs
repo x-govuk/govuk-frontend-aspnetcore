@@ -32,7 +32,7 @@ public class CheckboxesItemConditionalTagHelper : TagHelper
         var conditionalOptions = new CheckboxesOptionsItemConditional
         {
             Attributes = attributes,
-            Html = content.ToTemplateString()
+            Html = content.Snapshot()
         };
 
         itemContext.SetConditional(conditionalOptions, context.TagName);

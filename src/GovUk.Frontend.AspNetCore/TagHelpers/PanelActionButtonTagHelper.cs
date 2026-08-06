@@ -51,7 +51,7 @@ public class PanelActionButtonTagHelper : TagHelper
 
         actionsContext.Actions.Add(new PanelActionsItemOptions
         {
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Type = Type ?? "button",
             Href = null,
             Classes = classes,

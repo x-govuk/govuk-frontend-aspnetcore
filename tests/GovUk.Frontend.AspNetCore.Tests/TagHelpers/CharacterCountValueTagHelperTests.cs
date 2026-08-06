@@ -27,6 +27,6 @@ public class CharacterCountValueTagHelperTests : TagHelperTestBase<CharacterCoun
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Value", characterCountContext.Value);
+        Assert.Equal("Value", characterCountContext.Value.ToHtmlString());
     }
 }

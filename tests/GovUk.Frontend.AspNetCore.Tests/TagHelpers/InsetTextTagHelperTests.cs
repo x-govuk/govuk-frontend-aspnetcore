@@ -35,7 +35,7 @@ public class InsetTextTagHelperTests : TagHelperTestBase<InsetTextTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal(content, actualOptions.Html.ToHtmlString());
         Assert.Null(actualOptions.Text);
         Assert.Equal(id, actualOptions.Id);
     }

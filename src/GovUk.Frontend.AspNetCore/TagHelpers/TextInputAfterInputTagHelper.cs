@@ -60,7 +60,7 @@ public class TextInputAfterInputTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        inputContext.SetAfterInput(content.ToTemplateString(), context.TagName);
+        inputContext.SetAfterInput(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

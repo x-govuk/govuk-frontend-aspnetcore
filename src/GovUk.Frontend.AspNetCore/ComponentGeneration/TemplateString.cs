@@ -481,6 +481,13 @@ public static class TemplateStringExtensions
         return !templateString.IsEmpty() ? templateString : fallback;
     }
 
+    internal static string WithEmptyFallback(this string? value, string fallback)
+    {
+        ArgumentNullException.ThrowIfNull(fallback);
+
+        return !value.IsEmpty() ? value : fallback;
+    }
+
     /// <summary>
     /// Gets the text of <paramref name="templateString"/> for use as an identifier, key or attribute
     /// token, falling back to its rendered HTML when it has no unambiguous text reading.

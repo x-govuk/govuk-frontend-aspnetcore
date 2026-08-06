@@ -44,12 +44,12 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                 inputContext.SetLabel(
                     isPageHeading: false,
                     attributes: [],
-                    labelContent,
+                    new TemplateString(labelContent),
                     TextInputLabelTagHelper.TagName);
 
                 inputContext.SetHint(
                     attributes: [],
-                    hintContent,
+                    new TemplateString(hintContent),
                     TextInputHintTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -96,8 +96,8 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         Assert.Equal(value, actualOptions.Value);
         Assert.Equal(disabled, actualOptions.Disabled);
         Assert.Equal(describedBy, actualOptions.DescribedBy);
-        Assert.Equal(labelContent, actualOptions.Label?.Html);
-        Assert.Equal(hintContent, actualOptions.Hint?.Html);
+        Assert.Equal(labelContent, actualOptions.Label?.Html.ToHtmlString());
+        Assert.Equal(hintContent, actualOptions.Hint?.Html.ToHtmlString());
         Assert.Null(actualOptions.ErrorMessage);
         Assert.Equal(className, actualOptions.Classes);
         Assert.Equal(autocomplete, actualOptions.AutoComplete);
@@ -145,7 +145,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
                     TextInputLabelTagHelper.TagName);
 
                 inputContext.SetErrorMessage(
-                    visuallyHiddenText: new HtmlString(errorVht),
+                    visuallyHiddenText: new HtmlString(errorVht).ToHtmlString(),
                     attributes: new AttributeCollection()
                     {
                         { "data-foo", errorDataFooAttribute }
@@ -176,7 +176,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html.ToHtmlString());
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
         Assert.Collection(actualOptions.ErrorMessage.Attributes, kvp =>
@@ -263,9 +263,9 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
         Assert.NotNull(actualOptions.Id);
         Assert.NotNull(actualOptions.Name);
         Assert.Equal(modelStateValue, actualOptions.Value);
-        Assert.Equal(displayName, actualOptions.Label?.Html);
-        Assert.Equal(description, actualOptions.Hint?.Html);
-        Assert.Equal(modelStateError, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(displayName, actualOptions.Label?.Text);
+        Assert.Equal(description, actualOptions.Hint?.Text);
+        Assert.Equal(modelStateError, actualOptions.ErrorMessage?.Text);
     }
 
     [Fact]
@@ -404,7 +404,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(labelHtml, actualOptions.Label?.Html);
+        Assert.Equal(labelHtml, actualOptions.Label?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -478,7 +478,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -559,7 +559,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -714,7 +714,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html.ToHtmlString());
     }
 
     [Fact]
@@ -776,7 +776,7 @@ public class TextInputTagHelperTests : TagHelperTestBase<TextInputTagHelper>
             tagHelper.ViewContext.HttpContext.GetPageErrorContext().Errors,
             error =>
             {
-                Assert.Equal(errorHtml, error.Html);
+                Assert.Equal(errorHtml, error.Html.ToHtmlString());
                 Assert.Equal($"#{id}", error.Href);
             });
     }

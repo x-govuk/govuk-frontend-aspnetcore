@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
 using AttributeCollection = GovUk.Frontend.AspNetCore.ComponentGeneration.AttributeCollection;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -252,14 +253,14 @@ public class DateInputTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new DateInputFormGroupOptions
         {
-            BeforeInputs = dateInputContext.BeforeInputs is TemplateString beforeInputs ?
+            BeforeInputs = dateInputContext.BeforeInputs is { } beforeInputs ?
                 new DateInputOptionsBeforeInputs
                 {
                     Text = null,
                     Html = beforeInputs
                 } :
                 null,
-            AfterInputs = dateInputContext.AfterInputs is TemplateString afterInputs ?
+            AfterInputs = dateInputContext.AfterInputs is { } afterInputs ?
                 new DateInputOptionsAfterInputs
                 {
                     Text = null,
@@ -348,14 +349,15 @@ public class DateInputTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
 
             var firstFieldWithError = items
                 .First(i => i.Classes?.Contains("govuk-input--error") is true)
                 .Id;
 
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + firstFieldWithError!);
+            containerErrorContext.AddError(errorContent, href: "#" + firstFieldWithError!);
         }
 
         DateInputOptionsItem CreateDateInputItem(
@@ -371,7 +373,7 @@ public class DateInputTagHelper : TagHelper
             var defaultFullName = ModelNames.CreatePropertyModelName(namePrefix, defaultName);
             var itemName = TemplateString.Coalesce(contextItem?.Name, defaultFullName);
             var itemId = TemplateString.Coalesce(contextItem?.Id, contextItem?.Name, new TemplateString($"{id}.{defaultName}"));
-            var itemLabel = TemplateString.Coalesce(contextItem?.LabelHtml, defaultLabel);
+            IHtmlContent? itemLabel = contextItem?.LabelHtml ?? new TemplateString(defaultLabel);
 
             // Value resolution hierarchy:
             //   if Value has been set on a child tag helper e.g. <date-input-day /> then use that;

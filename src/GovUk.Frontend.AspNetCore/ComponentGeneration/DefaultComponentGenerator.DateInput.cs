@@ -44,7 +44,7 @@ internal partial class DefaultComponentGenerator
                 Role = "group",
                 Attributes = options.Fieldset.Attributes,
                 Legend = options.Fieldset.Legend,
-                Html = innerContent.ToTemplateString()
+                Html = innerContent.Snapshot()
             });
 
             formGroupDiv.InnerHtml.AppendHtml(fieldsetComponent);
@@ -157,14 +157,14 @@ internal partial class DefaultComponentGenerator
 
             var inputClasses = new TemplateString("govuk-date-input__input").AppendCssClasses(errorClass, widthClass, item.Classes);
 
-            var labelText = item.Label ?? Capitalize(itemName);
+            var labelText = item.Label ?? new TemplateString(Capitalize(itemName));
             var inputId = item.Id ?? new TemplateString($"{parentId}-{itemName}");
             var inputName = namePrefix.IsEmpty() ? itemName : new TemplateString($"{namePrefix}-{itemName}");
             var inputValue = itemValue ?? GetValue(values, inputName.ToText());
 
             var inputComponent = await GenerateInputAsync(new InputOptions
             {
-                Label = new LabelOptions { Text = labelText, Classes = "govuk-date-input__label" },
+                Label = new LabelOptions { Html = labelText, Classes = "govuk-date-input__label" },
                 Id = inputId,
                 Classes = inputClasses,
                 Name = inputName,

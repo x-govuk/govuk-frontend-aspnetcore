@@ -32,9 +32,9 @@ public class RadiosErrorMessageTagHelper : FormGroupErrorMessageTagHelperBase
         var attributes = new AttributeCollection(output.Attributes);
 
         radiosContext.SetErrorMessage(
-            VisuallyHiddenText is not null ? new TemplateString(VisuallyHiddenText) : null,
+            VisuallyHiddenText,
             attributes,
-            content?.ToTemplateString(),
+            content?.Snapshot(),
             context.TagName);
     }
 }

@@ -1,21 +1,22 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class TextInputContext : FormGroupContext3
 {
-    private (TemplateString Content, string TagName)? _beforeInput;
+    private (IHtmlContent Content, string TagName)? _beforeInput;
     private (InputOptionsPrefix Options, string TagName)? _prefix;
     private (InputOptionsSuffix Options, string TagName)? _suffix;
-    private (TemplateString Content, string TagName)? _afterInput;
+    private (IHtmlContent Content, string TagName)? _afterInput;
 
-    public TemplateString? BeforeInput => _beforeInput?.Content;
+    public IHtmlContent? BeforeInput => _beforeInput?.Content;
 
     public InputOptionsPrefix? Prefix => _prefix?.Options;
 
     public InputOptionsSuffix? Suffix => _suffix?.Options;
 
-    public TemplateString? AfterInput => _afterInput?.Content;
+    public IHtmlContent? AfterInput => _afterInput?.Content;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => TextInputErrorMessageTagHelper.AllTagNames;
 
@@ -34,9 +35,9 @@ internal class TextInputContext : FormGroupContext3
     protected override string RootTagName => TextInputTagHelper.TagName;
 
     public override void SetErrorMessage(
-        TemplateString? visuallyHiddenText,
+        string? visuallyHiddenText,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -72,7 +73,7 @@ internal class TextInputContext : FormGroupContext3
 
     public override void SetHint(
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -109,7 +110,7 @@ internal class TextInputContext : FormGroupContext3
     public override void SetLabel(
         bool? isPageHeading,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -143,7 +144,7 @@ internal class TextInputContext : FormGroupContext3
         base.SetLabel(isPageHeading, attributes, html, tagName);
     }
 
-    public void SetBeforeInput(TemplateString content, string tagName)
+    public void SetBeforeInput(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);
@@ -230,7 +231,7 @@ internal class TextInputContext : FormGroupContext3
         _suffix = (options, tagName);
     }
 
-    public void SetAfterInput(TemplateString content, string tagName)
+    public void SetAfterInput(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);

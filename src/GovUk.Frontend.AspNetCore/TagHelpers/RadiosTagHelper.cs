@@ -181,14 +181,14 @@ public class RadiosTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new RadiosOptionsFormGroup
         {
-            BeforeInputs = radiosContext.BeforeInputs is TemplateString beforeInputs ?
+            BeforeInputs = radiosContext.BeforeInputs is { } beforeInputs ?
                 new RadiosOptionsBeforeInputs
                 {
                     Text = null,
                     Html = beforeInputs
                 } :
                 null,
-            AfterInputs = radiosContext.AfterInputs is TemplateString afterInputs ?
+            AfterInputs = radiosContext.AfterInputs is { } afterInputs ?
                 new RadiosOptionsAfterInputs
                 {
                     Text = null,
@@ -222,9 +222,10 @@ public class RadiosTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + idPrefix);
+            containerErrorContext.AddError(errorContent, href: "#" + idPrefix);
         }
     }
 

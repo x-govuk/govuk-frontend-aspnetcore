@@ -61,7 +61,7 @@ public class ServiceNavigationStartTagHelper : TagHelper
             throw ExceptionHelper.AttributesNotSupported();
         }
 
-        serviceNavigationContext.StartSlot = (content.ToTemplateString(), context.TagName);
+        serviceNavigationContext.StartSlot = (content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

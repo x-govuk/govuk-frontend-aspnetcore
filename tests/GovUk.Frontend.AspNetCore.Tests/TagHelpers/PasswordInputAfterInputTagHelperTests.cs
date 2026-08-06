@@ -37,6 +37,6 @@ public class PasswordInputAfterInputTagHelperTests : TagHelperTestBase<PasswordI
 
         // Assert
         Assert.NotNull(inputContext.AfterInput);
-        Assert.Equal(content, inputContext.AfterInput);
+        Assert.Equal(content, inputContext.AfterInput.ToHtmlString());
     }
 }

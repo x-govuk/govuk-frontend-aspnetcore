@@ -36,7 +36,7 @@ public class SummaryListRowValueTagHelper : TagHelper
             new SummaryListOptionsRowValue
             {
                 Text = null,
-                Html = content.ToTemplateString(),
+                Html = content.Snapshot(),
                 Classes = classes,
                 Attributes = attributes
             },

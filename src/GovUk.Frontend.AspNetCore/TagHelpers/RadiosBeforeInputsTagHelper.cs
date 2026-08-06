@@ -51,7 +51,7 @@ public class RadiosBeforeInputsTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        radiosContext.SetBeforeInputs(content.ToTemplateString(), context.TagName);
+        radiosContext.SetBeforeInputs(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

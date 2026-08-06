@@ -60,7 +60,7 @@ public class FileUploadAfterInputTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        fileUploadContext.SetAfterInput(content.ToTemplateString(), context.TagName);
+        fileUploadContext.SetAfterInput(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

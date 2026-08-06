@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -19,17 +20,23 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
+    private readonly IGovUkFrontendLocalizer _localizer;
 
     /// <summary>
     /// Creates a <see cref="GeneratedErrorSummaryTagHelper"/>.
     /// </summary>
-    public GeneratedErrorSummaryTagHelper(IComponentGenerator componentGenerator, IOptions<GovUkFrontendOptions> optionsAccessor)
+    public GeneratedErrorSummaryTagHelper(
+        IComponentGenerator componentGenerator,
+        IOptions<GovUkFrontendOptions> optionsAccessor,
+        IGovUkFrontendLocalizer localizer)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
         ArgumentNullException.ThrowIfNull(optionsAccessor);
+        ArgumentNullException.ThrowIfNull(localizer);
 
         _componentGenerator = componentGenerator;
         _optionsAccessor = optionsAccessor;
+        _localizer = localizer;
     }
 
     /// <summary>
@@ -78,10 +85,12 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
 
         var disableAutoFocus = generateErrorSummariesOptions.HasFlag(DisableAutoFocus);
 
+        var (titleText, titleHtml) = DefaultComponentGenerator.GetErrorSummaryTitle(_localizer, specifiedTitleHtml: null);
+
         var errorSummary = await _componentGenerator.GenerateErrorSummaryAsync(new ErrorSummaryOptions
         {
-            TitleText = DefaultComponentGenerator.DefaultErrorSummaryTitleText,
-            TitleHtml = null,
+            TitleText = titleText,
+            TitleHtml = titleHtml,
             DescriptionText = null,
             DescriptionHtml = null,
             ErrorList = errorSummaryItems,

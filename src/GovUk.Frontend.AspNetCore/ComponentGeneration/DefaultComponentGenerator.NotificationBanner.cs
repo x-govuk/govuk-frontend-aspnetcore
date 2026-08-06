@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -88,7 +89,11 @@ internal partial class DefaultComponentGenerator
                 return new TemplateString(titleText);
             }
 
-            return new HtmlString(isSuccessBanner ? "Success" : "Important");
+            var name = isSuccessBanner
+                ? GovUkFrontendResourceNames.NotificationBannerTitleTextSuccess
+                : GovUkFrontendResourceNames.NotificationBannerTitleTextImportant;
+
+            return new TemplateString(LocalizedText(name) ?? (isSuccessBanner ? "Success" : "Important"));
         }
     }
 }

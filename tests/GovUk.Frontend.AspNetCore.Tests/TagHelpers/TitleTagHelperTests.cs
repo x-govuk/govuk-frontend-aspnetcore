@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
@@ -35,7 +36,7 @@ public class TitleTagHelperTests : TagHelperTestBase<TitleTagHelper>
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.ErrorSummaryHasBeenRendered = pageHasErrors;
 
-        var tagHelper = new TitleTagHelper(options)
+        var tagHelper = new TitleTagHelper(options, NullGovUkFrontendLocalizer.Instance)
         {
             ViewContext = viewContext
         };

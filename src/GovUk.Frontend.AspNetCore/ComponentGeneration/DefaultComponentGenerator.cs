@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -6,6 +7,21 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator : IComponentGenerator
 {
+    private readonly IGovUkFrontendLocalizer _localizer;
+
+    // A parameterless constructor is required so the type can be mocked with CallBase.
+    public DefaultComponentGenerator()
+        : this(NullGovUkFrontendLocalizer.Instance)
+    {
+    }
+
+    public DefaultComponentGenerator(IGovUkFrontendLocalizer localizer)
+    {
+        ArgumentNullException.ThrowIfNull(localizer);
+
+        _localizer = localizer;
+    }
+
     private ValueTask<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
         ValueTask.FromResult<GovUkComponent>(new HtmlTagGovUkComponent(tag));
 
@@ -25,6 +41,27 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
         return new TemplateString(fallback);
     }
+
+    /// <summary>
+    /// Gets the localized text for <paramref name="name"/>, or <see langword="null"/> when no content
+    /// has been supplied. It is HTML-encoded wherever it is written, like any other text.
+    /// </summary>
+    private string? LocalizedText(string name) =>
+        _localizer.GetString(name) is { Length: > 0 } value ? value : null;
+
+    /// <summary>
+    /// Gets the localized content for <paramref name="name"/> as HTML, which is written as-is, or
+    /// <see langword="null"/> when no content has been supplied.
+    /// </summary>
+    private IHtmlContent? LocalizedHtml(string name) =>
+        _localizer.GetString(name) is { Length: > 0 } value ? TemplateString.FromEncoded(value) : null;
+
+    /// <summary>
+    /// Gets the localized text for <paramref name="name"/> with every occurrence of
+    /// <paramref name="placeholder"/> replaced by <paramref name="value"/>.
+    /// </summary>
+    private string? LocalizedText(string name, string placeholder, string value) =>
+        LocalizedText(name)?.Replace(placeholder, value, StringComparison.Ordinal);
 
     protected sealed class EmptyComponent : GovUkComponent
     {

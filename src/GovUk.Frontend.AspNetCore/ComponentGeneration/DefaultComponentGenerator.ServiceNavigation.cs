@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -8,7 +9,8 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var menuButtonText = options.MenuButtonText.WithEmptyFallback("Menu");
+        var menuButtonText = options.MenuButtonText
+            .WithEmptyFallback(LocalizedText(GovUkFrontendResourceNames.ServiceNavigationMenuButtonText) ?? "Menu");
         var navigationId = options.NavigationId.WithEmptyFallback("navigation");
 
         var innerContent = CreateInnerContent();
@@ -215,7 +217,10 @@ internal partial class DefaultComponentGenerator
                 !(options.Slots?.Start).IsEmpty() ||
                 !(options.Slots?.End).IsEmpty())
             {
-                var ariaLabel = TemplateString.Coalesce(options.AriaLabel, "Service information");
+                var ariaLabel = TemplateString.Coalesce(
+                    options.AriaLabel,
+                    LocalizedText(GovUkFrontendResourceNames.ServiceNavigationAriaLabel),
+                    "Service information");
 
                 var sectionTag = new HtmlTag("section", attrs => attrs
                     .WithClasses("govuk-service-navigation", options.Classes)

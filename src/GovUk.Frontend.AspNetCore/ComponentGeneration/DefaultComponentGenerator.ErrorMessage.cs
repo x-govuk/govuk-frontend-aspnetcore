@@ -1,3 +1,5 @@
+using GovUk.Frontend.AspNetCore.Localization;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -6,7 +8,9 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var visuallyHiddenText = options.VisuallyHiddenText ?? "Error";
+        var visuallyHiddenText = options.VisuallyHiddenText ??
+            LocalizedText(GovUkFrontendResourceNames.ErrorMessageVisuallyHiddenText) ??
+            "Error";
         var content = HtmlOrText(options.Html, options.Text);
 
         var tag = new HtmlTag("p", attrs => attrs

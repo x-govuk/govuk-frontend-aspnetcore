@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using GovUk.Frontend.AspNetCore.Localization;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
@@ -36,7 +37,7 @@ public class GeneratedErrorSummaryTagHelperTests : TagHelperTestBase<GeneratedEr
         var containerErrorContext = viewContext.HttpContext.GetPageErrorContext();
         containerErrorContext.AddError(new TemplateString(errorHtml), errorHref);
 
-        var tagHelper = new GeneratedErrorSummaryTagHelper(componentGenerator, options)
+        var tagHelper = new GeneratedErrorSummaryTagHelper(componentGenerator, options, NullGovUkFrontendLocalizer.Instance)
         {
             PrependErrorSummary = prependErrorSummary,
             ViewContext = viewContext

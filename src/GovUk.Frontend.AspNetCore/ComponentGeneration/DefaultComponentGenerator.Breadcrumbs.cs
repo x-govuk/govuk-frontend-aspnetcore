@@ -1,3 +1,5 @@
+using GovUk.Frontend.AspNetCore.Localization;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -8,7 +10,7 @@ internal partial class DefaultComponentGenerator
 
         var navTag = new HtmlTag("nav", attrs => attrs
             .WithClasses("govuk-breadcrumbs", options.CollapseOnMobile is true ? "govuk-breadcrumbs--collapse-on-mobile" : null, options.Classes)
-            .With("aria-label", options.LabelText ?? "Breadcrumb")
+            .With("aria-label", options.LabelText ?? LocalizedText(GovUkFrontendResourceNames.BreadcrumbsLabelText) ?? "Breadcrumb")
             .With(options.Attributes));
 
         var olTag = new HtmlTag("ol", attrs => attrs

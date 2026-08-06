@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -14,7 +15,7 @@ internal partial class DefaultComponentGenerator
                 .WithClasses("govuk-cookie-banner", options.Classes)
                 .WithBoolean("data-nosnippet")
                 .With("role", "region")
-                .With("aria-label", options.AriaLabel ?? "Cookie banner")
+                .With("aria-label", options.AriaLabel ?? LocalizedText(GovUkFrontendResourceNames.CookieBannerAriaLabel) ?? "Cookie banner")
                 .WithBoolean("hidden", options.Hidden is true)
                 .With(options.Attributes);
         });

@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -112,7 +113,9 @@ internal partial class DefaultComponentGenerator
 
             if (meta is not null)
             {
-                var visuallyHiddenTitle = meta.VisuallyHiddenTitle ?? "Support links";
+                var visuallyHiddenTitle = meta.VisuallyHiddenTitle ??
+                    LocalizedText(GovUkFrontendResourceNames.FooterMetaVisuallyHiddenTitle) ??
+                    "Support links";
                 var h2Tag = new HtmlTag("h2", attrs => attrs
                     .WithClasses("govuk-visually-hidden"));
                 h2Tag.InnerHtml.AppendHtml(visuallyHiddenTitle);
@@ -170,6 +173,12 @@ internal partial class DefaultComponentGenerator
                 {
                     licenceSpanTag.InnerHtml.AppendHtml(HtmlOrText(contentLicence.Html, contentLicence.Text));
                 }
+                else if (LocalizedHtml(GovUkFrontendResourceNames.FooterContentLicenceHtml) is { } localizedContentLicence)
+                {
+                    // The sentence wraps a link, so it's localized as a whole rather than split into
+                    // fragments around it.
+                    licenceSpanTag.InnerHtml.AppendHtml(localizedContentLicence);
+                }
                 else
                 {
                     licenceSpanTag.InnerHtml.Append("All content is available under the ");
@@ -201,6 +210,10 @@ internal partial class DefaultComponentGenerator
                 if (copyright?.Html is not null || copyright?.Text is not null)
                 {
                     copyrightLink.InnerHtml.AppendHtml(HtmlOrText(copyright.Html, copyright.Text));
+                }
+                else if (LocalizedText(GovUkFrontendResourceNames.FooterCopyrightText) is { } localizedCopyright)
+                {
+                    copyrightLink.InnerHtml.Append(localizedCopyright);
                 }
                 else
                 {

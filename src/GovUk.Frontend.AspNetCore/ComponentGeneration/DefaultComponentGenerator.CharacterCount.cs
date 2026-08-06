@@ -1,4 +1,5 @@
 using System.Globalization;
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -13,7 +14,16 @@ internal partial class DefaultComponentGenerator
 
         var hasNoLimit = !options.MaxWords.HasValue && !options.MaxLength.HasValue;
         var textareaDescriptionLength = options.MaxWords ?? options.MaxLength;
-        var textareaDescriptionText = options.TextareaDescriptionText ??
+
+        // %{count} is substituted below (when there's a limit) or by the JavaScript (when there isn't),
+        // so it has to survive localization verbatim.
+        var localizedTextareaDescriptionText = LocalizedText(options.MaxWords.HasValue
+            ? GovUkFrontendResourceNames.CharacterCountTextareaDescriptionTextWords
+            : GovUkFrontendResourceNames.CharacterCountTextareaDescriptionTextCharacters);
+
+        var specifiedTextareaDescriptionText = options.TextareaDescriptionText ?? localizedTextareaDescriptionText;
+
+        var textareaDescriptionText = specifiedTextareaDescriptionText ??
             $"You can enter up to %{{count}} {(options.MaxWords.HasValue ? "words" : "characters")}";
 
         var textareaDescriptionTextNoLimit = !hasNoLimit && textareaDescriptionLength.HasValue
@@ -65,17 +75,44 @@ internal partial class DefaultComponentGenerator
             formGroupAttributes.Set("data-threshold", options.Threshold.Value.ToString(CultureInfo.InvariantCulture));
         }
 
-        if (hasNoLimit && options.TextareaDescriptionText is not null && !options.TextareaDescriptionText.IsEmpty())
+        if (hasNoLimit && specifiedTextareaDescriptionText is not null && !specifiedTextareaDescriptionText.IsEmpty())
         {
-            formGroupAttributes.Set("data-i18n.textarea-description.other", options.TextareaDescriptionText);
+            formGroupAttributes.Set("data-i18n.textarea-description.other", specifiedTextareaDescriptionText);
         }
 
-        AddI18nPluralAttributes(formGroupAttributes, "characters-under-limit", options.CharactersUnderLimitText?.Other, options.CharactersUnderLimitText?.One);
-        AddI18nSingularAttribute(formGroupAttributes, "characters-at-limit", options.CharactersAtLimitText);
-        AddI18nPluralAttributes(formGroupAttributes, "characters-over-limit", options.CharactersOverLimitText?.Other, options.CharactersOverLimitText?.One);
-        AddI18nPluralAttributes(formGroupAttributes, "words-under-limit", options.WordsUnderLimitText?.Other, options.WordsUnderLimitText?.One);
-        AddI18nSingularAttribute(formGroupAttributes, "words-at-limit", options.WordsAtLimitText);
-        AddI18nPluralAttributes(formGroupAttributes, "words-over-limit", options.WordsOverLimitText?.Other, options.WordsOverLimitText?.One);
+        AddI18nPluralAttributes(
+            formGroupAttributes,
+            "characters-under-limit",
+            options.CharactersUnderLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextOther),
+            options.CharactersUnderLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextOne));
+
+        AddI18nSingularAttribute(
+            formGroupAttributes,
+            "characters-at-limit",
+            options.CharactersAtLimitText ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersAtLimitText));
+
+        AddI18nPluralAttributes(
+            formGroupAttributes,
+            "characters-over-limit",
+            options.CharactersOverLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextOther),
+            options.CharactersOverLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextOne));
+
+        AddI18nPluralAttributes(
+            formGroupAttributes,
+            "words-under-limit",
+            options.WordsUnderLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextOther),
+            options.WordsUnderLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextOne));
+
+        AddI18nSingularAttribute(
+            formGroupAttributes,
+            "words-at-limit",
+            options.WordsAtLimitText ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsAtLimitText));
+
+        AddI18nPluralAttributes(
+            formGroupAttributes,
+            "words-over-limit",
+            options.WordsOverLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextOther),
+            options.WordsOverLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextOne));
 
         if (options.FormGroup?.Attributes is not null)
         {

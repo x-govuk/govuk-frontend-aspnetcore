@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -8,7 +9,7 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var buttonContent = CreateButtonContent(options);
+        var buttonContent = CreateButtonContent();
 
         var buttonOptions = new ButtonOptions
         {
@@ -29,10 +30,10 @@ internal partial class DefaultComponentGenerator
                 .With("id", options.Id)
                 .WithClasses("govuk-exit-this-page", options.Classes)
                 .With("data-module", "govuk-exit-this-page")
-                .With("data-i18n.activated", options.ActivatedText)
-                .With("data-i18n.timed-out", options.TimedOutText)
-                .With("data-i18n.press-two-more-times", options.PressTwoMoreTimesText)
-                .With("data-i18n.press-one-more-time", options.PressOneMoreTimeText)
+                .With("data-i18n.activated", options.ActivatedText ?? LocalizedText(GovUkFrontendResourceNames.ExitThisPageActivatedText))
+                .With("data-i18n.timed-out", options.TimedOutText ?? LocalizedText(GovUkFrontendResourceNames.ExitThisPageTimedOutText))
+                .With("data-i18n.press-two-more-times", options.PressTwoMoreTimesText ?? LocalizedText(GovUkFrontendResourceNames.ExitThisPagePressTwoMoreTimesText))
+                .With("data-i18n.press-one-more-time", options.PressOneMoreTimeText ?? LocalizedText(GovUkFrontendResourceNames.ExitThisPagePressOneMoreTimeText))
                 .With(options.Attributes);
         })
         {
@@ -41,7 +42,7 @@ internal partial class DefaultComponentGenerator
 
         return await GenerateFromHtmlTagAsync(container);
 
-        static IHtmlContent CreateButtonContent(ExitThisPageOptions options)
+        IHtmlContent CreateButtonContent()
         {
             if (!options.Html.IsEmpty())
             {
@@ -53,7 +54,15 @@ internal partial class DefaultComponentGenerator
                 return new TemplateString(options.Text);
             }
 
-            return TemplateString.FromEncoded("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page");
+            var visuallyHiddenText = LocalizedText(GovUkFrontendResourceNames.ExitThisPageVisuallyHiddenText) ?? "Emergency";
+            var text = LocalizedText(GovUkFrontendResourceNames.ExitThisPageText) ?? "Exit this page";
+
+            var visuallyHiddenTag = new HtmlTag("span", attrs => attrs.WithClasses("govuk-visually-hidden"))
+            {
+                visuallyHiddenText
+            };
+
+            return new TemplateString($"{visuallyHiddenTag} {text}");
         }
     }
 }

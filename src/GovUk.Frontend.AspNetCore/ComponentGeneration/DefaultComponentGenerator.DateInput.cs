@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -157,7 +158,7 @@ internal partial class DefaultComponentGenerator
 
             var inputClasses = new TemplateString("govuk-date-input__input").AppendCssClasses(errorClass, widthClass, item.Classes);
 
-            var labelText = item.Label ?? new TemplateString(Capitalize(itemName));
+            var labelText = item.Label ?? new TemplateString(LocalizedItemLabel(itemName) ?? Capitalize(itemName));
             var inputId = item.Id ?? new TemplateString($"{parentId}-{itemName}");
             var inputName = namePrefix.IsEmpty() ? itemName : new TemplateString($"{namePrefix}-{itemName}");
             var inputValue = itemValue ?? GetValue(values, inputName.ToText());
@@ -190,4 +191,14 @@ internal partial class DefaultComponentGenerator
 
     private static TemplateString? GetValue(IReadOnlyDictionary<string, TemplateString?>? values, string? key) =>
         key is not null && values is not null && values.TryGetValue(key, out var value) ? value : null;
+
+    // Only the three canonical items have a localized label; a custom item's label is still derived
+    // from its name.
+    private string? LocalizedItemLabel(TemplateString? itemName) => itemName.ToText() switch
+    {
+        "day" => LocalizedText(GovUkFrontendResourceNames.DateInputDayLabel),
+        "month" => LocalizedText(GovUkFrontendResourceNames.DateInputMonthLabel),
+        "year" => LocalizedText(GovUkFrontendResourceNames.DateInputYearLabel),
+        _ => null
+    };
 }

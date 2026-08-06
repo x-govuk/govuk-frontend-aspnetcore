@@ -1,3 +1,5 @@
+using GovUk.Frontend.AspNetCore.Localization;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -23,12 +25,12 @@ internal partial class DefaultComponentGenerator
             .WithClasses("govuk-accordion", options.Classes)
             .With("data-module", "govuk-accordion")
             .With("id", options.Id)
-            .With("data-i18n.hide-all-sections", options.HideAllSectionsText)
-            .With("data-i18n.hide-section", options.HideSectionText)
-            .With("data-i18n.hide-section-aria-label", options.HideSectionAriaLabelText)
-            .With("data-i18n.show-all-sections", options.ShowAllSectionsText)
-            .With("data-i18n.show-section", options.ShowSectionText)
-            .With("data-i18n.show-section-aria-label", options.ShowSectionAriaLabelText)
+            .With("data-i18n.hide-all-sections", options.HideAllSectionsText ?? LocalizedText(GovUkFrontendResourceNames.AccordionHideAllSectionsText))
+            .With("data-i18n.hide-section", options.HideSectionText ?? LocalizedText(GovUkFrontendResourceNames.AccordionHideSectionText))
+            .With("data-i18n.hide-section-aria-label", options.HideSectionAriaLabelText ?? LocalizedText(GovUkFrontendResourceNames.AccordionHideSectionAriaLabelText))
+            .With("data-i18n.show-all-sections", options.ShowAllSectionsText ?? LocalizedText(GovUkFrontendResourceNames.AccordionShowAllSectionsText))
+            .With("data-i18n.show-section", options.ShowSectionText ?? LocalizedText(GovUkFrontendResourceNames.AccordionShowSectionText))
+            .With("data-i18n.show-section-aria-label", options.ShowSectionAriaLabelText ?? LocalizedText(GovUkFrontendResourceNames.AccordionShowSectionAriaLabelText))
             .With("data-remember-expanded", options.RememberExpanded is false ? "false" : null)
             .With(options.Attributes));
 

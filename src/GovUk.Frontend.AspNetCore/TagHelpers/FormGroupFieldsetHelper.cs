@@ -40,7 +40,7 @@ internal static class FormGroupFieldsetHelper
 
         if (resolvedLegendAttributes.Remove(IsPageHeadingAttributeName, out var isPageHeadingValue))
         {
-            resolvedLegendIsPageHeading = bool.TryParse(isPageHeadingValue?.ToHtmlString(), out var parsed)
+            resolvedLegendIsPageHeading = bool.TryParse(isPageHeadingValue.ToText(), out var parsed)
                 ? parsed
                 : throw new InvalidOperationException(
                     $"The '{LegendIsPageHeadingAttributeName}' attribute must be 'true' or 'false'.");

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Globalization;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -64,7 +65,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
         {
             if (_attributes.TryGetValue(name, out var attribute))
             {
-                return attribute.Value as TemplateString ?? attribute.Value?.ToString();
+                return ValueToTemplateString(attribute.Value);
             }
 
             return null;
@@ -163,7 +164,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
     {
         if (_attributes.Remove(name, out var attribute))
         {
-            value = attribute.Value as TemplateString ?? attribute.Value?.ToString();
+            value = ValueToTemplateString(attribute.Value);
             return true;
         }
 
@@ -185,6 +186,27 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
             }
         }
     }
+
+    /// <summary>
+    /// Reads an attribute's value as a <see cref="TemplateString"/>.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="Attribute.Value"/> is <see cref="object"/> because it also carries the flag for a
+    /// minimized attribute and whatever Razor put in a <see cref="TagHelperAttribute"/> — usually an
+    /// already-encoded <see cref="IHtmlContent"/>. Calling <see cref="object.ToString"/> on that and
+    /// letting it convert back would relabel encoded HTML as text, so it would be encoded a second
+    /// time on the way out. The cases here mirror <see cref="Attribute.WriteTo"/>, so what's read back
+    /// is what gets written.
+    /// </remarks>
+    private static TemplateString? ValueToTemplateString(object? value) => value switch
+    {
+        null => null,
+        TemplateString templateString => templateString,
+        IHtmlContent htmlContent => new TemplateString(htmlContent),
+        true => new TemplateString("true"),
+        false => new TemplateString("false"),
+        _ => new TemplateString(Convert.ToString(value, CultureInfo.InvariantCulture))
+    };
 
     internal sealed record Attribute(string Name, object? Value, bool Optional) : IHtmlContent
     {
@@ -229,7 +251,7 @@ public sealed class AttributeCollection : IEnumerable<KeyValuePair<string, Templ
 
             yield return KeyValuePair.Create(
                 attribute.Name,
-                (TemplateString?)(attribute.Value as TemplateString ?? attribute.Value?.ToString()));
+                ValueToTemplateString(attribute.Value));
         }
     }
 

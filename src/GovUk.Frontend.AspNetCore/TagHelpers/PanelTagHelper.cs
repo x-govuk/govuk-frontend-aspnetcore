@@ -88,7 +88,7 @@ public class PanelTagHelper : TagHelper
         // Actions are only rendered for the interruption variant, so reject them otherwise
         // rather than silently dropping them.
         var isInterruption = !classes.IsEmpty() &&
-            classes!.ToHtmlString().Contains(InterruptionClassName, StringComparison.Ordinal);
+            classes.ToText().Contains(InterruptionClassName, StringComparison.Ordinal);
 
         if (panelContext.Actions is not null && !isInterruption)
         {

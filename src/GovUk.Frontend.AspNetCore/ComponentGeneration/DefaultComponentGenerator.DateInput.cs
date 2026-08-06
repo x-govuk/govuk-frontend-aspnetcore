@@ -160,7 +160,7 @@ internal partial class DefaultComponentGenerator
             var labelText = item.Label ?? Capitalize(itemName);
             var inputId = item.Id ?? new TemplateString($"{parentId}-{itemName}");
             var inputName = namePrefix.IsEmpty() ? itemName : new TemplateString($"{namePrefix}-{itemName}");
-            var inputValue = itemValue ?? GetValue(values, inputName?.ToHtmlString());
+            var inputValue = itemValue ?? GetValue(values, inputName.ToText());
 
             var inputComponent = await GenerateInputAsync(new InputOptions
             {
@@ -183,7 +183,7 @@ internal partial class DefaultComponentGenerator
     }
 
     private static bool ClassesContain(TemplateString? classes, string token) =>
-        !classes.IsEmpty() && classes!.ToHtmlString().Contains(token, StringComparison.Ordinal);
+        !classes.IsEmpty() && classes.ToText().Contains(token, StringComparison.Ordinal);
 
     private static bool NameMatches(TemplateString? name, string defaultName, TemplateString? fieldName) =>
         !name.IsEmpty() && (name == defaultName || name == fieldName);

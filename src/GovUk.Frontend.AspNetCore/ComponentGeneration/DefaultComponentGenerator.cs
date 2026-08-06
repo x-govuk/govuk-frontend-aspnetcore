@@ -45,6 +45,8 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
         public override IHtmlContent GetContent() => _content;
     }
 
+    // Casing the encoded form would upper-case the '&' of an entity rather than the character it
+    // stands for, so this works on the text.
     private static TemplateString Capitalize(TemplateString? input)
     {
         if (input.IsEmpty())
@@ -52,11 +54,28 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
             return TemplateString.Empty;
         }
 
-        var encodedInput = input.ToHtmlString();
+        var text = input.ToText();
 
 #pragma warning disable CA1308
-        return TemplateString.FromEncoded(char.ToUpperInvariant(encodedInput[0]) + encodedInput[1..].ToLowerInvariant());
+        return new TemplateString(char.ToUpperInvariant(text[0]) + text[1..].ToLowerInvariant());
 #pragma warning restore CA1308
+    }
+
+    /// <summary>
+    /// Replaces every occurrence of <paramref name="placeholder"/> in <paramref name="value"/>.
+    /// </summary>
+    /// <remarks>
+    /// Substituting into the text rather than the rendered HTML keeps the result's encoding, so it's
+    /// still written with the caller's encoder.
+    /// </remarks>
+    private static TemplateString ReplacePlaceholder(TemplateString value, string placeholder, string replacement)
+    {
+        if (value.TryGetText(out var text))
+        {
+            return new TemplateString(text.Replace(placeholder, replacement, StringComparison.Ordinal));
+        }
+
+        return TemplateString.FromEncoded(value.Render().Replace(placeholder, replacement, StringComparison.Ordinal));
     }
 
     private class HtmlTagGovUkComponent : GovUkComponent

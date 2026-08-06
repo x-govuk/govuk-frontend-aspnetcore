@@ -107,7 +107,7 @@ internal partial class DefaultComponentGenerator
                         else if (!options.Value.IsEmpty())
                         {
                             var compareWith = item.Value ?? item.Text;
-                            if (compareWith is not null && !compareWith.IsEmpty() && options.Value.ToHtmlString() == compareWith.ToHtmlString())
+                            if (compareWith is not null && !compareWith.IsEmpty() && options.Value == compareWith)
                             {
                                 selected = true;
                             }

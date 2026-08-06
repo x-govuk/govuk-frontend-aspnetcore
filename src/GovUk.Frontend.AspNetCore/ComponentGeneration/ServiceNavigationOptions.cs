@@ -36,8 +36,12 @@ public record ServiceNavigationOptionsNavigationItem
 
 public record ServiceNavigationOptionsSlots
 {
+    [HtmlParameter]
     public TemplateString? Start { get; set; }
+    [HtmlParameter]
     public TemplateString? End { get; set; }
+    [HtmlParameter]
     public TemplateString? NavigationStart { get; set; }
+    [HtmlParameter]
     public TemplateString? NavigationEnd { get; set; }
 }

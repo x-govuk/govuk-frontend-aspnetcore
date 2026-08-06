@@ -36,14 +36,17 @@ public class ComponentFixtureData(
 
         static void UseEncodedTemplateStringForHtmlProperties(JsonTypeInfo typeInfo)
         {
-            // The *html parameters carry HTML, as does every member of a `slots` object even though
-            // none of them is named for it.
-            var typeHoldsOnlyHtml = typeInfo.Type == typeof(ServiceNavigationOptionsSlots);
-
             foreach (var property in typeInfo.Properties)
             {
-                if (property.PropertyType == typeof(TemplateString) &&
-                    (typeHoldsOnlyHtml || property.Name.EndsWith("html", StringComparison.OrdinalIgnoreCase)))
+                if (property.PropertyType != typeof(TemplateString))
+                {
+                    continue;
+                }
+
+                var isHtml = property.Name.EndsWith("html", StringComparison.OrdinalIgnoreCase) ||
+                    property.AttributeProvider?.IsDefined(typeof(HtmlParameterAttribute), inherit: false) is true;
+
+                if (isHtml)
                 {
                     property.CustomConverter = TemplateStringJsonConverter.Encoded;
                 }

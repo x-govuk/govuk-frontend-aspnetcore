@@ -98,7 +98,7 @@ internal partial class DefaultComponentGenerator
             if (options.IsStartButton is true && !options.Html.IsEmpty())
             {
                 var span = new HtmlTag("span");
-                span.InnerHtml.AppendHtml(options.Html.GetRawHtml());
+                span.InnerHtml.AppendHtml(options.Html);
                 tag.InnerHtml.AppendHtml(span);
             }
             else

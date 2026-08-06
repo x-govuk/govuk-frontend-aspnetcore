@@ -1,5 +1,24 @@
 # Changelog
 
+## Unreleased
+
+Fixes content assigned to an `Html` option as a plain `string` being emitted as markup instead of being HTML-encoded.
+
+This affected validation messages: `ModelError.ErrorMessage` is a `string`, and both `<govuk-error-summary-item for="…">` and `<govuk-error-message for="…">` passed it through an `Html` option. Where a message quotes what the user submitted — as ASP.NET Core's default type-conversion message does, for example when a non-numeric value is posted to an `int` property — the submitted value was written to the page unencoded.
+
+### Breaking changes
+
+A `string` assigned to an `Html` option is now HTML-encoded rather than emitted verbatim, because a `string` is text. To supply markup, wrap it with `TemplateString.FromEncoded(...)`:
+
+```diff
+-Html = "<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page"
++Html = TemplateString.FromEncoded("<span class=\"govuk-visually-hidden\">Emergency</span> Exit this page")
+```
+
+Content that already came from Razor — anything assigned from a `TagHelperContent` or an `IHtmlContent` — is unaffected and still renders as markup.
+
+The `Text` and `Html` properties on `CharacterCountOptionsBeforeInput`, `CharacterCountOptionsAfterInput`, `FileUploadOptionsBeforeInput`, `FileUploadOptionsAfterInput`, `DateInputOptionsBeforeInputs` and `DateInputOptionsAfterInputs` are now `TemplateString?` rather than `string?`, matching every other component's before- and after-input options.
+
 ## 4.4.0
 
 Targets GOV.UK Frontend v6.4.0.

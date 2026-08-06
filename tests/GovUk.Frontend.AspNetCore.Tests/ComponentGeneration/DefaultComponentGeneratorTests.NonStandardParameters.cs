@@ -329,7 +329,7 @@ public partial class DefaultComponentGeneratorTests
                 [
                     new FooterOptionsMetaItem
                     {
-                        Html = "<span data-test=\"item-html\">Custom HTML</span>",
+                        Html = TemplateString.FromEncoded("<span data-test=\"item-html\">Custom HTML</span>"),
                         Href = "#"
                     }
                 ]
@@ -471,7 +471,7 @@ public partial class DefaultComponentGeneratorTests
                     [
                         new FooterOptionsNavigationItem
                         {
-                            Html = "<span data-test=\"item-html\">Custom HTML</span>",
+                            Html = TemplateString.FromEncoded("<span data-test=\"item-html\">Custom HTML</span>"),
                             Href = "#"
                         }
                     ]
@@ -636,7 +636,7 @@ public partial class DefaultComponentGeneratorTests
         var options = new GenericHeaderOptions
         {
             LogoText = "My service",
-            Html = "<div class=\"extra-content\">Extra content</div>"
+            Html = TemplateString.FromEncoded("<div class=\"extra-content\">Extra content</div>")
         };
 
         // Act
@@ -693,7 +693,7 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new HeaderOptions
         {
-            Html = "<div class=\"extra-content\">Extra content</div>"
+            Html = TemplateString.FromEncoded("<div class=\"extra-content\">Extra content</div>")
         };
 
         // Act

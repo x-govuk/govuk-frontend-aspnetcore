@@ -236,13 +236,13 @@ public class FileUploadTagHelper : TagHelper
             BeforeInput = fileUploadContext.BeforeInput is TemplateString beforeInput ?
                 new FileUploadOptionsBeforeInput
                 {
-                    Html = beforeInput.ToHtmlString()
+                    Html = beforeInput
                 } :
                 null,
             AfterInput = fileUploadContext.AfterInput is TemplateString afterInput ?
                 new FileUploadOptionsAfterInput
                 {
-                    Html = afterInput.ToHtmlString()
+                    Html = afterInput
                 } :
                 null,
             Attributes = formGroupAttributes,

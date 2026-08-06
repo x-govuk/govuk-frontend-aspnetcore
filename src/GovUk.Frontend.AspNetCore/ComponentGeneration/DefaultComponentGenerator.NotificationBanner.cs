@@ -80,7 +80,7 @@ internal partial class DefaultComponentGenerator
         {
             if (!titleHtml.IsEmpty())
             {
-                return titleHtml.GetRawHtml();
+                return titleHtml;
             }
 
             if (!titleText.IsEmpty())

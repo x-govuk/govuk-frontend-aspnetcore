@@ -208,7 +208,7 @@ internal partial class DefaultComponentGenerator
 
             if (hasConditional)
             {
-                var conditionalContent = conditionalHtml!.GetRawHtml();
+                var conditionalContent = conditionalHtml!;
 
                 var conditional = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-radios__conditional", !isChecked ? "govuk-radios__conditional--hidden" : null)

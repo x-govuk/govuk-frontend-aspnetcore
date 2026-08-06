@@ -77,7 +77,7 @@ internal partial class DefaultComponentGenerator
 
                 if (item.Content?.Html is { } contentHtml)
                 {
-                    contentTag.InnerHtml.AppendHtml(contentHtml.GetRawHtml());
+                    contentTag.InnerHtml.AppendHtml(contentHtml);
                 }
                 else if (item.Content?.Text is { } contentText)
                 {

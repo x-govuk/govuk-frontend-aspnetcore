@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -17,6 +18,9 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
 {
     internal static HtmlEncoder DefaultEncoder { get; } = HtmlEncoder.Default;
 
+    // Either an unencoded string, an already-encoded IHtmlContent, or a Composite of both. Composites
+    // are kept unrendered so that composition doesn't have to pick an encoder, and so that a value
+    // built from text stays recognizable as text.
     private readonly object? _value;
 
     /// <summary>
@@ -49,8 +53,27 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// </summary>
     public TemplateString(TemplateStringInterpolatedStringHandler builder)
     {
-        _value = new HtmlString(builder.GetFormattedText());
+        // Empty parts aren't dropped here the way Join drops them: the literals between holes are
+        // content, and a literal that's only whitespace is still meaningful.
+        var parts = builder.GetParts();
+
+        _value = parts.Count switch
+        {
+            0 => string.Empty,
+            1 => parts[0]._value,
+            _ => new Composite([.. parts], Separator: string.Empty)
+        };
     }
+
+    private TemplateString(Composite composite)
+    {
+        _value = composite;
+    }
+
+    /// <summary>
+    /// A sequence of values written in order, without committing to an encoder up front.
+    /// </summary>
+    private sealed record Composite(TemplateString[] Parts, string Separator);
 
     /// <summary>
     /// Creates a new <see cref="TemplateString"/> from an encoded <see cref="string"/>.
@@ -79,27 +102,26 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         ArgumentNullException.ThrowIfNull(separator);
         ArgumentNullException.ThrowIfNull(content);
 
-        var builder = new StringBuilder();
-        using var writer = new StringWriter(builder);
+        var parts = content.Where(item => item is not null && !item.IsEmpty()).ToArray();
 
-        var first = true;
-        foreach (var item in content)
+        return parts.Length switch
         {
-            if (item is null || item.IsEmpty())
-            {
-                continue;
-            }
+            0 => Empty,
+            1 => parts[0]!,
+            _ => new TemplateString(new Composite(parts!, separator))
+        };
+    }
 
-            if (!first)
-            {
-                builder.Append(separator);
-            }
+    /// <summary>
+    /// Concatenates the specified values, keeping each one's encoding.
+    /// </summary>
+    /// <param name="values">The values to concatenate.</param>
+    /// <returns>A new <see cref="TemplateString"/> with the concatenated content.</returns>
+    public static TemplateString Concat(params TemplateString?[] values)
+    {
+        ArgumentNullException.ThrowIfNull(values);
 
-            item.WriteTo(writer, DefaultEncoder);
-            first = false;
-        }
-
-        return FromEncoded(builder.ToString());
+        return Join(string.Empty, values);
     }
 
     /// <summary>
@@ -125,7 +147,7 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// <summary>
     /// A <see cref="TemplateString"/> with no content.
     /// </summary>
-    public static TemplateString Empty { get; } = new(HtmlString.Empty);
+    public static TemplateString Empty { get; } = new(string.Empty);
 
     /// <summary>
     /// Concatenates two <see cref="TemplateString"/> instances.
@@ -147,23 +169,14 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
             return first;
         }
 
-        // Optimize concatenation for string + string case using StringBuilder to avoid intermediate allocations
+        // Text stays text: concatenating two unencoded strings gives an unencoded string, so the
+        // result still encodes at write time using whatever encoder the caller supplies.
         if (first._value is string str1 && second._value is string str2)
         {
-            // Both are strings - encode both and concatenate using StringBuilder
-            var encoded1 = DefaultEncoder.Encode(str1);
-            var encoded2 = DefaultEncoder.Encode(str2);
-            var sb = new StringBuilder(encoded1.Length + encoded2.Length);
-            sb.Append(encoded1);
-            sb.Append(encoded2);
-            return new TemplateString(new HtmlString(sb.ToString()));
+            return new TemplateString(string.Concat(str1, str2));
         }
 
-        // At least one is IHtmlContent - concatenate their HTML representations
-        using var writer = new StringWriter();
-        first.WriteTo(writer, DefaultEncoder);
-        second.WriteTo(writer, DefaultEncoder);
-        return FromEncoded(writer.ToString());
+        return new TemplateString(new Composite([first, second], Separator: string.Empty));
     }
 
     /// <summary>
@@ -212,6 +225,88 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
+    /// <summary>
+    /// Gets whether this instance holds already-encoded HTML rather than plain text.
+    /// </summary>
+    /// <remarks>
+    /// A value built by concatenating or joining others is HTML if any of its parts is.
+    /// </remarks>
+    public bool IsHtml => _value switch
+    {
+        Composite composite => Array.Exists(composite.Parts, part => part.IsHtml),
+        IHtmlContent => true,
+        _ => false
+    };
+
+    /// <summary>
+    /// Gets the plain, unencoded text of this instance when it has an unambiguous text reading.
+    /// </summary>
+    /// <param name="text">
+    /// When this method returns <see langword="true"/>, the unencoded text; otherwise <see langword="null"/>.
+    /// </param>
+    /// <returns>
+    /// <see langword="true"/> when this instance was created from text, or from HTML containing no
+    /// character an HTML encoder would escape — in which case its text and HTML forms are identical.
+    /// Otherwise <see langword="false"/>.
+    /// </returns>
+    /// <remarks>
+    /// This never HTML-decodes: decoding isn't the inverse of encoding, so a decoded value wouldn't
+    /// re-encode to the same markup. Use this for values that are identifiers, attribute tokens or
+    /// parseable data; to write content out, write the <see cref="TemplateString"/> itself.
+    /// </remarks>
+    public bool TryGetText([NotNullWhen(true)] out string? text)
+    {
+        if (_value is null)
+        {
+            text = string.Empty;
+            return true;
+        }
+
+        if (_value is string str)
+        {
+            text = str;
+            return true;
+        }
+
+        if (_value is Composite composite)
+        {
+            var builder = new StringBuilder();
+
+            for (var i = 0; i < composite.Parts.Length; i++)
+            {
+                if (!composite.Parts[i].TryGetText(out var partText))
+                {
+                    text = null;
+                    return false;
+                }
+
+                if (i > 0)
+                {
+                    builder.Append(composite.Separator);
+                }
+
+                builder.Append(partText);
+            }
+
+            text = builder.ToString();
+            return true;
+        }
+
+        // Encoding is what tells the two readings apart, so ask it directly: content that encoding
+        // leaves alone reads identically as text and as HTML. Testing against the default encoder is
+        // the conservative choice, since it escapes the most.
+        var rendered = Render(DefaultEncoder);
+
+        if (string.Equals(DefaultEncoder.Encode(rendered), rendered, StringComparison.Ordinal))
+        {
+            text = rendered;
+            return true;
+        }
+
+        text = null;
+        return false;
+    }
+
     /// <inheritdoc cref="IHtmlContent.WriteTo"/>
     public void WriteTo(TextWriter writer, HtmlEncoder encoder)
     {
@@ -231,8 +326,38 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
             return;
         }
 
+        if (_value is Composite composite)
+        {
+            for (var i = 0; i < composite.Parts.Length; i++)
+            {
+                if (i > 0 && composite.Separator.Length > 0)
+                {
+                    // The separator is text, so it's encoded like any other text.
+                    encoder.Encode(writer, composite.Separator);
+                }
+
+                composite.Parts[i].WriteTo(writer, encoder);
+            }
+
+            return;
+        }
+
         Debug.Assert(_value is IHtmlContent);
         ((IHtmlContent)_value).WriteTo(writer, encoder);
+    }
+
+    internal string Render(HtmlEncoder? encoder = null)
+    {
+        encoder ??= DefaultEncoder;
+
+        if (_value is IHtmlContent and HtmlString htmlString)
+        {
+            return htmlString.Value ?? string.Empty;
+        }
+
+        using var writer = new StringWriter();
+        WriteTo(writer, encoder);
+        return writer.ToString();
     }
 
     /// <inheritdoc/>
@@ -240,9 +365,16 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         ReferenceEquals(this, obj) || (obj is TemplateString other && Equals(other));
 
     /// <inheritdoc/>
-    public override int GetHashCode() => _value != null ? _value.GetHashCode() : 0;
+    /// <remarks>
+    /// Hashes the rendered form, so that it agrees with <see cref="Equals(TemplateString?)"/>.
+    /// </remarks>
+    public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(Render(DefaultEncoder));
 
     /// <inheritdoc/>
+    /// <remarks>
+    /// Two instances are equal when they render the same HTML, whether or not they hold the same kind
+    /// of content.
+    /// </remarks>
     public bool Equals(TemplateString? other)
     {
         if (other is null)
@@ -261,18 +393,6 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
             return true;
         }
 
-        // Fast path: both empty
-        if (_value is "" or null && other._value is "" or null)
-        {
-            return true;
-        }
-
-        // Fast path: one is empty, the other is not
-        if (_value is "" or null || other._value is "" or null)
-        {
-            return false;
-        }
-
         // Fast path: both are strings - compare directly
         if (_value is string str1 && other._value is string str2)
         {
@@ -280,7 +400,7 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         }
 
         // Slow path: convert to HTML strings and compare
-        return string.Equals(this.ToHtmlString(DefaultEncoder), other.ToHtmlString(DefaultEncoder), StringComparison.Ordinal);
+        return string.Equals(Render(DefaultEncoder), other.Render(DefaultEncoder), StringComparison.Ordinal);
     }
 
     /// <summary>
@@ -314,12 +434,10 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         }
 
         // Slow path: convert to HTML strings and compare
-        var thisHtml = this.ToHtmlString(DefaultEncoder);
-        var otherHtml = other.ToHtmlString(DefaultEncoder);
-        return thisHtml.Contains(otherHtml, StringComparison.Ordinal);
+        return Render(DefaultEncoder).Contains(other.Render(DefaultEncoder), StringComparison.Ordinal);
     }
 
-    private string DebuggerToString() => this.ToHtmlString(DefaultEncoder);
+    private string DebuggerToString() => Render(DefaultEncoder);
 }
 
 /// <summary>
@@ -362,6 +480,19 @@ public static class TemplateStringExtensions
 
         return !templateString.IsEmpty() ? templateString : fallback;
     }
+
+    /// <summary>
+    /// Gets the text of <paramref name="templateString"/> for use as an identifier, key or attribute
+    /// token, falling back to its rendered HTML when it has no unambiguous text reading.
+    /// </summary>
+    /// <remarks>
+    /// The fallback only applies to values holding real markup, which none of these call sites expect;
+    /// it keeps them behaving as they did when they rendered unconditionally.
+    /// </remarks>
+    internal static string ToText(this TemplateString? templateString) =>
+        templateString is null ? string.Empty :
+        templateString.TryGetText(out var text) ? text :
+        templateString.Render();
 }
 
 /// <summary>
@@ -370,22 +501,18 @@ public static class TemplateStringExtensions
 [EditorBrowsable(EditorBrowsableState.Never)]
 [InterpolatedStringHandler]
 #pragma warning disable CA1815
-#pragma warning disable CA1815
-#pragma warning disable CA1001
 public struct TemplateStringInterpolatedStringHandler
-#pragma warning restore CA1001
-#pragma warning restore CA1815
 #pragma warning restore CA1815
 {
-    private static readonly HtmlEncoder _encoder = TemplateString.DefaultEncoder;
-
-    private readonly StringWriter _writer;
+    // Parts are collected rather than rendered, so the result is written with the caller's encoder
+    // and a value interpolated from literals and text is still recognizable as text.
+    private readonly List<TemplateString> _parts;
 
     /// <summary>Initializes a new instance of the <see cref="TemplateStringInterpolatedStringHandler"/> struct.</summary>
     // ReSharper disable UnusedParameter.Local
     public TemplateStringInterpolatedStringHandler(int literalLength, int formattedCount)
     {
-        _writer = new();
+        _parts = new List<TemplateString>(formattedCount * 2 + 1);
     }
     // ReSharper restore UnusedParameter.Local
 
@@ -394,7 +521,7 @@ public struct TemplateStringInterpolatedStringHandler
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendLiteral(string value)
     {
-        _writer.Write(_encoder.Encode(value));
+        _parts.Add(new TemplateString(value));
     }
 
     /// <summary>Writes the specified value to the handler.</summary>
@@ -407,19 +534,24 @@ public struct TemplateStringInterpolatedStringHandler
             return;
         }
 
-        if (value is IHtmlContent htmlContent)
+        if (value is TemplateString templateString)
         {
-            htmlContent.WriteTo(_writer, _encoder);
+            // Added as-is; wrapping it would relabel a text hole as HTML.
+            _parts.Add(templateString);
+        }
+        else if (value is IHtmlContent htmlContent)
+        {
+            _parts.Add(new TemplateString(htmlContent));
         }
         else
         {
             var str = Convert.ToString(value, CultureInfo.InvariantCulture);
             if (str is not null)
             {
-                _writer.Write(_encoder.Encode(str));
+                _parts.Add(new TemplateString(str));
             }
         }
     }
 
-    internal string GetFormattedText() => _writer.ToString();
+    internal readonly IReadOnlyList<TemplateString> GetParts() => _parts;
 }

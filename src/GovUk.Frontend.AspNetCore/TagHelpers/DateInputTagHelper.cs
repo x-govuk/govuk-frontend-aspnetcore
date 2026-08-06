@@ -418,7 +418,7 @@ public class DateInputTagHelper : TagHelper
 
             TemplateString? GetValueFromModelState()
             {
-                var modelStateKey = _modelHelper.GetFullHtmlFieldName(ViewContext!, itemName.ToHtmlString());
+                var modelStateKey = _modelHelper.GetFullHtmlFieldName(ViewContext!, itemName.ToText());
 
                 return ViewContext!.ModelState.TryGetValue(modelStateKey, out var modelStateEntry) &&
                     modelStateEntry.AttemptedValue is not null

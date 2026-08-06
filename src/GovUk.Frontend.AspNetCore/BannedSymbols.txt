@@ -1,0 +1,1 @@
+M:GovUk.Frontend.AspNetCore.HtmlContentExtensions.ToHtmlString(Microsoft.AspNetCore.Html.IHtmlContent,System.Text.Encodings.Web.HtmlEncoder);Returns encoded HTML, so passing the result somewhere that encodes gives double-encoded output. Use TemplateString.TryGetText for a value's text, TemplateString.Render to render it, or write the value itself.

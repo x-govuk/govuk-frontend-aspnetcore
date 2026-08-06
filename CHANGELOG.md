@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+`TemplateString` now keeps track of whether it holds text or HTML through composition, instead of rendering eagerly.
+
+Concatenating, joining or interpolating values used to render them immediately using `HtmlEncoder.Default` and label the result as HTML. That discarded the encoder the application had configured — an app registering `HtmlEncoder.Create(UnicodeRanges.All)` got `ŵ` for a value written directly but `&#x175;` for one that had been concatenated — and meant a value built from plain text was no longer recognisable as text. Composition is now deferred until the value is written, using the encoder it is written with.
+
+Two new members go with it. `TryGetText` gets a value's plain text, for the cases that want an identifier, a key or an attribute token rather than markup; it never HTML-decodes, and reports failure for content with no unambiguous text reading. `IsHtml` reports which kind of content a value holds.
+
+Also fixed:
+
+- Reading an attribute back out of an `AttributeCollection` — through the indexer, `Remove` or enumeration — turned the already-encoded value Razor supplied into a string and treated it as text, so it was encoded again when written. An attribute written in a view as `class="a&amp;b"` came back out as `a&amp;amp;b`.
+- `GetHashCode` disagreed with `Equals`, which made `TemplateString` unsafe as a dictionary or set key.
+- `TemplateString.Empty` was not equal to `new TemplateString("")` or `TemplateString.FromEncoded("")`.
+- `Join` inserted its separator without encoding it.
+- The character count's `%{count}` substitution, the date input's field labels and lookups, and the panel's and date input's CSS class checks all operated on the encoded form of a value, which is wrong for any content outside Basic Latin.
+- The password input's toggle button text was encoded twice.
+
 Fixes content assigned to an `Html` option as a plain `string` being emitted as markup instead of being HTML-encoded.
 
 This affected validation messages: `ModelError.ErrorMessage` is a `string`, and both `<govuk-error-summary-item for="…">` and `<govuk-error-message for="…">` passed it through an `Html` option. Where a message quotes what the user submitted — as ASP.NET Core's default type-conversion message does, for example when a non-numeric value is posted to an `int` property — the submitted value was written to the page unencoded.

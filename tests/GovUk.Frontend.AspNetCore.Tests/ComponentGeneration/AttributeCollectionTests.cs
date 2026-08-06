@@ -1,3 +1,6 @@
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ComponentGeneration;
@@ -58,5 +61,35 @@ public class AttributeCollectionTests
 
         // Assert
         Assert.Equal("id1 id2", attributes["aria-describedby"]?.ToHtmlString());
+    }
+
+    [Theory]
+    [InlineData("a&b")]
+    [InlineData("a<b>c")]
+    [InlineData("say \"hi\"")]
+    public void ReadingAndWritingAnAttributeFromRazor_RoundTripsExactly(string value)
+    {
+        // Razor hands over attribute values already encoded, as an IHtmlContent. Reading one back out
+        // and putting it in again must not treat it as text, or it gets encoded a second time.
+        var encoded = HtmlEncoder.Default.Encode(value);
+
+        var attributes = new AttributeCollection(
+            [new TagHelperAttribute("data-test", new HtmlString(encoded), HtmlAttributeValueStyle.DoubleQuotes)]);
+
+        // Act
+        var viaIndexer = attributes["data-test"];
+        var viaEnumerator = attributes.Single().Value;
+        Assert.True(attributes.Remove("data-test", out var viaRemove));
+
+        // Assert
+        foreach (var read in new[] { viaIndexer, viaEnumerator, viaRemove })
+        {
+            Assert.NotNull(read);
+
+            var tag = new HtmlTag("div", attrs => attrs.With("data-test", read));
+            var element = HtmlHelper.ParseHtmlElement(tag.ToHtmlString());
+
+            Assert.Equal(value, element.GetAttribute("data-test"));
+        }
     }
 }

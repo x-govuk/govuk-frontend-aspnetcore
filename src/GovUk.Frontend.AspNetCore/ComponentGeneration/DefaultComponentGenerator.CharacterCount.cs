@@ -19,9 +19,10 @@ internal partial class DefaultComponentGenerator
         TemplateString textareaDescriptionTextNoLimit;
         if (!hasNoLimit && textareaDescriptionLength.HasValue)
         {
-            textareaDescriptionTextNoLimit = TemplateString.FromEncoded(
-                textareaDescriptionText.ToHtmlString()
-                    .Replace("%{count}", textareaDescriptionLength.Value.ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal));
+            textareaDescriptionTextNoLimit = ReplacePlaceholder(
+                textareaDescriptionText,
+                "%{count}",
+                textareaDescriptionLength.Value.ToString(CultureInfo.InvariantCulture));
         }
         else
         {

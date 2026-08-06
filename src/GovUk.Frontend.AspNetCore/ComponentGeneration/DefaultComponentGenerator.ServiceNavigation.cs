@@ -24,7 +24,7 @@ internal partial class DefaultComponentGenerator
 
             if (!(options.Slots?.Start).IsEmpty())
             {
-                widthContainerTag.InnerHtml.AppendHtml(options.Slots.Start.GetRawHtml());
+                widthContainerTag.InnerHtml.AppendHtml(options.Slots.Start);
             }
 
             var serviceNavigationContainer = new HtmlTag("div", attrs => attrs
@@ -72,7 +72,7 @@ internal partial class DefaultComponentGenerator
 
             if (!(options.Slots?.End).IsEmpty())
             {
-                widthContainerTag.InnerHtml.AppendHtml(options.Slots.End.GetRawHtml());
+                widthContainerTag.InnerHtml.AppendHtml(options.Slots.End);
             }
 
             return widthContainerTag;
@@ -116,7 +116,7 @@ internal partial class DefaultComponentGenerator
 
             if (!(options.Slots?.NavigationStart).IsEmpty())
             {
-                ulTag.InnerHtml.AppendHtml(options.Slots.NavigationStart.GetRawHtml());
+                ulTag.InnerHtml.AppendHtml(options.Slots.NavigationStart);
             }
 
             if (navigationItems is not null)
@@ -135,7 +135,7 @@ internal partial class DefaultComponentGenerator
 
             if (!(options.Slots?.NavigationEnd).IsEmpty())
             {
-                ulTag.InnerHtml.AppendHtml(options.Slots.NavigationEnd.GetRawHtml());
+                ulTag.InnerHtml.AppendHtml(options.Slots.NavigationEnd);
             }
 
             navTag.InnerHtml.AppendHtml(ulTag);

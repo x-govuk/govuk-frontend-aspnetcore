@@ -319,17 +319,6 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
         return thisHtml.Contains(otherHtml, StringComparison.Ordinal);
     }
 
-    internal IHtmlContent GetRawHtml()
-    {
-        if (_value is string str)
-        {
-            return new HtmlString(str);
-        }
-
-        Debug.Assert(_value is IHtmlContent);
-        return (IHtmlContent)_value;
-    }
-
     private string DebuggerToString() => this.ToHtmlString(DefaultEncoder);
 }
 

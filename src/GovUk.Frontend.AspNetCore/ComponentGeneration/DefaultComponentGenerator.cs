@@ -9,11 +9,14 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
     private ValueTask<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
         ValueTask.FromResult<GovUkComponent>(new HtmlTagGovUkComponent(tag));
 
+    // A TemplateString already knows whether it holds HTML or text, and writes itself accordingly.
+    // Don't reach past that to force one reading or the other: doing so is how text from a validation
+    // message ended up being emitted as markup.
     private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
     {
         if (!html.IsEmpty())
         {
-            return html.GetRawHtml();
+            return html;
         }
 
         if (!text.IsEmpty())

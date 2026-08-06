@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Html;
 using Xunit.Sdk;
@@ -24,6 +25,30 @@ public class ComponentFixtureData(
         _serializerOptions.Converters.Add(new StringHtmlContentJsonConverter());
         _serializerOptions.Converters.Add(new AttributeCollectionJsonConverter());
         _serializerOptions.Converters.Add(new TemplateStringJsonConverter());
+
+        // A converter can't see which property it's deserializing, so the *html parameters are picked
+        // out here instead. Without this every fixture value is labelled as text and the suite can't
+        // tell correctly-encoded output from raw markup that merely renders.
+        _serializerOptions.TypeInfoResolver = new DefaultJsonTypeInfoResolver
+        {
+            Modifiers = { UseEncodedTemplateStringForHtmlProperties }
+        };
+
+        static void UseEncodedTemplateStringForHtmlProperties(JsonTypeInfo typeInfo)
+        {
+            // The *html parameters carry HTML, as does every member of a `slots` object even though
+            // none of them is named for it.
+            var typeHoldsOnlyHtml = typeInfo.Type == typeof(ServiceNavigationOptionsSlots);
+
+            foreach (var property in typeInfo.Properties)
+            {
+                if (property.PropertyType == typeof(TemplateString) &&
+                    (typeHoldsOnlyHtml || property.Name.EndsWith("html", StringComparison.OrdinalIgnoreCase)))
+                {
+                    property.CustomConverter = TemplateStringJsonConverter.Encoded;
+                }
+            }
+        }
     }
 
     private readonly HashSet<string> _exclude = new(exclude);

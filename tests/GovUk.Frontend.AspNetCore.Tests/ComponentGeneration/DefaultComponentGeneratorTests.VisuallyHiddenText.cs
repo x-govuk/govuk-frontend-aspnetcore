@@ -106,7 +106,7 @@ public partial class DefaultComponentGeneratorTests
         // Arrange
         var options = new ExitThisPageOptions
         {
-            Html = "<span class=\"govuk-visually-hidden\">Emergency</span> Leave immediately"
+            Html = TemplateString.FromEncoded("<span class=\"govuk-visually-hidden\">Emergency</span> Leave immediately")
         };
 
         // Act

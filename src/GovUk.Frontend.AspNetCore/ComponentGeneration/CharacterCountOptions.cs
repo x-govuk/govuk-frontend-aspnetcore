@@ -72,16 +72,16 @@ public record CharacterCountOptionsFormGroup : FormGroupOptions
 
 public record CharacterCountOptionsBeforeInput
 {
-    public string? Text { get; set; }
-    public string? Html { get; set; }
+    public TemplateString? Text { get; set; }
+    public TemplateString? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }
 
 public record CharacterCountOptionsAfterInput
 {
-    public string? Text { get; set; }
-    public string? Html { get; set; }
+    public TemplateString? Text { get; set; }
+    public TemplateString? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }

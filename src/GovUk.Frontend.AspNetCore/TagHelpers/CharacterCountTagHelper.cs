@@ -287,14 +287,14 @@ public class CharacterCountTagHelper : TagHelper
                 new CharacterCountOptionsBeforeInput
                 {
                     Text = null,
-                    Html = beforeInput.ToHtmlString()
+                    Html = beforeInput
                 } :
                 null,
             AfterInput = characterCountContext.AfterInput is TemplateString afterInput ?
                 new CharacterCountOptionsAfterInput
                 {
                     Text = null,
-                    Html = afterInput.ToHtmlString()
+                    Html = afterInput
                 } :
                 null,
             Attributes = formGroupAttributes,

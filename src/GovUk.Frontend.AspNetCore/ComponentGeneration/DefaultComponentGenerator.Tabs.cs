@@ -80,7 +80,7 @@ internal partial class DefaultComponentGenerator
 
             if (!(item.Panel?.Html).IsEmpty())
             {
-                panelTag.InnerHtml.AppendHtml(item.Panel.Html.GetRawHtml());
+                panelTag.InnerHtml.AppendHtml(item.Panel.Html);
             }
             else if (!(item.Panel?.Text).IsEmpty())
             {

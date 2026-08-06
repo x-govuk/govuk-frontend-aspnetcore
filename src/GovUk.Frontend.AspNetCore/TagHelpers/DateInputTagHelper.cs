@@ -256,14 +256,14 @@ public class DateInputTagHelper : TagHelper
                 new DateInputOptionsBeforeInputs
                 {
                     Text = null,
-                    Html = beforeInputs.ToHtmlString()
+                    Html = beforeInputs
                 } :
                 null,
             AfterInputs = dateInputContext.AfterInputs is TemplateString afterInputs ?
                 new DateInputOptionsAfterInputs
                 {
                     Text = null,
-                    Html = afterInputs.ToHtmlString()
+                    Html = afterInputs
                 } :
                 null,
             Attributes = formGroupAttributes,

@@ -30,7 +30,7 @@ internal partial class DefaultComponentGenerator
 
         if (!options.LogoHtml.IsEmpty())
         {
-            logoLink.InnerHtml.AppendHtml(options.LogoHtml.GetRawHtml());
+            logoLink.InnerHtml.AppendHtml(options.LogoHtml);
         }
         else if (!options.LogoText.IsEmpty())
         {
@@ -42,7 +42,7 @@ internal partial class DefaultComponentGenerator
 
         if (!options.Html.IsEmpty())
         {
-            containerTag.InnerHtml.AppendHtml(options.Html.GetRawHtml());
+            containerTag.InnerHtml.AppendHtml(options.Html);
         }
 
         headerTag.InnerHtml.AppendHtml(containerTag);

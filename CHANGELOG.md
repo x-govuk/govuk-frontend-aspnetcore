@@ -2,6 +2,12 @@
 
 ## Unreleased — 5.0.0
 
+`TabsOptions.Title`, `RadiosOptionsItem.Divider`, `CheckboxesOptionsItem.Divider` and `PaginationOptionsItem.Number` are now `string?` rather than `TemplateString?`. govuk-frontend renders all four with `{{ }}`, which Nunjucks escapes, so they are text.
+
+The divider and number are also settable from content written inside `<govuk-radios-item-divider>`, `<govuk-checkboxes-item-divider>` and `<govuk-pagination-item>`, which is markup. Each therefore gains a `DividerHtml` / `NumberHtml` property to hold it, and the tag helpers now set those. Tabs' title only ever comes from the `title` attribute, so it has no HTML counterpart.
+
+Rendered output is unchanged; what changes is that assigning markup to the text properties no longer compiles.
+
 `Text` and `Html` options are now typed for what they hold: `Text` is a `string` and is always HTML-encoded, `Html` is an `IHtmlContent` and is always emitted as-is.
 
 Both used to be `TemplateString`, which carries either text or markup and decides which by how it was constructed. That made it possible — and, in practice, easy — to put text in an `Html` slot, and the compiler had nothing to say about it. That is how validation messages came to be rendered as markup. Now `Html = someString` doesn't compile.

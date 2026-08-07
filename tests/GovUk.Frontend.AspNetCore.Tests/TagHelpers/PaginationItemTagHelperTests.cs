@@ -38,7 +38,7 @@ public class PaginationItemTagHelperTests : TagHelperTestBase<PaginationItemTagH
             {
                 var paginationItem = Assert.IsType<PaginationOptionsItem>(item);
                 Assert.True(paginationItem.Current);
-                Assert.Equal("Page 42", paginationItem.Number?.ToHtmlString(HtmlEncoder.Default));
+                Assert.Equal("Page 42", paginationItem.NumberHtml?.ToHtmlString(HtmlEncoder.Default));
             });
     }
 }

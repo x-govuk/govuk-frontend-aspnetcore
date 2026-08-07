@@ -17,7 +17,7 @@ internal partial class DefaultComponentGenerator
         var titleTag = new HtmlTag("h2", attrs => attrs
             .WithClasses("govuk-tabs__title"));
         titleTag.InnerHtml.AppendHtml(
-            HtmlOrText(options.Title, null, fallback: LocalizedText(GovUkFrontendResourceNames.TabsTitle) ?? "Contents"));
+            HtmlOrText(html: null, options.Title, fallback: LocalizedText(GovUkFrontendResourceNames.TabsTitle) ?? "Contents"));
         tabsTag.InnerHtml.AppendHtml(titleTag);
 
         if (options.Items is not null && options.Items.Count > 0)

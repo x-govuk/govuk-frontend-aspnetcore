@@ -15,7 +15,9 @@ public record PaginationOptions
 
 public record PaginationOptionsItem
 {
-    public TemplateString? Number { get; set; }
+    public string? Number { get; set; }
+    [NonStandardParameter]
+    public IHtmlContent? NumberHtml { get; set; }
     public string? VisuallyHiddenText { get; set; }
     public TemplateString? Href { get; set; }
     public bool? Current { get; set; }

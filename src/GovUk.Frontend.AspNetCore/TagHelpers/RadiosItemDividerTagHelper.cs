@@ -30,7 +30,7 @@ public class RadiosItemDividerTagHelper : TagHelper
 
         radiosContext.AddItem(new RadiosOptionsItem
         {
-            Divider = new TemplateString(content.Snapshot())
+            DividerHtml = content.Snapshot()
         });
 
         output.SuppressOutput();

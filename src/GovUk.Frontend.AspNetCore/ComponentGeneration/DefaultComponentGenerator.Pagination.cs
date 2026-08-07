@@ -202,10 +202,14 @@ internal partial class DefaultComponentGenerator
             {
                 var aTag = new HtmlTag("a", attrs =>
                 {
+                    // The aria-label needs the number as text; fall back to reading it out of the
+                    // markup when only that was supplied.
+                    var numberText = item.Number ?? new TemplateString(item.NumberHtml).ToText();
+
                     var ariaLabel = item.VisuallyHiddenText
-                        ?? (item.Number is not null
-                            ? new TemplateString(LocalizedText(GovUkFrontendResourceNames.PaginationItemVisuallyHiddenText, "%{number}", item.Number.ToText()))
-                                .WithEmptyFallback(new TemplateString($"Page {item.Number}"))
+                        ?? (!numberText.IsEmpty()
+                            ? new TemplateString(LocalizedText(GovUkFrontendResourceNames.PaginationItemVisuallyHiddenText, "%{number}", numberText))
+                                .WithEmptyFallback(new TemplateString($"Page {numberText}"))
                             : null);
 
                     attrs
@@ -221,7 +225,7 @@ internal partial class DefaultComponentGenerator
                     attrs.With(item.Attributes);
                 });
 
-                aTag.InnerHtml.AppendHtml(item.Number ?? TemplateString.Empty);
+                aTag.InnerHtml.AppendHtml(HtmlOrText(item.NumberHtml, item.Number));
                 liTag.InnerHtml.AppendHtml(aTag);
             }
 

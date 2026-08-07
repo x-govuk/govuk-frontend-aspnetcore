@@ -94,7 +94,7 @@ internal partial class DefaultComponentGenerator
                         continue;
                     }
 
-                    if (item.Divider is not null)
+                    if (item.Divider is not null || item.DividerHtml is not null)
                     {
                         var divider = CreateDivider(item);
                         checkboxesDiv.InnerHtml.AppendHtml(divider);
@@ -124,8 +124,7 @@ internal partial class DefaultComponentGenerator
 
         HtmlTag CreateDivider(CheckboxesOptionsItem item)
         {
-            // Divider is checked on line 98, so it's safe to use here
-            var dividerText = item.Divider!;
+            var dividerText = HtmlOrText(item.DividerHtml, item.Divider);
 
             var divider = new HtmlTag("div", attrs => attrs
                 .WithClasses("govuk-checkboxes__divider"))

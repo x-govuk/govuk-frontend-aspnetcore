@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.Tests.ComponentGeneration;
 
@@ -1062,5 +1063,71 @@ public partial class DefaultComponentGeneratorTests
 
         // Assert
         Assert.Contains("data-test=\"item-attr\"", html);
+    }
+
+    [Fact]
+    public async Task Radios_Divider_IsEncodedAndDividerHtmlIsNot()
+    {
+        // Upstream renders the divider with {{ }}, which Nunjucks escapes, so Divider is text. The
+        // Html sibling exists for content written inside <govuk-radios-item-divider>.
+
+        // Arrange
+        var textOptions = new RadiosOptions
+        {
+            Name = "n",
+            Items = [new RadiosOptionsItem { Divider = "one & two" }]
+        };
+
+        var htmlOptions = new RadiosOptions
+        {
+            Name = "n",
+            Items = [new RadiosOptionsItem { DividerHtml = new HtmlString("<em data-probe=\"1\">or</em>") }]
+        };
+
+        // Act
+        var fromText = (await _componentGenerator.GenerateRadiosAsync(textOptions)).GetHtml();
+        var fromHtml = (await _componentGenerator.GenerateRadiosAsync(htmlOptions)).GetHtml();
+
+        // Assert
+        Assert.Contains("one &amp; two", fromText, StringComparison.Ordinal);
+        Assert.NotNull(HtmlHelper.ParseHtmlElement(fromHtml).QuerySelector("[data-probe]"));
+    }
+
+    [Fact]
+    public async Task Pagination_Number_IsEncodedAndNumberHtmlIsNot()
+    {
+        // Arrange
+        var textOptions = new PaginationOptions
+        {
+            Items = [new PaginationOptionsItem { Number = "1 & 2", Href = "#" }]
+        };
+
+        var htmlOptions = new PaginationOptions
+        {
+            Items = [new PaginationOptionsItem { NumberHtml = new HtmlString("<em data-probe=\"1\">1</em>"), Href = "#" }]
+        };
+
+        // Act
+        var fromText = (await _componentGenerator.GeneratePaginationAsync(textOptions)).GetHtml();
+        var fromHtml = (await _componentGenerator.GeneratePaginationAsync(htmlOptions)).GetHtml();
+
+        // Assert
+        Assert.Contains("1 &amp; 2", fromText, StringComparison.Ordinal);
+        Assert.NotNull(HtmlHelper.ParseHtmlElement(fromHtml).QuerySelector("[data-probe]"));
+    }
+
+    [Fact]
+    public async Task Tabs_Title_IsEncoded()
+    {
+        // Tabs' title only ever comes from a string attribute, so it has no Html sibling.
+
+        // Arrange
+        var options = new TabsOptions { Title = "Contents & more" };
+
+        // Act
+        var html = (await _componentGenerator.GenerateTabsAsync(options)).GetHtml();
+
+        // Assert
+        Assert.Contains("Contents &amp; more", html, StringComparison.Ordinal);
     }
 }

@@ -33,7 +33,7 @@ public class RadiosItemDividerTagHelperTests : TagHelperTestBase<RadiosItemDivid
             item =>
             {
                 var divider = Assert.IsType<RadiosOptionsItem>(item);
-                Assert.Equal("Divider", divider.Divider?.ToHtmlString());
+                Assert.Equal("Divider", divider.DividerHtml?.ToHtmlString());
             });
     }
 }

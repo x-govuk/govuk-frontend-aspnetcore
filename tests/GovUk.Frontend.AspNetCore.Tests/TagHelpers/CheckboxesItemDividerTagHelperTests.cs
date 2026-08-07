@@ -34,7 +34,7 @@ public class CheckboxesItemDividerTagHelperTests : TagHelperTestBase<CheckboxesI
             item =>
             {
                 var dividerItem = Assert.IsType<CheckboxesOptionsItem>(item);
-                Assert.Equal("Divider", dividerItem.Divider?.ToHtmlString());
+                Assert.Equal("Divider", dividerItem.DividerHtml?.ToHtmlString());
             });
     }
 }

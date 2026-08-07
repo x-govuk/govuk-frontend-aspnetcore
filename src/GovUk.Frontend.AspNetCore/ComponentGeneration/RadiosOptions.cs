@@ -44,7 +44,9 @@ public record RadiosOptionsItem
     public TemplateString? Value { get; set; }
     public LabelOptions? Label { get; set; }
     public HintOptions? Hint { get; set; }
-    public TemplateString? Divider { get; set; }
+    public string? Divider { get; set; }
+    [NonStandardParameter]
+    public IHtmlContent? DividerHtml { get; set; }
     public bool? Checked { get; set; }
     public RadiosOptionsItemConditional? Conditional { get; set; }
     public string? Behaviour { get; set; }

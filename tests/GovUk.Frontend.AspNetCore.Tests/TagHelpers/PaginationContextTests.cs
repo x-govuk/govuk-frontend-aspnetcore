@@ -28,14 +28,14 @@ public class PaginationContextTests
         var context = new PaginationContext();
         context.AddItem(new PaginationOptionsItem()
         {
-            Number = new HtmlString("1"),
+            NumberHtml = new HtmlString("1"),
             Current = true
         });
 
         // Act
         var ex = Record.Exception(() => context.AddItem(new PaginationOptionsItem()
         {
-            Number = new HtmlString("2"),
+            NumberHtml = new HtmlString("2"),
             Current = true
         }));
 
@@ -124,7 +124,7 @@ public class PaginationContextTests
         var context = new PaginationContext();
         context.AddItem(new PaginationOptionsItem()
         {
-            Number = new HtmlString("1"),
+            NumberHtml = new HtmlString("1"),
             Current = true
         });
 

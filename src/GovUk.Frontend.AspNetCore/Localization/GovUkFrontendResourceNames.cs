@@ -224,6 +224,30 @@ public static class GovUkFrontendResourceNames
     /// </summary>
     public const string CharacterCountCharactersUnderLimitTextOne = "CharacterCount.CharactersUnderLimitText.One";
 
+    /// <summary>
+    /// The character count's description of the remaining characters when the <c>zero</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountCharactersUnderLimitTextZero = "CharacterCount.CharactersUnderLimitText.Zero";
+
+    /// <summary>
+    /// The character count's description of the remaining characters when the <c>two</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountCharactersUnderLimitTextTwo = "CharacterCount.CharactersUnderLimitText.Two";
+
+    /// <summary>
+    /// The character count's description of the remaining characters when the <c>few</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountCharactersUnderLimitTextFew = "CharacterCount.CharactersUnderLimitText.Few";
+
+    /// <summary>
+    /// The character count's description of the remaining characters when the <c>many</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountCharactersUnderLimitTextMany = "CharacterCount.CharactersUnderLimitText.Many";
+
     /// <summary>The character count's description when the character limit is reached. There is no built-in default.</summary>
     public const string CharacterCountCharactersAtLimitText = "CharacterCount.CharactersAtLimitText";
 
@@ -240,6 +264,30 @@ public static class GovUkFrontendResourceNames
     public const string CharacterCountCharactersOverLimitTextOne = "CharacterCount.CharactersOverLimitText.One";
 
     /// <summary>
+    /// The character count's description of the excess characters when the <c>zero</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountCharactersOverLimitTextZero = "CharacterCount.CharactersOverLimitText.Zero";
+
+    /// <summary>
+    /// The character count's description of the excess characters when the <c>two</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountCharactersOverLimitTextTwo = "CharacterCount.CharactersOverLimitText.Two";
+
+    /// <summary>
+    /// The character count's description of the excess characters when the <c>few</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountCharactersOverLimitTextFew = "CharacterCount.CharactersOverLimitText.Few";
+
+    /// <summary>
+    /// The character count's description of the excess characters when the <c>many</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountCharactersOverLimitTextMany = "CharacterCount.CharactersOverLimitText.Many";
+
+    /// <summary>
     /// The character count's description of the remaining words when more than one remains.
     /// Use the <c>%{count}</c> placeholder. There is no built-in default.
     /// </summary>
@@ -250,6 +298,30 @@ public static class GovUkFrontendResourceNames
     /// There is no built-in default.
     /// </summary>
     public const string CharacterCountWordsUnderLimitTextOne = "CharacterCount.WordsUnderLimitText.One";
+
+    /// <summary>
+    /// The character count's description of the remaining words when the <c>zero</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountWordsUnderLimitTextZero = "CharacterCount.WordsUnderLimitText.Zero";
+
+    /// <summary>
+    /// The character count's description of the remaining words when the <c>two</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountWordsUnderLimitTextTwo = "CharacterCount.WordsUnderLimitText.Two";
+
+    /// <summary>
+    /// The character count's description of the remaining words when the <c>few</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountWordsUnderLimitTextFew = "CharacterCount.WordsUnderLimitText.Few";
+
+    /// <summary>
+    /// The character count's description of the remaining words when the <c>many</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountWordsUnderLimitTextMany = "CharacterCount.WordsUnderLimitText.Many";
 
     /// <summary>The character count's description when the word limit is reached. There is no built-in default.</summary>
     public const string CharacterCountWordsAtLimitText = "CharacterCount.WordsAtLimitText";
@@ -265,6 +337,30 @@ public static class GovUkFrontendResourceNames
     /// There is no built-in default.
     /// </summary>
     public const string CharacterCountWordsOverLimitTextOne = "CharacterCount.WordsOverLimitText.One";
+
+    /// <summary>
+    /// The character count's description of the excess words when the <c>zero</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountWordsOverLimitTextZero = "CharacterCount.WordsOverLimitText.Zero";
+
+    /// <summary>
+    /// The character count's description of the excess words when the <c>two</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountWordsOverLimitTextTwo = "CharacterCount.WordsOverLimitText.Two";
+
+    /// <summary>
+    /// The character count's description of the excess words when the <c>few</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountWordsOverLimitTextFew = "CharacterCount.WordsOverLimitText.Few";
+
+    /// <summary>
+    /// The character count's description of the excess words when the <c>many</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string CharacterCountWordsOverLimitTextMany = "CharacterCount.WordsOverLimitText.Many";
 
     // Client-side content: exit this page
 
@@ -307,6 +403,30 @@ public static class GovUkFrontendResourceNames
     /// The file upload's description of the chosen files when one is chosen. There is no built-in default.
     /// </summary>
     public const string FileUploadMultipleFilesChosenTextOne = "FileUpload.MultipleFilesChosenText.One";
+
+    /// <summary>
+    /// The file upload's description of the chosen files when the <c>zero</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string FileUploadMultipleFilesChosenTextZero = "FileUpload.MultipleFilesChosenText.Zero";
+
+    /// <summary>
+    /// The file upload's description of the chosen files when the <c>two</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string FileUploadMultipleFilesChosenTextTwo = "FileUpload.MultipleFilesChosenText.Two";
+
+    /// <summary>
+    /// The file upload's description of the chosen files when the <c>few</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string FileUploadMultipleFilesChosenTextFew = "FileUpload.MultipleFilesChosenText.Few";
+
+    /// <summary>
+    /// The file upload's description of the chosen files when the <c>many</c> plural category applies.
+    /// Use the <c>%{count}</c> placeholder. There is no built-in default.
+    /// </summary>
+    public const string FileUploadMultipleFilesChosenTextMany = "FileUpload.MultipleFilesChosenText.Many";
 
     // Client-side content: password input
 

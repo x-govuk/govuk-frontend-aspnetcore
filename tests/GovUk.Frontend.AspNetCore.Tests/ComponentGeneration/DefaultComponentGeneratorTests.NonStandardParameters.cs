@@ -1063,4 +1063,96 @@ public partial class DefaultComponentGeneratorTests
         // Assert
         Assert.Contains("data-test=\"item-attr\"", html);
     }
+
+    [Fact]
+    public async Task CharacterCount_PluralTexts_AllCategoriesAreIncludedInOutput()
+    {
+        // Arrange
+        var options = new CharacterCountOptions
+        {
+            Name = "my-name",
+            MaxLength = 10,
+            CharactersUnderLimitText = new CharacterCountOptionsCharactersUnderLimitText
+            {
+                Other = "other-text",
+                Zero = "zero-text",
+                One = "one-text",
+                Two = "two-text",
+                Few = "few-text",
+                Many = "many-text"
+            }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateCharacterCountAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        foreach (var category in new[] { "other", "zero", "one", "two", "few", "many" })
+        {
+            Assert.Contains($"data-i18n.characters-under-limit.{category}=\"{category}-text\"", html, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public async Task CharacterCount_PluralTexts_CategoriesWithoutContentAreOmitted()
+    {
+        // govuk-frontend's macro writes exactly the categories it is given, and the conformance
+        // fixtures assert that. Filling the gaps in from Other here would diverge from it.
+
+        // Arrange
+        var options = new CharacterCountOptions
+        {
+            Name = "my-name",
+            MaxLength = 10,
+            CharactersUnderLimitText = new CharacterCountOptionsCharactersUnderLimitText
+            {
+                Other = "other-text",
+                Few = "few-text"
+            }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateCharacterCountAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("data-i18n.characters-under-limit.other=\"other-text\"", html, StringComparison.Ordinal);
+        Assert.Contains("data-i18n.characters-under-limit.few=\"few-text\"", html, StringComparison.Ordinal);
+
+        foreach (var category in new[] { "zero", "one", "two", "many" })
+        {
+            Assert.DoesNotContain($"data-i18n.characters-under-limit.{category}", html, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public async Task FileUpload_MultipleFilesChosenText_AllCategoriesAreIncludedInOutput()
+    {
+        // Arrange
+        var options = new FileUploadOptions
+        {
+            Name = "my-name",
+            JavaScript = true,
+            MultipleFilesChosenText = new FileUploadOptionsMultipleFilesChosenText
+            {
+                Other = "other-text",
+                Zero = "zero-text",
+                One = "one-text",
+                Two = "two-text",
+                Few = "few-text",
+                Many = "many-text"
+            }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateFileUploadAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        foreach (var category in new[] { "other", "zero", "one", "two", "few", "many" })
+        {
+            Assert.Contains($"data-i18n.multiple-files-chosen.{category}=\"{category}-text\"", html, StringComparison.Ordinal);
+        }
+    }
 }

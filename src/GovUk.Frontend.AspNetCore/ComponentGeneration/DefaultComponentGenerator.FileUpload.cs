@@ -76,19 +76,13 @@ internal partial class DefaultComponentGenerator
                     .With("data-i18n.left-drop-zone", options.LeftDropZoneText ?? LocalizedText(GovUkFrontendResourceNames.FileUploadLeftDropZoneText))
                     .With(options.WrapperAttributes));
 
-                var multipleFilesChosenOne = options.MultipleFilesChosenText?.One ??
-                    LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextOne);
-                var multipleFilesChosenOther = options.MultipleFilesChosenText?.Other ??
-                    LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextOther);
-
-                if (!multipleFilesChosenOne.IsEmpty())
-                {
-                    wrapperDiv.Attributes.Set("data-i18n.multiple-files-chosen.one", multipleFilesChosenOne);
-                }
-                if (!multipleFilesChosenOther.IsEmpty())
-                {
-                    wrapperDiv.Attributes.Set("data-i18n.multiple-files-chosen.other", multipleFilesChosenOther);
-                }
+                AddI18nPluralAttributes(wrapperDiv.Attributes, "multiple-files-chosen", new PluralTexts(
+                    Other: options.MultipleFilesChosenText?.Other ?? LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextOther),
+                    Zero: options.MultipleFilesChosenText?.Zero ?? LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextZero),
+                    One: options.MultipleFilesChosenText?.One ?? LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextOne),
+                    Two: options.MultipleFilesChosenText?.Two ?? LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextTwo),
+                    Few: options.MultipleFilesChosenText?.Few ?? LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextFew),
+                    Many: options.MultipleFilesChosenText?.Many ?? LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextMany)));
 
                 var inputTag = CreateFileInputTag();
                 wrapperDiv.InnerHtml.AppendHtml(inputTag);

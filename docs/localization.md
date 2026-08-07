@@ -72,12 +72,29 @@ otherwise you'll get a mix of languages.
 `PasswordInput.ShowPasswordText` and `PasswordInput.ShowPasswordAriaLabelText` are used for the
 server-rendered button *and* the `data-i18n` attributes, so they always change together.
 
-### Known limitation: plural forms
+### Plural forms
 
-The govuk-frontend JavaScript selects plural forms with `Intl.PluralRules`, which has up to six
-categories. Welsh uses all six; this library currently only models `one` and `other`, matching the
-shape of the underlying options. A Welsh service therefore can't fully localize the character count
-counter or the file upload's multiple-files text through this route yet.
+The character count's counter and the file upload's multiple-files text vary by plural category. The
+govuk-frontend JavaScript picks between them with `Intl.PluralRules`, so each of these has a resource
+name per CLDR category — `Zero`, `One`, `Two`, `Few`, `Many` and `Other`:
+
+| Name                                            | Used when                        |
+| ----------------------------------------------- | -------------------------------- |
+| `CharacterCount.CharactersUnderLimitText.Other` | the `other` category applies     |
+| `CharacterCount.CharactersUnderLimitText.Few`   | the `few` category applies       |
+| …and `.Zero`, `.One`, `.Two`, `.Many`           |                                  |
+
+English needs only `one` and `other`; Welsh uses all six.
+
+> [!IMPORTANT]
+> **Supply every category your language uses, including `other`.** A category you leave out does *not*
+> fall back to your `other` — it falls back to govuk-frontend's own **English** default, because the
+> JavaScript merges your attributes over its English ones. Leaving out `other` is worse still: the
+> JavaScript throws.
+
+Only the categories you supply are written to the page, matching what govuk-frontend's own template
+does. Which categories a language needs is set by
+[CLDR's plural rules](https://cldr.unicode.org/index/cldr-spec/plural-rules).
 
 ## Implementing `IGovUkFrontendLocalizer` directly
 

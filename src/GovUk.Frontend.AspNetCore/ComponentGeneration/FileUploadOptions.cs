@@ -54,6 +54,14 @@ public record FileUploadOptionsAfterInput
 
 public record FileUploadOptionsMultipleFilesChosenText
 {
-    public TemplateString? Other { get; set; }
-    public TemplateString? One { get; set; }
+    public string? Other { get; set; }
+    [NonStandardParameter]
+    public string? Zero { get; set; }
+    public string? One { get; set; }
+    [NonStandardParameter]
+    public string? Two { get; set; }
+    [NonStandardParameter]
+    public string? Few { get; set; }
+    [NonStandardParameter]
+    public string? Many { get; set; }
 }

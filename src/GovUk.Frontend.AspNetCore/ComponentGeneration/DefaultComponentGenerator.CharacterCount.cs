@@ -80,39 +80,47 @@ internal partial class DefaultComponentGenerator
             formGroupAttributes.Set("data-i18n.textarea-description.other", specifiedTextareaDescriptionText);
         }
 
-        AddI18nPluralAttributes(
-            formGroupAttributes,
-            "characters-under-limit",
-            options.CharactersUnderLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextOther),
-            options.CharactersUnderLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextOne));
+        AddI18nPluralAttributes(formGroupAttributes, "characters-under-limit", new PluralTexts(
+            Other: options.CharactersUnderLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextOther),
+            Zero: options.CharactersUnderLimitText?.Zero ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextZero),
+            One: options.CharactersUnderLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextOne),
+            Two: options.CharactersUnderLimitText?.Two ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextTwo),
+            Few: options.CharactersUnderLimitText?.Few ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextFew),
+            Many: options.CharactersUnderLimitText?.Many ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextMany)));
 
         AddI18nSingularAttribute(
             formGroupAttributes,
             "characters-at-limit",
             options.CharactersAtLimitText ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersAtLimitText));
 
-        AddI18nPluralAttributes(
-            formGroupAttributes,
-            "characters-over-limit",
-            options.CharactersOverLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextOther),
-            options.CharactersOverLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextOne));
+        AddI18nPluralAttributes(formGroupAttributes, "characters-over-limit", new PluralTexts(
+            Other: options.CharactersOverLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextOther),
+            Zero: options.CharactersOverLimitText?.Zero ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextZero),
+            One: options.CharactersOverLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextOne),
+            Two: options.CharactersOverLimitText?.Two ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextTwo),
+            Few: options.CharactersOverLimitText?.Few ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextFew),
+            Many: options.CharactersOverLimitText?.Many ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextMany)));
 
-        AddI18nPluralAttributes(
-            formGroupAttributes,
-            "words-under-limit",
-            options.WordsUnderLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextOther),
-            options.WordsUnderLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextOne));
+        AddI18nPluralAttributes(formGroupAttributes, "words-under-limit", new PluralTexts(
+            Other: options.WordsUnderLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextOther),
+            Zero: options.WordsUnderLimitText?.Zero ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextZero),
+            One: options.WordsUnderLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextOne),
+            Two: options.WordsUnderLimitText?.Two ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextTwo),
+            Few: options.WordsUnderLimitText?.Few ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextFew),
+            Many: options.WordsUnderLimitText?.Many ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextMany)));
 
         AddI18nSingularAttribute(
             formGroupAttributes,
             "words-at-limit",
             options.WordsAtLimitText ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsAtLimitText));
 
-        AddI18nPluralAttributes(
-            formGroupAttributes,
-            "words-over-limit",
-            options.WordsOverLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextOther),
-            options.WordsOverLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextOne));
+        AddI18nPluralAttributes(formGroupAttributes, "words-over-limit", new PluralTexts(
+            Other: options.WordsOverLimitText?.Other ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextOther),
+            Zero: options.WordsOverLimitText?.Zero ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextZero),
+            One: options.WordsOverLimitText?.One ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextOne),
+            Two: options.WordsOverLimitText?.Two ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextTwo),
+            Few: options.WordsOverLimitText?.Few ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextFew),
+            Many: options.WordsOverLimitText?.Many ?? LocalizedText(GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextMany)));
 
         if (options.FormGroup?.Attributes is not null)
         {
@@ -165,16 +173,44 @@ internal partial class DefaultComponentGenerator
         return await GenerateTextareaAsync(textareaOptions);
     }
 
-    private static void AddI18nPluralAttributes(AttributeCollection attributes, string key, TemplateString? other, TemplateString? one)
-    {
-        if (other is not null && !other.IsEmpty())
-        {
-            attributes.Set($"data-i18n.{key}.other", other);
-        }
+    /// <summary>
+    /// The text for a message that varies by plural category, in the order govuk-frontend writes them.
+    /// </summary>
+    /// <remarks>
+    /// The categories are CLDR's, which is what <c>Intl.PluralRules</c> selects between in the browser.
+    /// </remarks>
+    private readonly record struct PluralTexts(
+        string? Other,
+        string? Zero,
+        string? One,
+        string? Two,
+        string? Few,
+        string? Many);
 
-        if (one is not null && !one.IsEmpty())
+    /// <summary>
+    /// Writes a <c>data-i18n</c> attribute for each plural category that has content.
+    /// </summary>
+    /// <remarks>
+    /// Categories without content are left out rather than filled in from <see cref="PluralTexts.Other"/>,
+    /// matching govuk-frontend, whose macro writes exactly the categories it is given. That means a
+    /// category a translation omits falls back to govuk-frontend's own English default in the browser,
+    /// not to the translation's <c>other</c>.
+    /// </remarks>
+    private static void AddI18nPluralAttributes(AttributeCollection attributes, string key, PluralTexts texts)
+    {
+        Add("other", texts.Other);
+        Add("zero", texts.Zero);
+        Add("one", texts.One);
+        Add("two", texts.Two);
+        Add("few", texts.Few);
+        Add("many", texts.Many);
+
+        void Add(string category, string? text)
         {
-            attributes.Set($"data-i18n.{key}.one", one);
+            if (!text.IsEmpty())
+            {
+                attributes.Set($"data-i18n.{key}.{category}", text);
+            }
         }
     }
 

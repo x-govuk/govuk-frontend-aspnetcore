@@ -138,6 +138,18 @@ public class ComponentLocalizationTests
         [GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextOne] =
             g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
 
+        [GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextZero] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextTwo] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextFew] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountCharactersUnderLimitTextMany] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
+
         [GovUkFrontendResourceNames.CharacterCountCharactersAtLimitText] =
             g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
 
@@ -147,10 +159,34 @@ public class ComponentLocalizationTests
         [GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextOne] =
             g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
 
+        [GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextZero] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextTwo] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextFew] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountCharactersOverLimitTextMany] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxLength = 10 }),
+
         [GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextOther] =
             g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
 
         [GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextOne] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextZero] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextTwo] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextFew] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountWordsUnderLimitTextMany] =
             g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
 
         [GovUkFrontendResourceNames.CharacterCountWordsAtLimitText] =
@@ -160,6 +196,18 @@ public class ComponentLocalizationTests
             g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
 
         [GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextOne] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextZero] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextTwo] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextFew] =
+            g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
+
+        [GovUkFrontendResourceNames.CharacterCountWordsOverLimitTextMany] =
             g => g.GenerateCharacterCountAsync(new CharacterCountOptions { Name = "c", MaxWords = 10 }),
 
         [GovUkFrontendResourceNames.ExitThisPageActivatedText] =
@@ -193,6 +241,18 @@ public class ComponentLocalizationTests
             g => g.GenerateFileUploadAsync(new FileUploadOptions { Name = "f", JavaScript = true }),
 
         [GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextOne] =
+            g => g.GenerateFileUploadAsync(new FileUploadOptions { Name = "f", JavaScript = true }),
+
+        [GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextZero] =
+            g => g.GenerateFileUploadAsync(new FileUploadOptions { Name = "f", JavaScript = true }),
+
+        [GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextTwo] =
+            g => g.GenerateFileUploadAsync(new FileUploadOptions { Name = "f", JavaScript = true }),
+
+        [GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextFew] =
+            g => g.GenerateFileUploadAsync(new FileUploadOptions { Name = "f", JavaScript = true }),
+
+        [GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextMany] =
             g => g.GenerateFileUploadAsync(new FileUploadOptions { Name = "f", JavaScript = true })
     };
 

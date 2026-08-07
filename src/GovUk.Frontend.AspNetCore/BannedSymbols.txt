@@ -1,3 +1,4 @@
 M:GovUk.Frontend.AspNetCore.HtmlContentExtensions.ToHtmlString(Microsoft.AspNetCore.Html.IHtmlContent,System.Text.Encodings.Web.HtmlEncoder);Returns encoded HTML, so passing the result somewhere that encodes gives double-encoded output. Use TemplateString.TryGetText for a value's text, TemplateString.Render to render it, or write the value itself.
 M:Microsoft.AspNetCore.Html.IHtmlContentBuilder.AppendHtml(System.String);Treats the string as markup. Pass an IHtmlContent, or Append it to encode it as text.
 M:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContent.AppendHtml(System.String);Treats the string as markup. Pass an IHtmlContent, or Append it to encode it as text.
+M:Microsoft.AspNetCore.Html.HtmlContentBuilder.AppendHtml(System.String);Treats the string as markup. Pass an IHtmlContent, or Append it to encode it as text.

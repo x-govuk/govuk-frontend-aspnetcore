@@ -38,9 +38,10 @@
             builder.Append(attribute.Key);
             if (attribute.Value is not null)
             {
-                builder.AppendHtml("=\"");
+                // The quotes are markup; the value between them is not.
+                builder.AppendHtml(new HtmlString("=\""));
                 builder.Append(attribute.Value);
-                builder.AppendHtml("\"");
+                builder.AppendHtml(new HtmlString("\""));
             }
         }
 

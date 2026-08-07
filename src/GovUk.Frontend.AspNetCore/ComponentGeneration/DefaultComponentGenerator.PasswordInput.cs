@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -9,6 +10,13 @@ internal partial class DefaultComponentGenerator
         ArgumentNullException.ThrowIfNull(options);
 
         var id = options.Id.WithEmptyFallback(options.Name);
+
+        // These two are used for the server-rendered button as well as the data-i18n attributes that
+        // the JavaScript reads, so they have to stay in step with each other.
+        var showPasswordText = options.ShowPasswordText ??
+            LocalizedText(GovUkFrontendResourceNames.PasswordInputShowPasswordText);
+        var showPasswordAriaLabelText = options.ShowPasswordAriaLabelText ??
+            LocalizedText(GovUkFrontendResourceNames.PasswordInputShowPasswordAriaLabelText);
 
         var describedByParts = new List<TemplateString>();
         if (options.DescribedBy is var describedBy && !describedBy.IsEmpty())
@@ -23,12 +31,12 @@ internal partial class DefaultComponentGenerator
                 options.ErrorMessage is not null ? "govuk-form-group--error" : null,
                 options.FormGroup?.Classes)
             .With("data-module", "govuk-password-input")
-            .With("data-i18n.show-password", options.ShowPasswordText)
-            .With("data-i18n.hide-password", options.HidePasswordText)
-            .With("data-i18n.show-password-aria-label", options.ShowPasswordAriaLabelText)
-            .With("data-i18n.hide-password-aria-label", options.HidePasswordAriaLabelText)
-            .With("data-i18n.password-shown-announcement", options.PasswordShownAnnouncementText)
-            .With("data-i18n.password-hidden-announcement", options.PasswordHiddenAnnouncementText)
+            .With("data-i18n.show-password", showPasswordText)
+            .With("data-i18n.hide-password", options.HidePasswordText ?? LocalizedText(GovUkFrontendResourceNames.PasswordInputHidePasswordText))
+            .With("data-i18n.show-password-aria-label", showPasswordAriaLabelText)
+            .With("data-i18n.hide-password-aria-label", options.HidePasswordAriaLabelText ?? LocalizedText(GovUkFrontendResourceNames.PasswordInputHidePasswordAriaLabelText))
+            .With("data-i18n.password-shown-announcement", options.PasswordShownAnnouncementText ?? LocalizedText(GovUkFrontendResourceNames.PasswordInputPasswordShownAnnouncementText))
+            .With("data-i18n.password-hidden-announcement", options.PasswordHiddenAnnouncementText ?? LocalizedText(GovUkFrontendResourceNames.PasswordInputPasswordHiddenAnnouncementText))
             .With(options.FormGroup?.Attributes));
 
         var labelComponent = await GenerateLabelAsync(new LabelOptions
@@ -112,10 +120,10 @@ internal partial class DefaultComponentGenerator
             .WithClasses(buttonClasses)
             .With("data-module", "govuk-button")
             .With("aria-controls", id)
-            .With("aria-label", options.ShowPasswordAriaLabelText.WithEmptyFallback("Show password"))
+            .With("aria-label", showPasswordAriaLabelText.WithEmptyFallback("Show password"))
             .WithBoolean("hidden"));
 
-        buttonElement.InnerHtml.Append(options.ShowPasswordText.WithEmptyFallback("Show"));
+        buttonElement.InnerHtml.Append(showPasswordText.WithEmptyFallback("Show"));
 
         wrapperDiv.InnerHtml.AppendHtml(buttonElement);
 

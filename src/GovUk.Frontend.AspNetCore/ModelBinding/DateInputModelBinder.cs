@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -40,6 +41,8 @@ public class DateInputModelBinder : IModelBinder
         ArgumentNullException.ThrowIfNull(bindingContext);
 
         var optionsAccessor = bindingContext.HttpContext.RequestServices.GetRequiredService<IOptions<GovUkFrontendOptions>>();
+        var localizer = bindingContext.HttpContext.RequestServices.GetService<IGovUkFrontendLocalizer>() ??
+            NullGovUkFrontendLocalizer.Instance;
 
         var modelType = bindingContext.ModelMetadata.UnderlyingOrModelType;
 
@@ -111,7 +114,7 @@ public class DateInputModelBinder : IModelBinder
             var modelMetadata = bindingContext.ModelMetadata;
             var displayName = dateInputModelMetadata?.ErrorMessagePrefix ?? modelMetadata.DisplayName ?? modelMetadata.PropertyName ?? string.Empty;
 
-            var errorMessageTemplate = GetModelStateErrorMessageTemplate(parseErrors);
+            var errorMessageTemplate = GetModelStateErrorMessageTemplate(parseErrors, localizer);
             var parseException = new DateInputParseException(errorMessageTemplate, displayName, parseErrors);
             var modelError = new ModelError(parseException, parseException.Message);
             bindingContext.ModelState[bindingContext.ModelName]!.Errors.Add(modelError);
@@ -123,36 +126,41 @@ public class DateInputModelBinder : IModelBinder
     }
 
     // internal for testing
-    internal static string GetModelStateErrorMessageTemplate(DateInputParseErrors parseErrors)
+    internal static string GetModelStateErrorMessageTemplate(DateInputParseErrors parseErrors) =>
+        GetModelStateErrorMessageTemplate(parseErrors, NullGovUkFrontendLocalizer.Instance);
+
+    // internal for testing
+    internal static string GetModelStateErrorMessageTemplate(
+        DateInputParseErrors parseErrors,
+        IGovUkFrontendLocalizer localizer)
     {
-        // TODO Make these messages configurable
-        // (see Microsoft.AspNetCore.Mvc.ModelBinding.Metadata.ModelBindingMessageProvider)
-
         Debug.Assert(parseErrors != DateInputParseErrors.None);
-        Debug.Assert(parseErrors != (DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingYear));
 
-        var missingFields = new List<string>();
+        // The all-three-missing case can't get here; BindModelAsync returns early when every field is empty.
+        var missingFields = parseErrors &
+            (DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingYear);
+        Debug.Assert(missingFields != (DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingYear));
 
-        if ((parseErrors & DateInputParseErrors.MissingDay) != 0)
+        // Each combination is a whole sentence rather than a list joined from field names; languages
+        // don't agree on how to inflect a noun after a conjunction.
+        var (name, defaultTemplate) = missingFields switch
         {
-            missingFields.Add("day");
-        }
-        if ((parseErrors & DateInputParseErrors.MissingMonth) != 0)
-        {
-            missingFields.Add("month");
-        }
-        if ((parseErrors & DateInputParseErrors.MissingYear) != 0)
-        {
-            missingFields.Add("year");
-        }
+            DateInputParseErrors.MissingDay =>
+                (GovUkFrontendResourceNames.DateInputErrorMessageMissingDay, "{0} must include a day"),
+            DateInputParseErrors.MissingMonth =>
+                (GovUkFrontendResourceNames.DateInputErrorMessageMissingMonth, "{0} must include a month"),
+            DateInputParseErrors.MissingYear =>
+                (GovUkFrontendResourceNames.DateInputErrorMessageMissingYear, "{0} must include a year"),
+            DateInputParseErrors.MissingDay | DateInputParseErrors.MissingMonth =>
+                (GovUkFrontendResourceNames.DateInputErrorMessageMissingDayAndMonth, "{0} must include a day and month"),
+            DateInputParseErrors.MissingDay | DateInputParseErrors.MissingYear =>
+                (GovUkFrontendResourceNames.DateInputErrorMessageMissingDayAndYear, "{0} must include a day and year"),
+            DateInputParseErrors.MissingMonth | DateInputParseErrors.MissingYear =>
+                (GovUkFrontendResourceNames.DateInputErrorMessageMissingMonthAndYear, "{0} must include a month and year"),
+            _ => (GovUkFrontendResourceNames.DateInputErrorMessageInvalidDate, "{0} must be a real date")
+        };
 
-        if (missingFields.Count > 0)
-        {
-            Debug.Assert(missingFields.Count <= 2);
-            return $"{{0}} must include a {string.Join(" and ", missingFields)}";
-        }
-
-        return "{0} must be a real date";
+        return localizer.GetString(name) is { Length: > 0 } localizedTemplate ? localizedTemplate : defaultTemplate;
     }
 
     // internal for testing

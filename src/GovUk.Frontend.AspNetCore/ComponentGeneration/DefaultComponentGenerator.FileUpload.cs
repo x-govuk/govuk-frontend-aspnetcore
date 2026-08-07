@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -68,23 +69,25 @@ internal partial class DefaultComponentGenerator
                 var wrapperDiv = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-file-upload-wrapper", options.WrapperClasses)
                     .With("data-module", "govuk-file-upload")
-                    .With("data-i18n.choose-files-button", options.ChooseFilesButtonText)
-                    .With("data-i18n.no-file-chosen", options.NoFileChosenText)
-                    .With("data-i18n.drop-instruction", options.DropInstructionText)
-                    .With("data-i18n.entered-drop-zone", options.EnteredDropZoneText)
-                    .With("data-i18n.left-drop-zone", options.LeftDropZoneText)
+                    .With("data-i18n.choose-files-button", options.ChooseFilesButtonText ?? LocalizedText(GovUkFrontendResourceNames.FileUploadChooseFilesButtonText))
+                    .With("data-i18n.no-file-chosen", options.NoFileChosenText ?? LocalizedText(GovUkFrontendResourceNames.FileUploadNoFileChosenText))
+                    .With("data-i18n.drop-instruction", options.DropInstructionText ?? LocalizedText(GovUkFrontendResourceNames.FileUploadDropInstructionText))
+                    .With("data-i18n.entered-drop-zone", options.EnteredDropZoneText ?? LocalizedText(GovUkFrontendResourceNames.FileUploadEnteredDropZoneText))
+                    .With("data-i18n.left-drop-zone", options.LeftDropZoneText ?? LocalizedText(GovUkFrontendResourceNames.FileUploadLeftDropZoneText))
                     .With(options.WrapperAttributes));
 
-                if (options.MultipleFilesChosenText is { } multipleFilesChosenText)
+                var multipleFilesChosenOne = options.MultipleFilesChosenText?.One ??
+                    LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextOne);
+                var multipleFilesChosenOther = options.MultipleFilesChosenText?.Other ??
+                    LocalizedText(GovUkFrontendResourceNames.FileUploadMultipleFilesChosenTextOther);
+
+                if (!multipleFilesChosenOne.IsEmpty())
                 {
-                    if (!multipleFilesChosenText.One.IsEmpty())
-                    {
-                        wrapperDiv.Attributes.Set("data-i18n.multiple-files-chosen.one", multipleFilesChosenText.One);
-                    }
-                    if (!multipleFilesChosenText.Other.IsEmpty())
-                    {
-                        wrapperDiv.Attributes.Set("data-i18n.multiple-files-chosen.other", multipleFilesChosenText.Other);
-                    }
+                    wrapperDiv.Attributes.Set("data-i18n.multiple-files-chosen.one", multipleFilesChosenOne);
+                }
+                if (!multipleFilesChosenOther.IsEmpty())
+                {
+                    wrapperDiv.Attributes.Set("data-i18n.multiple-files-chosen.other", multipleFilesChosenOther);
                 }
 
                 var inputTag = CreateFileInputTag();

@@ -318,6 +318,12 @@ services.AddGovUkFrontend(options =>
 
 - [Max words validator](docs/validation/maxwords.md)
 
+## Localization
+
+The content the library renders — `Error`, `There is a problem`, `Back`, the date input validation
+messages and so on — can be translated by registering an `IGovUkFrontendLocalizer`. See
+[Localization](docs/localization.md).
+
 
 ## Building the library
 

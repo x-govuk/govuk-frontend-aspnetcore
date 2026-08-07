@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -19,14 +20,18 @@ public class ErrorSummaryTagHelper : TagHelper
     private const string DisableAutoFocusAttributeName = "disable-auto-focus";
 
     private readonly IComponentGenerator _componentGenerator;
+    private readonly IGovUkFrontendLocalizer _localizer;
 
     /// <summary>
     /// Creates a new <see cref="ErrorSummaryTagHelper"/>.
     /// </summary>
-    public ErrorSummaryTagHelper(IComponentGenerator componentGenerator)
+    public ErrorSummaryTagHelper(IComponentGenerator componentGenerator, IGovUkFrontendLocalizer localizer)
     {
         ArgumentNullException.ThrowIfNull(componentGenerator);
+        ArgumentNullException.ThrowIfNull(localizer);
+
         _componentGenerator = componentGenerator;
+        _localizer = localizer;
     }
 
     /// <summary>
@@ -84,10 +89,14 @@ public class ErrorSummaryTagHelper : TagHelper
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
 
+        var (titleText, titleHtml) = DefaultComponentGenerator.GetErrorSummaryTitle(
+            _localizer,
+            errorSummaryContext.Title?.Html);
+
         var component = await _componentGenerator.GenerateErrorSummaryAsync(new ErrorSummaryOptions
         {
-            TitleText = errorSummaryContext.Title is null ? DefaultComponentGenerator.DefaultErrorSummaryTitleText : null,
-            TitleHtml = errorSummaryContext.Title?.Html,
+            TitleText = titleText,
+            TitleHtml = titleHtml,
             DescriptionText = null,
             DescriptionHtml = errorSummaryContext.Description?.Html,
             ErrorList = errorList,

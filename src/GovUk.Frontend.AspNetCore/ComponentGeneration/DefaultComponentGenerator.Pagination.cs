@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -13,12 +14,18 @@ internal partial class DefaultComponentGenerator
 
         var navTag = new HtmlTag("nav", attrs => attrs
             .WithClasses("govuk-pagination", blockLevel ? "govuk-pagination--block" : null, options.Classes)
-            .With("aria-label", options.LandmarkLabel ?? "Pagination")
+            .With("aria-label", options.LandmarkLabel ?? LocalizedText(GovUkFrontendResourceNames.PaginationLandmarkLabel) ?? "Pagination")
             .With(options.Attributes));
+
+        // The space before the visually hidden suffix lives here rather than in the resource; leading
+        // whitespace in a .resx only survives with xml:space="preserve", which tooling tends to drop.
+        var linkVisuallyHiddenText = " " +
+            (LocalizedText(GovUkFrontendResourceNames.PaginationLinkVisuallyHiddenText) ?? "page");
 
         if (!(options.Previous?.Href).IsEmpty())
         {
-            var previousLinkContent = GetLinkContent(options.Previous.Html, options.Previous.Text, "Previous", " page");
+            var previousText = LocalizedText(GovUkFrontendResourceNames.PaginationPreviousText) ?? "Previous";
+            var previousLinkContent = GetLinkContent(options.Previous.Html, options.Previous.Text, previousText, linkVisuallyHiddenText);
             var previousTag = GeneratePrevLink(options.Previous, previousLinkContent, blockLevel);
             navTag.InnerHtml.AppendHtml(previousTag);
         }
@@ -44,7 +51,8 @@ internal partial class DefaultComponentGenerator
 
         if (!(options.Next?.Href).IsEmpty())
         {
-            var nextLinkContent = GetLinkContent(options.Next.Html, options.Next.Text, "Next", " page");
+            var nextText = LocalizedText(GovUkFrontendResourceNames.PaginationNextText) ?? "Next";
+            var nextLinkContent = GetLinkContent(options.Next.Html, options.Next.Text, nextText, linkVisuallyHiddenText);
             var nextTag = GenerateNextLink(options.Next, nextLinkContent, blockLevel);
             navTag.InnerHtml.AppendHtml(nextTag);
         }
@@ -195,7 +203,10 @@ internal partial class DefaultComponentGenerator
                 var aTag = new HtmlTag("a", attrs =>
                 {
                     var ariaLabel = item.VisuallyHiddenText
-                        ?? (item.Number is not null ? new TemplateString($"Page {item.Number}") : null);
+                        ?? (item.Number is not null
+                            ? new TemplateString(LocalizedText(GovUkFrontendResourceNames.PaginationItemVisuallyHiddenText, "%{number}", item.Number.ToText()))
+                                .WithEmptyFallback(new TemplateString($"Page {item.Number}"))
+                            : null);
 
                     attrs
                         .WithClasses("govuk-link", "govuk-pagination__link")

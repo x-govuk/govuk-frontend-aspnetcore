@@ -1,8 +1,29 @@
+using GovUk.Frontend.AspNetCore.Localization;
+using Microsoft.AspNetCore.Html;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
 {
     internal const string DefaultErrorSummaryTitleText = "There is a problem";
+
+    /// <summary>
+    /// Resolves the title to pass to <see cref="GenerateErrorSummaryAsync"/> when the consumer hasn't
+    /// specified one.
+    /// </summary>
+    internal static (string? TitleText, IHtmlContent? TitleHtml) GetErrorSummaryTitle(
+        IGovUkFrontendLocalizer localizer,
+        IHtmlContent? specifiedTitleHtml)
+    {
+        if (specifiedTitleHtml is not null)
+        {
+            return (null, specifiedTitleHtml);
+        }
+
+        var localizedTitle = localizer.GetString(GovUkFrontendResourceNames.ErrorSummaryTitleText);
+
+        return (localizedTitle is { Length: > 0 } ? localizedTitle : DefaultErrorSummaryTitleText, null);
+    }
 
     public virtual ValueTask<GovUkComponent> GenerateErrorSummaryAsync(ErrorSummaryOptions options)
     {

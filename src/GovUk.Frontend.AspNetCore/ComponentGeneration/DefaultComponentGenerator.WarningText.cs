@@ -1,3 +1,5 @@
+using GovUk.Frontend.AspNetCore.Localization;
+
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 internal partial class DefaultComponentGenerator
@@ -6,7 +8,9 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var iconFallbackText = options.IconFallbackText ?? "Warning";
+        var iconFallbackText = options.IconFallbackText ??
+            LocalizedText(GovUkFrontendResourceNames.WarningTextIconFallbackText) ??
+            "Warning";
         var content = HtmlOrText(options.Html, options.Text);
 
         var outerTag = new HtmlTag("div", attrs => attrs

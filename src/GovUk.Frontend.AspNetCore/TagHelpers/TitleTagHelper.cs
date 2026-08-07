@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using GovUk.Frontend.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -19,15 +20,18 @@ public class TitleTagHelper : TagHelper
     private const string ErrorPrefixAttributeName = "error-prefix";
 
     private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;
+    private readonly IGovUkFrontendLocalizer _localizer;
 
     /// <summary>
     /// Creates a new <see cref="TitleTagHelper"/>.
     /// </summary>
-    public TitleTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor)
+    public TitleTagHelper(IOptions<GovUkFrontendOptions> optionsAccessor, IGovUkFrontendLocalizer localizer)
     {
         ArgumentNullException.ThrowIfNull(optionsAccessor);
+        ArgumentNullException.ThrowIfNull(localizer);
 
         _optionsAccessor = optionsAccessor;
+        _localizer = localizer;
     }
 
     /// <summary>
@@ -57,7 +61,9 @@ public class TitleTagHelper : TagHelper
 
         if (_optionsAccessor.Value.PrependErrorToTitle && containerErrorContext.ErrorSummaryHasBeenRendered)
         {
-            var errorPrefix = ErrorPrefix ?? DefaultErrorPrefix;
+            var errorPrefix = ErrorPrefix ??
+                _localizer.GetString(GovUkFrontendResourceNames.TitleErrorPrefix) ??
+                DefaultErrorPrefix;
             output.PreContent.Append(errorPrefix + " ");
         }
     }

@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using GovUk.Frontend.AspNetCore.Localization;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -49,7 +50,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator, NullGovUkFrontendLocalizer.Instance)
         {
             DisableAutoFocus = disableAutoFocus,
             ViewContext = viewContext
@@ -104,7 +105,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator, NullGovUkFrontendLocalizer.Instance)
         {
             ViewContext = TestUtils.CreateViewContext()
         };
@@ -132,7 +133,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var (componentGenerator, _) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator, NullGovUkFrontendLocalizer.Instance)
         {
             ViewContext = TestUtils.CreateViewContext()
         };
@@ -182,7 +183,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator, NullGovUkFrontendLocalizer.Instance)
         {
             ViewContext = viewContext
         };
@@ -232,7 +233,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var (componentGenerator, getActualOptions) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator, NullGovUkFrontendLocalizer.Instance)
         {
             ViewContext = viewContext
         };
@@ -273,7 +274,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
 
         var (componentGenerator, _) = CreateComponentGenerator<ErrorSummaryOptions>(nameof(IComponentGenerator.GenerateErrorSummaryAsync));
 
-        var tagHelper = new ErrorSummaryTagHelper(componentGenerator)
+        var tagHelper = new ErrorSummaryTagHelper(componentGenerator, NullGovUkFrontendLocalizer.Instance)
         {
             ViewContext = viewContext
         };

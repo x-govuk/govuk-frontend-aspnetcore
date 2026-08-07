@@ -1155,4 +1155,19 @@ public partial class DefaultComponentGeneratorTests
             Assert.Contains($"data-i18n.multiple-files-chosen.{category}=\"{category}-text\"", html, StringComparison.Ordinal);
         }
     }
+
+    [Fact]
+    public async Task Tabs_Title_IsEncoded()
+    {
+        // Tabs' title only ever comes from a string attribute, so it has no Html sibling.
+
+        // Arrange
+        var options = new TabsOptions { Title = "Contents & more" };
+
+        // Act
+        var html = (await _componentGenerator.GenerateTabsAsync(options)).GetHtml();
+
+        // Assert
+        Assert.Contains("Contents &amp; more", html, StringComparison.Ordinal);
+    }
 }

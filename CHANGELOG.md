@@ -2,6 +2,10 @@
 
 ## Unreleased — 5.0.0
 
+`TabsOptions.Title` is now `string?` rather than `TemplateString?`. It only ever comes from the `title` attribute, so it is always text.
+
+`SelectOptionsItem.Text` is `TemplateString?` again and its `Html` property is gone. Content written inside `<govuk-select-item>` is markup, and `TemplateString` already carries either kind, so the extra property added nothing.
+
 `Text` and `Html` options are now typed for what they hold: `Text` is a `string` and is always HTML-encoded, `Html` is an `IHtmlContent` and is always emitted as-is.
 
 Both used to be `TemplateString`, which carries either text or markup and decides which by how it was constructed. That made it possible — and, in practice, easy — to put text in an `Html` slot, and the compiler had nothing to say about it. That is how validation messages came to be rendered as markup. Now `Html = someString` doesn't compile.

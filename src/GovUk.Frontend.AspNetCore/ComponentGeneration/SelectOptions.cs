@@ -41,9 +41,7 @@ public record SelectOptionsAfterInput
 public record SelectOptionsItem
 {
     public TemplateString? Value { get; set; }
-    public string? Text { get; set; }
-    [NonStandardParameter]
-    public IHtmlContent? Html { get; set; }
+    public TemplateString? Text { get; set; }
     public bool? Selected { get; set; }
     public bool? Disabled { get; set; }
     public AttributeCollection? Attributes { get; set; }

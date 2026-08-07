@@ -31,7 +31,7 @@ public class TabsContextTests
             {
                 Assert.Equal("item1", item.Id);
                 Assert.Equal("Label", item.Label);
-                Assert.Equal("Panel", item.Panel?.Html.ToHtmlString());
+                Assert.Equal("Panel", item.Panel?.Html?.ToHtmlString());
             });
     }
 
@@ -60,7 +60,7 @@ public class TabsContextTests
             item =>
             {
                 Assert.Equal("Label", item.Label);
-                Assert.Equal("Panel", item.Panel?.Html.ToHtmlString());
+                Assert.Equal("Panel", item.Panel?.Html?.ToHtmlString());
             });
     }
 }

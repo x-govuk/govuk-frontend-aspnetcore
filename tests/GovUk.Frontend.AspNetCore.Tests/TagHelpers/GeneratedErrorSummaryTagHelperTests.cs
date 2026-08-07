@@ -61,7 +61,7 @@ public class GeneratedErrorSummaryTagHelperTests : TagHelperTestBase<GeneratedEr
                 {
                     Assert.NotNull(error);
                     Assert.Equal(errorHref, error.Href);
-                    Assert.Equal(errorHtml, error.Html.ToHtmlString());
+                    Assert.Equal(errorHtml, error.Html?.ToHtmlString());
                 });
         }
         else

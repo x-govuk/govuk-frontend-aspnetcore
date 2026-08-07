@@ -53,7 +53,7 @@ public class FooterMetaTagHelperTests : TagHelperTestBase<FooterMetaTagHelper>
         Assert.NotNull(footerMetaOptions);
         Assert.Equal(visuallyHiddenTitle, footerMetaOptions.VisuallyHiddenTitle);
         Assert.Null(footerMetaOptions.Text);
-        Assert.Equal(content, footerMetaOptions.Html.ToHtmlString());
+        Assert.Equal(content, footerMetaOptions.Html?.ToHtmlString());
         AssertContainsAttributes(attributes, footerMetaOptions.Attributes);
         Assert.NotNull(footerMetaOptions.Items);
         Assert.Collection(footerMetaOptions.Items, i => Assert.Same(item, i));

@@ -37,7 +37,7 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
 
         // Assert
         Assert.True(dateInputContext.Fieldset?.Legend?.IsPageHeading);
-        Assert.Equal(legendContent, dateInputContext.Fieldset?.Legend?.Html.ToHtmlString());
+        Assert.Equal(legendContent, dateInputContext.Fieldset?.Legend?.Html?.ToHtmlString());
         Assert.Equal(isPageHeading, dateInputContext.Fieldset?.Legend?.IsPageHeading);
     }
 

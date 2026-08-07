@@ -48,7 +48,7 @@ public class FooterNavItemTagHelperTests : TagHelperTestBase<FooterNavItemTagHel
             item =>
             {
                 Assert.Equal(href, item.Href);
-                Assert.Equal(content, item.Html.ToHtmlString());
+                Assert.Equal(content, item.Html?.ToHtmlString());
                 Assert.Null(item.Text);
                 AssertContainsAttributes(linkAttributes, item.Attributes);
                 AssertContainsAttributes(attributes, item.ItemAttributes, except: "href");

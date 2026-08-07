@@ -52,7 +52,7 @@ public class FooterNavTagHelperTests : TagHelperTestBase<FooterNavTagHelper>
             {
                 Assert.Equal(columns, nav.Columns);
                 Assert.Equal(width, nav.Width);
-                Assert.Equal(titleContent, nav.Title.ToHtmlString());
+                Assert.Equal(titleContent, nav.Title?.ToHtmlString());
                 AssertContainsAttributes(titleAttributes, nav.TitleAttributes);
                 Assert.NotNull(nav.Items);
                 Assert.Collection(

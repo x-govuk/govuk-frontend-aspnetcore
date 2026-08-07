@@ -29,7 +29,7 @@ public class PanelBodyTagHelperTests : TagHelperTestBase<PanelBodyTagHelper>
 
         // Assert
         Assert.NotNull(panelContext.Body);
-        Assert.Equal("The body", panelContext.Body.Value.Content.ToHtmlString());
+        Assert.Equal("The body", panelContext.Body.Value.Content?.ToHtmlString());
     }
 
     [Fact]

@@ -55,7 +55,7 @@ public class ServiceNavigationNavItemTagHelperTests : TagHelperTestBase<ServiceN
                 AssertContainsAttributes(linkAttributes, item.Attributes);
                 Assert.Equal(active, item.Active);
                 Assert.Equal(current, item.Current);
-                Assert.Equal(content, item.Html.ToHtmlString());
+                Assert.Equal(content, item.Html?.ToHtmlString());
                 Assert.Null(item.Text);
             });
     }

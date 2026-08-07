@@ -74,14 +74,14 @@ public class TabsTagHelperTests : TagHelperTestBase<TabsTagHelper>
                 Assert.NotNull(item);
                 Assert.Equal(firstItemId, item.Id);
                 Assert.Equal(firstItemLabel, item.Label);
-                Assert.Equal(firstItemContent, item.Panel?.Html.ToHtmlString());
+                Assert.Equal(firstItemContent, item.Panel?.Html?.ToHtmlString());
             },
             item =>
             {
                 Assert.NotNull(item);
                 Assert.Equal(secondItemId, item.Id);
                 Assert.Equal(secondItemLabel, item.Label);
-                Assert.Equal(secondItemContent, item.Panel?.Html.ToHtmlString());
+                Assert.Equal(secondItemContent, item.Panel?.Html?.ToHtmlString());
             });
     }
 }

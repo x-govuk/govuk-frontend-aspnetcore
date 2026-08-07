@@ -33,7 +33,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html.ToHtmlString());
+        Assert.Equal(content, actualOptions.Html?.ToHtmlString());
         Assert.Null(actualOptions.Type);
         Assert.Null(actualOptions.Role);
         Assert.Null(actualOptions.DisableAutoFocus);
@@ -71,7 +71,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html.ToHtmlString());
+        Assert.Equal(content, actualOptions.Html?.ToHtmlString());
         Assert.Equal("success", actualOptions.Type);
         Assert.Null(actualOptions.Role);
         Assert.Null(actualOptions.DisableAutoFocus);
@@ -107,7 +107,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html.ToHtmlString());
+        Assert.Equal(content, actualOptions.Html?.ToHtmlString());
         Assert.Equal("success", actualOptions.Type);
         Assert.True(actualOptions.DisableAutoFocus);
     }
@@ -142,7 +142,7 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html.ToHtmlString());
+        Assert.Equal(content, actualOptions.Html?.ToHtmlString());
         Assert.Equal(role, actualOptions.Role);
     }
 
@@ -178,9 +178,9 @@ public class NotificationBannerTagHelperTests : TagHelperTestBase<NotificationBa
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html.ToHtmlString());
+        Assert.Equal(content, actualOptions.Html?.ToHtmlString());
         Assert.Equal(titleId, actualOptions.TitleId);
         Assert.Equal(titleHeadingLevel, actualOptions.TitleHeadingLevel);
-        Assert.Equal(titleContent.Value, actualOptions.TitleHtml.ToHtmlString());
+        Assert.Equal(titleContent.Value, actualOptions.TitleHtml?.ToHtmlString());
     }
 }

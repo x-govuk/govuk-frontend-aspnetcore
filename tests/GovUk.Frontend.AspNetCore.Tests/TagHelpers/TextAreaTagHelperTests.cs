@@ -90,8 +90,8 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
         Assert.Equal(value, actualOptions.Value);
         Assert.Equal(disabled, actualOptions.Disabled);
         Assert.Equal(describedBy, actualOptions.DescribedBy);
-        Assert.Equal(labelContent, actualOptions.Label?.Html.ToHtmlString());
-        Assert.Equal(hintContent, actualOptions.Hint?.Html.ToHtmlString());
+        Assert.Equal(labelContent, actualOptions.Label?.Html?.ToHtmlString());
+        Assert.Equal(hintContent, actualOptions.Hint?.Html?.ToHtmlString());
         Assert.Null(actualOptions.ErrorMessage);
         Assert.Equal(className, actualOptions.Classes);
         Assert.Equal(autocomplete, actualOptions.AutoComplete);
@@ -167,7 +167,7 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html.ToHtmlString());
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html?.ToHtmlString());
         Assert.Equal(errorDataFooAttribute, actualOptions.ErrorMessage.Attributes?["data-foo"]);
     }
 

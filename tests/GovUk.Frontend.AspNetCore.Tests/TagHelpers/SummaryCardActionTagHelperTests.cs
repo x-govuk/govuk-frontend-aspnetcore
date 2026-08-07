@@ -51,7 +51,7 @@ public class SummaryCardActionTagHelperTests : TagHelperTestBase<SummaryCardActi
             actionsContext.Items,
             action =>
             {
-                Assert.Equal(content, action.Html.ToHtmlString());
+                Assert.Equal(content, action.Html?.ToHtmlString());
                 Assert.Equal(visuallyHiddenText, action.VisuallyHiddenText);
                 Assert.NotNull(action.Attributes);
                 Assert.Equal(className, action.Classes);

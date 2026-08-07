@@ -68,13 +68,13 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 Assert.NotNull(error);
                 Assert.Equal(firstErrorHref, error.Href);
-                Assert.Equal(firstErrorHtml, error.Html.ToHtmlString());
+                Assert.Equal(firstErrorHtml, error.Html?.ToHtmlString());
             },
             error =>
             {
                 Assert.NotNull(error);
                 Assert.Equal(secondErrorHref, error.Href);
-                Assert.Equal(secondErrorHtml, error.Html.ToHtmlString());
+                Assert.Equal(secondErrorHtml, error.Html?.ToHtmlString());
             });
         Assert.Equal(disableAutoFocus, actualOptions.DisableAutoFocus);
         Assert.True(containerErrorContext.ErrorSummaryHasBeenRendered);
@@ -200,7 +200,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 Assert.NotNull(error);
                 Assert.Equal(itemErrorHref, error.Href);
-                Assert.Equal(itemErrorHtml, error.Html.ToHtmlString());
+                Assert.Equal(itemErrorHtml, error.Html?.ToHtmlString());
             });
         Assert.True(containerErrorContext.ErrorSummaryHasBeenRendered);
     }
@@ -250,7 +250,7 @@ public class ErrorSummaryTagHelperTests : TagHelperTestBase<ErrorSummaryTagHelpe
             {
                 Assert.NotNull(error);
                 Assert.Equal(containerErrorContextErrorHref, error.Href);
-                Assert.Equal(containerErrorContextErrorHtml, error.Html.ToHtmlString());
+                Assert.Equal(containerErrorContextErrorHtml, error.Html?.ToHtmlString());
             });
         Assert.True(containerErrorContext.ErrorSummaryHasBeenRendered);
     }

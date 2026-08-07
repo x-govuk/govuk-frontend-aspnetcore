@@ -39,7 +39,7 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(titleContent, summaryCardContext.Title?.Html.ToHtmlString());
+        Assert.Equal(titleContent, summaryCardContext.Title?.Html?.ToHtmlString());
         Assert.Equal(headingLevel, summaryCardContext.Title?.HeadingLevel);
         Assert.Equal(className, summaryCardContext.Title?.Classes);
         AssertContainsAttributes(attributes, summaryCardContext.Title?.Attributes);

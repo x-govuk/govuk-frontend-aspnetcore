@@ -81,9 +81,9 @@ public class CookieBannerMessageTagHelperTests : TagHelperTestBase<CookieBannerM
             message =>
             {
                 Assert.Null(message.HeadingText);
-                Assert.Equal(headingContent, message.HeadingHtml.ToHtmlString());
+                Assert.Equal(headingContent, message.HeadingHtml?.ToHtmlString());
                 Assert.Null(message.Text);
-                Assert.Equal(messageContent, message.Html.ToHtmlString());
+                Assert.Equal(messageContent, message.Html?.ToHtmlString());
                 Assert.NotNull(message.Actions);
                 Assert.Collection(
                     message.Actions,

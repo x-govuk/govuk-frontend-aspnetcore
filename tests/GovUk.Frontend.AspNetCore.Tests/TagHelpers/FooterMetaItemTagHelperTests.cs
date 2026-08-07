@@ -47,7 +47,7 @@ public class FooterMetaItemTagHelperTests : TagHelperTestBase<FooterMetaItemTagH
             metaItemsContext.Items,
             item =>
             {
-                Assert.Equal(content, item.Html.ToHtmlString());
+                Assert.Equal(content, item.Html?.ToHtmlString());
                 Assert.Equal(href, item.Href);
                 Assert.Null(item.Text);
                 AssertContainsAttributes(linkAttributes, item.Attributes);

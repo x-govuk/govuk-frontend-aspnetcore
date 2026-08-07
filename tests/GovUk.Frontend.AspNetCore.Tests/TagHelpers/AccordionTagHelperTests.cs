@@ -96,20 +96,20 @@ public class AccordionTagHelperTests : TagHelperTestBase<AccordionTagHelper>
         Assert.NotNull(firstItem);
         Assert.Equal(items[0].Expanded, firstItem.Expanded);
         Assert.NotNull(firstItem.Heading);
-        Assert.Equal("First heading", firstItem.Heading.Html.ToHtmlString());
+        Assert.Equal("First heading", firstItem.Heading.Html?.ToHtmlString());
         Assert.NotNull(firstItem.Summary);
-        Assert.Equal("First summary", firstItem.Summary.Html.ToHtmlString());
+        Assert.Equal("First summary", firstItem.Summary.Html?.ToHtmlString());
         Assert.NotNull(firstItem.Content);
-        Assert.Equal("First content", firstItem.Content.Html.ToHtmlString());
+        Assert.Equal("First content", firstItem.Content.Html?.ToHtmlString());
 
         var secondItem = actualOptions.Items.ElementAt(1);
         Assert.NotNull(secondItem);
         Assert.Equal(items[1].Expanded, secondItem.Expanded);
         Assert.NotNull(secondItem.Heading);
-        Assert.Equal("Second heading", secondItem.Heading.Html.ToHtmlString());
+        Assert.Equal("Second heading", secondItem.Heading.Html?.ToHtmlString());
         Assert.Null(secondItem.Summary);
         Assert.NotNull(secondItem.Content);
-        Assert.Equal("Second content", secondItem.Content.Html.ToHtmlString());
+        Assert.Equal("Second content", secondItem.Content.Html?.ToHtmlString());
     }
 
     [Fact]

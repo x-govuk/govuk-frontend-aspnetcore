@@ -50,7 +50,7 @@ public class PhaseBannerTagHelperTests : TagHelperTestBase<PhaseBannerTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.Null(actualOptions.Text);
-        Assert.Equal(content, actualOptions.Html.ToHtmlString());
+        Assert.Equal(content, actualOptions.Html?.ToHtmlString());
         Assert.Same(tagOptions, actualOptions.Tag);
         Assert.Equal(className, actualOptions.Classes);
         AssertContainsAttributes(attributes, actualOptions.Attributes);

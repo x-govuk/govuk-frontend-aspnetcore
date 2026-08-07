@@ -45,9 +45,9 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.Equal(headingLevel, actualOptions.HeadingLevel);
-        Assert.Equal(titleContent, actualOptions.TitleHtml.ToHtmlString());
+        Assert.Equal(titleContent, actualOptions.TitleHtml?.ToHtmlString());
         Assert.Null(actualOptions.TitleText);
-        Assert.Equal(bodyContent, actualOptions.Html.ToHtmlString());
+        Assert.Equal(bodyContent, actualOptions.Html?.ToHtmlString());
         Assert.Null(actualOptions.Text);
         Assert.Equal(classes, actualOptions.Classes);
         AssertContainsAttributes(attributes, actualOptions.Attributes);
@@ -84,8 +84,8 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.Equal(1, actualOptions.HeadingLevel);
-        Assert.Equal(titleContent, actualOptions.TitleHtml.ToHtmlString());
-        Assert.Equal(bodyContent, actualOptions.Html.ToHtmlString());
+        Assert.Equal(titleContent, actualOptions.TitleHtml?.ToHtmlString());
+        Assert.Equal(bodyContent, actualOptions.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -116,7 +116,7 @@ public class PanelTagHelperTests : TagHelperTestBase<PanelTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(titleContent, actualOptions.TitleHtml.ToHtmlString());
+        Assert.Equal(titleContent, actualOptions.TitleHtml?.ToHtmlString());
         Assert.Null(actualOptions.Html);
         Assert.Null(actualOptions.Text);
     }

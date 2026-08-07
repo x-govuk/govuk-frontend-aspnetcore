@@ -41,7 +41,7 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
 
         // Assert
         Assert.NotNull(rowContext.Key);
-        Assert.Equal(content, rowContext.Key.Html.ToHtmlString());
+        Assert.Equal(content, rowContext.Key.Html?.ToHtmlString());
         Assert.Equal(className, rowContext.Key.Classes);
         AssertContainsAttributes(attributes, rowContext.Key.Attributes);
     }

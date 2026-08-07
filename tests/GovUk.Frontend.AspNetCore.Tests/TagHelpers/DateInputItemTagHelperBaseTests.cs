@@ -56,7 +56,7 @@ public abstract class DateInputItemTagHelperBaseTests<T> : TagHelperTestBase<T>
                 Assert.Equal(autoComplete, item.AutoComplete);
                 Assert.Equal(id, item.Id);
                 Assert.Equal(inputMode, item.InputMode);
-                Assert.Equal(labelContent, item.LabelHtml.ToHtmlString());
+                Assert.Equal(labelContent, item.LabelHtml?.ToHtmlString());
                 Assert.Equal(name, item.Name);
                 Assert.Equal(pattern, item.Pattern);
                 Assert.Equal(value, item.Value);

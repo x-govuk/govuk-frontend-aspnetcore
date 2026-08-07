@@ -84,8 +84,8 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
         Assert.Equal(multiple, actualOptions.Multiple);
         Assert.Equal(disabled, actualOptions.Disabled);
         Assert.Equal(describedBy, actualOptions.DescribedBy);
-        Assert.Equal(labelHtml, actualOptions.Label?.Html.ToHtmlString());
-        Assert.Equal(hintHtml, actualOptions.Hint?.Html.ToHtmlString());
+        Assert.Equal(labelHtml, actualOptions.Label?.Html?.ToHtmlString());
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html?.ToHtmlString());
         Assert.Null(actualOptions.ErrorMessage);
         Assert.Equal(classes, actualOptions.Classes);
 
@@ -159,7 +159,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html.ToHtmlString());
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html?.ToHtmlString());
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
         Assert.Collection(actualOptions.ErrorMessage.Attributes, kvp =>
@@ -306,7 +306,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(labelHtml, actualOptions.Label?.Html.ToHtmlString());
+        Assert.Equal(labelHtml, actualOptions.Label?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -373,7 +373,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(hintHtml, actualOptions.Hint?.Html.ToHtmlString());
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -447,7 +447,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html.ToHtmlString());
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -588,7 +588,7 @@ public class FileUploadTagHelperTests : TagHelperTestBase<FileUploadTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html.ToHtmlString());
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html?.ToHtmlString());
     }
 
     [Fact]

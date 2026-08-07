@@ -44,7 +44,7 @@ public class PanelActionLinkTagHelperTests : TagHelperTestBase<PanelActionLinkTa
             actionsContext.Actions,
             action =>
             {
-                Assert.Equal(content, action.Html.ToHtmlString());
+                Assert.Equal(content, action.Html?.ToHtmlString());
                 Assert.Null(action.Text);
                 Assert.Equal(href, action.Href);
                 Assert.Null(action.Type);

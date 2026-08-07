@@ -92,10 +92,10 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
         Assert.Equal(navigationId, actualOptions.NavigationId);
         Assert.Equal(navigationClassName, actualOptions.NavigationClasses);
         AssertContainsAttributes(navigationAttributes, actualOptions.NavigationAttributes);
-        Assert.Equal(startSlotContent, actualOptions.Slots?.Start.ToHtmlString());
-        Assert.Equal(endSlotContent, actualOptions.Slots?.End.ToHtmlString());
-        Assert.Equal(navStartSlotContent, actualOptions.Slots?.NavigationStart.ToHtmlString());
-        Assert.Equal(navEndSlotContent, actualOptions.Slots?.NavigationEnd.ToHtmlString());
+        Assert.Equal(startSlotContent, actualOptions.Slots?.Start?.ToHtmlString());
+        Assert.Equal(endSlotContent, actualOptions.Slots?.End?.ToHtmlString());
+        Assert.Equal(navStartSlotContent, actualOptions.Slots?.NavigationStart?.ToHtmlString());
+        Assert.Equal(navEndSlotContent, actualOptions.Slots?.NavigationEnd?.ToHtmlString());
         Assert.NotNull(actualOptions.Navigation);
         Assert.Collection(actualOptions.Navigation, i => Assert.Same(item, i));
     }

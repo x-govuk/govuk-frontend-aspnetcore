@@ -89,6 +89,8 @@ public abstract class DateInputItemTagHelperBaseTests<T> : TagHelperTestBase<T>
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Value cannot be specified for both <{TagName}> and the parent <{ParentTagName}>.", ex.Message);
+        // The conflicting value lives on the root date input, so that's what's named regardless
+        // of whether the item sits directly inside it or inside its fieldset.
+        Assert.Equal($"Value cannot be specified for both <{TagName}> and the parent <{DateInputTagHelper.TagName}>.", ex.Message);
     }
 }

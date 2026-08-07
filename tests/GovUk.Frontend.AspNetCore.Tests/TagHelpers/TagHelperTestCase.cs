@@ -78,11 +78,13 @@ public class TagHelperTestCase : XunitTestCase, ISelfExecutingXunitTestCase
 
     public TagHelperTestCase(
         TagHelperTestCaseInfo tagHelperTestCaseInfo,
-        XunitTestCase baseTestCase) :
+        XunitTestCase baseTestCase,
+        string testCaseDisplayName,
+        string uniqueID) :
         base(
             baseTestCase.TestMethod,
-            baseTestCase.TestCaseDisplayName,
-            baseTestCase.UniqueID,
+            testCaseDisplayName,
+            uniqueID,
             baseTestCase.Explicit,
             baseTestCase.SkipExceptions,
             baseTestCase.SkipReason,
@@ -345,7 +347,9 @@ file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames, st
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         var allParentTagNames = tagHelperInfo.TagNames.Select(t => t.ParentTagName!).Where(t => t is not null).Distinct().OrderByGovUkPrefixedFirst().ToArray();
 
-        return tagHelperInfo.TagNames
+        var targets = tagHelperInfo.TagNames.Distinct().ToArray();
+
+        return targets
             .SelectMany(i => baseTestCases.Select(tc =>
             {
                 var tagHelperTestCaseInfo = new TagHelperTestCaseInfo(
@@ -356,7 +360,15 @@ file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames, st
                     AllTagNames: allTagNames,
                     AllParentTagNames: allParentTagNames);
 
-                return new TagHelperTestCase(tagHelperTestCaseInfo, (XunitTestCase)tc);
+                // Each target gets its own test case so they need distinct display names and IDs;
+                // when there's only a single target keep the names the method itself declared.
+                var target = i.ParentTagName is not null ? $"{i.TagName} in {i.ParentTagName}" : i.TagName;
+
+                return new TagHelperTestCase(
+                    tagHelperTestCaseInfo,
+                    (XunitTestCase)tc,
+                    targets.Length > 1 ? $"{tc.TestCaseDisplayName} [{target}]" : tc.TestCaseDisplayName,
+                    targets.Length > 1 ? $"{tc.UniqueID}-{target}" : tc.UniqueID);
             }))
             .ToArray();
     }

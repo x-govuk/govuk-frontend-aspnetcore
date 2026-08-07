@@ -15,7 +15,7 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
+        var rowContext = new SummaryListRowContext(ParentTagName!);
 
         var context = CreateTagHelperContext(
             className: className,
@@ -54,8 +54,8 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
-        rowContext.SetKey(new(), SummaryListRowKeyTagHelper.TagName);
+        var rowContext = new SummaryListRowContext(ParentTagName!);
+        rowContext.SetKey(new(), TagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 
@@ -77,21 +77,24 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal(
-            $"Only one <{SummaryListRowKeyTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            $"Only one <{ShortTagName}> or <{PrimaryTagName}> element is permitted within each <{ParentTagName}>.",
             ex.Message);
     }
 
-    [Theory]
-    [InlineData(SummaryListRowValueTagHelper.TagName)]
-    public async Task ProcessAsync_ParentHasValue_ThrowsInvalidOperationException(string valueTagName)
+    [Fact]
+    public async Task ProcessAsync_ParentHasValue_ThrowsInvalidOperationException()
     {
         // Arrange
         var content = "Key";
 
+        var valueTagName = GetSiblingTagName(
+            SummaryListRowValueTagHelper.TagName,
+            SummaryListRowValueTagHelper.ShortTagName);
+
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
-        rowContext.SetValue(new(), SummaryListRowValueTagHelper.TagName);
+        var rowContext = new SummaryListRowContext(ParentTagName!);
+        rowContext.SetValue(new(), valueTagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 
@@ -115,17 +118,20 @@ public class SummaryListRowKeyTagHelperTests : TagHelperTestBase<SummaryListRowK
         Assert.Equal($"<{TagName}> must be specified before <{valueTagName}>.", ex.Message);
     }
 
-    [Theory]
-    [InlineData(SummaryListRowActionsTagHelper.TagName)]
-    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException(string actionsTagName)
+    [Fact]
+    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException()
     {
         // Arrange
         var content = "Key";
 
+        var actionsTagName = GetSiblingTagName(
+            SummaryListRowActionsTagHelper.TagName,
+            SummaryListRowActionsTagHelper.ShortTagName);
+
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
-        rowContext.SetActions(new(), SummaryListRowActionsTagHelper.TagName);
+        var rowContext = new SummaryListRowContext(ParentTagName!);
+        rowContext.SetActions(new(), actionsTagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 

@@ -28,6 +28,19 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
 
     public IReadOnlyCollection<string> AllParentTagNames { get; set; } = null!;
 
+    /// <summary>
+    /// Whether the tag name under test is the short alias rather than the govuk- prefixed name.
+    /// </summary>
+    protected bool UsesShortTagName => TagName == ShortTagName;
+
+    /// <summary>
+    /// Gets the spelling of a sibling element that can legally appear alongside the tag name under
+    /// test. Where a short name pairs with a short parent, only siblings of the same spelling are
+    /// permitted within that parent.
+    /// </summary>
+    protected string GetSiblingTagName(string tagName, string shortTagName) =>
+        UsesShortTagName ? shortTagName : tagName;
+
     protected TagHelperContext CreateTagHelperContext(
         string? tagName = null,
         string? className = null,

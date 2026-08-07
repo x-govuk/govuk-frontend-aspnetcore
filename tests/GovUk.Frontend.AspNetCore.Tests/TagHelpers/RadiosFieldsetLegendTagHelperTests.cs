@@ -10,7 +10,7 @@ public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFields
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
-        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
+        var fieldsetContext = new FormGroupFieldsetContext2(ParentTagName!);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 
@@ -39,13 +39,13 @@ public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFields
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
+        var fieldsetContext = new FormGroupFieldsetContext2(ParentTagName!);
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
             attributes: new AttributeCollection(),
             html: new TemplateString("Existing legend"),
-            RadiosFieldsetLegendTagHelper.TagName);
+            TagName);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 
@@ -67,6 +67,6 @@ public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFields
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-radios-fieldset-legend> element is permitted within each <govuk-radios-fieldset>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 }

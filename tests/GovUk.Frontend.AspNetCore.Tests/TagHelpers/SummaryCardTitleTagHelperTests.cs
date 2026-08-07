@@ -78,12 +78,15 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal(
-            $"Only one <{SummaryCardTitleTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            $"Only one <{ShortTagName}> or <{PrimaryTagName}> element is permitted within each <{ParentTagName}>.",
             ex.Message);
     }
 
     [Theory]
+    // Both spellings of the actions element are permitted within a <govuk-summary-card>, whichever
+    // spelling of the title is used, so each is exercised here.
     [InlineData(SummaryCardActionsTagHelper.TagName)]
+    [InlineData(SummaryCardActionsTagHelper.ShortTagName)]
     public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException(string actionsTagName)
     {
         // Arrange
@@ -91,7 +94,7 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         var headingLevel = 3;
 
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetActions(new(), SummaryCardActionsTagHelper.TagName);
+        summaryCardContext.SetActions(new(), actionsTagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 
@@ -118,16 +121,16 @@ public class SummaryCardTitleTagHelperTests : TagHelperTestBase<SummaryCardTitle
         Assert.Equal($"<{TagName}> must be specified before <{actionsTagName}>.", ex.Message);
     }
 
-    [Theory]
-    [InlineData(SummaryListTagHelper.TagName)]
-    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException(string summaryListTagName)
+    [Fact]
+    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException()
     {
         // Arrange
         var titleContent = "Title";
         var headingLevel = 3;
+        var summaryListTagName = SummaryListTagHelper.TagName;
 
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetSummaryList(new(), SummaryListTagHelper.TagName);
+        summaryCardContext.SetSummaryList(new(), summaryListTagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 

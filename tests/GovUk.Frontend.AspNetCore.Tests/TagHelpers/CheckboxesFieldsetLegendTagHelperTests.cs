@@ -11,7 +11,7 @@ public class CheckboxesFieldsetLegendTagHelperTests : TagHelperTestBase<Checkbox
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
-        var fieldsetContext = new FormGroupFieldsetContext2(CheckboxesFieldsetTagHelper.TagName);
+        var fieldsetContext = new FormGroupFieldsetContext2(ParentTagName!);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 
@@ -40,13 +40,13 @@ public class CheckboxesFieldsetLegendTagHelperTests : TagHelperTestBase<Checkbox
     public async Task ProcessAsync_ParentAlreadyHasLegend_ThrowsInvalidOperationException()
     {
         // Arrange
-        var fieldsetContext = new FormGroupFieldsetContext2(CheckboxesFieldsetTagHelper.TagName);
+        var fieldsetContext = new FormGroupFieldsetContext2(ParentTagName!);
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
             attributes: new AttributeCollection(),
             html: new HtmlString("Existing legend"),
-            CheckboxesFieldsetLegendTagHelper.TagName);
+            TagName);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 
@@ -68,6 +68,6 @@ public class CheckboxesFieldsetLegendTagHelperTests : TagHelperTestBase<Checkbox
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-checkboxes-fieldset-legend> element is permitted within each <govuk-checkboxes-fieldset>.", ex.Message);
+        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 }

@@ -89,17 +89,18 @@ public class SummaryCardActionsTagHelperTests : TagHelperTestBase<SummaryCardAct
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal(
-            $"Only one <{SummaryCardActionsTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            $"Only one <{ShortTagName}> or <{PrimaryTagName}> element is permitted within each <{ParentTagName}>.",
             ex.Message);
     }
 
-    [Theory]
-    [InlineData(SummaryListTagHelper.TagName)]
-    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException(string summaryListTagName)
+    [Fact]
+    public async Task ProcessAsync_ParentHasSummaryList_ThrowsInvalidOperationException()
     {
         // Arrange
+        var summaryListTagName = SummaryListTagHelper.TagName;
+
         var summaryCardContext = new SummaryCardContext();
-        summaryCardContext.SetSummaryList(new(), SummaryListTagHelper.TagName);
+        summaryCardContext.SetSummaryList(new(), summaryListTagName);
 
         var context = CreateTagHelperContext(contexts: summaryCardContext);
 

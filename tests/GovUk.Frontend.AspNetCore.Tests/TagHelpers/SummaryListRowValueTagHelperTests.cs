@@ -15,7 +15,7 @@ public class SummaryListRowValueTagHelperTests : TagHelperTestBase<SummaryListRo
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
+        var rowContext = new SummaryListRowContext(ParentTagName!);
 
         var context = CreateTagHelperContext(
             className: className,
@@ -54,8 +54,8 @@ public class SummaryListRowValueTagHelperTests : TagHelperTestBase<SummaryListRo
 
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
-        rowContext.SetValue(new(), SummaryListRowValueTagHelper.TagName);
+        var rowContext = new SummaryListRowContext(ParentTagName!);
+        rowContext.SetValue(new(), TagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 
@@ -77,21 +77,24 @@ public class SummaryListRowValueTagHelperTests : TagHelperTestBase<SummaryListRo
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal(
-            $"Only one <{SummaryListRowValueTagHelper.ShortTagName}> or <{TagName}> element is permitted within each <{ParentTagName}>.",
+            $"Only one <{ShortTagName}> or <{PrimaryTagName}> element is permitted within each <{ParentTagName}>.",
             ex.Message);
     }
 
-    [Theory]
-    [InlineData(SummaryListRowActionsTagHelper.TagName)]
-    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException(string actionsTagName)
+    [Fact]
+    public async Task ProcessAsync_ParentHasActions_ThrowsInvalidOperationException()
     {
         // Arrange
         var content = "Value";
 
+        var actionsTagName = GetSiblingTagName(
+            SummaryListRowActionsTagHelper.TagName,
+            SummaryListRowActionsTagHelper.ShortTagName);
+
         var summaryListContext = new SummaryListContext();
 
-        var rowContext = new SummaryListRowContext(SummaryListRowTagHelper.TagName);
-        rowContext.SetActions(new(), SummaryListRowActionsTagHelper.TagName);
+        var rowContext = new SummaryListRowContext(ParentTagName!);
+        rowContext.SetActions(new(), actionsTagName);
 
         var context = CreateTagHelperContext(contexts: [summaryListContext, rowContext]);
 

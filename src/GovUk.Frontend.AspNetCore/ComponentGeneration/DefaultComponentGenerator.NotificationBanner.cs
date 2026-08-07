@@ -76,7 +76,7 @@ internal partial class DefaultComponentGenerator
             return "region";
         }
 
-        IHtmlContent DetermineTitle(TemplateString? titleHtml, TemplateString? titleText)
+        IHtmlContent DetermineTitle(IHtmlContent? titleHtml, string? titleText)
         {
             if (!titleHtml.IsEmpty())
             {
@@ -85,7 +85,7 @@ internal partial class DefaultComponentGenerator
 
             if (!titleText.IsEmpty())
             {
-                return titleText;
+                return new TemplateString(titleText);
             }
 
             return new HtmlString(isSuccessBanner ? "Success" : "Important");

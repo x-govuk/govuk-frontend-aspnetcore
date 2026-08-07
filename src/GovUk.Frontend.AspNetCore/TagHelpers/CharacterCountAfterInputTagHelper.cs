@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Logging;
 
@@ -60,7 +59,7 @@ public class CharacterCountAfterInputTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        characterCountContext.SetAfterInput(content.ToTemplateString(), context.TagName);
+        characterCountContext.SetAfterInput(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

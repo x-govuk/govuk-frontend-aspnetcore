@@ -37,7 +37,7 @@ public class BackLinkTagHelperTests : TagHelperTestBase<BackLinkTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal(content, actualOptions.Html?.ToHtmlString());
         Assert.Null(actualOptions.Text);
         Assert.Equal(href, actualOptions.Href);
         Assert.Equal(className, actualOptions.Classes);

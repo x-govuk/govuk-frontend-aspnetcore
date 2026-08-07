@@ -186,14 +186,14 @@ public class CheckboxesTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new CheckboxesOptionsFormGroup
         {
-            BeforeInputs = checkboxesContext.BeforeInputs is TemplateString beforeInputs ?
+            BeforeInputs = checkboxesContext.BeforeInputs is { } beforeInputs ?
                 new CheckboxesOptionsBeforeInputs
                 {
                     Text = null,
                     Html = beforeInputs
                 } :
                 null,
-            AfterInputs = checkboxesContext.AfterInputs is TemplateString afterInputs ?
+            AfterInputs = checkboxesContext.AfterInputs is { } afterInputs ?
                 new CheckboxesOptionsAfterInputs
                 {
                     Text = null,
@@ -226,9 +226,10 @@ public class CheckboxesTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + idPrefix);
+            containerErrorContext.AddError(errorContent, href: "#" + idPrefix);
         }
     }
 

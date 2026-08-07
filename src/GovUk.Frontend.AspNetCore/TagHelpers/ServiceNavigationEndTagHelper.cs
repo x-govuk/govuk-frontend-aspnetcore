@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -51,7 +50,7 @@ public class ServiceNavigationEndTagHelper : TagHelper
             throw ExceptionHelper.AttributesNotSupported();
         }
 
-        serviceNavigationContext.EndSlot = (content.ToTemplateString(), context.TagName);
+        serviceNavigationContext.EndSlot = (content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

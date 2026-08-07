@@ -150,7 +150,7 @@ public class CheckboxesItemTagHelper : TagHelper
         checkboxesContext.AddItem(new CheckboxesOptionsItem
         {
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Id = Id,
             Name = Name,
             Value = Value,

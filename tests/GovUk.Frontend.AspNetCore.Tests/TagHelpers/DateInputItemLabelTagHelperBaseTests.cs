@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -37,7 +38,7 @@ public abstract class DateInputItemLabelTagHelperBaseTests<T> : TagHelperTestBas
 
         // Assert
         Assert.NotNull(itemContext.Label);
-        Assert.Equal(labelContent, itemContext.Label?.Html);
+        Assert.Equal(labelContent, itemContext.Label?.Html.ToHtmlString());
         AssertContainsAttributes(attributes, itemContext.Label?.Attributes);
     }
 
@@ -46,7 +47,7 @@ public abstract class DateInputItemLabelTagHelperBaseTests<T> : TagHelperTestBas
     {
         // Arrange
         var itemContext = new DateInputItemContext(ParentTagName!, TagName);
-        itemContext.SetLabel(html: "Existing label", attributes: [], TagName);
+        itemContext.SetLabel(html: new TemplateString("Existing label"), attributes: [], TagName);
 
         var context = CreateTagHelperContext(contexts: itemContext);
 

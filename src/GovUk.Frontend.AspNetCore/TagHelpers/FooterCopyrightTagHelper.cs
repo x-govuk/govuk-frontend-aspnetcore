@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -24,7 +25,7 @@ public class FooterCopyrightTagHelper : TagHelper
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterTagHelper.TagName);
         }
 
-        TemplateString? resolvedContent = null;
+        IHtmlContent? resolvedContent = null;
 
         if (output.TagMode == TagMode.StartTagAndEndTag)
         {
@@ -35,7 +36,7 @@ public class FooterCopyrightTagHelper : TagHelper
                 content = output.Content;
             }
 
-            resolvedContent = content.ToTemplateString();
+            resolvedContent = content.Snapshot();
         }
 
         var attributes = new AttributeCollection(output.Attributes);

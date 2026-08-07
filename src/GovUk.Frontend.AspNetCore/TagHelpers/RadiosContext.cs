@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -7,8 +8,8 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 {
     private bool _fieldsetIsOpen;
     private readonly List<RadiosOptionsItem> _items = [];
-    private (TemplateString Content, string TagName)? _beforeInputs;
-    private (TemplateString Content, string TagName)? _afterInputs;
+    private (IHtmlContent Content, string TagName)? _beforeInputs;
+    private (IHtmlContent Content, string TagName)? _afterInputs;
 
     public string? Name { get; } = name;
 
@@ -16,9 +17,9 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     public IReadOnlyCollection<RadiosOptionsItem> Items => _items;
 
-    public TemplateString? BeforeInputs => _beforeInputs?.Content;
+    public IHtmlContent? BeforeInputs => _beforeInputs?.Content;
 
-    public TemplateString? AfterInputs => _afterInputs?.Content;
+    public IHtmlContent? AfterInputs => _afterInputs?.Content;
 
     public AttributeCollection? Attributes { get; private set; }
 
@@ -107,7 +108,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         _fieldsetIsOpen = false;
     }
 
-    public void SetBeforeInputs(TemplateString content, string tagName)
+    public void SetBeforeInputs(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);
@@ -141,7 +142,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         _beforeInputs = (content, tagName);
     }
 
-    public void SetAfterInputs(TemplateString content, string tagName)
+    public void SetAfterInputs(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);
@@ -162,9 +163,9 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
     }
 
     public override void SetErrorMessage(
-        TemplateString? visuallyHiddenText,
+        string? visuallyHiddenText,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (Fieldset is not null && !_fieldsetIsOpen)
@@ -190,7 +191,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
         base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
     }
 
-    public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
+    public override void SetHint(AttributeCollection attributes, IHtmlContent? html, string tagName)
     {
         if (Fieldset is not null && !_fieldsetIsOpen)
         {
@@ -218,7 +219,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
     public override void SetLabel(
         bool? isPageHeading,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         throw new NotSupportedException();

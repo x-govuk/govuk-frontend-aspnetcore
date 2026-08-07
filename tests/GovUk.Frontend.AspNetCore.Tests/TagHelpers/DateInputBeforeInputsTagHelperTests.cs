@@ -37,6 +37,6 @@ public class DateInputBeforeInputsTagHelperTests : TagHelperTestBase<DateInputBe
 
         // Assert
         Assert.NotNull(dateInputContext.BeforeInputs);
-        Assert.Equal(content, dateInputContext.BeforeInputs);
+        Assert.Equal(content, dateInputContext.BeforeInputs.ToHtmlString());
     }
 }

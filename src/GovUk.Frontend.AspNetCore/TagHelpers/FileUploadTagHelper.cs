@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -233,13 +232,13 @@ public class FileUploadTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new FileUploadOptionsFormGroup
         {
-            BeforeInput = fileUploadContext.BeforeInput is TemplateString beforeInput ?
+            BeforeInput = fileUploadContext.BeforeInput is { } beforeInput ?
                 new FileUploadOptionsBeforeInput
                 {
                     Html = beforeInput
                 } :
                 null,
-            AfterInput = fileUploadContext.AfterInput is TemplateString afterInput ?
+            AfterInput = fileUploadContext.AfterInput is { } afterInput ?
                 new FileUploadOptionsAfterInput
                 {
                     Html = afterInput
@@ -289,9 +288,10 @@ public class FileUploadTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html!, href: "#" + id);
+            containerErrorContext.AddError(errorContent, href: "#" + id);
         }
     }
 

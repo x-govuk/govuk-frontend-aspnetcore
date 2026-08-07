@@ -52,9 +52,9 @@ public abstract class FormGroupErrorMessageTagHelperBase : TagHelper
         var formGroupContext3 = context.GetContextItem<FormGroupContext3>();
 
         formGroupContext3.SetErrorMessage(
-            VisuallyHiddenText is not null ? new TemplateString(VisuallyHiddenText) : null,
+            VisuallyHiddenText,
             new AttributeCollection(output.Attributes),
-            content?.ToTemplateString(),
+            content?.Snapshot(),
             context.TagName);
     }
 }

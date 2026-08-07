@@ -172,14 +172,14 @@ internal partial class DefaultComponentGenerator
                 }
                 else
                 {
-                    licenceSpanTag.InnerHtml.AppendHtml("All content is available under the ");
+                    licenceSpanTag.InnerHtml.Append("All content is available under the ");
                     var licenceLink = new HtmlTag("a", attrs => attrs
                         .WithClasses("govuk-footer__link")
                         .With("href", "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/")
                         .With("rel", "license"));
-                    licenceLink.InnerHtml.AppendHtml("Open Government Licence v3.0");
+                    licenceLink.InnerHtml.Append("Open Government Licence v3.0");
                     licenceSpanTag.InnerHtml.AppendHtml(licenceLink);
-                    licenceSpanTag.InnerHtml.AppendHtml(", except where otherwise stated");
+                    licenceSpanTag.InnerHtml.Append(", except where otherwise stated");
                 }
 
                 metaItemTag.InnerHtml.AppendHtml(licenceSpanTag);
@@ -204,7 +204,7 @@ internal partial class DefaultComponentGenerator
                 }
                 else
                 {
-                    copyrightLink.InnerHtml.AppendHtml("&#xA9; Crown copyright");
+                    copyrightLink.InnerHtml.Append("© Crown copyright");
                 }
 
                 copyrightItemTag.InnerHtml.AppendHtml(copyrightLink);

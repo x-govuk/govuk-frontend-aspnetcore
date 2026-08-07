@@ -115,7 +115,7 @@ internal partial class DefaultComponentGenerator
             .With("aria-label", options.ShowPasswordAriaLabelText.WithEmptyFallback("Show password"))
             .WithBoolean("hidden"));
 
-        buttonElement.InnerHtml.AppendHtml(options.ShowPasswordText.WithEmptyFallback("Show"));
+        buttonElement.InnerHtml.Append(options.ShowPasswordText.WithEmptyFallback("Show"));
 
         wrapperDiv.InnerHtml.AppendHtml(buttonElement);
 

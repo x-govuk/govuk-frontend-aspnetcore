@@ -1,14 +1,15 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class DetailsContext
 {
-    public (AttributeCollection Attributes, TemplateString Content)? Summary { get; private set; }
+    public (AttributeCollection Attributes, IHtmlContent Content)? Summary { get; private set; }
 
-    public (AttributeCollection Attributes, TemplateString Content)? Text { get; private set; }
+    public (AttributeCollection Attributes, IHtmlContent Content)? Text { get; private set; }
 
-    public void SetSummary(AttributeCollection attributes, TemplateString content)
+    public void SetSummary(AttributeCollection attributes, IHtmlContent content)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);
@@ -26,7 +27,7 @@ internal class DetailsContext
         Summary = (attributes, content);
     }
 
-    public void SetText(AttributeCollection attributes, TemplateString content)
+    public void SetText(AttributeCollection attributes, IHtmlContent content)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);

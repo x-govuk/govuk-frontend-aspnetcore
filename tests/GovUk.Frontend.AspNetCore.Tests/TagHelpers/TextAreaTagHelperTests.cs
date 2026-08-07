@@ -40,15 +40,15 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
                 textAreaContext.SetLabel(
                     isPageHeading: false,
                     attributes: [],
-                    labelContent,
+                    new TemplateString(labelContent),
                     TextAreaLabelTagHelper.TagName);
 
                 textAreaContext.SetHint(
                     attributes: [],
-                    hintContent,
+                    new TemplateString(hintContent),
                     TextAreaHintTagHelper.TagName);
 
-                textAreaContext.SetValue(value, TextAreaValueTagHelper.TagName);
+                textAreaContext.SetValue(new TemplateString(value), TextAreaValueTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -90,8 +90,8 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
         Assert.Equal(value, actualOptions.Value);
         Assert.Equal(disabled, actualOptions.Disabled);
         Assert.Equal(describedBy, actualOptions.DescribedBy);
-        Assert.Equal(labelContent, actualOptions.Label?.Html);
-        Assert.Equal(hintContent, actualOptions.Hint?.Html);
+        Assert.Equal(labelContent, actualOptions.Label?.Html?.ToHtmlString());
+        Assert.Equal(hintContent, actualOptions.Hint?.Html?.ToHtmlString());
         Assert.Null(actualOptions.ErrorMessage);
         Assert.Equal(className, actualOptions.Classes);
         Assert.Equal(autocomplete, actualOptions.AutoComplete);
@@ -138,7 +138,7 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
                     TextAreaLabelTagHelper.TagName);
 
                 textAreaContext.SetErrorMessage(
-                    visuallyHiddenText: new HtmlString(errorVht),
+                    visuallyHiddenText: new HtmlString(errorVht).ToHtmlString(),
                     attributes: new AttributeCollection { { "data-foo", errorDataFooAttribute } },
                     html: new HtmlString(errorHtml),
                     TextAreaErrorMessageTagHelper.TagName);
@@ -167,12 +167,55 @@ public class TextAreaTagHelperTests : TagHelperTestBase<TextAreaTagHelper>
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html?.ToHtmlString());
         Assert.Equal(errorDataFooAttribute, actualOptions.ErrorMessage.Attributes?["data-foo"]);
     }
 
     private class Model
     {
         public string? Foo { get; set; }
+    }
+
+    [Xunit.Fact]
+    public async Task ProcessAsync_WithBeforeAndAfterInputContent_PassesItToTheComponentGenerator()
+    {
+        // The context stores this content as IHtmlContent, so a type test against a concrete type
+        // here silently drops it -- which is how it got dropped for every component at once.
+
+        // Arrange
+        var beforeInputContent = "Before input";
+        var afterInputContent = "After input";
+
+        var context = CreateTagHelperContext(tagName: TextAreaTagHelper.TagName);
+
+        var output = CreateTagHelperOutput(
+            tagName: TextAreaTagHelper.TagName,
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var textAreaContext = context.GetContextItem<TextAreaContext>();
+
+                textAreaContext.SetLabel(isPageHeading: false, attributes: [], new TemplateString("The label"), TextAreaLabelTagHelper.TagName);
+                textAreaContext.SetBeforeInput(new HtmlString(beforeInputContent), TextAreaBeforeInputTagHelper.TagName);
+                textAreaContext.SetAfterInput(new HtmlString(afterInputContent), TextAreaAfterInputTagHelper.TagName);
+
+                return Task.FromResult<TagHelperContent>(new DefaultTagHelperContent());
+            });
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<TextareaOptions>(nameof(IComponentGenerator.GenerateTextareaAsync));
+
+        var tagHelper = new TextAreaTagHelper(componentGenerator, new DefaultModelHelper())
+        {
+            Name = "my-name",
+            ViewContext = TestUtils.CreateViewContext()
+        };
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.Equal(beforeInputContent, actualOptions.FormGroup?.BeforeInput?.Html?.ToHtmlString());
+        Assert.Equal(afterInputContent, actualOptions.FormGroup?.AfterInput?.Html?.ToHtmlString());
     }
 }

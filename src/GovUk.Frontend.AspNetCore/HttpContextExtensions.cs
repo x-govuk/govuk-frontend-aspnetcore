@@ -1,5 +1,6 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 
 namespace GovUk.Frontend.AspNetCore;
@@ -15,7 +16,7 @@ public static class HttpContextExtensions
     /// <param name="context">The <see cref="HttpContext"/>.</param>
     /// <param name="html">The error content.</param>
     /// <param name="href">A link to the field the error relates to.</param>
-    public static void AddPageError(this HttpContext context, TemplateString html, TemplateString? href)
+    public static void AddPageError(this HttpContext context, IHtmlContent html, TemplateString? href)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(html);

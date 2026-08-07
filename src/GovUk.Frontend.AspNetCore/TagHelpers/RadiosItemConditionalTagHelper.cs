@@ -32,7 +32,7 @@ public class RadiosItemConditionalTagHelper : TagHelper
         var conditionalOptions = new RadiosOptionsItemConditional
         {
             Attributes = attributes,
-            Html = content.ToTemplateString()
+            Html = content.Snapshot()
         };
 
         itemContext.SetConditional(conditionalOptions, context.TagName);

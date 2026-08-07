@@ -36,7 +36,7 @@ public class PanelActionLinkTagHelper : TagHelper
 
         actionsContext.Actions.Add(new PanelActionsItemOptions
         {
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Href = href,
             Type = null,
             Classes = classes,

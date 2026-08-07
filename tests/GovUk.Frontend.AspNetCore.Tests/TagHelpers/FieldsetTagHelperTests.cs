@@ -50,10 +50,10 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
         var actualOptions = getActualOptions();
         Assert.Equal(describedBy, actualOptions.DescribedBy);
         Assert.Equal(role, actualOptions.Role);
-        Assert.Equal(mainContent, actualOptions.Html);
+        Assert.Equal(mainContent, actualOptions.Html?.ToHtmlString());
         Assert.NotNull(actualOptions.Legend);
         Assert.False(actualOptions.Legend!.IsPageHeading);
-        Assert.Equal(legendText, actualOptions.Legend.Html);
+        Assert.Equal(legendText, actualOptions.Legend.Html?.ToHtmlString());
         Assert.NotNull(actualOptions.Legend.Attributes);
         Assert.Empty(actualOptions.Legend.Attributes);
         Assert.Null(actualOptions.Classes);
@@ -104,10 +104,10 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
         var actualOptions = getActualOptions();
         Assert.Equal(describedBy, actualOptions.DescribedBy);
         Assert.Equal(role, actualOptions.Role);
-        Assert.Equal(mainContent, actualOptions.Html);
+        Assert.Equal(mainContent, actualOptions.Html?.ToHtmlString());
         Assert.NotNull(actualOptions.Legend);
         Assert.True(actualOptions.Legend!.IsPageHeading);
-        Assert.Equal(legendText, actualOptions.Legend.Html);
+        Assert.Equal(legendText, actualOptions.Legend.Html?.ToHtmlString());
         Assert.NotNull(actualOptions.Legend.Attributes);
         Assert.Empty(actualOptions.Legend.Attributes);
     }
@@ -193,10 +193,10 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
         var actualOptions = getActualOptions();
         Assert.Equal(describedBy, actualOptions.DescribedBy);
         Assert.Equal(role, actualOptions.Role);
-        Assert.Equal(mainContent, actualOptions.Html);
+        Assert.Equal(mainContent, actualOptions.Html?.ToHtmlString());
         Assert.NotNull(actualOptions.Legend);
         Assert.False(actualOptions.Legend!.IsPageHeading);
-        Assert.Equal(legendText, actualOptions.Legend.Html);
+        Assert.Equal(legendText, actualOptions.Legend.Html?.ToHtmlString());
         Assert.NotNull(actualOptions.Legend.Attributes);
         Assert.Empty(actualOptions.Legend.Attributes);
         Assert.Equal(customClass, actualOptions.Classes);

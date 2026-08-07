@@ -29,7 +29,7 @@ public class PanelTitleTagHelperTests : TagHelperTestBase<PanelTitleTagHelper>
 
         // Assert
         Assert.NotNull(panelContext.Title);
-        Assert.Equal("The title", panelContext.Title.Value.Content);
+        Assert.Equal("The title", panelContext.Title.Value.Content?.ToHtmlString());
     }
 
     [Fact]

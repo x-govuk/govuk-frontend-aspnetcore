@@ -34,7 +34,7 @@ public class PhaseBannerTagTagHelper : TagHelper
             new TagOptions
             {
                 Text = null,
-                Html = content.ToTemplateString(),
+                Html = content.Snapshot(),
                 Classes = classes,
                 Attributes = attributes
             },

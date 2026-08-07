@@ -1,12 +1,12 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class NotificationBannerContext
 {
-    public (string? Id, int? HeadingLevel, TemplateString? Content)? Title { get; private set; }
+    public (string? Id, int? HeadingLevel, IHtmlContent? Content)? Title { get; private set; }
 
-    public void SetTitle(string? id, int? headingLevel, TemplateString? content)
+    public void SetTitle(string? id, int? headingLevel, IHtmlContent? content)
     {
         if (Title is not null)
         {

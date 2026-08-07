@@ -1,13 +1,14 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class GenericHeaderContext
 {
-    public (TemplateString Content, AttributeCollection Attributes, AttributeCollection LinkAttributes)? Logo { get; private set; }
+    public (IHtmlContent Content, AttributeCollection Attributes, AttributeCollection LinkAttributes)? Logo { get; private set; }
 
     public void SetLogo(
-        TemplateString content,
+        IHtmlContent content,
         AttributeCollection attributes,
         AttributeCollection linkAttributes)
     {

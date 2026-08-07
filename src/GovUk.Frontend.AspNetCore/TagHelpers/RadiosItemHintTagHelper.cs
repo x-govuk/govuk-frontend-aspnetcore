@@ -34,7 +34,7 @@ public class RadiosItemHintTagHelper : TagHelper
         {
             Classes = classes,
             Attributes = attributes,
-            Html = content.ToTemplateString()
+            Html = content.Snapshot()
         };
 
         itemContext.SetHint(hintOptions, context.TagName);

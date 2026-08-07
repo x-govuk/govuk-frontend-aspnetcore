@@ -137,7 +137,7 @@ internal partial class DefaultComponentGenerator
 
             if (action.Text is not null)
             {
-                linkTag.InnerHtml.AppendHtml(action.Text);
+                linkTag.InnerHtml.Append(action.Text);
             }
 
             return linkTag;

@@ -29,7 +29,7 @@ public class ErrorSummaryTitleTagHelper : TagHelper
 
         errorSummaryContext.SetTitle(
             new AttributeCollection(output.Attributes),
-            content.ToTemplateString());
+            content.Snapshot());
 
         output.SuppressOutput();
     }

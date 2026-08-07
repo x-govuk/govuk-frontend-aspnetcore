@@ -34,7 +34,7 @@ internal partial class DefaultComponentGenerator
         {
             svgTag.Attributes.Set("aria-label", options.AriaLabelText);
             var titleTag = new HtmlTag("title");
-            titleTag.InnerHtml.AppendHtml(options.AriaLabelText);
+            titleTag.InnerHtml.Append(options.AriaLabelText);
             svgTag.InnerHtml.AppendHtml(titleTag);
         }
 

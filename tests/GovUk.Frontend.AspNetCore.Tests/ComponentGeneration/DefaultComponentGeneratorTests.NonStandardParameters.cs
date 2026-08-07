@@ -382,7 +382,7 @@ public partial class DefaultComponentGeneratorTests
             [
                 new FooterOptionsNavigation
                 {
-                    Title = "Section",
+                    Title = new TemplateString("Section"),
                     Items =
                     [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
@@ -410,7 +410,7 @@ public partial class DefaultComponentGeneratorTests
             [
                 new FooterOptionsNavigation
                 {
-                    Title = "Section",
+                    Title = new TemplateString("Section"),
                     Items =
                     [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
@@ -438,7 +438,7 @@ public partial class DefaultComponentGeneratorTests
             [
                 new FooterOptionsNavigation
                 {
-                    Title = "Section",
+                    Title = new TemplateString("Section"),
                     Items =
                     [
                         new FooterOptionsNavigationItem { Text = "Item", Href = "#" }
@@ -466,7 +466,7 @@ public partial class DefaultComponentGeneratorTests
             [
                 new FooterOptionsNavigation
                 {
-                    Title = "Section",
+                    Title = new TemplateString("Section"),
                     Items =
                     [
                         new FooterOptionsNavigationItem
@@ -497,7 +497,7 @@ public partial class DefaultComponentGeneratorTests
             [
                 new FooterOptionsNavigation
                 {
-                    Title = "Section",
+                    Title = new TemplateString("Section"),
                     Items =
                     [
                         new FooterOptionsNavigationItem
@@ -1026,7 +1026,7 @@ public partial class DefaultComponentGeneratorTests
                     Value = "option1",
                     Conditional = new CheckboxesOptionsItemConditional
                     {
-                        Html = "Conditional",
+                        Html = new TemplateString("Conditional"),
                         Attributes = new AttributeCollection { { "data-test", "item-attr" } }
                     }
                 }

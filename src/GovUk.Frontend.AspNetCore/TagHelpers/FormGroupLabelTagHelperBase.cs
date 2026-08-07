@@ -44,7 +44,7 @@ public abstract class FormGroupLabelTagHelperBase : TagHelper
         formGroupContext.SetLabel(
             IsPageHeading,
             new AttributeCollection(output.Attributes),
-            content?.ToTemplateString(),
+            content?.Snapshot(),
             context.TagName);
 
         output.SuppressOutput();

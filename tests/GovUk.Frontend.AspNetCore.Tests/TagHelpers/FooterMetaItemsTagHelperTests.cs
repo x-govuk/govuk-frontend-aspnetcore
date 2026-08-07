@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
@@ -64,7 +65,7 @@ public class FooterMetaItemsTagHelperTests : TagHelperTestBase<FooterMetaItemsTa
         var footerContext = new FooterContext();
         var footerMetaContext = new FooterMetaContext();
         var contentTagName = FooterMetaContentTagHelper.TagName;
-        footerMetaContext.Content = new("Content", [], contentTagName);
+        footerMetaContext.Content = new(new TemplateString("Content"), [], contentTagName);
 
         var context = CreateTagHelperContext(contexts: [footerContext, footerMetaContext]);
 

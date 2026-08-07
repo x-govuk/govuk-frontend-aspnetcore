@@ -30,6 +30,6 @@ public class ErrorSummaryDescriptionTagHelperTests : TagHelperTestBase<ErrorSumm
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal(HtmlEncoder.Default.Encode(descriptionContent), errorSummaryContext.Description?.Html);
+        Assert.Equal(HtmlEncoder.Default.Encode(descriptionContent), errorSummaryContext.Description?.Html.ToHtmlString());
     }
 }

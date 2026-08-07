@@ -70,7 +70,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         var actualOptions = getActualOptions();
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
-        Assert.Equal(hintContent, actualOptions.Hint?.Html);
+        Assert.Equal(hintContent, actualOptions.Hint?.Html?.ToHtmlString());
         Assert.Null(actualOptions.ErrorMessage);
         Assert.Null(actualOptions.Fieldset);
         Assert.Equal(2, actualOptions.Items?.Count);
@@ -78,7 +78,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
 
         var firstItem = actualOptions.Items?.ElementAt(0);
         Assert.NotNull(firstItem);
-        Assert.Equal("First", firstItem.Html);
+        Assert.Equal("First", firstItem.Html?.ToHtmlString());
         Assert.Equal("first", firstItem.Id);
         Assert.Equal("first", firstItem.Value);
         Assert.False(firstItem.Checked);
@@ -86,7 +86,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
 
         var secondItem = actualOptions.Items?.ElementAt(1);
         Assert.NotNull(secondItem);
-        Assert.Equal("Second", secondItem.Html);
+        Assert.Equal("Second", secondItem.Html?.ToHtmlString());
         Assert.Equal("second", secondItem.Id);
         Assert.Equal("second", secondItem.Value);
         Assert.True(secondItem.Checked);
@@ -156,7 +156,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         Assert.Equal(name, actualOptions.Name);
         Assert.Null(actualOptions.Hint);
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.Equal(errorContent, actualOptions.ErrorMessage.Html);
+        Assert.Equal(errorContent, actualOptions.ErrorMessage.Html?.ToHtmlString());
         Assert.Null(actualOptions.Fieldset);
         Assert.Equal(2, actualOptions.Items?.Count);
     }
@@ -213,11 +213,11 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
 
         var item = actualOptions.Items!.ElementAt(0);
         Assert.NotNull(item);
-        Assert.Equal("First", item.Html);
+        Assert.Equal("First", item.Html?.ToHtmlString());
         Assert.Equal("first", item.Id);
         Assert.Equal("first", item.Value);
         Assert.NotNull(item.Hint);
-        Assert.Equal(itemHintContent, item.Hint.Html);
+        Assert.Equal(itemHintContent, item.Hint.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -272,12 +272,12 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
 
         var item = actualOptions.Items!.ElementAt(0);
         Assert.NotNull(item);
-        Assert.Equal("First", item.Html);
+        Assert.Equal("First", item.Html?.ToHtmlString());
         Assert.Equal("first", item.Id);
         Assert.Equal("first", item.Value);
         Assert.True(item.Checked != true);
         Assert.NotNull(item.Conditional);
-        Assert.Equal(conditionalContent, item.Conditional.Html);
+        Assert.Equal(conditionalContent, item.Conditional.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -333,12 +333,12 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
 
         var item = actualOptions.Items!.ElementAt(0);
         Assert.NotNull(item);
-        Assert.Equal("First", item.Html);
+        Assert.Equal("First", item.Html?.ToHtmlString());
         Assert.Equal("first", item.Id);
         Assert.Equal("first", item.Value);
         Assert.True(item.Checked);
         Assert.NotNull(item.Conditional);
-        Assert.Equal(conditionalContent, item.Conditional.Html);
+        Assert.Equal(conditionalContent, item.Conditional.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -411,16 +411,16 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
         Assert.Equal(idPrefix, actualOptions.IdPrefix);
         Assert.Equal(name, actualOptions.Name);
         Assert.NotNull(actualOptions.Hint);
-        Assert.Equal(hintContent, actualOptions.Hint.Html);
+        Assert.Equal(hintContent, actualOptions.Hint.Html?.ToHtmlString());
         Assert.NotNull(actualOptions.Fieldset);
         Assert.NotNull(actualOptions.Fieldset.Legend);
         Assert.Equal(describedBy, actualOptions.DescribedBy);
-        Assert.Equal(legendContent, actualOptions.Fieldset.Legend.Html);
+        Assert.Equal(legendContent, actualOptions.Fieldset.Legend.Html?.ToHtmlString());
         Assert.Equal(2, actualOptions.Items?.Count);
 
         var firstItem = actualOptions.Items?.ElementAt(0);
         Assert.NotNull(firstItem);
-        Assert.Equal("First", firstItem.Html);
+        Assert.Equal("First", firstItem.Html?.ToHtmlString());
         Assert.Equal("first", firstItem.Id);
         Assert.Equal("first", firstItem.Value);
         Assert.False(firstItem.Checked);
@@ -428,7 +428,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
 
         var secondItem = actualOptions.Items?.ElementAt(1);
         Assert.NotNull(secondItem);
-        Assert.Equal("Second", secondItem.Html);
+        Assert.Equal("Second", secondItem.Html?.ToHtmlString());
         Assert.Equal("second", secondItem.Id);
         Assert.Equal("second", secondItem.Value);
         Assert.True(secondItem.Checked);

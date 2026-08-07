@@ -31,7 +31,7 @@ public class PanelTitleTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        panelContext.SetTitle(content.ToTemplateString(), attributes);
+        panelContext.SetTitle(content.Snapshot(), attributes);
 
         output.SuppressOutput();
     }

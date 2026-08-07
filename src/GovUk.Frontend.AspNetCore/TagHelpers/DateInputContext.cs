@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -8,8 +9,8 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 {
     private bool _fieldsetIsOpen;
     private readonly SortedDictionary<DateInputItemTypes, DateInputContextItem> _items = [];
-    private (TemplateString Content, string TagName)? _beforeInputs;
-    private (TemplateString Content, string TagName)? _afterInputs;
+    private (IHtmlContent Content, string TagName)? _beforeInputs;
+    private (IHtmlContent Content, string TagName)? _afterInputs;
 
     public ModelExpression? For { get; } = @for;
 
@@ -25,9 +26,9 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public DateInputItemTypes? ErrorFields { get; private set; }
 
-    public TemplateString? BeforeInputs => _beforeInputs?.Content;
+    public IHtmlContent? BeforeInputs => _beforeInputs?.Content;
 
-    public TemplateString? AfterInputs => _afterInputs?.Content;
+    public IHtmlContent? AfterInputs => _afterInputs?.Content;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
         [/*, DateInputErrorMessageTagHelper.ShortTagName, */DateInputErrorMessageTagHelper.TagName];
@@ -98,7 +99,8 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         IModelHelper modelHelper,
         bool? ignoreModelStateErrors)
     {
-        TemplateString? html = null;
+        IHtmlContent? html = null;
+        string? text = null;
 
         if (ErrorMessage?.Html is { } explicitHtml)
         {
@@ -113,15 +115,15 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
             if (invalidDateException is not null && errorMessagePrefix is not null)
             {
-                html = invalidDateException.GetMessage(errorMessagePrefix);
+                text = invalidDateException.GetMessage(errorMessagePrefix);
             }
             else if (@for is not null)
             {
-                html = modelHelper.GetValidationMessage(viewContext, @for.ModelExplorer, @for.Name);
+                text = modelHelper.GetValidationMessage(viewContext, @for.ModelExplorer, @for.Name);
             }
         }
 
-        return CreateErrorMessageOptions(html);
+        return CreateErrorMessageOptions(html, text);
     }
 
     public FieldsetOptions? GetFieldsetOptions(
@@ -138,12 +140,12 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
             legendAttributes,
             legendIsPageHeading);
 
-    public override void SetLabel(bool? isPageHeading, AttributeCollection attributes, TemplateString? html, string tagName)
+    public override void SetLabel(bool? isPageHeading, AttributeCollection attributes, IHtmlContent? html, string tagName)
     {
         throw new NotSupportedException();
     }
 
-    public override void SetHint(AttributeCollection attributes, TemplateString? html, string tagName)
+    public override void SetHint(AttributeCollection attributes, IHtmlContent? html, string tagName)
     {
         if (Fieldset is not null && !_fieldsetIsOpen)
         {
@@ -171,9 +173,9 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public void SetErrorMessage(
         DateInputItemTypes? errorFields,
-        TemplateString? visuallyHiddenText,
+        string? visuallyHiddenText,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (Fieldset is not null && !_fieldsetIsOpen)
@@ -202,7 +204,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
     }
 
-    public override void SetErrorMessage(TemplateString? visuallyHiddenText, AttributeCollection attributes, TemplateString? html, string tagName)
+    public override void SetErrorMessage(string? visuallyHiddenText, AttributeCollection attributes, IHtmlContent? html, string tagName)
     {
         throw new NotSupportedException($"Use the overload that takes a {nameof(DateInputItemTypes)} argument too.");
     }
@@ -241,7 +243,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         _items.Add(itemType, item);
     }
 
-    public void SetBeforeInputs(TemplateString content, string tagName)
+    public void SetBeforeInputs(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);
@@ -276,7 +278,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         _beforeInputs = (content, tagName);
     }
 
-    public void SetAfterInputs(TemplateString content, string tagName)
+    public void SetAfterInputs(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);

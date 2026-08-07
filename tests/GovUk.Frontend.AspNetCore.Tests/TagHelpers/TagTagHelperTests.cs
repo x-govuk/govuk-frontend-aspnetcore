@@ -32,6 +32,6 @@ public class TagTagHelperTests : TagHelperTestBase<TagTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html);
+        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html?.ToHtmlString());
     }
 }

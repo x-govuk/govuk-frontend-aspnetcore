@@ -86,7 +86,7 @@ internal partial class DefaultComponentGenerator
             {
                 var pTag = new HtmlTag("p", attrs => attrs
                     .WithClasses("govuk-body"));
-                pTag.InnerHtml.AppendHtml(item.Panel.Text);
+                pTag.InnerHtml.Append(item.Panel.Text);
                 panelTag.InnerHtml.AppendHtml(pTag);
             }
 

@@ -36,7 +36,7 @@ public class FooterCopyrightTagHelperTests : TagHelperTestBase<FooterCopyrightTa
         // Assert
         var copyrightOptions = footerContext.Copyright?.Options;
         Assert.NotNull(copyrightOptions);
-        Assert.Equal(content, copyrightOptions.Html);
+        Assert.Equal(content, copyrightOptions.Html?.ToHtmlString());
         Assert.Null(copyrightOptions.Text);
         AssertContainsAttributes(attributes, copyrightOptions.Attributes);
     }

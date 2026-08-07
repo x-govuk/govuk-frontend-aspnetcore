@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -259,14 +258,14 @@ public class TextInputTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new InputFormGroupOptions
         {
-            BeforeInput = textInputContext.BeforeInput is TemplateString beforeInput ?
+            BeforeInput = textInputContext.BeforeInput is { } beforeInput ?
                 new InputOptionsBeforeInput
                 {
                     Text = null,
                     Html = beforeInput
                 } :
                 null,
-            AfterInput = textInputContext.AfterInput is TemplateString afterInput ?
+            AfterInput = textInputContext.AfterInput is { } afterInput ?
                 new InputOptionsAfterInput
                 {
                     Text = null,
@@ -320,9 +319,10 @@ public class TextInputTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
+            containerErrorContext.AddError(errorContent, href: "#" + id);
         }
     }
 

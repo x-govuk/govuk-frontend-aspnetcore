@@ -50,7 +50,7 @@ public class BreadcrumbsItemTagHelper : TagHelper
             ItemAttributes = attributes,
             Href = href,
             Attributes = new AttributeCollection(LinkAttributes),
-            Html = content.ToTemplateString()
+            Html = content.Snapshot()
         });
 
         output.SuppressOutput();

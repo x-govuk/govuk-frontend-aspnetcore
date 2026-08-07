@@ -45,7 +45,7 @@ public class ButtonLinkTagHelperTests : TagHelperTestBase<ButtonLinkTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.Equal("a", actualOptions.Element);
-        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html);
+        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html?.ToHtmlString());
         Assert.Null(actualOptions.Text);
         Assert.Null(actualOptions.Name);
         Assert.Null(actualOptions.Type);

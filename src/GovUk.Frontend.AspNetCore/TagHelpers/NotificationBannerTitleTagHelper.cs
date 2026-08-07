@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -59,7 +58,7 @@ public class NotificationBannerTitleTagHelper : TagHelper
         notificationBannerContext.SetTitle(
             Id,
             HeadingLevel,
-            content.ToTemplateString());
+            content.Snapshot());
 
         output.SuppressOutput();
     }

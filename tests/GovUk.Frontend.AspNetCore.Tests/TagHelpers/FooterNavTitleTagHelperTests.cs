@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -40,7 +41,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
 
         // Assert
         Assert.NotNull(footerNavContext.Title);
-        Assert.Equal(content, footerNavContext.Title?.Html);
+        Assert.Equal(content, footerNavContext.Title?.Html.ToHtmlString());
         AssertContainsAttributes(attributes, footerNavContext.Title?.Attributes);
     }
 
@@ -51,7 +52,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
         var footerContext = new FooterContext();
         var footerNavContext = new FooterNavContext
         {
-            Title = new("Title", [], TagName)
+            Title = new(new TemplateString("Title"), [], TagName)
         };
 
         var context = CreateTagHelperContext(contexts: [footerContext, footerNavContext]);

@@ -40,7 +40,7 @@ public class DateInputErrorMessageTagHelperTests : TagHelperTestBase<DateInputEr
 
         // Assert
         Assert.NotNull(dateInputContext.ErrorMessage);
-        Assert.Equal(errorContent, dateInputContext.ErrorMessage.Html);
+        Assert.Equal(errorContent, dateInputContext.ErrorMessage.Html?.ToHtmlString());
         Assert.Equal(errorItems, dateInputContext.ErrorFields);
         AssertContainsAttributes(attributes, dateInputContext.ErrorMessage.Attributes);
     }

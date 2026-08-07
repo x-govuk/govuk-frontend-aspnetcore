@@ -38,7 +38,7 @@ public class FooterNavTitleTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        navContext.Title = (content.ToTemplateString(), attributes, context.TagName);
+        navContext.Title = (content.Snapshot(), attributes, context.TagName);
 
         output.SuppressOutput();
     }

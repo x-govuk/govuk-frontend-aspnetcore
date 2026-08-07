@@ -90,7 +90,7 @@ public class FormGroupFieldsetHelperTests
 
         // Assert
         Assert.NotNull(options);
-        Assert.Equal(DisplayName, options.Legend?.Html?.ToHtmlString());
+        Assert.Equal(DisplayName, options.Legend?.Text);
     }
 
     [Fact]
@@ -109,7 +109,7 @@ public class FormGroupFieldsetHelperTests
 
         // Assert
         Assert.NotNull(options);
-        Assert.Equal(DisplayName, options.Legend?.Html?.ToHtmlString());
+        Assert.Equal(DisplayName, options.Legend?.Text);
         Assert.Equal("generated-legend-class", options.Legend?.Classes?.ToHtmlString());
     }
 
@@ -124,7 +124,7 @@ public class FormGroupFieldsetHelperTests
 
         // Assert
         Assert.NotNull(options);
-        Assert.Equal(DisplayName, options.Legend?.Html?.ToHtmlString());
+        Assert.Equal(DisplayName, options.Legend?.Text);
         Assert.True(options.Legend?.IsPageHeading);
     }
 

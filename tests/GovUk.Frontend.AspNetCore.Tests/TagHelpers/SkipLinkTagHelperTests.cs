@@ -35,7 +35,7 @@ public class SkipLinkTagHelperTests : TagHelperTestBase<SkipLinkTagHelper>
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(content, actualOptions.Html);
+        Assert.Equal(content, actualOptions.Html?.ToHtmlString());
         Assert.Null(actualOptions.Text);
         Assert.Equal(href, actualOptions.Href);
     }

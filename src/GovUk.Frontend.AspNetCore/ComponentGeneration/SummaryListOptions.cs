@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -20,8 +21,8 @@ public record SummaryListOptionsCard
 
 public record SummaryListOptionsCardTitle
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     public int? HeadingLevel { get; set; }
     public TemplateString? Classes { get; set; }
 
@@ -43,7 +44,7 @@ public record SummaryListOptionsRow
 public record SummaryListOptionsRowKey
 {
     public string? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public IHtmlContent? Html { get; set; }
     public TemplateString? Classes { get; set; }
 
     [NonStandardParameter]
@@ -53,7 +54,7 @@ public record SummaryListOptionsRowKey
 public record SummaryListOptionsRowValue
 {
     public string? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public IHtmlContent? Html { get; set; }
     public TemplateString? Classes { get; set; }
 
     [NonStandardParameter]
@@ -73,8 +74,8 @@ public record SummaryListOptionsRowActionsItem
 {
     public TemplateString? Href { get; set; }
     public string? Text { get; set; }
-    public TemplateString? Html { get; set; }
-    public TemplateString? VisuallyHiddenText { get; set; }
+    public IHtmlContent? Html { get; set; }
+    public string? VisuallyHiddenText { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
 }
@@ -92,8 +93,8 @@ public record SummaryListOptionsCardActionsItem
 {
     public TemplateString? Href { get; set; }
     public string? Text { get; set; }
-    public TemplateString? Html { get; set; }
-    public TemplateString? VisuallyHiddenText { get; set; }
+    public IHtmlContent? Html { get; set; }
+    public string? VisuallyHiddenText { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
 }

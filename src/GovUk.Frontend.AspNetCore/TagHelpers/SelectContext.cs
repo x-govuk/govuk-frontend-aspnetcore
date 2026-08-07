@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -6,16 +7,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 internal class SelectContext(ModelExpression? @for) : FormGroupContext3
 {
     private readonly List<SelectOptionsItem> _items = [];
-    private (TemplateString Content, string TagName)? _beforeInput;
-    private (TemplateString Content, string TagName)? _afterInput;
+    private (IHtmlContent Content, string TagName)? _beforeInput;
+    private (IHtmlContent Content, string TagName)? _afterInput;
 
     public ModelExpression? For { get; } = @for;
 
     public IReadOnlyCollection<SelectOptionsItem> Items => _items;
 
-    public TemplateString? BeforeInput => _beforeInput?.Content;
+    public IHtmlContent? BeforeInput => _beforeInput?.Content;
 
-    public TemplateString? AfterInput => _afterInput?.Content;
+    public IHtmlContent? AfterInput => _afterInput?.Content;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => SelectErrorMessageTagHelper.AllTagNames;
 
@@ -37,9 +38,9 @@ internal class SelectContext(ModelExpression? @for) : FormGroupContext3
     }
 
     public override void SetErrorMessage(
-        TemplateString? visuallyHiddenText,
+        string? visuallyHiddenText,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -66,7 +67,7 @@ internal class SelectContext(ModelExpression? @for) : FormGroupContext3
 
     public override void SetHint(
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -94,7 +95,7 @@ internal class SelectContext(ModelExpression? @for) : FormGroupContext3
     public override void SetLabel(
         bool? isPageHeading,
         AttributeCollection attributes,
-        TemplateString? html,
+        IHtmlContent? html,
         string tagName)
     {
         if (_beforeInput is var (_, beforeInputTagName))
@@ -119,7 +120,7 @@ internal class SelectContext(ModelExpression? @for) : FormGroupContext3
         base.SetLabel(isPageHeading, attributes, html, tagName);
     }
 
-    public void SetBeforeInput(TemplateString content, string tagName)
+    public void SetBeforeInput(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);
@@ -146,7 +147,7 @@ internal class SelectContext(ModelExpression? @for) : FormGroupContext3
         _beforeInput = (content, tagName);
     }
 
-    public void SetAfterInput(TemplateString content, string tagName)
+    public void SetAfterInput(IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(content);
         ArgumentNullException.ThrowIfNull(tagName);

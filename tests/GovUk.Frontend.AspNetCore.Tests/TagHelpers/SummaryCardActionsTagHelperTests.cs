@@ -23,7 +23,7 @@ public class SummaryCardActionsTagHelperTests : TagHelperTestBase<SummaryCardAct
         {
             Href = item1Href,
             Text = null,
-            Html = item1Content,
+            Html = new TemplateString(item1Content),
             VisuallyHiddenText = item1Vht,
             Classes = item1Class,
             Attributes = new(item1Attributes)

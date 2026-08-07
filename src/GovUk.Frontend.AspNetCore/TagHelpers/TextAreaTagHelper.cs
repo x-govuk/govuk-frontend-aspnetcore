@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -193,14 +192,14 @@ public class TextAreaTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new TextareaOptionsFormGroup
         {
-            BeforeInput = textAreaContext.BeforeInput is TemplateString beforeInput ?
+            BeforeInput = textAreaContext.BeforeInput is { } beforeInput ?
                 new TextareaOptionsBeforeInput
                 {
                     Text = null,
                     Html = beforeInput
                 } :
                 null,
-            AfterInput = textAreaContext.AfterInput is TemplateString afterInput ?
+            AfterInput = textAreaContext.AfterInput is { } afterInput ?
                 new TextareaOptionsAfterInput
                 {
                     Text = null,
@@ -241,9 +240,10 @@ public class TextAreaTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
+            containerErrorContext.AddError(errorContent, href: "#" + id);
         }
     }
 
@@ -261,9 +261,9 @@ public class TextAreaTagHelper : TagHelper
 
     private TemplateString? ResolveValue(TextAreaContext textAreaContext)
     {
-        if (textAreaContext.Value is TemplateString contextValue)
+        if (textAreaContext.Value is { } contextValue)
         {
-            return contextValue;
+            return new TemplateString(contextValue);
         }
 
         if (For is not null)

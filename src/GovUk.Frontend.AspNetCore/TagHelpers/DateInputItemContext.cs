@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
@@ -15,9 +16,9 @@ internal class DateInputItemContext
         _labelTagName = labelTagName;
     }
 
-    public (TemplateString Html, AttributeCollection Attributes, string TagName)? Label { get; private set; }
+    public (IHtmlContent Html, AttributeCollection Attributes, string TagName)? Label { get; private set; }
 
-    public void SetLabel(TemplateString html, AttributeCollection attributes, string tagName)
+    public void SetLabel(IHtmlContent html, AttributeCollection attributes, string tagName)
     {
         ArgumentNullException.ThrowIfNull(html);
         ArgumentNullException.ThrowIfNull(attributes);

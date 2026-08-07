@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
@@ -17,8 +18,8 @@ public record TableOptions
 
 public record TableOptionsColumn
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     public TemplateString? Format { get; set; }
     public TemplateString? Classes { get; set; }
     [JsonPropertyName("colspan")]
@@ -30,8 +31,8 @@ public record TableOptionsColumn
 
 public record TableOptionsHead
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     public TemplateString? Format { get; set; }
     public TemplateString? Classes { get; set; }
     [JsonPropertyName("colspan")]

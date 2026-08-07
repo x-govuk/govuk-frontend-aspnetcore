@@ -103,8 +103,8 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
         Assert.Equal(value, actualOptions.Value);
         Assert.Equal(maxLength, actualOptions.MaxLength);
         Assert.Equal(threshold, actualOptions.Threshold);
-        Assert.Equal(labelHtml, actualOptions.Label?.Html);
-        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
+        Assert.Equal(labelHtml, actualOptions.Label?.Html?.ToHtmlString());
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html?.ToHtmlString());
         Assert.Null(actualOptions.ErrorMessage);
         Assert.Equal(classes, actualOptions.Classes);
         Assert.Equal(spellcheck, actualOptions.Spellcheck);
@@ -197,7 +197,7 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
                     CharacterCountLabelTagHelper.TagName);
 
                 characterCountContext.SetErrorMessage(
-                    visuallyHiddenText: new HtmlString(errorVht),
+                    visuallyHiddenText: new HtmlString(errorVht).ToHtmlString(),
                     attributes: new AttributeCollection()
                     {
                         { "data-foo", errorDataFooAttribute }
@@ -227,7 +227,7 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
         // Assert
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html?.ToHtmlString());
         Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
         Assert.Collection(actualOptions.ErrorMessage.Attributes, kvp =>
@@ -307,9 +307,9 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
         Assert.NotNull(actualOptions.Id);
         Assert.NotNull(actualOptions.Name);
         Assert.Equal(modelStateValue, actualOptions.Value);
-        Assert.Equal(displayName, actualOptions.Label?.Html);
-        Assert.Equal(description, actualOptions.Hint?.Html);
-        Assert.Equal(modelStateError, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(displayName, actualOptions.Label?.Text);
+        Assert.Equal(description, actualOptions.Hint?.Text);
+        Assert.Equal(modelStateError, actualOptions.ErrorMessage?.Text);
     }
 
     [Fact]
@@ -437,7 +437,7 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(labelHtml, actualOptions.Label?.Html);
+        Assert.Equal(labelHtml, actualOptions.Label?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -504,7 +504,7 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(hintHtml, actualOptions.Hint?.Html);
+        Assert.Equal(hintHtml, actualOptions.Hint?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -578,7 +578,7 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -719,7 +719,7 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
 
         // Assert
         var actualOptions = getActualOptions();
-        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html);
+        Assert.Equal(errorHtml, actualOptions.ErrorMessage?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -774,7 +774,7 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
             tagHelper.ViewContext.HttpContext.GetPageErrorContext().Errors,
             error =>
             {
-                Assert.Equal(errorHtml, error.Html);
+                Assert.Equal(errorHtml, error.Html.ToHtmlString());
                 Assert.Equal($"#{id}", error.Href);
             });
     }

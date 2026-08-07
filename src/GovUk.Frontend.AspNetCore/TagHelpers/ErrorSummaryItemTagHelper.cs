@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.ModelBinding;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -86,11 +87,11 @@ public class ErrorSummaryItemTagHelper : TagHelper
             content = output.Content;
         }
 
-        TemplateString itemHtml;
+        IHtmlContent itemContent;
 
         if (output.TagMode == TagMode.StartTagAndEndTag)
         {
-            itemHtml = content.ToTemplateString();
+            itemContent = content.Snapshot()!;
         }
         else
         {
@@ -106,7 +107,8 @@ public class ErrorSummaryItemTagHelper : TagHelper
                 return;
             }
 
-            itemHtml = validationMessage;
+            // A validation message is plain text, so it is wrapped rather than treated as markup.
+            itemContent = new TemplateString(validationMessage);
         }
 
         var attributes = new AttributeCollection(output.Attributes);
@@ -162,7 +164,7 @@ public class ErrorSummaryItemTagHelper : TagHelper
         errorSummaryContext.AddItem(
             new ErrorSummaryContextItem(
                 resolvedHref,
-                itemHtml,
+                itemContent,
                 attributes,
                 new AttributeCollection(LinkAttributes)));
 

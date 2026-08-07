@@ -34,7 +34,7 @@ internal partial class DefaultComponentGenerator
         }
         else if (!options.LogoText.IsEmpty())
         {
-            logoLink.InnerHtml.AppendHtml(options.LogoText);
+            logoLink.InnerHtml.Append(options.LogoText);
         }
 
         logoDiv.InnerHtml.AppendHtml(logoLink);

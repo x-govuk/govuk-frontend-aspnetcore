@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Logging;
 
@@ -54,7 +53,7 @@ public class DateInputBeforeInputsTagHelper : TagHelper
             _logger.AttributesAreNotSupportedOnTagNameAndWillBeIgnored(context.TagName);
         }
 
-        dateInputContext.SetBeforeInputs(content.ToTemplateString(), context.TagName);
+        dateInputContext.SetBeforeInputs(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -25,14 +26,14 @@ public record SelectFormGroupOptions : FormGroupOptions
 
 public record SelectOptionsBeforeInput
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
 }
 
 public record SelectOptionsAfterInput
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }
@@ -40,7 +41,9 @@ public record SelectOptionsAfterInput
 public record SelectOptionsItem
 {
     public TemplateString? Value { get; set; }
-    public TemplateString? Text { get; set; }
+    public string? Text { get; set; }
+    [NonStandardParameter]
+    public IHtmlContent? Html { get; set; }
     public bool? Selected { get; set; }
     public bool? Disabled { get; set; }
     public AttributeCollection? Attributes { get; set; }

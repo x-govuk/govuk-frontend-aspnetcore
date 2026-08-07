@@ -31,7 +31,7 @@ public class PanelBodyTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        panelContext.SetBody(content.ToTemplateString(), attributes);
+        panelContext.SetBody(content.Snapshot(), attributes);
 
         output.SuppressOutput();
     }

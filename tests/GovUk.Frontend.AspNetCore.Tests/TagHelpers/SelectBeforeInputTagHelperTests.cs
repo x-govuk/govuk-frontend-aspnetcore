@@ -37,6 +37,6 @@ public class SelectBeforeInputTagHelperTests : TagHelperTestBase<SelectBeforeInp
 
         // Assert
         Assert.NotNull(selectContext.BeforeInput);
-        Assert.Equal(content, selectContext.BeforeInput);
+        Assert.Equal(content, selectContext.BeforeInput.ToHtmlString());
     }
 }

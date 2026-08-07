@@ -26,16 +26,16 @@ public class AccordionTagHelperTests : TagHelperTestBase<AccordionTagHelper>
         {
             new AccordionOptionsItem()
             {
-                Content = new AccordionOptionsItemContent() { Html = "First content" },
+                Content = new AccordionOptionsItemContent() { Html = new TemplateString("First content" )},
                 Expanded = false,
-                Heading = new AccordionOptionsItemHeading() { Html = "First heading" },
-                Summary = new AccordionOptionsItemSummary() { Html = "First summary" }
+                Heading = new AccordionOptionsItemHeading() { Html = new TemplateString("First heading" )},
+                Summary = new AccordionOptionsItemSummary() { Html = new TemplateString("First summary" )}
             },
             new AccordionOptionsItem()
             {
-                Content = new AccordionOptionsItemContent() { Html = "Second content" },
+                Content = new AccordionOptionsItemContent() { Html = new TemplateString("Second content" )},
                 Expanded = true,
-                Heading = new AccordionOptionsItemHeading() { Html = "Second heading" }
+                Heading = new AccordionOptionsItemHeading() { Html = new TemplateString("Second heading" )}
             }
         };
 
@@ -96,20 +96,20 @@ public class AccordionTagHelperTests : TagHelperTestBase<AccordionTagHelper>
         Assert.NotNull(firstItem);
         Assert.Equal(items[0].Expanded, firstItem.Expanded);
         Assert.NotNull(firstItem.Heading);
-        Assert.Equal("First heading", firstItem.Heading.Html);
+        Assert.Equal("First heading", firstItem.Heading.Html?.ToHtmlString());
         Assert.NotNull(firstItem.Summary);
-        Assert.Equal("First summary", firstItem.Summary.Html);
+        Assert.Equal("First summary", firstItem.Summary.Html?.ToHtmlString());
         Assert.NotNull(firstItem.Content);
-        Assert.Equal("First content", firstItem.Content.Html);
+        Assert.Equal("First content", firstItem.Content.Html?.ToHtmlString());
 
         var secondItem = actualOptions.Items.ElementAt(1);
         Assert.NotNull(secondItem);
         Assert.Equal(items[1].Expanded, secondItem.Expanded);
         Assert.NotNull(secondItem.Heading);
-        Assert.Equal("Second heading", secondItem.Heading.Html);
+        Assert.Equal("Second heading", secondItem.Heading.Html?.ToHtmlString());
         Assert.Null(secondItem.Summary);
         Assert.NotNull(secondItem.Content);
-        Assert.Equal("Second content", secondItem.Content.Html);
+        Assert.Equal("Second content", secondItem.Content.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -125,10 +125,10 @@ public class AccordionTagHelperTests : TagHelperTestBase<AccordionTagHelper>
 
                 accordionContext.AddItem(new AccordionOptionsItem()
                 {
-                    Content = new AccordionOptionsItemContent() { Html = "First content" },
+                    Content = new AccordionOptionsItemContent() { Html = new TemplateString("First content") },
                     Expanded = false,
-                    Heading = new AccordionOptionsItemHeading() { Html = "First heading" },
-                    Summary = new AccordionOptionsItemSummary() { Html = "First summary" }
+                    Heading = new AccordionOptionsItemHeading() { Html = new TemplateString("First heading") },
+                    Summary = new AccordionOptionsItemSummary() { Html = new TemplateString("First summary") }
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();

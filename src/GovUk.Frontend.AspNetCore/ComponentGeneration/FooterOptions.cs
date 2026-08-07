@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Html;
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -22,8 +23,8 @@ public record FooterOptions
 public record FooterOptionsMeta
 {
     public TemplateString? VisuallyHiddenTitle { get; set; }
-    public TemplateString? Html { get; set; }
-    public TemplateString? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
+    public string? Text { get; set; }
     public IReadOnlyCollection<FooterOptionsMetaItem?>? Items { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
@@ -35,9 +36,9 @@ public record FooterOptionsMeta
 
 public record FooterOptionsMetaItem
 {
-    public TemplateString? Text { get; set; }
+    public string? Text { get; set; }
     [NonStandardParameter]
-    public TemplateString? Html { get; set; }
+    public IHtmlContent? Html { get; set; }
     public TemplateString? Href { get; set; }
     public AttributeCollection? Attributes { get; set; }
     [NonStandardParameter]
@@ -46,7 +47,7 @@ public record FooterOptionsMetaItem
 
 public record FooterOptionsNavigation
 {
-    public TemplateString? Title { get; set; }
+    public IHtmlContent? Title { get; set; }
     public int? Columns { get; set; }
     public TemplateString? Width { get; set; }
     public IReadOnlyCollection<FooterOptionsNavigationItem?>? Items { get; set; }
@@ -60,9 +61,9 @@ public record FooterOptionsNavigation
 
 public record FooterOptionsNavigationItem
 {
-    public TemplateString? Text { get; set; }
+    public string? Text { get; set; }
     [NonStandardParameter]
-    public TemplateString? Html { get; set; }
+    public IHtmlContent? Html { get; set; }
     public TemplateString? Href { get; set; }
     public AttributeCollection? Attributes { get; set; }
     [NonStandardParameter]
@@ -71,16 +72,16 @@ public record FooterOptionsNavigationItem
 
 public record FooterOptionsContentLicence
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }
 
 public record FooterOptionsCopyright
 {
-    public TemplateString? Text { get; set; }
-    public TemplateString? Html { get; set; }
+    public string? Text { get; set; }
+    public IHtmlContent? Html { get; set; }
     [NonStandardParameter]
     public AttributeCollection? Attributes { get; set; }
 }

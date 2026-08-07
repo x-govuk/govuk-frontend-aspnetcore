@@ -41,7 +41,7 @@ public class FooterNavItemTagHelper : TagHelper
         navItemsContext.Items.Add(new FooterOptionsNavigationItem
         {
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Href = href,
             Attributes = new(LinkAttributes),
             ItemAttributes = attributes

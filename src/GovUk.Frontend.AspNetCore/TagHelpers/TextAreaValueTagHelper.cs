@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -27,7 +26,7 @@ public class TextAreaValueTagHelper : TagHelper
             content = output.Content;
         }
 
-        textAreaContext.SetValue(content.ToTemplateString(), context.TagName);
+        textAreaContext.SetValue(content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

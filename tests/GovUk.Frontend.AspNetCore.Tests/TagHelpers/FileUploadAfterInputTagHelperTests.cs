@@ -37,6 +37,6 @@ public class FileUploadAfterInputTagHelperTests : TagHelperTestBase<FileUploadAf
 
         // Assert
         Assert.NotNull(fileUploadContext.AfterInput);
-        Assert.Equal(content, fileUploadContext.AfterInput);
+        Assert.Equal(content, fileUploadContext.AfterInput.ToHtmlString());
     }
 }

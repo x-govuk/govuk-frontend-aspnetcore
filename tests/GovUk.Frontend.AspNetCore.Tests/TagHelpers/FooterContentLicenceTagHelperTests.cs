@@ -36,7 +36,7 @@ public class FooterContentLicenceTagHelperTests : TagHelperTestBase<FooterConten
         // Assert
         var contentLicenceOptions = footerContext.ContentLicence?.Options;
         Assert.NotNull(contentLicenceOptions);
-        Assert.Equal(content, contentLicenceOptions.Html);
+        Assert.Equal(content, contentLicenceOptions.Html?.ToHtmlString());
         Assert.Null(contentLicenceOptions.Text);
         AssertContainsAttributes(attributes, contentLicenceOptions.Attributes);
     }

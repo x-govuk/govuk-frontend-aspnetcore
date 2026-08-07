@@ -29,7 +29,7 @@ public class AccordionItemSummaryTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        itemContext.SetSummary(attributes, content.ToTemplateString());
+        itemContext.SetSummary(attributes, content.Snapshot());
 
         output.SuppressOutput();
     }

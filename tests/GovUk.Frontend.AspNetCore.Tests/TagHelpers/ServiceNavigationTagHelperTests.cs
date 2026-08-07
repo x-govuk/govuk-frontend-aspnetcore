@@ -42,7 +42,7 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
                     { "class", navigationClassName }
                 };
 
-                serviceNavigationContext.StartSlot = new(startSlotContent, ServiceNavigationStartTagHelper.TagName);
+                serviceNavigationContext.StartSlot = new(new TemplateString(startSlotContent), ServiceNavigationStartTagHelper.TagName);
 
                 serviceNavigationContext.Nav = new ServiceNavigationNavContext()
                 {
@@ -54,13 +54,13 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
                     Id = navigationId,
                     Attributes = attributes,
                     FirstItemTagName = ServiceNavigationNavItemTagHelper.TagName,
-                    NavigationStartSlot = new(navStartSlotContent, ServiceNavigationNavStartTagHelper.TagName),
-                    NavigationEndSlot = new(navEndSlotContent, ServiceNavigationNavEndTagHelper.TagName)
+                    NavigationStartSlot = new(new TemplateString(navStartSlotContent), ServiceNavigationNavStartTagHelper.TagName),
+                    NavigationEndSlot = new(new TemplateString(navEndSlotContent), ServiceNavigationNavEndTagHelper.TagName)
                 };
 
                 serviceNavigationContext.Nav.Items.Add(item);
 
-                serviceNavigationContext.EndSlot = new(endSlotContent, ServiceNavigationEndTagHelper.TagName);
+                serviceNavigationContext.EndSlot = new(new TemplateString(endSlotContent), ServiceNavigationEndTagHelper.TagName);
 
                 TagHelperContent content = new DefaultTagHelperContent();
                 return Task.FromResult(content);
@@ -92,10 +92,10 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
         Assert.Equal(navigationId, actualOptions.NavigationId);
         Assert.Equal(navigationClassName, actualOptions.NavigationClasses);
         AssertContainsAttributes(navigationAttributes, actualOptions.NavigationAttributes);
-        Assert.Equal(startSlotContent, actualOptions.Slots?.Start);
-        Assert.Equal(endSlotContent, actualOptions.Slots?.End);
-        Assert.Equal(navStartSlotContent, actualOptions.Slots?.NavigationStart);
-        Assert.Equal(navEndSlotContent, actualOptions.Slots?.NavigationEnd);
+        Assert.Equal(startSlotContent, actualOptions.Slots?.Start?.ToHtmlString());
+        Assert.Equal(endSlotContent, actualOptions.Slots?.End?.ToHtmlString());
+        Assert.Equal(navStartSlotContent, actualOptions.Slots?.NavigationStart?.ToHtmlString());
+        Assert.Equal(navEndSlotContent, actualOptions.Slots?.NavigationEnd?.ToHtmlString());
         Assert.NotNull(actualOptions.Navigation);
         Assert.Collection(actualOptions.Navigation, i => Assert.Same(item, i));
     }

@@ -104,7 +104,7 @@ public class ButtonTagHelper : TagHelper
         var component = await _componentGenerator.GenerateButtonAsync(new ButtonOptions
         {
             Element = Element,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Name = Name,
             Type = Type,
             Value = Value,

@@ -53,7 +53,7 @@ public class ButtonTagHelperTests : TagHelperTestBase<ButtonTagHelper>
         // Assert
         var actualOptions = getActualOptions();
         Assert.Equal("button", actualOptions.Element);
-        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html);
+        Assert.Equal(HtmlEncoder.Default.Encode(content), actualOptions.Html?.ToHtmlString());
         Assert.Null(actualOptions.Text);
         Assert.Equal(name, actualOptions.Name);
         Assert.Equal(type, actualOptions.Type);

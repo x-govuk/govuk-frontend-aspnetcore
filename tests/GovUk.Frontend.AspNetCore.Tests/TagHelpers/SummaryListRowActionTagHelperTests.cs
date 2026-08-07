@@ -53,7 +53,7 @@ public class SummaryListRowActionTagHelperTests : TagHelperTestBase<SummaryListR
             actionsContext.Items,
             action =>
             {
-                Assert.Equal(content, action.Html);
+                Assert.Equal(content, action.Html?.ToHtmlString());
                 Assert.Equal(visuallyHiddenText, action.VisuallyHiddenText);
                 Assert.Equal(href, action.Href);
                 AssertContainsAttributes(attributes, action.Attributes, except: href);

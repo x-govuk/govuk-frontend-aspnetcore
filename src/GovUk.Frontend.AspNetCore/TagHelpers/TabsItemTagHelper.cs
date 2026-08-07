@@ -76,7 +76,7 @@ public class TabsItemTagHelper : TagHelper
             Panel = new TabsOptionsItemPanel
             {
                 Text = null,
-                Html = content.ToTemplateString(),
+                Html = content.Snapshot(),
                 Attributes = attributes
             }
         });

@@ -37,6 +37,6 @@ public class CheckboxesAfterInputsTagHelperTests : TagHelperTestBase<CheckboxesA
 
         // Assert
         Assert.NotNull(checkboxesContext.AfterInputs);
-        Assert.Equal(content, checkboxesContext.AfterInputs);
+        Assert.Equal(content, checkboxesContext.AfterInputs.ToHtmlString());
     }
 }

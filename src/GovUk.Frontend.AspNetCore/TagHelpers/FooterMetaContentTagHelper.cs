@@ -33,6 +33,6 @@ public class FooterMetaContentTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
 
-        metaContext.Content = (content.ToTemplateString(), attributes, context.TagName);
+        metaContext.Content = (content.Snapshot(), attributes, context.TagName);
     }
 }

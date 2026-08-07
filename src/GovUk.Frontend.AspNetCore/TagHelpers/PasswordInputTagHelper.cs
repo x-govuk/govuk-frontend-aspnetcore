@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
@@ -278,14 +277,14 @@ public class PasswordInputTagHelper : TagHelper
         formGroupAttributes.Remove("class", out var formGroupClasses);
         var formGroupOptions = new PasswordInputOptionsFormGroup
         {
-            BeforeInput = passwordInputContext.BeforeInput is TemplateString beforeInput ?
+            BeforeInput = passwordInputContext.BeforeInput is { } beforeInput ?
                 new PasswordInputOptionsBeforeInput
                 {
                     Text = null,
                     Html = beforeInput
                 } :
                 null,
-            AfterInput = passwordInputContext.AfterInput is TemplateString afterInput ?
+            AfterInput = passwordInputContext.AfterInput is { } afterInput ?
                 new PasswordInputOptionsAfterInput
                 {
                     Text = null,
@@ -333,9 +332,10 @@ public class PasswordInputTagHelper : TagHelper
 
         if (errorMessageOptions is not null)
         {
-            Debug.Assert(errorMessageOptions.Html is not null);
+            // The message may be markup written in the view or text from ModelState.
+            var errorContent = errorMessageOptions.Html ?? new TemplateString(errorMessageOptions.Text);
             var containerErrorContext = ViewContext.HttpContext.GetPageErrorContext();
-            containerErrorContext.AddError(errorMessageOptions.Html, href: "#" + id);
+            containerErrorContext.AddError(errorContent, href: "#" + id);
         }
     }
 

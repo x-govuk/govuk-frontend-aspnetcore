@@ -35,7 +35,7 @@ internal partial class DefaultComponentGenerator
                 Classes = options.Fieldset!.Classes,
                 Attributes = options.Fieldset.Attributes,
                 Legend = options.Fieldset.Legend,
-                Html = innerContent.ToTemplateString()
+                Html = innerContent.Snapshot()
             });
 
             formGroupDiv.InnerHtml.AppendHtml(fieldsetComponent);
@@ -193,7 +193,7 @@ internal partial class DefaultComponentGenerator
                 For = itemId,
                 Classes = new TemplateString("govuk-checkboxes__label").AppendCssClasses(item.Label?.Classes),
                 Attributes = item.Label?.Attributes,
-                Html = labelContent.ToTemplateString()
+                Html = labelContent.Snapshot()
             });
 
             itemDiv.InnerHtml.AppendHtml(labelComponent);

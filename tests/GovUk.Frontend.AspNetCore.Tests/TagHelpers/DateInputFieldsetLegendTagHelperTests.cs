@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -40,7 +41,7 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
 
         // Assert
         Assert.NotNull(fieldsetContext.Legend);
-        Assert.Equal(legendContent, fieldsetContext.Legend.Html);
+        Assert.Equal(legendContent, fieldsetContext.Legend.Html?.ToHtmlString());
         Assert.Equal(isPageHeading, fieldsetContext.Legend.IsPageHeading);
         AssertContainsAttributes(attributes, fieldsetContext.Legend.Attributes);
     }
@@ -51,7 +52,7 @@ public class DateInputFieldsetLegendTagHelperTests : TagHelperTestBase<DateInput
         // Arrange
         var fieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName);
 
-        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: "Existing legend", DateInputFieldsetLegendTagHelper.TagName);
+        fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new TemplateString("Existing legend"), DateInputFieldsetLegendTagHelper.TagName);
 
         var context = CreateTagHelperContext(contexts: fieldsetContext);
 

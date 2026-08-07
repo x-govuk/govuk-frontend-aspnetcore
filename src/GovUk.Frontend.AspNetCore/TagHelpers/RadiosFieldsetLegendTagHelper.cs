@@ -44,7 +44,7 @@ public class RadiosFieldsetLegendTagHelper : TagHelper
         fieldsetContext.SetLegend(
             IsPageHeading,
             new AttributeCollection(output.Attributes),
-            html: content.ToTemplateString(),
+            html: content.Snapshot(),
             TagName);
 
         output.SuppressOutput();

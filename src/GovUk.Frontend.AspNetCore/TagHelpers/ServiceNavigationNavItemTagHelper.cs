@@ -88,7 +88,7 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
         {
             Current = current,
             Active = Active,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Text = null,
             Href = href,
             Attributes = new(LinkAttributes),

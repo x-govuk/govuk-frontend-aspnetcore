@@ -9,22 +9,21 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
     private ValueTask<GovUkComponent> GenerateFromHtmlTagAsync(HtmlTag tag) =>
         ValueTask.FromResult<GovUkComponent>(new HtmlTagGovUkComponent(tag));
 
-    // A TemplateString already knows whether it holds HTML or text, and writes itself accordingly.
-    // Don't reach past that to force one reading or the other: doing so is how text from a validation
-    // message ended up being emitted as markup.
-    private IHtmlContent HtmlOrText(TemplateString? html, TemplateString? text, string? fallback = null)
+    // The parameter types carry the distinction: Html is markup and is written as-is, Text is plain
+    // and is encoded. Neither can be mistaken for the other, so nothing here has to decide.
+    private IHtmlContent HtmlOrText(IHtmlContent? html, string? text, string? fallback = null)
     {
         if (!html.IsEmpty())
         {
             return html;
         }
 
-        if (!text.IsEmpty())
+        if (!string.IsNullOrWhiteSpace(text))
         {
-            return text;
+            return new TemplateString(text);
         }
 
-        return new HtmlString(fallback);
+        return new TemplateString(fallback);
     }
 
     protected sealed class EmptyComponent : GovUkComponent
@@ -47,17 +46,17 @@ internal partial class DefaultComponentGenerator : IComponentGenerator
 
     // Casing the encoded form would upper-case the '&' of an entity rather than the character it
     // stands for, so this works on the text.
-    private static TemplateString Capitalize(TemplateString? input)
+    private static string Capitalize(TemplateString? input)
     {
         if (input.IsEmpty())
         {
-            return TemplateString.Empty;
+            return string.Empty;
         }
 
         var text = input.ToText();
 
 #pragma warning disable CA1308
-        return new TemplateString(char.ToUpperInvariant(text[0]) + text[1..].ToLowerInvariant());
+        return char.ToUpperInvariant(text[0]) + text[1..].ToLowerInvariant();
 #pragma warning restore CA1308
     }
 

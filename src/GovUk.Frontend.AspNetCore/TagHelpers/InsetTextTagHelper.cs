@@ -52,7 +52,7 @@ public class InsetTextTagHelper : TagHelper
         var component = await _componentGenerator.GenerateInsetTextAsync(new InsetTextOptions
         {
             Text = null,
-            Html = content.ToTemplateString(),
+            Html = content.Snapshot(),
             Id = Id,
             Classes = classes,
             Attributes = attributes

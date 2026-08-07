@@ -37,12 +37,12 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                 selectContext.SetLabel(
                     isPageHeading: false,
                     attributes: [],
-                    labelContent,
+                    new TemplateString(labelContent),
                     SelectLabelTagHelper.TagName);
 
                 selectContext.SetHint(
                     attributes: [],
-                    hintContent,
+                    new TemplateString(hintContent),
                     SelectHintTagHelper.TagName);
 
                 selectContext.AddItem(new SelectOptionsItem()
@@ -155,7 +155,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                     SelectLabelTagHelper.TagName);
 
                 selectContext.SetErrorMessage(
-                    visuallyHiddenText: new HtmlString(errorVht),
+                    visuallyHiddenText: new HtmlString(errorVht).ToHtmlString(),
                     attributes: new AttributeCollection()
                     {
                         { "data-foo", errorDataFooAttribute }
@@ -192,7 +192,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.ErrorMessage);
         Assert.Equal(errorHtml, actualOptions.ErrorMessage.Html?.ToHtmlString());
-        Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText?.ToHtmlString());
+        Assert.Equal(errorVht, actualOptions.ErrorMessage.VisuallyHiddenText);
         Assert.NotNull(actualOptions.ErrorMessage.Attributes);
         Assert.Collection(actualOptions.ErrorMessage.Attributes, kvp =>
         {
@@ -291,9 +291,9 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
         var actualOptions = getActualOptions();
         Assert.NotNull(actualOptions.Id);
         Assert.NotNull(actualOptions.Name);
-        Assert.Equal(displayName, actualOptions.Label?.Html?.ToHtmlString());
-        Assert.Equal(description, actualOptions.Hint?.Html?.ToHtmlString());
-        Assert.Equal(modelStateError, actualOptions.ErrorMessage?.Html?.ToHtmlString());
+        Assert.Equal(displayName, actualOptions.Label?.Text);
+        Assert.Equal(description, actualOptions.Hint?.Text);
+        Assert.Equal(modelStateError, actualOptions.ErrorMessage?.Text);
     }
 
     private class Model

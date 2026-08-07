@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Html;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 

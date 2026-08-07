@@ -125,10 +125,10 @@ public class AccordionTagHelperTests : TagHelperTestBase<AccordionTagHelper>
 
                 accordionContext.AddItem(new AccordionOptionsItem()
                 {
-                    Content = new AccordionOptionsItemContent() { Html = new TemplateString("First content" )},
+                    Content = new AccordionOptionsItemContent() { Html = new TemplateString("First content") },
                     Expanded = false,
-                    Heading = new AccordionOptionsItemHeading() { Html = new TemplateString("First heading" )},
-                    Summary = new AccordionOptionsItemSummary() { Html = new TemplateString("First summary" )}
+                    Heading = new AccordionOptionsItemHeading() { Html = new TemplateString("First heading") },
+                    Summary = new AccordionOptionsItemSummary() { Html = new TemplateString("First summary") }
                 });
 
                 var tagHelperContent = new DefaultTagHelperContent();

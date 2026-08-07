@@ -106,7 +106,7 @@ internal partial class DefaultComponentGenerator
                         }
                         else if (!options.Value.IsEmpty())
                         {
-                            var compareWith = item.Value ?? new TemplateString(item.Text);
+                            var compareWith = item.Value ?? item.Text;
                             if (compareWith is not null && !compareWith.IsEmpty() && options.Value == compareWith)
                             {
                                 selected = true;
@@ -128,9 +128,9 @@ internal partial class DefaultComponentGenerator
                         option.Attributes.AddBoolean("selected");
                     }
 
-                    if (!item.Html.IsEmpty() || !item.Text.IsEmpty())
+                    if (!item.Text.IsEmpty())
                     {
-                        option.InnerHtml.AppendHtml(HtmlOrText(item.Html, item.Text));
+                        option.InnerHtml.AppendHtml(item.Text);
                     }
 
                     select.InnerHtml.AppendHtml(option);

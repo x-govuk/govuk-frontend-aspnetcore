@@ -325,6 +325,12 @@ messages and so on — can be translated by registering an `IGovUkFrontendLocali
 [Localization](docs/localization.md).
 
 
+## Contributing
+
+- [Typing component parameters](docs/component-parameters.md) — how to decide whether a new
+  `*Options` property should be `string`, `IHtmlContent` or `TemplateString`, and the encoding traps
+  to avoid.
+
 ## Building the library
 
 Install [just](https://github.com/casey/just?tab=readme-ov-file#installation) and make sure it's in your `PATH` then run:

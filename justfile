@@ -29,7 +29,7 @@ _clear-samples-package-cache:
   @pwsh -f Remove-CachedPackages.ps1
 
 # Run the tests
-test *ARGS: (unit-tests ARGS) (integration-tests ARGS)
+test *ARGS: (unit-tests ARGS) (integration-tests ARGS) (package-tests ARGS)
 
 # Run the unit tests
 unit-tests *ARGS:
@@ -38,6 +38,10 @@ unit-tests *ARGS:
 # Run the integration tests
 integration-tests *ARGS:
   @dotnet test tests/GovUk.Frontend.AspNetCore.IntegrationTests/ {{ARGS}}
+
+# Run the package tests; these pack the library and build throwaway projects against it
+package-tests *ARGS:
+  @dotnet test tests/GovUk.Frontend.AspNetCore.PackageTests/ {{ARGS}}
 
 # Format the C# code
 format *ARGS:

@@ -13,7 +13,7 @@
 <govuk-panel heading-level="2">
     <panel-title>Application complete</panel-title>
     <panel-body>
-        Your reference number<br /><strong>HDJ2123F</strong>
+        Your reference number<br><strong>HDJ2123F</strong>
     </panel-body>
 </govuk-panel>
 ```

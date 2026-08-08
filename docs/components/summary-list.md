@@ -27,7 +27,7 @@
     </row>
     <row>
         <key>Contact information</key>
-        <value>72 Guild Street<br />London<br />SE23 6FH</value>
+        <value>72 Guild Street<br>London<br>SE23 6FH</value>
         <row-actions>
             <action href="#" visually-hidden-text="contact information">Change</action>
         </row-actions>
@@ -60,7 +60,7 @@
     </row>
     <row>
         <key>Contact information</key>
-        <value>72 Guild Street<br />London<br />SE23 6FH</value>
+        <value>72 Guild Street<br>London<br>SE23 6FH</value>
     </row>
     <row>
         <key>Contact details</key>
@@ -83,11 +83,11 @@
     <govuk-summary-list>
         <row>
             <key>Course</key>
-            <value>English (3DMD)<br />PGCE with QTS full time</value>
+            <value>English (3DMD)<br>PGCE with QTS full time</value>
         </row>
         <row>
             <key>Location</key>
-            <value>School name<br />Road, City, SW1 1AA</value>
+            <value>School name<br>Road, City, SW1 1AA</value>
         </row>
     </govuk-summary-list>
 </govuk-summary-card>

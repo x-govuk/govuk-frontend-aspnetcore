@@ -88,8 +88,12 @@ public class RazorSnippetProvider
             throw new InvalidOperationException($"Multiple <example> elements found in {hintName}.");
         }
 
-        var exampleElement = exampleElements.Single();
-        return Dedent(exampleElement.InnerHtml);
+        // Take the contents from the source rather than from the parsed element; re-writing the parsed element
+        // normalizes attribute quotes, which mangles any attribute whose value itself contains quotes
+        var contentStart = markup.IndexOf('>', markup.IndexOf("<example", StringComparison.Ordinal)) + 1;
+        var contentEnd = markup.LastIndexOf("</example>", StringComparison.Ordinal);
+
+        return Dedent(markup[contentStart..contentEnd]);
     }
 
     private static string Dedent(string markup)

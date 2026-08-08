@@ -1,6 +1,8 @@
 @page
+@using GovUk.Frontend.AspNetCore
 @using Microsoft.AspNetCore.Http
 @using static GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants
+@inject PageTemplateHelper PageTemplateHelper
 @{
     // The library's own page template, so the URLs under test are the ones a real consumer's pages
     // would emit: the stylesheet, the script imports and the head icons that live under the assets
@@ -16,3 +18,7 @@
 }
 
 <p class="govuk-body">Package test app</p>
+
+@* So a test can check the hashes still cover the scripts the page template actually emitted. *@
+<meta name="csp-script-hashes" content="@PageTemplateHelper.GetCspScriptHashes(ViewContext.HttpContext)">
+

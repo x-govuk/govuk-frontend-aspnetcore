@@ -73,7 +73,7 @@
 
     string GetStaticAssetUrl(string path)
     {
-        var assetPath = ViewData[ViewDataKeys.AssetPath] as PathString? ?? PageTemplateHelper.DefaultAssetsPath;
+        var assetPath = ViewData[ViewDataKeys.AssetPath] as PathString? ?? PageTemplateHelper.AssetsPath;
         var fullPath = assetPath + "/" + path;
         return PageTemplateHelper.ResolveContentUrl(ViewContext.HttpContext, fullPath);
     }

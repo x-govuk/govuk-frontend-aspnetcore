@@ -1,7 +1,4 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore;
 
@@ -15,57 +12,17 @@ internal class VersionedAssetMiddleware : IMiddleware
     private readonly PathString? _stylesheetPath;
     private readonly PathString? _javascriptPath;
 
-    public VersionedAssetMiddleware(
-        IWebHostEnvironment environment,
-        IOptions<GovUkFrontendOptions> optionsAccessor)
+    // Only the files the build actually restored are marked immutable. A file the project manages itself
+    // can sit at the same URL and change without the govuk-frontend version changing, so it must not pick
+    // up a year-long cache just because the request happens to carry a matching version.
+    public VersionedAssetMiddleware(GovUkFrontendPaths paths)
     {
-        ArgumentNullException.ThrowIfNull(environment);
-        ArgumentNullException.ThrowIfNull(optionsAccessor);
+        ArgumentNullException.ThrowIfNull(paths);
 
-        if (!environment.WebRootPath.StartsWith(environment.ContentRootPath, StringComparison.Ordinal))
-        {
-            return;
-        }
-
-        var relativeWebRoot = NormalizeSeparators(Path.GetRelativePath(environment.ContentRootPath, environment.WebRootPath));
-
-        var buildInfo = optionsAccessor.Value.BuildInfo;
-
-        Debug.Assert(buildInfo?.EnableGovUkFrontendSupport is true);
-
-        if (GetPathUnderWebRoot(buildInfo?.GovUkFrontendAssetsDirectory) is { } assetDirectory)
-        {
-            _staticAssetsDirectory = assetDirectory;
-        }
-
-        if (GetPathUnderWebRoot(buildInfo?.GovUkFrontendJavaScriptDirectory) is { } jsDirectory)
-        {
-            _javascriptPath = jsDirectory + "/" + PageTemplateHelper.JavascriptFileName;
-        }
-
-        if (GetPathUnderWebRoot(buildInfo?.GovUkFrontendStylesheetDirectory) is { } cssDirectory)
-        {
-            _stylesheetPath = cssDirectory + "/" + PageTemplateHelper.StylesheetFileName;
-        }
-
-        // The directories come from MSBuild properties so they use whichever separator the project author
-        // wrote (the defaults use '\'); PathString only accepts '/'.
-        string? GetPathUnderWebRoot(string? directory)
-        {
-            if (directory is null)
-            {
-                return null;
-            }
-
-            var normalized = NormalizeSeparators(directory);
-
-            return normalized.StartsWith(relativeWebRoot, StringComparison.Ordinal)
-                ? normalized[relativeWebRoot.Length..].TrimEnd('/')
-                : null;
-        }
+        _staticAssetsDirectory = paths.Assets is { } assets ? new PathString(assets) : null;
+        _javascriptPath = paths.RestoredJavaScriptFile is { } javaScript ? new PathString(javaScript) : null;
+        _stylesheetPath = paths.RestoredStylesheetFile is { } stylesheet ? new PathString(stylesheet) : null;
     }
-
-    private static string NormalizeSeparators(string path) => path.Replace('\\', '/');
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {

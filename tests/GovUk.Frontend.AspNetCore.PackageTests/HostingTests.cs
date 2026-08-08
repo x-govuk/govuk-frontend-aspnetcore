@@ -1,4 +1,6 @@
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using GovUk.Frontend.AspNetCore.PackageTests.Infrastructure;
 
@@ -128,6 +130,25 @@ public partial class HostingTests(DefaultConfigurationAppFixture fixture, Packag
         }
     }
 
+    /// <summary>
+    /// The init script embeds the URL of the JavaScript file, so the CSP hash and the emitted script have
+    /// to be built from the same URL. A page whose hash doesn't cover its own script is one that a strict
+    /// Content-Security-Policy would block.
+    /// </summary>
+    [Theory]
+    [MemberData(nameof(TargetFrameworks))]
+    public async Task TheCspHashesCoverTheScriptThePageActuallyEmitted(string targetFramework)
+    {
+        await using var app = await fixture.StartAsync(targetFramework);
+
+        var page = await HostedPage.GetAsync(app);
+
+        Assert.Contains(Sha256CspHash(page.InlineInitScript), page.CspScriptHashes, StringComparison.Ordinal);
+    }
+
+    internal static string Sha256CspHash(string value) =>
+        $"'sha256-{Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(value)))}'";
+
     private static IEnumerable<string> RestoredFilePaths() =>
     [
         "/govuk-frontend.min.css",
@@ -215,39 +236,56 @@ public class CustomDirectoryHostingTests(CustomDirectoryAppFixture fixture, Pack
     }
 
     /// <summary>
-    /// Pins a known gap: <c>PageTemplateHelper</c> builds its URLs from the file names alone and never
-    /// consults the directories in the build info, so moving the stylesheet or the script leaves the page
-    /// template pointing at a URL that isn't there. Callers have to pass a <c>pathBase</c> themselves.
+    /// The page template has to follow the directories the build restored into, or a project that moves
+    /// them gets a page pointing at URLs that aren't there.
     /// </summary>
     [Theory]
     [MemberData(nameof(TargetFrameworks))]
-    public async Task ThePageTemplateStillAdvertisesTheDefaultUrls(string targetFramework)
+    public async Task ThePageTemplateAdvertisesTheCustomDirectoryUrlsAndTheyAreServed(string targetFramework)
     {
         await using var app = await fixture.StartAsync(targetFramework);
 
         var page = await HostedPage.GetAsync(app);
 
-        Assert.StartsWith("/govuk-frontend.min.css", page.Stylesheet, StringComparison.Ordinal);
-        Assert.StartsWith("/govuk-frontend.min.js", page.Script, StringComparison.Ordinal);
+        Assert.StartsWith("/govuk/govuk-frontend.min", page.Stylesheet, StringComparison.Ordinal);
+        Assert.StartsWith("/govuk/govuk-frontend.min", page.Script, StringComparison.Ordinal);
+        Assert.StartsWith("/govuk/assets/", page.FavIcon, StringComparison.Ordinal);
+        Assert.StartsWith("/govuk/assets/", page.Manifest, StringComparison.Ordinal);
 
-        using var stylesheet = await app.Client.GetAsync(page.Stylesheet);
-        Assert.Equal(HttpStatusCode.NotFound, stylesheet.StatusCode);
+        await HostingTests.AssertServedAsync(app, page.Stylesheet, "text/css");
+        await HostingTests.AssertServedAsync(app, page.Script, "text/javascript");
+        await HostingTests.AssertServedAsync(app, page.FavIcon, expectedContentType: null);
+        await HostingTests.AssertServedAsync(app, page.Manifest, expectedContentType: null);
     }
 
     /// <summary>
-    /// The assets path is configurable through view data, so the head icons can be pointed at the moved
-    /// directory even though the stylesheet and script can't.
+    /// Where it matters most: the init script embeds the JavaScript URL, so if only one of the hash and
+    /// the script picked up the custom directory they'd disagree.
     /// </summary>
     [Theory]
     [MemberData(nameof(TargetFrameworks))]
-    public async Task TheHeadIconsFollowTheConfiguredAssetPath(string targetFramework)
+    public async Task TheCspHashesCoverTheScriptThePageActuallyEmitted(string targetFramework)
     {
         await using var app = await fixture.StartAsync(targetFramework);
 
-        var page = await HostedPage.GetAsync(app, "/?assetPath=/govuk/assets");
+        var page = await HostedPage.GetAsync(app);
 
-        Assert.StartsWith("/govuk/assets/", page.FavIcon, StringComparison.Ordinal);
+        Assert.Contains("/govuk/govuk-frontend.min", page.InlineInitScript, StringComparison.Ordinal);
+        Assert.Contains(HostingTests.Sha256CspHash(page.InlineInitScript), page.CspScriptHashes, StringComparison.Ordinal);
+    }
 
-        await HostingTests.AssertServedAsync(app, page.FavIcon, expectedContentType: null);
+    /// <summary>
+    /// A view can still point the head icons somewhere else, which is what the assets path view data key
+    /// is for.
+    /// </summary>
+    [Theory]
+    [MemberData(nameof(TargetFrameworks))]
+    public async Task TheHeadIconsFollowTheAssetPathViewDataKeyWhenItIsSet(string targetFramework)
+    {
+        await using var app = await fixture.StartAsync(targetFramework);
+
+        var page = await HostedPage.GetAsync(app, "/?assetPath=/somewhere-else");
+
+        Assert.StartsWith("/somewhere-else/", page.FavIcon, StringComparison.Ordinal);
     }
 }

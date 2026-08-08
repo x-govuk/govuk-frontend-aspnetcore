@@ -3,6 +3,7 @@ using GovUk.Frontend.AspNetCore.Localization;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,7 +51,12 @@ public static class GovUkFrontendExtensions
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
         services.AddSingleton<IConfigureOptions<GovUkFrontendOptions>, ConfigureGovUkFrontendOptions>();
-        services.AddTransient<PageTemplateHelper>();
+        // Resolved through IWebHostEnvironment, which a non-web host won't have; such a host has nothing
+        // to serve the files from either, so the defaults are the right answer there.
+        services.TryAddSingleton(sp => GovUkFrontendPaths.Create(
+            sp.GetService<IWebHostEnvironment>(),
+            sp.GetRequiredService<IOptions<GovUkFrontendOptions>>().Value.BuildInfo));
+        services.AddTransient(sp => new PageTemplateHelper(sp.GetRequiredService<GovUkFrontendPaths>()));
         services.AddSingleton<ITagHelperInitializer<ButtonTagHelper>, ButtonTagHelperInitializer>();
         services.AddSingleton<ITagHelperInitializer<FileUploadTagHelper>, FileUploadTagHelperInitializer>();
         services.AddHttpContextAccessor();

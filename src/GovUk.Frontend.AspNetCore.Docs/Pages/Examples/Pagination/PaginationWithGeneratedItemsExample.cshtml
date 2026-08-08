@@ -1,0 +1,5 @@
+@page
+
+<example>
+    <govuk-pagination current-page="7" total-pages="42" generate-page-href="@(page => Url.Action("Index", "Home", new { pageNumber = page })!)" />
+</example>

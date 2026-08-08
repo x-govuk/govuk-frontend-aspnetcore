@@ -26,9 +26,6 @@ public class GovUkFrontendOptions
 
         ErrorSummaryGeneration = ErrorSummaryGenerationOptions.PrependToMainElement;
         PrependErrorToTitle = true;
-        FrontendPackageHostingOptions = FrontendPackageHostingOptions.HostAssets |
-            FrontendPackageHostingOptions.HostCompiledFiles |
-            FrontendPackageHostingOptions.RemoveSourceMapReferences;
     }
 
     /// <summary>
@@ -46,9 +43,6 @@ public class GovUkFrontendOptions
     /// The default is <c>true</c>.
     /// </remarks>
     public bool AddNovalidateAttributeToForms { get; set; }
-
-    /// <inheritdoc cref="AspNetCore.FrontendPackageHostingOptions"/>
-    public FrontendPackageHostingOptions FrontendPackageHostingOptions { get; set; }
 
     /// <summary>
     /// The default value for <see cref="ButtonTagHelper.PreventDoubleClick"/>.

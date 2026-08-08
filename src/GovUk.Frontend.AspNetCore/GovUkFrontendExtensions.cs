@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
@@ -147,38 +146,6 @@ public static class GovUkFrontendExtensions
         if (options.BuildInfo?.EnableGovUkFrontendSupport is true)
         {
             app.UseMiddleware<VersionedAssetMiddleware>();
-        }
-
-        if (options.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostAssets))
-        {
-            var fileProvider = new ManifestEmbeddedFileProvider(
-                typeof(GovUkFrontendExtensions).Assembly,
-                root: "Content/Assets");
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = fileProvider,
-                RequestPath = PageTemplateHelper.DefaultAssetsPath,
-                OnPrepareResponse = ctx =>
-                {
-                    var hasVersionQueryParam =
-                        ctx.Context.Request.Query[HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName].Count != 0;
-
-                    if (hasVersionQueryParam)
-                    {
-                        ctx.Context.Response.Headers.CacheControl = "Cache-Control: public, max-age=31536000, immutable";
-                    }
-                }
-            });
-        }
-
-        if (options.FrontendPackageHostingOptions.HasFlag(FrontendPackageHostingOptions.HostCompiledFiles))
-        {
-            var fileProvider = new ManifestEmbeddedFileProvider(
-                typeof(GovUkFrontendExtensions).Assembly,
-                root: "Content/Compiled");
-
-            app.UseMiddleware<HostCompiledAssetsMiddleware>(fileProvider);
         }
 
         return app;

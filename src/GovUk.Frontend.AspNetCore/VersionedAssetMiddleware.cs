@@ -7,6 +7,8 @@ namespace GovUk.Frontend.AspNetCore;
 
 internal class VersionedAssetMiddleware : IMiddleware
 {
+    internal const string StaticAssetVersionQueryParamName = "v";
+
     private const string CacheControlHeaderValue = "public, max-age=31536000, immutable";
 
     private readonly PathString? _staticAssetsDirectory;
@@ -54,7 +56,7 @@ internal class VersionedAssetMiddleware : IMiddleware
     {
         var expectedVersion = GovUkFrontendInfo.Version;
 
-        if (context.Request.Query[HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName] == expectedVersion)
+        if (context.Request.Query[StaticAssetVersionQueryParamName] == expectedVersion)
         {
             context.Response.OnStarting(() =>
             {

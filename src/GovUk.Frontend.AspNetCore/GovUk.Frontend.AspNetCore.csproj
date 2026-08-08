@@ -17,7 +17,6 @@
     <MinVerMinimumMajorMinor>4.0</MinVerMinimumMajorMinor>
     <MinVerDefaultPreReleaseIdentifiers>pre.0</MinVerDefaultPreReleaseIdentifiers>
     <MinVerBuildMetadata Condition="'$(GITHUB_ACTIONS)' != 'true'">$([System.DateTimeOffset]::Now.ToUnixTimeSeconds())</MinVerBuildMetadata>
-    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -31,13 +30,6 @@
     <NoWarn>$(NoWarn);CA1859</NoWarn>
     <SassCompilerEnableWatcher>false</SassCompilerEnableWatcher>
   </PropertyGroup>
-
-  <!-- https://github.com/dotnet/aspnetcore/issues/63719 -->
-  <Target Name="_DontPruneFileProvidersEmbedded" AfterTargets="AddPrunePackageReferences">
-    <ItemGroup>
-      <PrunePackageReference Remove="Microsoft.Extensions.FileProviders.Embedded" />
-    </ItemGroup>
-  </Target>
 
   <Target Name="InstallGovUkFrontendPackage" Condition="!Exists('$(GovUkFrontendLibrary)')">
     <Message Text="Restoring govuk-frontend@$(GovUkFrontendVersion)" />
@@ -123,36 +115,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.*" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="9.0.*" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="10.0.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.css" Visible="false">
-      <LinkedName>govuk-frontend.min.css</LinkedName>
-    </_CompiledAssets>
-    <_CompiledAssets Include="$(GovUkFrontendLibrary)govuk-frontend.min.js" Visible="false">
-      <LinkedName>govuk-frontend.min.js</LinkedName>
-    </_CompiledAssets>
-
-    <EmbeddedResource Include="$(GovUkFrontendLibrary)assets\**\*">
-      <Link>Content/Assets/%(RecursiveDir)%(Filename)%(Extension)</Link>
-      <LogicalName>Content/Assets/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="@(_CompiledAssets)">
-      <Link>Content/Compiled/%(LinkedName)</Link>
-      <LogicalName>Content/Compiled/%(LinkedName)</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

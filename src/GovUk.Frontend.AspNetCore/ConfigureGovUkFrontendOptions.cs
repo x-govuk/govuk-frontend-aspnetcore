@@ -21,10 +21,5 @@ internal class ConfigureGovUkFrontendOptions(ApplicationPartManager applicationP
 
         var buildInfo = buildInfoAttributes.Single()!;
         options.BuildInfo = buildInfo;
-
-        if (buildInfo.EnableGovUkFrontendSupport)
-        {
-            options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.None;
-        }
     }
 }

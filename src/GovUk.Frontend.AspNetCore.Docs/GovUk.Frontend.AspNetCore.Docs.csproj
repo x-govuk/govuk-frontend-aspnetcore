@@ -6,6 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <Import Project="..\GovUk.Frontend.AspNetCore\Package\buildTransitive\GovUk.Frontend.AspNetCore.props" />
+  <Import Project="..\GovUk.Frontend.AspNetCore\Package\buildTransitive\GovUk.Frontend.AspNetCore.targets" />
+
   <ItemGroup>
     <AssemblyMetadata Include="DocsBase" Value="docs" />
     <AssemblyMetadata Include="RepoRoot" Value="$(RepoRoot)" />

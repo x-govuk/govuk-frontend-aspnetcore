@@ -5,6 +5,47 @@
              Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' != ''" />
   </Target>
 
+  <!-- These live here rather than in a props file so that they can see what the project asked for. NuGet
+       imports a package's props before the project body is evaluated, so a property set in the body -
+       which is where a consumer naturally sets one - is still empty at that point. Anything derived from
+       one there silently reads an empty value, and a default applied there makes it impossible to tell
+       afterwards whether the property was set at all.
+
+       The derivations therefore have to come before the defaults they feed into: once
+       RestoreGovUkFrontendAssets has defaulted to true, there is no way to distinguish that from the
+       project having asked for it. -->
+  <PropertyGroup>
+    <!-- Backward compatibility - CopyGovUkFrontendAssetsToWebRoot -->
+    <RestoreGovUkFrontendAssets Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' == 'false' And '$(RestoreGovUkFrontendAssets)' == ''">false</RestoreGovUkFrontendAssets>
+
+    <!-- Backward compatibility - assign EnableGovUkFrontendSupport if RestoreGovUkFrontendNpmPackage or CopyGovUkFrontendAssetsToWebRoot are set -->
+    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == '' And ('$(RestoreGovUkFrontendNpmPackage)' == 'true' Or '$(CopyGovUkFrontendAssetsToWebRoot)' == 'true')">true</EnableGovUkFrontendSupport>
+
+    <RestoreGovUkFrontendSupportPackage Condition="'$(RestoreGovUkFrontendSupportPackage)' == '' And '$(GovUkFrontendSupportPackageDirectory)' != ''">true</RestoreGovUkFrontendSupportPackage>
+
+    <!-- Defaults -->
+    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == '' And '$(UsingMicrosoftNETSdkWeb)' == 'true'">true</EnableGovUkFrontendSupport>
+    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == ''">false</EnableGovUkFrontendSupport>
+
+    <!-- The directory defaults use '/', which MSBuild accepts on every platform. A '\' would reach the
+         GovUkFrontendBuildInfoAttribute as-is on Windows, where it becomes an escape sequence in the
+         generated C# string literal. -->
+    <RestoreGovUkFrontendNpmPackage Condition="'$(RestoreGovUkFrontendNpmPackage)' == ''">false</RestoreGovUkFrontendNpmPackage>
+    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == ''">lib/govuk-frontend</GovUkFrontendNpmPackageDirectory>
+
+    <RestoreGovUkFrontendAssets Condition="'$(RestoreGovUkFrontendAssets)' == ''">true</RestoreGovUkFrontendAssets>
+    <GovUkFrontendAssetsDirectory Condition="'$(GovUkFrontendAssetsDirectory)' == ''">wwwroot/assets</GovUkFrontendAssetsDirectory>
+
+    <RestoreGovUkFrontendJavascript Condition="'$(RestoreGovUkFrontendJavascript)' == ''">true</RestoreGovUkFrontendJavascript>
+    <GovUkFrontendJavaScriptDirectory Condition="'$(GovUkFrontendJavaScriptDirectory)' == ''">wwwroot</GovUkFrontendJavaScriptDirectory>
+
+    <RestoreGovUkFrontendStylesheet Condition="'$(RestoreGovUkFrontendStylesheet)' == ''">true</RestoreGovUkFrontendStylesheet>
+    <GovUkFrontendStylesheetDirectory Condition="'$(GovUkFrontendStylesheetDirectory)' == ''">wwwroot</GovUkFrontendStylesheetDirectory>
+
+    <RestoreGovUkFrontendSupportPackage Condition="'$(RestoreGovUkFrontendSupportPackage)' == ''">false</RestoreGovUkFrontendSupportPackage>
+    <GovUkFrontendSupportPackageDirectory Condition="'$(GovUkFrontendSupportPackageDirectory)' == ''">lib/govuk-frontend-aspnetcore</GovUkFrontendSupportPackageDirectory>
+  </PropertyGroup>
+
   <PropertyGroup>
     <!-- Where the package's content lives. Overridable so that projects inside this repo, where the
          npm content is only projected into content\govuk-frontend\ at pack time, can point at the

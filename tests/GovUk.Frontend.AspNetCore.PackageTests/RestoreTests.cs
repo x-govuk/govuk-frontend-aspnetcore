@@ -292,24 +292,43 @@ public class RestoreTests(PackageTestContext context)
     }
 
     /// <summary>
-    /// Pins a known bug: <c>CopyGovUkFrontendAssetsToWebRoot</c> has no effect when it's set where a
-    /// consumer would naturally set it.
+    /// The project body is where a consumer naturally sets a property, so the backward-compatibility
+    /// shim has to work from there and not just from a <c>Directory.Build.props</c>.
     /// </summary>
-    /// <remarks>
-    /// The backward-compatibility shim that maps it onto <c>RestoreGovUkFrontendAssets</c> lives in the
-    /// package's props file, which MSBuild evaluates before the project body, so it only ever sees an
-    /// empty value. The deprecation warning still fires because that lives in the targets file, which is
-    /// evaluated afterwards — so the build tells you the property is deprecated while silently ignoring
-    /// it. See <see cref="WithDeprecatedCopyAssetsPropertySetToFalseInDirectoryBuildProps_DoesNotRestoreAssets"/>
-    /// for the placement where it does work.
-    /// </remarks>
     [Fact]
-    public async Task WithDeprecatedCopyAssetsPropertySetToFalseInProjectBody_StillRestoresAssets()
+    public async Task WithDeprecatedCopyAssetsPropertySetToFalseInProjectBody_DoesNotRestoreAssets()
     {
         var project = FixtureProject.CreateWebApp(
             context,
-            nameof(WithDeprecatedCopyAssetsPropertySetToFalseInProjectBody_StillRestoresAssets),
+            nameof(WithDeprecatedCopyAssetsPropertySetToFalseInProjectBody_DoesNotRestoreAssets),
             new Dictionary<string, string>() { ["CopyGovUkFrontendAssetsToWebRoot"] = "false" });
+
+        var result = await project.BuildAsync();
+
+        result.AssertSucceeded();
+        result.AssertHasWarning(DeprecationWarning);
+
+        project.AssertDirectoryIsEmptyOrMissing("wwwroot/assets");
+
+        // The old property only ever controlled the assets.
+        project.AssertFileExists("wwwroot/govuk-frontend.min.js");
+        project.AssertFileExists("wwwroot/govuk-frontend.min.css");
+    }
+
+    /// <summary>
+    /// The new property wins when both are set, rather than the shim overriding it.
+    /// </summary>
+    [Fact]
+    public async Task WithDeprecatedCopyAssetsPropertyContradictingTheNewOne_TheNewOneWins()
+    {
+        var project = FixtureProject.CreateWebApp(
+            context,
+            nameof(WithDeprecatedCopyAssetsPropertyContradictingTheNewOne_TheNewOneWins),
+            new Dictionary<string, string>()
+            {
+                ["CopyGovUkFrontendAssetsToWebRoot"] = "false",
+                ["RestoreGovUkFrontendAssets"] = "true"
+            });
 
         var result = await project.BuildAsync();
 
@@ -340,22 +359,21 @@ public class RestoreTests(PackageTestContext context)
     }
 
     /// <summary>
-    /// Pins the same evaluation-order bug for the other two properties the props file derives from
-    /// user-set values: setting a support package directory is documented to imply
-    /// <c>RestoreGovUkFrontendSupportPackage</c>, and either opt-in is documented to imply
-    /// <c>EnableGovUkFrontendSupport</c>, but neither is visible to the props file from the project body.
+    /// The other two derivations: setting a support package directory implies
+    /// <c>RestoreGovUkFrontendSupportPackage</c>, and either opt-in implies
+    /// <c>EnableGovUkFrontendSupport</c>. Both have to work from the project body.
     /// </summary>
     [Fact]
-    public async Task WithDerivedPropertiesSetInProjectBody_TheDerivationDoesNotHappen()
+    public async Task WithDerivedPropertiesSetInProjectBody_TheDerivationHappens()
     {
         var project = FixtureProject.CreateClassLibrary(
             context,
-            nameof(WithDerivedPropertiesSetInProjectBody_TheDerivationDoesNotHappen),
+            nameof(WithDerivedPropertiesSetInProjectBody_TheDerivationHappens),
             new Dictionary<string, string>()
             {
-                // Documented to imply EnableGovUkFrontendSupport.
+                // Implies EnableGovUkFrontendSupport.
                 ["RestoreGovUkFrontendNpmPackage"] = "true",
-                // Documented to imply RestoreGovUkFrontendSupportPackage.
+                // Implies RestoreGovUkFrontendSupportPackage.
                 ["GovUkFrontendSupportPackageDirectory"] = "vendor/support"
             });
 
@@ -363,15 +381,15 @@ public class RestoreTests(PackageTestContext context)
 
         result.AssertSucceeded();
 
-        project.AssertDirectoryIsEmptyOrMissing("lib");
-        project.AssertDirectoryIsEmptyOrMissing("vendor");
+        project.AssertFileExists("lib/govuk-frontend/govuk-frontend.min.js");
+        project.AssertFileExists("vendor/support/index.scss");
 
         AssertBuildInfoForEveryTargetFramework(
             project,
-            enableSupport: false,
-            assetsDirectory: null,
-            javaScriptDirectory: null,
-            stylesheetDirectory: null);
+            enableSupport: true,
+            assetsDirectory: "wwwroot/assets",
+            javaScriptDirectory: "wwwroot",
+            stylesheetDirectory: "wwwroot");
     }
 
     [Fact]

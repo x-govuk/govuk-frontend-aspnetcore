@@ -7,14 +7,15 @@
   </PropertyGroup>
 
   <!-- A ProjectReference doesn't flow buildTransitive assets, so import them directly to get the same
-       build-time asset restore that package consumers get. -->
+       build-time asset restore that package consumers get. Importing here rather than at the top of the
+       file matters: the targets resolve the public properties themselves, and anything set below an
+       import isn't visible to it. -->
   <PropertyGroup>
     <!-- In the repo the npm content only lands under Package\content\govuk-frontend\ at pack time, via
          Link metadata; on disk it lives in lib\govuk-frontend-$(GovUkFrontendVersion)\dist\govuk\. -->
     <_GovUkFrontendNpmContentDirectory>$(GovUkFrontendLibrary)</_GovUkFrontendNpmContentDirectory>
   </PropertyGroup>
 
-  <Import Project="..\GovUk.Frontend.AspNetCore\Package\buildTransitive\GovUk.Frontend.AspNetCore.props" />
   <Import Project="..\GovUk.Frontend.AspNetCore\Package\buildTransitive\GovUk.Frontend.AspNetCore.targets" />
 
   <!-- Those targets restore the assets from an InitialTarget, i.e. before the ProjectReference below is

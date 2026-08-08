@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- These tests drive the SDK as a child process, so the host only needs one TFM; the frameworks
+         under test are a property of the generated fixture projects. -->
+    <TargetFramework>net10.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>xUnit1051</NoWarn>
+
+    <PackageTestFeed>$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', 'obj', 'test-feed'))</PackageTestFeed>
+    <PackageTestPackages>$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', 'obj', 'test-packages'))</PackageTestPackages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.5.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3" Version="3.1.0" />
+  </ItemGroup>
+
+  <!-- Deliberately no ProjectReference to the library: these tests must only ever see it through the
+       package, since the packed layout is half of what's under test. -->
+
+  <!-- The fixture sources are copied into generated projects at test time; they're data here, not part
+       of this assembly. -->
+  <ItemGroup>
+    <Compile Remove="Fixtures\**" />
+    <None Remove="Fixtures\**" />
+    <Content Include="Fixtures\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- The tests build throwaway projects against a real nupkg, so one has to exist before they run.
+       MinVer gives every local pack a distinct version, hence the wipe. -->
+  <Target Name="PackLibraryUnderTest" BeforeTargets="Build" Condition="'$(SkipPackLibraryUnderTest)' != 'true'">
+    <!-- The extracted copy goes too, so a repeated version number can't leave a stale package behind for
+         the fixture projects to restore. -->
+    <RemoveDir Directories="$(PackageTestFeed);$(PackageTestPackages)govuk.frontend.aspnetcore" />
+
+    <MSBuild Projects="$(RepoRoot)src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj"
+             Targets="Pack"
+             Properties="Configuration=$(Configuration);PackageOutputPath=$(PackageTestFeed)" />
+  </Target>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="PackageTestFeed" Value="$(PackageTestFeed)" />
+    <AssemblyMetadata Include="RepoRoot" Value="$(RepoRoot)" />
+  </ItemGroup>
+
+</Project>

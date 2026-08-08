@@ -1,0 +1,18 @@
+@page
+@using Microsoft.AspNetCore.Http
+@using static GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants
+@{
+    // The library's own page template, so the URLs under test are the ones a real consumer's pages
+    // would emit: the stylesheet, the script imports and the head icons that live under the assets
+    // directory.
+    Layout = "_GovUkPageTemplate";
+    ViewData[ViewDataKeys.Title] = "Package test app";
+
+    // Lets a test point the head icons at a non-default assets directory.
+    if (Request.Query["assetPath"] is [{ } assetPath, ..])
+    {
+        ViewData[ViewDataKeys.AssetPath] = new PathString(assetPath);
+    }
+}
+
+<p class="govuk-body">Package test app</p>

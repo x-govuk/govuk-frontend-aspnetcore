@@ -10,6 +10,7 @@
     <RestoreGovUkFrontendSupportPackage Condition="'$(RestoreGovUkFrontendSupportPackage)' == '' And '$(GovUkFrontendSupportPackageDirectory)' != ''">true</RestoreGovUkFrontendSupportPackage>
 
     <!-- Defaults -->
+    <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == '' And '$(UsingMicrosoftNETSdkWeb)' == 'true'">true</EnableGovUkFrontendSupport>
     <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == ''">false</EnableGovUkFrontendSupport>
 
     <RestoreGovUkFrontendNpmPackage Condition="'$(RestoreGovUkFrontendNpmPackage)' == ''">false</RestoreGovUkFrontendNpmPackage>

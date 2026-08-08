@@ -1,10 +1,40 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web" InitialTargets="BuildGovUkFrontendLibrary">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <!-- A ProjectReference doesn't flow buildTransitive assets, so import them directly to get the same
+       build-time asset restore that package consumers get. -->
+  <PropertyGroup>
+    <!-- In the repo the npm content only lands under Package\content\govuk-frontend\ at pack time, via
+         Link metadata; on disk it lives in lib\govuk-frontend-$(GovUkFrontendVersion)\dist\govuk\. -->
+    <_GovUkFrontendNpmContentDirectory>$(GovUkFrontendLibrary)</_GovUkFrontendNpmContentDirectory>
+  </PropertyGroup>
+
+  <Import Project="..\GovUk.Frontend.AspNetCore\Package\buildTransitive\GovUk.Frontend.AspNetCore.props" />
+  <Import Project="..\GovUk.Frontend.AspNetCore\Package\buildTransitive\GovUk.Frontend.AspNetCore.targets" />
+
+  <!-- Those targets restore the assets from an InitialTarget, i.e. before the ProjectReference below is
+       built, but the files they copy are the library's build outputs (the libman-restored npm package and
+       the compiled stylesheet). Build it first so they exist on a clean checkout. Skipped during restore,
+       where the SDK injects EnableDefaultCompileItems=false as a global property that we'd inherit and
+       compile the library with no source files. -->
+  <Target Name="BuildGovUkFrontendLibrary" Condition="'$(MSBuildRestoreSessionId)' == ''">
+    <MSBuild Projects="..\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj"
+             Targets="Build"
+             Properties="TargetFramework=$(TargetFramework)">
+      <Output TaskParameter="TargetOutputs" ItemName="_GovUkFrontendLibraryOutput" />
+    </MSBuild>
+
+    <!-- TagHelperApiProvider reads the XML documentation with a relative path, and 'dotnet run' uses the
+         project directory as the working directory. -->
+    <Copy SourceFiles="@(_GovUkFrontendLibraryOutput->'%(RootDir)%(Directory)%(Filename).xml')"
+          DestinationFolder="$(MSBuildProjectDirectory)"
+          SkipUnchangedFiles="true" />
+  </Target>
 
   <ItemGroup>
     <AssemblyMetadata Include="DocsBase" Value="docs" />

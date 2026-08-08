@@ -336,3 +336,8 @@ lib
 packages
 src/GovUk.Frontend.AspNetCore/govuk-frontend-version.txt
 src/GovUk.Frontend.AspNetCore.Docs/GovUk.Frontend.AspNetCore.xml
+
+# Restored into the docs app's web root at build time by the package's targets
+src/GovUk.Frontend.AspNetCore.Docs/wwwroot/assets/
+src/GovUk.Frontend.AspNetCore.Docs/wwwroot/govuk-frontend.min.css
+src/GovUk.Frontend.AspNetCore.Docs/wwwroot/govuk-frontend.min.js

@@ -7,6 +7,8 @@ namespace GovUk.Frontend.AspNetCore;
 
 internal class VersionedAssetMiddleware : IMiddleware
 {
+    internal const string StaticAssetVersionQueryParamName = "v";
+
     private const string CacheControlHeaderValue = "public, max-age=31536000, immutable";
 
     private readonly PathString? _staticAssetsDirectory;
@@ -25,36 +27,51 @@ internal class VersionedAssetMiddleware : IMiddleware
             return;
         }
 
-        var relativeWebRoot = Path.GetRelativePath(environment.ContentRootPath, environment.WebRootPath);
+        var relativeWebRoot = NormalizeSeparators(Path.GetRelativePath(environment.ContentRootPath, environment.WebRootPath));
 
         var buildInfo = optionsAccessor.Value.BuildInfo;
 
         Debug.Assert(buildInfo?.EnableGovUkFrontendSupport is true);
 
-        if (buildInfo?.GovUkFrontendAssetsDirectory is { } assetDirectory &&
-            assetDirectory.StartsWith(relativeWebRoot, StringComparison.Ordinal))
+        if (GetPathUnderWebRoot(buildInfo?.GovUkFrontendAssetsDirectory) is { } assetDirectory)
         {
-            _staticAssetsDirectory = assetDirectory[relativeWebRoot.Length..];
+            _staticAssetsDirectory = assetDirectory;
         }
 
-        if (buildInfo?.GovUkFrontendJavaScriptDirectory is { } jsDirectory &&
-            jsDirectory.StartsWith(relativeWebRoot, StringComparison.Ordinal))
+        if (GetPathUnderWebRoot(buildInfo?.GovUkFrontendJavaScriptDirectory) is { } jsDirectory)
         {
-            _javascriptPath = jsDirectory[relativeWebRoot.Length..].TrimEnd('/') + "/" + PageTemplateHelper.JavascriptFileName;
+            _javascriptPath = jsDirectory + "/" + PageTemplateHelper.JavascriptFileName;
         }
 
-        if (buildInfo?.GovUkFrontendStylesheetDirectory is { } cssDirectory &&
-            cssDirectory.StartsWith(relativeWebRoot, StringComparison.Ordinal))
+        if (GetPathUnderWebRoot(buildInfo?.GovUkFrontendStylesheetDirectory) is { } cssDirectory)
         {
-            _stylesheetPath = cssDirectory[relativeWebRoot.Length..].TrimEnd('/') + "/" + PageTemplateHelper.StylesheetFileName;
+            _stylesheetPath = cssDirectory + "/" + PageTemplateHelper.StylesheetFileName;
+        }
+
+        // The directories come from MSBuild properties so they use whichever separator the project author
+        // wrote (the defaults use '\'); PathString only accepts '/'.
+        string? GetPathUnderWebRoot(string? directory)
+        {
+            if (directory is null)
+            {
+                return null;
+            }
+
+            var normalized = NormalizeSeparators(directory);
+
+            return normalized.StartsWith(relativeWebRoot, StringComparison.Ordinal)
+                ? normalized[relativeWebRoot.Length..].TrimEnd('/')
+                : null;
         }
     }
+
+    private static string NormalizeSeparators(string path) => path.Replace('\\', '/');
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         var expectedVersion = GovUkFrontendInfo.Version;
 
-        if (context.Request.Query[HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName] == expectedVersion)
+        if (context.Request.Query[StaticAssetVersionQueryParamName] == expectedVersion)
         {
             context.Response.OnStarting(() =>
             {

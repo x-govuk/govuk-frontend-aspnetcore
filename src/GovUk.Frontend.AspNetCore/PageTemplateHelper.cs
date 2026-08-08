@@ -307,7 +307,7 @@ public class PageTemplateHelper
     private static string GetVersionedUrl(string path) =>
         QueryHelpers.AddQueryString(
             path,
-            HostCompiledAssetsMiddleware.StaticAssetVersionQueryParamName,
+            VersionedAssetMiddleware.StaticAssetVersionQueryParamName,
             GovUkFrontendInfo.Version);
 
     private static string GetInitScriptContents(string scriptPath) =>

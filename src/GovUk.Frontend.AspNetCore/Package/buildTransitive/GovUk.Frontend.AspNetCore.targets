@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="_WarnOnDeprecatedGovUkProperties;RestoreGovUkFrontend">
-  <!-- NuGet excludes package imports from restore, so for a PackageReference this runs once regardless.
-       A project that imports these targets directly gets no such exclusion: InitialTargets then run for
-       every project instance, and a single 'dotnet build' raises the warning three times. -->
-  <Target Name="_WarnOnDeprecatedGovUkProperties" Condition="'$(MSBuildRestoreSessionId)' == ''">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="_WarnOnDeprecatedGovUkProperties">
     <Warning Text="The CopyGovUkFrontendAssetsToWebRoot property is deprecated; use RestoreGovUkFrontendAssets instead."
              Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' != ''" />
   </Target>
@@ -23,9 +20,10 @@
     <_ShouldRestoreNpmPackage Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendNpmPackage)' == 'true'">true</_ShouldRestoreNpmPackage>
     <_ShouldRestoreSupportLib Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendSupportPackage)' == 'true'">true</_ShouldRestoreSupportLib>
 
-    <!-- Whether this invocation is one where copying files makes sense. Restore has no use for them, and
-         the restore-only global properties it runs under make any work done there suspect. -->
-    <_CanCopyGovUkFrontendFiles Condition="'$(MSBuildRestoreSessionId)' == ''">true</_CanCopyGovUkFrontendFiles>
+    <!-- Whether this invocation is one where copying files makes sense. The IDE runs design-time builds on
+         project load and after edits, and writing into the project directory from those means the IDE
+         churns files in the background. -->
+    <_CanCopyGovUkFrontendFiles Condition="'$(DesignTimeBuild)' != 'true'">true</_CanCopyGovUkFrontendFiles>
   </PropertyGroup>
 
   <!-- WriteCodeFragment emits a literal parameter into the generated C# verbatim, so anything that isn't
@@ -68,11 +66,20 @@
     </ItemGroup>
   </Target>
 
-  <!-- Each target carries its own condition rather than being invoked through CallTarget, which bypasses
+  <!-- Hooked to the build rather than run from InitialTargets, which fire for every target invocation on
+       the project — restore, clean, pack, test — not just builds.
+
+       The copied files have to be in @(Content) before anything consumes it. In a Web SDK project that is
+       ResolveProjectStaticWebAssets, which picks the wwwroot/** subset of @(Content) and is itself hooked
+       before AssignTargetPaths; elsewhere AssignTargetPaths is the first consumer. Naming both means the
+       ordering holds either way, and the target still runs for projects that aren't using the Web SDK.
+
+       Each target carries its own condition rather than being invoked through CallTarget, which bypasses
        the normal ordering and incrementality checks. Note that a target's DependsOnTargets are built
        before its own Condition is evaluated, so the guards cannot live on this target. -->
   <Target Name="RestoreGovUkFrontend"
-          DependsOnTargets="_RestoreAssets;_RestoreJs;_RestoreCss;_RestoreNpmPackage;_RestoreSupportLib" />
+          BeforeTargets="ResolveProjectStaticWebAssets;AssignTargetPaths"
+          DependsOnTargets="_WarnOnDeprecatedGovUkProperties;_RestoreAssets;_RestoreJs;_RestoreCss;_RestoreNpmPackage;_RestoreSupportLib" />
 
   <Target Name="_RestoreAssets"
           Condition="'$(_ShouldRestoreAssets)' == 'true' And '$(_CanCopyGovUkFrontendFiles)' == 'true'">

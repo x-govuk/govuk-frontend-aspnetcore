@@ -23,7 +23,10 @@ var app = builder.Build();
 
 app.UseDeveloperExceptionPage();
 
+// Must come before UseStaticFiles so that it can set cache headers on the versioned asset responses.
 app.UseGovUkFrontend();
+
+app.UseStaticFiles();
 
 app.UseRouting();
 

@@ -21,15 +21,37 @@ public class PageTemplateHelper
 
     private const string JsEnabledScript = "document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');";
 
+    private readonly GovUkFrontendPaths _paths;
+
+    /// <summary>
+    /// Creates a new <see cref="PageTemplateHelper"/> that generates URLs for the default locations.
+    /// </summary>
+    /// <remarks>
+    /// Resolve this from the service provider instead wherever possible; an instance created this way
+    /// has no way of knowing where the build restored the files to, so it always assumes the defaults.
+    /// </remarks>
+    public PageTemplateHelper() : this(GovUkFrontendPaths.None)
+    {
+    }
+
+    internal PageTemplateHelper(GovUkFrontendPaths paths)
+    {
+        ArgumentNullException.ThrowIfNull(paths);
+
+        _paths = paths;
+    }
+
     /// <summary>
     /// Gets the version of the GOV.UK Frontend library.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static string GovUkFrontendVersion => GovUkFrontendInfo.Version;
 
-    internal static PathString DefaultAssetsPath => new("/assets");
-
-    internal static PathString DefaultCompiledContentPath => new("");
+    /// <summary>
+    /// The directory the govuk-frontend assets are served from, which is where the page template's head
+    /// icons are resolved against unless a view overrides it.
+    /// </summary>
+    internal PathString AssetsPath => new(_paths.AssetsUrlPath);
 
     /// <summary>
     /// Generates the script that adds a <c>js-enabled</c> CSS class.
@@ -72,7 +94,7 @@ public class PageTemplateHelper
     /// <param name="cspNonce">The CSP nonce attribute to be added to the generated <c>script</c> tag.</param>
     /// <returns><see cref="IHtmlContent"/> containing the <c>script</c> tag.</returns>
     public IHtmlContent GenerateScriptImports(string? cspNonce = null) =>
-        GenerateScriptImports(pathBase: DefaultCompiledContentPath, cspNonce);
+        GenerateScriptImports(pathBase: _paths.JavaScriptUrlBase, cspNonce);
 
     /// <summary>
     /// Generates the script that adds a <c>js-enabled</c> CSS class.
@@ -123,7 +145,7 @@ public class PageTemplateHelper
     /// The contents of this property should be inserted in the <c>head</c> tag.
     /// </remarks>
     /// <returns><see cref="IHtmlContent"/> containing the <c>link</c> tags.</returns>
-    public IHtmlContent GenerateStyleImports() => GenerateStyleImports(pathBase: DefaultCompiledContentPath);
+    public IHtmlContent GenerateStyleImports() => GenerateStyleImports(pathBase: _paths.StylesheetUrlBase);
 
     /// <summary>
     /// Generates the HTML that imports the GOV.UK Frontend library styles.
@@ -159,7 +181,7 @@ public class PageTemplateHelper
     /// Gets all the CSP hashes for the inline scripts used in the page template.
     /// </summary>
     /// <returns>A list of hashes to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
-    public string GetCspScriptHashes() => GetCspScriptHashes(pathBase: "");
+    public string GetCspScriptHashes() => GetCspScriptHashes(pathBase: _paths.JavaScriptUrlBase);
 
     /// <summary>
     /// Gets all the CSP hashes for the inline scripts used in the page template.
@@ -185,7 +207,7 @@ public class PageTemplateHelper
     /// Gets the CSP hash for the GOV.UK Frontend initialization script.
     /// </summary>
     /// <returns>A hash to be included in your site's <c>Content-Security-Policy</c> header within the <c>script-src</c> directive.</returns>
-    public string GetInitScriptCspHash() => GetInitScriptCspHash(pathBase: "");
+    public string GetInitScriptCspHash() => GetInitScriptCspHash(pathBase: _paths.JavaScriptUrlBase);
 
     /// <summary>
     /// Gets the CSP hash for the GOV.UK Frontend initialization script.
@@ -207,7 +229,7 @@ public class PageTemplateHelper
     {
         ArgumentNullException.ThrowIfNull(httpContext);
 
-        var scriptPath = ResolveContentUrl(httpContext, JavascriptFileName);
+        var scriptPath = ResolveContentUrl(httpContext, _paths.JavaScriptUrlPath);
         return GenerateCspHash(GetInitScriptContents(scriptPath));
     }
 
@@ -228,7 +250,7 @@ public class PageTemplateHelper
     {
         ArgumentNullException.ThrowIfNull(httpContext);
 
-        return ResolveContentUrl(httpContext, JavascriptFileName);
+        return ResolveContentUrl(httpContext, _paths.JavaScriptUrlPath);
     }
 
     /// <summary>
@@ -248,7 +270,7 @@ public class PageTemplateHelper
     {
         ArgumentNullException.ThrowIfNull(httpContext);
 
-        return ResolveContentUrl(httpContext, StylesheetFileName);
+        return ResolveContentUrl(httpContext, _paths.StylesheetUrlPath);
     }
 
     internal string ResolveContentUrl(HttpContext httpContext, string path)

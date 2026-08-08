@@ -2,6 +2,8 @@
 
 ## Unreleased — 5.0.0
 
+`EnableGovUkFrontendSupport` is now on by default for projects using the `Microsoft.NET.Web.Sdk` SDK.
+
 `<govuk-pagination>` can generate its own items. Specify `current-page`, `total-pages` and `generate-page-href` instead of writing a child element per page:
 
 ```razor

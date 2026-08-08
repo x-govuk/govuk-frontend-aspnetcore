@@ -6,6 +6,14 @@
 
 ## Tag helpers
 
+### Example with generated items
+<img alt="Pagination with generated items example" src="../images/pagination-with-generated-items-example.png" />
+
+```razor
+<govuk-pagination current-page="7" total-pages="42" generate-page-href="@(page => Url.Action("Index", "Home", new { pageNumber = page })!)" />
+```
+
+
 ### Example
 <img alt="Pagination example" src="../images/pagination-example.png" />
 
@@ -55,7 +63,10 @@
 
 | Attribute | Type | Description |
 | --- | --- | --- |
+| `current-page` | `int?` | The current page. Specify this, `total-pages` and `generate-page-href` to have the items generated instead of specifying them with child elements. |
+| `generate-page-href` | `Func<int, string>` | A function that given a page number generates the `href` attribute for that page. Specify this, `current-page` and `total-pages` to have the items generated instead of specifying them with child elements. |
 | `landmark-label` | `string` | The label for the navigation landmark that wraps the pagination. The default is `results`. Cannot be `null` or empty. |
+| `total-pages` | `int?` | The total number of pages. Specify this, `current-page` and `generate-page-href` to have the items generated instead of specifying them with child elements. |
 
 
 #### `<govuk-pagination-previous>`

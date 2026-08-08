@@ -2,6 +2,14 @@
 
 ## Unreleased — 5.0.0
 
+`<govuk-pagination>` can generate its own items. Specify `current-page`, `total-pages` and `generate-page-href` instead of writing a child element per page:
+
+```razor
+<govuk-pagination current-page="@Model.PageNumber" total-pages="@Model.TotalPages" generate-page-href="@(page => Url.Action("Index", "Home", new { pageNumber = page })!)" />
+```
+
+As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
+
 `TabsOptions.Title` is now `string?` rather than `TemplateString?`. It only ever comes from the `title` attribute, so it is always text.
 
 `SelectOptionsItem.Text` is `TemplateString?` again and its `Html` property is gone. Content written inside `<govuk-select-item>` is markup, and `TemplateString` already carries either kind, so the extra property added nothing.

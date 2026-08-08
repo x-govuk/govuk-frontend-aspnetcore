@@ -149,23 +149,38 @@ public class TagHelperApiProvider
 
     private static string GetNormalizedTypeName(Type type)
     {
-        return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)
-            ? GetNormalizedTypeName(type.GetGenericArguments()[0]) + "?"
-            : type.FullName switch
-            {
-                "System.Boolean" => "bool",
-                "System.String" => "string",
-                "System.Int32" => "int",
-                "System.Int64" => "long",
-                "System.Int16" => "short",
-                "System.Byte" => "byte",
-                "System.Double" => "double",
-                "System.Single" => "float",
-                "System.Decimal" => "decimal",
-                "System.Char" => "char",
-                "System.Object" => "object",
-                _ => type.FullName ?? ""
-            };
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+        {
+            return GetNormalizedTypeName(type.GetGenericArguments()[0]) + "?";
+        }
+
+        if (type.IsGenericType)
+        {
+            var name = type.Name[..type.Name.IndexOf('`')];
+            var typeArguments = type.GetGenericArguments().Select(GetNormalizedTypeName);
+            return $"{name}<{string.Join(", ", typeArguments)}>";
+        }
+
+        return GetNormalizedNonGenericTypeName(type);
+    }
+
+    private static string GetNormalizedNonGenericTypeName(Type type)
+    {
+        return type.FullName switch
+        {
+            "System.Boolean" => "bool",
+            "System.String" => "string",
+            "System.Int32" => "int",
+            "System.Int64" => "long",
+            "System.Int16" => "short",
+            "System.Byte" => "byte",
+            "System.Double" => "double",
+            "System.Single" => "float",
+            "System.Decimal" => "decimal",
+            "System.Char" => "char",
+            "System.Object" => "object",
+            _ => type.FullName ?? ""
+        };
     }
 }
 

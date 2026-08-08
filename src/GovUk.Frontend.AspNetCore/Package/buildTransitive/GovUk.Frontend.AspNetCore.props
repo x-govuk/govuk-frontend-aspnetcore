@@ -13,11 +13,14 @@
     <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == '' And '$(UsingMicrosoftNETSdkWeb)' == 'true'">true</EnableGovUkFrontendSupport>
     <EnableGovUkFrontendSupport Condition="'$(EnableGovUkFrontendSupport)' == ''">false</EnableGovUkFrontendSupport>
 
+    <!-- The directory defaults use '/', which MSBuild accepts on every platform. A '\' would reach the
+         GovUkFrontendBuildInfoAttribute as-is on Windows, where it becomes an escape sequence in the
+         generated C# string literal. -->
     <RestoreGovUkFrontendNpmPackage Condition="'$(RestoreGovUkFrontendNpmPackage)' == ''">false</RestoreGovUkFrontendNpmPackage>
-    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == ''">lib\govuk-frontend</GovUkFrontendNpmPackageDirectory>
+    <GovUkFrontendNpmPackageDirectory Condition="'$(GovUkFrontendNpmPackageDirectory)' == ''">lib/govuk-frontend</GovUkFrontendNpmPackageDirectory>
 
     <RestoreGovUkFrontendAssets Condition="'$(RestoreGovUkFrontendAssets)' == ''">true</RestoreGovUkFrontendAssets>
-    <GovUkFrontendAssetsDirectory Condition="'$(GovUkFrontendAssetsDirectory)' == ''">wwwroot\assets</GovUkFrontendAssetsDirectory>
+    <GovUkFrontendAssetsDirectory Condition="'$(GovUkFrontendAssetsDirectory)' == ''">wwwroot/assets</GovUkFrontendAssetsDirectory>
 
     <RestoreGovUkFrontendJavascript Condition="'$(RestoreGovUkFrontendJavascript)' == ''">true</RestoreGovUkFrontendJavascript>
     <GovUkFrontendJavaScriptDirectory Condition="'$(GovUkFrontendJavaScriptDirectory)' == ''">wwwroot</GovUkFrontendJavaScriptDirectory>
@@ -26,6 +29,6 @@
     <GovUkFrontendStylesheetDirectory Condition="'$(GovUkFrontendStylesheetDirectory)' == ''">wwwroot</GovUkFrontendStylesheetDirectory>
 
     <RestoreGovUkFrontendSupportPackage Condition="'$(RestoreGovUkFrontendSupportPackage)' == ''">false</RestoreGovUkFrontendSupportPackage>
-    <GovUkFrontendSupportPackageDirectory Condition="'$(GovUkFrontendSupportPackageDirectory)' == ''">lib\govuk-frontend-aspnetcore</GovUkFrontendSupportPackageDirectory>
+    <GovUkFrontendSupportPackageDirectory Condition="'$(GovUkFrontendSupportPackageDirectory)' == ''">lib/govuk-frontend-aspnetcore</GovUkFrontendSupportPackageDirectory>
   </PropertyGroup>
 </Project>

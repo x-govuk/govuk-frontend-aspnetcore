@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="_WarnOnDeprecatedGovUkProperties;RestoreGovUkFrontend">
-  <Target Name="_WarnOnDeprecatedGovUkProperties">
+  <!-- NuGet excludes package imports from restore, so for a PackageReference this runs once regardless.
+       A project that imports these targets directly gets no such exclusion: InitialTargets then run for
+       every project instance, and a single 'dotnet build' raises the warning three times. -->
+  <Target Name="_WarnOnDeprecatedGovUkProperties" Condition="'$(MSBuildRestoreSessionId)' == ''">
     <Warning Text="The CopyGovUkFrontendAssetsToWebRoot property is deprecated; use RestoreGovUkFrontendAssets instead."
              Condition="'$(CopyGovUkFrontendAssetsToWebRoot)' != ''" />
   </Target>
@@ -12,49 +15,67 @@
     <_GovUkFrontendPackageContentDirectory Condition="'$(_GovUkFrontendPackageContentDirectory)' == ''">$(MSBuildThisFileDirectory)..\content\</_GovUkFrontendPackageContentDirectory>
     <_GovUkFrontendNpmContentDirectory Condition="'$(_GovUkFrontendNpmContentDirectory)' == ''">$(_GovUkFrontendPackageContentDirectory)govuk-frontend\</_GovUkFrontendNpmContentDirectory>
 
-    <_RestoreAssets Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendAssets)' == 'true'">true</_RestoreAssets>
-    <_RestoreJs Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendJavascript)' == 'true'">true</_RestoreJs>
-    <_RestoreCss Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendStylesheet)' == 'true'">true</_RestoreCss>
-    <_RestoreNpmPackage Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendNpmPackage)' == 'true'">true</_RestoreNpmPackage>
-    <_RestoreSupportLib Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendSupportPackage)' == 'true'">true</_RestoreSupportLib>
+    <!-- What the project has asked for. Named apart from the targets below, which share their names with
+         the public Restore* properties. -->
+    <_ShouldRestoreAssets Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendAssets)' == 'true'">true</_ShouldRestoreAssets>
+    <_ShouldRestoreJs Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendJavascript)' == 'true'">true</_ShouldRestoreJs>
+    <_ShouldRestoreCss Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendStylesheet)' == 'true'">true</_ShouldRestoreCss>
+    <_ShouldRestoreNpmPackage Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendNpmPackage)' == 'true'">true</_ShouldRestoreNpmPackage>
+    <_ShouldRestoreSupportLib Condition="'$(EnableGovUkFrontendSupport)' == 'true' And '$(RestoreGovUkFrontendSupportPackage)' == 'true'">true</_ShouldRestoreSupportLib>
+
+    <!-- Whether this invocation is one where copying files makes sense. Restore has no use for them, and
+         the restore-only global properties it runs under make any work done there suspect. -->
+    <_CanCopyGovUkFrontendFiles Condition="'$(MSBuildRestoreSessionId)' == ''">true</_CanCopyGovUkFrontendFiles>
   </PropertyGroup>
 
+  <!-- WriteCodeFragment emits a literal parameter into the generated C# verbatim, so anything that isn't
+       already valid C# has to go in as a non-literal, where it gets quoted and escaped properly. That
+       leaves 'null' as the only value here that has to stay a literal: an unquoted directory would be
+       read as an identifier, and a quoted one would carry unescaped '\' and '"' straight into the
+       source. The boolean is normalised because MSBuild treats 'True' as true but C# does not. -->
   <Target Name="AddGovUkFrontendBuildInfoAttribute" BeforeTargets="BeforeBuild">
     <PropertyGroup>
-      <_enableGovUkFrontendSupportArg>$(EnableGovUkFrontendSupport)</_enableGovUkFrontendSupportArg>
-      <_govUkFrontendAssetsDirectoryArg>null</_govUkFrontendAssetsDirectoryArg>
-      <_govUkFrontendAssetsDirectoryArg Condition="'$(_RestoreAssets)' == 'true'">&quot;$(GovUkFrontendAssetsDirectory)&quot;</_govUkFrontendAssetsDirectoryArg>
-      <_govUkFrontendJavaScriptDirectoryArg>null</_govUkFrontendJavaScriptDirectoryArg>
-      <_govUkFrontendJavaScriptDirectoryArg Condition="'$(_RestoreJs)' == 'true'">&quot;$(GovUkFrontendJavaScriptDirectory)&quot;</_govUkFrontendJavaScriptDirectoryArg>
-      <_govUkFrontendStylesheetDirectoryArg>null</_govUkFrontendStylesheetDirectoryArg>
-      <_govUkFrontendStylesheetDirectoryArg Condition="'$(_RestoreCss)' == 'true'">&quot;$(GovUkFrontendStylesheetDirectory)&quot;</_govUkFrontendStylesheetDirectoryArg>
+      <_govUkEnableSupportArg>false</_govUkEnableSupportArg>
+      <_govUkEnableSupportArg Condition="'$(EnableGovUkFrontendSupport)' == 'true'">true</_govUkEnableSupportArg>
+
+      <_govUkAssetsDirectoryArg>null</_govUkAssetsDirectoryArg>
+      <_govUkAssetsDirectoryIsLiteral>true</_govUkAssetsDirectoryIsLiteral>
+      <_govUkAssetsDirectoryArg Condition="'$(_ShouldRestoreAssets)' == 'true'">$(GovUkFrontendAssetsDirectory)</_govUkAssetsDirectoryArg>
+      <_govUkAssetsDirectoryIsLiteral Condition="'$(_ShouldRestoreAssets)' == 'true'">false</_govUkAssetsDirectoryIsLiteral>
+
+      <_govUkJavaScriptDirectoryArg>null</_govUkJavaScriptDirectoryArg>
+      <_govUkJavaScriptDirectoryIsLiteral>true</_govUkJavaScriptDirectoryIsLiteral>
+      <_govUkJavaScriptDirectoryArg Condition="'$(_ShouldRestoreJs)' == 'true'">$(GovUkFrontendJavaScriptDirectory)</_govUkJavaScriptDirectoryArg>
+      <_govUkJavaScriptDirectoryIsLiteral Condition="'$(_ShouldRestoreJs)' == 'true'">false</_govUkJavaScriptDirectoryIsLiteral>
+
+      <_govUkStylesheetDirectoryArg>null</_govUkStylesheetDirectoryArg>
+      <_govUkStylesheetDirectoryIsLiteral>true</_govUkStylesheetDirectoryIsLiteral>
+      <_govUkStylesheetDirectoryArg Condition="'$(_ShouldRestoreCss)' == 'true'">$(GovUkFrontendStylesheetDirectory)</_govUkStylesheetDirectoryArg>
+      <_govUkStylesheetDirectoryIsLiteral Condition="'$(_ShouldRestoreCss)' == 'true'">false</_govUkStylesheetDirectoryIsLiteral>
     </PropertyGroup>
 
     <ItemGroup>
       <AssemblyAttribute Include="GovUk.Frontend.AspNetCore.GovUkFrontendBuildInfoAttribute">
-        <_Parameter1>$(_enableGovUkFrontendSupportArg)</_Parameter1>
+        <_Parameter1>$(_govUkEnableSupportArg)</_Parameter1>
         <_Parameter1_IsLiteral>true</_Parameter1_IsLiteral>
-        <_Parameter2>$(_govUkFrontendAssetsDirectoryArg)</_Parameter2>
-        <_Parameter2_IsLiteral>true</_Parameter2_IsLiteral>
-        <_Parameter3>$(_govUkFrontendJavaScriptDirectoryArg)</_Parameter3>
-        <_Parameter3_IsLiteral>true</_Parameter3_IsLiteral>
-        <_Parameter4>$(_govUkFrontendStylesheetDirectoryArg)</_Parameter4>
-        <_Parameter4_IsLiteral>true</_Parameter4_IsLiteral>
+        <_Parameter2>$(_govUkAssetsDirectoryArg)</_Parameter2>
+        <_Parameter2_IsLiteral>$(_govUkAssetsDirectoryIsLiteral)</_Parameter2_IsLiteral>
+        <_Parameter3>$(_govUkJavaScriptDirectoryArg)</_Parameter3>
+        <_Parameter3_IsLiteral>$(_govUkJavaScriptDirectoryIsLiteral)</_Parameter3_IsLiteral>
+        <_Parameter4>$(_govUkStylesheetDirectoryArg)</_Parameter4>
+        <_Parameter4_IsLiteral>$(_govUkStylesheetDirectoryIsLiteral)</_Parameter4_IsLiteral>
       </AssemblyAttribute>
     </ItemGroup>
   </Target>
 
-  <!-- InitialTargets run for every target invocation on the project, including NuGet's restore, which has
-       no use for the copied files. '$(MSBuildRestoreSessionId)' is only set during restore. -->
-  <Target Name="RestoreGovUkFrontend" Condition="'$(MSBuildRestoreSessionId)' == ''">
-    <CallTarget Targets="_RestoreAssets" Condition="'$(_RestoreAssets)' == 'true'" />
-    <CallTarget Targets="_RestoreJs" Condition="'$(_RestoreJs)' == 'true'" />
-    <CallTarget Targets="_RestoreCss" Condition="'$(_RestoreCss)' == 'true'" />
-    <CallTarget Targets="_RestoreNpmPackage" Condition="'$(_RestoreNpmPackage)' == 'true'" />
-    <CallTarget Targets="_RestoreSupportLib" Condition="'$(_RestoreSupportLib)' == 'true'" />
-  </Target>
+  <!-- Each target carries its own condition rather than being invoked through CallTarget, which bypasses
+       the normal ordering and incrementality checks. Note that a target's DependsOnTargets are built
+       before its own Condition is evaluated, so the guards cannot live on this target. -->
+  <Target Name="RestoreGovUkFrontend"
+          DependsOnTargets="_RestoreAssets;_RestoreJs;_RestoreCss;_RestoreNpmPackage;_RestoreSupportLib" />
 
-  <Target Name="_RestoreAssets">
+  <Target Name="_RestoreAssets"
+          Condition="'$(_ShouldRestoreAssets)' == 'true' And '$(_CanCopyGovUkFrontendFiles)' == 'true'">
     <ItemGroup>
       <_AssetFiles Include="$(_GovUkFrontendNpmContentDirectory)assets\**\*" />
     </ItemGroup>
@@ -73,7 +94,8 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_RestoreJs">
+  <Target Name="_RestoreJs"
+          Condition="'$(_ShouldRestoreJs)' == 'true' And '$(_CanCopyGovUkFrontendFiles)' == 'true'">
     <ItemGroup>
       <_JavascriptFiles Include="$(_GovUkFrontendNpmContentDirectory)govuk-frontend.min.js" />
     </ItemGroup>
@@ -92,7 +114,8 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_RestoreCss">
+  <Target Name="_RestoreCss"
+          Condition="'$(_ShouldRestoreCss)' == 'true' And '$(_CanCopyGovUkFrontendFiles)' == 'true'">
     <ItemGroup>
       <_CssFiles Include="$(_GovUkFrontendPackageContentDirectory)govuk-frontend.min.css" />
     </ItemGroup>
@@ -111,7 +134,8 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_RestoreNpmPackage">
+  <Target Name="_RestoreNpmPackage"
+          Condition="'$(_ShouldRestoreNpmPackage)' == 'true' And '$(_CanCopyGovUkFrontendFiles)' == 'true'">
     <ItemGroup>
       <_PackageFiles Include="$(_GovUkFrontendNpmContentDirectory)**\*" />
     </ItemGroup>
@@ -126,7 +150,8 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_RestoreSupportLib">
+  <Target Name="_RestoreSupportLib"
+          Condition="'$(_ShouldRestoreSupportLib)' == 'true' And '$(_CanCopyGovUkFrontendFiles)' == 'true'">
     <ItemGroup>
       <_SupportFiles Include="$(_GovUkFrontendPackageContentDirectory)support\**\*" />
     </ItemGroup>

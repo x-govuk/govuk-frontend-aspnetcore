@@ -75,6 +75,7 @@ Must be inside a `<govuk-cookie-banner-message-actions>` element.
 | `text` | `string` | The button text. This attribute is required. |
 | `type` | `string` | The `type` attribute for the generated `button` element. |
 | `value` | `string` | The `value` attribute for the generated `button` element. |
+| (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
 #### `<govuk-cookie-banner-message-action-link>`

@@ -55,4 +55,38 @@ public class CookieBannerMessageActionButtonTagHelperTests : TagHelperTestBase<C
                 AssertContainsAttributes(attributes, action.Attributes);
             });
     }
+
+    [Fact]
+    public async Task ProcessAsync_WithGeneratedFormAction_SetsFormActionAttribute()
+    {
+        // Arrange
+        var formAction = "/cookies/accept";
+        var attributes = new Dictionary<string, string?> { { "formaction", formAction } };
+
+        var actionsContext = new CookieBannerMessageActionsContext();
+        var messageContext = new CookieBannerMessageContext() { Actions = actionsContext };
+        var cookieBannerContext = new CookieBannerContext();
+
+        var context = CreateTagHelperContext(
+            attributes: attributes,
+            contexts: [cookieBannerContext, messageContext, actionsContext]);
+
+        var output = CreateTagHelperOutput(attributes: attributes);
+
+        var tagHelper = new CookieBannerMessageActionButtonTagHelper()
+        {
+            Text = "Accept analytics cookies",
+            Type = "submit"
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.Collection(
+            actionsContext.Actions,
+            action => AssertContainsAttributes(attributes, action.Attributes));
+    }
 }

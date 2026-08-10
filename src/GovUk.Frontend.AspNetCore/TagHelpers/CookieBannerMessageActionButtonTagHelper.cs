@@ -58,6 +58,12 @@ public class CookieBannerMessageActionButtonTagHelper : TagHelper
 
         var attributes = new AttributeCollection(output.Attributes);
         attributes.Remove("class", out var classes);
+        attributes.Remove("formaction", out _);
+
+        if (output.Attributes.ContainsName("formaction"))
+        {
+            attributes.Set("formaction", output.GetUrlAttribute("formaction")!);
+        }
 
         actionsContext.Actions.Add(new CookieBannerOptionsMessageAction
         {

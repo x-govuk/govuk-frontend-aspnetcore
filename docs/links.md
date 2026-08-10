@@ -43,7 +43,7 @@ The following tag helpers support generating the `href` attribute using these at
 
 ## `formaction`
 
-For `<govuk-button>` a similar set of `asp-` attributes listed above can be used to generate the `formaction` attribute:
+For `<govuk-button>`, `<govuk-cookie-banner-message-action-button>` and `<govuk-panel-action-button>` a similar set of `asp-` attributes listed above can be used to generate the `formaction` attribute:
 - `asp-action`
 - `asp-controller`
 - `asp-area`

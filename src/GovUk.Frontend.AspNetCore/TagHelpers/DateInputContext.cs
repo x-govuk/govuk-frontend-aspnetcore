@@ -106,18 +106,14 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         {
             html = explicitHtml;
         }
-        else if (ignoreModelStateErrors != true)
+        else if (ignoreModelStateErrors != true && @for is not null)
         {
-            var modelName = @for?.Name ?? namePrefix;
-
-            var invalidDateException = viewContext.ModelState[modelName]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)
-                ?.Exception as DateInputParseException;
-
-            if (invalidDateException is not null && errorMessagePrefix is not null)
+            if (viewContext.ModelState[@for.Name]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)?.Exception
+                is DateInputParseException invalidDateException && errorMessagePrefix is not null)
             {
                 text = invalidDateException.GetMessage(errorMessagePrefix);
             }
-            else if (@for is not null)
+            else
             {
                 text = modelHelper.GetValidationMessage(viewContext, @for.ModelExplorer, @for.Name);
             }

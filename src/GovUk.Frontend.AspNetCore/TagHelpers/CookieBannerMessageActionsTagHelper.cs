@@ -7,7 +7,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the actions in a message in a GDS cookie banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CookieBannerMessageTagHelper.TagName)]
-[RestrictChildren(CookieBannerMessageActionTagHelper.TagName, CookieBannerMessageActionLinkTagHelper.TagName)]
+#pragma warning disable GFA0006 // Type or member is obsolete
+[RestrictChildren(
+    CookieBannerMessageActionButtonTagHelper.TagName,
+    CookieBannerMessageActionLinkTagHelper.TagName,
+    CookieBannerMessageActionTagHelper.TagName)]
+#pragma warning restore GFA0006 // Type or member is obsolete
 public class CookieBannerMessageActionsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-cookie-banner-message-actions";

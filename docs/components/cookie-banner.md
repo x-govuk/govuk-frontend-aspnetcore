@@ -18,8 +18,8 @@
             <p class="govuk-body">We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
         </govuk-cookie-banner-message-content>
         <govuk-cookie-banner-message-actions>
-            <govuk-cookie-banner-message-action text="Accept analytics cookies" type="button"/>
-            <govuk-cookie-banner-message-action text="Reject analytics cookies" type="button"/>
+            <govuk-cookie-banner-message-action-button text="Accept analytics cookies" type="button"/>
+            <govuk-cookie-banner-message-action-button text="Reject analytics cookies" type="button"/>
             <govuk-cookie-banner-message-action-link text="View cookies" href="#"/>
         </govuk-cookie-banner-message-actions>
     </govuk-cookie-banner-message>
@@ -62,7 +62,7 @@ Must be inside a `<govuk-cookie-banner-message>` element.
 Must be inside a `<govuk-cookie-banner-message>` element.
 
 
-#### `<govuk-cookie-banner-message-action>`
+#### `<govuk-cookie-banner-message-action-button>`
 
 > [!NOTE]
 > This tag helper should not have any child content.

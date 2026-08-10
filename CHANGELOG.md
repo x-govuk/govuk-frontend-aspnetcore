@@ -2,6 +2,9 @@
 
 ## Unreleased — 5.0.0
 
+The cookie banner's `<govuk-cookie-banner-message-action>` element is now `<govuk-cookie-banner-message-action-button>`, to match the panel component's `<govuk-panel-action-button>` and to sit alongside `<govuk-cookie-banner-message-action-link>`.
+The old element still works, with everything it generated before, but using it produces a deprecation warning with the diagnostic ID `GFA0006`.
+
 `EnableGovUkFrontendSupport` is now on by default for projects using the `Microsoft.NET.Web.Sdk` SDK.
 
 `<govuk-pagination>` can generate its own items. Specify `current-page`, `total-pages` and `generate-page-href` instead of writing a child element per page:

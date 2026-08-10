@@ -1,7 +1,7 @@
 ﻿@model GovUk.Frontend.AspNetCore.IntegrationTests.DateInputsTestsModel
 
 <form asp-action="PostForDateParts">
-    <govuk-date-input for="MonthAndYear" />
+    <govuk-date-input for="MonthAndYear" error-message-prefix="Month of birth" />
 
     <govuk-button type="submit">Save</govuk-button>
 </form>

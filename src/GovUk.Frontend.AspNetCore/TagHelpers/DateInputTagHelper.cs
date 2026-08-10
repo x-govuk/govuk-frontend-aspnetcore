@@ -103,6 +103,10 @@ public class DateInputTagHelper : TagHelper
     /// <summary>
     /// The prefix to use in generated error messages.
     /// </summary>
+    /// <remarks>
+    /// This is required unless an error message prefix has been specified on the model with a
+    /// <see cref="DateInputAttribute"/>.
+    /// </remarks>
     [HtmlAttributeName(ErrorMessagePrefixAttributeName)]
     public string? ErrorMessagePrefix { get; set; }
 
@@ -238,12 +242,12 @@ public class DateInputTagHelper : TagHelper
 
         var id = ResolveId();
         var namePrefix = ResolveNamePrefix();
+        var errorMessagePrefix = ResolveErrorMessagePrefix();
         var itemTypes = ResolveItemTypes();
         var value = ResolveValue(itemTypes);
         var hintOptions = dateInputContext.GetHintOptions(For, _modelHelper);
         var errorMessageOptions = dateInputContext.GetErrorMessageOptions(
-            namePrefix,
-            ErrorMessagePrefix,
+            errorMessagePrefix,
             For,
             ViewContext!,
             _modelHelper,
@@ -444,6 +448,24 @@ public class DateInputTagHelper : TagHelper
     {
         var resolvedName = For is not null ? _modelHelper.GetFullHtmlFieldName(ViewContext!, For.Name) : null;
         return NamePrefix ?? resolvedName ?? string.Empty;
+    }
+
+    private string ResolveErrorMessagePrefix()
+    {
+        if (ErrorMessagePrefix is not null)
+        {
+            return ErrorMessagePrefix;
+        }
+
+        if (For?.Metadata.TryGetDateInputModelMetadata(out var dateInputModelMetadata) is true &&
+            dateInputModelMetadata.ErrorMessagePrefix is string metadataErrorMessagePrefix)
+        {
+            return metadataErrorMessagePrefix;
+        }
+
+        throw new InvalidOperationException(
+            $"An error message prefix must be specified with the '{ErrorMessagePrefixAttributeName}' attribute " +
+            $"or the {nameof(DateInputAttribute)}'s {nameof(DateInputAttribute.ErrorMessagePrefix)} property.");
     }
 
     private DateInputItemTypes ResolveItemTypes()

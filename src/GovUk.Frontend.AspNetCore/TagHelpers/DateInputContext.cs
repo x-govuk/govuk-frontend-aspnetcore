@@ -92,8 +92,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
     }
 
     public ErrorMessageOptions? GetErrorMessageOptions(
-        string namePrefix,
-        string? errorMessagePrefix,
+        string errorMessagePrefix,
         ModelExpression? @for,
         ViewContext viewContext,
         IModelHelper modelHelper,
@@ -109,7 +108,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
         else if (ignoreModelStateErrors != true && @for is not null)
         {
             if (viewContext.ModelState[@for.Name]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)?.Exception
-                is DateInputParseException invalidDateException && errorMessagePrefix is not null)
+                is DateInputParseException invalidDateException)
             {
                 text = invalidDateException.GetMessage(errorMessagePrefix);
             }

@@ -44,6 +44,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             NamePrefix = namePrefix,
             Value = value,
@@ -146,6 +147,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             NamePrefix = namePrefix,
             ViewContext = viewContext
@@ -199,6 +201,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -243,6 +246,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -273,6 +277,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -312,6 +317,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -359,6 +365,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             NamePrefix = namePrefix,
             ViewContext = viewContext
@@ -394,6 +401,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -441,6 +449,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = CreateViewContext()
         };
@@ -473,6 +482,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -525,6 +535,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             Id = id,
             NamePrefix = namePrefix,
@@ -612,6 +623,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             NamePrefix = namePrefix,
             ViewContext = CreateViewContext()
@@ -716,6 +728,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             Id = id,
             NamePrefix = namePrefix,
@@ -773,6 +786,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             Id = id,
             NamePrefix = namePrefix,
@@ -815,6 +829,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             componentGenerator,
             CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDateType), customDateTypeConverter)))
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             NamePrefix = namePrefix,
             Value = value,
@@ -856,6 +871,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             componentGenerator,
             CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDateType), customDateTypeConverter)))
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -917,6 +933,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             NamePrefix = namePrefix,
             ViewContext = viewContext
@@ -975,6 +992,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             Id = id,
             NamePrefix = namePrefix,
@@ -1033,6 +1051,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             NamePrefix = namePrefix,
             ViewContext = viewContext
@@ -1087,6 +1106,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             Id = id,
             NamePrefix = namePrefix,
@@ -1149,6 +1169,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             Id = id,
             NamePrefix = namePrefix,
@@ -1186,6 +1207,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ItemTypes = itemTypes,
             ViewContext = viewContext
@@ -1221,6 +1243,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -1262,6 +1285,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             componentGenerator,
             CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDayAndMonthType), new CustomDayAndMonthTypeConverter())))
         {
+            ErrorMessagePrefix = "Your date",
             For = @for,
             ViewContext = viewContext
         };
@@ -1315,6 +1339,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             ItemTypes = itemTypes,
             NamePrefix = namePrefix,
@@ -1360,6 +1385,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = id,
             ItemTypes = itemTypes,
             NamePrefix = namePrefix,
@@ -1410,6 +1436,111 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     }
 
     [Fact]
+    public async Task ProcessAsync_GeneratesErrorMessageHtmlFromErrorMessagePrefixOnModelMetadata()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var errorMessagePrefix = "XYZ";
+        var dateInputParseException = new DateInputParseException("{0} must contain a valid month", nameof(Model.Date), DateInputParseErrors.InvalidMonth);
+        var @for = CreateModelExpression(
+            viewContext,
+            date: null,
+            dateInputParseException: dateInputParseException,
+            errorMessagePrefix: errorMessagePrefix);
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
+        {
+            For = @for,
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.ErrorMessage);
+        Assert.StartsWith(errorMessagePrefix, actualOptions.ErrorMessage.Text);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_ErrorMessagePrefixSpecifiedOnAttributeAndModelMetadata_UsesPrefixFromAttribute()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var attributeErrorMessagePrefix = "XYZ";
+        var dateInputParseException = new DateInputParseException("{0} must contain a valid month", nameof(Model.Date), DateInputParseErrors.InvalidMonth);
+        var @for = CreateModelExpression(
+            viewContext,
+            date: null,
+            dateInputParseException: dateInputParseException,
+            errorMessagePrefix: "ABC");
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
+        {
+            For = @for,
+            ViewContext = viewContext,
+            ErrorMessagePrefix = attributeErrorMessagePrefix
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.ErrorMessage);
+        Assert.StartsWith(attributeErrorMessagePrefix, actualOptions.ErrorMessage.Text);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_NoErrorMessagePrefixSpecified_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+        var @for = CreateModelExpression(viewContext, date: null);
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var (componentGenerator, _) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
+        {
+            For = @for,
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal(
+            $"An error message prefix must be specified with the 'error-message-prefix' attribute " +
+            $"or the {nameof(DateInputAttribute)}'s {nameof(DateInputAttribute.ErrorMessagePrefix)} property.",
+            ex.Message);
+    }
+
+    [Fact]
     public async Task ProcessAsync_WithLegendButNoFieldsetElement_InvokesComponentGeneratorWithFieldsetOptions()
     {
         // Arrange
@@ -1435,6 +1566,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
 
         var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
         {
+            ErrorMessagePrefix = "Your date",
             Id = "my-id",
             NamePrefix = "my-id",
             FieldsetAttributes = new Dictionary<string, string?>() { { "class", "fieldset-class" } },
@@ -1502,7 +1634,8 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         string? displayName = null,
         string? description = null,
         string? errorMessage = null,
-        DateInputParseException? dateInputParseException = null)
+        DateInputParseException? dateInputParseException = null,
+        string? errorMessagePrefix = null)
     {
         return CreateModelExpression(
             viewContext,
@@ -1512,7 +1645,8 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             displayName,
             description,
             errorMessage,
-            dateInputParseException);
+            dateInputParseException,
+            errorMessagePrefix: errorMessagePrefix);
     }
 
     private ModelExpression CreateModelExpressionForCustomDateType(
@@ -1586,7 +1720,8 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         string? description = null,
         string? errorMessage = null,
         DateInputParseException? dateInputParseException = null,
-        DateInputItemTypes? itemTypes = null)
+        DateInputItemTypes? itemTypes = null,
+        string? errorMessagePrefix = null)
     {
         var modelType = model.GetType();
         var identity = ModelMetadataIdentity.ForProperty(modelType.GetProperty(modelPropertyName)!, propertyType, modelType);
@@ -1595,6 +1730,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
         modelMetadataProvider.DetailsProvider.SetDisplayNameForProperty(identity, displayName);
         modelMetadataProvider.DetailsProvider.SetDescriptionForProperty(identity, description);
         modelMetadataProvider.DetailsProvider.SetDateInputItemTypesForProperty(identity, itemTypes);
+        modelMetadataProvider.DetailsProvider.SetDateInputErrorMessagePrefixForProperty(identity, errorMessagePrefix);
 
         var modelExplorer = modelMetadataProvider.GetModelExplorerForType(modelType, model)
             .GetExplorerForProperty(modelPropertyName);

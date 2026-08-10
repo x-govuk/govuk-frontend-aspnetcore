@@ -2,6 +2,15 @@
 
 ## Unreleased — 5.0.0
 
+`<govuk-date-input>` now requires an error message prefix, either from its `error-message-prefix` attribute or from a `DateInput` attribute on the bound property; rendering one without either throws.
+
+The prefix is what makes the model binder's messages read as guidance — `Your date of birth must be a real date` rather than `Date must be a real date` — and, before, forgetting it was only visible once someone submitted an invalid date. The prefix from the model is now used by the component too, so specifying it in one place is enough:
+
+```csharp
+[DateInput(ErrorMessagePrefix = "Your date of birth")]
+public DateOnly? DateOfBirth { get; set; }
+```
+
 The cookie banner's `<govuk-cookie-banner-message-action>` element is now `<govuk-cookie-banner-message-action-button>`, to match the panel component's `<govuk-panel-action-button>` and to sit alongside `<govuk-cookie-banner-message-action-link>`.
 The old element still works, with everything it generated before, but using it produces a deprecation warning with the diagnostic ID `GFA0006`.
 

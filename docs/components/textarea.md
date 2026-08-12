@@ -11,12 +11,12 @@
 
 ```razor
 <govuk-textarea for="MoreDetail">
-    <govuk-textarea-label class="govuk-label--l" is-page-heading="true">
+    <label class="govuk-label--l" is-page-heading="true">
         Can you provide more detail?
-    </govuk-textarea-label>
-    <govuk-textarea-hint>
+    </label>
+    <hint>
         Do not include personal or financial information like your National Insurance number or credit card details.
-    </govuk-textarea-hint>
+    </hint>
 </govuk-textarea>
 ```
 
@@ -41,7 +41,7 @@
 | `textarea-*` |  | Additional attributes to add to the generated `textarea` element. |
 
 
-#### `<govuk-textarea-label>`
+#### `<label>` / `<govuk-textarea-label>`
 
 The content is the HTML to use within the component's label.
 
@@ -52,14 +52,14 @@ Must be inside a `<govuk-textarea>` element.
 | `is-page-heading` | `bool?` | Whether the label also acts as the heading for the page. |
 
 
-#### `<govuk-textarea-hint>`
+#### `<hint>` / `<govuk-textarea-hint>`
 
 The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-textarea>` element.
 
 
-#### `<govuk-textarea-error-message>`
+#### `<error-message>` / `<govuk-textarea-error-message>`
 
 The content is the HTML to use within the component's error message.
 
@@ -70,21 +70,21 @@ Must be inside a `<govuk-textarea>` element.
 | `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
 
-#### `<govuk-textarea-before-input>`
+#### `<before-input>` / `<govuk-textarea-before-input>`
 
 The content is the HTML to use before the generated textarea element.
 
 Must be inside a `<govuk-textarea>` element.
 
 
-#### `<govuk-textarea-value>`
+#### `<value>` / `<govuk-textarea-value>`
 
 The content is the HTML to use within the generated textarea.
 
 Must be inside a `<govuk-textarea>` element.
 
 
-#### `<govuk-textarea-after-input>`
+#### `<after-input>` / `<govuk-textarea-after-input>`
 
 The content is the HTML to use after the generated textarea element.
 

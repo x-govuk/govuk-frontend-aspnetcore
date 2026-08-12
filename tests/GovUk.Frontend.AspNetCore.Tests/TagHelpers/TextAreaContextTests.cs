@@ -244,7 +244,7 @@ public class TextAreaContextTests
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal(
-            $"Only one <{valueTagName}> element is permitted within each <{TextAreaTagHelper.TagName}>.",
+            $"Only one <{valueTagName}> or <{TextAreaValueTagHelper.ShortTagName}> element is permitted within each <{TextAreaTagHelper.TagName}>.",
             ex.Message);
     }
 

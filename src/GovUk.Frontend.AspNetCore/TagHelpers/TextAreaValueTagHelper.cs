@@ -6,10 +6,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the value of a GDS textarea component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TextAreaTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = TextAreaTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the generated textarea.")]
 public class TextAreaValueTagHelper : TagHelper
 {
     internal const string TagName = "govuk-textarea-value";
+    internal const string ShortTagName = ShortTagNames.Value;
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

@@ -10,7 +10,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(ShortTagName, ParentTag = CheckboxesTagHelper.TagName)]
 #endif
 [RestrictChildren(
-    CheckboxesFieldsetLegendTagHelper.TagName,
+    FormGroupFieldsetLegendTagHelper.CheckboxesTagName,
     CheckboxesItemTagHelper.TagName,
     CheckboxesItemDividerTagHelper.TagName,
     CheckboxesHintTagHelper.TagName,
@@ -43,5 +43,5 @@ public class CheckboxesFieldsetTagHelper : FormGroupFieldsetTagHelperBase
     {
     }
 
-    private protected override string LegendTagName => CheckboxesFieldsetLegendTagHelper.TagName;
+    private protected override string LegendTagName => FormGroupFieldsetLegendTagHelper.CheckboxesTagName;
 }

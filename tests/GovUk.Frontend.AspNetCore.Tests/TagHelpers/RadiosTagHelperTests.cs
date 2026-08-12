@@ -373,7 +373,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
 
                 var radiosFieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName) { DescribedBy = describedBy };
                 radiosContext.OpenFieldset(radiosFieldsetContext, new AttributeCollection());
-                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString(legendContent), RadiosFieldsetLegendTagHelper.TagName);
+                radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString(legendContent), FormGroupFieldsetLegendTagHelper.RadiosTagName);
 
                 radiosContext.SetHint(
                     attributes: new AttributeCollection(),
@@ -578,7 +578,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     isPageHeading: true,
                     attributes: new AttributeCollection(),
                     html: new TemplateString(legendContent),
-                    RadiosFieldsetLegendTagHelper.TagName);
+                    FormGroupFieldsetLegendTagHelper.RadiosTagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

@@ -3,15 +3,17 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosItemConditionalTagHelperTests : TagHelperTestBase<RadiosItemConditionalTagHelper>
+public class FormGroupItemConditionalTagHelperTests : TagHelperTestBase<FormGroupItemConditionalTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsConditionalOnContext()
     {
         // Arrange
-        var radiosItemContext = new RadiosItemContext();
+        FormGroupItemContext itemContext = TagName == FormGroupItemConditionalTagHelper.CheckboxesTagName ?
+            new CheckboxesItemContext() :
+            new RadiosItemContext();
 
-        var context = CreateTagHelperContext(contexts: radiosItemContext);
+        var context = CreateTagHelperContext(contexts: itemContext);
 
         var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
@@ -21,12 +23,12 @@ public class RadiosItemConditionalTagHelperTests : TagHelperTestBase<RadiosItemC
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosItemConditionalTagHelper();
+        var tagHelper = new FormGroupItemConditionalTagHelper();
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Conditional", radiosItemContext.Conditional?.Html?.ToHtmlString());
+        Assert.Equal("Conditional", itemContext.Conditional?.Html?.ToHtmlString());
     }
 }

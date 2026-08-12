@@ -22,7 +22,7 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
-                fieldsetContext.SetLegend(isPageHeading, attributes: [], html: new TemplateString(legendContent), DateInputFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading, attributes: [], html: new TemplateString(legendContent), FormGroupFieldsetLegendTagHelper.DateInputTagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -49,7 +49,7 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
 
         var checkboxesFieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName);
         dateInputContext.OpenFieldset(checkboxesFieldsetContext, []);
-        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new HtmlString("Existing legend"), DateInputFieldsetLegendTagHelper.TagName);
+        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new HtmlString("Existing legend"), FormGroupFieldsetLegendTagHelper.DateInputTagName);
         dateInputContext.CloseFieldset();
 
         var context = CreateTagHelperContext(contexts: dateInputContext);
@@ -58,7 +58,7 @@ public class DateInputFieldsetTagHelperTests : TagHelperTestBase<DateInputFields
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: [], html: new TemplateString("New legend"), DateInputFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: [], html: new TemplateString("New legend"), FormGroupFieldsetLegendTagHelper.DateInputTagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

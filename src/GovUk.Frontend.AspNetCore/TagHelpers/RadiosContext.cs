@@ -29,7 +29,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     public string FieldsetTagName => RadiosFieldsetTagHelper.TagName;
 
-    public string LegendTagName => RadiosFieldsetLegendTagHelper.TagName;
+    public string LegendTagName => FormGroupFieldsetLegendTagHelper.RadiosTagName;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => RadiosErrorMessageTagHelper.AllTagNames;
 

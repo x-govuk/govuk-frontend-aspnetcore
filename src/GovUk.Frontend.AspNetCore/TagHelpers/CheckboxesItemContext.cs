@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class CheckboxesItemContext : FormGroupItemContext
 {
-    protected override string ConditionalTagName => CheckboxesItemConditionalTagHelper.TagName;
+    protected override string ConditionalTagName => FormGroupItemConditionalTagHelper.CheckboxesTagName;
 
     protected override string HintTagName => CheckboxesItemHintTagHelper.TagName;
 

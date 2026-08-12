@@ -18,7 +18,7 @@ public class RadiosFieldsetTagHelperTests : TagHelperTestBase<RadiosFieldsetTagH
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), RadiosFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), FormGroupFieldsetLegendTagHelper.RadiosTagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -44,7 +44,7 @@ public class RadiosFieldsetTagHelperTests : TagHelperTestBase<RadiosFieldsetTagH
 
         var radiosFieldsetContext = new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName);
         radiosContext.OpenFieldset(radiosFieldsetContext, new AttributeCollection());
-        radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString("Existing legend"), RadiosFieldsetLegendTagHelper.TagName);
+        radiosFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new TemplateString("Existing legend"), FormGroupFieldsetLegendTagHelper.RadiosTagName);
         radiosContext.CloseFieldset();
 
         var context = CreateTagHelperContext(contexts: radiosContext);
@@ -53,7 +53,7 @@ public class RadiosFieldsetTagHelperTests : TagHelperTestBase<RadiosFieldsetTagH
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), RadiosFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new TemplateString("Legend"), FormGroupFieldsetLegendTagHelper.RadiosTagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

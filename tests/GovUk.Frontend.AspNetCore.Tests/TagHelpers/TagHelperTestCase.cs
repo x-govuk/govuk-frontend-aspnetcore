@@ -315,7 +315,7 @@ public class TagHelperTestRunner : XunitTestRunnerBase<TagHelperTestRunnerContex
     }
 }
 
-file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames, string PrimaryTagName, string? ShortTagName)
+file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames, string? PrimaryTagName, string? ShortTagName)
 {
     private static readonly Dictionary<Type, TagHelperInfo> _tagInfoByType = [];
 
@@ -325,8 +325,8 @@ file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames, st
         {
             var tagHelperAttributes = tagHelperType.GetCustomAttributes<HtmlTargetElementAttribute>(inherit: true).ToArray();
 
-            var primaryTagName = tagHelperType.GetField("TagName", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null) as string
-                ?? throw new InvalidOperationException($"Tag helper type '{tagHelperType.FullName}' does not have a public static field 'TagName'.");
+            // Tag helpers that target several elements have no single primary tag name; each test case uses its own
+            var primaryTagName = tagHelperType.GetField("TagName", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null) as string;
 
             var shortTagName = tagHelperType.GetField("ShortTagName", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null) as string;
 
@@ -355,7 +355,7 @@ file record TagHelperInfo((string TagName, string? ParentTagName)[] TagNames, st
                 var tagHelperTestCaseInfo = new TagHelperTestCaseInfo(
                     i.TagName,
                     i.ParentTagName,
-                    PrimaryTagName: tagHelperInfo.PrimaryTagName,
+                    PrimaryTagName: tagHelperInfo.PrimaryTagName ?? i.TagName,
                     ShortTagName: tagHelperInfo.ShortTagName,
                     AllTagNames: allTagNames,
                     AllParentTagNames: allParentTagNames);

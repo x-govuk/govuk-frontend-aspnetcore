@@ -19,7 +19,7 @@ public class CheckboxesFieldsetTagHelperTests : TagHelperTestBase<CheckboxesFiel
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new HtmlString("Legend"), CheckboxesFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new HtmlString("Legend"), FormGroupFieldsetLegendTagHelper.CheckboxesTagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -45,7 +45,7 @@ public class CheckboxesFieldsetTagHelperTests : TagHelperTestBase<CheckboxesFiel
 
         var checkboxesFieldsetContext = new FormGroupFieldsetContext2(CheckboxesFieldsetTagHelper.TagName);
         checkboxesContext.OpenFieldset(checkboxesFieldsetContext, new AttributeCollection());
-        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString("Existing legend"), CheckboxesFieldsetLegendTagHelper.TagName);
+        checkboxesFieldsetContext.SetLegend(isPageHeading: false, attributes: new AttributeCollection(), html: new HtmlString("Existing legend"), FormGroupFieldsetLegendTagHelper.CheckboxesTagName);
         checkboxesContext.CloseFieldset();
 
         var context = CreateTagHelperContext(contexts: checkboxesContext);
@@ -54,7 +54,7 @@ public class CheckboxesFieldsetTagHelperTests : TagHelperTestBase<CheckboxesFiel
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var fieldsetContext = context.GetContextItem<FormGroupFieldsetContext2>();
-                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new HtmlString("Legend"), CheckboxesFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: true, attributes: new AttributeCollection(), html: new HtmlString("Legend"), FormGroupFieldsetLegendTagHelper.CheckboxesTagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

@@ -14,18 +14,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     PasswordInputLabelTagHelper.TagName,
+    PasswordInputLabelTagHelper.ShortTagName,
     PasswordInputHintTagHelper.TagName,
+    PasswordInputHintTagHelper.ShortTagName,
     PasswordInputErrorMessageTagHelper.TagName,
+    PasswordInputErrorMessageTagHelper.ShortTagName,
     PasswordInputBeforeInputTagHelper.TagName,
-    PasswordInputAfterInputTagHelper.TagName
-#if SHORT_TAG_NAMES
-    ,
-    FormGroupLabelTagHelperBase.ShortTagName,
-    FormGroupHintTagHelperBase.ShortTagName,
-    FormGroupErrorMessageTagHelperBase.ShortTagName,
     PasswordInputBeforeInputTagHelper.ShortTagName,
+    PasswordInputAfterInputTagHelper.TagName,
     PasswordInputAfterInputTagHelper.ShortTagName
-#endif
     )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class PasswordInputTagHelper : TagHelper

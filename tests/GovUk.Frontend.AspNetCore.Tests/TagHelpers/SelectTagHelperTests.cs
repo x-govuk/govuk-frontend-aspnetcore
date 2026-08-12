@@ -48,14 +48,14 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                 selectContext.AddItem(new SelectOptionsItem()
                 {
                     Text = "First"
-                });
+                }, SelectItemTagHelper.TagName);
 
                 selectContext.AddItem(new SelectOptionsItem()
                 {
                     Text = "Second",
                     Value = "second",
                     Selected = true
-                });
+                }, SelectItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -166,7 +166,7 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                 selectContext.AddItem(new SelectOptionsItem()
                 {
                     Text = "First"
-                });
+                }, SelectItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -227,13 +227,13 @@ public class SelectTagHelperTests : TagHelperTestBase<SelectTagHelper>
                 {
                     Text = "First",
                     Value = "1"
-                });
+                }, SelectItemTagHelper.TagName);
 
                 selectContext.AddItem(new SelectOptionsItem()
                 {
                     Text = "Second",
                     Value = modelStateValue
-                });
+                }, SelectItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

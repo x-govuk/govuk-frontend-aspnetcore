@@ -30,7 +30,7 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
-The checkboxes, radios, date input, text input, textarea, file upload and password input tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+The checkboxes, radios, date input, text input, textarea, file upload, password input and select tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
@@ -59,7 +59,7 @@ The checkboxes, radios, date input, text input, textarea, file upload and passwo
 </govuk-date-input>
 ```
 
-The text input takes `<label>`, `<hint>`, `<error-message>`, `<before-input>`, `<prefix>`, `<suffix>` and `<after-input>`; the textarea takes the same, with `<value>` in place of the prefix and suffix, and the file upload and password input take `<label>`, `<hint>`, `<error-message>`, `<before-input>` and `<after-input>`.
+The text input takes `<label>`, `<hint>`, `<error-message>`, `<before-input>`, `<prefix>`, `<suffix>` and `<after-input>`; the textarea takes the same, with `<value>` in place of the prefix and suffix, the file upload and password input take `<label>`, `<hint>`, `<error-message>`, `<before-input>` and `<after-input>`; and the select takes those plus `<item>`.
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 

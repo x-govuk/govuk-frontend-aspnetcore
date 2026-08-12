@@ -1,0 +1,54 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-select for="Sort">
+        <label is-page-heading="true" class="govuk-label--l">The label</label>
+
+        <hint>
+            Choose how the results are ordered
+        </hint>
+
+        <before-input>Before input</before-input>
+        <after-input>After input</after-input>
+
+        <item value="published">Recently published</item>
+        <item value="updated" selected="true">Recently updated</item>
+        <item value="views" disabled="true">Most views</item>
+    </govuk-select>
+</div>
+
+<div data-testid="long">
+    <govuk-select for="Sort">
+        <govuk-select-label is-page-heading="true" class="govuk-label--l">The label</govuk-select-label>
+
+        <govuk-select-hint>
+            Choose how the results are ordered
+        </govuk-select-hint>
+
+        <govuk-select-before-input>Before input</govuk-select-before-input>
+        <govuk-select-after-input>After input</govuk-select-after-input>
+
+        <govuk-select-item value="published">Recently published</govuk-select-item>
+        <govuk-select-item value="updated" selected="true">Recently updated</govuk-select-item>
+        <govuk-select-item value="views" disabled="true">Most views</govuk-select-item>
+    </govuk-select>
+</div>
+
+<div data-testid="short-error-message">
+    <govuk-select name="WithError" id="with-error">
+        <label>The label</label>
+        <error-message>Select how to sort the results</error-message>
+        <item value="published">Recently published</item>
+    </govuk-select>
+</div>
+
+<div data-testid="long-error-message">
+    <govuk-select name="WithError" id="with-error">
+        <govuk-select-label>The label</govuk-select-label>
+        <govuk-select-error-message>Select how to sort the results</govuk-select-error-message>
+        <govuk-select-item value="published">Recently published</govuk-select-item>
+    </govuk-select>
+</div>

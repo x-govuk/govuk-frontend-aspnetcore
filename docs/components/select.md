@@ -11,11 +11,11 @@
 
 ```razor
 <govuk-select for="SortBy">
-    <govuk-select-label>Sort by</govuk-select-label>
-    <govuk-select-item value="published">Recently published</govuk-select-item>
-    <govuk-select-item value="updated">Recently updated</govuk-select-item>
-    <govuk-select-item value="views">Most views</govuk-select-item>
-    <govuk-select-item value="comments">Most comments</govuk-select-item>
+    <label>Sort by</label>
+    <item value="published">Recently published</item>
+    <item value="updated">Recently updated</item>
+    <item value="views">Most views</item>
+    <item value="comments">Most comments</item>
 </govuk-select>
 ```
 
@@ -36,7 +36,7 @@
 | `select-*` |  | Additional attributes to add to the generated `select` element. |
 
 
-#### `<govuk-select-label>`
+#### `<label>` / `<govuk-select-label>`
 
 The content is the HTML to use within the component's label.
 
@@ -47,14 +47,14 @@ Must be inside a `<govuk-select>` element.
 | `is-page-heading` | `bool?` | Whether the label also acts as the heading for the page. |
 
 
-#### `<govuk-select-hint>`
+#### `<hint>` / `<govuk-select-hint>`
 
 The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-select>` element.
 
 
-#### `<govuk-select-error-message>`
+#### `<error-message>` / `<govuk-select-error-message>`
 
 The content is the HTML to use within the component's error message.
 
@@ -65,21 +65,21 @@ Must be inside a `<govuk-select>` element.
 | `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
 
-#### `<govuk-select-before-input>`
+#### `<before-input>` / `<govuk-select-before-input>`
 
 The content is the HTML to use before the generated select element.
 
 Must be inside a `<govuk-select>` element.
 
 
-#### `<govuk-select-after-input>`
+#### `<after-input>` / `<govuk-select-after-input>`
 
 The content is the HTML to use after the generated select element.
 
 Must be inside a `<govuk-select>` element.
 
 
-#### `<govuk-select-item>`
+#### `<item>` / `<govuk-select-item>`
 
 The content is the HTML to use within the generated option element.
 

@@ -15,7 +15,7 @@ public class SelectContextTests
         context.AddItem(new SelectOptionsItem()
         {
             Text = "Option"
-        });
+        }, SelectItemTagHelper.TagName);
 
         // Act
         var ex = Record.Exception(() => context.SetErrorMessage(null, [], new HtmlString("Error"), SelectErrorMessageTagHelper.TagName));
@@ -34,7 +34,7 @@ public class SelectContextTests
         context.AddItem(new SelectOptionsItem()
         {
             Text = "Option"
-        });
+        }, SelectItemTagHelper.TagName);
 
         // Act
         var ex = Record.Exception(() => context.SetHint([], new HtmlString("Error"), SelectHintTagHelper.TagName));
@@ -53,7 +53,7 @@ public class SelectContextTests
         context.AddItem(new SelectOptionsItem()
         {
             Text = "Option"
-        });
+        }, SelectItemTagHelper.TagName);
 
         // Act
         var ex = Record.Exception(() => context.SetLabel(false, [], new HtmlString("Error"), SelectLabelTagHelper.TagName));

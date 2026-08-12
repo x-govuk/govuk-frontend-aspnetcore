@@ -35,7 +35,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     Disabled = true,
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
@@ -44,7 +44,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     Disabled = false,
                     Id = new TemplateString("second"),
                     Value = new TemplateString("second")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -121,7 +121,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     Disabled = true,
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
@@ -130,7 +130,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     Disabled = false,
                     Id = new TemplateString("second"),
                     Value = new TemplateString("second")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -185,7 +185,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     },
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -244,7 +244,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     },
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -305,7 +305,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     },
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -374,7 +374,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     Disabled = true,
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 checkboxesContext.AddItem(new CheckboxesOptionsItem()
                 {
@@ -383,7 +383,7 @@ public class CheckboxesTagHelperTests : TagHelperTestBase<CheckboxesTagHelper>
                     Disabled = false,
                     Id = new TemplateString("second"),
                     Value = new TemplateString("second")
-                });
+                }, CheckboxesItemTagHelper.TagName);
 
                 checkboxesContext.CloseFieldset();
 

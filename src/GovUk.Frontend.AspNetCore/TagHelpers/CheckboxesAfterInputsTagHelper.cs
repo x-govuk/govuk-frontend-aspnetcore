@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content after the inputs in a GDS checkboxes component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = CheckboxesTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the checkboxes.")]
 public class CheckboxesAfterInputsTagHelper : TagHelper
@@ -14,11 +15,9 @@ public class CheckboxesAfterInputsTagHelper : TagHelper
     private readonly ILogger<CheckboxesAfterInputsTagHelper> _logger;
 
     internal const string TagName = "govuk-checkboxes-after-inputs";
+    internal const string ShortTagName = ShortTagNames.AfterInputs;
 
-    internal static IReadOnlyCollection<string> AllTagNames { get; } = new[]
-    {
-        TagName
-    };
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <summary>
     /// Creates a new <see cref="CheckboxesAfterInputsTagHelper"/>.

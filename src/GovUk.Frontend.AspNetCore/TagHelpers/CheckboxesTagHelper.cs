@@ -15,12 +15,19 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [RestrictChildren(
     CheckboxesFieldsetTagHelper.TagName,
     FormGroupFieldsetLegendTagHelper.CheckboxesTagName,
+    FormGroupFieldsetLegendTagHelper.ShortTagName,
     CheckboxesItemTagHelper.TagName,
+    CheckboxesItemTagHelper.ShortTagName,
     CheckboxesItemDividerTagHelper.TagName,
+    CheckboxesItemDividerTagHelper.ShortTagName,
     CheckboxesHintTagHelper.TagName,
+    CheckboxesHintTagHelper.ShortTagName,
     CheckboxesErrorMessageTagHelper.TagName,
+    CheckboxesErrorMessageTagHelper.ShortTagName,
     CheckboxesBeforeInputsTagHelper.TagName,
-    CheckboxesAfterInputsTagHelper.TagName
+    CheckboxesBeforeInputsTagHelper.ShortTagName,
+    CheckboxesAfterInputsTagHelper.TagName,
+    CheckboxesAfterInputsTagHelper.ShortTagName
 )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class CheckboxesTagHelper : TagHelper

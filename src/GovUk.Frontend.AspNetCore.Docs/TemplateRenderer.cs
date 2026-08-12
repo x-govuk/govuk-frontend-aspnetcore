@@ -84,8 +84,9 @@ public class TemplateRenderer
     {
         var tagHelperName = args.At(0).ToStringValue();
         var forTagName = args.Count > 1 ? args.At(1).ToStringValue() : null;
+        var forShortTagName = args.Count > 2 ? args.At(2).ToStringValue() : null;
 
-        var tagHelperApi = _tagHelperApiProvider.GetTagHelperApi(tagHelperName, forTagName);
+        var tagHelperApi = _tagHelperApiProvider.GetTagHelperApi(tagHelperName, forTagName, forShortTagName);
         var contentDescription = tagHelperApi.ContentDescription;
 
         var sb = new StringBuilder();
@@ -120,8 +121,11 @@ public class TemplateRenderer
             // Show the short tag name before the full one
             var orderedParentTagNames = tagHelperApi.ParentTagNames.OrderByDescending(tn => !tn.StartsWith("govuk-")).ThenBy(tn => tn).ToArray();
 
+            // The first tag name is the one the article is read against, e.g. an <item>
+            var article = orderedParentTagNames[0] is ['a' or 'e' or 'i' or 'o' or 'u', ..] ? "an" : "a";
+
             sb.AppendLine();
-            sb.AppendLine($"Must be inside a {string.Join(" or ", orderedParentTagNames.Select(t => $"`<{t}>`"))} element.");
+            sb.AppendLine($"Must be inside {article} {string.Join(" or ", orderedParentTagNames.Select(t => $"`<{t}>`"))} element.");
         }
 
         if (tagHelperApi.Attributes.Count > 0)

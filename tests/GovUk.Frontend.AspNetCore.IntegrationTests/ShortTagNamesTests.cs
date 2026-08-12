@@ -1,0 +1,100 @@
+using AngleSharp.Dom;
+using Microsoft.AspNetCore.Mvc;
+
+namespace GovUk.Frontend.AspNetCore.IntegrationTests;
+
+public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixture<ShortTagNamesTestsFixture>
+{
+    [Theory]
+    [InlineData("Checkboxes", "short", "long")]
+    [InlineData("Checkboxes", "short-error-message", "long-error-message")]
+    public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
+        string component,
+        string shortTestId,
+        string longTestId)
+    {
+        // Act
+        var document = await GetDocumentAsync(component);
+
+        // Assert
+        var shortContainer = GetContainer(document, shortTestId);
+        var longContainer = GetContainer(document, longTestId);
+
+        // Guards against both containers being empty, which would make the comparison vacuous
+        Assert.NotNull(shortContainer.QuerySelector("fieldset > legend"));
+        Assert.NotEmpty(shortContainer.QuerySelectorAll("input[type='checkbox']"));
+
+        // An unrecognised element is written out as-is, so a short name that never bound to a tag
+        // helper would show up here as, say, an <item> element outside the fieldset
+        Assert.Equal(longContainer.InnerHtml, shortContainer.InnerHtml);
+    }
+
+    private async Task<IDocument> GetDocumentAsync(string component)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/ShortTagNamesTests/{component}");
+        var response = await fixture.HttpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+
+        return await response.GetHtmlDocument();
+    }
+
+    private static IElement GetContainer(IDocument document, string testId) =>
+        document.QuerySelector($"[data-testid='{testId}']") ??
+            throw new InvalidOperationException($"No element found with the test ID '{testId}'.");
+}
+
+public class ShortTagNamesTestsFixture : ServerFixture
+{
+    public ShortTagNamesTestsFixture()
+    {
+        HttpClient = new HttpClient() { BaseAddress = new Uri(BaseUrl) };
+    }
+
+    public HttpClient HttpClient { get; }
+
+    public override async ValueTask InitializeAsync()
+    {
+        // No browser needed for these tests
+        await StartHostAsync();
+    }
+
+    public override ValueTask DisposeAsync()
+    {
+        HttpClient.Dispose();
+        return base.DisposeAsync();
+    }
+
+    protected override void Configure(IApplicationBuilder app)
+    {
+        base.Configure(app);
+
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
+    }
+
+    protected override void ConfigureServices(IServiceCollection services)
+    {
+        base.ConfigureServices(services);
+
+        services
+            .AddMvc()
+            .AddRazorOptions(options => options.ViewLocationFormats.Add("/ShortTagNamesTestsViews/{0}.cshtml"));
+    }
+}
+
+[Route("ShortTagNamesTests")]
+public class ShortTagNamesTestsController : Controller
+{
+    [HttpGet("Checkboxes")]
+    public IActionResult GetCheckboxes() => View("Checkboxes", new ShortTagNamesTestsModel());
+}
+
+public class ShortTagNamesTestsModel
+{
+    public string[]? ContactPreferences { get; set; }
+
+    public string? EmailAddress { get; set; }
+
+    public string? PhoneNumber { get; set; }
+
+    public string? MobilePhoneNumber { get; set; }
+}

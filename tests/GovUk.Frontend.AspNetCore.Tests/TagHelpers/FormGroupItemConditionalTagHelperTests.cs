@@ -9,9 +9,9 @@ public class FormGroupItemConditionalTagHelperTests : TagHelperTestBase<FormGrou
     public async Task ProcessAsync_SetsConditionalOnContext()
     {
         // Arrange
-        FormGroupItemContext itemContext = TagName == FormGroupItemConditionalTagHelper.CheckboxesTagName ?
-            new CheckboxesItemContext() :
-            new RadiosItemContext();
+        FormGroupItemContext itemContext = TagName == FormGroupItemConditionalTagHelper.RadiosTagName ?
+            new RadiosItemContext() :
+            new CheckboxesItemContext();
 
         var context = CreateTagHelperContext(contexts: itemContext);
 

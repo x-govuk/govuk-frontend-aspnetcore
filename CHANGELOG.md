@@ -30,6 +30,25 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
+The checkboxes tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+
+```razor
+<govuk-checkboxes for="ContactPreferences">
+    <legend>How would you like to be contacted?</legend>
+    <hint>Select all options that are relevant to you.</hint>
+    <item value="email">
+        Email
+        <conditional>
+            <govuk-input for="EmailAddress" type="email" input-class="govuk-!-width-one-third">
+                <govuk-input-label>Email address</govuk-input-label>
+            </govuk-input>
+        </conditional>
+    </item>
+</govuk-checkboxes>
+```
+
+`<legend>`, `<hint>`, `<error-message>`, `<item>`, `<divider>`, `<before-inputs>` and `<after-inputs>` go directly inside `<govuk-checkboxes>`; `<hint>` and `<conditional>` go inside an `<item>`. The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>` — the short names pair with the fieldset that `<govuk-checkboxes>` generates for a `<legend>` of its own.
+
 `TabsOptions.Title` is now `string?` rather than `TemplateString?`. It only ever comes from the `title` attribute, so it is always text.
 
 `SelectOptionsItem.Text` is `TemplateString?` again and its `Html` property is gone. Content written inside `<govuk-select-item>` is markup, and `TemplateString` already carries either kind, so the extra property added nothing.

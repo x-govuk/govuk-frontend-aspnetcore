@@ -30,7 +30,11 @@ public class TagHelperApiProvider
         _formActionTagHelper = typeof(GovUkFrontendOptions).Assembly.GetType($"{TagHelperNamespace}.FormActionTagHelper")!;
     }
 
-    public TagHelperApi GetTagHelperApi(string tagHelperName, string? forTagName = null)
+    /// <param name="forShortTagName">
+    /// The short name that goes with <paramref name="forTagName"/>, for tag helpers that target more than one
+    /// element; it targets a different parent element so it cannot be deduced from <paramref name="forTagName"/>.
+    /// </param>
+    public TagHelperApi GetTagHelperApi(string tagHelperName, string? forTagName = null, string? forShortTagName = null)
     {
         ArgumentNullException.ThrowIfNull(tagHelperName);
 
@@ -46,11 +50,18 @@ public class TagHelperApiProvider
         // Tag helpers that target several elements are documented an element at a time
         if (forTagName is not null)
         {
-            htmlTargetElementAttrs = htmlTargetElementAttrs.Where(e => e.Tag == forTagName).ToArray();
+            htmlTargetElementAttrs = htmlTargetElementAttrs
+                .Where(e => e.Tag == forTagName || e.Tag == forShortTagName)
+                .ToArray();
 
-            if (htmlTargetElementAttrs.Length == 0)
+            if (!htmlTargetElementAttrs.Any(e => e.Tag == forTagName))
             {
                 throw new ArgumentException($"Could not find HtmlTargetElementAttribute for '{forTagName}' on '{tagHelperClassName}'.", nameof(forTagName));
+            }
+
+            if (forShortTagName is not null && !htmlTargetElementAttrs.Any(e => e.Tag == forShortTagName))
+            {
+                throw new ArgumentException($"Could not find HtmlTargetElementAttribute for '{forShortTagName}' on '{tagHelperClassName}'.", nameof(forShortTagName));
             }
         }
 

@@ -8,6 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(CheckboxesTagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
 [HtmlTargetElement(CheckboxesTagName, ParentTag = CheckboxesTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = CheckboxesTagHelper.TagName)]
 [HtmlTargetElement(DateInputTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
 [HtmlTargetElement(DateInputTagName, ParentTag = DateInputTagHelper.TagName)]
 [HtmlTargetElement(RadiosTagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
@@ -20,6 +21,7 @@ public class FormGroupFieldsetLegendTagHelper : TagHelper
     internal const string CheckboxesTagName = "govuk-checkboxes-fieldset-legend";
     internal const string DateInputTagName = "govuk-date-input-fieldset-legend";
     internal const string RadiosTagName = "govuk-radios-fieldset-legend";
+    internal const string ShortTagName = ShortTagNames.Legend;
 
     private const string IsPageHeadingAttributeName = "is-page-heading";
 

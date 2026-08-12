@@ -20,18 +20,21 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [RestrictChildren(
     DateInputFieldsetTagHelper.TagName,
     FormGroupFieldsetLegendTagHelper.DateInputTagName,
+    FormGroupFieldsetLegendTagHelper.ShortTagName,
     DateInputHintTagHelper.TagName,
+    DateInputHintTagHelper.ShortTagName,
     DateInputErrorMessageTagHelper.TagName,
+    DateInputErrorMessageTagHelper.ShortTagName,
     DateInputDayTagHelper.TagName,
+    DateInputDayTagHelper.ShortTagName,
     DateInputMonthTagHelper.TagName,
+    DateInputMonthTagHelper.ShortTagName,
     DateInputYearTagHelper.TagName,
+    DateInputYearTagHelper.ShortTagName,
     DateInputBeforeInputsTagHelper.TagName,
-    DateInputAfterInputsTagHelper.TagName
-#if SHORT_TAG_NAMES
-    ,
-    FormGroupHintTagHelperBase.ShortTagName,
-    FormGroupErrorMessageTagHelperBase.ShortTagName
-#endif
+    DateInputBeforeInputsTagHelper.ShortTagName,
+    DateInputAfterInputsTagHelper.TagName,
+    DateInputAfterInputsTagHelper.ShortTagName
     )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class DateInputTagHelper : TagHelper

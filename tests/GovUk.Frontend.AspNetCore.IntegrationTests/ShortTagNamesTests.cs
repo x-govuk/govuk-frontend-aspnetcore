@@ -10,6 +10,8 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("Checkboxes", "short-error-message", "long-error-message")]
     [InlineData("Radios", "short", "long")]
     [InlineData("Radios", "short-error-message", "long-error-message")]
+    [InlineData("DateInput", "short", "long")]
+    [InlineData("DateInput", "short-error-message", "long-error-message")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -24,7 +26,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
 
         // Guards against both containers being empty, which would make the comparison vacuous
         Assert.NotNull(shortContainer.QuerySelector("fieldset > legend"));
-        Assert.NotEmpty(shortContainer.QuerySelectorAll("input[type='checkbox'], input[type='radio']"));
+        Assert.NotEmpty(shortContainer.QuerySelectorAll("input"));
 
         // An unrecognised element is written out as-is, so a short name that never bound to a tag
         // helper would show up here as, say, an <item> element outside the fieldset
@@ -91,6 +93,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("Radios")]
     public IActionResult GetRadios() => View("Radios", new ShortTagNamesTestsModel());
+
+    [HttpGet("DateInput")]
+    public IActionResult GetDateInput() => View("DateInput", new ShortTagNamesTestsModel());
 }
 
 public class ShortTagNamesTestsModel
@@ -104,4 +109,7 @@ public class ShortTagNamesTestsModel
     public string? PhoneNumber { get; set; }
 
     public string? MobilePhoneNumber { get; set; }
+
+    [DateInput(ErrorMessagePrefix = "Your date of birth")]
+    public DateOnly? DateOfBirth { get; set; }
 }

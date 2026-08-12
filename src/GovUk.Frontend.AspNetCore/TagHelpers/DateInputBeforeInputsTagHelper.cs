@@ -7,21 +7,17 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content before the inputs in a GDS date input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-#if SHORT_TAG_NAMES
-[HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.ShortTagName)]
-#endif
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use before the date input.")]
 public class DateInputBeforeInputsTagHelper : TagHelper
 {
     private readonly ILogger<DateInputBeforeInputsTagHelper> _logger;
 
     internal const string TagName = "govuk-date-input-before-inputs";
+    internal const string ShortTagName = ShortTagNames.BeforeInputs;
 
-    internal static IReadOnlyCollection<string> AllTagNames { get; } = new[]
-    {
-        TagName
-    };
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <summary>
     /// Creates a new <see cref="DateInputBeforeInputsTagHelper"/>.

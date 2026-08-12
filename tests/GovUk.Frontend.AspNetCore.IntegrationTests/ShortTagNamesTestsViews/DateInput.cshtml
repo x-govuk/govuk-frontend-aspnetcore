@@ -1,0 +1,66 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-date-input for="DateOfBirth">
+        <legend>The legend</legend>
+
+        <hint>
+            For example, 31 3 1980
+        </hint>
+
+        <before-inputs>Before inputs</before-inputs>
+
+        <day>
+            <label>Diwrnod</label>
+        </day>
+        <month>
+            <label>Mis</label>
+        </month>
+        <year>
+            <label>Blwyddyn</label>
+        </year>
+
+        <after-inputs>After inputs</after-inputs>
+    </govuk-date-input>
+</div>
+
+<div data-testid="long">
+    <govuk-date-input for="DateOfBirth">
+        <govuk-date-input-fieldset-legend>The legend</govuk-date-input-fieldset-legend>
+
+        <govuk-date-input-hint>
+            For example, 31 3 1980
+        </govuk-date-input-hint>
+
+        <govuk-date-input-before-inputs>Before inputs</govuk-date-input-before-inputs>
+
+        <govuk-date-input-day>
+            <govuk-date-input-day-label>Diwrnod</govuk-date-input-day-label>
+        </govuk-date-input-day>
+        <govuk-date-input-month>
+            <govuk-date-input-month-label>Mis</govuk-date-input-month-label>
+        </govuk-date-input-month>
+        <govuk-date-input-year>
+            <govuk-date-input-year-label>Blwyddyn</govuk-date-input-year-label>
+        </govuk-date-input-year>
+
+        <govuk-date-input-after-inputs>After inputs</govuk-date-input-after-inputs>
+    </govuk-date-input>
+</div>
+
+<div data-testid="short-error-message">
+    <govuk-date-input id="with-error" name-prefix="WithError" error-message-prefix="Your date of birth">
+        <legend>The legend</legend>
+        <error-message>Enter your date of birth</error-message>
+    </govuk-date-input>
+</div>
+
+<div data-testid="long-error-message">
+    <govuk-date-input id="with-error" name-prefix="WithError" error-message-prefix="Your date of birth">
+        <govuk-date-input-fieldset-legend>The legend</govuk-date-input-fieldset-legend>
+        <govuk-date-input-error-message>Enter your date of birth</govuk-date-input-error-message>
+    </govuk-date-input>
+</div>

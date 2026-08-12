@@ -9,6 +9,8 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the item's label.")]
 public abstract class DateInputItemLabelTagHelperBase : TagHelper
 {
+    internal const string ShortTagName = ShortTagNames.Label;
+
     /// <summary>
     /// Creates a <see cref="DateInputItemLabelTagHelperBase"/>.
     /// </summary>

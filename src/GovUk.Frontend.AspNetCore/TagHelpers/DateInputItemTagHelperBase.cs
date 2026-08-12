@@ -98,7 +98,14 @@ public abstract class DateInputItemTagHelperBase : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new DateInputItemContext(ItemTagName, _labelTagName));
+        ArgumentNullException.ThrowIfNull(context);
+
+        // The label pairs with the item it is inside, so a short-named item takes the short-named label
+        var labelTagName = context.TagName == ItemTagName ?
+            _labelTagName :
+            DateInputItemLabelTagHelperBase.ShortTagName;
+
+        context.SetContextItem(new DateInputItemContext(context.TagName, labelTagName));
     }
 
     /// <inheritdoc/>

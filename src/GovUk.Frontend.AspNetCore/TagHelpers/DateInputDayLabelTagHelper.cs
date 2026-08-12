@@ -6,6 +6,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the label in the day item of a GDS date input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DateInputDayTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputDayTagHelper.ShortTagName)]
 public class DateInputDayLabelTagHelper : DateInputItemLabelTagHelperBase
 {
     internal const string TagName = "govuk-date-input-day-label";

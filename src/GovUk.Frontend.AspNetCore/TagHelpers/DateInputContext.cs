@@ -30,13 +30,11 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public IHtmlContent? AfterInputs => _afterInputs?.Content;
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
-        [/*, DateInputErrorMessageTagHelper.ShortTagName, */DateInputErrorMessageTagHelper.TagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } = DateInputErrorMessageTagHelper.AllTagNames;
 
     public string FieldsetTagName { get; } = DateInputFieldsetTagHelper.TagName;
 
-    protected override IReadOnlyCollection<string> HintTagNames { get; } =
-        [/*DateInputHintTagHelper.ShortTagName, */DateInputHintTagHelper.TagName];
+    protected override IReadOnlyCollection<string> HintTagNames { get; } = DateInputHintTagHelper.AllTagNames;
 
     protected override IReadOnlyCollection<string> LabelTagNames => throw new NotSupportedException();
 

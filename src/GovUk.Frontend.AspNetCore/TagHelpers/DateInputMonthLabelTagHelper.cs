@@ -6,6 +6,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the label in the month item of a GDS date input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DateInputMonthTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputMonthTagHelper.ShortTagName)]
 public class DateInputMonthLabelTagHelper : DateInputItemLabelTagHelperBase
 {
     internal const string TagName = "govuk-date-input-month-label";

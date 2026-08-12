@@ -6,11 +6,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the day item in a GDS date input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-[RestrictChildren(DateInputDayLabelTagHelper.TagName)]
+[RestrictChildren(DateInputDayLabelTagHelper.TagName, DateInputDayLabelTagHelper.ShortTagName)]
 public class DateInputDayTagHelper : DateInputItemTagHelperBase
 {
     internal const string TagName = "govuk-date-input-day";
+    internal const string ShortTagName = ShortTagNames.Day;
 
     /// <summary>
     /// Creates a <see cref="DateInputDayTagHelper"/>.

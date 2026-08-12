@@ -19,9 +19,9 @@
 
 ```razor
 <govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
-    <govuk-date-input-error-message>
+    <error-message>
         The date your passport was issued must be in the past
-    </govuk-date-input-error-message>
+    </error-message>
 </govuk-date-input>
 ```
 
@@ -31,15 +31,15 @@
 
 ```razor
 <govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
-    <govuk-date-input-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+    <legend is-page-heading="true" class="govuk-fieldset__legend--l">
         When was your passport issued?
-    </govuk-date-input-fieldset-legend>
-    <govuk-date-input-hint>
+    </legend>
+    <hint>
         For example, 27 3 2007
-    </govuk-date-input-hint>
-    <govuk-date-input-error-message>
+    </hint>
+    <error-message>
         The date your passport was issued must be in the past
-    </govuk-date-input-error-message>
+    </error-message>
 </govuk-date-input>
 ```
 
@@ -57,15 +57,15 @@
 
 ```razor
 <govuk-date-input for="PassportIssued">
-    <govuk-date-input-day>
-        <govuk-date-input-day-label>Dydd</govuk-date-input-day-label>
-    </govuk-date-input-day>
-    <govuk-date-input-month>
-        <govuk-date-input-month-label>Mis</govuk-date-input-month-label>
-    </govuk-date-input-month>
-    <govuk-date-input-year>
-        <govuk-date-input-year-label>Blwyddyn</govuk-date-input-year-label>
-    </govuk-date-input-year>
+    <day>
+        <label>Dydd</label>
+    </day>
+    <month>
+        <label>Mis</label>
+    </month>
+    <year>
+        <label>Blwyddyn</label>
+    </year>
 </govuk-date-input>
 ```
 
@@ -75,9 +75,9 @@
 
 ```razor
 <govuk-date-input for="PassportIssued" error-message-prefix="Your passport issue date">
-    <govuk-date-input-day value="1" />
-    <govuk-date-input-month value="4" />
-    <govuk-date-input-year value="2022" />
+    <day value="1" />
+    <month value="4" />
+    <year value="2022" />
 </govuk-date-input>
 ```
 
@@ -87,7 +87,7 @@
 
 ```razor
 <govuk-date-input for="Birthday" item-types="DateInputItemTypes.DayAndMonth" error-message-prefix="Your birthday">
-    <govuk-date-input-fieldset-legend>What is your birthday?</govuk-date-input-fieldset-legend>
+    <legend>What is your birthday?</legend>
 </govuk-date-input>
 ```
 
@@ -97,7 +97,7 @@
 
 ```razor
 <govuk-date-input for="DateMovedIn" item-types="DateInputItemTypes.MonthAndYear" error-message-prefix="The date you moved into this property">
-    <govuk-date-input-fieldset-legend>When did you move into this property?</govuk-date-input-fieldset-legend>
+    <legend>When did you move into this property?</legend>
 </govuk-date-input>
 ```
 
@@ -126,7 +126,7 @@
 
 #### `<govuk-date-input-fieldset>`
 
-A container element used when the date input should be contained within a fieldset element. When used, every other child element must be placed inside this element rather than the root date input element.
+A container element used when the date input should be contained within a fieldset element. When used, every other child element must be placed inside this element rather than the root date input element, and each must use its govuk- prefixed name; the short names are only available directly inside the root date input element.
 
 Must be inside a `<govuk-date-input>` element.
 
@@ -135,7 +135,7 @@ Must be inside a `<govuk-date-input>` element.
 | `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute. |
 
 
-#### `<govuk-date-input-fieldset-legend>`
+#### `<legend>` / `<govuk-date-input-fieldset-legend>`
 
 The content is the HTML to use within the legend. When this element is specified directly inside the root date input element a fieldset is generated automatically.
 
@@ -146,14 +146,14 @@ Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 | `is-page-heading` | `bool?` | Whether the legend also acts as the heading for the page. The default is `false`. |
 
 
-#### `<govuk-date-input-hint>`
+#### `<hint>` / `<govuk-date-input-hint>`
 
 The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 
 
-#### `<govuk-date-input-error-message>`
+#### `<error-message>` / `<govuk-date-input-error-message>`
 
 The content is the HTML to use within the component's error message.
 
@@ -165,14 +165,14 @@ Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 | `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
 
-#### `<govuk-date-input-before-inputs>`
+#### `<before-inputs>` / `<govuk-date-input-before-inputs>`
 
 The content is the HTML to use before the date input.
 
 Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 
 
-#### `<govuk-date-input-day>`
+#### `<day>` / `<govuk-date-input-day>`
 
 Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 
@@ -186,14 +186,14 @@ Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 | `value` | `string` | The `value` attribute for the generated `input` element. This cannot be specified if the `Value` property on the parent is also specified. |
 
 
-#### `<govuk-date-input-day-label>`
+#### `<label>` / `<govuk-date-input-day-label>`
 
 The content is the HTML to use within the item's label.
 
-Must be inside a `<govuk-date-input-day>` element.
+Must be inside a `<day>` or `<govuk-date-input-day>` element.
 
 
-#### `<govuk-date-input-month>`
+#### `<month>` / `<govuk-date-input-month>`
 
 Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 
@@ -207,14 +207,14 @@ Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 | `value` | `string` | The `value` attribute for the generated `input` element. This cannot be specified if the `Value` property on the parent is also specified. |
 
 
-#### `<govuk-date-input-month-label>`
+#### `<label>` / `<govuk-date-input-month-label>`
 
 The content is the HTML to use within the item's label.
 
-Must be inside a `<govuk-date-input-month>` element.
+Must be inside a `<month>` or `<govuk-date-input-month>` element.
 
 
-#### `<govuk-date-input-year>`
+#### `<year>` / `<govuk-date-input-year>`
 
 Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 
@@ -228,14 +228,14 @@ Must be inside a `<govuk-date-input>` or `<govuk-date-input-fieldset>` element.
 | `value` | `string` | The `value` attribute for the generated `input` element. This cannot be specified if the `Value` property on the parent is also specified. |
 
 
-#### `<govuk-date-input-year-label>`
+#### `<label>` / `<govuk-date-input-year-label>`
 
 The content is the HTML to use within the item's label.
 
-Must be inside a `<govuk-date-input-year>` element.
+Must be inside a `<year>` or `<govuk-date-input-year>` element.
 
 
-#### `<govuk-date-input-after-inputs>`
+#### `<after-inputs>` / `<govuk-date-input-after-inputs>`
 
 The content is the HTML to use after the date input.
 

@@ -14,19 +14,17 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     SelectItemTagHelper.TagName,
+    SelectItemTagHelper.ShortTagName,
     SelectLabelTagHelper.TagName,
+    SelectLabelTagHelper.ShortTagName,
     SelectHintTagHelper.TagName,
+    SelectHintTagHelper.ShortTagName,
     SelectErrorMessageTagHelper.TagName,
+    SelectErrorMessageTagHelper.ShortTagName,
     SelectBeforeInputTagHelper.TagName,
-    SelectAfterInputTagHelper.TagName
-#if SHORT_TAG_NAMES
-    ,
-    FormGroupLabelTagHelperBase.ShortTagName,
-    FormGroupHintTagHelperBase.ShortTagName,
-    FormGroupErrorMessageTagHelperBase.ShortTagName,
-    ShortTagNames.BeforeInput,
-    ShortTagNames.AfterInput
-#endif
+    SelectBeforeInputTagHelper.ShortTagName,
+    SelectAfterInputTagHelper.TagName,
+    SelectAfterInputTagHelper.ShortTagName
 )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class SelectTagHelper : TagHelper

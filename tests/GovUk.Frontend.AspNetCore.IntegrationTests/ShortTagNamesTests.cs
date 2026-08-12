@@ -20,6 +20,8 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("FileUpload", "short-error-message", "long-error-message")]
     [InlineData("PasswordInput", "short", "long")]
     [InlineData("PasswordInput", "short-error-message", "long-error-message")]
+    [InlineData("Select", "short", "long")]
+    [InlineData("Select", "short-error-message", "long-error-message")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -116,6 +118,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("PasswordInput")]
     public IActionResult GetPasswordInput() => View("PasswordInput", new ShortTagNamesTestsModel());
+
+    [HttpGet("Select")]
+    public IActionResult GetSelect() => View("Select", new ShortTagNamesTestsModel());
 }
 
 public class ShortTagNamesTestsModel
@@ -138,4 +143,6 @@ public class ShortTagNamesTestsModel
     public IFormFile? Evidence { get; set; }
 
     public string? Password { get; set; }
+
+    public string? Sort { get; set; }
 }

@@ -18,7 +18,7 @@ public class CheckboxesItemHintTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var itemContext = context.GetContextItem<CheckboxesItemContext>();
+        var itemContext = context.GetContextItem<FormGroupItemContext>();
 
         var content = await output.GetChildContentAsync();
 

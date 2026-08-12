@@ -27,6 +27,6 @@ public class CheckboxesItemConditionalTagHelperTests : TagHelperTestBase<Checkbo
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Conditional", checkboxesItemContext.Conditional?.Options.Html?.ToHtmlString());
+        Assert.Equal("Conditional", checkboxesItemContext.Conditional?.Html?.ToHtmlString());
     }
 }

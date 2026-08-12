@@ -2,45 +2,16 @@ using GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class RadiosItemContext
+internal class RadiosItemContext : FormGroupItemContext
 {
-    public (RadiosOptionsItemConditional Options, string TagName)? Conditional { get; private set; }
-    public (HintOptions Options, string TagName)? Hint { get; private set; }
+    protected override string ConditionalTagName => RadiosItemConditionalTagHelper.TagName;
 
-    public void SetConditional(RadiosOptionsItemConditional options, string tagName)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        ArgumentNullException.ThrowIfNull(tagName);
+    protected override string HintTagName => RadiosItemHintTagHelper.TagName;
 
-        if (Conditional is not null)
-        {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                RadiosItemConditionalTagHelper.TagName,
-                RadiosItemTagHelper.TagName);
-        }
+    protected override string ItemTagName => RadiosItemTagHelper.TagName;
 
-        Conditional = (options, tagName);
-    }
-
-    public void SetHint(HintOptions options, string tagName)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        ArgumentNullException.ThrowIfNull(tagName);
-
-        if (Hint is not null)
-        {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                RadiosItemHintTagHelper.TagName,
-                RadiosItemTagHelper.TagName);
-        }
-
-        if (Conditional is not null)
-        {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
-                RadiosItemHintTagHelper.TagName,
-                RadiosItemConditionalTagHelper.TagName);
-        }
-
-        Hint = (options, tagName);
-    }
+    public RadiosOptionsItemConditional? GetConditionalOptions() =>
+        Conditional is { } conditional ?
+            new RadiosOptionsItemConditional { Attributes = conditional.Attributes, Html = conditional.Html } :
+            null;
 }

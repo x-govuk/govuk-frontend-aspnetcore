@@ -10,13 +10,12 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        var conditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Conditional") };
 
         // Act
-        context.SetConditional(conditionalOptions, "govuk-checkboxes-item-conditional");
+        context.SetConditional(new AttributeCollection(), new TemplateString("Conditional"), "govuk-checkboxes-item-conditional");
 
         // Assert
-        Assert.Equal("Conditional", context.Conditional?.Options.Html?.ToHtmlString());
+        Assert.Equal("Conditional", context.Conditional?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -24,12 +23,10 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        var existingConditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Existing conditional") };
-        context.SetConditional(existingConditionalOptions, "govuk-checkboxes-item-conditional");
+        context.SetConditional(new AttributeCollection(), new TemplateString("Existing conditional"), "govuk-checkboxes-item-conditional");
 
         // Act
-        var conditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Conditional") };
-        var ex = Record.Exception(() => context.SetConditional(conditionalOptions, "govuk-checkboxes-item-conditional"));
+        var ex = Record.Exception(() => context.SetConditional(new AttributeCollection(), new TemplateString("Conditional"), "govuk-checkboxes-item-conditional"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -55,8 +52,7 @@ public class CheckboxesItemContextTests
     {
         // Arrange
         var context = new CheckboxesItemContext();
-        var existingConditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Existing conditional") };
-        context.SetConditional(existingConditionalOptions, "govuk-checkboxes-item-conditional");
+        context.SetConditional(new AttributeCollection(), new TemplateString("Existing conditional"), "govuk-checkboxes-item-conditional");
 
         // Act
         var hintOptions = new HintOptions { Html = new TemplateString("Hint") };

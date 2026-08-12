@@ -74,6 +74,12 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
             items[typeof(FormGroupContext3)] = formGroupContext;
         }
 
+        // Form group item tag helpers register their context under FormGroupItemContext too
+        foreach (var formGroupItemContext in contexts.OfType<FormGroupItemContext>())
+        {
+            items[typeof(FormGroupItemContext)] = formGroupItemContext;
+        }
+
         return new TagHelperContext(
             tagName ?? TagName,
             tagHelperAttributes,

@@ -70,7 +70,7 @@
         Email
         <conditional>
             <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
-                <govuk-input-label>Email address</govuk-input-label>
+                <label>Email address</label>
             </govuk-input>
         </conditional>
     </item>
@@ -79,7 +79,7 @@
         Phone
         <conditional>
             <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
-                <govuk-input-label>Phone number</govuk-input-label>
+                <label>Phone number</label>
             </govuk-input>
         </conditional>
     </item>
@@ -88,7 +88,7 @@
         Text message
         <conditional>
             <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
-                <govuk-input-label>Mobile phone number</govuk-input-label>
+                <label>Mobile phone number</label>
             </govuk-input>
         </conditional>
     </item>

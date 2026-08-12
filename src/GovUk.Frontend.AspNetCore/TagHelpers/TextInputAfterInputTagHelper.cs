@@ -7,27 +7,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content after the input in a GDS text input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = TextInputTagHelper.TagName)]
-#if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = TextInputTagHelper.TagName)]
-#endif
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the generated input element.")]
 public class TextInputAfterInputTagHelper : TagHelper
 {
     private readonly ILogger<TextInputAfterInputTagHelper> _logger;
 
     internal const string TagName = "govuk-input-after-input";
-#if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.AfterInput;
-#endif
 
-    internal static IReadOnlyCollection<string> AllTagNames { get; } = new[]
-    {
-        TagName
-#if SHORT_TAG_NAMES
-        ,
-        ShortTagName
-#endif
-    };
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <summary>
     /// Creates a new <see cref="TextInputAfterInputTagHelper"/>.

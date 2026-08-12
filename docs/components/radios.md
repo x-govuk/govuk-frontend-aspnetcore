@@ -59,8 +59,8 @@
         Email
         <conditional>
             <govuk-input id="contact-by-email" name="contact-by-email" type="email" autocomplete="email" spellcheck="false" class="govuk-!-width-one-half">
-                <govuk-input-label>Email address</govuk-input-label>
-                <govuk-input-error-message>Email address cannot be blank</govuk-input-error-message>
+                <label>Email address</label>
+                <error-message>Email address cannot be blank</error-message>
             </govuk-input>
         </conditional>
     </item>
@@ -69,7 +69,7 @@
         Phone
         <conditional>
             <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
-                <govuk-input-label>Phone number</govuk-input-label>
+                <label>Phone number</label>
             </govuk-input>
         </conditional>
     </item>
@@ -78,7 +78,7 @@
         Text message
         <conditional>
             <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
-                <govuk-input-label>Mobile phone number</govuk-input-label>
+                <label>Mobile phone number</label>
             </govuk-input>
         </conditional>
     </item>

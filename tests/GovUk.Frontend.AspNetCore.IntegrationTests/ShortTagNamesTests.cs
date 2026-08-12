@@ -12,6 +12,8 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("Radios", "short-error-message", "long-error-message")]
     [InlineData("DateInput", "short", "long")]
     [InlineData("DateInput", "short-error-message", "long-error-message")]
+    [InlineData("TextInput", "short", "long")]
+    [InlineData("TextInput", "short-error-message", "long-error-message")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -25,7 +27,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
         var longContainer = GetContainer(document, longTestId);
 
         // Guards against both containers being empty, which would make the comparison vacuous
-        Assert.NotNull(shortContainer.QuerySelector("fieldset > legend"));
+        Assert.NotEmpty(shortContainer.QuerySelectorAll("legend, label"));
         Assert.NotEmpty(shortContainer.QuerySelectorAll("input"));
 
         // An unrecognised element is written out as-is, so a short name that never bound to a tag
@@ -96,6 +98,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("DateInput")]
     public IActionResult GetDateInput() => View("DateInput", new ShortTagNamesTestsModel());
+
+    [HttpGet("TextInput")]
+    public IActionResult GetTextInput() => View("TextInput", new ShortTagNamesTestsModel());
 }
 
 public class ShortTagNamesTestsModel

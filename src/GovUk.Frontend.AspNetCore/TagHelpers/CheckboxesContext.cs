@@ -8,6 +8,7 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
 {
     private bool _fieldsetIsOpen;
     private readonly List<CheckboxesOptionsItem> _items = [];
+    private string? _firstItemTagName;
     private (IHtmlContent Content, string TagName)? _beforeInputs;
     private (IHtmlContent Content, string TagName)? _afterInputs;
 
@@ -33,7 +34,9 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => CheckboxesErrorMessageTagHelper.AllTagNames;
 
-    protected string ItemTagName => CheckboxesItemTagHelper.TagName;
+    // Messages about an item that has already been added name it as it was written in the view,
+    // which may be either the govuk- prefixed name or the short one
+    protected string ItemTagName => _firstItemTagName ?? CheckboxesItemTagHelper.TagName;
 
     protected override IReadOnlyCollection<string> HintTagNames => CheckboxesHintTagHelper.AllTagNames;
 
@@ -47,15 +50,17 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
 
     private IReadOnlyCollection<string> AfterInputsTagNames => CheckboxesAfterInputsTagHelper.AllTagNames;
 
-    public void AddItem(CheckboxesOptionsItem item)
+    public void AddItem(CheckboxesOptionsItem item, string tagName)
     {
         ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(tagName);
 
         if (Fieldset is not null && !_fieldsetIsOpen)
         {
-            throw new InvalidOperationException($"<{ItemTagName}> must be inside <{FieldsetTagName}>.");
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
+        _firstItemTagName ??= tagName;
         _items.Add(item);
     }
 

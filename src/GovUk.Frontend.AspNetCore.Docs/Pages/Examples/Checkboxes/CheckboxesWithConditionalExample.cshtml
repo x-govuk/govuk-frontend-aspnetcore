@@ -3,39 +3,39 @@
 
 <example>
     <govuk-checkboxes for="ContactPreferences">
-        <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+        <legend is-page-heading="true" class="govuk-fieldset__legend--l">
             How would you like to be contacted?
-        </govuk-checkboxes-fieldset-legend>
+        </legend>
 
-        <govuk-checkboxes-hint>
+        <hint>
             Select all options that are relevant to you.
-        </govuk-checkboxes-hint>
+        </hint>
 
-        <govuk-checkboxes-item value="email">
+        <item value="email">
             Email
-            <govuk-checkboxes-item-conditional>
+            <conditional>
                 <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Email address</govuk-input-label>
                 </govuk-input>
-            </govuk-checkboxes-item-conditional>
-        </govuk-checkboxes-item>
+            </conditional>
+        </item>
 
-        <govuk-checkboxes-item value="phone">
+        <item value="phone">
             Phone
-            <govuk-checkboxes-item-conditional>
+            <conditional>
                 <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Phone number</govuk-input-label>
                 </govuk-input>
-            </govuk-checkboxes-item-conditional>
-        </govuk-checkboxes-item>
+            </conditional>
+        </item>
 
-        <govuk-checkboxes-item value="text message">
+        <item value="text message">
             Text message
-            <govuk-checkboxes-item-conditional>
+            <conditional>
                 <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Mobile phone number</govuk-input-label>
                 </govuk-input>
-            </govuk-checkboxes-item-conditional>
-        </govuk-checkboxes-item>
+            </conditional>
+        </item>
     </govuk-checkboxes>
 </example>

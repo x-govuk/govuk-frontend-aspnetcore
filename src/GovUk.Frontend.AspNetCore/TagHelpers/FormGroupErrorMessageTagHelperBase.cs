@@ -8,9 +8,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 public abstract class FormGroupErrorMessageTagHelperBase : TagHelper
 {
-#if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.ErrorMessage;
-#endif
 
     private const string VisuallyHiddenTextAttributeName = "visually-hidden-text";
 

@@ -6,9 +6,13 @@ internal static class ShortTagNames
     public const string ActionButton = "action-button";
     public const string ActionLink = "action-link";
     public const string AfterInput = "after-input";
+    public const string AfterInputs = "after-inputs";
     public const string BeforeInput = "before-input";
+    public const string BeforeInputs = "before-inputs";
     public const string CardActions = "card-actions";
+    public const string Conditional = "conditional";
     public const string Day = "day";
+    public const string Divider = "divider";
     public const string End = "end";
     public const string ErrorMessage = "error-message";
     public const string Fieldset = "fieldset";
@@ -16,6 +20,7 @@ internal static class ShortTagNames
     public const string Item = "item";
     public const string Key = "key";
     public const string Label = "label";
+    public const string Legend = "legend";
     public const string Month = "month";
     public const string Nav = "nav";
     public const string PanelActions = "panel-actions";

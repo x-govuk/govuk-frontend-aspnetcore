@@ -12,11 +12,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a GDS checkboxes component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = CheckboxesTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the label for the generated input element.")]
 public class CheckboxesItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes-item";
+    internal const string ShortTagName = ShortTagNames.Item;
 
     private const string CheckedAttributeName = "checked";
     private const string DisabledAttributeName = "disabled";
@@ -149,26 +151,28 @@ public class CheckboxesItemTagHelper : TagHelper
 
         var inputAttributes = new AttributeCollection(InputAttributes);
 
-        checkboxesContext.AddItem(new CheckboxesOptionsItem
-        {
-            Text = null,
-            Html = content.Snapshot(),
-            Id = Id,
-            Name = Name,
-            Value = Value,
-            Label = new LabelOptions
+        checkboxesContext.AddItem(
+            new CheckboxesOptionsItem
             {
-                Classes = labelClasses,
-                Attributes = labelAttributes
+                Text = null,
+                Html = content.Snapshot(),
+                Id = Id,
+                Name = Name,
+                Value = Value,
+                Label = new LabelOptions
+                {
+                    Classes = labelClasses,
+                    Attributes = labelAttributes
+                },
+                Hint = itemContext.Hint?.Options,
+                Checked = @checked,
+                Conditional = itemContext.GetConditionalOptions(),
+                Behaviour = Behavior is CheckboxesItemBehavior.Exclusive ? "exclusive" : null,
+                Disabled = Disabled,
+                Attributes = inputAttributes,
+                ItemAttributes = itemAttributes
             },
-            Hint = itemContext.Hint?.Options,
-            Checked = @checked,
-            Conditional = itemContext.GetConditionalOptions(),
-            Behaviour = Behavior is CheckboxesItemBehavior.Exclusive ? "exclusive" : null,
-            Disabled = Disabled,
-            Attributes = inputAttributes,
-            ItemAttributes = itemAttributes
-        });
+            context.TagName);
 
         output.SuppressOutput();
     }

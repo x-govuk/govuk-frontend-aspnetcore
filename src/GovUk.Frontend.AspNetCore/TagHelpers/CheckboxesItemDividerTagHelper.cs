@@ -7,11 +7,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the divider text to separate items in a GDS checkboxes component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = CheckboxesTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = CheckboxesFieldsetTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the item divider.")]
 public class CheckboxesItemDividerTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes-divider";
+    internal const string ShortTagName = ShortTagNames.Divider;
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -28,10 +30,12 @@ public class CheckboxesItemDividerTagHelper : TagHelper
             content = output.Content;
         }
 
-        checkboxesContext.AddItem(new CheckboxesOptionsItem
-        {
-            Divider = new TemplateString(content.Snapshot())
-        });
+        checkboxesContext.AddItem(
+            new CheckboxesOptionsItem
+            {
+                Divider = new TemplateString(content.Snapshot())
+            },
+            context.TagName);
 
         output.SuppressOutput();
     }

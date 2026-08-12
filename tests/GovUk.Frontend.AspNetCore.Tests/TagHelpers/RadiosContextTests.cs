@@ -18,7 +18,7 @@ public class RadiosContextTests
         };
 
         // Act
-        context.AddItem(item);
+        context.AddItem(item, "govuk-radios-item");
 
         // Assert
         var contextItem = Assert.Single(context.Items);
@@ -42,7 +42,7 @@ public class RadiosContextTests
         context.CloseFieldset();
 
         // Act
-        var ex = Record.Exception(() => context.AddItem(item));
+        var ex = Record.Exception(() => context.AddItem(item, "govuk-radios-item"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -95,7 +95,7 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        context.AddItem(item);
+        context.AddItem(item, "govuk-radios-item");
 
         // Act
         var ex = Record.Exception(() => context.OpenFieldset(new FormGroupFieldsetContext2(RadiosFieldsetTagHelper.TagName), new AttributeCollection()));
@@ -162,7 +162,7 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        context.AddItem(item);
+        context.AddItem(item, "govuk-radios-item");
 
         // Act
         var ex = Record.Exception(
@@ -210,7 +210,7 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        context.AddItem(item);
+        context.AddItem(item, "govuk-radios-item");
 
         // Act
         var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "govuk-radios-hint"));
@@ -218,6 +218,28 @@ public class RadiosContextTests
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal("<govuk-radios-hint> must be specified before <govuk-radios-item>.", ex.Message);
+    }
+
+    [Fact]
+    public void SetHint_AlreadyGotItemAddedWithShortTagName_ThrowsInvalidOperationExceptionNamingTheShortTagName()
+    {
+        // Arrange
+        var context = new RadiosContext(name: null, @for: null);
+
+        var item = new RadiosOptionsItem()
+        {
+            Html = new TemplateString("Item 1"),
+            Value = new TemplateString("item1")
+        };
+
+        context.AddItem(item, "item");
+
+        // Act
+        var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "hint"));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal("<hint> must be specified before <item>.", ex.Message);
     }
 
     [Fact]

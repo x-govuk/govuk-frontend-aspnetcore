@@ -7,6 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content after the inputs in a GDS radios component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = RadiosTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the radios.")]
 public class RadiosAfterInputsTagHelper : TagHelper
@@ -14,11 +15,9 @@ public class RadiosAfterInputsTagHelper : TagHelper
     private readonly ILogger<RadiosAfterInputsTagHelper> _logger;
 
     internal const string TagName = "govuk-radios-after-inputs";
+    internal const string ShortTagName = ShortTagNames.AfterInputs;
 
-    internal static IReadOnlyCollection<string> AllTagNames { get; } = new[]
-    {
-        TagName
-    };
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <summary>
     /// Creates a new <see cref="RadiosAfterInputsTagHelper"/>.

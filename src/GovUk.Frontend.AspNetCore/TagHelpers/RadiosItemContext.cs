@@ -6,7 +6,7 @@ internal class RadiosItemContext : FormGroupItemContext
 {
     protected override string ConditionalTagName => FormGroupItemConditionalTagHelper.RadiosTagName;
 
-    protected override string HintTagName => RadiosItemHintTagHelper.TagName;
+    protected override string HintTagName => FormGroupItemHintTagHelper.RadiosTagName;
 
     protected override string ItemTagName => RadiosItemTagHelper.TagName;
 

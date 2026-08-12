@@ -7,27 +7,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content after the input in a GDS character count component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CharacterCountTagHelper.TagName)]
-#if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = CharacterCountTagHelper.TagName)]
-#endif
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use after the generated textarea element.")]
 public class CharacterCountAfterInputTagHelper : TagHelper
 {
     private readonly ILogger<CharacterCountAfterInputTagHelper> _logger;
 
     internal const string TagName = "govuk-character-count-after-input";
-#if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.AfterInput;
-#endif
 
-    internal static IReadOnlyCollection<string> AllTagNames { get; } = new[]
-    {
-        TagName
-#if SHORT_TAG_NAMES
-        ,
-        ShortTagName
-#endif
-    };
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <summary>
     /// Creates a new <see cref="CharacterCountAfterInputTagHelper"/>.

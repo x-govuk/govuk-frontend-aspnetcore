@@ -7,15 +7,13 @@ internal class CharacterCountContext : FormGroupContext3
 {
     private (IHtmlContent Content, string TagName)? _beforeInput;
     private (IHtmlContent Content, string TagName)? _afterInput;
+    private string? _valueTagName;
 
-    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } =
-        [/*CharacterCountErrorMessageTagHelper.ShortTagName, */CharacterCountErrorMessageTagHelper.TagName];
+    protected override IReadOnlyCollection<string> ErrorMessageTagNames { get; } = CharacterCountErrorMessageTagHelper.AllTagNames;
 
-    protected override IReadOnlyCollection<string> HintTagNames { get; } =
-        [/*CharacterCountHintTagHelper.ShortTagName, */CharacterCountHintTagHelper.TagName];
+    protected override IReadOnlyCollection<string> HintTagNames { get; } = CharacterCountHintTagHelper.AllTagNames;
 
-    protected override IReadOnlyCollection<string> LabelTagNames { get; } =
-        [/*CharacterCountLabelTagHelper.ShortTagName, */CharacterCountLabelTagHelper.TagName];
+    protected override IReadOnlyCollection<string> LabelTagNames { get; } = CharacterCountLabelTagHelper.AllTagNames;
 
     protected override string RootTagName { get; } = CharacterCountTagHelper.TagName;
 
@@ -24,6 +22,10 @@ internal class CharacterCountContext : FormGroupContext3
     public IHtmlContent? AfterInput => _afterInput?.Content;
 
     public IHtmlContent? Value { get; private set; }
+
+    // Messages about a value that has already been set name it as it was written in the view,
+    // which may be either the govuk- prefixed name or the short one
+    private string ValueTagName => _valueTagName ?? CharacterCountValueTagHelper.TagName;
 
     private IReadOnlyCollection<string> BeforeInputTagNames => CharacterCountBeforeInputTagHelper.AllTagNames;
 
@@ -53,7 +55,7 @@ internal class CharacterCountContext : FormGroupContext3
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
                 tagName,
-                CharacterCountValueTagHelper.TagName);
+                ValueTagName);
         }
 
         base.SetErrorMessage(visuallyHiddenText, attributes, html, tagName);
@@ -79,7 +81,7 @@ internal class CharacterCountContext : FormGroupContext3
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
                 tagName,
-                CharacterCountValueTagHelper.TagName);
+                ValueTagName);
         }
 
         base.SetHint(attributes, html, tagName);
@@ -109,7 +111,7 @@ internal class CharacterCountContext : FormGroupContext3
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
                 tagName,
-                CharacterCountValueTagHelper.TagName);
+                ValueTagName);
         }
 
         base.SetLabel(isPageHeading, attributes, html, tagName);
@@ -138,7 +140,7 @@ internal class CharacterCountContext : FormGroupContext3
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
                 tagName,
-                CharacterCountValueTagHelper.TagName);
+                ValueTagName);
         }
 
         _beforeInput = (content, tagName);
@@ -160,7 +162,7 @@ internal class CharacterCountContext : FormGroupContext3
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(
                 tagName,
-                CharacterCountValueTagHelper.TagName);
+                ValueTagName);
         }
 
         _afterInput = (content, tagName);
@@ -168,11 +170,14 @@ internal class CharacterCountContext : FormGroupContext3
 
     public void SetValue(IHtmlContent html, string tagName)
     {
+        ArgumentNullException.ThrowIfNull(tagName);
+
         if (Value is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(tagName, RootTagName);
         }
 
+        _valueTagName = tagName;
         Value = html;
     }
 }

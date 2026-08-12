@@ -1,0 +1,46 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-character-count for="MoreDetail" max-length="200" rows="5">
+        <label is-page-heading="true" class="govuk-label--l">The label</label>
+
+        <hint>
+            Do not include personal or financial information
+        </hint>
+
+        <before-input>Before input</before-input>
+        <after-input>After input</after-input>
+        <value>Some existing content</value>
+    </govuk-character-count>
+</div>
+
+<div data-testid="long">
+    <govuk-character-count for="MoreDetail" max-length="200" rows="5">
+        <govuk-character-count-label is-page-heading="true" class="govuk-label--l">The label</govuk-character-count-label>
+
+        <govuk-character-count-hint>
+            Do not include personal or financial information
+        </govuk-character-count-hint>
+
+        <govuk-character-count-before-input>Before input</govuk-character-count-before-input>
+        <govuk-character-count-after-input>After input</govuk-character-count-after-input>
+        <govuk-character-count-value>Some existing content</govuk-character-count-value>
+    </govuk-character-count>
+</div>
+
+<div data-testid="short-error-message">
+    <govuk-character-count name="WithError" id="with-error" max-length="200">
+        <label>The label</label>
+        <error-message>Enter more detail</error-message>
+    </govuk-character-count>
+</div>
+
+<div data-testid="long-error-message">
+    <govuk-character-count name="WithError" id="with-error" max-length="200">
+        <govuk-character-count-label>The label</govuk-character-count-label>
+        <govuk-character-count-error-message>Enter more detail</govuk-character-count-error-message>
+    </govuk-character-count>
+</div>

@@ -29,7 +29,7 @@ internal class CheckboxesContext(string? name, ModelExpression? @for) : FormGrou
 
     public string FieldsetTagName => CheckboxesFieldsetTagHelper.TagName;
 
-    public string LegendTagName => CheckboxesFieldsetLegendTagHelper.TagName;
+    public string LegendTagName => FormGroupFieldsetLegendTagHelper.CheckboxesTagName;
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => CheckboxesErrorMessageTagHelper.AllTagNames;
 

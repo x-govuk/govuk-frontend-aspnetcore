@@ -4,35 +4,44 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFieldsetLegendTagHelper>
+public class FormGroupFieldsetLegendTagHelperTests : TagHelperTestBase<FormGroupFieldsetLegendTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_AddsLegendToContext()
     {
         // Arrange
+        var legendContent = "Legend content";
+        var isPageHeading = true;
+        var attributes = CreateDummyDataAttributes();
+
         var fieldsetContext = new FormGroupFieldsetContext2(ParentTagName!);
 
-        var context = CreateTagHelperContext(contexts: fieldsetContext);
+        var context = CreateTagHelperContext(
+            attributes: attributes,
+            contexts: fieldsetContext);
 
         var output = CreateTagHelperOutput(
+            attributes: attributes,
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var tagHelperContent = new DefaultTagHelperContent();
-                tagHelperContent.SetContent("Legend content");
+                tagHelperContent.SetContent(legendContent);
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosFieldsetLegendTagHelper()
+        var tagHelper = new FormGroupFieldsetLegendTagHelper()
         {
-            IsPageHeading = true
+            IsPageHeading = isPageHeading
         };
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Legend content", fieldsetContext.Legend?.Html?.ToHtmlString());
-        Assert.True(fieldsetContext.Legend?.IsPageHeading);
+        Assert.NotNull(fieldsetContext.Legend);
+        Assert.Equal(legendContent, fieldsetContext.Legend.Html?.ToHtmlString());
+        Assert.Equal(isPageHeading, fieldsetContext.Legend.IsPageHeading);
+        AssertContainsAttributes(attributes, fieldsetContext.Legend.Attributes);
     }
 
     [Fact]
@@ -43,7 +52,7 @@ public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFields
 
         fieldsetContext.SetLegend(
             isPageHeading: false,
-            attributes: new AttributeCollection(),
+            attributes: [],
             html: new TemplateString("Existing legend"),
             TagName);
 
@@ -57,7 +66,7 @@ public class RadiosFieldsetLegendTagHelperTests : TagHelperTestBase<RadiosFields
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new RadiosFieldsetLegendTagHelper()
+        var tagHelper = new FormGroupFieldsetLegendTagHelper()
         {
             IsPageHeading = true
         };

@@ -233,7 +233,7 @@ public class FormGroupFieldsetHelperTests
             isPageHeading: null,
             attributes: legendElementAttributes,
             html: new HtmlString("Legend"),
-            CheckboxesFieldsetLegendTagHelper.TagName);
+            FormGroupFieldsetLegendTagHelper.CheckboxesTagName);
 
         // Act
         var options = GetFieldsetOptions(
@@ -261,7 +261,7 @@ public class FormGroupFieldsetHelperTests
             isPageHeading: null,
             attributes: new AttributeCollection(new Dictionary<string, string?>() { { "data-foo", "from-element" } }),
             html: new HtmlString("Legend"),
-            CheckboxesFieldsetLegendTagHelper.TagName);
+            FormGroupFieldsetLegendTagHelper.CheckboxesTagName);
 
         // Act
         var options = GetFieldsetOptions(
@@ -307,7 +307,7 @@ public class FormGroupFieldsetHelperTests
                 isPageHeading: null,
                 attributes: new AttributeCollection(),
                 html: new HtmlString(legendHtml),
-                CheckboxesFieldsetLegendTagHelper.TagName);
+                FormGroupFieldsetLegendTagHelper.CheckboxesTagName);
         }
 
         context.CloseFieldset();
@@ -318,7 +318,7 @@ public class FormGroupFieldsetHelperTests
             isPageHeading: null,
             attributes: new AttributeCollection(),
             html: new HtmlString(html),
-            CheckboxesFieldsetLegendTagHelper.TagName);
+            FormGroupFieldsetLegendTagHelper.CheckboxesTagName);
 
     private static ModelExpression CreateModelExpression()
     {

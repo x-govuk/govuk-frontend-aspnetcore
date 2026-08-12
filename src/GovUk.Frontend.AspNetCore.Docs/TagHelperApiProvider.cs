@@ -30,7 +30,7 @@ public class TagHelperApiProvider
         _formActionTagHelper = typeof(GovUkFrontendOptions).Assembly.GetType($"{TagHelperNamespace}.FormActionTagHelper")!;
     }
 
-    public TagHelperApi GetTagHelperApi(string tagHelperName)
+    public TagHelperApi GetTagHelperApi(string tagHelperName, string? forTagName = null)
     {
         ArgumentNullException.ThrowIfNull(tagHelperName);
 
@@ -43,11 +43,25 @@ public class TagHelperApiProvider
             throw new ArgumentException($"Could not find HtmlTargetElementAttribute on '{tagHelperClassName}'.", nameof(tagHelperName));
         }
 
+        // Tag helpers that target several elements are documented an element at a time
+        if (forTagName is not null)
+        {
+            htmlTargetElementAttrs = htmlTargetElementAttrs.Where(e => e.Tag == forTagName).ToArray();
+
+            if (htmlTargetElementAttrs.Length == 0)
+            {
+                throw new ArgumentException($"Could not find HtmlTargetElementAttribute for '{forTagName}' on '{tagHelperClassName}'.", nameof(forTagName));
+            }
+        }
+
         var tagName = htmlTargetElementAttrs.Select(e => e.Tag).Distinct().Single(t => t.StartsWith("govuk"));
         var shortTagName = htmlTargetElementAttrs.Select(e => e.Tag).Distinct().SingleOrDefault(t => !t.StartsWith("govuk-"));
         var tagStructure = htmlTargetElementAttrs.Select(e => e.TagStructure).Distinct().Single();
 
-        var documentationAttr = tagHelperType.GetCustomAttribute<TagHelperDocumentationAttribute>();
+        var documentationAttrs = tagHelperType.GetCustomAttributes<TagHelperDocumentationAttribute>().ToArray();
+        var documentationAttr =
+            documentationAttrs.SingleOrDefault(a => a.TagName == tagName) ??
+            documentationAttrs.SingleOrDefault(a => a.TagName is null);
 
         var parentTagNames = htmlTargetElementAttrs
             .Select(a => a.ParentTag)

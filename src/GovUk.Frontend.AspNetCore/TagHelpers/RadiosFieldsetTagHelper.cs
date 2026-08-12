@@ -7,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
 [RestrictChildren(
-    RadiosFieldsetLegendTagHelper.TagName,
+    FormGroupFieldsetLegendTagHelper.RadiosTagName,
     RadiosItemTagHelper.TagName,
     RadiosItemDividerTagHelper.TagName,
     RadiosTagHelper.HintTagName,
@@ -27,5 +27,5 @@ public class RadiosFieldsetTagHelper : FormGroupFieldsetTagHelperBase
     {
     }
 
-    private protected override string LegendTagName => RadiosFieldsetLegendTagHelper.TagName;
+    private protected override string LegendTagName => FormGroupFieldsetLegendTagHelper.RadiosTagName;
 }

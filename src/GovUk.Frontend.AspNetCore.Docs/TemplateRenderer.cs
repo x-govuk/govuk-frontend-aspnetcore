@@ -83,8 +83,9 @@ public class TemplateRenderer
     private FluidValue TagHelperApiFunction(FunctionArguments args, TemplateContext context)
     {
         var tagHelperName = args.At(0).ToStringValue();
+        var forTagName = args.Count > 1 ? args.At(1).ToStringValue() : null;
 
-        var tagHelperApi = _tagHelperApiProvider.GetTagHelperApi(tagHelperName);
+        var tagHelperApi = _tagHelperApiProvider.GetTagHelperApi(tagHelperName, forTagName);
         var contentDescription = tagHelperApi.ContentDescription;
 
         var sb = new StringBuilder();

@@ -10,7 +10,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
 #endif
 [RestrictChildren(
-    DateInputFieldsetLegendTagHelper.TagName,
+    FormGroupFieldsetLegendTagHelper.DateInputTagName,
     DateInputHintTagHelper.TagName,
     DateInputErrorMessageTagHelper.TagName,
     DateInputDayTagHelper.TagName,
@@ -44,5 +44,5 @@ public class DateInputFieldsetTagHelper : FormGroupFieldsetTagHelperBase
     {
     }
 
-    private protected override string LegendTagName => DateInputFieldsetLegendTagHelper.TagName;
+    private protected override string LegendTagName => FormGroupFieldsetLegendTagHelper.DateInputTagName;
 }

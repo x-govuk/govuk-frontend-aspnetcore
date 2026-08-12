@@ -18,7 +18,7 @@ internal class DateInputContext(bool haveExplicitValue, ModelExpression? @for) :
 
     public FormGroupFieldsetContext2 ImplicitFieldset { get; } = new(DateInputTagHelper.TagName);
 
-    public string LegendTagName => DateInputFieldsetLegendTagHelper.TagName;
+    public string LegendTagName => FormGroupFieldsetLegendTagHelper.DateInputTagName;
 
     public AttributeCollection? Attributes { get; private set; }
 

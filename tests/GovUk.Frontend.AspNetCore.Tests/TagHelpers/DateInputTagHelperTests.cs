@@ -136,7 +136,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 var fieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName) { DescribedBy = fieldsetDescribedBy };
                 dateInputContext.OpenFieldset(fieldsetContext, new(fieldsetAttributes));
 
-                fieldsetContext.SetLegend(legendIsPageHeading, new(legendAttributes), new TemplateString(legendContent), DateInputFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(legendIsPageHeading, new(legendAttributes), new TemplateString(legendContent), FormGroupFieldsetLegendTagHelper.DateInputTagName);
                 dateInputContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -190,7 +190,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 var fieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName);
                 dateInputContext.OpenFieldset(fieldsetContext, []);
 
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: null, DateInputFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: null, FormGroupFieldsetLegendTagHelper.DateInputTagName);
                 dateInputContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -235,7 +235,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                 var fieldsetContext = new FormGroupFieldsetContext2(DateInputFieldsetTagHelper.TagName);
                 dateInputContext.OpenFieldset(fieldsetContext, []);
 
-                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new TemplateString(legendContent), DateInputFieldsetLegendTagHelper.TagName);
+                fieldsetContext.SetLegend(isPageHeading: false, attributes: [], html: new TemplateString(legendContent), FormGroupFieldsetLegendTagHelper.DateInputTagName);
                 dateInputContext.CloseFieldset();
 
                 var tagHelperContent = new DefaultTagHelperContent();
@@ -1556,7 +1556,7 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
                     isPageHeading: true,
                     attributes: new AttributeCollection(),
                     html: new TemplateString(legendContent),
-                    DateInputFieldsetLegendTagHelper.TagName);
+                    FormGroupFieldsetLegendTagHelper.DateInputTagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

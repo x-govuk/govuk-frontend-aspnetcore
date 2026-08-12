@@ -14,7 +14,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     RadiosFieldsetTagHelper.TagName,
-    RadiosFieldsetLegendTagHelper.TagName,
+    FormGroupFieldsetLegendTagHelper.RadiosTagName,
     RadiosItemTagHelper.TagName,
     RadiosItemDividerTagHelper.TagName,
     HintTagName,

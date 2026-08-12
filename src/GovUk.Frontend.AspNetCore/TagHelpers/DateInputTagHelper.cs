@@ -19,7 +19,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     DateInputFieldsetTagHelper.TagName,
-    DateInputFieldsetLegendTagHelper.TagName,
+    FormGroupFieldsetLegendTagHelper.DateInputTagName,
     DateInputHintTagHelper.TagName,
     DateInputErrorMessageTagHelper.TagName,
     DateInputDayTagHelper.TagName,

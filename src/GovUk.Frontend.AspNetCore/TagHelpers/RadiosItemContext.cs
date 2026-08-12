@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class RadiosItemContext : FormGroupItemContext
 {
-    protected override string ConditionalTagName => RadiosItemConditionalTagHelper.TagName;
+    protected override string ConditionalTagName => FormGroupItemConditionalTagHelper.RadiosTagName;
 
     protected override string HintTagName => RadiosItemHintTagHelper.TagName;
 

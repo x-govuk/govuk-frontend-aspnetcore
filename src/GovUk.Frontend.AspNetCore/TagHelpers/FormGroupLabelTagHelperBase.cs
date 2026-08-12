@@ -10,9 +10,7 @@ public abstract class FormGroupLabelTagHelperBase : TagHelper
 {
     private const string IsPageHeadingAttributeName = "is-page-heading";
 
-#if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.Label;
-#endif
 
     private protected FormGroupLabelTagHelperBase()
     {

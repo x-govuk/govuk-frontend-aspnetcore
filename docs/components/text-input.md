@@ -11,8 +11,8 @@
 
 ```razor
 <govuk-input for="AccountNumber" input-class="govuk-input--width-10" inputmode="numeric" pattern="[0-9]*" spellcheck="false">
-    <govuk-input-label is-page-heading="true" class="govuk-label--l">What is your account number?</govuk-input-label>
-    <govuk-input-hint>Must be between 6 and 8 digits long</govuk-input-hint>
+    <label is-page-heading="true" class="govuk-label--l">What is your account number?</label>
+    <hint>Must be between 6 and 8 digits long</hint>
 </govuk-input>
 ```
 
@@ -22,9 +22,9 @@
 
 ```razor
 <govuk-input name="EventName">
-    <govuk-input-label is-page-heading="true" class="govuk-label--l">What is the name of the event?</govuk-input-label>
-    <govuk-input-hint>The name you’ll use on promotional material.</govuk-input-hint>
-    <govuk-input-error-message>Enter an event name</govuk-input-error-message>
+    <label is-page-heading="true" class="govuk-label--l">What is the name of the event?</label>
+    <hint>The name you’ll use on promotional material.</hint>
+    <error-message>Enter an event name</error-message>
 </govuk-input>
 ```
 
@@ -34,9 +34,9 @@
 
 ```razor
 <govuk-input for="CostPerItem" input-class="govuk-input--width-5" spellcheck="false">
-    <govuk-input-label is-page-heading="true" class="govuk-label--l">What is the cost per item, in pounds?</govuk-input-label>
-    <govuk-input-prefix>&pound;</govuk-input-prefix>
-    <govuk-input-suffix>per item</govuk-input-suffix>
+    <label is-page-heading="true" class="govuk-label--l">What is the cost per item, in pounds?</label>
+    <prefix>&pound;</prefix>
+    <suffix>per item</suffix>
 </govuk-input>
 ```
 
@@ -66,7 +66,7 @@
 | `value` | `string` | The `value` attribute for the generated `input` element. If not specified and `For` is not `null` then the value for the specified model expression will be used. |
 
 
-#### `<govuk-input-label>`
+#### `<label>` / `<govuk-input-label>`
 
 The content is the HTML to use within the component's label.
 
@@ -77,14 +77,14 @@ Must be inside a `<govuk-input>` element.
 | `is-page-heading` | `bool?` | Whether the label also acts as the heading for the page. |
 
 
-#### `<govuk-input-hint>`
+#### `<hint>` / `<govuk-input-hint>`
 
 The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-input>` element.
 
 
-#### `<govuk-input-error-message>`
+#### `<error-message>` / `<govuk-input-error-message>`
 
 The content is the HTML to use within the component's error message.
 
@@ -95,28 +95,28 @@ Must be inside a `<govuk-input>` element.
 | `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
 
-#### `<govuk-input-before-input>`
+#### `<before-input>` / `<govuk-input-before-input>`
 
 The content is the HTML to use before the generated input element.
 
 Must be inside a `<govuk-input>` element.
 
 
-#### `<govuk-input-prefix>`
+#### `<prefix>` / `<govuk-input-prefix>`
 
 The content is the HTML to use within the component's prefix.
 
 Must be inside a `<govuk-input>` element.
 
 
-#### `<govuk-input-suffix>`
+#### `<suffix>` / `<govuk-input-suffix>`
 
 The content is the HTML to use within the component's suffix.
 
 Must be inside a `<govuk-input>` element.
 
 
-#### `<govuk-input-after-input>`
+#### `<after-input>` / `<govuk-input-after-input>`
 
 The content is the HTML to use after the generated input element.
 

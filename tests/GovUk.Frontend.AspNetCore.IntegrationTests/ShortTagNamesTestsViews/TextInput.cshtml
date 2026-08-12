@@ -1,0 +1,48 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
+        <label is-page-heading="true" class="govuk-label--l">The label</label>
+
+        <hint>
+            We'll only use this to contact you about your application
+        </hint>
+
+        <before-input>Before input</before-input>
+        <prefix>&pound;</prefix>
+        <suffix>per week</suffix>
+        <after-input>After input</after-input>
+    </govuk-input>
+</div>
+
+<div data-testid="long">
+    <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
+        <govuk-input-label is-page-heading="true" class="govuk-label--l">The label</govuk-input-label>
+
+        <govuk-input-hint>
+            We'll only use this to contact you about your application
+        </govuk-input-hint>
+
+        <govuk-input-before-input>Before input</govuk-input-before-input>
+        <govuk-input-prefix>&pound;</govuk-input-prefix>
+        <govuk-input-suffix>per week</govuk-input-suffix>
+        <govuk-input-after-input>After input</govuk-input-after-input>
+    </govuk-input>
+</div>
+
+<div data-testid="short-error-message">
+    <govuk-input name="WithError" id="with-error">
+        <label>The label</label>
+        <error-message>Enter an email address</error-message>
+    </govuk-input>
+</div>
+
+<div data-testid="long-error-message">
+    <govuk-input name="WithError" id="with-error">
+        <govuk-input-label>The label</govuk-input-label>
+        <govuk-input-error-message>Enter an email address</govuk-input-error-message>
+    </govuk-input>
+</div>

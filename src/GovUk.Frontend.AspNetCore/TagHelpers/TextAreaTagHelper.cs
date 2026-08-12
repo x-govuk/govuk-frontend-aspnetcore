@@ -14,19 +14,17 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     TextAreaLabelTagHelper.TagName,
+    TextAreaLabelTagHelper.ShortTagName,
     TextAreaHintTagHelper.TagName,
+    TextAreaHintTagHelper.ShortTagName,
     TextAreaErrorMessageTagHelper.TagName,
+    TextAreaErrorMessageTagHelper.ShortTagName,
     TextAreaBeforeInputTagHelper.TagName,
-    TextAreaValueTagHelper.TagName,
-    TextAreaAfterInputTagHelper.TagName
-#if SHORT_TAG_NAMES
-    ,
-    FormGroupLabelTagHelperBase.ShortTagName,
-    FormGroupHintTagHelperBase.ShortTagName,
-    FormGroupErrorMessageTagHelperBase.ShortTagName,
     TextAreaBeforeInputTagHelper.ShortTagName,
+    TextAreaValueTagHelper.TagName,
+    TextAreaValueTagHelper.ShortTagName,
+    TextAreaAfterInputTagHelper.TagName,
     TextAreaAfterInputTagHelper.ShortTagName
-#endif
     )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class TextAreaTagHelper : TagHelper

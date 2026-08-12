@@ -14,6 +14,8 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("DateInput", "short-error-message", "long-error-message")]
     [InlineData("TextInput", "short", "long")]
     [InlineData("TextInput", "short-error-message", "long-error-message")]
+    [InlineData("TextArea", "short", "long")]
+    [InlineData("TextArea", "short-error-message", "long-error-message")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -28,7 +30,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
 
         // Guards against both containers being empty, which would make the comparison vacuous
         Assert.NotEmpty(shortContainer.QuerySelectorAll("legend, label"));
-        Assert.NotEmpty(shortContainer.QuerySelectorAll("input"));
+        Assert.NotEmpty(shortContainer.QuerySelectorAll("input, textarea, select"));
 
         // An unrecognised element is written out as-is, so a short name that never bound to a tag
         // helper would show up here as, say, an <item> element outside the fieldset
@@ -101,6 +103,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("TextInput")]
     public IActionResult GetTextInput() => View("TextInput", new ShortTagNamesTestsModel());
+
+    [HttpGet("TextArea")]
+    public IActionResult GetTextArea() => View("TextArea", new ShortTagNamesTestsModel());
 }
 
 public class ShortTagNamesTestsModel
@@ -117,4 +122,6 @@ public class ShortTagNamesTestsModel
 
     [DateInput(ErrorMessagePrefix = "Your date of birth")]
     public DateOnly? DateOfBirth { get; set; }
+
+    public string? MoreDetail { get; set; }
 }

@@ -25,7 +25,7 @@ internal class TextAreaContext : FormGroupContext3
 
     private IReadOnlyCollection<string> AfterInputTagNames => TextAreaAfterInputTagHelper.AllTagNames;
 
-    private IReadOnlyCollection<string> ValueTagNames => [TextAreaValueTagHelper.TagName];
+    private IReadOnlyCollection<string> ValueTagNames => [TextAreaValueTagHelper.TagName, TextAreaValueTagHelper.ShortTagName];
 
     protected override string RootTagName => TextAreaTagHelper.TagName;
 

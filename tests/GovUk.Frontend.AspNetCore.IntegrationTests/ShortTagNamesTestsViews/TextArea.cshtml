@@ -1,0 +1,46 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-textarea for="MoreDetail" rows="5">
+        <label is-page-heading="true" class="govuk-label--l">The label</label>
+
+        <hint>
+            Do not include personal or financial information
+        </hint>
+
+        <before-input>Before input</before-input>
+        <value>Some existing content</value>
+        <after-input>After input</after-input>
+    </govuk-textarea>
+</div>
+
+<div data-testid="long">
+    <govuk-textarea for="MoreDetail" rows="5">
+        <govuk-textarea-label is-page-heading="true" class="govuk-label--l">The label</govuk-textarea-label>
+
+        <govuk-textarea-hint>
+            Do not include personal or financial information
+        </govuk-textarea-hint>
+
+        <govuk-textarea-before-input>Before input</govuk-textarea-before-input>
+        <govuk-textarea-value>Some existing content</govuk-textarea-value>
+        <govuk-textarea-after-input>After input</govuk-textarea-after-input>
+    </govuk-textarea>
+</div>
+
+<div data-testid="short-error-message">
+    <govuk-textarea name="WithError" id="with-error">
+        <label>The label</label>
+        <error-message>Enter more detail</error-message>
+    </govuk-textarea>
+</div>
+
+<div data-testid="long-error-message">
+    <govuk-textarea name="WithError" id="with-error">
+        <govuk-textarea-label>The label</govuk-textarea-label>
+        <govuk-textarea-error-message>Enter more detail</govuk-textarea-error-message>
+    </govuk-textarea>
+</div>

@@ -1,0 +1,42 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-accordion id="accordion" heading-level="3">
+        <accordion-item expanded="true">
+            <heading>Understanding agile project management</heading>
+            <summary>Introductions, methods, core features.</summary>
+            <content>
+                <p class="govuk-body">Agile and government services: an introduction</p>
+            </content>
+        </accordion-item>
+
+        <accordion-item>
+            <heading>Working with agile methods</heading>
+            <content>
+                <p class="govuk-body">Creating an agile working environment</p>
+            </content>
+        </accordion-item>
+    </govuk-accordion>
+</div>
+
+<div data-testid="long">
+    <govuk-accordion id="accordion" heading-level="3">
+        <govuk-accordion-item expanded="true">
+            <govuk-accordion-item-heading>Understanding agile project management</govuk-accordion-item-heading>
+            <govuk-accordion-item-summary>Introductions, methods, core features.</govuk-accordion-item-summary>
+            <govuk-accordion-item-content>
+                <p class="govuk-body">Agile and government services: an introduction</p>
+            </govuk-accordion-item-content>
+        </govuk-accordion-item>
+
+        <govuk-accordion-item>
+            <govuk-accordion-item-heading>Working with agile methods</govuk-accordion-item-heading>
+            <govuk-accordion-item-content>
+                <p class="govuk-body">Creating an agile working environment</p>
+            </govuk-accordion-item-content>
+        </govuk-accordion-item>
+    </govuk-accordion>
+</div>

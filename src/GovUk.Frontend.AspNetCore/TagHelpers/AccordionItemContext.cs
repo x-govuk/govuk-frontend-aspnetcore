@@ -3,82 +3,94 @@ using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
-internal class AccordionItemContext
+internal class AccordionItemContext(string itemTagName)
 {
-    public (AttributeCollection Attributes, IHtmlContent Content)? Heading { get; private set; }
-    public (AttributeCollection Attributes, IHtmlContent Content)? Summary { get; private set; }
-    public (AttributeCollection Attributes, IHtmlContent Content)? Content { get; private set; }
+    private (AttributeCollection Attributes, IHtmlContent Content, string TagName)? _heading;
+    private (AttributeCollection Attributes, IHtmlContent Content, string TagName)? _summary;
+    private (AttributeCollection Attributes, IHtmlContent Content, string TagName)? _content;
 
-    public void SetHeading(AttributeCollection attributes, IHtmlContent content)
+    public (AttributeCollection Attributes, IHtmlContent Content)? Heading =>
+        _heading is var (attributes, content, _) ? (attributes, content) : null;
+
+    public (AttributeCollection Attributes, IHtmlContent Content)? Summary =>
+        _summary is var (attributes, content, _) ? (attributes, content) : null;
+
+    public (AttributeCollection Attributes, IHtmlContent Content)? Content =>
+        _content is var (attributes, content, _) ? (attributes, content) : null;
+
+    public void SetHeading(AttributeCollection attributes, IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
 
-        if (Heading is not null)
+        if (_heading is not null)
         {
-            throw new InvalidOperationException(
-                $"Only one <{AccordionItemHeadingTagHelper.TagName}> is permitted for each <{AccordionItemTagHelper.TagName}>.");
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                AccordionItemHeadingTagHelper.AllTagNames,
+                itemTagName);
         }
 
-        if (Summary is not null)
+        if (_summary is var (_, _, summaryTagName))
         {
-            throw new InvalidOperationException(
-                $"<{AccordionItemHeadingTagHelper.TagName}> must be specified before <{AccordionItemSummaryTagHelper.TagName}>.");
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, summaryTagName);
         }
 
-        if (Content is not null)
+        if (_content is var (_, _, contentTagName))
         {
-            throw new InvalidOperationException(
-                $"<{AccordionItemHeadingTagHelper.TagName}> must be specified before <{AccordionItemContentTagHelper.TagName}>.");
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, contentTagName);
         }
 
-        Heading = (attributes, content);
+        _heading = (attributes, content, tagName);
     }
 
-    public void SetSummary(AttributeCollection attributes, IHtmlContent content)
+    public void SetSummary(AttributeCollection attributes, IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
 
-        if (Summary is not null)
+        if (_summary is not null)
         {
-            throw new InvalidOperationException(
-                $"Only one <{AccordionItemSummaryTagHelper.TagName}> is permitted for each <{AccordionItemTagHelper.TagName}>.");
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                AccordionItemSummaryTagHelper.AllTagNames,
+                itemTagName);
         }
 
-        if (Content is not null)
+        if (_content is var (_, _, contentTagName))
         {
-            throw new InvalidOperationException(
-                $"<{AccordionItemSummaryTagHelper.TagName}> must be specified before <{AccordionItemContentTagHelper.TagName}>.");
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, contentTagName);
         }
 
-        Summary = (attributes, content);
+        _summary = (attributes, content, tagName);
     }
 
-    public void SetContent(AttributeCollection attributes, IHtmlContent content)
+    public void SetContent(AttributeCollection attributes, IHtmlContent content, string tagName)
     {
         ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(content);
+        ArgumentNullException.ThrowIfNull(tagName);
 
-        if (Content is not null)
+        if (_content is not null)
         {
-            throw new InvalidOperationException(
-                $"Only one <{AccordionItemContentTagHelper.TagName}> is permitted for each <{AccordionItemTagHelper.TagName}>.");
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                AccordionItemContentTagHelper.AllTagNames,
+                itemTagName);
         }
 
-        Content = (attributes, content);
+        _content = (attributes, content, tagName);
     }
 
     public void ThrowIfIncomplete()
     {
-        if (Heading is null)
+        if (_heading is null)
         {
-            throw ExceptionHelper.AChildElementMustBeProvided(AccordionItemHeadingTagHelper.TagName);
+            throw ExceptionHelper.AChildElementMustBeProvided(AccordionItemHeadingTagHelper.AllTagNames);
         }
 
-        if (Content is null)
+        if (_content is null)
         {
-            throw ExceptionHelper.AChildElementMustBeProvided(AccordionItemContentTagHelper.TagName);
+            throw ExceptionHelper.AChildElementMustBeProvided(AccordionItemContentTagHelper.AllTagNames);
         }
     }
 }

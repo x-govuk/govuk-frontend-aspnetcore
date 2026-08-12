@@ -11,7 +11,7 @@ public class AccordionItemContentTagHelperTests : TagHelperTestBase<AccordionIte
     {
         // Arrange
         var accordionContext = new AccordionContext();
-        var itemContext = new AccordionItemContext();
+        var itemContext = new AccordionItemContext(ParentTagName!);
 
         var context = CreateTagHelperContext(contexts: [accordionContext, itemContext]);
 
@@ -38,8 +38,8 @@ public class AccordionItemContentTagHelperTests : TagHelperTestBase<AccordionIte
     {
         // Arrange
         var accordionContext = new AccordionContext();
-        var itemContext = new AccordionItemContext();
-        itemContext.SetContent(new AttributeCollection(), content: new TemplateString("Existing content"));
+        var itemContext = new AccordionItemContext(ParentTagName!);
+        itemContext.SetContent(new AttributeCollection(), content: new TemplateString("Existing content"), TagName);
 
         var context = CreateTagHelperContext(contexts: [accordionContext, itemContext]);
 
@@ -58,6 +58,8 @@ public class AccordionItemContentTagHelperTests : TagHelperTestBase<AccordionIte
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-accordion-item-content> is permitted for each <govuk-accordion-item>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 }

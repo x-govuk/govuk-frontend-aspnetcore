@@ -24,10 +24,14 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("Select", "short-error-message", "long-error-message")]
     [InlineData("CharacterCount", "short", "long")]
     [InlineData("CharacterCount", "short-error-message", "long-error-message")]
+    [InlineData("Accordion", "short", "long", ".govuk-accordion__section")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
-        string longTestId)
+        string longTestId,
+        // What the component generates from the children written with the short names; the default
+        // covers the components built around a form field
+        string contentSelector = "legend, label, input, textarea, select")
     {
         // Act
         var document = await GetDocumentAsync(component);
@@ -37,8 +41,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
         var longContainer = GetContainer(document, longTestId);
 
         // Guards against both containers being empty, which would make the comparison vacuous
-        Assert.NotEmpty(shortContainer.QuerySelectorAll("legend, label"));
-        Assert.NotEmpty(shortContainer.QuerySelectorAll("input, textarea, select"));
+        Assert.NotEmpty(shortContainer.QuerySelectorAll(contentSelector));
 
         // An unrecognised element is written out as-is, so a short name that never bound to a tag
         // helper would show up here as, say, a <radios-item> element outside the fieldset
@@ -126,6 +129,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("CharacterCount")]
     public IActionResult GetCharacterCount() => View("CharacterCount", new ShortTagNamesTestsModel());
+
+    [HttpGet("Accordion")]
+    public IActionResult GetAccordion() => View("Accordion", new ShortTagNamesTestsModel());
 }
 
 public class ShortTagNamesTestsModel

@@ -401,8 +401,7 @@ public class CheckboxesItemTagHelperTests : TagHelperTestBase<CheckboxesItemTagH
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<CheckboxesItemContext>();
-                var conditionalOptions = new CheckboxesOptionsItemConditional { Html = new TemplateString("Conditional") };
-                itemContext.SetConditional(conditionalOptions, "govuk-checkboxes-item-conditional");
+                itemContext.SetConditional(new AttributeCollection(), new TemplateString("Conditional"), "govuk-checkboxes-item-conditional");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

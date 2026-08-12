@@ -109,7 +109,9 @@ public class CheckboxesItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new CheckboxesItemContext());
+        var itemContext = new CheckboxesItemContext();
+        context.SetContextItem(itemContext);
+        context.SetContextItem<FormGroupItemContext>(itemContext);
     }
 
     /// <inheritdoc/>
@@ -161,7 +163,7 @@ public class CheckboxesItemTagHelper : TagHelper
             },
             Hint = itemContext.Hint?.Options,
             Checked = @checked,
-            Conditional = itemContext.Conditional?.Options,
+            Conditional = itemContext.GetConditionalOptions(),
             Behaviour = Behavior is CheckboxesItemBehavior.Exclusive ? "exclusive" : null,
             Disabled = Disabled,
             Attributes = inputAttributes,

@@ -18,7 +18,7 @@ public class RadiosItemHintTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var itemContext = context.GetContextItem<RadiosItemContext>();
+        var itemContext = context.GetContextItem<FormGroupItemContext>();
 
         var content = await output.GetChildContentAsync();
 

@@ -318,8 +318,7 @@ public class RadiosItemTagHelperTests : TagHelperTestBase<RadiosItemTagHelper>
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<RadiosItemContext>();
-                var conditionalOptions = new RadiosOptionsItemConditional { Html = new TemplateString("Conditional") };
-                itemContext.SetConditional(conditionalOptions, "govuk-radios-item-conditional");
+                itemContext.SetConditional(new AttributeCollection(), new TemplateString("Conditional"), "govuk-radios-item-conditional");
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

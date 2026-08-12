@@ -97,7 +97,9 @@ public class RadiosItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new RadiosItemContext());
+        var itemContext = new RadiosItemContext();
+        context.SetContextItem(itemContext);
+        context.SetContextItem<FormGroupItemContext>(itemContext);
     }
 
     /// <inheritdoc/>
@@ -143,7 +145,7 @@ public class RadiosItemTagHelper : TagHelper
             },
             Hint = itemContext.Hint?.Options,
             Checked = @checked,
-            Conditional = itemContext.Conditional?.Options,
+            Conditional = itemContext.GetConditionalOptions(),
             Disabled = Disabled,
             Attributes = inputAttributes,
             ItemAttributes = itemAttributes

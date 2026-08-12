@@ -1,4 +1,3 @@
-using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -8,35 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CheckboxesItemTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the conditional reveal for the item.")]
-public class CheckboxesItemConditionalTagHelper : TagHelper
+public class CheckboxesItemConditionalTagHelper : FormGroupItemConditionalTagHelperBase
 {
     internal const string TagName = "govuk-checkboxes-item-conditional";
-
-    /// <inheritdoc/>
-    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
-    {
-        ArgumentNullException.ThrowIfNull(context);
-        ArgumentNullException.ThrowIfNull(output);
-
-        var itemContext = context.GetContextItem<CheckboxesItemContext>();
-
-        var content = await output.GetChildContentAsync();
-
-        if (output.Content.IsModified)
-        {
-            content = output.Content;
-        }
-
-        var attributes = new AttributeCollection(output.Attributes);
-
-        var conditionalOptions = new CheckboxesOptionsItemConditional
-        {
-            Attributes = attributes,
-            Html = content.Snapshot()
-        };
-
-        itemContext.SetConditional(conditionalOptions, context.TagName);
-
-        output.SuppressOutput();
-    }
 }

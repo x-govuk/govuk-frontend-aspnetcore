@@ -27,6 +27,6 @@ public class RadiosItemConditionalTagHelperTests : TagHelperTestBase<RadiosItemC
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Conditional", radiosItemContext.Conditional?.Options.Html?.ToHtmlString());
+        Assert.Equal("Conditional", radiosItemContext.Conditional?.Html?.ToHtmlString());
     }
 }

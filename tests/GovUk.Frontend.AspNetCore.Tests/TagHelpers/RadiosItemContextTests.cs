@@ -12,10 +12,10 @@ public class RadiosItemContextTests
         var context = new RadiosItemContext();
 
         // Act
-        context.SetConditional(new RadiosOptionsItemConditional { Html = new TemplateString("Conditional") }, tagName: "govuk-radios-item-conditional");
+        context.SetConditional(new AttributeCollection(), new TemplateString("Conditional"), tagName: "govuk-radios-item-conditional");
 
         // Assert
-        Assert.Equal("Conditional", context.Conditional?.Options.Html?.ToHtmlString());
+        Assert.Equal("Conditional", context.Conditional?.Html?.ToHtmlString());
     }
 
     [Fact]
@@ -23,10 +23,10 @@ public class RadiosItemContextTests
     {
         // Arrange
         var context = new RadiosItemContext();
-        context.SetConditional(new RadiosOptionsItemConditional { Html = new TemplateString("Existing conditional") }, tagName: "govuk-radios-item-conditional");
+        context.SetConditional(new AttributeCollection(), new TemplateString("Existing conditional"), tagName: "govuk-radios-item-conditional");
 
         // Act
-        var ex = Record.Exception(() => context.SetConditional(new RadiosOptionsItemConditional { Html = new TemplateString("Conditional") }, tagName: "govuk-radios-item-conditional"));
+        var ex = Record.Exception(() => context.SetConditional(new AttributeCollection(), new TemplateString("Conditional"), tagName: "govuk-radios-item-conditional"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
@@ -51,7 +51,7 @@ public class RadiosItemContextTests
     {
         // Arrange
         var context = new RadiosItemContext();
-        context.SetConditional(new RadiosOptionsItemConditional { Html = new TemplateString("Existing conditional") }, tagName: "govuk-radios-item-conditional");
+        context.SetConditional(new AttributeCollection(), new TemplateString("Existing conditional"), tagName: "govuk-radios-item-conditional");
 
         // Act
         var ex = Record.Exception(() => context.SetHint(new HintOptions { Html = new TemplateString("Hint") }, tagName: "govuk-radios-item-hint"));

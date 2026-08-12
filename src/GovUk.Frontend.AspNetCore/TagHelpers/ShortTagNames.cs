@@ -2,6 +2,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal static class ShortTagNames
 {
+    public const string AccordionItem = "accordion-item";
     public const string Action = "action";
     public const string ActionButton = "action-button";
     public const string ActionLink = "action-link";
@@ -13,10 +14,12 @@ internal static class ShortTagNames
     public const string CardActions = "card-actions";
     public const string CheckboxesItem = "checkboxes-item";
     public const string Conditional = "conditional";
+    public const string Content = "content";
     public const string Day = "day";
     public const string Divider = "divider";
     public const string End = "end";
     public const string ErrorMessage = "error-message";
+    public const string Heading = "heading";
     public const string Hint = "hint";
     public const string Key = "key";
     public const string Label = "label";
@@ -34,6 +37,7 @@ internal static class ShortTagNames
     public const string SelectItem = "select-item";
     public const string Start = "start";
     public const string Suffix = "suffix";
+    public const string Summary = "summary";
     public const string Title = "title";
     public const string Value = "value";
     public const string Year = "year";

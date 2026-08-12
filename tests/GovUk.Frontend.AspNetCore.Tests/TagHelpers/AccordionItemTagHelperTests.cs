@@ -18,9 +18,9 @@ public class AccordionItemTagHelperTests : TagHelperTestBase<AccordionItemTagHel
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
-                itemContext.SetHeading(new AttributeCollection(), new TemplateString("Heading"));
-                itemContext.SetSummary(new AttributeCollection(), new TemplateString("Summary"));
-                itemContext.SetContent(new AttributeCollection(), new TemplateString("Content"));
+                itemContext.SetHeading(new AttributeCollection(), new TemplateString("Heading"), AccordionItemHeadingTagHelper.TagName);
+                itemContext.SetSummary(new AttributeCollection(), new TemplateString("Summary"), AccordionItemSummaryTagHelper.TagName);
+                itemContext.SetContent(new AttributeCollection(), new TemplateString("Content"), AccordionItemContentTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -54,8 +54,8 @@ public class AccordionItemTagHelperTests : TagHelperTestBase<AccordionItemTagHel
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
-                itemContext.SetSummary(new AttributeCollection(), new TemplateString("Summary"));
-                itemContext.SetContent(new AttributeCollection(), new TemplateString("Content"));
+                itemContext.SetSummary(new AttributeCollection(), new TemplateString("Summary"), AccordionItemSummaryTagHelper.TagName);
+                itemContext.SetContent(new AttributeCollection(), new TemplateString("Content"), AccordionItemContentTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -69,7 +69,9 @@ public class AccordionItemTagHelperTests : TagHelperTestBase<AccordionItemTagHel
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("A <govuk-accordion-item-heading> element must be provided.", ex.Message);
+        Assert.Equal(
+            $"A <{AccordionItemHeadingTagHelper.TagName}> or <{AccordionItemHeadingTagHelper.ShortTagName}> element must be provided.",
+            ex.Message);
     }
 
     [Fact]
@@ -84,7 +86,7 @@ public class AccordionItemTagHelperTests : TagHelperTestBase<AccordionItemTagHel
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var itemContext = context.GetContextItem<AccordionItemContext>();
-                itemContext.SetHeading(new AttributeCollection(), new TemplateString("Heading"));
+                itemContext.SetHeading(new AttributeCollection(), new TemplateString("Heading"), AccordionItemHeadingTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -98,6 +100,8 @@ public class AccordionItemTagHelperTests : TagHelperTestBase<AccordionItemTagHel
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("A <govuk-accordion-item-content> element must be provided.", ex.Message);
+        Assert.Equal(
+            $"A <{AccordionItemContentTagHelper.TagName}> or <{AccordionItemContentTagHelper.ShortTagName}> element must be provided.",
+            ex.Message);
     }
 }

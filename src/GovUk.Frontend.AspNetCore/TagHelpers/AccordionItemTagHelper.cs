@@ -7,10 +7,18 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a GDS accordion component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = AccordionTagHelper.TagName)]
-[RestrictChildren(AccordionItemHeadingTagHelper.TagName, AccordionItemSummaryTagHelper.TagName, AccordionItemContentTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = AccordionTagHelper.TagName)]
+[RestrictChildren(
+    AccordionItemHeadingTagHelper.TagName,
+    AccordionItemHeadingTagHelper.ShortTagName,
+    AccordionItemSummaryTagHelper.TagName,
+    AccordionItemSummaryTagHelper.ShortTagName,
+    AccordionItemContentTagHelper.TagName,
+    AccordionItemContentTagHelper.ShortTagName)]
 public class AccordionItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-accordion-item";
+    internal const string ShortTagName = ShortTagNames.AccordionItem;
 
     private const string ExpandedAttributeName = "expanded";
 
@@ -26,7 +34,9 @@ public class AccordionItemTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new AccordionItemContext());
+        ArgumentNullException.ThrowIfNull(context);
+
+        context.SetContextItem(new AccordionItemContext(context.TagName));
     }
 
     /// <inheritdoc/>

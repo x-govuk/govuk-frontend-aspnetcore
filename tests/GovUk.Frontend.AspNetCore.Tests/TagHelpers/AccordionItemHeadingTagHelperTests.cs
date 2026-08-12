@@ -11,7 +11,7 @@ public class AccordionItemHeadingTagHelperTests : TagHelperTestBase<AccordionIte
     {
         // Arrange
         var accordionContext = new AccordionContext();
-        var itemContext = new AccordionItemContext();
+        var itemContext = new AccordionItemContext(ParentTagName!);
 
         var context = CreateTagHelperContext(contexts: [accordionContext, itemContext]);
 
@@ -38,8 +38,8 @@ public class AccordionItemHeadingTagHelperTests : TagHelperTestBase<AccordionIte
     {
         // Arrange
         var accordionContext = new AccordionContext();
-        var itemContext = new AccordionItemContext();
-        itemContext.SetHeading(new AttributeCollection(), content: new TemplateString("Existing heading"));
+        var itemContext = new AccordionItemContext(ParentTagName!);
+        itemContext.SetHeading(new AttributeCollection(), content: new TemplateString("Existing heading"), TagName);
 
         var context = CreateTagHelperContext(contexts: [accordionContext, itemContext]);
 
@@ -58,16 +58,22 @@ public class AccordionItemHeadingTagHelperTests : TagHelperTestBase<AccordionIte
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-accordion-item-heading> is permitted for each <govuk-accordion-item>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 
     [Fact]
     public async Task ProcessAsync_ItemAlreadyHasSummary_ThrowsInvalidOperationException()
     {
         // Arrange
+        var summaryTagName = GetSiblingTagName(
+            AccordionItemSummaryTagHelper.TagName,
+            AccordionItemSummaryTagHelper.ShortTagName);
+
         var accordionContext = new AccordionContext();
-        var itemContext = new AccordionItemContext();
-        itemContext.SetSummary(attributes: new AttributeCollection(), content: new TemplateString("Summary"));
+        var itemContext = new AccordionItemContext(ParentTagName!);
+        itemContext.SetSummary(attributes: new AttributeCollection(), content: new TemplateString("Summary"), summaryTagName);
 
         var context = CreateTagHelperContext(contexts: [accordionContext, itemContext]);
 
@@ -86,6 +92,6 @@ public class AccordionItemHeadingTagHelperTests : TagHelperTestBase<AccordionIte
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-accordion-item-heading> must be specified before <govuk-accordion-item-summary>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{summaryTagName}>.", ex.Message);
     }
 }

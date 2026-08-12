@@ -11,10 +11,10 @@
 
 ```razor
 <govuk-accordion id="accordion-with-summary-sections" heading-level="3">
-    <govuk-accordion-item expanded="true">
-        <govuk-accordion-item-heading>Understanding agile project management</govuk-accordion-item-heading>
-        <govuk-accordion-item-summary>Introductions, methods, core features.</govuk-accordion-item-summary>
-        <govuk-accordion-item-content>
+    <accordion-item expanded="true">
+        <heading>Understanding agile project management</heading>
+        <summary>Introductions, methods, core features.</summary>
+        <content>
             <ul class="govuk-list">
                 <li>
                     <a class="govuk-link" href="#">Agile and government services: an introduction</a>
@@ -26,12 +26,12 @@
                     <a class="govuk-link" href="#">Core principles of agile</a>
                 </li>
             </ul>
-        </govuk-accordion-item-content>
-    </govuk-accordion-item>
-    <govuk-accordion-item>
-        <govuk-accordion-item-heading>Working with agile methods</govuk-accordion-item-heading>
-        <govuk-accordion-item-summary>Workspaces, tools and techniques, user stories, planning.</govuk-accordion-item-summary>
-        <govuk-accordion-item-content>
+        </content>
+    </accordion-item>
+    <accordion-item>
+        <heading>Working with agile methods</heading>
+        <summary>Workspaces, tools and techniques, user stories, planning.</summary>
+        <content>
             <ul class="govuk-list">
                 <li>
                     <a class="govuk-link" href="#">Creating an agile working environment</a>
@@ -55,12 +55,12 @@
                     <a class="govuk-link" href="#">Developing a roadmap</a>
                 </li>
             </ul>
-        </govuk-accordion-item-content>
-    </govuk-accordion-item>
-    <govuk-accordion-item>
-        <govuk-accordion-item-heading>Governing agile services</govuk-accordion-item-heading>
-        <govuk-accordion-item-summary>Principles, measuring progress, spending money.</govuk-accordion-item-summary>
-        <govuk-accordion-item-content>
+        </content>
+    </accordion-item>
+    <accordion-item>
+        <heading>Governing agile services</heading>
+        <summary>Principles, measuring progress, spending money.</summary>
+        <content>
             <ul class="govuk-list">
                 <li>
                     <a class="govuk-link" href="#">Governance principles for agile service delivery</a>
@@ -81,12 +81,12 @@
                     <a class="govuk-link" href="#">Working across organisational boundaries</a>
                 </li>
             </ul>
-        </govuk-accordion-item-content>
-    </govuk-accordion-item>
-    <govuk-accordion-item>
-        <govuk-accordion-item-heading>Phases of an agile project</govuk-accordion-item-heading>
-        <govuk-accordion-item-summary>Discovery, alpha, beta, live and retirement.</govuk-accordion-item-summary>
-        <govuk-accordion-item-content>
+        </content>
+    </accordion-item>
+    <accordion-item>
+        <heading>Phases of an agile project</heading>
+        <summary>Discovery, alpha, beta, live and retirement.</summary>
+        <content>
             <ul class="govuk-list">
                 <li>
                     <a class="govuk-link" href="#">How the discovery phase works</a>
@@ -104,8 +104,8 @@
                     <a class="govuk-link" href="#">Retiring your service</a>
                 </li>
             </ul>
-        </govuk-accordion-item-content>
-    </govuk-accordion-item>
+        </content>
+    </accordion-item>
 </govuk-accordion>
 ```
 
@@ -127,7 +127,7 @@
 | `show-section-text` | `string` | The text content of the "Show" button within each section of the accordion, which is visible when the section is collapsed. |
 
 
-#### `<govuk-accordion-item>`
+#### `<accordion-item>` / `<govuk-accordion-item>`
 
 Must be inside a `<govuk-accordion>` element.
 
@@ -136,23 +136,23 @@ Must be inside a `<govuk-accordion>` element.
 | `expanded` | `bool?` | Whether the section should be expanded upon initial load. The default is `false`. |
 
 
-#### `<govuk-accordion-item-heading>`
+#### `<heading>` / `<govuk-accordion-item-heading>`
 
 The content is the HTML of the header for each section which is used both as the title for each section, and as the button to open or close each section.
 
-Must be inside a `<govuk-accordion-item>` element.
+Must be inside an `<accordion-item>` or `<govuk-accordion-item>` element.
 
 
-#### `<govuk-accordion-item-summary>`
+#### `<summary>` / `<govuk-accordion-item-summary>`
 
 The content is the HTML for the summary line.
 
-Must be inside a `<govuk-accordion-item>` element.
+Must be inside an `<accordion-item>` or `<govuk-accordion-item>` element.
 
 
-#### `<govuk-accordion-item-content>`
+#### `<content>` / `<govuk-accordion-item-content>`
 
 The content is the HTML of the section, which is hidden when the section is closed.
 
-Must be inside a `<govuk-accordion-item>` element.
+Must be inside an `<accordion-item>` or `<govuk-accordion-item>` element.
 

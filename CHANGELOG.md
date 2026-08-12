@@ -30,7 +30,7 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
-The checkboxes, radios, date input, text input, textarea, file upload, password input, select and character count tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count and accordion tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
@@ -60,6 +60,22 @@ The checkboxes, radios, date input, text input, textarea, file upload, password 
 ```
 
 The text input takes `<label>`, `<hint>`, `<error-message>`, `<before-input>`, `<prefix>`, `<suffix>` and `<after-input>`. The file upload and password input take the same without the prefix and suffix; the textarea and character count take that set plus `<value>`; and the select takes it plus `<select-item>`.
+
+The accordion takes `<accordion-item>` inside `<govuk-accordion>`, each with a `<heading>`, an optional `<summary>` and a `<content>`:
+
+```razor
+<govuk-accordion id="agile-delivery">
+    <accordion-item expanded="true">
+        <heading>Understanding agile project management</heading>
+        <summary>Introductions, methods, core features.</summary>
+        <content>
+            <p class="govuk-body">Agile and government services: an introduction</p>
+        </content>
+    </accordion-item>
+</govuk-accordion>
+```
+
+The item's children pair with the spelling of the item they are in, as the summary list's row children do: `<heading>`, `<summary>` and `<content>` go inside an `<accordion-item>`, and the `govuk-` prefixed names go inside a `<govuk-accordion-item>`.
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 

@@ -1,0 +1,94 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-radios for="ContactPreference">
+        <legend>The legend</legend>
+
+        <hint>
+            Select the option that is most relevant to you.
+        </hint>
+
+        <before-inputs>Before inputs</before-inputs>
+
+        <item value="email">
+            Email
+            <hint>We'll only use this to contact you about your application</hint>
+            <conditional>
+                <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
+                    <govuk-input-label>Email address</govuk-input-label>
+                </govuk-input>
+            </conditional>
+        </item>
+
+        <item value="phone">
+            Phone
+            <conditional>
+                <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
+                    <govuk-input-label>Phone number</govuk-input-label>
+                </govuk-input>
+            </conditional>
+        </item>
+
+        <divider>or</divider>
+
+        <item value="text message">Text message</item>
+
+        <after-inputs>After inputs</after-inputs>
+    </govuk-radios>
+</div>
+
+<div data-testid="long">
+    <govuk-radios for="ContactPreference">
+        <govuk-radios-fieldset-legend>The legend</govuk-radios-fieldset-legend>
+
+        <govuk-radios-hint>
+            Select the option that is most relevant to you.
+        </govuk-radios-hint>
+
+        <govuk-radios-before-inputs>Before inputs</govuk-radios-before-inputs>
+
+        <govuk-radios-item value="email">
+            Email
+            <govuk-radios-item-hint>We'll only use this to contact you about your application</govuk-radios-item-hint>
+            <govuk-radios-item-conditional>
+                <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
+                    <govuk-input-label>Email address</govuk-input-label>
+                </govuk-input>
+            </govuk-radios-item-conditional>
+        </govuk-radios-item>
+
+        <govuk-radios-item value="phone">
+            Phone
+            <govuk-radios-item-conditional>
+                <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
+                    <govuk-input-label>Phone number</govuk-input-label>
+                </govuk-input>
+            </govuk-radios-item-conditional>
+        </govuk-radios-item>
+
+        <govuk-radios-divider>or</govuk-radios-divider>
+
+        <govuk-radios-item value="text message">Text message</govuk-radios-item>
+
+        <govuk-radios-after-inputs>After inputs</govuk-radios-after-inputs>
+    </govuk-radios>
+</div>
+
+<div data-testid="short-error-message">
+    <govuk-radios name="WithError">
+        <legend>The legend</legend>
+        <error-message>Select how you would like to be contacted</error-message>
+        <item value="email">Email</item>
+    </govuk-radios>
+</div>
+
+<div data-testid="long-error-message">
+    <govuk-radios name="WithError">
+        <govuk-radios-fieldset-legend>The legend</govuk-radios-fieldset-legend>
+        <govuk-radios-error-message>Select how you would like to be contacted</govuk-radios-error-message>
+        <govuk-radios-item value="email">Email</govuk-radios-item>
+    </govuk-radios>
+</div>

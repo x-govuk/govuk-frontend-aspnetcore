@@ -7,8 +7,10 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the conditional reveal of an item in a GDS form component.
 /// </summary>
 [HtmlTargetElement(CheckboxesTagName, ParentTag = CheckboxesItemTagHelper.TagName)]
-[HtmlTargetElement(ShortTagName, ParentTag = CheckboxesItemTagHelper.ShortTagName)]
 [HtmlTargetElement(RadiosTagName, ParentTag = RadiosItemTagHelper.TagName)]
+// The checkboxes and radios items share the one short name, so this covers the item in either
+// component; the item's context decides which component's conditional is being set
+[HtmlTargetElement(ShortTagName, ParentTag = ShortTagNames.Item)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the conditional reveal for the item.")]
 public class FormGroupItemConditionalTagHelper : TagHelper
 {

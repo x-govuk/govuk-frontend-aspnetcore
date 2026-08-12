@@ -13,6 +13,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(DateInputTagName, ParentTag = DateInputTagHelper.TagName)]
 [HtmlTargetElement(RadiosTagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 [HtmlTargetElement(RadiosTagName, ParentTag = RadiosTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = RadiosTagHelper.TagName)]
 [TagHelperDocumentation(CheckboxesTagName, ContentDescription = "The content is the HTML to use within the legend. When this element is specified directly inside the root checkboxes element a fieldset is generated automatically.")]
 [TagHelperDocumentation(DateInputTagName, ContentDescription = "The content is the HTML to use within the legend. When this element is specified directly inside the root date input element a fieldset is generated automatically.")]
 [TagHelperDocumentation(RadiosTagName, ContentDescription = "The content is the HTML to use within the legend. When this element is specified directly inside the root radios element a fieldset is generated automatically.")]

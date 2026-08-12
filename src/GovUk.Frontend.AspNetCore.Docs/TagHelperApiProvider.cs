@@ -50,19 +50,34 @@ public class TagHelperApiProvider
         // Tag helpers that target several elements are documented an element at a time
         if (forTagName is not null)
         {
-            htmlTargetElementAttrs = htmlTargetElementAttrs
-                .Where(e => e.Tag == forTagName || e.Tag == forShortTagName)
-                .ToArray();
+            var forTagNameAttrs = htmlTargetElementAttrs.Where(e => e.Tag == forTagName).ToArray();
 
-            if (!htmlTargetElementAttrs.Any(e => e.Tag == forTagName))
+            if (forTagNameAttrs.Length == 0)
             {
                 throw new ArgumentException($"Could not find HtmlTargetElementAttribute for '{forTagName}' on '{tagHelperClassName}'.", nameof(forTagName));
             }
 
-            if (forShortTagName is not null && !htmlTargetElementAttrs.Any(e => e.Tag == forShortTagName))
+            // Components share their short names, so the short name targets several elements too;
+            // keep the ones for the component being documented. A govuk- prefixed parent has to be
+            // one this element is already inside; a short-named parent is that component's element
+            // whichever component it belongs to, since only one of them is in scope in a view.
+            var forParentTags = forTagNameAttrs.Select(e => e.ParentTag).OfType<string>().ToArray();
+
+            var forShortTagNameAttrs = forShortTagName is not null ?
+                htmlTargetElementAttrs
+                    .Where(e => e.Tag == forShortTagName)
+                    .Where(e => e.ParentTag is not { } parentTag ||
+                        !parentTag.StartsWith("govuk-") ||
+                        forParentTags.Contains(parentTag))
+                    .ToArray() :
+                [];
+
+            if (forShortTagName is not null && forShortTagNameAttrs.Length == 0)
             {
                 throw new ArgumentException($"Could not find HtmlTargetElementAttribute for '{forShortTagName}' on '{tagHelperClassName}'.", nameof(forShortTagName));
             }
+
+            htmlTargetElementAttrs = [.. forTagNameAttrs, .. forShortTagNameAttrs];
         }
 
         var tagName = htmlTargetElementAttrs.Select(e => e.Tag).Distinct().Single(t => t.StartsWith("govuk"));

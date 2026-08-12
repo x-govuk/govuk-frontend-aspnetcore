@@ -7,11 +7,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the divider text to separate items in a GDS radios component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = RadiosTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the item divider.")]
 public class RadiosItemDividerTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-divider";
+    internal const string ShortTagName = ShortTagNames.Divider;
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -28,10 +30,12 @@ public class RadiosItemDividerTagHelper : TagHelper
             content = output.Content;
         }
 
-        radiosContext.AddItem(new RadiosOptionsItem
-        {
-            Divider = new TemplateString(content.Snapshot())
-        });
+        radiosContext.AddItem(
+            new RadiosOptionsItem
+            {
+                Divider = new TemplateString(content.Snapshot())
+            },
+            context.TagName);
 
         output.SuppressOutput();
     }

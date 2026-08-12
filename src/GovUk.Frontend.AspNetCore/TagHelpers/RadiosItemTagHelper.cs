@@ -11,11 +11,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a GDS radios component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = RadiosTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = RadiosTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the label for the generated input element.")]
 public class RadiosItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-item";
+    internal const string ShortTagName = ShortTagNames.Item;
 
     private const string CheckedAttributeName = "checked";
     private const string DisabledAttributeName = "disabled";
@@ -132,24 +134,26 @@ public class RadiosItemTagHelper : TagHelper
 
         var inputAttributes = new AttributeCollection(InputAttributes);
 
-        radiosContext.AddItem(new RadiosOptionsItem
-        {
-            Text = null,
-            Html = content.Snapshot(),
-            Id = Id,
-            Value = Value,
-            Label = new LabelOptions
+        radiosContext.AddItem(
+            new RadiosOptionsItem
             {
-                Classes = labelClasses,
-                Attributes = labelAttributes
+                Text = null,
+                Html = content.Snapshot(),
+                Id = Id,
+                Value = Value,
+                Label = new LabelOptions
+                {
+                    Classes = labelClasses,
+                    Attributes = labelAttributes
+                },
+                Hint = itemContext.Hint?.Options,
+                Checked = @checked,
+                Conditional = itemContext.GetConditionalOptions(),
+                Disabled = Disabled,
+                Attributes = inputAttributes,
+                ItemAttributes = itemAttributes
             },
-            Hint = itemContext.Hint?.Options,
-            Checked = @checked,
-            Conditional = itemContext.GetConditionalOptions(),
-            Disabled = Disabled,
-            Attributes = inputAttributes,
-            ItemAttributes = itemAttributes
-        });
+            context.TagName);
 
         output.SuppressOutput();
     }

@@ -3,15 +3,17 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class CheckboxesItemHintTagHelperTests : TagHelperTestBase<CheckboxesItemHintTagHelper>
+public class FormGroupItemHintTagHelperTests : TagHelperTestBase<FormGroupItemHintTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_SetsHintOnContext()
     {
         // Arrange
-        var checkboxesItemContext = new CheckboxesItemContext();
+        FormGroupItemContext itemContext = TagName == FormGroupItemHintTagHelper.RadiosTagName ?
+            new RadiosItemContext() :
+            new CheckboxesItemContext();
 
-        var context = CreateTagHelperContext(contexts: checkboxesItemContext);
+        var context = CreateTagHelperContext(contexts: itemContext);
 
         var output = CreateTagHelperOutput(
             getChildContentAsync: (useCachedResult, encoder) =>
@@ -21,12 +23,12 @@ public class CheckboxesItemHintTagHelperTests : TagHelperTestBase<CheckboxesItem
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new CheckboxesItemHintTagHelper();
+        var tagHelper = new FormGroupItemHintTagHelper();
 
         // Act
         await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.Equal("Hint", checkboxesItemContext.Hint?.Options.Html?.ToHtmlString());
+        Assert.Equal("Hint", itemContext.Hint?.Options.Html?.ToHtmlString());
     }
 }

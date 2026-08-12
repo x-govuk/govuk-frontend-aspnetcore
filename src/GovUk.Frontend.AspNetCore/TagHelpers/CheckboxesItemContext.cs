@@ -6,7 +6,7 @@ internal class CheckboxesItemContext : FormGroupItemContext
 {
     protected override string ConditionalTagName => FormGroupItemConditionalTagHelper.CheckboxesTagName;
 
-    protected override string HintTagName => CheckboxesItemHintTagHelper.TagName;
+    protected override string HintTagName => FormGroupItemHintTagHelper.CheckboxesTagName;
 
     protected override string ItemTagName => CheckboxesItemTagHelper.TagName;
 

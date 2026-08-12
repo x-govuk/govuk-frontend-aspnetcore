@@ -34,7 +34,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     Disabled = true,
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 radiosContext.AddItem(new RadiosOptionsItem()
                 {
@@ -43,7 +43,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     Disabled = false,
                     Id = new TemplateString("second"),
                     Value = new TemplateString("second")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -120,7 +120,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     Disabled = true,
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 radiosContext.AddItem(new RadiosOptionsItem()
                 {
@@ -129,7 +129,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     Disabled = false,
                     Id = new TemplateString("second"),
                     Value = new TemplateString("second")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -198,7 +198,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     },
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -257,7 +257,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     },
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -318,7 +318,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     },
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -387,7 +387,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     Disabled = true,
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 radiosContext.AddItem(new RadiosOptionsItem()
                 {
@@ -396,7 +396,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     Disabled = false,
                     Id = new TemplateString("second"),
                     Value = new TemplateString("second")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 radiosContext.CloseFieldset();
 
@@ -471,7 +471,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first"),
                     ItemAttributes = itemAttributes
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -530,7 +530,7 @@ public class RadiosTagHelperTests : TagHelperTestBase<RadiosTagHelper>
                     },
                     Id = new TemplateString("first"),
                     Value = new TemplateString("first")
-                });
+                }, RadiosItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

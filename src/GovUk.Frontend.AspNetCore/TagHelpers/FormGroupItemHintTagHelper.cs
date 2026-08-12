@@ -4,14 +4,18 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 /// <summary>
-/// Represents the hint of a checkbox item in a GDS checkboxes component.
+/// Represents the hint of an item in a GDS form component.
 /// </summary>
-[HtmlTargetElement(TagName, ParentTag = CheckboxesItemTagHelper.TagName)]
-[HtmlTargetElement(ShortTagName, ParentTag = CheckboxesItemTagHelper.ShortTagName)]
+[HtmlTargetElement(CheckboxesTagName, ParentTag = CheckboxesItemTagHelper.TagName)]
+[HtmlTargetElement(RadiosTagName, ParentTag = RadiosItemTagHelper.TagName)]
+// The checkboxes and radios items share the one short name, so this covers the item in either
+// component; the item's context decides which component's hint is being set
+[HtmlTargetElement(ShortTagName, ParentTag = ShortTagNames.Item)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the item's hint.")]
-public class CheckboxesItemHintTagHelper : TagHelper
+public class FormGroupItemHintTagHelper : TagHelper
 {
-    internal const string TagName = "govuk-checkboxes-item-hint";
+    internal const string CheckboxesTagName = "govuk-checkboxes-item-hint";
+    internal const string RadiosTagName = "govuk-radios-item-hint";
     private const string ShortTagName = ShortTagNames.Hint;
 
     /// <inheritdoc/>

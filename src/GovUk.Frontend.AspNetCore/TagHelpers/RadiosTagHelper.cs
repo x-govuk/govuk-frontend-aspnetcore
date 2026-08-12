@@ -15,12 +15,19 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [RestrictChildren(
     RadiosFieldsetTagHelper.TagName,
     FormGroupFieldsetLegendTagHelper.RadiosTagName,
+    FormGroupFieldsetLegendTagHelper.ShortTagName,
     RadiosItemTagHelper.TagName,
+    RadiosItemTagHelper.ShortTagName,
     RadiosItemDividerTagHelper.TagName,
+    RadiosItemDividerTagHelper.ShortTagName,
     HintTagName,
+    RadiosHintTagHelper.ShortTagName,
     ErrorMessageTagName,
+    RadiosErrorMessageTagHelper.ShortTagName,
     RadiosBeforeInputsTagHelper.TagName,
-    RadiosAfterInputsTagHelper.TagName
+    RadiosBeforeInputsTagHelper.ShortTagName,
+    RadiosAfterInputsTagHelper.TagName,
+    RadiosAfterInputsTagHelper.ShortTagName
 )]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.FormGroup)]
 public class RadiosTagHelper : TagHelper

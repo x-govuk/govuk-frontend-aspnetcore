@@ -15,7 +15,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
     RadiosBeforeInputsTagHelper.TagName,
     RadiosAfterInputsTagHelper.TagName
 )]
-[TagHelperDocumentation(ContentDescription = "A container element used when the radios should be contained within a fieldset element. When used, every hint, error message, item and divider must be placed inside this element rather than the root radios element.")]
+[TagHelperDocumentation(ContentDescription = "A container element used when the radios should be contained within a fieldset element. When used, every hint, error message, item and divider must be placed inside this element rather than the root radios element, and each must use its govuk- prefixed name; the short names are only available directly inside the root radios element.")]
 public class RadiosFieldsetTagHelper : FormGroupFieldsetTagHelperBase
 {
     internal const string TagName = "govuk-radios-fieldset";

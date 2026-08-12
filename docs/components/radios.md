@@ -11,20 +11,20 @@
 
 ```razor
 <govuk-radios for="WhereDoYouLive">
-    <govuk-radios-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+    <legend is-page-heading="true" class="govuk-fieldset__legend--l">
         Where do you live?
-    </govuk-radios-fieldset-legend>
+    </legend>
 
-    <govuk-radios-hint>
+    <hint>
         Select one option.
-    </govuk-radios-hint>
+    </hint>
 
-    <govuk-radios-item value="england">England</govuk-radios-item>
-    <govuk-radios-item value="scotland">Scotland</govuk-radios-item>
-    <govuk-radios-item value="wales">Wales</govuk-radios-item>
-    <govuk-radios-item value="northern-ireland">Northern Ireland</govuk-radios-item>
-    <govuk-radios-divider>or</govuk-radios-divider>
-    <govuk-radios-item value="abroad">I am a British citizen living abroad</govuk-radios-item>
+    <item value="england">England</item>
+    <item value="scotland">Scotland</item>
+    <item value="wales">Wales</item>
+    <item value="northern-ireland">Northern Ireland</item>
+    <divider>or</divider>
+    <item value="abroad">I am a British citizen living abroad</item>
 </govuk-radios>
 ```
 
@@ -34,10 +34,10 @@
 
 ```razor
 <govuk-radios for="WhereDoYouLive" fieldset legend-class="govuk-fieldset__legend--l" legend-is-page-heading="true">
-    <govuk-radios-item value="england">England</govuk-radios-item>
-    <govuk-radios-item value="scotland">Scotland</govuk-radios-item>
-    <govuk-radios-item value="wales">Wales</govuk-radios-item>
-    <govuk-radios-item value="northern-ireland">Northern Ireland</govuk-radios-item>
+    <item value="england">England</item>
+    <item value="scotland">Scotland</item>
+    <item value="wales">Wales</item>
+    <item value="northern-ireland">Northern Ireland</item>
 </govuk-radios>
 ```
 
@@ -47,41 +47,41 @@
 
 ```razor
 <govuk-radios for="HowContacted">
-    <govuk-radios-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+    <legend is-page-heading="true" class="govuk-fieldset__legend--l">
         How would you prefer to be contacted?
-    </govuk-radios-fieldset-legend>
+    </legend>
 
-    <govuk-radios-hint>
+    <hint>
         Select one option.
-    </govuk-radios-hint>
+    </hint>
 
-    <govuk-radios-item value="email">
+    <item value="email">
         Email
-        <govuk-radios-item-conditional>
+        <conditional>
             <govuk-input id="contact-by-email" name="contact-by-email" type="email" autocomplete="email" spellcheck="false" class="govuk-!-width-one-half">
                 <govuk-input-label>Email address</govuk-input-label>
                 <govuk-input-error-message>Email address cannot be blank</govuk-input-error-message>
             </govuk-input>
-        </govuk-radios-item-conditional>
-    </govuk-radios-item>
+        </conditional>
+    </item>
 
-    <govuk-radios-item value="phone">
+    <item value="phone">
         Phone
-        <govuk-radios-item-conditional>
+        <conditional>
             <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
                 <govuk-input-label>Phone number</govuk-input-label>
             </govuk-input>
-        </govuk-radios-item-conditional>
-    </govuk-radios-item>
+        </conditional>
+    </item>
 
-    <govuk-radios-item value="text">
+    <item value="text">
         Text message
-        <govuk-radios-item-conditional>
+        <conditional>
             <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
                 <govuk-input-label>Mobile phone number</govuk-input-label>
             </govuk-input>
-        </govuk-radios-item-conditional>
-    </govuk-radios-item>
+        </conditional>
+    </item>
 </govuk-radios>
 ```
 
@@ -91,22 +91,22 @@
 
 ```razor
 <govuk-radios name="where-do-you-live">
-    <govuk-radios-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+    <legend is-page-heading="true" class="govuk-fieldset__legend--l">
         Where do you live?
-    </govuk-radios-fieldset-legend>
+    </legend>
 
-    <govuk-radios-hint>
+    <hint>
         Select one option.
-    </govuk-radios-hint>
+    </hint>
 
-    <govuk-radios-error-message>
+    <error-message>
         Select the country where you live
-    </govuk-radios-error-message>
+    </error-message>
 
-    <govuk-radios-item value="england">England</govuk-radios-item>
-    <govuk-radios-item value="scotland">Scotland</govuk-radios-item>
-    <govuk-radios-item value="wales">Wales</govuk-radios-item>
-    <govuk-radios-item value="northern-ireland">Northern Ireland</govuk-radios-item>
+    <item value="england">England</item>
+    <item value="scotland">Scotland</item>
+    <item value="wales">Wales</item>
+    <item value="northern-ireland">Northern Ireland</item>
 </govuk-radios>
 ```
 
@@ -130,7 +130,7 @@
 
 #### `<govuk-radios-fieldset>`
 
-A container element used when the radios should be contained within a fieldset element. When used, every hint, error message, item and divider must be placed inside this element rather than the root radios element.
+A container element used when the radios should be contained within a fieldset element. When used, every hint, error message, item and divider must be placed inside this element rather than the root radios element, and each must use its govuk- prefixed name; the short names are only available directly inside the root radios element.
 
 Must be inside a `<govuk-radios>` element.
 
@@ -139,7 +139,7 @@ Must be inside a `<govuk-radios>` element.
 | `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute. |
 
 
-#### `<govuk-radios-fieldset-legend>`
+#### `<legend>` / `<govuk-radios-fieldset-legend>`
 
 The content is the HTML to use within the legend. When this element is specified directly inside the root radios element a fieldset is generated automatically.
 
@@ -150,14 +150,14 @@ Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 | `is-page-heading` | `bool?` | Whether the legend also acts as the heading for the page. The default is `false`. |
 
 
-#### `<govuk-radios-hint>`
+#### `<hint>` / `<govuk-radios-hint>`
 
 The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 
 
-#### `<govuk-radios-error-message>`
+#### `<error-message>` / `<govuk-radios-error-message>`
 
 The content is the HTML to use within the component's error message.
 
@@ -168,14 +168,14 @@ Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 | `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
 
-#### `<govuk-radios-before-inputs>`
+#### `<before-inputs>` / `<govuk-radios-before-inputs>`
 
 The content is the HTML to use before the radios.
 
 Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 
 
-#### `<govuk-radios-item>`
+#### `<item>` / `<govuk-radios-item>`
 
 The content is the HTML to use within the label for the generated input element.
 
@@ -191,28 +191,28 @@ Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 | `value` | `string` | The `value` attribute for the item. |
 
 
-#### `<govuk-radios-item-hint>`
+#### `<hint>` / `<govuk-radios-item-hint>`
 
 The content is the HTML to use within the item's hint.
 
-Must be inside a `<govuk-radios-item>` element.
+Must be inside an `<item>` or `<govuk-radios-item>` element.
 
 
-#### `<govuk-radios-item-conditional>`
+#### `<conditional>` / `<govuk-radios-item-conditional>`
 
 The content is the HTML to use within the conditional reveal for the item.
 
-Must be inside a `<govuk-radios-item>` element.
+Must be inside an `<item>` or `<govuk-radios-item>` element.
 
 
-#### `<govuk-radios-divider>`
+#### `<divider>` / `<govuk-radios-divider>`
 
 The content is the HTML to use within the item divider.
 
 Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 
 
-#### `<govuk-radios-after-inputs>`
+#### `<after-inputs>` / `<govuk-radios-after-inputs>`
 
 The content is the HTML to use after the radios.
 

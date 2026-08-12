@@ -8,6 +8,7 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 {
     private bool _fieldsetIsOpen;
     private readonly List<RadiosOptionsItem> _items = [];
+    private string? _firstItemTagName;
     private (IHtmlContent Content, string TagName)? _beforeInputs;
     private (IHtmlContent Content, string TagName)? _afterInputs;
 
@@ -33,7 +34,9 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     protected override IReadOnlyCollection<string> ErrorMessageTagNames => RadiosErrorMessageTagHelper.AllTagNames;
 
-    protected string ItemTagName => RadiosItemTagHelper.TagName;
+    // Messages about an item that has already been added name it as it was written in the view,
+    // which may be either the govuk- prefixed name or the short one
+    protected string ItemTagName => _firstItemTagName ?? RadiosItemTagHelper.TagName;
 
     protected override IReadOnlyCollection<string> HintTagNames => RadiosHintTagHelper.AllTagNames;
 
@@ -47,15 +50,17 @@ internal class RadiosContext(string? name, ModelExpression? @for) : FormGroupCon
 
     private IReadOnlyCollection<string> AfterInputsTagNames => RadiosAfterInputsTagHelper.AllTagNames;
 
-    public void AddItem(RadiosOptionsItem item)
+    public void AddItem(RadiosOptionsItem item, string tagName)
     {
         ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(tagName);
 
         if (Fieldset is not null && !_fieldsetIsOpen)
         {
-            throw new InvalidOperationException($"<{ItemTagName}> must be inside <{FieldsetTagName}>.");
+            throw new InvalidOperationException($"<{tagName}> must be inside <{FieldsetTagName}>.");
         }
 
+        _firstItemTagName ??= tagName;
         _items.Add(item);
     }
 

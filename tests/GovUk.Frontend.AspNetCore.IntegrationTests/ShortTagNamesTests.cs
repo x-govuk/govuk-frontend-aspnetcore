@@ -16,6 +16,8 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("TextInput", "short-error-message", "long-error-message")]
     [InlineData("TextArea", "short", "long")]
     [InlineData("TextArea", "short-error-message", "long-error-message")]
+    [InlineData("FileUpload", "short", "long")]
+    [InlineData("FileUpload", "short-error-message", "long-error-message")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -106,6 +108,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("TextArea")]
     public IActionResult GetTextArea() => View("TextArea", new ShortTagNamesTestsModel());
+
+    [HttpGet("FileUpload")]
+    public IActionResult GetFileUpload() => View("FileUpload", new ShortTagNamesTestsModel());
 }
 
 public class ShortTagNamesTestsModel
@@ -124,4 +129,6 @@ public class ShortTagNamesTestsModel
     public DateOnly? DateOfBirth { get; set; }
 
     public string? MoreDetail { get; set; }
+
+    public IFormFile? Evidence { get; set; }
 }

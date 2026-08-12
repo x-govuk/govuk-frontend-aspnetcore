@@ -1,0 +1,44 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-file-upload for="Evidence">
+        <label is-page-heading="true" class="govuk-label--l">The label</label>
+
+        <hint>
+            Your file may be a doc, docx, pdf or odt
+        </hint>
+
+        <before-input>Before input</before-input>
+        <after-input>After input</after-input>
+    </govuk-file-upload>
+</div>
+
+<div data-testid="long">
+    <govuk-file-upload for="Evidence">
+        <govuk-file-upload-label is-page-heading="true" class="govuk-label--l">The label</govuk-file-upload-label>
+
+        <govuk-file-upload-hint>
+            Your file may be a doc, docx, pdf or odt
+        </govuk-file-upload-hint>
+
+        <govuk-file-upload-before-input>Before input</govuk-file-upload-before-input>
+        <govuk-file-upload-after-input>After input</govuk-file-upload-after-input>
+    </govuk-file-upload>
+</div>
+
+<div data-testid="short-error-message">
+    <govuk-file-upload name="WithError" id="with-error">
+        <label>The label</label>
+        <error-message>Select a file</error-message>
+    </govuk-file-upload>
+</div>
+
+<div data-testid="long-error-message">
+    <govuk-file-upload name="WithError" id="with-error">
+        <govuk-file-upload-label>The label</govuk-file-upload-label>
+        <govuk-file-upload-error-message>Select a file</govuk-file-upload-error-message>
+    </govuk-file-upload>
+</div>

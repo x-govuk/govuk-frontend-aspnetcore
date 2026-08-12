@@ -19,12 +19,12 @@
         Select one option.
     </hint>
 
-    <item value="england">England</item>
-    <item value="scotland">Scotland</item>
-    <item value="wales">Wales</item>
-    <item value="northern-ireland">Northern Ireland</item>
+    <radios-item value="england">England</radios-item>
+    <radios-item value="scotland">Scotland</radios-item>
+    <radios-item value="wales">Wales</radios-item>
+    <radios-item value="northern-ireland">Northern Ireland</radios-item>
     <divider>or</divider>
-    <item value="abroad">I am a British citizen living abroad</item>
+    <radios-item value="abroad">I am a British citizen living abroad</radios-item>
 </govuk-radios>
 ```
 
@@ -34,10 +34,10 @@
 
 ```razor
 <govuk-radios for="WhereDoYouLive" fieldset legend-class="govuk-fieldset__legend--l" legend-is-page-heading="true">
-    <item value="england">England</item>
-    <item value="scotland">Scotland</item>
-    <item value="wales">Wales</item>
-    <item value="northern-ireland">Northern Ireland</item>
+    <radios-item value="england">England</radios-item>
+    <radios-item value="scotland">Scotland</radios-item>
+    <radios-item value="wales">Wales</radios-item>
+    <radios-item value="northern-ireland">Northern Ireland</radios-item>
 </govuk-radios>
 ```
 
@@ -55,7 +55,7 @@
         Select one option.
     </hint>
 
-    <item value="email">
+    <radios-item value="email">
         Email
         <conditional>
             <govuk-input id="contact-by-email" name="contact-by-email" type="email" autocomplete="email" spellcheck="false" class="govuk-!-width-one-half">
@@ -63,25 +63,25 @@
                 <error-message>Email address cannot be blank</error-message>
             </govuk-input>
         </conditional>
-    </item>
+    </radios-item>
 
-    <item value="phone">
+    <radios-item value="phone">
         Phone
         <conditional>
             <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
                 <label>Phone number</label>
             </govuk-input>
         </conditional>
-    </item>
+    </radios-item>
 
-    <item value="text">
+    <radios-item value="text">
         Text message
         <conditional>
             <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
                 <label>Mobile phone number</label>
             </govuk-input>
         </conditional>
-    </item>
+    </radios-item>
 </govuk-radios>
 ```
 
@@ -103,10 +103,10 @@
         Select the country where you live
     </error-message>
 
-    <item value="england">England</item>
-    <item value="scotland">Scotland</item>
-    <item value="wales">Wales</item>
-    <item value="northern-ireland">Northern Ireland</item>
+    <radios-item value="england">England</radios-item>
+    <radios-item value="scotland">Scotland</radios-item>
+    <radios-item value="wales">Wales</radios-item>
+    <radios-item value="northern-ireland">Northern Ireland</radios-item>
 </govuk-radios>
 ```
 
@@ -175,7 +175,7 @@ The content is the HTML to use before the radios.
 Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 
 
-#### `<item>` / `<govuk-radios-item>`
+#### `<radios-item>` / `<govuk-radios-item>`
 
 The content is the HTML to use within the label for the generated input element.
 
@@ -195,14 +195,14 @@ Must be inside a `<govuk-radios>` or `<govuk-radios-fieldset>` element.
 
 The content is the HTML to use within the item's hint.
 
-Must be inside an `<item>` or `<govuk-radios-item>` element.
+Must be inside a `<radios-item>` or `<govuk-radios-item>` element.
 
 
 #### `<conditional>` / `<govuk-radios-item-conditional>`
 
 The content is the HTML to use within the conditional reveal for the item.
 
-Must be inside an `<item>` or `<govuk-radios-item>` element.
+Must be inside a `<radios-item>` or `<govuk-radios-item>` element.
 
 
 #### `<divider>` / `<govuk-radios-divider>`

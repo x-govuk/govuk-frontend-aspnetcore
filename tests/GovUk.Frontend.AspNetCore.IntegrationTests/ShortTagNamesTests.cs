@@ -41,7 +41,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
         Assert.NotEmpty(shortContainer.QuerySelectorAll("input, textarea, select"));
 
         // An unrecognised element is written out as-is, so a short name that never bound to a tag
-        // helper would show up here as, say, an <item> element outside the fieldset
+        // helper would show up here as, say, a <radios-item> element outside the fieldset
         Assert.Equal(longContainer.InnerHtml, shortContainer.InnerHtml);
     }
 

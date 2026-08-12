@@ -232,14 +232,14 @@ public class RadiosContextTests
             Value = new TemplateString("item1")
         };
 
-        context.AddItem(item, "item");
+        context.AddItem(item, "radios-item");
 
         // Act
         var ex = Record.Exception(() => context.SetHint(attributes: new AttributeCollection(), html: new TemplateString("Hint"), tagName: "hint"));
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<hint> must be specified before <item>.", ex.Message);
+        Assert.Equal("<hint> must be specified before <radios-item>.", ex.Message);
     }
 
     [Fact]

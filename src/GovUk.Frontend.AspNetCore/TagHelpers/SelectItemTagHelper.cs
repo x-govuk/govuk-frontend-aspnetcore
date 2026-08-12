@@ -16,7 +16,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 public class SelectItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-select-item";
-    internal const string ShortTagName = ShortTagNames.Item;
+    internal const string ShortTagName = ShortTagNames.SelectItem;
 
     private const string DisabledAttributeName = "disabled";
     private const string SelectedAttributeName = "selected";

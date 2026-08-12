@@ -12,10 +12,10 @@
 ```razor
 <govuk-select for="SortBy">
     <label>Sort by</label>
-    <item value="published">Recently published</item>
-    <item value="updated">Recently updated</item>
-    <item value="views">Most views</item>
-    <item value="comments">Most comments</item>
+    <select-item value="published">Recently published</select-item>
+    <select-item value="updated">Recently updated</select-item>
+    <select-item value="views">Most views</select-item>
+    <select-item value="comments">Most comments</select-item>
 </govuk-select>
 ```
 
@@ -79,7 +79,7 @@ The content is the HTML to use after the generated select element.
 Must be inside a `<govuk-select>` element.
 
 
-#### `<item>` / `<govuk-select-item>`
+#### `<select-item>` / `<govuk-select-item>`
 
 The content is the HTML to use within the generated option element.
 

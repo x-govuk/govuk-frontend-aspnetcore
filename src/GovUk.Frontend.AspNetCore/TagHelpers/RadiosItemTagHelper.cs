@@ -17,7 +17,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 public class RadiosItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-radios-item";
-    internal const string ShortTagName = ShortTagNames.Item;
+    internal const string ShortTagName = ShortTagNames.RadiosItem;
 
     private const string CheckedAttributeName = "checked";
     private const string DisabledAttributeName = "disabled";

@@ -15,7 +15,7 @@ public class BreadcrumbsItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-breadcrumbs-item";
 #if SHORT_TAG_NAMES
-    internal const string ShortTagName = ShortTagNames.Item;
+    internal const string ShortTagName = ShortTagNames.BreadcrumbsItem;
 #endif
 
     private const string LinkAttributesPrefix = "link-";

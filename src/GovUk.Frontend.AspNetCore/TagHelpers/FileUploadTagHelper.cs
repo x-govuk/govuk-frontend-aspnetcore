@@ -14,18 +14,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     FileUploadLabelTagHelper.TagName,
+    FileUploadLabelTagHelper.ShortTagName,
     FileUploadHintTagHelper.TagName,
+    FileUploadHintTagHelper.ShortTagName,
     FileUploadErrorMessageTagHelper.TagName,
+    FileUploadErrorMessageTagHelper.ShortTagName,
     FileUploadBeforeInputTagHelper.TagName,
-    FileUploadAfterInputTagHelper.TagName
-#if SHORT_TAG_NAMES
-    ,
-    FormGroupLabelTagHelperBase.ShortTagName,
-    FormGroupHintTagHelperBase.ShortTagName,
-    FormGroupErrorMessageTagHelperBase.ShortTagName,
     FileUploadBeforeInputTagHelper.ShortTagName,
+    FileUploadAfterInputTagHelper.TagName,
     FileUploadAfterInputTagHelper.ShortTagName
-#endif
     )]
 public class FileUploadTagHelper : TagHelper
 {

@@ -11,7 +11,7 @@
 
 ```razor
 <govuk-file-upload for="Document">
-    <govuk-file-upload-label>Upload a file</govuk-file-upload-label>
+    <label>Upload a file</label>
 </govuk-file-upload>
 ```
 
@@ -21,8 +21,8 @@
 
 ```razor
 <govuk-file-upload name="FileUpload1">
-    <govuk-file-upload-label>Upload a file</govuk-file-upload-label>
-    <govuk-file-upload-error-message>The CSV must be smaller than 2MB</govuk-file-upload-error-message>
+    <label>Upload a file</label>
+    <error-message>The CSV must be smaller than 2MB</error-message>
 </govuk-file-upload>
 ```
 
@@ -32,7 +32,7 @@
 
 ```razor
 <govuk-file-upload for="Document" javascript-enhancements="true">
-    <govuk-file-upload-label>Upload a file</govuk-file-upload-label>
+    <label>Upload a file</label>
 </govuk-file-upload>
 ```
 
@@ -63,7 +63,7 @@
 | `wrapper-*` |  | Additional attributes to add to the Javascript enhanced component's wrapper element. |
 
 
-#### `<govuk-file-upload-label>`
+#### `<label>` / `<govuk-file-upload-label>`
 
 The content is the HTML to use within the component's label.
 
@@ -74,14 +74,14 @@ Must be inside a `<govuk-file-upload>` element.
 | `is-page-heading` | `bool?` | Whether the label also acts as the heading for the page. |
 
 
-#### `<govuk-file-upload-hint>`
+#### `<hint>` / `<govuk-file-upload-hint>`
 
 The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-file-upload>` element.
 
 
-#### `<govuk-file-upload-error-message>`
+#### `<error-message>` / `<govuk-file-upload-error-message>`
 
 The content is the HTML to use within the component's error message.
 
@@ -92,14 +92,14 @@ Must be inside a `<govuk-file-upload>` element.
 | `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
 
-#### `<govuk-file-upload-before-input>`
+#### `<before-input>` / `<govuk-file-upload-before-input>`
 
 The content is the HTML to use before the generated input element.
 
 Must be inside a `<govuk-file-upload>` element.
 
 
-#### `<govuk-file-upload-after-input>`
+#### `<after-input>` / `<govuk-file-upload-after-input>`
 
 The content is the HTML to use after the generated input element.
 

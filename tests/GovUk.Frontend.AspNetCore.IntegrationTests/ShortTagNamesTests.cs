@@ -22,6 +22,8 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("PasswordInput", "short-error-message", "long-error-message")]
     [InlineData("Select", "short", "long")]
     [InlineData("Select", "short-error-message", "long-error-message")]
+    [InlineData("CharacterCount", "short", "long")]
+    [InlineData("CharacterCount", "short-error-message", "long-error-message")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -121,6 +123,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("Select")]
     public IActionResult GetSelect() => View("Select", new ShortTagNamesTestsModel());
+
+    [HttpGet("CharacterCount")]
+    public IActionResult GetCharacterCount() => View("CharacterCount", new ShortTagNamesTestsModel());
 }
 
 public class ShortTagNamesTestsModel

@@ -13,12 +13,12 @@ Check out the [max words validator](../validation/maxwords.md) for adding server
 
 ```razor
 <govuk-character-count for="MoreDetail" max-length="200">
-    <govuk-character-count-label class="govuk-label--l" is-page-heading="true">
+    <label class="govuk-label--l" is-page-heading="true">
         Can you provide more detail?
-    </govuk-character-count-label>
-    <govuk-character-count-hint>
+    </label>
+    <hint>
         Do not include personal or financial information like your National Insurance number or credit card details.
-    </govuk-character-count-hint>
+    </hint>
 </govuk-character-count>
 ```
 
@@ -47,7 +47,7 @@ Check out the [max words validator](../validation/maxwords.md) for adding server
 | `threshold` | `decimal?` | The percentage value of the limit at which point the count message is displayed. If this is specified the count message will be hidden by default. |
 
 
-#### `<govuk-character-count-label>`
+#### `<label>` / `<govuk-character-count-label>`
 
 The content is the HTML to use within the component's label.
 
@@ -58,14 +58,14 @@ Must be inside a `<govuk-character-count>` element.
 | `is-page-heading` | `bool?` | Whether the label also acts as the heading for the page. |
 
 
-#### `<govuk-character-count-hint>`
+#### `<hint>` / `<govuk-character-count-hint>`
 
 The content is the HTML to use within the component's hint.
 
 Must be inside a `<govuk-character-count>` element.
 
 
-#### `<govuk-character-count-error-message>`
+#### `<error-message>` / `<govuk-character-count-error-message>`
 
 The content is the HTML to use within the component's error message.
 
@@ -76,21 +76,21 @@ Must be inside a `<govuk-character-count>` element.
 | `visually-hidden-text` | `string` | A visually hidden prefix used before the error message. The default is `"Error"`. |
 
 
-#### `<govuk-character-count-before-input>`
+#### `<before-input>` / `<govuk-character-count-before-input>`
 
 The content is the HTML to use before the generated textarea element.
 
 Must be inside a `<govuk-character-count>` element.
 
 
-#### `<govuk-character-count-value>`
+#### `<value>` / `<govuk-character-count-value>`
 
 The content is the HTML to use within the generated textarea.
 
 Must be inside a `<govuk-character-count>` element.
 
 
-#### `<govuk-character-count-after-input>`
+#### `<after-input>` / `<govuk-character-count-after-input>`
 
 The content is the HTML to use after the generated textarea element.
 

@@ -15,7 +15,6 @@ internal static class ShortTagNames
     public const string Divider = "divider";
     public const string End = "end";
     public const string ErrorMessage = "error-message";
-    public const string Fieldset = "fieldset";
     public const string Hint = "hint";
     public const string Item = "item";
     public const string Key = "key";

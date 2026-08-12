@@ -30,7 +30,7 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
-The checkboxes and radios tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+The checkboxes, radios and date input tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
@@ -47,7 +47,19 @@ The checkboxes and radios tag helpers now support short tag name syntax, as the 
 </govuk-checkboxes>
 ```
 
-`<legend>`, `<hint>`, `<error-message>`, `<item>`, `<divider>`, `<before-inputs>` and `<after-inputs>` go directly inside `<govuk-checkboxes>` or `<govuk-radios>`; `<hint>` and `<conditional>` go inside an `<item>`. The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>` or `<govuk-radios-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
+`<legend>`, `<hint>`, `<error-message>`, `<item>`, `<divider>`, `<before-inputs>` and `<after-inputs>` go directly inside `<govuk-checkboxes>` or `<govuk-radios>`; `<hint>` and `<conditional>` go inside an `<item>`. The date input takes the same `<legend>`, `<hint>`, `<error-message>`, `<before-inputs>` and `<after-inputs>`, along with `<day>`, `<month>` and `<year>`, each of which takes a `<label>`:
+
+```razor
+<govuk-date-input for="PassportIssued">
+    <legend>When was your passport issued?</legend>
+    <hint>For example, 27 3 2007</hint>
+    <day><label>Dydd</label></day>
+    <month><label>Mis</label></month>
+    <year><label>Blwyddyn</label></year>
+</govuk-date-input>
+```
+
+The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 
 `TabsOptions.Title` is now `string?` rather than `TemplateString?`. It only ever comes from the `title` attribute, so it is always text.
 

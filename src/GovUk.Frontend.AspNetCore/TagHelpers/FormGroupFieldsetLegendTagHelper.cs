@@ -11,6 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(ShortTagName, ParentTag = CheckboxesTagHelper.TagName)]
 [HtmlTargetElement(DateInputTagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
 [HtmlTargetElement(DateInputTagName, ParentTag = DateInputTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
 [HtmlTargetElement(RadiosTagName, ParentTag = RadiosFieldsetTagHelper.TagName)]
 [HtmlTargetElement(RadiosTagName, ParentTag = RadiosTagHelper.TagName)]
 [HtmlTargetElement(ShortTagName, ParentTag = RadiosTagHelper.TagName)]

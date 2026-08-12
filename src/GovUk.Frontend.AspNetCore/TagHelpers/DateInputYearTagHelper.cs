@@ -6,11 +6,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the year item in a GDS date input component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DateInputTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = DateInputTagHelper.TagName)]
 [HtmlTargetElement(TagName, ParentTag = DateInputFieldsetTagHelper.TagName)]
-[RestrictChildren(DateInputYearLabelTagHelper.TagName)]
+[RestrictChildren(DateInputYearLabelTagHelper.TagName, DateInputYearLabelTagHelper.ShortTagName)]
 public class DateInputYearTagHelper : DateInputItemTagHelperBase
 {
     internal const string TagName = "govuk-date-input-year";
+    internal const string ShortTagName = ShortTagNames.Year;
 
     /// <summary>
     /// Creates a <see cref="DateInputYearTagHelper"/>.

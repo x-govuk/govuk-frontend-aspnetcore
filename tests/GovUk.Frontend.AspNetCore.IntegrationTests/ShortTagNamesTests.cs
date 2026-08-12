@@ -25,6 +25,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("CharacterCount", "short", "long")]
     [InlineData("CharacterCount", "short-error-message", "long-error-message")]
     [InlineData("Accordion", "short", "long", ".govuk-accordion__section")]
+    [InlineData("Breadcrumbs", "short", "long", ".govuk-breadcrumbs__list-item")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -132,6 +133,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("Accordion")]
     public IActionResult GetAccordion() => View("Accordion", new ShortTagNamesTestsModel());
+
+    [HttpGet("Breadcrumbs")]
+    public IActionResult GetBreadcrumbs() => View("Breadcrumbs", new ShortTagNamesTestsModel());
 }
 
 public class ShortTagNamesTestsModel

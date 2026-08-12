@@ -11,9 +11,9 @@
 
 ```razor
 <govuk-breadcrumbs collapse-on-mobile="true">
-    <govuk-breadcrumbs-item asp-controller="Home" asp-action="Index">Home</govuk-breadcrumbs-item>
-    <govuk-breadcrumbs-item href="#" link-target="_blank">Passports, travel and living abroad</govuk-breadcrumbs-item>
-    <govuk-breadcrumbs-item>Travel abroad</govuk-breadcrumbs-item>
+    <breadcrumbs-item asp-controller="Home" asp-action="Index">Home</breadcrumbs-item>
+    <breadcrumbs-item href="#" link-target="_blank">Passports, travel and living abroad</breadcrumbs-item>
+    <breadcrumbs-item>Travel abroad</breadcrumbs-item>
 </govuk-breadcrumbs>
 ```
 
@@ -28,7 +28,7 @@
 | `label-text` | `string` | The plain text label identifying the landmark to screen readers. Defaults to `Breadcrumb`. |
 
 
-#### `<govuk-breadcrumbs-item>`
+#### `<breadcrumbs-item>` / `<govuk-breadcrumbs-item>`
 
 The content is the HTML to use within the breadcrumbs item.
 

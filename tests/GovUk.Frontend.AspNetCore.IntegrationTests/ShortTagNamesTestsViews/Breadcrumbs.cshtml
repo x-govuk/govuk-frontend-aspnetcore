@@ -1,0 +1,20 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-breadcrumbs collapse-on-mobile="true">
+        <breadcrumbs-item href="/" link-target="_blank">Home</breadcrumbs-item>
+        <breadcrumbs-item asp-controller="ShortTagNamesTests" asp-action="GetBreadcrumbs">Passports, travel and living abroad</breadcrumbs-item>
+        <breadcrumbs-item>Travel abroad</breadcrumbs-item>
+    </govuk-breadcrumbs>
+</div>
+
+<div data-testid="long">
+    <govuk-breadcrumbs collapse-on-mobile="true">
+        <govuk-breadcrumbs-item href="/" link-target="_blank">Home</govuk-breadcrumbs-item>
+        <govuk-breadcrumbs-item asp-controller="ShortTagNamesTests" asp-action="GetBreadcrumbs">Passports, travel and living abroad</govuk-breadcrumbs-item>
+        <govuk-breadcrumbs-item>Travel abroad</govuk-breadcrumbs-item>
+    </govuk-breadcrumbs>
+</div>

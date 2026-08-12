@@ -121,7 +121,7 @@ public class TemplateRenderer
             // Show the short tag name before the full one
             var orderedParentTagNames = tagHelperApi.ParentTagNames.OrderByDescending(tn => !tn.StartsWith("govuk-")).ThenBy(tn => tn).ToArray();
 
-            // The first tag name is the one the article is read against, e.g. an <item>
+            // The first tag name is the one the article is read against, e.g. an <error-message>
             var article = orderedParentTagNames[0] is ['a' or 'e' or 'i' or 'o' or 'u', ..] ? "an" : "a";
 
             sb.AppendLine();

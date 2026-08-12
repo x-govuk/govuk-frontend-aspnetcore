@@ -8,9 +8,10 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// </summary>
 [HtmlTargetElement(CheckboxesTagName, ParentTag = CheckboxesItemTagHelper.TagName)]
 [HtmlTargetElement(RadiosTagName, ParentTag = RadiosItemTagHelper.TagName)]
-// The checkboxes and radios items share the one short name, so this covers the item in either
-// component; the item's context decides which component's hint is being set
-[HtmlTargetElement(ShortTagName, ParentTag = ShortTagNames.Item)]
+// The checkboxes and radios items share the one short name for the hint; the item's context
+// decides which component's hint is being set
+[HtmlTargetElement(ShortTagName, ParentTag = CheckboxesItemTagHelper.ShortTagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = RadiosItemTagHelper.ShortTagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the item's hint.")]
 public class FormGroupItemHintTagHelper : TagHelper
 {

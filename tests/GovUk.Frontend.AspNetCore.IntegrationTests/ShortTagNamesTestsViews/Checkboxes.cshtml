@@ -13,7 +13,7 @@
 
         <before-inputs>Before inputs</before-inputs>
 
-        <item value="email">
+        <checkboxes-item value="email">
             Email
             <hint>We'll only use this to contact you about your application</hint>
             <conditional>
@@ -21,27 +21,27 @@
                     <govuk-input-label>Email address</govuk-input-label>
                 </govuk-input>
             </conditional>
-        </item>
+        </checkboxes-item>
 
-        <item value="phone">
+        <checkboxes-item value="phone">
             Phone
             <conditional>
                 <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Phone number</govuk-input-label>
                 </govuk-input>
             </conditional>
-        </item>
+        </checkboxes-item>
 
         <divider>or</divider>
 
-        <item value="text message">
+        <checkboxes-item value="text message">
             Text message
             <conditional>
                 <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Mobile phone number</govuk-input-label>
                 </govuk-input>
             </conditional>
-        </item>
+        </checkboxes-item>
 
         <after-inputs>After inputs</after-inputs>
     </govuk-checkboxes>
@@ -97,7 +97,7 @@
     <govuk-checkboxes name="WithError">
         <legend>The legend</legend>
         <error-message>Select how you would like to be contacted</error-message>
-        <item value="email">Email</item>
+        <checkboxes-item value="email">Email</checkboxes-item>
     </govuk-checkboxes>
 </div>
 

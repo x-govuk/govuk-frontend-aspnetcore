@@ -18,7 +18,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 public class CheckboxesItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-checkboxes-item";
-    internal const string ShortTagName = ShortTagNames.Item;
+    internal const string ShortTagName = ShortTagNames.CheckboxesItem;
 
     private const string CheckedAttributeName = "checked";
     private const string DisabledAttributeName = "disabled";

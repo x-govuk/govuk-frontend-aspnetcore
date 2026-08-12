@@ -13,7 +13,7 @@
 
         <before-inputs>Before inputs</before-inputs>
 
-        <item value="email">
+        <radios-item value="email">
             Email
             <hint>We'll only use this to contact you about your application</hint>
             <conditional>
@@ -21,20 +21,20 @@
                     <govuk-input-label>Email address</govuk-input-label>
                 </govuk-input>
             </conditional>
-        </item>
+        </radios-item>
 
-        <item value="phone">
+        <radios-item value="phone">
             Phone
             <conditional>
                 <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                     <govuk-input-label>Phone number</govuk-input-label>
                 </govuk-input>
             </conditional>
-        </item>
+        </radios-item>
 
         <divider>or</divider>
 
-        <item value="text message">Text message</item>
+        <radios-item value="text message">Text message</radios-item>
 
         <after-inputs>After inputs</after-inputs>
     </govuk-radios>
@@ -81,7 +81,7 @@
     <govuk-radios name="WithError">
         <legend>The legend</legend>
         <error-message>Select how you would like to be contacted</error-message>
-        <item value="email">Email</item>
+        <radios-item value="email">Email</radios-item>
     </govuk-radios>
 </div>
 

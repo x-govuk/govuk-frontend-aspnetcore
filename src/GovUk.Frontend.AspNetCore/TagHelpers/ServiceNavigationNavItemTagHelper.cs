@@ -21,7 +21,7 @@ public class ServiceNavigationNavItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-nav-item";
 #if SHORT_TAG_NAMES
-    internal const string ShortTagName = ShortTagNames.Item;
+    internal const string ShortTagName = ShortTagNames.NavItem;
 #endif
 
     private const string ActiveAttributeName = "active";

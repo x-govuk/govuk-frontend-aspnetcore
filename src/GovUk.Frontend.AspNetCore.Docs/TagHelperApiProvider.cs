@@ -14,6 +14,8 @@ public class TagHelperApiProvider
     private const string XmlDocFileName = "GovUk.Frontend.AspNetCore.xml";
     private const string TagHelperNamespace = "GovUk.Frontend.AspNetCore.TagHelpers";
 
+    private static string[][]? _tagNames;
+
     private readonly TemplatePublishOptions _publishOptions;
     private readonly XDocument _docs;
     private readonly Type _anchorTagHelper;
@@ -58,17 +60,20 @@ public class TagHelperApiProvider
             }
 
             // Components share their short names, so the short name targets several elements too;
-            // keep the ones for the component being documented. A govuk- prefixed parent has to be
-            // one this element is already inside; a short-named parent is that component's element
-            // whichever component it belongs to, since only one of them is in scope in a view.
+            // keep the ones for the component being documented. A parent has to be an element this
+            // one is already inside; a short-named parent is checked through the element it names,
+            // since that name belongs to one component's element.
             var forParentTags = forTagNameAttrs.Select(e => e.ParentTag).OfType<string>().ToArray();
+
+            bool ParentIsInScope(string? parentTag) =>
+                parentTag is not { Length: > 0 } ||
+                forParentTags.Contains(parentTag) ||
+                GetTagNames(parentTag).Any(forParentTags.Contains);
 
             var forShortTagNameAttrs = forShortTagName is not null ?
                 htmlTargetElementAttrs
                     .Where(e => e.Tag == forShortTagName)
-                    .Where(e => e.ParentTag is not { } parentTag ||
-                        !parentTag.StartsWith("govuk-") ||
-                        forParentTags.Contains(parentTag))
+                    .Where(e => ParentIsInScope(e.ParentTag))
                     .ToArray() :
                 [];
 
@@ -179,6 +184,20 @@ public class TagHelperApiProvider
         }
 
         return new TagHelperApi(tagName, shortTagName, attributes, tagStructure, parentTagNames, documentationAttr?.ContentDescription);
+    }
+
+    /// <summary>
+    /// The names of every element targeted by the tag helpers that target <paramref name="tagName"/>,
+    /// e.g. <c>govuk-checkboxes-item</c> and <c>checkboxes-item</c> for <c>checkboxes-item</c>.
+    /// </summary>
+    private static IEnumerable<string> GetTagNames(string tagName)
+    {
+        _tagNames ??= typeof(GovUkFrontendOptions).Assembly.GetTypes()
+            .Select(t => t.GetCustomAttributes<HtmlTargetElementAttribute>().Select(e => e.Tag).Distinct().ToArray())
+            .Where(tagNames => tagNames.Length > 0)
+            .ToArray();
+
+        return _tagNames.Where(tagNames => tagNames.Contains(tagName)).SelectMany(tagNames => tagNames).Distinct();
     }
 
     private static XDocument LoadDocs()

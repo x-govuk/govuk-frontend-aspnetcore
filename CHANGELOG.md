@@ -36,18 +36,18 @@ The checkboxes, radios, date input, text input, textarea, file upload, password 
 <govuk-checkboxes for="ContactPreferences">
     <legend>How would you like to be contacted?</legend>
     <hint>Select all options that are relevant to you.</hint>
-    <item value="email">
+    <checkboxes-item value="email">
         Email
         <conditional>
             <govuk-input for="EmailAddress" type="email" input-class="govuk-!-width-one-third">
                 <label>Email address</label>
             </govuk-input>
         </conditional>
-    </item>
+    </checkboxes-item>
 </govuk-checkboxes>
 ```
 
-`<legend>`, `<hint>`, `<error-message>`, `<item>`, `<divider>`, `<before-inputs>` and `<after-inputs>` go directly inside `<govuk-checkboxes>` or `<govuk-radios>`; `<hint>` and `<conditional>` go inside an `<item>`. The date input takes the same `<legend>`, `<hint>`, `<error-message>`, `<before-inputs>` and `<after-inputs>`, along with `<day>`, `<month>` and `<year>`, each of which takes a `<label>`:
+`<legend>`, `<hint>`, `<error-message>`, `<checkboxes-item>` or `<radios-item>`, `<divider>`, `<before-inputs>` and `<after-inputs>` go directly inside `<govuk-checkboxes>` or `<govuk-radios>`; `<hint>` and `<conditional>` go inside the item. The date input takes the same `<legend>`, `<hint>`, `<error-message>`, `<before-inputs>` and `<after-inputs>`, along with `<day>`, `<month>` and `<year>`, each of which takes a `<label>`:
 
 ```razor
 <govuk-date-input for="PassportIssued">
@@ -59,7 +59,7 @@ The checkboxes, radios, date input, text input, textarea, file upload, password 
 </govuk-date-input>
 ```
 
-The text input takes `<label>`, `<hint>`, `<error-message>`, `<before-input>`, `<prefix>`, `<suffix>` and `<after-input>`. The file upload and password input take the same without the prefix and suffix; the textarea and character count take that set plus `<value>`; and the select takes it plus `<item>`.
+The text input takes `<label>`, `<hint>`, `<error-message>`, `<before-input>`, `<prefix>`, `<suffix>` and `<after-input>`. The file upload and password input take the same without the prefix and suffix; the textarea and character count take that set plus `<value>`; and the select takes it plus `<select-item>`.
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 

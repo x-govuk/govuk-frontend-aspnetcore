@@ -19,12 +19,12 @@
         If you have dual nationality, select all options that are relevant to you.
     </hint>
 
-    <item value="british">
+    <checkboxes-item value="british">
         British
         <hint>including English, Scottish, Welsh and Northern Irish</hint>
-    </item>
-    <item value="irish">Irish</item>
-    <item value="other">Citizen of another country</item>
+    </checkboxes-item>
+    <checkboxes-item value="irish">Irish</checkboxes-item>
+    <checkboxes-item value="other">Citizen of another country</checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -34,9 +34,9 @@
 
 ```razor
 <govuk-checkboxes for="Nationalities" fieldset legend-class="govuk-fieldset__legend--l" legend-is-page-heading="true">
-    <item value="british">British</item>
-    <item value="irish">Irish</item>
-    <item value="other">Citizen of another country</item>
+    <checkboxes-item value="british">British</checkboxes-item>
+    <checkboxes-item value="irish">Irish</checkboxes-item>
+    <checkboxes-item value="other">Citizen of another country</checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -46,9 +46,9 @@
 
 ```razor
 <govuk-checkboxes for="AcceptedTermsAndConditions">
-    <item value="true">
+    <checkboxes-item value="true">
         I agree to the terms and conditions
-    </item>
+    </checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -66,32 +66,32 @@
         Select all options that are relevant to you.
     </hint>
 
-    <item value="email">
+    <checkboxes-item value="email">
         Email
         <conditional>
             <govuk-input for="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
                 <label>Email address</label>
             </govuk-input>
         </conditional>
-    </item>
+    </checkboxes-item>
 
-    <item value="phone">
+    <checkboxes-item value="phone">
         Phone
         <conditional>
             <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                 <label>Phone number</label>
             </govuk-input>
         </conditional>
-    </item>
+    </checkboxes-item>
 
-    <item value="text message">
+    <checkboxes-item value="text message">
         Text message
         <conditional>
             <govuk-input for="MobilePhoneNumber" type="tel" autocomplete="tel" input-class="govuk-!-width-one-third">
                 <label>Mobile phone number</label>
             </govuk-input>
         </conditional>
-    </item>
+    </checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -109,11 +109,11 @@
         Select all countries that apply
     </hint>
 
-    <item value="france">France</item>
-    <item value="portugal">Portugal</item>
-    <item value="spain">Spain</item>
+    <checkboxes-item value="france">France</checkboxes-item>
+    <checkboxes-item value="portugal">Portugal</checkboxes-item>
+    <checkboxes-item value="spain">Spain</checkboxes-item>
     <divider>or</divider>
-    <item value="none" behavior="CheckboxesItemBehavior.Exclusive">No, I will not be travelling to any of these countries</item>
+    <checkboxes-item value="none" behavior="CheckboxesItemBehavior.Exclusive">No, I will not be travelling to any of these countries</checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -135,12 +135,12 @@
         Select if you are British, Irish or a citizen of a different country
     </error-message>
 
-    <item value="british">
+    <checkboxes-item value="british">
         British
         <hint>including English, Scottish, Welsh and Northern Irish</hint>
-    </item>
-    <item value="irish">Irish</item>
-    <item value="other">Citizen of another country</item>
+    </checkboxes-item>
+    <checkboxes-item value="irish">Irish</checkboxes-item>
+    <checkboxes-item value="other">Citizen of another country</checkboxes-item>
 </govuk-checkboxes>
 ```
 
@@ -210,7 +210,7 @@ The content is the HTML to use before the checkboxes.
 Must be inside a `<govuk-checkboxes>` or `<govuk-checkboxes-fieldset>` element.
 
 
-#### `<item>` / `<govuk-checkboxes-item>`
+#### `<checkboxes-item>` / `<govuk-checkboxes-item>`
 
 The content is the HTML to use within the label for the generated input element.
 
@@ -231,14 +231,14 @@ Must be inside a `<govuk-checkboxes>` or `<govuk-checkboxes-fieldset>` element.
 
 The content is the HTML to use within the item's hint.
 
-Must be inside an `<item>` or `<govuk-checkboxes-item>` element.
+Must be inside a `<checkboxes-item>` or `<govuk-checkboxes-item>` element.
 
 
 #### `<conditional>` / `<govuk-checkboxes-item-conditional>`
 
 The content is the HTML to use within the conditional reveal for the item.
 
-Must be inside an `<item>` or `<govuk-checkboxes-item>` element.
+Must be inside a `<checkboxes-item>` or `<govuk-checkboxes-item>` element.
 
 
 #### `<divider>` / `<govuk-checkboxes-divider>`

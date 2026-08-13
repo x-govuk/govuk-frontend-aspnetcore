@@ -43,6 +43,7 @@ public class ServiceNavigationNavStartTagHelperTests : TagHelperTestBase<Service
 
         var navContext = new ServiceNavigationNavContext
         {
+            TagName = ParentTagName,
             NavigationStartSlot = new(new TemplateString("Existing start slot"), TagName)
         };
 
@@ -74,9 +75,13 @@ public class ServiceNavigationNavStartTagHelperTests : TagHelperTestBase<Service
         // Arrange
         var content = "Content";
 
+        var itemTagName = GetSiblingTagName(
+            ServiceNavigationNavItemTagHelper.TagName,
+            ServiceNavigationNavItemTagHelper.ShortTagName);
+
         var navContext = new ServiceNavigationNavContext();
         navContext.Items.Add(new ServiceNavigationOptionsNavigationItem());
-        navContext.FirstItemTagName = ServiceNavigationNavItemTagHelper.TagName;
+        navContext.FirstItemTagName = itemTagName;
 
         var context = CreateTagHelperContext(contexts: navContext);
 
@@ -97,7 +102,7 @@ public class ServiceNavigationNavStartTagHelperTests : TagHelperTestBase<Service
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"<{TagName}> must be specified before <{ServiceNavigationNavItemTagHelper.TagName}>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{itemTagName}>.", ex.Message);
     }
 
     [Fact]
@@ -106,9 +111,13 @@ public class ServiceNavigationNavStartTagHelperTests : TagHelperTestBase<Service
         // Arrange
         var content = "Content";
 
+        var endTagName = GetSiblingTagName(
+            ServiceNavigationNavEndTagHelper.TagName,
+            ServiceNavigationNavEndTagHelper.ShortTagName);
+
         var navContext = new ServiceNavigationNavContext
         {
-            NavigationEndSlot = new(new TemplateString("End slot"), ServiceNavigationNavEndTagHelper.TagName)
+            NavigationEndSlot = new(new TemplateString("End slot"), endTagName)
         };
 
         var context = CreateTagHelperContext(contexts: navContext);
@@ -130,6 +139,6 @@ public class ServiceNavigationNavStartTagHelperTests : TagHelperTestBase<Service
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"<{TagName}> must be specified before <{ServiceNavigationNavEndTagHelper.TagName}>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{endTagName}>.", ex.Message);
     }
 }

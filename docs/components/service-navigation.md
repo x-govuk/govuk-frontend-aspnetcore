@@ -11,11 +11,11 @@
 
 ```razor
 <govuk-service-navigation service-name="Service name" service-url="#">
-    <govuk-service-navigation-nav>
-        <govuk-service-navigation-nav-item href="#">Navigation item 1</govuk-service-navigation-nav-item>
-        <govuk-service-navigation-nav-item href="#" active="true">Navigation item 2</govuk-service-navigation-nav-item>
-        <govuk-service-navigation-nav-item href="#">Navigation item 3</govuk-service-navigation-nav-item>
-    </govuk-service-navigation-nav>
+    <nav>
+        <nav-item href="#">Navigation item 1</nav-item>
+        <nav-item href="#" active="true">Navigation item 2</nav-item>
+        <nav-item href="#">Navigation item 3</nav-item>
+    </nav>
 </govuk-service-navigation>
 ```
 
@@ -30,14 +30,14 @@
 | `service-url` | `string` | The homepage of your service. |
 
 
-#### `<govuk-service-navigation-start>`
+#### `<start>` / `<govuk-service-navigation-start>`
 
 The content is the HTML at the start of the service header container.
 
 Must be inside a `<govuk-service-navigation>` element.
 
 
-#### `<govuk-service-navigation-nav>`
+#### `<nav>` / `<govuk-service-navigation-nav>`
 
 Must be inside a `<govuk-service-navigation>` element.
 
@@ -51,18 +51,18 @@ Must be inside a `<govuk-service-navigation>` element.
 | `menu-button-text` | `string` | The text of the mobile navigation menu toggle. |
 
 
-#### `<govuk-service-navigation-nav-start>`
+#### `<start>` / `<govuk-service-navigation-nav-start>`
 
 The content is the HTML before the first list item in the navigation list.
 
-Must be inside a `<govuk-service-navigation-nav>` element.
+Must be inside a `<nav>` or `<govuk-service-navigation-nav>` element.
 
 
-#### `<govuk-service-navigation-nav-item>`
+#### `<nav-item>` / `<govuk-service-navigation-nav-item>`
 
 The content is the HTML to use within the generated service navigation item.
 
-Must be inside a `<govuk-service-navigation-nav>` element.
+Must be inside a `<nav>` or `<govuk-service-navigation-nav>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |
@@ -72,14 +72,14 @@ Must be inside a `<govuk-service-navigation-nav>` element.
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
-#### `<govuk-service-navigation-nav-end>`
+#### `<end>` / `<govuk-service-navigation-nav-end>`
 
 The content is the HTML after the last list item in the navigation list.
 
-Must be inside a `<govuk-service-navigation-nav>` element.
+Must be inside a `<nav>` or `<govuk-service-navigation-nav>` element.
 
 
-#### `<govuk-service-navigation-end>`
+#### `<end>` / `<govuk-service-navigation-end>`
 
 The content is the HTML at the end of the service header container.
 

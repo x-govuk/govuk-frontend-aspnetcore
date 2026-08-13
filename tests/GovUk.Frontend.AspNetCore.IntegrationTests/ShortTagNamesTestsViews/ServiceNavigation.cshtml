@@ -1,0 +1,32 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-service-navigation service-name="Service name" service-url="/">
+        <start><span>Before</span></start>
+        <nav aria-label="Menu" menu-button-text="Menu">
+            <start><li class="govuk-service-navigation__item">First</li></start>
+            <nav-item href="/" link-target="_blank">Navigation item 1</nav-item>
+            <nav-item asp-controller="ShortTagNamesTests" asp-action="GetServiceNavigation" active="true">Navigation item 2</nav-item>
+            <nav-item href="#" current="true">Navigation item 3</nav-item>
+            <end><li class="govuk-service-navigation__item">Last</li></end>
+        </nav>
+        <end><span>After</span></end>
+    </govuk-service-navigation>
+</div>
+
+<div data-testid="long">
+    <govuk-service-navigation service-name="Service name" service-url="/">
+        <govuk-service-navigation-start><span>Before</span></govuk-service-navigation-start>
+        <govuk-service-navigation-nav aria-label="Menu" menu-button-text="Menu">
+            <govuk-service-navigation-nav-start><li class="govuk-service-navigation__item">First</li></govuk-service-navigation-nav-start>
+            <govuk-service-navigation-nav-item href="/" link-target="_blank">Navigation item 1</govuk-service-navigation-nav-item>
+            <govuk-service-navigation-nav-item asp-controller="ShortTagNamesTests" asp-action="GetServiceNavigation" active="true">Navigation item 2</govuk-service-navigation-nav-item>
+            <govuk-service-navigation-nav-item href="#" current="true">Navigation item 3</govuk-service-navigation-nav-item>
+            <govuk-service-navigation-nav-end><li class="govuk-service-navigation__item">Last</li></govuk-service-navigation-nav-end>
+        </govuk-service-navigation-nav>
+        <govuk-service-navigation-end><span>After</span></govuk-service-navigation-end>
+    </govuk-service-navigation>
+</div>

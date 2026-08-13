@@ -1,0 +1,11 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The service navigation's children all share the same parent element, so the two spellings
+   are kept apart at run time rather than through the parent element's name *@
+
+<govuk-service-navigation service-name="Service name" service-url="/">
+    <govuk-service-navigation-start><span>Before</span></govuk-service-navigation-start>
+    <nav aria-label="Menu">
+        <nav-item href="/">Navigation item 1</nav-item>
+    </nav>
+</govuk-service-navigation>

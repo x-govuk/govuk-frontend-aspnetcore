@@ -43,7 +43,7 @@ public class ServiceNavigationEndTagHelperTests : TagHelperTestBase<ServiceNavig
 
         var serviceNavigationContext = new ServiceNavigationContext
         {
-            EndSlot = new(new TemplateString("Existing end slot"), ServiceNavigationEndTagHelper.TagName)
+            EndSlot = new(new TemplateString("Existing end slot"), TagName)
         };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
@@ -66,5 +66,44 @@ public class ServiceNavigationEndTagHelperTests : TagHelperTestBase<ServiceNavig
         // Act
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal($"Only one {GetAllTagNameElementsMessage("or")} element is permitted within each <{ParentTagName}>.", ex.Message);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_ParentHasStartSlotWithOtherTagNameSpelling_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var content = "Content";
+
+        var startTagName = GetOtherSpellingSiblingTagName(
+            ServiceNavigationStartTagHelper.TagName,
+            ServiceNavigationStartTagHelper.ShortTagName);
+
+        var serviceNavigationContext = new ServiceNavigationContext
+        {
+            StartSlot = new(new TemplateString("Start slot"), startTagName)
+        };
+
+        var context = CreateTagHelperContext(contexts: serviceNavigationContext);
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                TagHelperContent tagHelperContent = new DefaultTagHelperContent();
+                tagHelperContent.SetContent(content);
+                return Task.FromResult(tagHelperContent);
+            });
+
+        var tagHelper = new ServiceNavigationEndTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal(
+            $"<{TagName}> cannot be used alongside <{startTagName}>; short tag names and govuk- prefixed tag names cannot be mixed.",
+            ex.Message);
     }
 }

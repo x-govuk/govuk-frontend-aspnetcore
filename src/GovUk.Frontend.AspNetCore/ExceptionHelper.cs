@@ -38,6 +38,10 @@ internal static class ExceptionHelper
         IReadOnlyCollection<string> childElementTagNames, IReadOnlyCollection<string> parentElementTagNames) =>
             new($"Only one {JoinTagNamesWithConjunction(childElementTagNames)} element is permitted within each {JoinTagNamesWithConjunction(parentElementTagNames)}.");
 
+    public static InvalidOperationException ShortAndGovUkPrefixedTagNamesCannotBeMixed(
+        string tagName, string siblingTagName) =>
+            new($"<{tagName}> cannot be used alongside <{siblingTagName}>; short tag names and govuk- prefixed tag names cannot be mixed.");
+
     public static InvalidOperationException TheAttributeMustBeSpecified(string attributeName) =>
         new($"The '{attributeName}' attribute must be specified.");
 

@@ -6,26 +6,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content after the last list item in the navigation list in a GDS service navigation component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ServiceNavigationNavTagHelper.TagName)]
-#if SHORT_TAG_NAMES
-[HtmlTargetElement(TagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
-[HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.TagName)]
 [HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationNavTagHelper.ShortTagName)]
-#endif
 [TagHelperDocumentation(ContentDescription = "The content is the HTML after the last list item in the navigation list.")]
 public class ServiceNavigationNavEndTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-nav-end";
-#if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.End;
-#endif
 
-    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
-        TagName
-#if SHORT_TAG_NAMES
-        ,
-        ShortTagName
-#endif
-    ];
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -37,7 +25,7 @@ public class ServiceNavigationNavEndTagHelper : TagHelper
 
         if (navContext.NavigationEndSlot is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, [ServiceNavigationNavTagHelper.TagName]);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, navContext.TagName!);
         }
 
         var content = await output.GetChildContentAsync();

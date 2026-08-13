@@ -43,7 +43,8 @@ public class ServiceNavigationNavEndTagHelperTests : TagHelperTestBase<ServiceNa
 
         var navContext = new ServiceNavigationNavContext
         {
-            NavigationEndSlot = new(new TemplateString("Existing end slot"), ServiceNavigationNavEndTagHelper.TagName)
+            TagName = ParentTagName,
+            NavigationEndSlot = new(new TemplateString("Existing end slot"), TagName)
         };
 
         var context = CreateTagHelperContext(contexts: navContext);

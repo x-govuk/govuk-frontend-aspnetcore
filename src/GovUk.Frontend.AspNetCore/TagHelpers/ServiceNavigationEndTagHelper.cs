@@ -6,24 +6,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the content at the end of the service header container in a GDS service navigation component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ServiceNavigationTagHelper.TagName)]
-#if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationTagHelper.TagName)]
-#endif
 [TagHelperDocumentation(ContentDescription = "The content is the HTML at the end of the service header container.")]
 public class ServiceNavigationEndTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-end";
-#if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.End;
-#endif
 
-    private static IReadOnlyCollection<string> AllTagNames => [
-        TagName
-#if SHORT_TAG_NAMES
-        ,
-        ShortTagName
-#endif
-    ];
+    private static IReadOnlyCollection<string> AllTagNames => [TagName, ShortTagName];
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -32,6 +22,8 @@ public class ServiceNavigationEndTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(output);
 
         var serviceNavigationContext = context.GetContextItem<ServiceNavigationContext>();
+
+        serviceNavigationContext.CheckChildTagNameSpelling(context.TagName);
 
         if (serviceNavigationContext.EndSlot is not null)
         {

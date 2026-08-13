@@ -81,7 +81,7 @@ public class ServiceNavigationNavTagHelperTests : TagHelperTestBase<ServiceNavig
         // Arrange
         var serviceNavigationContext = new ServiceNavigationContext
         {
-            Nav = new ServiceNavigationNavContext()
+            Nav = new ServiceNavigationNavContext { TagName = TagName }
         };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
@@ -104,9 +104,13 @@ public class ServiceNavigationNavTagHelperTests : TagHelperTestBase<ServiceNavig
     public async Task ProcessAsync_ParentHasEndSlot_ThrowsInvalidOperationException()
     {
         // Arrange
+        var endTagName = GetSiblingTagName(
+            ServiceNavigationEndTagHelper.TagName,
+            ServiceNavigationEndTagHelper.ShortTagName);
+
         var serviceNavigationContext = new ServiceNavigationContext
         {
-            EndSlot = new(new TemplateString("End slot"), ServiceNavigationEndTagHelper.TagName)
+            EndSlot = new(new TemplateString("End slot"), endTagName)
         };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);
@@ -122,6 +126,37 @@ public class ServiceNavigationNavTagHelperTests : TagHelperTestBase<ServiceNavig
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"<{TagName}> must be specified before <{ServiceNavigationEndTagHelper.TagName}>.", ex.Message);
+        Assert.Equal($"<{TagName}> must be specified before <{endTagName}>.", ex.Message);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_ParentHasStartSlotWithOtherTagNameSpelling_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var startTagName = GetOtherSpellingSiblingTagName(
+            ServiceNavigationStartTagHelper.TagName,
+            ServiceNavigationStartTagHelper.ShortTagName);
+
+        var serviceNavigationContext = new ServiceNavigationContext
+        {
+            StartSlot = new(new TemplateString("Start slot"), startTagName)
+        };
+
+        var context = CreateTagHelperContext(contexts: serviceNavigationContext);
+
+        var output = CreateTagHelperOutput();
+
+        var tagHelper = new ServiceNavigationNavTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal(
+            $"<{TagName}> cannot be used alongside <{startTagName}>; short tag names and govuk- prefixed tag names cannot be mixed.",
+            ex.Message);
     }
 }

@@ -41,6 +41,13 @@ public abstract class TagHelperTestBase<T> where T : ITagHelper
     protected string GetSiblingTagName(string tagName, string shortTagName) =>
         UsesShortTagName ? shortTagName : tagName;
 
+    /// <summary>
+    /// Gets the spelling of a sibling element that does not go with the tag name under test, for the
+    /// components where the two spellings cannot be mixed within the same parent.
+    /// </summary>
+    protected string GetOtherSpellingSiblingTagName(string tagName, string shortTagName) =>
+        UsesShortTagName ? tagName : shortTagName;
+
     protected TagHelperContext CreateTagHelperContext(
         string? tagName = null,
         string? className = null,

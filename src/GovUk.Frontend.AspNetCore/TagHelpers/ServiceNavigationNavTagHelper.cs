@@ -7,26 +7,18 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the navigation list in a GDS service navigation component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ServiceNavigationTagHelper.TagName)]
-#if SHORT_TAG_NAMES
 [HtmlTargetElement(ShortTagName, ParentTag = ServiceNavigationTagHelper.TagName)]
-#endif
 [RestrictChildren(
     ServiceNavigationNavStartTagHelper.TagName,
-    ServiceNavigationNavItemTagHelper.TagName,
-    ServiceNavigationNavEndTagHelper.TagName
-#if SHORT_TAG_NAMES
-    ,
     ServiceNavigationNavStartTagHelper.ShortTagName,
+    ServiceNavigationNavItemTagHelper.TagName,
     ServiceNavigationNavItemTagHelper.ShortTagName,
-    ServiceNavigationNavEndTagHelper.ShortTagName
-#endif
-    )]
+    ServiceNavigationNavEndTagHelper.TagName,
+    ServiceNavigationNavEndTagHelper.ShortTagName)]
 public class ServiceNavigationNavTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation-nav";
-#if SHORT_TAG_NAMES
     internal const string ShortTagName = ShortTagNames.Nav;
-#endif
 
     private const string AriaLabelAttributeName = "aria-label";
     private const string CollapseNavigationOnMobileAttributeName = "collapse-navigation-on-mobile";
@@ -35,13 +27,7 @@ public class ServiceNavigationNavTagHelper : TagHelper
     private const string LabelAttributeName = "label";
     private const string IdAttributeName = "id";
 
-    internal static IReadOnlyCollection<string> AllTagNames { get; } = [
-        TagName
-#if SHORT_TAG_NAMES
-        ,
-        ShortTagName
-#endif
-    ];
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <summary>
     /// The text for the <c>aria-label</c> which labels the service navigation container when a service name is included.
@@ -108,6 +94,8 @@ public class ServiceNavigationNavTagHelper : TagHelper
 
         var serviceNavigationContext = context.GetContextItem<ServiceNavigationContext>();
         var navContext = context.GetContextItem<ServiceNavigationNavContext>();
+
+        serviceNavigationContext.CheckChildTagNameSpelling(context.TagName);
 
         if (serviceNavigationContext.Nav is not null)
         {

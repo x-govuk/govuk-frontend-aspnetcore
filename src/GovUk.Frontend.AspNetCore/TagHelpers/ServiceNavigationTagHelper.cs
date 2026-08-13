@@ -9,11 +9,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     ServiceNavigationStartTagHelper.TagName,
-    //ServiceNavigationStartTagHelper.ShortTagName,
+    ServiceNavigationStartTagHelper.ShortTagName,
     ServiceNavigationNavTagHelper.TagName,
-    //ServiceNavigationNavTagHelper.ShortTagName,
-    ServiceNavigationEndTagHelper.TagName/*,
-    ServiceNavigationEndTagHelper.ShortTagName*/)]
+    ServiceNavigationNavTagHelper.ShortTagName,
+    ServiceNavigationEndTagHelper.TagName,
+    ServiceNavigationEndTagHelper.ShortTagName)]
 public class ServiceNavigationTagHelper : TagHelper
 {
     internal const string TagName = "govuk-service-navigation";

@@ -295,6 +295,7 @@ services.AddGovUkFrontend(options =>
 - [Error summary](docs/components/error-summary.md)
 - [Fieldset](docs/components/fieldset.md)
 - [File upload](docs/components/file-upload.md)
+- [Generic header](docs/components/generic-header.md)
 - [GOV.UK header](docs/components/header.md)
 - [GOV.UK footer](docs/components/footer.md)
 - [Inset text](docs/components/inset-text.md)

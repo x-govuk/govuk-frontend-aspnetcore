@@ -1,0 +1,22 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-error-summary disable-auto-focus="true">
+        <title>There is a problem</title>
+        <description>Check the following before continuing.</description>
+        <error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</error-summary-item>
+        <error-summary-item asp-controller="ShortTagNamesTests" asp-action="GetErrorSummary">Enter a postcode, like AA1 1AA</error-summary-item>
+    </govuk-error-summary>
+</div>
+
+<div data-testid="long">
+    <govuk-error-summary disable-auto-focus="true">
+        <govuk-error-summary-title>There is a problem</govuk-error-summary-title>
+        <govuk-error-summary-description>Check the following before continuing.</govuk-error-summary-description>
+        <govuk-error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</govuk-error-summary-item>
+        <govuk-error-summary-item asp-controller="ShortTagNamesTests" asp-action="GetErrorSummary">Enter a postcode, like AA1 1AA</govuk-error-summary-item>
+    </govuk-error-summary>
+</div>

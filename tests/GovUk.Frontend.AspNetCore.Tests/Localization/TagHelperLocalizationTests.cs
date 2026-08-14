@@ -60,7 +60,7 @@ public class TagHelperLocalizationTests : TagHelperTestBase<ErrorSummaryTagHelpe
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)]!;
-                errorSummaryContext.AddItem(new ErrorSummaryContextItem(Href: null, Html: new TemplateString("An error"), Attributes: new(), ItemAttributes: new()));
+                errorSummaryContext.AddItem(new ErrorSummaryContextItem(Href: null, Html: new TemplateString("An error"), Attributes: new(), ItemAttributes: new()), ErrorSummaryItemTagHelper.TagName);
                 return Task.FromResult<TagHelperContent>(new DefaultTagHelperContent());
             });
 
@@ -97,7 +97,7 @@ public class TagHelperLocalizationTests : TagHelperTestBase<ErrorSummaryTagHelpe
             getChildContentAsync: (useCachedResult, encoder) =>
             {
                 var errorSummaryContext = (ErrorSummaryContext)context.Items[typeof(ErrorSummaryContext)]!;
-                errorSummaryContext.AddItem(new ErrorSummaryContextItem(Href: null, Html: new TemplateString("An error"), Attributes: new(), ItemAttributes: new()));
+                errorSummaryContext.AddItem(new ErrorSummaryContextItem(Href: null, Html: new TemplateString("An error"), Attributes: new(), ItemAttributes: new()), ErrorSummaryItemTagHelper.TagName);
                 return Task.FromResult<TagHelperContent>(new DefaultTagHelperContent());
             });
 

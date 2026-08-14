@@ -30,7 +30,7 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
-The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header, footer, notification banner, pagination, phase banner and tabs tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header, footer, notification banner, pagination, phase banner, tabs and error summary tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
@@ -185,6 +185,18 @@ The tabs take `<tabs-item>` inside `<govuk-tabs>`:
     </tabs-item>
 </govuk-tabs>
 ```
+
+The error summary takes `<title>`, `<description>` and `<error-summary-item>` inside `<govuk-error-summary>`, with the item generating its `href` from the `asp-` attributes just as `<govuk-error-summary-item>` does:
+
+```razor
+<govuk-error-summary>
+    <title>There is a problem</title>
+    <error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</error-summary-item>
+    <error-summary-item for="Postcode" />
+</govuk-error-summary>
+```
+
+Its children also all share the same parent element, so, as with the pagination and the footer, the two spellings cannot be mixed.
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 

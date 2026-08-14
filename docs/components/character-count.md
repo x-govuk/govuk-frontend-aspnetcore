@@ -23,6 +23,27 @@ Check out the [max words validator](../validation/maxwords.md) for adding server
 ```
 
 
+### Example with long tag names
+<img alt="Character count with long tag names example" src="../images/character-count-with-long-tag-names-example.png" />
+
+```razor
+<govuk-character-count name="MoreDetail" max-length="200">
+    <govuk-character-count-label is-page-heading="true" class="govuk-label--l">Can you provide more detail?</govuk-character-count-label>
+    <govuk-character-count-hint>
+        Do not include personal or financial information like your National Insurance number or credit card details.
+    </govuk-character-count-hint>
+    <govuk-character-count-error-message>Enter more detail</govuk-character-count-error-message>
+    <govuk-character-count-before-input>
+        <p class="govuk-body">Content before the textarea</p>
+    </govuk-character-count-before-input>
+    <govuk-character-count-after-input>
+        <p class="govuk-body">Content after the textarea</p>
+    </govuk-character-count-after-input>
+    <govuk-character-count-value>The existing content of the textarea</govuk-character-count-value>
+</govuk-character-count>
+```
+
+
 ### API
 
 #### `<govuk-character-count>`

@@ -57,6 +57,24 @@
 ```
 
 
+### Example with long tag names
+<img alt="Pagination with long tag names example" src="../images/pagination-with-long-tag-names-example.png" />
+
+```razor
+<govuk-pagination>
+    <govuk-pagination-previous href="#" />
+    <govuk-pagination-item href="#">1</govuk-pagination-item>
+    <govuk-pagination-ellipsis />
+    <govuk-pagination-item href="#">6</govuk-pagination-item>
+    <govuk-pagination-item href="#" current="true">7</govuk-pagination-item>
+    <govuk-pagination-item href="#">8</govuk-pagination-item>
+    <govuk-pagination-ellipsis />
+    <govuk-pagination-item asp-controller="Home" asp-action="Index">42</govuk-pagination-item>
+    <govuk-pagination-next href="#" />
+</govuk-pagination>
+```
+
+
 ### API
 
 #### `<govuk-pagination>`

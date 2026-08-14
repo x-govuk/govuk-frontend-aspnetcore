@@ -54,6 +54,23 @@ The `type="submit"` action generates a `formaction` attribute and the link actio
 ```
 
 
+### Example with long tag names
+<img alt="Panel with long tag names example" src="../images/panel-with-long-tag-names-example.png" />
+
+```razor
+<govuk-panel class="govuk-panel--interruption">
+    <govuk-panel-title>Is your age correct?</govuk-panel-title>
+    <govuk-panel-body>
+        <p class="govuk-body">You entered your age as <strong>109</strong>.</p>
+    </govuk-panel-body>
+    <govuk-panel-actions>
+        <govuk-panel-action-button type="submit" asp-controller="Home" asp-action="Confirm">Yes, this is correct</govuk-panel-action-button>
+        <govuk-panel-action-link href="#">No, change my age</govuk-panel-action-link>
+    </govuk-panel-actions>
+</govuk-panel>
+```
+
+
 ### API
 
 #### `<govuk-panel>`

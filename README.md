@@ -12,8 +12,8 @@ The assets are copied in when your project builds, and the components are writte
 @* Labels, hints and error messages come from the model *@
 
 <govuk-input for="EmailAddress">
-    <govuk-input-label>Email address</govuk-input-label>
-    <govuk-input-hint>We'll only use this to send you a receipt</govuk-input-hint>
+    <label>Email address</label>
+    <hint>We'll only use this to send you a receipt</hint>
 </govuk-input>
 
 <govuk-button>Submit</govuk-button>
@@ -116,11 +116,11 @@ In your `_Layout.cshtml` file:
 
 @section GovUkServiceNavigation {
     <govuk-service-navigation service-name="Service name" service-url="#">
-        <govuk-service-navigation-nav>
-            <govuk-service-navigation-nav-item href="#">Navigation item 1</govuk-service-navigation-nav-item>
-            <govuk-service-navigation-nav-item href="#" active="true">Navigation item 2</govuk-service-navigation-nav-item>
-            <govuk-service-navigation-nav-item href="#">Navigation item 3</govuk-service-navigation-nav-item>
-        </govuk-service-navigation-nav>
+        <nav>
+            <nav-item href="#">Navigation item 1</nav-item>
+            <nav-item href="#" active="true">Navigation item 2</nav-item>
+            <nav-item href="#">Navigation item 3</nav-item>
+        </nav>
     </govuk-service-navigation>
 }
 
@@ -128,15 +128,15 @@ In your `_Layout.cshtml` file:
 
 @section GovUkFooter {
     <govuk-footer>
-        <govuk-footer-meta>
-            <govuk-footer-meta-items>
-                <govuk-footer-meta-item href="#">Item 1</govuk-footer-meta-item>
-                <govuk-footer-meta-item href="#">Item 2</govuk-footer-meta-item>
-                <govuk-footer-meta-item href="#">Item 3</govuk-footer-meta-item>
-            </govuk-footer-meta-items>
-        </govuk-footer-meta>
-        <govuk-footer-content-licence />
-        <govuk-footer-copyright />
+        <meta>
+            <meta-items>
+                <meta-item href="#">Item 1</meta-item>
+                <meta-item href="#">Item 2</meta-item>
+                <meta-item href="#">Item 3</meta-item>
+            </meta-items>
+        </meta>
+        <content-licence />
+        <copyright />
     </govuk-footer>
 }
 ```

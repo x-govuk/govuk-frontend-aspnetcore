@@ -15,6 +15,17 @@
 ```
 
 
+### Example with long tag names
+<img alt="Phase banner with long tag names example" src="../images/phase-banner-with-long-tag-names-example.png" />
+
+```razor
+<govuk-phase-banner>
+    <govuk-phase-banner-tag>Alpha</govuk-phase-banner-tag>
+    This is a new service - your <a href="#" class="govuk-link">feedback</a> will help us to improve it.
+</govuk-phase-banner>
+```
+
+
 ### API
 
 #### `<govuk-phase-banner>`

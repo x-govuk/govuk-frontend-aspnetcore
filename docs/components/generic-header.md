@@ -18,6 +18,18 @@
 ```
 
 
+### Example with long tag names
+<img alt="Generic header with long tag names example" src="../images/generic-header-with-long-tag-names-example.png" />
+
+```razor
+<govuk-generic-header home-page-url="https://my.service.gov.uk">
+    <govuk-generic-header-logo>
+        My service
+    </govuk-generic-header-logo>
+</govuk-generic-header>
+```
+
+
 ### API
 
 #### `<govuk-generic-header>`

@@ -37,6 +37,24 @@
 ```
 
 
+### Example with long tag names
+<img alt="File upload with long tag names example" src="../images/file-upload-with-long-tag-names-example.png" />
+
+```razor
+<govuk-file-upload name="Document">
+    <govuk-file-upload-label is-page-heading="true" class="govuk-label--l">Upload a file</govuk-file-upload-label>
+    <govuk-file-upload-hint>Your file may be a doc, docx, pdf or odt</govuk-file-upload-hint>
+    <govuk-file-upload-error-message>The CSV must be smaller than 2MB</govuk-file-upload-error-message>
+    <govuk-file-upload-before-input>
+        <p class="govuk-body">Content before the input</p>
+    </govuk-file-upload-before-input>
+    <govuk-file-upload-after-input>
+        <p class="govuk-body">Content after the input</p>
+    </govuk-file-upload-after-input>
+</govuk-file-upload>
+```
+
+
 ### API
 
 #### `<govuk-file-upload>`

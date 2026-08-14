@@ -16,6 +16,16 @@
 ```
 
 
+### Example with long tag names
+<img alt="Fieldset with long tag names example" src="../images/fieldset-with-long-tag-names-example.png" />
+
+```razor
+<govuk-fieldset>
+    <govuk-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">Legend as page heading</govuk-fieldset-legend>
+</govuk-fieldset>
+```
+
+
 ### API
 
 #### `<govuk-fieldset>`

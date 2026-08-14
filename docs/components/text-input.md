@@ -41,6 +41,26 @@
 ```
 
 
+### Example with long tag names
+<img alt="Text input with long tag names example" src="../images/text-input-with-long-tag-names-example.png" />
+
+```razor
+<govuk-input name="CostPerItem" input-class="govuk-input--width-5" spellcheck="false">
+    <govuk-input-label is-page-heading="true" class="govuk-label--l">What is the cost per item, in pounds?</govuk-input-label>
+    <govuk-input-hint>For example, 12.50</govuk-input-hint>
+    <govuk-input-error-message>Enter the cost per item, in pounds</govuk-input-error-message>
+    <govuk-input-before-input>
+        <p class="govuk-body">Content before the input</p>
+    </govuk-input-before-input>
+    <govuk-input-prefix>&pound;</govuk-input-prefix>
+    <govuk-input-suffix>per item</govuk-input-suffix>
+    <govuk-input-after-input>
+        <p class="govuk-body">Content after the input</p>
+    </govuk-input-after-input>
+</govuk-input>
+```
+
+
 ### API
 
 #### `<govuk-input>`

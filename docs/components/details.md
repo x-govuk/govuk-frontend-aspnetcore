@@ -38,6 +38,22 @@
 ```
 
 
+### Example with long tag names
+<img alt="Details with long tag names example" src="../images/details-with-long-tag-names-example.png" />
+
+```razor
+<govuk-details open="true">
+    <govuk-details-summary>
+        Help with nationality
+    </govuk-details-summary>
+    <govuk-details-text>
+        We need to know your nationality so we can work out which elections you’re entitled to vote in.
+        If you cannot provide your nationality, you’ll have to send copies of identity documents through the post.
+    </govuk-details-text>
+</govuk-details>
+```
+
+
 ### API
 
 #### `<govuk-details>`

@@ -110,6 +110,49 @@
 ```
 
 
+### Example with long tag names
+<img alt="Accordion with long tag names example" src="../images/accordion-with-long-tag-names-example.png" />
+
+```razor
+<govuk-accordion id="accordion-with-long-tag-names" heading-level="3">
+    <govuk-accordion-item expanded="true">
+        <govuk-accordion-item-heading>Understanding agile project management</govuk-accordion-item-heading>
+        <govuk-accordion-item-summary>Introductions, methods, core features.</govuk-accordion-item-summary>
+        <govuk-accordion-item-content>
+            <ul class="govuk-list">
+                <li>
+                    <a class="govuk-link" href="#">Agile and government services: an introduction</a>
+                </li>
+                <li>
+                    <a class="govuk-link" href="#">Agile methods: an introduction</a>
+                </li>
+                <li>
+                    <a class="govuk-link" href="#">Core principles of agile</a>
+                </li>
+            </ul>
+        </govuk-accordion-item-content>
+    </govuk-accordion-item>
+    <govuk-accordion-item>
+        <govuk-accordion-item-heading>Working with agile methods</govuk-accordion-item-heading>
+        <govuk-accordion-item-summary>Workspaces, tools and techniques, user stories, planning.</govuk-accordion-item-summary>
+        <govuk-accordion-item-content>
+            <ul class="govuk-list">
+                <li>
+                    <a class="govuk-link" href="#">Creating an agile working environment</a>
+                </li>
+                <li>
+                    <a class="govuk-link" href="#">Agile tools and techniques</a>
+                </li>
+                <li>
+                    <a class="govuk-link" href="#">Writing user stories</a>
+                </li>
+            </ul>
+        </govuk-accordion-item-content>
+    </govuk-accordion-item>
+</govuk-accordion>
+```
+
+
 ### API
 
 #### `<govuk-accordion>`

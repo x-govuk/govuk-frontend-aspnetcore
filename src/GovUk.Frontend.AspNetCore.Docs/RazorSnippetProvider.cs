@@ -134,6 +134,14 @@ public class RazorSnippetProvider
         }
 
         var exampleElement = await page.WaitForSelectorAsync("example");
+
+        // The GOV.UK fonts are declared font-display: fallback, so until they have loaded the text is
+        // laid out in the fallback font — or, for the first 100ms, not painted at all. The load event
+        // doesn't wait for them, so without this the screenshot catches whichever of the three states
+        // the page happens to be in: the same example comes out a few bytes different from run to run
+        // and, now and then, with none of its text in it.
+        await page.EvaluateFunctionAsync("async () => { await document.fonts.ready; }");
+
         var contents = await exampleElement.ScreenshotStreamAsync(new ElementScreenshotOptions());
         var boundingBox = await exampleElement.BoundingBoxAsync();
 

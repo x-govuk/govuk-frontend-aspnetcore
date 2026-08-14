@@ -11,9 +11,9 @@
 
 ```razor
 <govuk-generic-header home-page-url="https://my.service.gov.uk">
-    <govuk-generic-header-logo>
+    <logo>
         My service
-    </govuk-generic-header-logo>
+    </logo>
 </govuk-generic-header>
 ```
 
@@ -30,7 +30,7 @@ The content is the HTML to use after the logo.
 | `home-page-url` | `string` | The URL of the homepage link. If not specified, `/` will be used. |
 
 
-#### `<govuk-generic-header-logo>`
+#### `<logo>` / `<govuk-generic-header-logo>`
 
 The content is the HTML to use within the logo's link.
 

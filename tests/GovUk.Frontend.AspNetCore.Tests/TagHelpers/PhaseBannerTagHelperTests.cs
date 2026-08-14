@@ -30,7 +30,7 @@ public class PhaseBannerTagHelperTests : TagHelperTestBase<PhaseBannerTagHelper>
             {
                 var phaseBannerContext = context.GetContextItem<PhaseBannerContext>();
 
-                phaseBannerContext.SetTag(tagOptions, PhaseBannerTagHelper.TagName);
+                phaseBannerContext.SetTag(tagOptions, PhaseBannerTagTagHelper.TagName);
 
                 TagHelperContent tagHelperContent = new DefaultTagHelperContent();
                 tagHelperContent.SetContent(content);
@@ -84,6 +84,8 @@ public class PhaseBannerTagHelperTests : TagHelperTestBase<PhaseBannerTagHelper>
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"A <{PhaseBannerTagTagHelper.TagName}> element must be provided.", ex.Message);
+        Assert.Equal(
+            $"A <{PhaseBannerTagTagHelper.TagName}> or <{PhaseBannerTagTagHelper.ShortTagName}> element must be provided.",
+            ex.Message);
     }
 }

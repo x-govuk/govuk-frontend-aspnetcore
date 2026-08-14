@@ -7,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS tabs component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(TabsItemTagHelper.TagName)]
+[RestrictChildren(TabsItemTagHelper.TagName, TabsItemTagHelper.ShortTagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Tabs)]
 public class TabsTagHelper : TagHelper
 {

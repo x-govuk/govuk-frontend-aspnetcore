@@ -11,18 +11,18 @@
 
 ```razor
 <govuk-tabs>
-    <govuk-tabs-item id="past-day" label="Past day">
+    <tabs-item id="past-day" label="Past day">
         <h2 class="govuk-heading-l">Past day</h2>
-    </govuk-tabs-item>
-    <govuk-tabs-item id="past-week" label="Past week">
+    </tabs-item>
+    <tabs-item id="past-week" label="Past week">
         <h2 class="govuk-heading-l">Past week</h2>
-    </govuk-tabs-item>
-    <govuk-tabs-item id="past-month" label="Past month">
+    </tabs-item>
+    <tabs-item id="past-month" label="Past month">
         <h2 class="govuk-heading-l">Past month</h2>
-    </govuk-tabs-item>
-    <govuk-tabs-item id="past-year" label="Past year">
+    </tabs-item>
+    <tabs-item id="past-year" label="Past year">
         <h2 class="govuk-heading-l">Past year</h2>
-    </govuk-tabs-item>
+    </tabs-item>
 </govuk-tabs>
 ```
 
@@ -38,7 +38,7 @@
 | `title` | `string` | The title for the tabs table of contents. The default is 'Contents'. |
 
 
-#### `<govuk-tabs-item>`
+#### `<tabs-item>` / `<govuk-tabs-item>`
 
 The content is the HTML of the panel.
 

@@ -15,6 +15,8 @@ internal static class ShortTagNames
     public const string CheckboxesItem = "checkboxes-item";
     public const string Conditional = "conditional";
     public const string Content = "content";
+    public const string ContentLicence = "content-licence";
+    public const string Copyright = "copyright";
     public const string Day = "day";
     public const string Divider = "divider";
     public const string End = "end";
@@ -25,9 +27,13 @@ internal static class ShortTagNames
     public const string Label = "label";
     public const string Legend = "legend";
     public const string Logo = "logo";
+    public const string Meta = "meta";
+    public const string MetaItem = "meta-item";
+    public const string MetaItems = "meta-items";
     public const string Month = "month";
     public const string Nav = "nav";
     public const string NavItem = "nav-item";
+    public const string NavItems = "nav-items";
     public const string PanelActions = "panel-actions";
     public const string PanelBody = "panel-body";
     public const string PanelTitle = "panel-title";

@@ -7,9 +7,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in the meta section of a GDS footer component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FooterMetaItemsTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FooterMetaItemsTagHelper.ShortTagName)]
 public class FooterMetaItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-meta-item";
+    internal const string ShortTagName = ShortTagNames.MetaItem;
 
     private const string LinkAttributesPrefix = "link-";
 

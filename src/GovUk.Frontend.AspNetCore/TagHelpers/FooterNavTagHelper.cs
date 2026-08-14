@@ -7,10 +7,16 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the navigation section of a GDS footer component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FooterTagHelper.TagName)]
-[RestrictChildren(FooterNavTitleTagHelper.TagName, FooterNavItemsTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FooterTagHelper.TagName)]
+[RestrictChildren(
+    FooterNavTitleTagHelper.TagName,
+    FooterNavTitleTagHelper.ShortTagName,
+    FooterNavItemsTagHelper.TagName,
+    FooterNavItemsTagHelper.ShortTagName)]
 public class FooterNavTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-nav";
+    internal const string ShortTagName = ShortTagNames.Nav;
 
     private const string ColumnsAttributeName = "columns";
     private const string WidthAttributeName = "width";
@@ -46,6 +52,8 @@ public class FooterNavTagHelper : TagHelper
         var footerContext = context.GetContextItem<FooterContext>();
         var navContext = context.GetContextItem<FooterNavContext>();
 
+        footerContext.CheckChildTagNameSpelling(context.TagName);
+
         if (footerContext.Meta?.TagName is string metaTagName)
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, metaTagName);
@@ -60,6 +68,9 @@ public class FooterNavTagHelper : TagHelper
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, copyrightTagName);
         }
+
+        navContext.TagName = context.TagName;
+        footerContext.NavigationTagName ??= context.TagName;
 
         _ = await output.GetChildContentAsync();
 

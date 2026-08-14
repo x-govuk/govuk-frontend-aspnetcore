@@ -9,8 +9,8 @@
 
 ```razor
 <govuk-footer>
-    <govuk-footer-content-licence />
-    <govuk-footer-copyright />
+    <content-licence />
+    <copyright />
 </govuk-footer>
 ```
 
@@ -20,15 +20,15 @@
 
 ```razor
 <govuk-footer>
-    <govuk-footer-meta>
-        <govuk-footer-meta-items>
-            <govuk-footer-meta-item href="#">Item 1</govuk-footer-meta-item>
-            <govuk-footer-meta-item href="#">Item 2</govuk-footer-meta-item>
-            <govuk-footer-meta-item href="#">Item 3</govuk-footer-meta-item>
-        </govuk-footer-meta-items>
-    </govuk-footer-meta>
-    <govuk-footer-content-licence />
-    <govuk-footer-copyright />
+    <meta>
+        <meta-items>
+            <meta-item href="#">Item 1</meta-item>
+            <meta-item href="#">Item 2</meta-item>
+            <meta-item href="#">Item 3</meta-item>
+        </meta-items>
+    </meta>
+    <content-licence />
+    <copyright />
 </govuk-footer>
 ```
 
@@ -38,27 +38,27 @@
 
 ```razor
 <govuk-footer>
-    <govuk-footer-nav width="two-thirds" columns="2">
-        <govuk-footer-nav-title>Two column list</govuk-footer-nav-title>
-        <govuk-footer-nav-items>
-            <govuk-footer-nav-item href="#">Navigation item 1</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Navigation item 2</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Navigation item 3</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Navigation item 4</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Navigation item 5</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Navigation item 6</govuk-footer-nav-item>
-        </govuk-footer-nav-items>
-    </govuk-footer-nav>
-    <govuk-footer-nav width="one-third">
-        <govuk-footer-nav-title>Single column list</govuk-footer-nav-title>
-        <govuk-footer-nav-items>
-            <govuk-footer-nav-item href="#">Navigation item 1</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Navigation item 2</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Navigation item 3</govuk-footer-nav-item>
-        </govuk-footer-nav-items>
-    </govuk-footer-nav>
-    <govuk-footer-content-licence />
-    <govuk-footer-copyright />
+    <nav width="two-thirds" columns="2">
+        <title>Two column list</title>
+        <nav-items>
+            <nav-item href="#">Navigation item 1</nav-item>
+            <nav-item href="#">Navigation item 2</nav-item>
+            <nav-item href="#">Navigation item 3</nav-item>
+            <nav-item href="#">Navigation item 4</nav-item>
+            <nav-item href="#">Navigation item 5</nav-item>
+            <nav-item href="#">Navigation item 6</nav-item>
+        </nav-items>
+    </nav>
+    <nav width="one-third">
+        <title>Single column list</title>
+        <nav-items>
+            <nav-item href="#">Navigation item 1</nav-item>
+            <nav-item href="#">Navigation item 2</nav-item>
+            <nav-item href="#">Navigation item 3</nav-item>
+        </nav-items>
+    </nav>
+    <content-licence />
+    <copyright />
 </govuk-footer>
 ```
 
@@ -68,50 +68,50 @@
 
 ```razor
 <govuk-footer>
-    <govuk-footer-nav width="two-thirds" columns="2">
-        <govuk-footer-nav-title>Services and information</govuk-footer-nav-title>
-        <govuk-footer-nav-items>
-            <govuk-footer-nav-item href="#">Benefits</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Births, deaths, marriages and care</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Business and self-employed</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Childcare and parenting</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Citizenship and living in the UK</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Crime, justice and the law</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Disabled people</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Driving and transport</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Education and learning</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Employing people</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Environment and countryside</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Housing and local services</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Money and tax</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Passports, travel and living abroad</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Visas and immigration</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Working, jobs and pensions</govuk-footer-nav-item>
-        </govuk-footer-nav-items>
-    </govuk-footer-nav>
-    <govuk-footer-nav width="one-third">
-        <govuk-footer-nav-title>Departments and policy</govuk-footer-nav-title>
-        <govuk-footer-nav-items>
-            <govuk-footer-nav-item href="#">How government works</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Departments</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Worldwide</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Policies</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Publications</govuk-footer-nav-item>
-            <govuk-footer-nav-item href="#">Announcements</govuk-footer-nav-item>
-        </govuk-footer-nav-items>
-    </govuk-footer-nav>
-    <govuk-footer-meta>
-        <govuk-footer-meta-items>
-            <govuk-footer-meta-item href="#">Help</govuk-footer-meta-item>
-            <govuk-footer-meta-item href="#">Cookies</govuk-footer-meta-item>
-            <govuk-footer-meta-item href="#">Contact</govuk-footer-meta-item>
-            <govuk-footer-meta-item href="#">Terms and conditions</govuk-footer-meta-item>
-            <govuk-footer-meta-item href="#" lang="cy" hreflang="cy">Rhestr o Wasanaethau Cymraeg</govuk-footer-meta-item>
-        </govuk-footer-meta-items>
-        <govuk-footer-meta-content>Built by the <a href="#" class="govuk-footer__link">Government Digital Service</a></govuk-footer-meta-content>
-    </govuk-footer-meta>
-    <govuk-footer-content-licence />
-    <govuk-footer-copyright />
+    <nav width="two-thirds" columns="2">
+        <title>Services and information</title>
+        <nav-items>
+            <nav-item href="#">Benefits</nav-item>
+            <nav-item href="#">Births, deaths, marriages and care</nav-item>
+            <nav-item href="#">Business and self-employed</nav-item>
+            <nav-item href="#">Childcare and parenting</nav-item>
+            <nav-item href="#">Citizenship and living in the UK</nav-item>
+            <nav-item href="#">Crime, justice and the law</nav-item>
+            <nav-item href="#">Disabled people</nav-item>
+            <nav-item href="#">Driving and transport</nav-item>
+            <nav-item href="#">Education and learning</nav-item>
+            <nav-item href="#">Employing people</nav-item>
+            <nav-item href="#">Environment and countryside</nav-item>
+            <nav-item href="#">Housing and local services</nav-item>
+            <nav-item href="#">Money and tax</nav-item>
+            <nav-item href="#">Passports, travel and living abroad</nav-item>
+            <nav-item href="#">Visas and immigration</nav-item>
+            <nav-item href="#">Working, jobs and pensions</nav-item>
+        </nav-items>
+    </nav>
+    <nav width="one-third">
+        <title>Departments and policy</title>
+        <nav-items>
+            <nav-item href="#">How government works</nav-item>
+            <nav-item href="#">Departments</nav-item>
+            <nav-item href="#">Worldwide</nav-item>
+            <nav-item href="#">Policies</nav-item>
+            <nav-item href="#">Publications</nav-item>
+            <nav-item href="#">Announcements</nav-item>
+        </nav-items>
+    </nav>
+    <meta>
+        <meta-items>
+            <meta-item href="#">Help</meta-item>
+            <meta-item href="#">Cookies</meta-item>
+            <meta-item href="#">Contact</meta-item>
+            <meta-item href="#">Terms and conditions</meta-item>
+            <meta-item href="#" lang="cy" hreflang="cy">Rhestr o Wasanaethau Cymraeg</meta-item>
+        </meta-items>
+        <content>Built by the <a href="#" class="govuk-footer__link">Government Digital Service</a></content>
+    </meta>
+    <content-licence />
+    <copyright />
 </govuk-footer>
 ```
 
@@ -133,7 +133,7 @@
 | `container-class` | `string` | Classes to add to the inner container. |
 
 
-#### `<govuk-footer-nav>`
+#### `<nav>` / `<govuk-footer-nav>`
 
 Must be inside a `<govuk-footer>` element.
 
@@ -143,19 +143,19 @@ Must be inside a `<govuk-footer>` element.
 | `width` | `string` | The width of this navigation section. For example, `one-third`, `two-thirds` or `one-half`. If not specified, `full` will be used. |
 
 
-#### `<govuk-footer-nav-title>`
+#### `<title>` / `<govuk-footer-nav-title>`
 
-Must be inside a `<govuk-footer-nav>` element.
-
-
-#### `<govuk-footer-nav-items>`
-
-Must be inside a `<govuk-footer-nav>` element.
+Must be inside a `<nav>` or `<govuk-footer-nav>` element.
 
 
-#### `<govuk-footer-nav-item>`
+#### `<nav-items>` / `<govuk-footer-nav-items>`
 
-Must be inside a `<govuk-footer-nav-items>` element.
+Must be inside a `<nav>` or `<govuk-footer-nav>` element.
+
+
+#### `<nav-item>` / `<govuk-footer-nav-item>`
+
+Must be inside a `<nav-items>` or `<govuk-footer-nav-items>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |
@@ -163,7 +163,7 @@ Must be inside a `<govuk-footer-nav-items>` element.
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
-#### `<govuk-footer-meta>`
+#### `<meta>` / `<govuk-footer-meta>`
 
 Must be inside a `<govuk-footer>` element.
 
@@ -172,14 +172,14 @@ Must be inside a `<govuk-footer>` element.
 | `visually-hidden-title` | `string` | The title of the meta item section. If not specified, `"Support links"` will be used. |
 
 
-#### `<govuk-footer-meta-items>`
+#### `<meta-items>` / `<govuk-footer-meta-items>`
 
-Must be inside a `<govuk-footer-meta>` element.
+Must be inside a `<meta>` or `<govuk-footer-meta>` element.
 
 
-#### `<govuk-footer-meta-item>`
+#### `<meta-item>` / `<govuk-footer-meta-item>`
 
-Must be inside a `<govuk-footer-meta-items>` element.
+Must be inside a `<meta-items>` or `<govuk-footer-meta-items>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |
@@ -187,12 +187,12 @@ Must be inside a `<govuk-footer-meta-items>` element.
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
-#### `<govuk-footer-content-licence>`
+#### `<content-licence>` / `<govuk-footer-content-licence>`
 
 Must be inside a `<govuk-footer>` element.
 
 
-#### `<govuk-footer-copyright>`
+#### `<copyright>` / `<govuk-footer-copyright>`
 
 Must be inside a `<govuk-footer>` element.
 

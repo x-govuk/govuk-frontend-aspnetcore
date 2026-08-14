@@ -52,6 +52,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
         var footerContext = new FooterContext();
         var footerNavContext = new FooterNavContext
         {
+            TagName = ParentTagName,
             Title = new(new TemplateString("Title"), [], TagName)
         };
 
@@ -74,7 +75,7 @@ public class FooterNavTitleTagHelperTests : TagHelperTestBase<FooterNavTitleTagH
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
     [Fact]

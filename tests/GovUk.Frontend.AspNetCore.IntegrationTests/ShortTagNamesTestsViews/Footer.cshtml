@@ -1,0 +1,62 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-footer container-class="app-width-container">
+        <nav width="two-thirds" columns="2">
+            <title>Services and information</title>
+            <nav-items>
+                <nav-item href="/">Benefits</nav-item>
+                <nav-item asp-controller="ShortTagNamesTests" asp-action="GetFooter">Births, deaths, marriages and care</nav-item>
+            </nav-items>
+        </nav>
+        <nav width="one-third">
+            <title>Departments and policy</title>
+            <nav-items>
+                <nav-item href="/">How government works</nav-item>
+            </nav-items>
+        </nav>
+        <meta visually-hidden-title="Support links">
+            <meta-items>
+                <meta-item href="/">Help</meta-item>
+                <meta-item asp-controller="ShortTagNamesTests" asp-action="GetFooter">Cookies</meta-item>
+            </meta-items>
+            <content>
+                <p class="govuk-body">Built by the Government Digital Service</p>
+            </content>
+        </meta>
+        <content-licence />
+        <copyright />
+    </govuk-footer>
+</div>
+
+<div data-testid="long">
+    <govuk-footer container-class="app-width-container">
+        <govuk-footer-nav width="two-thirds" columns="2">
+            <govuk-footer-nav-title>Services and information</govuk-footer-nav-title>
+            <govuk-footer-nav-items>
+                <govuk-footer-nav-item href="/">Benefits</govuk-footer-nav-item>
+                <govuk-footer-nav-item asp-controller="ShortTagNamesTests" asp-action="GetFooter">Births, deaths, marriages and care</govuk-footer-nav-item>
+            </govuk-footer-nav-items>
+        </govuk-footer-nav>
+        <govuk-footer-nav width="one-third">
+            <govuk-footer-nav-title>Departments and policy</govuk-footer-nav-title>
+            <govuk-footer-nav-items>
+                <govuk-footer-nav-item href="/">How government works</govuk-footer-nav-item>
+            </govuk-footer-nav-items>
+        </govuk-footer-nav>
+        <govuk-footer-meta visually-hidden-title="Support links">
+            <govuk-footer-meta-items>
+                <govuk-footer-meta-item href="/">Help</govuk-footer-meta-item>
+                <govuk-footer-meta-item asp-controller="ShortTagNamesTests" asp-action="GetFooter">Cookies</govuk-footer-meta-item>
+            </govuk-footer-meta-items>
+            <govuk-footer-meta-content>
+                <p class="govuk-body">Built by the Government Digital Service</p>
+            </govuk-footer-meta-content>
+        </govuk-footer-meta>
+        <govuk-footer-content-licence />
+        <govuk-footer-copyright />
+    </govuk-footer>
+</div>

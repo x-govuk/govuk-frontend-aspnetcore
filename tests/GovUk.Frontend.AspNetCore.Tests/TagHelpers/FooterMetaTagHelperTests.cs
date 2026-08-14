@@ -88,7 +88,7 @@ public class FooterMetaTagHelperTests : TagHelperTestBase<FooterMetaTagHelper>
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 
     [Fact]
@@ -96,7 +96,9 @@ public class FooterMetaTagHelperTests : TagHelperTestBase<FooterMetaTagHelper>
     {
         // Arrange
         var footerContext = new FooterContext();
-        var contentLicenceTagName = FooterContentLicenceTagHelper.TagName;
+        var contentLicenceTagName = GetSiblingTagName(
+            FooterContentLicenceTagHelper.TagName,
+            FooterContentLicenceTagHelper.ShortTagName);
         footerContext.ContentLicence = new(new FooterOptionsContentLicence(), contentLicenceTagName);
 
         var context = CreateTagHelperContext(contexts: footerContext);
@@ -125,7 +127,9 @@ public class FooterMetaTagHelperTests : TagHelperTestBase<FooterMetaTagHelper>
     {
         // Arrange
         var footerContext = new FooterContext();
-        var copyrightTagName = FooterCopyrightTagHelper.TagName;
+        var copyrightTagName = GetSiblingTagName(
+            FooterCopyrightTagHelper.TagName,
+            FooterCopyrightTagHelper.ShortTagName);
         footerContext.Copyright = new(new FooterOptionsCopyright(), copyrightTagName);
 
         var context = CreateTagHelperContext(contexts: footerContext);
@@ -148,4 +152,36 @@ public class FooterMetaTagHelperTests : TagHelperTestBase<FooterMetaTagHelper>
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal($"<{TagName}> must be specified before <{copyrightTagName}>.", ex.Message);
     }
+
+    [Fact]
+    public async Task ProcessAsync_FooterHasContentLicenceWithOtherTagNameSpelling_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var contentLicenceTagName = GetOtherSpellingSiblingTagName(
+            FooterContentLicenceTagHelper.TagName,
+            FooterContentLicenceTagHelper.ShortTagName);
+
+        var footerContext = new FooterContext
+        {
+            ContentLicence = new(new FooterOptionsContentLicence(), contentLicenceTagName)
+        };
+
+        var context = CreateTagHelperContext(contexts: footerContext);
+
+        var output = CreateTagHelperOutput();
+
+        var tagHelper = new FooterMetaTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal(
+            $"<{TagName}> cannot be used alongside <{contentLicenceTagName}>; short tag names and govuk- prefixed tag names cannot be mixed.",
+            ex.Message);
+    }
+
 }

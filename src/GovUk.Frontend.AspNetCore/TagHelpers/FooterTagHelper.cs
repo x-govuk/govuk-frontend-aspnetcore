@@ -10,9 +10,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName)]
 [RestrictChildren(
     FooterNavTagHelper.TagName,
+    FooterNavTagHelper.ShortTagName,
     FooterMetaTagHelper.TagName,
+    FooterMetaTagHelper.ShortTagName,
     FooterContentLicenceTagHelper.TagName,
-    FooterCopyrightTagHelper.TagName)]
+    FooterContentLicenceTagHelper.ShortTagName,
+    FooterCopyrightTagHelper.TagName,
+    FooterCopyrightTagHelper.ShortTagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Footer)]
 public class FooterTagHelper : TagHelper
 {

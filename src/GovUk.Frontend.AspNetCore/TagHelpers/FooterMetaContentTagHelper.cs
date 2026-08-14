@@ -7,9 +7,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the meta section of a GDS footer component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FooterMetaTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FooterMetaTagHelper.ShortTagName)]
 public class FooterMetaContentTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-meta-content";
+    internal const string ShortTagName = ShortTagNames.Content;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc />
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -21,7 +25,7 @@ public class FooterMetaContentTagHelper : TagHelper
 
         if (metaContext.Content is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterMetaTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, metaContext.TagName!);
         }
 
         var content = await output.GetChildContentAsync();

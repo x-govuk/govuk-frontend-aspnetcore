@@ -37,9 +37,9 @@
 
 ```razor
 <govuk-notification-banner>
-    <govuk-notification-banner-title heading-level="2" id="banner-title">
+    <title heading-level="2" id="banner-title">
         Important information
-    </govuk-notification-banner-title>
+    </title>
     <p class="govuk-notification-banner__heading">
         You have 7 days left to send your application.
         <a class="govuk-notification-banner__link" href="#">View application</a>.
@@ -61,7 +61,7 @@ The content is the HTML to use within the notification banner.
 | `type` | `GovUk.Frontend.AspNetCore.NotificationBannerType?` | The type of notification. |
 
 
-#### `<govuk-notification-banner-title>`
+#### `<title>` / `<govuk-notification-banner-title>`
 
 The content is the HTML to use within the notification banner's title. Use a self-closing tag to keep the default content.
 

@@ -11,7 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 public class FooterNavTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-nav-title";
-    internal const string ShortTagName = ShortTagNames.Title;
+    internal const string ShortTagName = ShortTagNames.NavTitle;
 
     internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 

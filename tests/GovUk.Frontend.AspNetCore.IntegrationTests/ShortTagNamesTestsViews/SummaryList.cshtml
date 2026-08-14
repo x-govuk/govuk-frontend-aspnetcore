@@ -1,0 +1,40 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-summary-card>
+        <card-title>University of Gloucestershire</card-title>
+        <card-actions>
+            <action href="#" visually-hidden-text="of University of Gloucestershire">Delete choice</action>
+        </card-actions>
+        <govuk-summary-list>
+            <row>
+                <key>Course</key>
+                <value>English (3DMD)</value>
+                <row-actions>
+                    <action href="#" visually-hidden-text="course">Change</action>
+                </row-actions>
+            </row>
+        </govuk-summary-list>
+    </govuk-summary-card>
+</div>
+
+<div data-testid="long">
+    <govuk-summary-card>
+        <govuk-summary-card-title>University of Gloucestershire</govuk-summary-card-title>
+        <govuk-summary-card-actions>
+            <govuk-summary-card-action href="#" visually-hidden-text="of University of Gloucestershire">Delete choice</govuk-summary-card-action>
+        </govuk-summary-card-actions>
+        <govuk-summary-list>
+            <govuk-summary-list-row>
+                <govuk-summary-list-row-key>Course</govuk-summary-list-row-key>
+                <govuk-summary-list-row-value>English (3DMD)</govuk-summary-list-row-value>
+                <govuk-summary-list-row-actions>
+                    <govuk-summary-list-row-action href="#" visually-hidden-text="course">Change</govuk-summary-list-row-action>
+                </govuk-summary-list-row-actions>
+            </govuk-summary-list-row>
+        </govuk-summary-list>
+    </govuk-summary-card>
+</div>

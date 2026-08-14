@@ -93,7 +93,7 @@ public class ErrorSummaryContextTests
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal(
-            "Only one <govuk-error-summary-title> or <title> element is permitted within each <govuk-error-summary>.",
+            "Only one <govuk-error-summary-title> or <error-summary-title> element is permitted within each <govuk-error-summary>.",
             ex.Message);
     }
 
@@ -132,7 +132,7 @@ public class ErrorSummaryContextTests
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
         Assert.Equal(
-            "<govuk-error-summary-description> cannot be used alongside <title>; " +
+            "<govuk-error-summary-description> cannot be used alongside <error-summary-title>; " +
                 "short tag names and govuk- prefixed tag names cannot be mixed.",
             ex.Message);
     }

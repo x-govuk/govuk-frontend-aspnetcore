@@ -12,7 +12,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 public class SummaryCardTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-summary-card-title";
-    internal const string ShortTagName = ShortTagNames.Title;
+    internal const string ShortTagName = ShortTagNames.CardTitle;
 
     private const int MinHeadingLevel = 1;
     private const int MaxHeadingLevel = 6;

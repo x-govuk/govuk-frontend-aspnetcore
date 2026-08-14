@@ -18,10 +18,12 @@ internal static class ShortTagNames
     public const string ContentLicence = "content-licence";
     public const string Copyright = "copyright";
     public const string Day = "day";
+    public const string Description = "description";
     public const string Divider = "divider";
     public const string Ellipsis = "ellipsis";
     public const string End = "end";
     public const string ErrorMessage = "error-message";
+    public const string ErrorSummaryItem = "error-summary-item";
     public const string Heading = "heading";
     public const string Hint = "hint";
     public const string Key = "key";

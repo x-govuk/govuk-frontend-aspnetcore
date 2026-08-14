@@ -15,10 +15,12 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an error item in a GDS error summary component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ErrorSummaryTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = ErrorSummaryTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the error link item. Content is required if the 'for' attribute is not specified. If 'for' is specified and there are no errors in the model state then the item will not be rendered.")]
 public class ErrorSummaryItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-error-summary-item";
+    internal const string ShortTagName = ShortTagNames.ErrorSummaryItem;
 
     private const string ForAttributeName = "for";
     private const string LinkAttributesPrefix = "link-";
@@ -166,7 +168,8 @@ public class ErrorSummaryItemTagHelper : TagHelper
                 resolvedHref,
                 itemContent,
                 attributes,
-                new AttributeCollection(LinkAttributes)));
+                new AttributeCollection(LinkAttributes)),
+            context.TagName);
 
         output.SuppressOutput();
 

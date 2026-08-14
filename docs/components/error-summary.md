@@ -15,8 +15,8 @@
 
 ```razor
 <govuk-error-summary>
-    <govuk-error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</govuk-error-summary-item>
-    <govuk-error-summary-item href="#postcode-input">Enter a postcode, like AA1 1AA</govuk-error-summary-item>
+    <error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</error-summary-item>
+    <error-summary-item href="#postcode-input">Enter a postcode, like AA1 1AA</error-summary-item>
 </govuk-error-summary>
 ```
 
@@ -26,9 +26,9 @@
 
 ```razor
 <govuk-error-summary>
-    <govuk-error-summary-title>There is a problem</govuk-error-summary-title>
-    <govuk-error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</govuk-error-summary-item>
-    <govuk-error-summary-item href="#postcode-input">Enter a postcode, like AA1 1AA</govuk-error-summary-item>
+    <title>There is a problem</title>
+    <error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</error-summary-item>
+    <error-summary-item href="#postcode-input">Enter a postcode, like AA1 1AA</error-summary-item>
 </govuk-error-summary>
 ```
 
@@ -38,7 +38,7 @@
 
 ```razor
 <govuk-error-summary>
-    <govuk-error-summary-item for="FullName" />
+    <error-summary-item for="FullName" />
 </govuk-error-summary>
 ```
 
@@ -52,21 +52,21 @@
 | `disable-auto-focus` | `bool?` | Whether to disable the behavior that focuses the error summary when the page loads. |
 
 
-#### `<govuk-error-summary-title>`
+#### `<title>` / `<govuk-error-summary-title>`
 
 The content is the HTML to use within the title for the error summary. If this element is not specified then the content is 'There is a problem'.
 
 Must be inside a `<govuk-error-summary>` element.
 
 
-#### `<govuk-error-summary-description>`
+#### `<description>` / `<govuk-error-summary-description>`
 
 The content is the HTML to use within the description for the error summary.
 
 Must be inside a `<govuk-error-summary>` element.
 
 
-#### `<govuk-error-summary-item>`
+#### `<error-summary-item>` / `<govuk-error-summary-item>`
 
 The content is the HTML to use within the error link item. Content is required if the 'for' attribute is not specified. If 'for' is specified and there are no errors in the model state then the item will not be rendered.
 

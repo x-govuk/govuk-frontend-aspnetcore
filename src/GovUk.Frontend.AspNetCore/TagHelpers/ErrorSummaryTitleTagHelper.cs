@@ -7,10 +7,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the title in the GDS error summary component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = ErrorSummaryTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = ErrorSummaryTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the title for the error summary. If this element is not specified then the content is 'There is a problem'.")]
 public class ErrorSummaryTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-error-summary-title";
+    internal const string ShortTagName = ShortTagNames.Title;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -29,7 +33,8 @@ public class ErrorSummaryTitleTagHelper : TagHelper
 
         errorSummaryContext.SetTitle(
             new AttributeCollection(output.Attributes),
-            content.Snapshot());
+            content.Snapshot(),
+            context.TagName);
 
         output.SuppressOutput();
     }

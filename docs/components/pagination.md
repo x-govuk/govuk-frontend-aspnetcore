@@ -19,11 +19,11 @@
 
 ```razor
 <govuk-pagination>
-    <govuk-pagination-previous href="#" />
-    <govuk-pagination-item href="#">1</govuk-pagination-item>
-    <govuk-pagination-item href="#" current="true">2</govuk-pagination-item>
-    <govuk-pagination-item href="#">3</govuk-pagination-item>
-    <govuk-pagination-next href="#" />
+    <previous href="#" />
+    <pagination-item href="#">1</pagination-item>
+    <pagination-item href="#" current="true">2</pagination-item>
+    <pagination-item href="#">3</pagination-item>
+    <next href="#" />
 </govuk-pagination>
 ```
 
@@ -33,8 +33,8 @@
 
 ```razor
 <govuk-pagination>
-    <govuk-pagination-previous href="#" label-text="Applying for a provisional lorry or bus licence" />
-    <govuk-pagination-next href="#" label-text="Driver CPC part 1 test: theory" />
+    <previous href="#" label-text="Applying for a provisional lorry or bus licence" />
+    <next href="#" label-text="Driver CPC part 1 test: theory" />
 </govuk-pagination>
 ```
 
@@ -44,15 +44,15 @@
 
 ```razor
 <govuk-pagination>
-    <govuk-pagination-previous href="#" />
-    <govuk-pagination-item href="#">1</govuk-pagination-item>
-    <govuk-pagination-ellipsis />
-    <govuk-pagination-item href="#">6</govuk-pagination-item>
-    <govuk-pagination-item href="#" current="true">7</govuk-pagination-item>
-    <govuk-pagination-item href="#">8</govuk-pagination-item>
-    <govuk-pagination-ellipsis />
-    <govuk-pagination-item href="#">42</govuk-pagination-item>
-    <govuk-pagination-next href="#" />
+    <previous href="#" />
+    <pagination-item href="#">1</pagination-item>
+    <ellipsis />
+    <pagination-item href="#">6</pagination-item>
+    <pagination-item href="#" current="true">7</pagination-item>
+    <pagination-item href="#">8</pagination-item>
+    <ellipsis />
+    <pagination-item href="#">42</pagination-item>
+    <next href="#" />
 </govuk-pagination>
 ```
 
@@ -69,7 +69,7 @@
 | `total-pages` | `int?` | The total number of pages. Specify this, `current-page` and `generate-page-href` to have the items generated instead of specifying them with child elements. |
 
 
-#### `<govuk-pagination-previous>`
+#### `<previous>` / `<govuk-pagination-previous>`
 
 The content is the text for the link to the previous page. The default is 'Previous page'.
 
@@ -82,7 +82,7 @@ Must be inside a `<govuk-pagination>` element.
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
-#### `<govuk-pagination-item>`
+#### `<pagination-item>` / `<govuk-pagination-item>`
 
 The content is the pagination item text, usually a page number.
 
@@ -95,7 +95,7 @@ Must be inside a `<govuk-pagination>` element.
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
-#### `<govuk-pagination-ellipsis>`
+#### `<ellipsis>` / `<govuk-pagination-ellipsis>`
 
 > [!NOTE]
 > This tag helper should not have any child content.
@@ -103,7 +103,7 @@ Must be inside a `<govuk-pagination>` element.
 Must be inside a `<govuk-pagination>` element.
 
 
-#### `<govuk-pagination-next>`
+#### `<next>` / `<govuk-pagination-next>`
 
 The content is the text for the link to the next page. The default is 'Next page'.
 

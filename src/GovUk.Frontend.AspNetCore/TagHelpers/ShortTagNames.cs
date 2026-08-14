@@ -19,6 +19,7 @@ internal static class ShortTagNames
     public const string Copyright = "copyright";
     public const string Day = "day";
     public const string Divider = "divider";
+    public const string Ellipsis = "ellipsis";
     public const string End = "end";
     public const string ErrorMessage = "error-message";
     public const string Heading = "heading";
@@ -34,10 +35,13 @@ internal static class ShortTagNames
     public const string Nav = "nav";
     public const string NavItem = "nav-item";
     public const string NavItems = "nav-items";
+    public const string Next = "next";
+    public const string PaginationItem = "pagination-item";
     public const string PanelActions = "panel-actions";
     public const string PanelBody = "panel-body";
     public const string PanelTitle = "panel-title";
     public const string Prefix = "prefix";
+    public const string Previous = "previous";
     public const string RadiosItem = "radios-item";
     public const string Row = "row";
     public const string RowActions = "row-actions";

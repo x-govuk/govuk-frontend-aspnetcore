@@ -37,7 +37,7 @@ public class PaginationTagHelperTests : TagHelperTestBase<PaginationTagHelper>
                     Href = previousHref,
                     LabelText = previousLabelText,
                     Text = previousText
-                });
+                }, PaginationPreviousTagHelper.TagName);
 
                 paginationContext.AddItem(new PaginationOptionsItem()
                 {
@@ -47,19 +47,19 @@ public class PaginationTagHelperTests : TagHelperTestBase<PaginationTagHelper>
                     Current = true,
                     Ellipsis = null,
                     Attributes = null
-                });
+                }, PaginationItemTagHelper.TagName);
 
                 paginationContext.AddItem(new PaginationOptionsItem()
                 {
                     Ellipsis = true
-                });
+                }, PaginationEllipsisItemTagHelper.TagName);
 
                 paginationContext.SetNext(new()
                 {
                     Href = nextHref,
                     LabelText = nextLabelText,
                     Text = nextText
-                });
+                }, PaginationNextTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -289,7 +289,7 @@ public class PaginationTagHelperTests : TagHelperTestBase<PaginationTagHelper>
             {
                 var paginationContext = context.GetContextItem<PaginationContext>();
 
-                paginationContext.AddItem(new PaginationOptionsItem() { Number = "1", Href = "/place?page=1" });
+                paginationContext.AddItem(new PaginationOptionsItem() { Number = "1", Href = "/place?page=1" }, PaginationItemTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

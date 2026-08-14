@@ -43,6 +43,19 @@
 ```
 
 
+### Example with long tag names
+<img alt="Error summary with long tag names example" src="../images/error-summary-with-long-tag-names-example.png" />
+
+```razor
+<govuk-error-summary>
+    <govuk-error-summary-title>There is a problem</govuk-error-summary-title>
+    <govuk-error-summary-description>Check the following before continuing.</govuk-error-summary-description>
+    <govuk-error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</govuk-error-summary-item>
+    <govuk-error-summary-item asp-controller="Home" asp-action="Index" asp-fragment="postcode-input">Enter a postcode, like AA1 1AA</govuk-error-summary-item>
+</govuk-error-summary>
+```
+
+
 ### API
 
 #### `<govuk-error-summary>`

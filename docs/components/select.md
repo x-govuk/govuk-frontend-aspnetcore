@@ -20,6 +20,28 @@
 ```
 
 
+### Example with long tag names
+<img alt="Select with long tag names example" src="../images/select-with-long-tag-names-example.png" />
+
+```razor
+<govuk-select name="SortBy">
+    <govuk-select-label is-page-heading="true" class="govuk-label--l">Sort by</govuk-select-label>
+    <govuk-select-hint>Choose how the results are ordered</govuk-select-hint>
+    <govuk-select-error-message>Select how to sort the results</govuk-select-error-message>
+    <govuk-select-before-input>
+        <p class="govuk-body">Content before the select</p>
+    </govuk-select-before-input>
+    <govuk-select-after-input>
+        <p class="govuk-body">Content after the select</p>
+    </govuk-select-after-input>
+    <govuk-select-item value="published">Recently published</govuk-select-item>
+    <govuk-select-item value="updated" selected="true">Recently updated</govuk-select-item>
+    <govuk-select-item value="views">Most views</govuk-select-item>
+    <govuk-select-item value="comments" disabled="true">Most comments</govuk-select-item>
+</govuk-select>
+```
+
+
 ### API
 
 #### `<govuk-select>`

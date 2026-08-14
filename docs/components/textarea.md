@@ -21,6 +21,27 @@
 ```
 
 
+### Example with long tag names
+<img alt="Textarea with long tag names example" src="../images/textarea-with-long-tag-names-example.png" />
+
+```razor
+<govuk-textarea name="MoreDetail" rows="5">
+    <govuk-textarea-label is-page-heading="true" class="govuk-label--l">Can you provide more detail?</govuk-textarea-label>
+    <govuk-textarea-hint>
+        Do not include personal or financial information like your National Insurance number or credit card details.
+    </govuk-textarea-hint>
+    <govuk-textarea-error-message>Enter more detail</govuk-textarea-error-message>
+    <govuk-textarea-before-input>
+        <p class="govuk-body">Content before the textarea</p>
+    </govuk-textarea-before-input>
+    <govuk-textarea-value>The existing content of the textarea</govuk-textarea-value>
+    <govuk-textarea-after-input>
+        <p class="govuk-body">Content after the textarea</p>
+    </govuk-textarea-after-input>
+</govuk-textarea>
+```
+
+
 ### API
 
 #### `<govuk-textarea>`

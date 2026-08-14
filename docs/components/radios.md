@@ -111,6 +111,52 @@
 ```
 
 
+### Example with long tag names
+<img alt="Radios with long tag names example" src="../images/radios-with-long-tag-names-example.png" />
+
+```razor
+<govuk-radios name="HowContacted">
+    <govuk-radios-fieldset>
+        <govuk-radios-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+            How would you prefer to be contacted?
+        </govuk-radios-fieldset-legend>
+
+        <govuk-radios-hint>
+            Select one option.
+        </govuk-radios-hint>
+
+        <govuk-radios-error-message>
+            Select how you would prefer to be contacted
+        </govuk-radios-error-message>
+
+        <govuk-radios-before-inputs>
+            <p class="govuk-body">Content before the radios</p>
+        </govuk-radios-before-inputs>
+
+        <govuk-radios-item value="email">
+            Email
+            <govuk-radios-item-hint>We’ll only use this to contact you about your application</govuk-radios-item-hint>
+            <govuk-radios-item-conditional>
+                <govuk-input name="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
+                    <govuk-input-label>Email address</govuk-input-label>
+                </govuk-input>
+            </govuk-radios-item-conditional>
+        </govuk-radios-item>
+
+        <govuk-radios-item value="phone">Phone</govuk-radios-item>
+
+        <govuk-radios-divider>or</govuk-radios-divider>
+
+        <govuk-radios-item value="post">Post</govuk-radios-item>
+
+        <govuk-radios-after-inputs>
+            <p class="govuk-body">Content after the radios</p>
+        </govuk-radios-after-inputs>
+    </govuk-radios-fieldset>
+</govuk-radios>
+```
+
+
 ### API
 
 #### `<govuk-radios>`

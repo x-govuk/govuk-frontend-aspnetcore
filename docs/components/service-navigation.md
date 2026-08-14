@@ -20,6 +20,32 @@
 ```
 
 
+### Example with long tag names
+<img alt="Service navigation with long tag names example" src="../images/service-navigation-with-long-tag-names-example.png" />
+
+```razor
+<govuk-service-navigation service-name="Service name" service-url="#">
+    <govuk-service-navigation-start>
+        <span class="govuk-body">Before the navigation</span>
+    </govuk-service-navigation-start>
+    <govuk-service-navigation-nav aria-label="Menu" menu-button-text="Menu">
+        <govuk-service-navigation-nav-start>
+            <li class="govuk-service-navigation__item">First navigation item</li>
+        </govuk-service-navigation-nav-start>
+        <govuk-service-navigation-nav-item href="#">Navigation item 1</govuk-service-navigation-nav-item>
+        <govuk-service-navigation-nav-item href="#" active="true">Navigation item 2</govuk-service-navigation-nav-item>
+        <govuk-service-navigation-nav-item asp-controller="Home" asp-action="Index">Navigation item 3</govuk-service-navigation-nav-item>
+        <govuk-service-navigation-nav-end>
+            <li class="govuk-service-navigation__item">Last navigation item</li>
+        </govuk-service-navigation-nav-end>
+    </govuk-service-navigation-nav>
+    <govuk-service-navigation-end>
+        <span class="govuk-body">After the navigation</span>
+    </govuk-service-navigation-end>
+</govuk-service-navigation>
+```
+
+
 ### API
 
 #### `<govuk-service-navigation>`

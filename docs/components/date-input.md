@@ -102,6 +102,46 @@
 ```
 
 
+### Example with long tag names
+<img alt="Date input with long tag names example" src="../images/date-input-with-long-tag-names-example.png" />
+
+```razor
+<govuk-date-input id="passport-issued" name-prefix="passport-issued" error-message-prefix="Your passport issue date">
+    <govuk-date-input-fieldset>
+        <govuk-date-input-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+            When was your passport issued?
+        </govuk-date-input-fieldset-legend>
+
+        <govuk-date-input-hint>
+            For example, 27 3 2007
+        </govuk-date-input-hint>
+
+        <govuk-date-input-error-message>
+            The date your passport was issued must be in the past
+        </govuk-date-input-error-message>
+
+        <govuk-date-input-before-inputs>
+            <p class="govuk-body">Content before the inputs</p>
+        </govuk-date-input-before-inputs>
+
+        <govuk-date-input-day value="27">
+            <govuk-date-input-day-label>Dydd</govuk-date-input-day-label>
+        </govuk-date-input-day>
+        <govuk-date-input-month value="3">
+            <govuk-date-input-month-label>Mis</govuk-date-input-month-label>
+        </govuk-date-input-month>
+        <govuk-date-input-year value="2007">
+            <govuk-date-input-year-label>Blwyddyn</govuk-date-input-year-label>
+        </govuk-date-input-year>
+
+        <govuk-date-input-after-inputs>
+            <p class="govuk-body">Content after the inputs</p>
+        </govuk-date-input-after-inputs>
+    </govuk-date-input-fieldset>
+</govuk-date-input>
+```
+
+
 ### API
 
 #### `<govuk-date-input>`

@@ -16,6 +16,24 @@
 ```
 
 
+### Example with long tag names
+<img alt="Password input with long tag names example" src="../images/password-input-with-long-tag-names-example.png" />
+
+```razor
+<govuk-password-input name="Password">
+    <govuk-password-input-label is-page-heading="true" class="govuk-label--l">Password</govuk-password-input-label>
+    <govuk-password-input-hint>Must be at least 8 characters</govuk-password-input-hint>
+    <govuk-password-input-error-message>Enter your password</govuk-password-input-error-message>
+    <govuk-password-input-before-input>
+        <p class="govuk-body">Content before the input</p>
+    </govuk-password-input-before-input>
+    <govuk-password-input-after-input>
+        <p class="govuk-body">Content after the input</p>
+    </govuk-password-input-after-input>
+</govuk-password-input>
+```
+
+
 ### API
 
 #### `<govuk-password-input>`

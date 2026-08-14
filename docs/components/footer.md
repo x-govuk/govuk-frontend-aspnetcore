@@ -124,6 +124,44 @@
 ```
 
 
+### Example with long tag names
+<img alt="Footer with long tag names example" src="../images/footer-with-long-tag-names-example.png" />
+
+```razor
+<govuk-footer>
+    <govuk-footer-nav width="two-thirds" columns="2">
+        <govuk-footer-nav-title>Services and information</govuk-footer-nav-title>
+        <govuk-footer-nav-items>
+            <govuk-footer-nav-item href="#">Benefits</govuk-footer-nav-item>
+            <govuk-footer-nav-item href="#">Births, deaths, marriages and care</govuk-footer-nav-item>
+            <govuk-footer-nav-item href="#">Business and self-employed</govuk-footer-nav-item>
+            <govuk-footer-nav-item href="#">Childcare and parenting</govuk-footer-nav-item>
+            <govuk-footer-nav-item href="#">Citizenship and living in the UK</govuk-footer-nav-item>
+            <govuk-footer-nav-item href="#">Crime, justice and the law</govuk-footer-nav-item>
+        </govuk-footer-nav-items>
+    </govuk-footer-nav>
+    <govuk-footer-nav width="one-third">
+        <govuk-footer-nav-title>Departments and policy</govuk-footer-nav-title>
+        <govuk-footer-nav-items>
+            <govuk-footer-nav-item asp-controller="Home" asp-action="Index">How government works</govuk-footer-nav-item>
+            <govuk-footer-nav-item href="#">Departments</govuk-footer-nav-item>
+            <govuk-footer-nav-item href="#">Worldwide</govuk-footer-nav-item>
+        </govuk-footer-nav-items>
+    </govuk-footer-nav>
+    <govuk-footer-meta>
+        <govuk-footer-meta-items>
+            <govuk-footer-meta-item href="#">Help</govuk-footer-meta-item>
+            <govuk-footer-meta-item href="#">Cookies</govuk-footer-meta-item>
+            <govuk-footer-meta-item href="#" lang="cy" hreflang="cy">Rhestr o Wasanaethau Cymraeg</govuk-footer-meta-item>
+        </govuk-footer-meta-items>
+        <govuk-footer-meta-content>Built by the <a href="#" class="govuk-footer__link">Government Digital Service</a></govuk-footer-meta-content>
+    </govuk-footer-meta>
+    <govuk-footer-content-licence />
+    <govuk-footer-copyright />
+</govuk-footer>
+```
+
+
 ### API
 
 #### `<govuk-footer>`
@@ -185,6 +223,11 @@ Must be inside a `<meta-items>` or `<govuk-footer-meta-items>` element.
 | --- | --- | --- |
 | `link-*` |  | Additional attributes to add to the generated `<a>` element. |
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
+
+
+#### `<content>` / `<govuk-footer-meta-content>`
+
+Must be inside a `<meta>` or `<govuk-footer-meta>` element.
 
 
 #### `<content-licence>` / `<govuk-footer-content-licence>`

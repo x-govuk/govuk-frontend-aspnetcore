@@ -48,6 +48,22 @@
 ```
 
 
+### Example with long tag names
+<img alt="Notification banner with long tag names example" src="../images/notification-banner-with-long-tag-names-example.png" />
+
+```razor
+<govuk-notification-banner>
+    <govuk-notification-banner-title heading-level="2" id="banner-title">
+        Important information
+    </govuk-notification-banner-title>
+    <p class="govuk-notification-banner__heading">
+        You have 7 days left to send your application.
+        <a class="govuk-notification-banner__link" href="#">View application</a>.
+    </p>
+</govuk-notification-banner>
+```
+
+
 ### API
 
 #### `<govuk-notification-banner>`

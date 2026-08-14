@@ -27,6 +27,27 @@
 ```
 
 
+### Example with long tag names
+<img alt="Tabs with long tag names example" src="../images/tabs-with-long-tag-names-example.png" />
+
+```razor
+<govuk-tabs>
+    <govuk-tabs-item id="past-day" label="Past day">
+        <h2 class="govuk-heading-l">Past day</h2>
+    </govuk-tabs-item>
+    <govuk-tabs-item id="past-week" label="Past week">
+        <h2 class="govuk-heading-l">Past week</h2>
+    </govuk-tabs-item>
+    <govuk-tabs-item id="past-month" label="Past month">
+        <h2 class="govuk-heading-l">Past month</h2>
+    </govuk-tabs-item>
+    <govuk-tabs-item id="past-year" label="Past year">
+        <h2 class="govuk-heading-l">Past year</h2>
+    </govuk-tabs-item>
+</govuk-tabs>
+```
+
+
 ### API
 
 #### `<govuk-tabs>`

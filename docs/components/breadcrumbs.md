@@ -18,6 +18,18 @@
 ```
 
 
+### Example with long tag names
+<img alt="Breadcrumbs with long tag names example" src="../images/breadcrumbs-with-long-tag-names-example.png" />
+
+```razor
+<govuk-breadcrumbs collapse-on-mobile="true">
+    <govuk-breadcrumbs-item asp-controller="Home" asp-action="Index">Home</govuk-breadcrumbs-item>
+    <govuk-breadcrumbs-item href="#" link-target="_blank">Passports, travel and living abroad</govuk-breadcrumbs-item>
+    <govuk-breadcrumbs-item>Travel abroad</govuk-breadcrumbs-item>
+</govuk-breadcrumbs>
+```
+
+
 ### API
 
 #### `<govuk-breadcrumbs>`

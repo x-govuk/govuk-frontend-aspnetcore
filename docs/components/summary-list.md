@@ -94,6 +94,36 @@
 ```
 
 
+### Example with long tag names
+<img alt="Summary list with long tag names example" src="../images/summary-list-with-long-tag-names-example.png" />
+
+```razor
+<govuk-summary-card>
+    <govuk-summary-card-title>University of Gloucestershire</govuk-summary-card-title>
+    <govuk-summary-card-actions>
+        <govuk-summary-card-action href="#" visually-hidden-text="of University of Gloucestershire">Delete choice</govuk-summary-card-action>
+        <govuk-summary-card-action asp-controller="Home" asp-action="Confirm" visually-hidden-text="from University of Gloucestershire">Withdraw</govuk-summary-card-action>
+    </govuk-summary-card-actions>
+    <govuk-summary-list>
+        <govuk-summary-list-row>
+            <govuk-summary-list-row-key>Course</govuk-summary-list-row-key>
+            <govuk-summary-list-row-value>English (3DMD)<br>PGCE with QTS full time</govuk-summary-list-row-value>
+            <govuk-summary-list-row-actions>
+                <govuk-summary-list-row-action href="#" visually-hidden-text="course">Change</govuk-summary-list-row-action>
+            </govuk-summary-list-row-actions>
+        </govuk-summary-list-row>
+        <govuk-summary-list-row>
+            <govuk-summary-list-row-key>Location</govuk-summary-list-row-key>
+            <govuk-summary-list-row-value>School name<br>Road, City, SW1 1AA</govuk-summary-list-row-value>
+            <govuk-summary-list-row-actions>
+                <govuk-summary-list-row-action asp-controller="Home" asp-action="Index" visually-hidden-text="location">Change</govuk-summary-list-row-action>
+            </govuk-summary-list-row-actions>
+        </govuk-summary-list-row>
+    </govuk-summary-list>
+</govuk-summary-card>
+```
+
+
 ### API
 
 #### `<govuk-summary-list>`

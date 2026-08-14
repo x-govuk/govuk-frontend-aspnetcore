@@ -8,8 +8,8 @@ The assets are copied in when your project builds, and the components are writte
 @* Labels, hints and error messages come from the model *@
 
 <govuk-input for="EmailAddress">
-    <govuk-input-label>Email address</govuk-input-label>
-    <govuk-input-hint>We'll only use this to send you a receipt</govuk-input-hint>
+    <label>Email address</label>
+    <hint>We'll only use this to send you a receipt</hint>
 </govuk-input>
 
 <govuk-button>Submit</govuk-button>

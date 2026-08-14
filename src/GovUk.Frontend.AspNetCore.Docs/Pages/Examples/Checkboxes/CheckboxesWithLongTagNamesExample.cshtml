@@ -1,0 +1,43 @@
+@page
+
+<example style="display: block; padding-bottom: 10px;">
+    <govuk-checkboxes name="ContactPreferences">
+        <govuk-checkboxes-fieldset>
+            <govuk-checkboxes-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+                How would you like to be contacted?
+            </govuk-checkboxes-fieldset-legend>
+
+            <govuk-checkboxes-hint>
+                Select all options that are relevant to you.
+            </govuk-checkboxes-hint>
+
+            <govuk-checkboxes-error-message>
+                Select how you would like to be contacted
+            </govuk-checkboxes-error-message>
+
+            <govuk-checkboxes-before-inputs>
+                <p class="govuk-body">Content before the checkboxes</p>
+            </govuk-checkboxes-before-inputs>
+
+            <govuk-checkboxes-item value="email">
+                Email
+                <govuk-checkboxes-item-hint>We’ll only use this to contact you about your application</govuk-checkboxes-item-hint>
+                <govuk-checkboxes-item-conditional>
+                    <govuk-input name="EmailAddress" type="email" autocomplete="email" spellcheck="false" input-class="govuk-!-width-one-third">
+                        <govuk-input-label>Email address</govuk-input-label>
+                    </govuk-input>
+                </govuk-checkboxes-item-conditional>
+            </govuk-checkboxes-item>
+
+            <govuk-checkboxes-item value="phone">Phone</govuk-checkboxes-item>
+
+            <govuk-checkboxes-divider>or</govuk-checkboxes-divider>
+
+            <govuk-checkboxes-item value="none">None of the above</govuk-checkboxes-item>
+
+            <govuk-checkboxes-after-inputs>
+                <p class="govuk-body">Content after the checkboxes</p>
+            </govuk-checkboxes-after-inputs>
+        </govuk-checkboxes-fieldset>
+    </govuk-checkboxes>
+</example>

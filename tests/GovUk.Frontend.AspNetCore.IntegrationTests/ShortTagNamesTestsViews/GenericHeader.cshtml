@@ -1,0 +1,18 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-generic-header home-page-url="https://my.service.gov.uk" container-class="app-width-container">
+        <logo link-aria-label="My service homepage">My service</logo>
+        <p class="govuk-body">After the logo</p>
+    </govuk-generic-header>
+</div>
+
+<div data-testid="long">
+    <govuk-generic-header home-page-url="https://my.service.gov.uk" container-class="app-width-container">
+        <govuk-generic-header-logo link-aria-label="My service homepage">My service</govuk-generic-header-logo>
+        <p class="govuk-body">After the logo</p>
+    </govuk-generic-header>
+</div>

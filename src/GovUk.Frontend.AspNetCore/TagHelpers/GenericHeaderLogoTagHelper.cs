@@ -7,10 +7,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the logo in a GDS generic header component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = GenericHeaderTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = GenericHeaderTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the logo's link.")]
 public class GenericHeaderLogoTagHelper : TagHelper
 {
     internal const string TagName = "govuk-generic-header-logo";
+    internal const string ShortTagName = ShortTagNames.Logo;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     private const string LinkAttributesPrefix = "link-";
 

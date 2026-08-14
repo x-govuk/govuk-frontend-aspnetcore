@@ -19,7 +19,7 @@ internal class GenericHeaderContext
         if (Logo is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                GenericHeaderLogoTagHelper.TagName,
+                GenericHeaderLogoTagHelper.AllTagNames,
                 GenericHeaderTagHelper.TagName);
         }
 
@@ -30,7 +30,7 @@ internal class GenericHeaderContext
     {
         if (Logo is null)
         {
-            throw ExceptionHelper.AChildElementMustBeProvided(GenericHeaderLogoTagHelper.TagName);
+            throw ExceptionHelper.AChildElementMustBeProvided(GenericHeaderLogoTagHelper.AllTagNames);
         }
     }
 }

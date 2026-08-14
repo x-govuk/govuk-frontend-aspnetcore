@@ -84,6 +84,8 @@ public class GenericHeaderTagHelperTests : TagHelperTestBase<GenericHeaderTagHel
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("A <govuk-generic-header-logo> element must be provided.", ex.Message);
+        Assert.Equal(
+            $"A <{GenericHeaderLogoTagHelper.TagName}> or <{GenericHeaderLogoTagHelper.ShortTagName}> element must be provided.",
+            ex.Message);
     }
 }

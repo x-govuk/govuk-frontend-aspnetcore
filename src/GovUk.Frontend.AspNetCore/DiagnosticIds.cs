@@ -8,4 +8,5 @@ internal static class DiagnosticIds
     public const string UseErrorPrefixAttributeInstead = "GFA0004";
     public const string UseGenerateErrorSummariesInstead = "GFA0005";
     public const string UseCookieBannerMessageActionButtonElementInstead = "GFA0006";
+    public const string UseSummaryCardTitleElementInstead = "GFA0007";
 }

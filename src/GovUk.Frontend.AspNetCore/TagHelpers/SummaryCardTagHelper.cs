@@ -7,12 +7,15 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GOV.UK summary card component.
 /// </summary>
 [HtmlTargetElement(TagName)]
+#pragma warning disable GFA0007 // Type or member is obsolete
 [RestrictChildren(
     SummaryCardTitleTagHelper.TagName,
     SummaryCardTitleTagHelper.ShortTagName,
+    ObsoleteSummaryCardTitleTagHelper.ShortTagName,
     SummaryCardActionsTagHelper.TagName,
     SummaryCardActionsTagHelper.ShortTagName,
     SummaryListTagHelper.TagName)]
+#pragma warning restore GFA0007 // Type or member is obsolete
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.SummaryCard)]
 public class SummaryCardTagHelper : TagHelper
 {

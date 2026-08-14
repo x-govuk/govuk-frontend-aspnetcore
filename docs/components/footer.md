@@ -39,7 +39,7 @@
 ```razor
 <govuk-footer>
     <nav width="two-thirds" columns="2">
-        <title>Two column list</title>
+        <nav-title>Two column list</nav-title>
         <nav-items>
             <nav-item href="#">Navigation item 1</nav-item>
             <nav-item href="#">Navigation item 2</nav-item>
@@ -50,7 +50,7 @@
         </nav-items>
     </nav>
     <nav width="one-third">
-        <title>Single column list</title>
+        <nav-title>Single column list</nav-title>
         <nav-items>
             <nav-item href="#">Navigation item 1</nav-item>
             <nav-item href="#">Navigation item 2</nav-item>
@@ -69,7 +69,7 @@
 ```razor
 <govuk-footer>
     <nav width="two-thirds" columns="2">
-        <title>Services and information</title>
+        <nav-title>Services and information</nav-title>
         <nav-items>
             <nav-item href="#">Benefits</nav-item>
             <nav-item href="#">Births, deaths, marriages and care</nav-item>
@@ -90,7 +90,7 @@
         </nav-items>
     </nav>
     <nav width="one-third">
-        <title>Departments and policy</title>
+        <nav-title>Departments and policy</nav-title>
         <nav-items>
             <nav-item href="#">How government works</nav-item>
             <nav-item href="#">Departments</nav-item>
@@ -181,7 +181,7 @@ Must be inside a `<govuk-footer>` element.
 | `width` | `string` | The width of this navigation section. For example, `one-third`, `two-thirds` or `one-half`. If not specified, `full` will be used. |
 
 
-#### `<title>` / `<govuk-footer-nav-title>`
+#### `<nav-title>` / `<govuk-footer-nav-title>`
 
 Must be inside a `<nav>` or `<govuk-footer-nav>` element.
 

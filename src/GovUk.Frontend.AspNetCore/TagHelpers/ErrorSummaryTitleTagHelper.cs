@@ -12,7 +12,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 public class ErrorSummaryTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-error-summary-title";
-    internal const string ShortTagName = ShortTagNames.Title;
+    internal const string ShortTagName = ShortTagNames.ErrorSummaryTitle;
 
     internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 

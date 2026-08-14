@@ -11,7 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 public class NotificationBannerTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-notification-banner-title";
-    internal const string ShortTagName = ShortTagNames.Title;
+    internal const string ShortTagName = ShortTagNames.NotificationBannerTitle;
 
     internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 

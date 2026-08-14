@@ -75,7 +75,7 @@
 
 ```razor
 <govuk-summary-card>
-    <title>University of Gloucestershire</title>
+    <card-title>University of Gloucestershire</card-title>
     <card-actions>
         <action href="#" visually-hidden-text="of University of Gloucestershire">Delete choice</action>
         <action href="#" visually-hidden-text="from University of Gloucestershire">Withdraw</action>
@@ -170,7 +170,7 @@ Must be inside a `<row-actions>` or `<govuk-summary-list-row-actions>` element.
 #### `<govuk-summary-card>`
 
 
-#### `<title>` / `<govuk-summary-card-title>`
+#### `<card-title>` / `<govuk-summary-card-title>`
 
 The content is the HTML to use for the card's title.
 

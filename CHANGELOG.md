@@ -117,12 +117,12 @@ The generic header takes `<logo>` inside `<govuk-generic-header>`:
 </govuk-generic-header>
 ```
 
-The footer takes `<nav>`, `<meta>`, `<content-licence>` and `<copyright>` inside `<govuk-footer>`, with `<title>` and `<nav-items>` inside the `<nav>`, `<meta-items>` and `<content>` inside the `<meta>`, and a `<nav-item>` or `<meta-item>` inside each of the item lists:
+The footer takes `<nav>`, `<meta>`, `<content-licence>` and `<copyright>` inside `<govuk-footer>`, with `<nav-title>` and `<nav-items>` inside the `<nav>`, `<meta-items>` and `<content>` inside the `<meta>`, and a `<nav-item>` or `<meta-item>` inside each of the item lists:
 
 ```razor
 <govuk-footer>
     <nav width="two-thirds" columns="2">
-        <title>Services and information</title>
+        <nav-title>Services and information</nav-title>
         <nav-items>
             <nav-item href="#">Benefits</nav-item>
             <nav-item asp-controller="Home" asp-action="Index">Births, deaths, marriages and care</nav-item>
@@ -140,11 +140,11 @@ The footer takes `<nav>`, `<meta>`, `<content-licence>` and `<copyright>` inside
 
 As with the service navigation, the footer's two spellings cannot be mixed. Each section's children pair with the spelling of the section they are in, and mixing the spellings of the `<govuk-footer>`'s own children — which all have the same parent element, so cannot be paired up that way — throws.
 
-The notification banner takes `<title>` inside `<govuk-notification-banner>`, the same short name the summary card and the footer's nav sections take for their titles:
+The notification banner takes `<notification-banner-title>` inside `<govuk-notification-banner>`:
 
 ```razor
 <govuk-notification-banner type="NotificationBannerType.Success">
-    <title heading-level="3">Important information</title>
+    <notification-banner-title heading-level="3">Important information</notification-banner-title>
     <p class="govuk-notification-banner__heading">You have 7 days left to send your application.</p>
 </govuk-notification-banner>
 ```
@@ -186,11 +186,11 @@ The tabs take `<tabs-item>` inside `<govuk-tabs>`:
 </govuk-tabs>
 ```
 
-The error summary takes `<title>`, `<description>` and `<error-summary-item>` inside `<govuk-error-summary>`, with the item generating its `href` from the `asp-` attributes just as `<govuk-error-summary-item>` does:
+The error summary takes `<error-summary-title>`, `<description>` and `<error-summary-item>` inside `<govuk-error-summary>`, with the item generating its `href` from the `asp-` attributes just as `<govuk-error-summary-item>` does:
 
 ```razor
 <govuk-error-summary>
-    <title>There is a problem</title>
+    <error-summary-title>There is a problem</error-summary-title>
     <error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</error-summary-item>
     <error-summary-item for="Postcode" />
 </govuk-error-summary>
@@ -229,6 +229,9 @@ The cookie banner takes `<message>` inside `<govuk-cookie-banner>`, with `<headi
 Every child pairs with the spelling of the element it is written in, as the accordion item's children do, so there is no way to mix the two. The deprecated `<govuk-cookie-banner-message-action>` keeps its `govuk-` prefixed spelling only; write `<action-button>` inside a `<message-actions>` instead.
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
+
+The summary card's `<title>` element is now `<card-title>`, so that every short name for a title says which component's title it is, as `<panel-title>` already did, and none of them read as the `<title>` element that goes in the page's `<head>`.
+The old element still works, with everything it generated before, but using it produces a deprecation warning with the diagnostic ID `GFA0007`.
 
 `TabsOptions.Title` is now `string?` rather than `TemplateString?`. It only ever comes from the `title` attribute, so it is always text.
 

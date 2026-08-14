@@ -12,6 +12,7 @@ internal static class ShortTagNames
     public const string BeforeInputs = "before-inputs";
     public const string BreadcrumbsItem = "breadcrumbs-item";
     public const string CardActions = "card-actions";
+    public const string CardTitle = "card-title";
     public const string CheckboxesItem = "checkboxes-item";
     public const string Conditional = "conditional";
     public const string Content = "content";
@@ -24,6 +25,7 @@ internal static class ShortTagNames
     public const string End = "end";
     public const string ErrorMessage = "error-message";
     public const string ErrorSummaryItem = "error-summary-item";
+    public const string ErrorSummaryTitle = "error-summary-title";
     public const string Heading = "heading";
     public const string Hint = "hint";
     public const string Key = "key";
@@ -39,7 +41,9 @@ internal static class ShortTagNames
     public const string Nav = "nav";
     public const string NavItem = "nav-item";
     public const string NavItems = "nav-items";
+    public const string NavTitle = "nav-title";
     public const string Next = "next";
+    public const string NotificationBannerTitle = "notification-banner-title";
     public const string PaginationItem = "pagination-item";
     public const string PanelActions = "panel-actions";
     public const string PanelBody = "panel-body";
@@ -56,7 +60,10 @@ internal static class ShortTagNames
     public const string Text = "text";
     public const string TabsItem = "tabs-item";
     public const string Tag = "tag";
+
+    // The deprecated short name for the summary card's title, replaced by CardTitle
     public const string Title = "title";
+
     public const string Value = "value";
     public const string Year = "year";
 }

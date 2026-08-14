@@ -26,7 +26,7 @@
 
 ```razor
 <govuk-error-summary>
-    <title>There is a problem</title>
+    <error-summary-title>There is a problem</error-summary-title>
     <error-summary-item href="#passport-issued-day">The date your passport was issued must be in the past</error-summary-item>
     <error-summary-item href="#postcode-input">Enter a postcode, like AA1 1AA</error-summary-item>
 </govuk-error-summary>
@@ -65,7 +65,7 @@
 | `disable-auto-focus` | `bool?` | Whether to disable the behavior that focuses the error summary when the page loads. |
 
 
-#### `<title>` / `<govuk-error-summary-title>`
+#### `<error-summary-title>` / `<govuk-error-summary-title>`
 
 The content is the HTML to use within the title for the error summary. If this element is not specified then the content is 'There is a problem'.
 

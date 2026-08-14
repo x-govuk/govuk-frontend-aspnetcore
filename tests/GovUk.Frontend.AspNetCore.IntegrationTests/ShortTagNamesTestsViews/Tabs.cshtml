@@ -1,0 +1,26 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-tabs id="tabs" title="Views">
+        <tabs-item id="past-day" label="Past day" link-data-track="past-day">
+            <h2 class="govuk-heading-l">Past day</h2>
+        </tabs-item>
+        <tabs-item id="past-week" label="Past week">
+            <h2 class="govuk-heading-l">Past week</h2>
+        </tabs-item>
+    </govuk-tabs>
+</div>
+
+<div data-testid="long">
+    <govuk-tabs id="tabs" title="Views">
+        <govuk-tabs-item id="past-day" label="Past day" link-data-track="past-day">
+            <h2 class="govuk-heading-l">Past day</h2>
+        </govuk-tabs-item>
+        <govuk-tabs-item id="past-week" label="Past week">
+            <h2 class="govuk-heading-l">Past week</h2>
+        </govuk-tabs-item>
+    </govuk-tabs>
+</div>

@@ -20,7 +20,10 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 <govuk-cookie-banner-message-action-button text="Accept analytics cookies" type="submit" asp-controller="Cookies" asp-action="Accept" />
 ```
 
-`EnableGovUkFrontendSupport` is now on by default for projects using the `Microsoft.NET.Web.Sdk` SDK.
+`EnableGovUkFrontendSupport` is now on by default for projects using the `Microsoft.NET.Sdk.Web` SDK.
+
+The library no longer embeds the `govuk-frontend` files or serves them from middleware; they're copied into your project by the package's build targets instead.
+`FrontendPackageHostingOptions` has been removed along with it, and applications need to serve their own `wwwroot` — through `MapStaticAssets()` or `UseStaticFiles()` — for the copied files to be reachable.
 
 `<govuk-pagination>` can generate its own items. Specify `current-page`, `total-pages` and `generate-page-href` instead of writing a child element per page:
 

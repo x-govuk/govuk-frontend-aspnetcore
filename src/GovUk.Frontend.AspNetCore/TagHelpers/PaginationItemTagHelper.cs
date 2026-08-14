@@ -12,10 +12,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a GDS pagination component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PaginationTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = PaginationTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the pagination item text, usually a page number.")]
 public class PaginationItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-pagination-item";
+    internal const string ShortTagName = ShortTagNames.PaginationItem;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     private const string CurrentAttributeName = "current";
     private const string VisuallyHiddenTextAttributeName = "visually-hidden-text";
@@ -75,7 +79,7 @@ public class PaginationItemTagHelper : TagHelper
             Current = current,
             Number = new TemplateString(content.Snapshot()),
             VisuallyHiddenText = VisuallyHiddenText
-        });
+        }, context.TagName);
 
         output.SuppressOutput();
 

@@ -1,0 +1,9 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The pagination's children all share the same parent element, so their spelling cannot be
+   paired up through ParentTag; mixing the two must throw *@
+
+<govuk-pagination>
+    <govuk-pagination-item href="/">1</govuk-pagination-item>
+    <next href="/">Next</next>
+</govuk-pagination>

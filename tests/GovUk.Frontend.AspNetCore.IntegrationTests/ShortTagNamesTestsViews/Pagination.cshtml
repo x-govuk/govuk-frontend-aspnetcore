@@ -1,0 +1,26 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-pagination landmark-label="pages">
+        <previous href="/" label-text="Applying for a provisional lorry licence">Previous</previous>
+        <pagination-item href="/">1</pagination-item>
+        <pagination-item href="/" current="true">2</pagination-item>
+        <ellipsis />
+        <pagination-item asp-controller="ShortTagNamesTests" asp-action="GetPaginationMixed">7</pagination-item>
+        <next href="/" label-text="Driver CPC part 1 test: theory">Next</next>
+    </govuk-pagination>
+</div>
+
+<div data-testid="long">
+    <govuk-pagination landmark-label="pages">
+        <govuk-pagination-previous href="/" label-text="Applying for a provisional lorry licence">Previous</govuk-pagination-previous>
+        <govuk-pagination-item href="/">1</govuk-pagination-item>
+        <govuk-pagination-item href="/" current="true">2</govuk-pagination-item>
+        <govuk-pagination-ellipsis />
+        <govuk-pagination-item asp-controller="ShortTagNamesTests" asp-action="GetPaginationMixed">7</govuk-pagination-item>
+        <govuk-pagination-next href="/" label-text="Driver CPC part 1 test: theory">Next</govuk-pagination-next>
+    </govuk-pagination>
+</div>

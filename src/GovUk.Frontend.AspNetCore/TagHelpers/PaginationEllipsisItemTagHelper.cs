@@ -7,9 +7,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an ellipsis item in a GDS pagination component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PaginationTagHelper.TagName, TagStructure = TagStructure.WithoutEndTag)]
+[HtmlTargetElement(ShortTagName, ParentTag = PaginationTagHelper.TagName, TagStructure = TagStructure.WithoutEndTag)]
 public class PaginationEllipsisItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-pagination-ellipsis";
+    internal const string ShortTagName = ShortTagNames.Ellipsis;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc/>
     public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -25,7 +29,7 @@ public class PaginationEllipsisItemTagHelper : TagHelper
         {
             Ellipsis = true,
             Attributes = attributes
-        });
+        }, context.TagName);
 
         output.SuppressOutput();
     }

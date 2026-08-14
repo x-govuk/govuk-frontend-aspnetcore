@@ -7,10 +7,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the tag in a GDS phase banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = PhaseBannerTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = PhaseBannerTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use for the tag in the phase banner.")]
 public class PhaseBannerTagTagHelper : TagHelper
 {
     internal const string TagName = "govuk-phase-banner-tag";
+    internal const string ShortTagName = ShortTagNames.Tag;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

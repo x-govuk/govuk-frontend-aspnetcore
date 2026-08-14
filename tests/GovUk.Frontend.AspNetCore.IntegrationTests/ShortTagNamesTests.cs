@@ -33,6 +33,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("Footer", "short", "long", ".govuk-footer__link")]
     [InlineData("NotificationBanner", "short", "long", ".govuk-notification-banner__title")]
     [InlineData("Pagination", "short", "long", ".govuk-pagination__link")]
+    [InlineData("PhaseBanner", "short", "long", ".govuk-phase-banner__content__tag")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -215,6 +216,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("PaginationMixed")]
     public IActionResult GetPaginationMixed() => View("PaginationMixed", new ShortTagNamesTestsModel());
+
+    [HttpGet("PhaseBanner")]
+    public IActionResult GetPhaseBanner() => View("PhaseBanner", new ShortTagNamesTestsModel());
 
     [HttpGet("ServiceNavigationMixed")]
     public IActionResult GetServiceNavigationMixed() => View("ServiceNavigationMixed", new ShortTagNamesTestsModel());

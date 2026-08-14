@@ -1,0 +1,18 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-phase-banner class="app-phase-banner">
+        <tag class="govuk-tag--blue">Alpha</tag>
+        This is a new service - your <a href="/" class="govuk-link">feedback</a> will help us to improve it.
+    </govuk-phase-banner>
+</div>
+
+<div data-testid="long">
+    <govuk-phase-banner class="app-phase-banner">
+        <govuk-phase-banner-tag class="govuk-tag--blue">Alpha</govuk-phase-banner-tag>
+        This is a new service - your <a href="/" class="govuk-link">feedback</a> will help us to improve it.
+    </govuk-phase-banner>
+</div>

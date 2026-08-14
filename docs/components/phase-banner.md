@@ -9,7 +9,7 @@
 
 ```razor
 <govuk-phase-banner>
-    <govuk-phase-banner-tag>Alpha</govuk-phase-banner-tag>
+    <tag>Alpha</tag>
     This is a new service - your <a href="#" class="govuk-link">feedback</a> will help us to improve it.
 </govuk-phase-banner>
 ```
@@ -22,7 +22,7 @@
 The content is the HTML to use in the phase banner.
 
 
-#### `<govuk-phase-banner-tag>`
+#### `<tag>` / `<govuk-phase-banner-tag>`
 
 The content is the HTML to use for the tag in the phase banner.
 

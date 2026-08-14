@@ -13,7 +13,9 @@ internal class PhaseBannerContext
 
         if (Tag is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(tagName, PhaseBannerTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(
+                PhaseBannerTagTagHelper.AllTagNames,
+                PhaseBannerTagHelper.TagName);
         }
 
         Tag = (options, tagName);
@@ -23,7 +25,7 @@ internal class PhaseBannerContext
     {
         if (Tag is null)
         {
-            throw ExceptionHelper.AChildElementMustBeProvided(PhaseBannerTagTagHelper.TagName);
+            throw ExceptionHelper.AChildElementMustBeProvided(PhaseBannerTagTagHelper.AllTagNames);
         }
     }
 }

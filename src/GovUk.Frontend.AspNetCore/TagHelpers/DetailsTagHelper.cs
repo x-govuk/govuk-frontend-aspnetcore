@@ -7,7 +7,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS details component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(DetailsSummaryTagHelper.TagName, DetailsTextTagHelper.TagName)]
+[RestrictChildren(
+    DetailsSummaryTagHelper.TagName,
+    DetailsSummaryTagHelper.ShortTagName,
+    DetailsTextTagHelper.TagName,
+    DetailsTextTagHelper.ShortTagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.Details)]
 public class DetailsTagHelper : TagHelper
 {

@@ -36,7 +36,7 @@ public class DetailsSummaryTagHelperTests : TagHelperTestBase<DetailsSummaryTagH
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetSummary([], new HtmlString("The summary"));
+        detailsContext.SetSummary([], new HtmlString("The summary"), TagName);
 
         var context = CreateTagHelperContext(contexts: detailsContext);
 
@@ -55,7 +55,9 @@ public class DetailsSummaryTagHelperTests : TagHelperTestBase<DetailsSummaryTagH
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-details-summary> element is permitted within each <govuk-details>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 
     [Fact]
@@ -63,7 +65,10 @@ public class DetailsSummaryTagHelperTests : TagHelperTestBase<DetailsSummaryTagH
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetText([], new HtmlString("The text"));
+        detailsContext.SetText(
+            [],
+            new HtmlString("The text"),
+            GetSiblingTagName(DetailsTextTagHelper.TagName, DetailsTextTagHelper.ShortTagName));
 
         var context = CreateTagHelperContext(contexts: detailsContext);
 
@@ -82,6 +87,9 @@ public class DetailsSummaryTagHelperTests : TagHelperTestBase<DetailsSummaryTagH
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("<govuk-details-summary> must be specified before <govuk-details-text>.", ex.Message);
+        Assert.Equal(
+            $"<{TagName}> must be specified before " +
+                $"<{GetSiblingTagName(DetailsTextTagHelper.TagName, DetailsTextTagHelper.ShortTagName)}>.",
+            ex.Message);
     }
 }

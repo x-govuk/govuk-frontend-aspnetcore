@@ -7,10 +7,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the summary in a GDS details component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = DetailsTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = DetailsTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the details summary.")]
 public class DetailsSummaryTagHelper : TagHelper
 {
     internal const string TagName = "govuk-details-summary";
+    internal const string ShortTagName = ShortTagNames.Summary;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -27,7 +31,7 @@ public class DetailsSummaryTagHelper : TagHelper
             content = output.Content;
         }
 
-        detailsContext.SetSummary(new AttributeCollection(output.Attributes), content.Snapshot());
+        detailsContext.SetSummary(new AttributeCollection(output.Attributes), content.Snapshot(), context.TagName);
 
         output.SuppressOutput();
     }

@@ -1,0 +1,9 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* Both of the details' children share the same parent element, so their spelling cannot be
+   paired up through ParentTag; mixing the two must throw *@
+
+<govuk-details>
+    <govuk-details-summary>Help with nationality</govuk-details-summary>
+    <text>We need to know your nationality.</text>
+</govuk-details>

@@ -30,7 +30,7 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
-The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header, footer, notification banner, pagination, phase banner, tabs and error summary tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header, footer, notification banner, pagination, phase banner, tabs, error summary and details tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
@@ -197,6 +197,17 @@ The error summary takes `<title>`, `<description>` and `<error-summary-item>` in
 ```
 
 Its children also all share the same parent element, so, as with the pagination and the footer, the two spellings cannot be mixed.
+
+The details takes `<summary>` and `<text>` inside `<govuk-details>`:
+
+```razor
+<govuk-details>
+    <summary>Help with nationality</summary>
+    <text>We need to know your nationality so we can work out which elections you're entitled to vote in.</text>
+</govuk-details>
+```
+
+Both children share the same parent element, so, as with the error summary and the pagination, the two spellings cannot be mixed.
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 

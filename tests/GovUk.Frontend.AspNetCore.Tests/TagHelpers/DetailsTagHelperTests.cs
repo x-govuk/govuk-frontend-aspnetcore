@@ -19,10 +19,10 @@ public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary(new AttributeCollection(), summary);
+                detailsContext.SetSummary(new AttributeCollection(), summary, DetailsSummaryTagHelper.TagName);
 
                 var text = new HtmlString("The text");
-                detailsContext.SetText(new AttributeCollection(), text);
+                detailsContext.SetText(new AttributeCollection(), text, DetailsTextTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -58,10 +58,10 @@ public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary(new AttributeCollection(), summary);
+                detailsContext.SetSummary(new AttributeCollection(), summary, DetailsSummaryTagHelper.TagName);
 
                 var text = new HtmlString("The text");
-                detailsContext.SetText(new AttributeCollection(), text);
+                detailsContext.SetText(new AttributeCollection(), text, DetailsTextTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -108,7 +108,9 @@ public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("A <govuk-details-summary> element must be provided.", ex.Message);
+        Assert.Equal(
+            $"A <{DetailsSummaryTagHelper.TagName}> or <{DetailsSummaryTagHelper.ShortTagName}> element must be provided.",
+            ex.Message);
     }
 
     [Fact]
@@ -123,7 +125,7 @@ public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary(new AttributeCollection(), summary);
+                detailsContext.SetSummary(new AttributeCollection(), summary, DetailsSummaryTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -140,7 +142,9 @@ public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("A <govuk-details-text> element must be provided.", ex.Message);
+        Assert.Equal(
+            $"A <{DetailsTextTagHelper.TagName}> or <{DetailsTextTagHelper.ShortTagName}> element must be provided.",
+            ex.Message);
     }
 
     [Fact]
@@ -157,10 +161,10 @@ public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
                 var summaryAttributes = new AttributeCollection();
                 summaryAttributes.Add("data-test", "summary-value");
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary(summaryAttributes, summary);
+                detailsContext.SetSummary(summaryAttributes, summary, DetailsSummaryTagHelper.TagName);
 
                 var text = new HtmlString("The text");
-                detailsContext.SetText(new AttributeCollection(), text);
+                detailsContext.SetText(new AttributeCollection(), text, DetailsTextTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -191,12 +195,12 @@ public class DetailsTagHelperTests : TagHelperTestBase<DetailsTagHelper>
                 var detailsContext = (DetailsContext)context.Items[typeof(DetailsContext)];
 
                 var summary = new HtmlString("The summary");
-                detailsContext.SetSummary(new AttributeCollection(), summary);
+                detailsContext.SetSummary(new AttributeCollection(), summary, DetailsSummaryTagHelper.TagName);
 
                 var textAttributes = new AttributeCollection();
                 textAttributes.Add("data-test", "text-value");
                 var text = new HtmlString("The text");
-                detailsContext.SetText(textAttributes, text);
+                detailsContext.SetText(textAttributes, text, DetailsTextTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);

@@ -7,13 +7,18 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents a message in a GDS cookie banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CookieBannerTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = CookieBannerTagHelper.TagName)]
 [RestrictChildren(
     CookieBannerMessageHeadingTagHelper.TagName,
+    CookieBannerMessageHeadingTagHelper.ShortTagName,
     CookieBannerMessageContentTagHelper.TagName,
-    CookieBannerMessageActionsTagHelper.TagName)]
+    CookieBannerMessageContentTagHelper.ShortTagName,
+    CookieBannerMessageActionsTagHelper.TagName,
+    CookieBannerMessageActionsTagHelper.ShortTagName)]
 public class CookieBannerMessageTagHelper : TagHelper
 {
     internal const string TagName = "govuk-cookie-banner-message";
+    internal const string ShortTagName = ShortTagNames.Message;
 
     private const string HiddenAttributeName = "hidden";
     private const string RoleAttributeName = "role";
@@ -40,7 +45,9 @@ public class CookieBannerMessageTagHelper : TagHelper
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new CookieBannerMessageContext());
+        ArgumentNullException.ThrowIfNull(context);
+
+        context.SetContextItem(new CookieBannerMessageContext(context.TagName));
     }
 
     /// <inheritdoc/>

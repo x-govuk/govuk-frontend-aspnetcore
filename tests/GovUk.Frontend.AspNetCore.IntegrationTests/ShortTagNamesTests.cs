@@ -37,6 +37,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("Tabs", "short", "long", ".govuk-tabs__tab")]
     [InlineData("ErrorSummary", "short", "long", ".govuk-error-summary__list a")]
     [InlineData("Details", "short", "long", ".govuk-details__summary-text")]
+    [InlineData("CookieBanner", "short", "long", ".govuk-cookie-banner__heading")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -269,6 +270,9 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("DetailsMixed")]
     public IActionResult GetDetailsMixed() => View("DetailsMixed", new ShortTagNamesTestsModel());
+
+    [HttpGet("CookieBanner")]
+    public IActionResult GetCookieBanner() => View("CookieBanner", new ShortTagNamesTestsModel());
 
     [HttpGet("ServiceNavigationMixed")]
     public IActionResult GetServiceNavigationMixed() => View("ServiceNavigationMixed", new ShortTagNamesTestsModel());

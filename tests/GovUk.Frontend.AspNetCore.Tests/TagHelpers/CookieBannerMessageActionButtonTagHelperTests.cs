@@ -4,6 +4,14 @@ namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
 public class CookieBannerMessageActionButtonTagHelperTests : TagHelperTestBase<CookieBannerMessageActionButtonTagHelper>
 {
+    /// <summary>
+    /// The spelling of the message the actions under test are inside; short names pair with short
+    /// names all the way up.
+    /// </summary>
+    private string MessageTagName => UsesShortTagName ?
+        CookieBannerMessageTagHelper.ShortTagName :
+        CookieBannerMessageTagHelper.TagName;
+
     [Fact]
     public async Task ProcessAsync_AddsActionToContext()
     {
@@ -15,8 +23,8 @@ public class CookieBannerMessageActionButtonTagHelperTests : TagHelperTestBase<C
         var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
 
-        var actionsContext = new CookieBannerMessageActionsContext();
-        var messageContext = new CookieBannerMessageContext() { Actions = actionsContext };
+        var actionsContext = new CookieBannerMessageActionsContext(ParentTagName!);
+        var messageContext = new CookieBannerMessageContext(MessageTagName) { Actions = actionsContext };
         var cookieBannerContext = new CookieBannerContext();
 
         var context = CreateTagHelperContext(
@@ -63,8 +71,8 @@ public class CookieBannerMessageActionButtonTagHelperTests : TagHelperTestBase<C
         var formAction = "/cookies/accept";
         var attributes = new Dictionary<string, string?> { { "formaction", formAction } };
 
-        var actionsContext = new CookieBannerMessageActionsContext();
-        var messageContext = new CookieBannerMessageContext() { Actions = actionsContext };
+        var actionsContext = new CookieBannerMessageActionsContext(ParentTagName!);
+        var messageContext = new CookieBannerMessageContext(MessageTagName) { Actions = actionsContext };
         var cookieBannerContext = new CookieBannerContext();
 
         var context = CreateTagHelperContext(

@@ -1,0 +1,46 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-cookie-banner aria-label="Cookies on [name of service]">
+        <message>
+            <heading>Cookies on [name of service]</heading>
+            <content>
+                <p class="govuk-body">We use some essential cookies to make this service work.</p>
+            </content>
+            <message-actions>
+                <action-button text="Accept analytics cookies" type="submit" asp-controller="ShortTagNamesTests" asp-action="GetCookieBanner" />
+                <action-button text="Reject analytics cookies" type="button" />
+                <action-link text="View cookies" asp-controller="ShortTagNamesTests" asp-action="GetCookieBanner" />
+            </message-actions>
+        </message>
+        <message hidden="true" role="alert">
+            <content>
+                <p class="govuk-body">You've accepted analytics cookies.</p>
+            </content>
+        </message>
+    </govuk-cookie-banner>
+</div>
+
+<div data-testid="long">
+    <govuk-cookie-banner aria-label="Cookies on [name of service]">
+        <govuk-cookie-banner-message>
+            <govuk-cookie-banner-message-heading>Cookies on [name of service]</govuk-cookie-banner-message-heading>
+            <govuk-cookie-banner-message-content>
+                <p class="govuk-body">We use some essential cookies to make this service work.</p>
+            </govuk-cookie-banner-message-content>
+            <govuk-cookie-banner-message-actions>
+                <govuk-cookie-banner-message-action-button text="Accept analytics cookies" type="submit" asp-controller="ShortTagNamesTests" asp-action="GetCookieBanner" />
+                <govuk-cookie-banner-message-action-button text="Reject analytics cookies" type="button" />
+                <govuk-cookie-banner-message-action-link text="View cookies" asp-controller="ShortTagNamesTests" asp-action="GetCookieBanner" />
+            </govuk-cookie-banner-message-actions>
+        </govuk-cookie-banner-message>
+        <govuk-cookie-banner-message hidden="true" role="alert">
+            <govuk-cookie-banner-message-content>
+                <p class="govuk-body">You've accepted analytics cookies.</p>
+            </govuk-cookie-banner-message-content>
+        </govuk-cookie-banner-message>
+    </govuk-cookie-banner>
+</div>

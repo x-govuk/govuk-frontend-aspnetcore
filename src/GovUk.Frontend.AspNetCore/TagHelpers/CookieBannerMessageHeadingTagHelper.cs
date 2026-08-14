@@ -7,9 +7,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the heading in a message in a GDS cookie banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CookieBannerMessageTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = CookieBannerMessageTagHelper.ShortTagName)]
 public class CookieBannerMessageHeadingTagHelper : TagHelper
 {
     internal const string TagName = "govuk-cookie-banner-message-heading";
+    internal const string ShortTagName = ShortTagNames.Heading;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -28,7 +32,7 @@ public class CookieBannerMessageHeadingTagHelper : TagHelper
 
         if (messageContext.Heading is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn([TagName], [CookieBannerMessageTagHelper.TagName]);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, messageContext.TagName);
         }
 
         if (messageContext.Content is not null)
@@ -38,7 +42,7 @@ public class CookieBannerMessageHeadingTagHelper : TagHelper
 
         if (messageContext.Actions is not null)
         {
-            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, CookieBannerMessageActionsTagHelper.TagName);
+            throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, messageContext.Actions.TagName);
         }
 
         var attributes = new AttributeCollection(output.Attributes);

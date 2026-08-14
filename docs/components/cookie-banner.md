@@ -11,6 +11,27 @@
 
 ```razor
 <govuk-cookie-banner aria-label="Cookie on [name of service]">
+    <message>
+        <heading>Cookies on [name of service]</heading>
+        <content>
+            <p class="govuk-body">We use some essential cookies to make this service work.</p>
+            <p class="govuk-body">We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+        </content>
+        <message-actions>
+            <action-button text="Accept analytics cookies" type="button"/>
+            <action-button text="Reject analytics cookies" type="button"/>
+            <action-link text="View cookies" href="#"/>
+        </message-actions>
+    </message>
+</govuk-cookie-banner>
+```
+
+
+### Example with long tag names
+<img alt="Cookie banner with long tag names example" src="../images/cookie-banner-with-long-tag-names-example.png" />
+
+```razor
+<govuk-cookie-banner aria-label="Cookie on [name of service]">
     <govuk-cookie-banner-message>
         <govuk-cookie-banner-message-heading>Cookies on [name of service]</govuk-cookie-banner-message-heading>
         <govuk-cookie-banner-message-content>
@@ -37,7 +58,7 @@
 | `hidden` | `bool?` | Whether the cookie banner should be hidden. If not specified, `false` is used. |
 
 
-#### `<govuk-cookie-banner-message>`
+#### `<message>` / `<govuk-cookie-banner-message>`
 
 Must be inside a `<govuk-cookie-banner>` element.
 
@@ -47,27 +68,27 @@ Must be inside a `<govuk-cookie-banner>` element.
 | `role` | `string` | The `role` attribute for the message. Set role to `alert` on confirmation messages to allow assistive tech to automatically read the message. You will also need to move focus to the confirmation message using JavaScript you have written yourself. |
 
 
-#### `<govuk-cookie-banner-message-heading>`
+#### `<heading>` / `<govuk-cookie-banner-message-heading>`
 
-Must be inside a `<govuk-cookie-banner-message>` element.
-
-
-#### `<govuk-cookie-banner-message-content>`
-
-Must be inside a `<govuk-cookie-banner-message>` element.
+Must be inside a `<message>` or `<govuk-cookie-banner-message>` element.
 
 
-#### `<govuk-cookie-banner-message-actions>`
+#### `<content>` / `<govuk-cookie-banner-message-content>`
 
-Must be inside a `<govuk-cookie-banner-message>` element.
+Must be inside a `<message>` or `<govuk-cookie-banner-message>` element.
 
 
-#### `<govuk-cookie-banner-message-action-button>`
+#### `<message-actions>` / `<govuk-cookie-banner-message-actions>`
+
+Must be inside a `<message>` or `<govuk-cookie-banner-message>` element.
+
+
+#### `<action-button>` / `<govuk-cookie-banner-message-action-button>`
 
 > [!NOTE]
 > This tag helper should not have any child content.
 
-Must be inside a `<govuk-cookie-banner-message-actions>` element.
+Must be inside a `<message-actions>` or `<govuk-cookie-banner-message-actions>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |
@@ -78,12 +99,12 @@ Must be inside a `<govuk-cookie-banner-message-actions>` element.
 | (link attributes) |  | See [documentation on links](../links.md) for more information. |
 
 
-#### `<govuk-cookie-banner-message-action-link>`
+#### `<action-link>` / `<govuk-cookie-banner-message-action-link>`
 
 > [!NOTE]
 > This tag helper should not have any child content.
 
-Must be inside a `<govuk-cookie-banner-message-actions>` element.
+Must be inside a `<message-actions>` or `<govuk-cookie-banner-message-actions>` element.
 
 | Attribute | Type | Description |
 | --- | --- | --- |

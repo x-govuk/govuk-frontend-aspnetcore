@@ -7,20 +7,28 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the actions in a message in a GDS cookie banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CookieBannerMessageTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = CookieBannerMessageTagHelper.ShortTagName)]
 #pragma warning disable GFA0006 // Type or member is obsolete
 [RestrictChildren(
     CookieBannerMessageActionButtonTagHelper.TagName,
+    CookieBannerMessageActionButtonTagHelper.ShortTagName,
     CookieBannerMessageActionLinkTagHelper.TagName,
+    CookieBannerMessageActionLinkTagHelper.ShortTagName,
     CookieBannerMessageActionTagHelper.TagName)]
 #pragma warning restore GFA0006 // Type or member is obsolete
 public class CookieBannerMessageActionsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-cookie-banner-message-actions";
+    internal const string ShortTagName = ShortTagNames.MessageActions;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc/>
     public override void Init(TagHelperContext context)
     {
-        context.SetContextItem(new CookieBannerMessageActionsContext());
+        ArgumentNullException.ThrowIfNull(context);
+
+        context.SetContextItem(new CookieBannerMessageActionsContext(context.TagName));
     }
 
     /// <inheritdoc/>
@@ -36,7 +44,7 @@ public class CookieBannerMessageActionsTagHelper : TagHelper
 
         if (messageContext.Actions is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn([TagName], [CookieBannerMessageTagHelper.TagName]);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, messageContext.TagName);
         }
 
         var attributes = new AttributeCollection(output.Attributes);

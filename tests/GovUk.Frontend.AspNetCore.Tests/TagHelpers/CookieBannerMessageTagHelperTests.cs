@@ -43,7 +43,7 @@ public class CookieBannerMessageTagHelperTests : TagHelperTestBase<CookieBannerM
 
                 messageContext.Heading = new(new TemplateString(headingContent), CookieBannerMessageHeadingTagHelper.TagName, new(headingAttributes));
 
-                messageContext.Actions = new CookieBannerMessageActionsContext()
+                messageContext.Actions = new CookieBannerMessageActionsContext(CookieBannerMessageActionsTagHelper.TagName)
                 {
                     Attributes = new(actionsAttributes)
                 };

@@ -4,6 +4,14 @@ namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
 public class CookieBannerMessageActionLinkTagHelperTests : TagHelperTestBase<CookieBannerMessageActionLinkTagHelper>
 {
+    /// <summary>
+    /// The spelling of the message the actions under test are inside; short names pair with short
+    /// names all the way up.
+    /// </summary>
+    private string MessageTagName => UsesShortTagName ?
+        CookieBannerMessageTagHelper.ShortTagName :
+        CookieBannerMessageTagHelper.TagName;
+
     [Fact]
     public async Task ProcessAsync_AddsActionToContext()
     {
@@ -14,8 +22,8 @@ public class CookieBannerMessageActionLinkTagHelperTests : TagHelperTestBase<Coo
         var attributes = CreateDummyDataAttributes();
         attributes.Add("href", href);
 
-        var actionsContext = new CookieBannerMessageActionsContext();
-        var messageContext = new CookieBannerMessageContext() { Actions = actionsContext };
+        var actionsContext = new CookieBannerMessageActionsContext(ParentTagName!);
+        var messageContext = new CookieBannerMessageContext(MessageTagName) { Actions = actionsContext };
         var cookieBannerContext = new CookieBannerContext();
 
         var context = CreateTagHelperContext(

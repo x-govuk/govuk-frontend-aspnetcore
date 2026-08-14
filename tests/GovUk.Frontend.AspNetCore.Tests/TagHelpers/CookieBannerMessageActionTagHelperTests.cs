@@ -12,8 +12,8 @@ public class CookieBannerMessageActionTagHelperTests : TagHelperTestBase<CookieB
         var text = "Action";
         var type = "type";
 
-        var actionsContext = new CookieBannerMessageActionsContext();
-        var messageContext = new CookieBannerMessageContext() { Actions = actionsContext };
+        var actionsContext = new CookieBannerMessageActionsContext(ParentTagName!);
+        var messageContext = new CookieBannerMessageContext(CookieBannerMessageTagHelper.TagName) { Actions = actionsContext };
         var cookieBannerContext = new CookieBannerContext();
 
         var context = CreateTagHelperContext(contexts: [cookieBannerContext, messageContext, actionsContext]);

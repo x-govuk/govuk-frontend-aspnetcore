@@ -30,7 +30,7 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
-The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header, footer, notification banner, pagination, phase banner, tabs, error summary and details tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header, footer, notification banner, pagination, phase banner, tabs, error summary, details and cookie banner tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
@@ -208,6 +208,25 @@ The details takes `<summary>` and `<text>` inside `<govuk-details>`:
 ```
 
 Both children share the same parent element, so, as with the error summary and the pagination, the two spellings cannot be mixed.
+
+The cookie banner takes `<message>` inside `<govuk-cookie-banner>`, with `<heading>`, `<content>` and `<message-actions>` inside the message and `<action-button>` and `<action-link>` inside the actions:
+
+```razor
+<govuk-cookie-banner aria-label="Cookies on [name of service]">
+    <message>
+        <heading>Cookies on [name of service]</heading>
+        <content>
+            <p class="govuk-body">We use some essential cookies to make this service work.</p>
+        </content>
+        <message-actions>
+            <action-button text="Accept analytics cookies" type="button" />
+            <action-link text="View cookies" href="#" />
+        </message-actions>
+    </message>
+</govuk-cookie-banner>
+```
+
+Every child pairs with the spelling of the element it is written in, as the accordion item's children do, so there is no way to mix the two. The deprecated `<govuk-cookie-banner-message-action>` keeps its `govuk-` prefixed spelling only; write `<action-button>` inside a `<message-actions>` instead.
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 

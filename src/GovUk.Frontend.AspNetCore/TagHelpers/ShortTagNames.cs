@@ -30,6 +30,8 @@ internal static class ShortTagNames
     public const string Label = "label";
     public const string Legend = "legend";
     public const string Logo = "logo";
+    public const string Message = "message";
+    public const string MessageActions = "message-actions";
     public const string Meta = "meta";
     public const string MetaItem = "meta-item";
     public const string MetaItems = "meta-items";

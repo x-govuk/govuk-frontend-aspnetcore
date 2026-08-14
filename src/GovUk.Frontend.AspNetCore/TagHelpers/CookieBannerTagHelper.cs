@@ -7,7 +7,9 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Generates a GDS cookie banner component.
 /// </summary>
 [HtmlTargetElement(TagName)]
-[RestrictChildren(CookieBannerMessageTagHelper.TagName)]
+[RestrictChildren(
+    CookieBannerMessageTagHelper.TagName,
+    CookieBannerMessageTagHelper.ShortTagName)]
 [OutputElementHint(DefaultComponentGenerator.ComponentElementTypes.CookieBanner)]
 public class CookieBannerTagHelper : TagHelper
 {

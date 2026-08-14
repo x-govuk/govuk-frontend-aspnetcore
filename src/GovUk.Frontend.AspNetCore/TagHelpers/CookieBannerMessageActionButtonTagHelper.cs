@@ -7,9 +7,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents a button action in the message in a GDS cookie banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = CookieBannerMessageActionsTagHelper.TagName, TagStructure = TagStructure.WithoutEndTag)]
+[HtmlTargetElement(ShortTagName, ParentTag = CookieBannerMessageActionsTagHelper.ShortTagName, TagStructure = TagStructure.WithoutEndTag)]
 public class CookieBannerMessageActionButtonTagHelper : TagHelper
 {
     internal const string TagName = "govuk-cookie-banner-message-action-button";
+    internal const string ShortTagName = ShortTagNames.ActionButton;
 
     private const string NameAttributeName = "name";
     private const string TextAttributeName = "text";

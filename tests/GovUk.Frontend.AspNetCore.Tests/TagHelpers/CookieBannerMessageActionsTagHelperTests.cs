@@ -10,7 +10,7 @@ public class CookieBannerMessageActionsTagHelperTests : TagHelperTestBase<Cookie
         // Arrange
         var attributes = CreateDummyDataAttributes();
 
-        var messageContext = new CookieBannerMessageContext();
+        var messageContext = new CookieBannerMessageContext(ParentTagName!);
         var cookieBannerContext = new CookieBannerContext();
 
         var context = CreateTagHelperContext(
@@ -29,5 +29,33 @@ public class CookieBannerMessageActionsTagHelperTests : TagHelperTestBase<Cookie
         // Assert
         Assert.NotNull(messageContext.Actions);
         AssertContainsAttributes(attributes, messageContext.Actions.Attributes);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_MessageAlreadyHasActions_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var messageContext = new CookieBannerMessageContext(ParentTagName!)
+        {
+            Actions = new CookieBannerMessageActionsContext(TagName)
+        };
+        var cookieBannerContext = new CookieBannerContext();
+
+        var context = CreateTagHelperContext(contexts: [cookieBannerContext, messageContext]);
+
+        var output = CreateTagHelperOutput();
+
+        var tagHelper = new CookieBannerMessageActionsTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal(
+            $"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 }

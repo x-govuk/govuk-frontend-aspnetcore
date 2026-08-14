@@ -11,7 +11,7 @@
 
 ```razor
 <govuk-fieldset>
-    <govuk-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">Legend as page heading</govuk-fieldset-legend>
+    <legend is-page-heading="true" class="govuk-fieldset__legend--l">Legend as page heading</legend>
 </govuk-fieldset>
 ```
 
@@ -26,7 +26,7 @@
 | `role` | `string` | The `role` attribute. |
 
 
-#### `<govuk-fieldset-legend>`
+#### `<legend>` / `<govuk-fieldset-legend>`
 
 The content is the HTML to use within the legend.
 

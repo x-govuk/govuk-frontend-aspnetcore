@@ -143,7 +143,9 @@ public class FieldsetTagHelperTests : TagHelperTestBase<FieldsetTagHelper>
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("A <govuk-fieldset-legend> element must be provided.", ex.Message);
+        Assert.Equal(
+            $"A <{FieldsetLegendTagHelper.TagName}> or <{FieldsetLegendTagHelper.ShortTagName}> element must be provided.",
+            ex.Message);
     }
 
     [Fact]

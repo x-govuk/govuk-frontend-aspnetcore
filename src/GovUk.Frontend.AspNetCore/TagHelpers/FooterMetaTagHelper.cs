@@ -7,10 +7,18 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the meta section of a GDS footer component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FooterTagHelper.TagName)]
-[RestrictChildren(FooterMetaItemsTagHelper.TagName, FooterMetaContentTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FooterTagHelper.TagName)]
+[RestrictChildren(
+    FooterMetaItemsTagHelper.TagName,
+    FooterMetaItemsTagHelper.ShortTagName,
+    FooterMetaContentTagHelper.TagName,
+    FooterMetaContentTagHelper.ShortTagName)]
 public class FooterMetaTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-meta";
+    internal const string ShortTagName = ShortTagNames.Meta;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     private const string VisuallyHiddenTitleAttributeName = "visually-hidden-title";
 
@@ -38,9 +46,11 @@ public class FooterMetaTagHelper : TagHelper
         var footerContext = context.GetContextItem<FooterContext>();
         var metaContext = context.GetContextItem<FooterMetaContext>();
 
+        footerContext.CheckChildTagNameSpelling(context.TagName);
+
         if (footerContext.Meta is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, FooterTagHelper.TagName);
         }
 
         if (footerContext.ContentLicence?.TagName is string contentLicenceTagName)
@@ -52,6 +62,8 @@ public class FooterMetaTagHelper : TagHelper
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, copyrightTagName);
         }
+
+        metaContext.TagName = context.TagName;
 
         _ = await output.GetChildContentAsync();
 

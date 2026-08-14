@@ -8,9 +8,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the copyright information in a GDS footer component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FooterTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FooterTagHelper.TagName)]
 public class FooterCopyrightTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-copyright";
+    internal const string ShortTagName = ShortTagNames.Copyright;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc />
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -20,9 +24,11 @@ public class FooterCopyrightTagHelper : TagHelper
 
         var footerContext = context.GetContextItem<FooterContext>();
 
+        footerContext.CheckChildTagNameSpelling(context.TagName);
+
         if (footerContext.Copyright is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, FooterTagHelper.TagName);
         }
 
         IHtmlContent? resolvedContent = null;

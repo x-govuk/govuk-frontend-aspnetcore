@@ -48,6 +48,7 @@ public class FooterMetaContentTagHelperTests : TagHelperTestBase<FooterMetaConte
         var footerContext = new FooterContext();
         var footerMetaContext = new FooterMetaContext
         {
+            TagName = ParentTagName,
             Content = new(new TemplateString("Content"), [], TagName)
         };
 
@@ -64,6 +65,6 @@ public class FooterMetaContentTagHelperTests : TagHelperTestBase<FooterMetaConte
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
     }
 }

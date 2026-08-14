@@ -7,9 +7,13 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the title of a navigation section of a GDS footer component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FooterNavTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FooterNavTagHelper.ShortTagName)]
 public class FooterNavTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-nav-title";
+    internal const string ShortTagName = ShortTagNames.Title;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc />
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -21,7 +25,7 @@ public class FooterNavTitleTagHelper : TagHelper
 
         if (navContext.Title is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterNavTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, navContext.TagName!);
         }
 
         if (navContext.Items?.TagName is string itemsTagName)

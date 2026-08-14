@@ -7,9 +7,11 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents an item in a navigation section of a GDS footer component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FooterNavItemsTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FooterNavItemsTagHelper.ShortTagName)]
 public class FooterNavItemTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-nav-item";
+    internal const string ShortTagName = ShortTagNames.NavItem;
 
     private const string LinkAttributesPrefix = "link-";
 

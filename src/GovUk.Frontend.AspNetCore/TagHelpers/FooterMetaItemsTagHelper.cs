@@ -7,10 +7,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the items with the meta section of a GDS footer component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FooterMetaTagHelper.TagName)]
-[RestrictChildren(FooterMetaItemTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FooterMetaTagHelper.ShortTagName)]
+[RestrictChildren(FooterMetaItemTagHelper.TagName, FooterMetaItemTagHelper.ShortTagName)]
 public class FooterMetaItemsTagHelper : TagHelper
 {
     internal const string TagName = "govuk-footer-meta-items";
+    internal const string ShortTagName = ShortTagNames.MetaItems;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     /// <inheritdoc />
     public override void Init(TagHelperContext context)
@@ -29,7 +33,7 @@ public class FooterMetaItemsTagHelper : TagHelper
 
         if (metaContext.Items is not null)
         {
-            throw ExceptionHelper.OnlyOneElementIsPermittedIn(context.TagName, FooterMetaTagHelper.TagName);
+            throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, metaContext.TagName!);
         }
 
         if (metaContext.Content?.TagName is string contentTagName)

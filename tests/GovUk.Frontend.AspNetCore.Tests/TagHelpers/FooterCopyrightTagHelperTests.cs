@@ -69,7 +69,38 @@ public class FooterCopyrightTagHelperTests : TagHelperTestBase<FooterCopyrightTa
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal($"Only one <{TagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+        Assert.Equal($"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.", ex.Message);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_FooterHasContentLicenceWithOtherTagNameSpelling_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var contentLicenceTagName = GetOtherSpellingSiblingTagName(
+            FooterContentLicenceTagHelper.TagName,
+            FooterContentLicenceTagHelper.ShortTagName);
+
+        var footerContext = new FooterContext
+        {
+            ContentLicence = new(new FooterOptionsContentLicence(), contentLicenceTagName)
+        };
+
+        var context = CreateTagHelperContext(contexts: footerContext);
+
+        var output = CreateTagHelperOutput(tagMode: TagMode.SelfClosing);
+
+        var tagHelper = new FooterCopyrightTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal(
+            $"<{TagName}> cannot be used alongside <{contentLicenceTagName}>; short tag names and govuk- prefixed tag names cannot be mixed.",
+            ex.Message);
     }
 
     [Fact]

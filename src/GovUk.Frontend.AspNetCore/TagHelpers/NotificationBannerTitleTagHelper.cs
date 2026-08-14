@@ -6,10 +6,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the title in a GDS notification banner component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = NotificationBannerTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = NotificationBannerTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the notification banner's title. Use a self-closing tag to keep the default content.")]
 public class NotificationBannerTitleTagHelper : TagHelper
 {
     internal const string TagName = "govuk-notification-banner-title";
+    internal const string ShortTagName = ShortTagNames.Title;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     private const string HeadingLevelAttributeName = "heading-level";
     private const string IdAttributeName = "id";

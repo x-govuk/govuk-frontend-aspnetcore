@@ -11,7 +11,7 @@ internal class NotificationBannerContext
         if (Title is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                NotificationBannerTitleTagHelper.TagName,
+                NotificationBannerTitleTagHelper.AllTagNames,
                 NotificationBannerTagHelper.TagName);
         }
 

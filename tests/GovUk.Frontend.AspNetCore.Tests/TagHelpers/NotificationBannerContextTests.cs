@@ -17,6 +17,9 @@ public class NotificationBannerContextTests
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-notification-banner-title> element is permitted within each <govuk-notification-banner>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{NotificationBannerTitleTagHelper.TagName}> or <{NotificationBannerTitleTagHelper.ShortTagName}> " +
+                $"element is permitted within each <{NotificationBannerTagHelper.TagName}>.",
+            ex.Message);
     }
 }

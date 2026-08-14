@@ -30,7 +30,7 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
-The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header and footer tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header, footer and notification banner tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
@@ -139,6 +139,15 @@ The footer takes `<nav>`, `<meta>`, `<content-licence>` and `<copyright>` inside
 ```
 
 As with the service navigation, the footer's two spellings cannot be mixed. Each section's children pair with the spelling of the section they are in, and mixing the spellings of the `<govuk-footer>`'s own children — which all have the same parent element, so cannot be paired up that way — throws.
+
+The notification banner takes `<title>` inside `<govuk-notification-banner>`, the same short name the summary card and the footer's nav sections take for their titles:
+
+```razor
+<govuk-notification-banner type="NotificationBannerType.Success">
+    <title heading-level="3">Important information</title>
+    <p class="govuk-notification-banner__heading">You have 7 days left to send your application.</p>
+</govuk-notification-banner>
+```
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 

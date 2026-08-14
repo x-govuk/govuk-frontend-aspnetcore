@@ -1,0 +1,24 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-notification-banner type="GovUk.Frontend.AspNetCore.NotificationBannerType.Success" disable-auto-focus="true">
+        <title heading-level="3" id="banner-title">Important information</title>
+        <p class="govuk-notification-banner__heading">
+            You have 7 days left to send your application.
+            <a class="govuk-notification-banner__link" href="/">View application</a>.
+        </p>
+    </govuk-notification-banner>
+</div>
+
+<div data-testid="long">
+    <govuk-notification-banner type="GovUk.Frontend.AspNetCore.NotificationBannerType.Success" disable-auto-focus="true">
+        <govuk-notification-banner-title heading-level="3" id="banner-title">Important information</govuk-notification-banner-title>
+        <p class="govuk-notification-banner__heading">
+            You have 7 days left to send your application.
+            <a class="govuk-notification-banner__link" href="/">View application</a>.
+        </p>
+    </govuk-notification-banner>
+</div>

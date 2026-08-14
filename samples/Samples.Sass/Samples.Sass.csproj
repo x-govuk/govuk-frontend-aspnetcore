@@ -4,7 +4,6 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
     <RestoreGovUkFrontendStylesheet>false</RestoreGovUkFrontendStylesheet>
     <RestoreGovUkFrontendNpmPackage>true</RestoreGovUkFrontendNpmPackage>
     <RestoreGovUkFrontendSupportPackage>true</RestoreGovUkFrontendSupportPackage>

@@ -9,7 +9,6 @@ To replicate this setup in your own project, follow these steps:
 2. Restore `govuk-frontend` assets on build by adding the following to your `.csproj` file:
    ```xml
    <PropertyGroup>
-     <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
      <RestoreGovUkFrontendStylesheet>false</RestoreGovUkFrontendStylesheet>
      <RestoreGovUkFrontendNpmPackage>true</RestoreGovUkFrontendNpmPackage>
      <RestoreGovUkFrontendSupportPackage>true</RestoreGovUkFrontendSupportPackage>

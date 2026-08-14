@@ -34,9 +34,12 @@ Or via the .NET Core command line interface:
 
     dotnet add package GovUk.Frontend.AspNetCore
 
-### 2. Update your project file to copy `govuk-frontend` assets into your application.
+### 2. Check the `govuk-frontend` assets are copied into your application
+
+Projects using the `Microsoft.NET.Sdk.Web` SDK get the assets copied into their `wwwroot` folder on build without any further configuration.
+Any other project type has to opt in by setting `EnableGovUkFrontendSupport` in its project file:
 ```diff
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 +    <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
   </PropertyGroup>
@@ -241,12 +244,14 @@ See the `Samples.MvcStarter` project for an example of this working.
 
 ## GOV.UK Frontend assets
 
-Assets will be copied into your `wwwroot` folder when `EnableGovUkFrontendSupport` is `true` in your project file.
-The table below shows the additional MSBuild properties you can set to configure which assets are copied into your project and where they are copied to.
+Assets are copied into your project when it builds, provided `EnableGovUkFrontendSupport` is `true`.
+That is the default for projects using the `Microsoft.NET.Sdk.Web` SDK; every other project type has to set it explicitly.
+The table below shows the MSBuild properties you can set to configure which assets are copied into your project and where they are copied to.
 Each category of files has a `Restore*` boolean to enable or disable copying it and a `*Directory` to control where the files are copied to.
 
 | MSBuild property                       | Description                                                                | Default                         |
 |----------------------------------------|----------------------------------------------------------------------------|---------------------------------|
+| `EnableGovUkFrontendSupport`           | Whether to copy any `govuk-frontend` files into your project.              | `true` for web projects         |
 | `RestoreGovUkFrontendAssets`           | Whether to copy the static assets (fonts, images, icons etc.).             | `true`                          |
 | `GovUkFrontendAssetsDirectory`         | The directory to copy the static assets into.                              | `wwwroot/assets`                |
 | `RestoreGovUkFrontendJavascript`       | Whether to copy the `govuk-frontend.min.js` file.                          | `true`                          |
@@ -258,6 +263,11 @@ Each category of files has a `Restore*` boolean to enable or disable copying it 
 | `RestoreGovUkFrontendSupportPackage`   | Whether to copy support files.                                             | `false`                         |
 | `GovUkFrontendSupportPackageDirectory` | The directory to copy support files into.                                  | `lib/govuk-frontend-aspnetcore` |
 
+`EnableGovUkFrontendSupport` defaults to `true` for projects using the `Microsoft.NET.Sdk.Web` SDK and to `false` for everything else.
+The `Restore*` properties only take effect when it is `true`; setting it to `false` stops the build copying anything at all.
+
+Setting `GovUkFrontendSupportPackageDirectory` turns `RestoreGovUkFrontendSupportPackage` on, so there's no need to set both.
+
 If you want the entire `govuk-frontend` NPM package to be available e.g. so you can reference SASS files from your own stylesheet,
 set `RestoreGovUkFrontendNpmPackage` to `true` (and optionally override `GovUkFrontendNpmPackageDirectory`).
 See [the SASS sample](samples/Samples.Sass) for a full example of how to set up your project with SASS integration.
@@ -268,18 +278,15 @@ See [the SASS sample](samples/Samples.Sass) for a full example of how to set up 
 > Typically it is sufficient to use `assets/fonts/` and `assets/images/` (i.e. the default location but without the leading `/`).
 
 > [!NOTE]
-> If `EnableGovUkFrontendSupport` is not set to `true` in your project file,
-static assets (fonts, images, icons etc.) and the compiled JavaScript and CSS from the GOV.UK Frontend package will be hosted automatically
-i.e. without the assets being copied into your `wwwroot`.
-This behaviour will be removed in a future version.
+> The `CopyGovUkFrontendAssetsToWebRoot` property is deprecated; use `RestoreGovUkFrontendAssets` instead.
+> Setting it still works, but the build emits a warning.
 
-If you do not want any assets to be automatically hosted, set `FrontendPackageHostingOptions` to `None`:
-```cs
-services.AddGovUkFrontend(options =>
-{
-    options.FrontendPackageHostingOptions = FrontendPackageHostingOptions.None;
-});
-```
+The library serves nothing itself, so the copied files need to be served by your application — through `MapStaticAssets()` or `UseStaticFiles()`, as in the installation guide above.
+When the library generates URLs for files the build didn't copy, it assumes the default locations — `/assets`, `/govuk-frontend.min.css` and `/govuk-frontend.min.js` —
+so anything you're managing yourself should be served from there.
+
+`app.UseGovUkFrontend()` adds middleware that applies long-lived cache headers to the files the build copied, which are requested with the `govuk-frontend` version in the query string.
+Files the build didn't copy are left alone, since they can change without the `govuk-frontend` version changing.
 
 
 ## Components

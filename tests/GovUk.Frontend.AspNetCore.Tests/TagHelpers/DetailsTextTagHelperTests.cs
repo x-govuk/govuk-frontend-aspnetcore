@@ -11,7 +11,10 @@ public class DetailsTextTagHelperTests : TagHelperTestBase<DetailsTextTagHelper>
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetSummary([], new HtmlString("The summary"));
+        detailsContext.SetSummary(
+            [],
+            new HtmlString("The summary"),
+            GetSiblingTagName(DetailsSummaryTagHelper.TagName, DetailsSummaryTagHelper.ShortTagName));
 
         var context = CreateTagHelperContext(contexts: detailsContext);
 
@@ -37,8 +40,11 @@ public class DetailsTextTagHelperTests : TagHelperTestBase<DetailsTextTagHelper>
     {
         // Arrange
         var detailsContext = new DetailsContext();
-        detailsContext.SetSummary([], new HtmlString("The summary"));
-        detailsContext.SetText([], new HtmlString("The text"));
+        detailsContext.SetSummary(
+            [],
+            new HtmlString("The summary"),
+            GetSiblingTagName(DetailsSummaryTagHelper.TagName, DetailsSummaryTagHelper.ShortTagName));
+        detailsContext.SetText([], new HtmlString("The text"), TagName);
 
         var context = CreateTagHelperContext(contexts: detailsContext);
 
@@ -57,6 +63,8 @@ public class DetailsTextTagHelperTests : TagHelperTestBase<DetailsTextTagHelper>
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-details-text> element is permitted within each <govuk-details>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 }

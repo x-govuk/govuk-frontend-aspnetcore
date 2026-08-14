@@ -36,6 +36,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("PhaseBanner", "short", "long", ".govuk-phase-banner__content__tag")]
     [InlineData("Tabs", "short", "long", ".govuk-tabs__tab")]
     [InlineData("ErrorSummary", "short", "long", ".govuk-error-summary__list a")]
+    [InlineData("Details", "short", "long", ".govuk-details__summary-text")]
     public async Task ShortTagNames_GenerateTheSameMarkupAsTheGovUkPrefixedNames(
         string component,
         string shortTestId,
@@ -71,6 +72,22 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
 
         Assert.Contains(
             "<nav> cannot be used alongside <govuk-service-navigation-start>; " +
+                "short tag names and govuk- prefixed tag names cannot be mixed.",
+            await response.Content.ReadAsStringAsync());
+    }
+
+    [Fact]
+    public async Task Details_MixingShortAndGovUkPrefixedTagNames_Throws()
+    {
+        // Act
+        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/DetailsMixed");
+        var response = await fixture.HttpClient.SendAsync(request);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+
+        Assert.Contains(
+            "<text> cannot be used alongside <govuk-details-summary>; " +
                 "short tag names and govuk- prefixed tag names cannot be mixed.",
             await response.Content.ReadAsStringAsync());
     }
@@ -246,6 +263,12 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("ErrorSummaryMixed")]
     public IActionResult GetErrorSummaryMixed() => View("ErrorSummaryMixed", new ShortTagNamesTestsModel());
+
+    [HttpGet("Details")]
+    public IActionResult GetDetails() => View("Details", new ShortTagNamesTestsModel());
+
+    [HttpGet("DetailsMixed")]
+    public IActionResult GetDetailsMixed() => View("DetailsMixed", new ShortTagNamesTestsModel());
 
     [HttpGet("ServiceNavigationMixed")]
     public IActionResult GetServiceNavigationMixed() => View("ServiceNavigationMixed", new ShortTagNamesTestsModel());

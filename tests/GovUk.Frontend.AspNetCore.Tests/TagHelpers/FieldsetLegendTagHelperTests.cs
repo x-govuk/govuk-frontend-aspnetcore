@@ -67,6 +67,8 @@ public class FieldsetLegendTagHelperTests : TagHelperTestBase<FieldsetLegendTagH
 
         // Assert
         Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Only one <govuk-fieldset-legend> element is permitted within each <govuk-fieldset>.", ex.Message);
+        Assert.Equal(
+            $"Only one <{PrimaryTagName}> or <{ShortTagName}> element is permitted within each <{ParentTagName}>.",
+            ex.Message);
     }
 }

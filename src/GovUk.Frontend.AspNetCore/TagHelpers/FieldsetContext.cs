@@ -18,7 +18,7 @@ internal class FieldsetContext
         if (Legend is not null)
         {
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(
-                FieldsetLegendTagHelper.TagName,
+                FieldsetLegendTagHelper.AllTagNames,
                 FieldsetTagHelper.TagName);
         }
 
@@ -29,7 +29,7 @@ internal class FieldsetContext
     {
         if (Legend is null)
         {
-            throw ExceptionHelper.AChildElementMustBeProvided(FieldsetLegendTagHelper.TagName);
+            throw ExceptionHelper.AChildElementMustBeProvided(FieldsetLegendTagHelper.AllTagNames);
         }
     }
 }

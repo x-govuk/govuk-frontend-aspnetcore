@@ -30,7 +30,7 @@ Both elements can now generate their `formaction` attribute from the `asp-` attr
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
-The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs and service navigation tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
+The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation and fieldset tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor
 <govuk-checkboxes for="ContactPreferences">
@@ -100,6 +100,14 @@ The service navigation takes `<start>`, `<nav>` and `<end>` inside `<govuk-servi
 ```
 
 Its two spellings cannot be mixed. The navigation's children pair with the spelling of the `<nav>` they are in, as the accordion item's children do, and mixing the spellings of the `<govuk-service-navigation>`'s own children — which all have the same parent element, so cannot be paired up that way — throws.
+
+The fieldset takes the same `<legend>` inside `<govuk-fieldset>` that the checkboxes, radios and date input take:
+
+```razor
+<govuk-fieldset>
+    <legend is-page-heading="true" class="govuk-fieldset__legend--l">What is your address?</legend>
+</govuk-fieldset>
+```
 
 The `govuk-` prefixed names continue to work everywhere they did before, and remain the only spelling accepted inside a `<govuk-checkboxes-fieldset>`, `<govuk-radios-fieldset>` or `<govuk-date-input-fieldset>` — the short names pair with the fieldset that the root element generates for a `<legend>` of its own.
 

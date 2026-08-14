@@ -1,0 +1,18 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-fieldset described-by="hint" role="group">
+        <legend is-page-heading="true" class="govuk-fieldset__legend--l">What is your address?</legend>
+        <p id="hint" class="govuk-hint">We'll only use this to send you a confirmation.</p>
+    </govuk-fieldset>
+</div>
+
+<div data-testid="long">
+    <govuk-fieldset described-by="hint" role="group">
+        <govuk-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">What is your address?</govuk-fieldset-legend>
+        <p id="hint" class="govuk-hint">We'll only use this to send you a confirmation.</p>
+    </govuk-fieldset>
+</div>

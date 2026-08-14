@@ -7,10 +7,14 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 /// Represents the legend in a GDS fieldset component.
 /// </summary>
 [HtmlTargetElement(TagName, ParentTag = FieldsetTagHelper.TagName)]
+[HtmlTargetElement(ShortTagName, ParentTag = FieldsetTagHelper.TagName)]
 [TagHelperDocumentation(ContentDescription = "The content is the HTML to use within the legend.")]
 public class FieldsetLegendTagHelper : TagHelper
 {
     internal const string TagName = "govuk-fieldset-legend";
+    internal const string ShortTagName = ShortTagNames.Legend;
+
+    internal static IReadOnlyCollection<string> AllTagNames { get; } = [TagName, ShortTagName];
 
     private const string IsPageHeadingAttributeName = "is-page-heading";
 

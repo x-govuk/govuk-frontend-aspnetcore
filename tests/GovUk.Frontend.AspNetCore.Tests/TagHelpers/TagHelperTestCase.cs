@@ -109,7 +109,10 @@ public class TagHelperTestCase : XunitTestCase, ISelfExecutingXunitTestCase
         IMessageBus messageBus,
         object?[] constructorArguments,
         ExceptionAggregator aggregator,
-        CancellationTokenSource cancellationTokenSource) =>
+        CancellationTokenSource cancellationTokenSource,
+        ParallelMode parallelMode,
+        ExecutionScheduler scheduler,
+        FixtureMappingManager methodFixtureMappings) =>
             TagHelperTestCaseRunner.Instance.Run(
                 TagHelperTestCaseInfo!,
                 this,
@@ -119,7 +122,10 @@ public class TagHelperTestCase : XunitTestCase, ISelfExecutingXunitTestCase
                 TestCaseDisplayName,
                 SkipReason,
                 explicitOption,
-                constructorArguments);
+                constructorArguments,
+                parallelMode,
+                scheduler,
+                methodFixtureMappings);
 
     protected override void Deserialize(IXunitSerializationInfo info)
     {
@@ -163,7 +169,10 @@ public class TagHelperTestCaseRunnerContext(
     string displayName,
     string? skipReason,
     ExplicitOption explicitOption,
-    object?[] constructorArguments) : XunitTestCaseRunnerBaseContext<IXunitTestCase, IXunitTest>(testCase, tests, messageBus, aggregator, cancellationTokenSource, displayName, skipReason, explicitOption, constructorArguments)
+    object?[] constructorArguments,
+    ParallelMode parallelMode,
+    ExecutionScheduler scheduler,
+    FixtureMappingManager methodFixtureMappings) : XunitTestCaseRunnerBaseContext<IXunitTestCase, IXunitTest>(testCase, tests, explicitOption, messageBus, aggregator, displayName, skipReason, cancellationTokenSource, parallelMode, scheduler, constructorArguments, methodFixtureMappings)
 {
     public TagHelperTestCaseInfo TagHelperTestCaseInfo => tagHelperTestCaseInfo;
 }
@@ -181,7 +190,10 @@ public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCase
         string displayName,
         string? skipReason,
         ExplicitOption explicitOption,
-        object?[] constructorArguments)
+        object?[] constructorArguments,
+        ParallelMode parallelMode,
+        ExecutionScheduler scheduler,
+        FixtureMappingManager methodFixtureMappings)
     {
         // See XunitRunnerHelper.RunXunitTestCase
 
@@ -231,7 +243,10 @@ public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCase
             displayName,
             skipReason,
             explicitOption,
-            constructorArguments);
+            constructorArguments,
+            parallelMode,
+            scheduler,
+            methodFixtureMappings);
 
         await ctxt.InitializeAsync();
 
@@ -248,7 +263,10 @@ public class TagHelperTestCaseRunner : XunitTestCaseRunnerBase<TagHelperTestCase
             ctxt.ExplicitOption,
             ctxt.Aggregator.Clone(),
             ctxt.CancellationTokenSource,
-            ctxt.BeforeAfterTestAttributes);
+            ctxt.BeforeAfterTestAttributes,
+            ctxt.ParallelMode,
+            ctxt.Scheduler,
+            ctxt.CaseFixtureMappings);
     }
 }
 
@@ -260,7 +278,10 @@ public class TagHelperTestRunnerContext(
     ExceptionAggregator aggregator,
     CancellationTokenSource cancellationTokenSource,
     IReadOnlyCollection<IBeforeAfterTestAttribute> beforeAfterAttributes,
-    object?[] constructorArguments) : XunitTestRunnerContext(test, messageBus, explicitOption, aggregator, cancellationTokenSource, beforeAfterAttributes, constructorArguments)
+    object?[] constructorArguments,
+    ParallelMode parallelMode,
+    ExecutionScheduler scheduler,
+    FixtureMappingManager caseFixtureMappings) : XunitTestRunnerContext(test, explicitOption, messageBus, aggregator, cancellationTokenSource, parallelMode, scheduler, beforeAfterAttributes, constructorArguments, caseFixtureMappings)
 {
     public TagHelperTestCaseInfo TagHelperTestCaseInfo => tagHelperTestCaseInfo;
 }
@@ -277,7 +298,10 @@ public class TagHelperTestRunner : XunitTestRunnerBase<TagHelperTestRunnerContex
         ExplicitOption explicitOption,
         ExceptionAggregator aggregator,
         CancellationTokenSource cancellationTokenSource,
-        IReadOnlyCollection<IBeforeAfterTestAttribute> beforeAfterAttributes)
+        IReadOnlyCollection<IBeforeAfterTestAttribute> beforeAfterAttributes,
+        ParallelMode parallelMode,
+        ExecutionScheduler scheduler,
+        FixtureMappingManager caseFixtureMappings)
     {
         await using var ctxt = new TagHelperTestRunnerContext(
             tagHelperTestCaseInfo,
@@ -287,7 +311,10 @@ public class TagHelperTestRunner : XunitTestRunnerBase<TagHelperTestRunnerContex
             aggregator,
             cancellationTokenSource,
             beforeAfterAttributes,
-            constructorArguments
+            constructorArguments,
+            parallelMode,
+            scheduler,
+            caseFixtureMappings
         );
         await ctxt.InitializeAsync();
 

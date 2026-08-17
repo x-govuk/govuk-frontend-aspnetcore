@@ -4,6 +4,8 @@
     <!-- These tests drive the SDK as a child process, so the host only needs one TFM; the frameworks
          under test are a property of the generated fixture projects. -->
     <TargetFramework>net10.0</TargetFramework>
+    <!-- xunit.v3 hosts the tests itself; the web SDK projects get this from their own defaults -->
+    <OutputType>Exe</OutputType>
 
     <IsPackable>false</IsPackable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -15,11 +17,6 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.7.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="xunit.v3" Version="4.0.0" />
   </ItemGroup>
 

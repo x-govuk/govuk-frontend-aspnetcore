@@ -33,15 +33,15 @@ test *ARGS: (unit-tests ARGS) (integration-tests ARGS) (package-tests ARGS)
 
 # Run the unit tests
 unit-tests *ARGS:
-  @dotnet test tests/GovUk.Frontend.AspNetCore.Tests/ {{ARGS}}
+  @dotnet test --project tests/GovUk.Frontend.AspNetCore.Tests/GovUk.Frontend.AspNetCore.Tests.csproj {{ARGS}}
 
 # Run the integration tests
 integration-tests *ARGS:
-  @dotnet test tests/GovUk.Frontend.AspNetCore.IntegrationTests/ {{ARGS}}
+  @dotnet test --project tests/GovUk.Frontend.AspNetCore.IntegrationTests/GovUk.Frontend.AspNetCore.IntegrationTests.csproj {{ARGS}}
 
 # Run the package tests; these pack the library and build throwaway projects against it
 package-tests *ARGS:
-  @dotnet test tests/GovUk.Frontend.AspNetCore.PackageTests/ {{ARGS}}
+  @dotnet test --project tests/GovUk.Frontend.AspNetCore.PackageTests/GovUk.Frontend.AspNetCore.PackageTests.csproj {{ARGS}}
 
 # Format the C# code
 format *ARGS:

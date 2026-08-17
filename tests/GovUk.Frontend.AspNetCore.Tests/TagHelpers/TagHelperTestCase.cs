@@ -45,6 +45,8 @@ public class TagHelperFactDiscoverer : FactDiscoverer
     }
 }
 
+// Every discovered case is re-wrapped as a plain TagHelperTestCase, which carries its data row with it, so the
+// theories have to be pre-enumerated by the time we see them; xunit.runner.json turns that on for the assembly.
 public class TagHelperTheoryDiscoverer : TheoryDiscoverer
 {
     public override async ValueTask<IReadOnlyCollection<IXunitTestCase>> Discover(

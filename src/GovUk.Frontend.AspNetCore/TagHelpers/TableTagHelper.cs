@@ -66,7 +66,8 @@ public class TableTagHelper : TagHelper
         var component = await _componentGenerator.GenerateTableAsync(new TableOptions
         {
             Rows = tableContext.Rows,
-            Head = tableContext.Head,
+            Head = tableContext.Head?.Cells,
+            HeadAttributes = tableContext.Head?.Attributes,
             Caption = tableContext.Caption?.Content,
             CaptionClasses = tableContext.Caption?.Classes,
             CaptionAttributes = tableContext.Caption?.Attributes,

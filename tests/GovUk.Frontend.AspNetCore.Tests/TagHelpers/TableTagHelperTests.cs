@@ -14,7 +14,8 @@ public class TableTagHelperTests : TagHelperTestBase<TableTagHelper>
         var captionClassName = CreateDummyClassName();
         var captionAttributes = CreateDummyDataAttributes();
         var headCell = new TableOptionsHead();
-        var cell = new TableOptionsColumn();
+        var headAttributes = CreateDummyDataAttributes();
+        var row = new TableOptionsRow();
         var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
 
@@ -33,8 +34,12 @@ public class TableTagHelperTests : TagHelperTestBase<TableTagHelper>
                     new AttributeCollection(captionAttributes),
                     TableCaptionTagHelper.TagName);
 
-                tableContext.SetHead([headCell], TableHeadTagHelper.TagName);
-                tableContext.AddRow([cell], TableRowTagHelper.TagName);
+                tableContext.SetHead(
+                    [headCell],
+                    new AttributeCollection(headAttributes),
+                    TableHeadTagHelper.TagName);
+
+                tableContext.AddRow(row, TableRowTagHelper.TagName);
 
                 var tagHelperContent = new DefaultTagHelperContent();
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
@@ -59,10 +64,9 @@ public class TableTagHelperTests : TagHelperTestBase<TableTagHelper>
         AssertContainsAttributes(captionAttributes, actualOptions.CaptionAttributes);
         Assert.NotNull(actualOptions.Head);
         Assert.Collection(actualOptions.Head, c => Assert.Same(headCell, c));
+        AssertContainsAttributes(headAttributes, actualOptions.HeadAttributes);
         Assert.NotNull(actualOptions.Rows);
-        Assert.Collection(
-            actualOptions.Rows,
-            row => Assert.Collection(row, c => Assert.Same(cell, c)));
+        Assert.Collection(actualOptions.Rows, r => Assert.Same(row, r));
         Assert.True(actualOptions.FirstCellIsHeader);
         Assert.Equal(className, actualOptions.Classes);
         AssertContainsAttributes(attributes, actualOptions.Attributes);
@@ -91,6 +95,7 @@ public class TableTagHelperTests : TagHelperTestBase<TableTagHelper>
         Assert.Null(actualOptions.CaptionClasses);
         Assert.Null(actualOptions.CaptionAttributes);
         Assert.Null(actualOptions.Head);
+        Assert.Null(actualOptions.HeadAttributes);
         Assert.Empty(actualOptions.Rows!);
         Assert.Null(actualOptions.FirstCellIsHeader);
     }

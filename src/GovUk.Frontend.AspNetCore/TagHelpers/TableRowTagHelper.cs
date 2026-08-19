@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -34,14 +35,15 @@ public class TableRowTagHelper : TagHelper
 
         await output.GetChildContentAsync();
 
-        if (output.Attributes.Any())
-        {
-            throw ExceptionHelper.AttributesNotSupported();
-        }
-
         rowContext.ThrowIfIncomplete();
 
-        tableContext.AddRow(rowContext.Cells, context.TagName);
+        tableContext.AddRow(
+            new TableOptionsRow
+            {
+                Cells = rowContext.Cells,
+                Attributes = new AttributeCollection(output.Attributes)
+            },
+            context.TagName);
 
         output.SuppressOutput();
     }

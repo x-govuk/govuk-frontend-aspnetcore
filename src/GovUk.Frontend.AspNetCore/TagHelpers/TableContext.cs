@@ -4,7 +4,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 
 internal class TableContext
 {
-    private readonly List<IReadOnlyCollection<TableOptionsColumn>> _rows = [];
+    private readonly List<TableOptionsRow?> _rows = [];
 
     private string? _captionTagName;
     private string? _headTagName;
@@ -12,9 +12,9 @@ internal class TableContext
 
     public (TemplateString Content, TemplateString? Classes, AttributeCollection Attributes)? Caption { get; private set; }
 
-    public IReadOnlyCollection<TableOptionsHead>? Head { get; private set; }
+    public (IReadOnlyCollection<TableOptionsHead> Cells, AttributeCollection Attributes)? Head { get; private set; }
 
-    public IReadOnlyCollection<IReadOnlyCollection<TableOptionsColumn>> Rows => _rows.AsReadOnly();
+    public IReadOnlyCollection<TableOptionsRow?> Rows => _rows.AsReadOnly();
 
     public void SetCaption(TemplateString content, TemplateString? classes, AttributeCollection attributes, string tagName)
     {
@@ -45,9 +45,10 @@ internal class TableContext
         _captionTagName = tagName;
     }
 
-    public void SetHead(IReadOnlyCollection<TableOptionsHead> head, string tagName)
+    public void SetHead(IReadOnlyCollection<TableOptionsHead> cells, AttributeCollection attributes, string tagName)
     {
-        ArgumentNullException.ThrowIfNull(head);
+        ArgumentNullException.ThrowIfNull(cells);
+        ArgumentNullException.ThrowIfNull(attributes);
         ArgumentNullException.ThrowIfNull(tagName);
 
         CheckChildTagNameSpelling(tagName);
@@ -64,11 +65,11 @@ internal class TableContext
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(tagName, rowTagName);
         }
 
-        Head = head;
+        Head = (cells, attributes);
         _headTagName = tagName;
     }
 
-    public void AddRow(IReadOnlyCollection<TableOptionsColumn> row, string tagName)
+    public void AddRow(TableOptionsRow row, string tagName)
     {
         ArgumentNullException.ThrowIfNull(row);
         ArgumentNullException.ThrowIfNull(tagName);

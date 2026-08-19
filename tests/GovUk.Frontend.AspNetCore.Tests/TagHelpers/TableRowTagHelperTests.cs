@@ -35,7 +35,9 @@ public class TableRowTagHelperTests : TagHelperTestBase<TableRowTagHelper>
 
         // Assert
         var row = Assert.Single(tableContext.Rows);
-        Assert.Collection(row, c => Assert.Same(cell, c));
+        Assert.NotNull(row);
+        Assert.NotNull(row.Cells);
+        Assert.Collection(row.Cells, c => Assert.Same(cell, c));
     }
 
     [Fact]
@@ -63,27 +65,44 @@ public class TableRowTagHelperTests : TagHelperTestBase<TableRowTagHelper>
     }
 
     [Fact]
-    public async Task ProcessAsync_WithAttributes_ThrowsInvalidOperationException()
+    public async Task ProcessAsync_AddsRowWithAttributesToContext()
     {
         // Arrange
-        var tableContext = new TableContext();
-
+        var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
 
-        var context = CreateTagHelperContext(attributes: attributes, contexts: tableContext);
+        var tableContext = new TableContext();
 
-        var output = CreateTagHelperOutput(attributes: attributes);
+        var context = CreateTagHelperContext(
+            className: className,
+            attributes: attributes,
+            contexts: tableContext);
+
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var rowContext = context.GetContextItem<TableRowContext>();
+                rowContext.AddCell(new TableOptionsColumn());
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
 
         var tagHelper = new TableRowTagHelper();
 
         tagHelper.Init(context);
 
         // Act
-        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+        await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Passing additional attributes is not supported.", ex.Message);
+        var row = Assert.Single(tableContext.Rows);
+        Assert.NotNull(row);
+        Assert.NotNull(row.Attributes);
+        Assert.Equal(className, row.Attributes["class"]);
+        AssertContainsAttributes(attributes, row.Attributes);
     }
 
     [Fact]

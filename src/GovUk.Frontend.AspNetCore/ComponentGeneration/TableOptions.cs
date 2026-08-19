@@ -7,7 +7,7 @@ namespace GovUk.Frontend.AspNetCore.ComponentGeneration;
 
 public record TableOptions
 {
-    public IReadOnlyCollection<IReadOnlyCollection<TableOptionsColumn>>? Rows { get; set; }
+    public IReadOnlyCollection<TableOptionsRow?>? Rows { get; set; }
     public IReadOnlyCollection<TableOptionsHead>? Head { get; set; }
     public TemplateString? Caption { get; set; }
     public TemplateString? CaptionClasses { get; set; }
@@ -17,6 +17,16 @@ public record TableOptions
 
     [NonStandardParameter]
     public AttributeCollection? CaptionAttributes { get; set; }
+    [NonStandardParameter]
+    public AttributeCollection? HeadAttributes { get; set; }
+}
+
+public record TableOptionsRow
+{
+    public IReadOnlyCollection<TableOptionsColumn?>? Cells { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record TableOptionsColumn

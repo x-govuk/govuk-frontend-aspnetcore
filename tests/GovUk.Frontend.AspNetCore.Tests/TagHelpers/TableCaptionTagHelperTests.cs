@@ -73,7 +73,7 @@ public class TableCaptionTagHelperTests : TagHelperTestBase<TableCaptionTagHelpe
         var headTagName = GetSiblingTagName(TableHeadTagHelper.TagName, TableHeadTagHelper.ShortTagName);
 
         var tableContext = new TableContext();
-        tableContext.SetHead([new TableOptionsHead()], headTagName);
+        tableContext.SetHead([new TableOptionsHead()], [], headTagName);
 
         var context = CreateTagHelperContext(contexts: tableContext);
 
@@ -96,7 +96,7 @@ public class TableCaptionTagHelperTests : TagHelperTestBase<TableCaptionTagHelpe
         var rowTagName = GetSiblingTagName(TableRowTagHelper.TagName, TableRowTagHelper.ShortTagName);
 
         var tableContext = new TableContext();
-        tableContext.AddRow([new TableOptionsColumn()], rowTagName);
+        tableContext.AddRow(new TableOptionsRow { Cells = [new TableOptionsColumn()] }, rowTagName);
 
         var context = CreateTagHelperContext(contexts: tableContext);
 
@@ -119,7 +119,7 @@ public class TableCaptionTagHelperTests : TagHelperTestBase<TableCaptionTagHelpe
         var rowTagName = GetOtherSpellingSiblingTagName(TableRowTagHelper.TagName, TableRowTagHelper.ShortTagName);
 
         var tableContext = new TableContext();
-        tableContext.AddRow([new TableOptionsColumn()], rowTagName);
+        tableContext.AddRow(new TableOptionsRow { Cells = [new TableOptionsColumn()] }, rowTagName);
 
         var context = CreateTagHelperContext(contexts: tableContext);
 

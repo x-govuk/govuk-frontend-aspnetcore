@@ -35,7 +35,7 @@ public class TableHeadTagHelperTests : TagHelperTestBase<TableHeadTagHelper>
 
         // Assert
         Assert.NotNull(tableContext.Head);
-        Assert.Collection(tableContext.Head, c => Assert.Same(cell, c));
+        Assert.Collection(tableContext.Head.Value.Cells, c => Assert.Same(cell, c));
     }
 
     [Fact]
@@ -63,27 +63,42 @@ public class TableHeadTagHelperTests : TagHelperTestBase<TableHeadTagHelper>
     }
 
     [Fact]
-    public async Task ProcessAsync_WithAttributes_ThrowsInvalidOperationException()
+    public async Task ProcessAsync_SetsHeadAttributesOnContext()
     {
         // Arrange
-        var tableContext = new TableContext();
-
+        var className = CreateDummyClassName();
         var attributes = CreateDummyDataAttributes();
 
-        var context = CreateTagHelperContext(attributes: attributes, contexts: tableContext);
+        var tableContext = new TableContext();
 
-        var output = CreateTagHelperOutput(attributes: attributes);
+        var context = CreateTagHelperContext(
+            className: className,
+            attributes: attributes,
+            contexts: tableContext);
+
+        var output = CreateTagHelperOutput(
+            className: className,
+            attributes: attributes,
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var headContext = context.GetContextItem<TableHeadContext>();
+                headContext.AddCell(new TableOptionsHead());
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
 
         var tagHelper = new TableHeadTagHelper();
 
         tagHelper.Init(context);
 
         // Act
-        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+        await tagHelper.ProcessAsync(context, output);
 
         // Assert
-        Assert.IsType<InvalidOperationException>(ex);
-        Assert.Equal("Passing additional attributes is not supported.", ex.Message);
+        Assert.NotNull(tableContext.Head);
+        Assert.Equal(className, tableContext.Head.Value.Attributes["class"]);
+        AssertContainsAttributes(attributes, tableContext.Head.Value.Attributes);
     }
 
     [Fact]
@@ -91,7 +106,7 @@ public class TableHeadTagHelperTests : TagHelperTestBase<TableHeadTagHelper>
     {
         // Arrange
         var tableContext = new TableContext();
-        tableContext.SetHead([new TableOptionsHead()], TagName);
+        tableContext.SetHead([new TableOptionsHead()], [], TagName);
 
         var context = CreateTagHelperContext(contexts: tableContext);
 
@@ -126,7 +141,7 @@ public class TableHeadTagHelperTests : TagHelperTestBase<TableHeadTagHelper>
         var rowTagName = GetSiblingTagName(TableRowTagHelper.TagName, TableRowTagHelper.ShortTagName);
 
         var tableContext = new TableContext();
-        tableContext.AddRow([new TableOptionsColumn()], rowTagName);
+        tableContext.AddRow(new TableOptionsRow { Cells = [new TableOptionsColumn()] }, rowTagName);
 
         var context = CreateTagHelperContext(contexts: tableContext);
 

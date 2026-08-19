@@ -35,7 +35,8 @@ internal partial class DefaultComponentGenerator
         HtmlTag GenerateTableHead(IReadOnlyCollection<TableOptionsHead> head)
         {
             var theadTag = new HtmlTag("thead", attrs => attrs
-                .WithClasses("govuk-table__head"));
+                .WithClasses("govuk-table__head")
+                .With(options.HeadAttributes));
 
             var trTag = new HtmlTag("tr", attrs => attrs
                 .WithClasses("govuk-table__row"));
@@ -72,7 +73,7 @@ internal partial class DefaultComponentGenerator
             return theadTag;
         }
 
-        HtmlTag GenerateTableBody(IReadOnlyCollection<IReadOnlyCollection<TableOptionsColumn?>?>? rows, bool? firstCellIsHeader)
+        HtmlTag GenerateTableBody(IReadOnlyCollection<TableOptionsRow?>? rows, bool? firstCellIsHeader)
         {
             var tbodyTag = new HtmlTag("tbody", attrs => attrs
                 .WithClasses("govuk-table__body"));
@@ -84,10 +85,11 @@ internal partial class DefaultComponentGenerator
                     if (row is not null)
                     {
                         var trTag = new HtmlTag("tr", attrs => attrs
-                            .WithClasses("govuk-table__row"));
+                            .WithClasses("govuk-table__row")
+                            .With(row.Attributes));
 
                         var isFirstCell = true;
-                        foreach (var cell in row)
+                        foreach (var cell in row.Cells ?? [])
                         {
                             if (cell is null)
                             {

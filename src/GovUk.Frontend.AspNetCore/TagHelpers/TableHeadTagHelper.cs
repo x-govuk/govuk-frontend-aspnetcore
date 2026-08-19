@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.TagHelpers;
@@ -34,14 +35,9 @@ public class TableHeadTagHelper : TagHelper
 
         await output.GetChildContentAsync();
 
-        if (output.Attributes.Any())
-        {
-            throw ExceptionHelper.AttributesNotSupported();
-        }
-
         headContext.ThrowIfIncomplete();
 
-        tableContext.SetHead(headContext.Cells, context.TagName);
+        tableContext.SetHead(headContext.Cells, new AttributeCollection(output.Attributes), context.TagName);
 
         output.SuppressOutput();
     }

@@ -15,7 +15,8 @@ internal partial class DefaultComponentGenerator
         if (options.Caption is not null)
         {
             var captionTag = new HtmlTag("caption", attrs => attrs
-                .WithClasses("govuk-table__caption", options.CaptionClasses));
+                .WithClasses("govuk-table__caption", options.CaptionClasses)
+                .With(options.CaptionAttributes));
             captionTag.InnerHtml.AppendHtml(options.Caption);
             tableTag.InnerHtml.AppendHtml(captionTag);
         }

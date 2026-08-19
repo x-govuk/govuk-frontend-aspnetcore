@@ -14,6 +14,9 @@ public record TableOptions
     public bool? FirstCellIsHeader { get; set; }
     public TemplateString? Classes { get; set; }
     public AttributeCollection? Attributes { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? CaptionAttributes { get; set; }
 }
 
 public record TableOptionsColumn

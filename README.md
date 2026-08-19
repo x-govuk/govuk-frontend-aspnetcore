@@ -317,6 +317,7 @@ Files the build didn't copy are left alone, since they can change without the `g
 - [Service navigation](docs/components/service-navigation.md)
 - [Skip link](docs/components/skip-link.md)
 - [Summary list](docs/components/summary-list.md)
+- [Table](docs/components/table.md)
 - [Tabs](docs/components/tabs.md)
 - [Tag](docs/components/tag.md)
 - [Textarea](docs/components/textarea.md)

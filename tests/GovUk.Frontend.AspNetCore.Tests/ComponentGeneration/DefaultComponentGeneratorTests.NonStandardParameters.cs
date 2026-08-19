@@ -1157,6 +1157,76 @@ public partial class DefaultComponentGeneratorTests
     }
 
     [Fact]
+    public async Task Table_CaptionAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new TableOptions
+        {
+            Caption = "Caption",
+            CaptionAttributes = new AttributeCollection { { "data-test", "caption-attr" } }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateTableAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("data-test=\"caption-attr\"", html);
+    }
+
+    [Fact]
+    public async Task Table_HeadAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new TableOptions
+        {
+            Head = [new TableOptionsHead { Text = "Header" }],
+            HeadAttributes = new AttributeCollection
+            {
+                { "class", "head-class" },
+                { "data-test", "head-attr" }
+            }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateTableAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("class=\"govuk-table__head head-class\"", html);
+        Assert.Contains("data-test=\"head-attr\"", html);
+    }
+
+    [Fact]
+    public async Task Table_RowAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new TableOptions
+        {
+            Rows =
+            [
+                new TableOptionsRow
+                {
+                    Cells = [new TableOptionsColumn { Text = "Cell" }],
+                    Attributes = new AttributeCollection
+                    {
+                        { "class", "row-class" },
+                        { "data-test", "row-attr" }
+                    }
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateTableAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("class=\"govuk-table__row row-class\"", html);
+        Assert.Contains("data-test=\"row-attr\"", html);
+    }
+
+    [Fact]
     public async Task Tabs_Title_IsEncoded()
     {
         // Tabs' title only ever comes from a string attribute, so it has no Html sibling.

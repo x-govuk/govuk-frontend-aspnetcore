@@ -24,6 +24,7 @@ public class ComponentFixtureData(
         _serializerOptions.Converters.Add(new StringHtmlContentJsonConverter());
         _serializerOptions.Converters.Add(new AttributeCollectionJsonConverter());
         _serializerOptions.Converters.Add(new TemplateStringJsonConverter());
+        _serializerOptions.Converters.Add(new TableOptionsRowJsonConverter());
 
     }
 

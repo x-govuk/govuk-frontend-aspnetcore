@@ -1,0 +1,40 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-table first-cell-is-header="true">
+        <table-caption class="govuk-table__caption--m">Dates and amounts</table-caption>
+        <table-head class="head-class" data-head="head">
+            <table-head-cell>Date</table-head-cell>
+            <table-head-cell format="numeric">Amount</table-head-cell>
+        </table-head>
+        <table-row class="row-class" data-row="row">
+            <table-cell>First 6 weeks</table-cell>
+            <table-cell format="numeric">£109.80 per week</table-cell>
+        </table-row>
+        <table-row class="row-class" data-row="row">
+            <table-cell>Next 33 weeks</table-cell>
+            <table-cell format="numeric">£109.80 per week</table-cell>
+        </table-row>
+    </govuk-table>
+</div>
+
+<div data-testid="long">
+    <govuk-table first-cell-is-header="true">
+        <govuk-table-caption class="govuk-table__caption--m">Dates and amounts</govuk-table-caption>
+        <govuk-table-head class="head-class" data-head="head">
+            <govuk-table-head-cell>Date</govuk-table-head-cell>
+            <govuk-table-head-cell format="numeric">Amount</govuk-table-head-cell>
+        </govuk-table-head>
+        <govuk-table-row class="row-class" data-row="row">
+            <govuk-table-cell>First 6 weeks</govuk-table-cell>
+            <govuk-table-cell format="numeric">£109.80 per week</govuk-table-cell>
+        </govuk-table-row>
+        <govuk-table-row class="row-class" data-row="row">
+            <govuk-table-cell>Next 33 weeks</govuk-table-cell>
+            <govuk-table-cell format="numeric">£109.80 per week</govuk-table-cell>
+        </govuk-table-row>
+    </govuk-table>
+</div>

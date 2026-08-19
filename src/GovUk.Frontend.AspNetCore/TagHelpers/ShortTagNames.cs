@@ -58,6 +58,11 @@ internal static class ShortTagNames
     public const string Suffix = "suffix";
     public const string Summary = "summary";
     public const string Text = "text";
+    public const string TableCaption = "table-caption";
+    public const string TableCell = "table-cell";
+    public const string TableHead = "table-head";
+    public const string TableHeadCell = "table-head-cell";
+    public const string TableRow = "table-row";
     public const string TabsItem = "tabs-item";
     public const string Tag = "tag";
 

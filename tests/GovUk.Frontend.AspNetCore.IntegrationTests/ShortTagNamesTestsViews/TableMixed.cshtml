@@ -1,0 +1,11 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* All of the table's children share the same parent element, so their spelling cannot be
+   paired up through ParentTag; mixing the two must throw *@
+
+<govuk-table>
+    <govuk-table-caption>Dates and amounts</govuk-table-caption>
+    <table-row>
+        <table-cell>First 6 weeks</table-cell>
+    </table-row>
+</govuk-table>

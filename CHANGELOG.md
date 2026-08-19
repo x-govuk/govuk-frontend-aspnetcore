@@ -33,6 +33,25 @@ The library no longer embeds the `govuk-frontend` files or serves them from midd
 
 As per the guidance, the first page, the pages either side of the current page and the last page are shown, with an ellipsis wherever pages have been skipped, plus Previous and Next links where there is a page to go to. Nothing is rendered at all when there is only one page. Child elements cannot be combined with these attributes.
 
+The table component now has tag helpers:
+
+```razor
+<govuk-table first-cell-is-header="true">
+    <table-caption class="govuk-table__caption--m">Dates and amounts</table-caption>
+    <table-head>
+        <table-head-cell>Date</table-head-cell>
+        <table-head-cell format="numeric">Amount</table-head-cell>
+    </table-head>
+    <table-row>
+        <table-cell>First 6 weeks</table-cell>
+        <table-cell format="numeric">£109.80 per week</table-cell>
+    </table-row>
+</govuk-table>
+```
+
+`<govuk-table-caption>`, `<govuk-table-head>` and `<govuk-table-row>` go directly inside `<govuk-table>`, in that order, with `<govuk-table-head-cell>` inside the head and `<govuk-table-cell>` inside each row.
+Each of them also has the short tag name shown above.
+
 The checkboxes, radios, date input, text input, textarea, file upload, password input, select, character count, accordion, breadcrumbs, service navigation, fieldset, generic header, footer, notification banner, pagination, phase banner, tabs, error summary, details and cookie banner tag helpers now support short tag name syntax, as the panel and summary list tag helpers already do:
 
 ```razor

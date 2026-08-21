@@ -23,31 +23,6 @@
         return string.Join(" ", classes.Where(c => !string.IsNullOrWhiteSpace(c)));
     }
 
-    static IHtmlContent? Attributes(AttributeDictionary? attributes)
-    {
-        if (attributes is null || attributes.Count == 0)
-        {
-            return null;
-        }
-
-        var builder = new HtmlContentBuilder();
-
-        foreach (var attribute in attributes)
-        {
-            builder.Append(" ");
-            builder.Append(attribute.Key);
-            if (attribute.Value is not null)
-            {
-                // The quotes are markup; the value between them is not.
-                builder.AppendHtml(new HtmlString("=\""));
-                builder.Append(attribute.Value);
-                builder.AppendHtml(new HtmlString("\""));
-            }
-        }
-
-        return builder;
-    }
-
     async Task<IHtmlContent> CaptureSectionContentAsync(string sectionName)
     {
         IgnoreSection(sectionName);
@@ -112,7 +87,7 @@
     <meta property="og:image" content="@(ogImage)">
 </head>
 
-<!body class="@Classes("govuk-template__body", ViewData[ViewDataKeys.BodyClasses] as string)"@Attributes(ViewData[ViewDataKeys.BodyAttributes] as AttributeDictionary)>
+<body class="@Classes("govuk-template__body", ViewData[ViewDataKeys.BodyClasses] as string)" _govuk-additional-attributes="ViewData[ViewDataKeys.BodyAttributes] as AttributeDictionary">
     @Html.GovUkFrontendJsEnabledScript(cspNonce)
     @await RenderSectionAsync(SectionNames.BodyStart, required: false)
 
@@ -161,7 +136,7 @@
 
         if (!headerContent.IsEmpty())
         {
-            <header class="@Classes("govuk-template__header", ViewData[ViewDataKeys.HeaderClasses] as string)"@Attributes(ViewData[ViewDataKeys.HeaderAttributes] as AttributeDictionary)>
+            <header class="@Classes("govuk-template__header", ViewData[ViewDataKeys.HeaderClasses] as string)" _govuk-additional-attributes="ViewData[ViewDataKeys.HeaderAttributes] as AttributeDictionary">
                 @headerContent
             </header>
         }
@@ -174,7 +149,7 @@
     }
     else
     {
-        <div class="@Classes("govuk-width-container", ViewData[ViewDataKeys.ContainerClasses] as string)"@Attributes(ViewData[ViewDataKeys.ContainerAttributes] as AttributeDictionary)>
+        <div class="@Classes("govuk-width-container", ViewData[ViewDataKeys.ContainerClasses] as string)" _govuk-additional-attributes="ViewData[ViewDataKeys.ContainerAttributes] as AttributeDictionary">
             @if (IsSectionDefined(SectionNames.ContainerStart))
             {
                 @await RenderSectionAsync(SectionNames.ContainerStart)
@@ -183,14 +158,9 @@
             {
                 @await RenderSectionAsync("BeforeContent")
             }
-            <!main class="@Classes("govuk-main-wrapper", ViewData[ViewDataKeys.MainClasses] as string)" id="main-content" role="main" lang="@ViewData[ViewDataKeys.MainLang]"@Attributes(ViewData[ViewDataKeys.MainAttributes] as AttributeDictionary)>
-                @if (!Context.GetPageErrorContext().ErrorSummaryHasBeenRendered)
-                {
-                    <govuk-error-summary/>
-                }
-
+            <main class="@Classes("govuk-main-wrapper", ViewData[ViewDataKeys.MainClasses] as string)" id="main-content" role="main" lang="@ViewData[ViewDataKeys.MainLang]" _govuk-additional-attributes="ViewData[ViewDataKeys.MainAttributes] as AttributeDictionary">
                 @RenderBody()
-            </!main>
+            </main>
             @await RenderSectionAsync(SectionNames.ContainerEnd, required: false)
         </div>
     }
@@ -220,7 +190,7 @@
 
         if (!footerContent.IsEmpty())
         {
-            <footer class="@Classes("govuk-template__footer", ViewData[ViewDataKeys.FooterClasses] as string)"@Attributes(ViewData[ViewDataKeys.FooterAttributes] as AttributeDictionary)>
+            <footer class="@Classes("govuk-template__footer", ViewData[ViewDataKeys.FooterClasses] as string)" _govuk-additional-attributes="ViewData[ViewDataKeys.FooterAttributes] as AttributeDictionary">
                 @footerContent
             </footer>
         }
@@ -234,5 +204,5 @@
     {
         @Html.GovUkFrontendScriptImports(cspNonce)
     }
-</!body>
+</body>
 </html>

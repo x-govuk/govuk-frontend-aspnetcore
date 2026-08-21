@@ -1,0 +1,13 @@
+@page
+@{
+    ViewData[GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants.ViewDataKeys.BodyAttributes] =
+        new Microsoft.AspNetCore.Mvc.ViewFeatures.AttributeDictionary { { "data-body", "body-attr" } };
+
+    ViewData[GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants.ViewDataKeys.MainAttributes] =
+        new Microsoft.AspNetCore.Mvc.ViewFeatures.AttributeDictionary { { "data-main", "main-attr" } };
+}
+
+<govuk-input name="InputWithAnError">
+    <govuk-input-label>Input with an error</govuk-input-label>
+    <govuk-input-error-message>An error</govuk-input-error-message>
+</govuk-input>

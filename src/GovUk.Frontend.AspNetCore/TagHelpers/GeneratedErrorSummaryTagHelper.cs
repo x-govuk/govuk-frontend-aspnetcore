@@ -66,9 +66,11 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
 
         var generateErrorSummariesOptions = _optionsAccessor.Value.ErrorSummaryGeneration;
 
+        var isMainElement = context.TagName?.Equals("main", StringComparison.OrdinalIgnoreCase) is true;
+
         var prependErrorSummary = PrependErrorSummary ??
             ((context.TagName?.Equals("form", StringComparison.OrdinalIgnoreCase) is true && generateErrorSummariesOptions.HasFlag(PrependToFormElements)) ||
-            (context.TagName?.Equals("main", StringComparison.OrdinalIgnoreCase) is true && generateErrorSummariesOptions.HasFlag(PrependToMainElement)));
+            (isMainElement && generateErrorSummariesOptions.HasFlag(PrependToMainElement)));
 
         if (!prependErrorSummary)
         {
@@ -76,6 +78,14 @@ public class GeneratedErrorSummaryTagHelper : TagHelper
         }
 
         var pageErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
+
+        // The main element wraps everything on the page, so if a summary has already been rendered
+        // - by a form inside it, say - a second one here would be a duplicate.
+        if (isMainElement && pageErrorContext.ErrorSummaryHasBeenRendered)
+        {
+            return;
+        }
+
         var errorSummaryItems = pageErrorContext.GetErrorSummaryItems();
 
         if (errorSummaryItems.Count == 0)

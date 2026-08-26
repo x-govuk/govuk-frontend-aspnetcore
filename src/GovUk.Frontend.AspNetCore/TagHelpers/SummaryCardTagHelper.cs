@@ -11,7 +11,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [RestrictChildren(
     SummaryCardTitleTagHelper.TagName,
     SummaryCardTitleTagHelper.ShortTagName,
-    ObsoleteSummaryCardTitleTagHelper.ShortTagName,
+    LegacySummaryCardTitleTagHelper.ShortTagName,
     SummaryCardActionsTagHelper.TagName,
     SummaryCardActionsTagHelper.ShortTagName,
     SummaryListTagHelper.TagName)]

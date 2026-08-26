@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
@@ -50,7 +51,10 @@ public static class GovUkFrontendExtensions
             new DefaultComponentGenerator(sp.GetRequiredService<IGovUkFrontendLocalizer>()));
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
-        services.AddSingleton<IConfigureOptions<GovUkFrontendOptions>, ConfigureGovUkFrontendOptions>();
+        // Resolved through IHostEnvironment, which a bare service collection won't have; the configurator
+        // falls back to the entry assembly there.
+        services.AddSingleton<IConfigureOptions<GovUkFrontendOptions>>(
+            sp => new ConfigureGovUkFrontendOptions(sp.GetService<IHostEnvironment>()));
         // Resolved through IWebHostEnvironment, which a non-web host won't have; such a host has nothing
         // to serve the files from either, so the defaults are the right answer there.
         services.TryAddSingleton(sp => GovUkFrontendPaths.Create(

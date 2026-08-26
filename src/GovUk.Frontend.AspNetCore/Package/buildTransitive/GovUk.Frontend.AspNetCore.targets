@@ -71,12 +71,14 @@
        already valid C# has to go in as a non-literal, where it gets quoted and escaped properly. That
        leaves 'null' as the only value here that has to stay a literal: an unquoted directory would be
        read as an identifier, and a quoted one would carry unescaped '\' and '"' straight into the
-       source. The boolean is normalised because MSBuild treats 'True' as true but C# does not. -->
-  <Target Name="AddGovUkFrontendBuildInfoAttribute" BeforeTargets="BeforeBuild">
-    <PropertyGroup>
-      <_govUkEnableSupportArg>false</_govUkEnableSupportArg>
-      <_govUkEnableSupportArg Condition="'$(EnableGovUkFrontendSupport)' == 'true'">true</_govUkEnableSupportArg>
+       source.
 
+       The attribute is only emitted when support is enabled, so its presence is what tells the library
+       the build targets ran for this project. -->
+  <Target Name="AddGovUkFrontendBuildInfoAttribute"
+          BeforeTargets="BeforeBuild"
+          Condition="'$(EnableGovUkFrontendSupport)' == 'true'">
+    <PropertyGroup>
       <_govUkAssetsDirectoryArg>null</_govUkAssetsDirectoryArg>
       <_govUkAssetsDirectoryIsLiteral>true</_govUkAssetsDirectoryIsLiteral>
       <_govUkAssetsDirectoryArg Condition="'$(_ShouldRestoreAssets)' == 'true'">$(GovUkFrontendAssetsDirectory)</_govUkAssetsDirectoryArg>
@@ -95,14 +97,12 @@
 
     <ItemGroup>
       <AssemblyAttribute Include="GovUk.Frontend.AspNetCore.GovUkFrontendBuildInfoAttribute">
-        <_Parameter1>$(_govUkEnableSupportArg)</_Parameter1>
-        <_Parameter1_IsLiteral>true</_Parameter1_IsLiteral>
-        <_Parameter2>$(_govUkAssetsDirectoryArg)</_Parameter2>
-        <_Parameter2_IsLiteral>$(_govUkAssetsDirectoryIsLiteral)</_Parameter2_IsLiteral>
-        <_Parameter3>$(_govUkJavaScriptDirectoryArg)</_Parameter3>
-        <_Parameter3_IsLiteral>$(_govUkJavaScriptDirectoryIsLiteral)</_Parameter3_IsLiteral>
-        <_Parameter4>$(_govUkStylesheetDirectoryArg)</_Parameter4>
-        <_Parameter4_IsLiteral>$(_govUkStylesheetDirectoryIsLiteral)</_Parameter4_IsLiteral>
+        <_Parameter1>$(_govUkAssetsDirectoryArg)</_Parameter1>
+        <_Parameter1_IsLiteral>$(_govUkAssetsDirectoryIsLiteral)</_Parameter1_IsLiteral>
+        <_Parameter2>$(_govUkJavaScriptDirectoryArg)</_Parameter2>
+        <_Parameter2_IsLiteral>$(_govUkJavaScriptDirectoryIsLiteral)</_Parameter2_IsLiteral>
+        <_Parameter3>$(_govUkStylesheetDirectoryArg)</_Parameter3>
+        <_Parameter3_IsLiteral>$(_govUkStylesheetDirectoryIsLiteral)</_Parameter3_IsLiteral>
       </AssemblyAttribute>
     </ItemGroup>
   </Target>

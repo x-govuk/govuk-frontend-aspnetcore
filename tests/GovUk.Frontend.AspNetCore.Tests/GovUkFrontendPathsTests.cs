@@ -6,7 +6,7 @@ public class GovUkFrontendPathsTests
     public void Create_WithTheDefaultDirectories_MapsThemToTheDefaultUrls()
     {
         // Arrange
-        var buildInfo = new GovUkFrontendBuildInfoAttribute(true, "wwwroot/assets", "wwwroot", "wwwroot");
+        var buildInfo = new GovUkFrontendBuildInfoAttribute("wwwroot/assets", "wwwroot", "wwwroot");
 
         // Act
         var paths = GovUkFrontendPaths.Create(CreateEnvironment(), buildInfo);
@@ -23,7 +23,7 @@ public class GovUkFrontendPathsTests
     public void Create_WithCustomDirectories_MapsThemRelativeToTheWebRoot()
     {
         // Arrange
-        var buildInfo = new GovUkFrontendBuildInfoAttribute(true, "wwwroot/govuk/assets", "wwwroot/govuk", "wwwroot/govuk");
+        var buildInfo = new GovUkFrontendBuildInfoAttribute("wwwroot/govuk/assets", "wwwroot/govuk", "wwwroot/govuk");
 
         // Act
         var paths = GovUkFrontendPaths.Create(CreateEnvironment(), buildInfo);
@@ -38,7 +38,7 @@ public class GovUkFrontendPathsTests
     public void Create_WithWindowsStyleSeparators_NormalizesThem()
     {
         // Arrange
-        var buildInfo = new GovUkFrontendBuildInfoAttribute(true, @"wwwroot\govuk\assets", @"wwwroot\govuk", @"wwwroot\govuk");
+        var buildInfo = new GovUkFrontendBuildInfoAttribute(@"wwwroot\govuk\assets", @"wwwroot\govuk", @"wwwroot\govuk");
 
         // Act
         var paths = GovUkFrontendPaths.Create(CreateEnvironment(), buildInfo);
@@ -54,7 +54,7 @@ public class GovUkFrontendPathsTests
     {
         // Arrange
         var environment = CreateEnvironment(webRoot: "/app/public");
-        var buildInfo = new GovUkFrontendBuildInfoAttribute(true, "public/assets", "public", "public");
+        var buildInfo = new GovUkFrontendBuildInfoAttribute("public/assets", "public", "public");
 
         // Act
         var paths = GovUkFrontendPaths.Create(environment, buildInfo);
@@ -68,7 +68,7 @@ public class GovUkFrontendPathsTests
     public void Create_WithADirectoryOutsideTheWebRoot_ReportsNoPath()
     {
         // Arrange - nothing outside the web root gets served, so there is no URL for it
-        var buildInfo = new GovUkFrontendBuildInfoAttribute(true, "lib/assets", "lib", "lib");
+        var buildInfo = new GovUkFrontendBuildInfoAttribute("lib/assets", "lib", "lib");
 
         // Act
         var paths = GovUkFrontendPaths.Create(CreateEnvironment(), buildInfo);
@@ -83,7 +83,7 @@ public class GovUkFrontendPathsTests
     public void Create_WithASiblingDirectoryWhoseNameStartsWithTheWebRoot_ReportsNoPath()
     {
         // Arrange
-        var buildInfo = new GovUkFrontendBuildInfoAttribute(true, "wwwrootstuff/assets", "wwwrootstuff", "wwwrootstuff");
+        var buildInfo = new GovUkFrontendBuildInfoAttribute("wwwrootstuff/assets", "wwwrootstuff", "wwwrootstuff");
 
         // Act
         var paths = GovUkFrontendPaths.Create(CreateEnvironment(), buildInfo);
@@ -99,7 +99,7 @@ public class GovUkFrontendPathsTests
     {
         // Arrange
         var environment = CreateEnvironment(contentRoot: "/app", webRoot: "/var/www");
-        var buildInfo = new GovUkFrontendBuildInfoAttribute(true, "wwwroot/assets", "wwwroot", "wwwroot");
+        var buildInfo = new GovUkFrontendBuildInfoAttribute("wwwroot/assets", "wwwroot", "wwwroot");
 
         // Act
         var paths = GovUkFrontendPaths.Create(environment, buildInfo);
@@ -124,7 +124,7 @@ public class GovUkFrontendPathsTests
     public void Create_WithNoEnvironment_ReportsNoPaths()
     {
         // Arrange
-        var buildInfo = new GovUkFrontendBuildInfoAttribute(true, "wwwroot/assets", "wwwroot", "wwwroot");
+        var buildInfo = new GovUkFrontendBuildInfoAttribute("wwwroot/assets", "wwwroot", "wwwroot");
 
         // Act
         var paths = GovUkFrontendPaths.Create(environment: null, buildInfo);

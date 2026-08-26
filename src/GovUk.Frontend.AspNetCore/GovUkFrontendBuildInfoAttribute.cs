@@ -7,14 +7,11 @@ namespace GovUk.Frontend.AspNetCore;
 [AttributeUsage(AttributeTargets.Assembly)]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class GovUkFrontendBuildInfoAttribute(
-    bool enableGovUkFrontendSupport,
     string? govUkFrontendAssetsDirectory,
     string? govUkFrontendJavaScriptDirectory,
     string? govUkFrontendStylesheetDirectory) :
     Attribute
 {
-    public bool EnableGovUkFrontendSupport { get; } = enableGovUkFrontendSupport;
-
     public string? GovUkFrontendAssetsDirectory { get; } = govUkFrontendAssetsDirectory;
 
     public string? GovUkFrontendJavaScriptDirectory { get; } = govUkFrontendJavaScriptDirectory;

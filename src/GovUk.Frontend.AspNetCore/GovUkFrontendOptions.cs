@@ -75,6 +75,11 @@ public class GovUkFrontendOptions
     /// </remarks>
     public bool PrependErrorToTitle { get; set; }
 
+    /// <summary>
+    /// What the package's build targets recorded about this project, or <see langword="null"/> if they
+    /// didn't run for it - either because the project doesn't reference the package or because it set
+    /// <c>EnableGovUkFrontendSupport</c> to <c>false</c>.
+    /// </summary>
     internal GovUkFrontendBuildInfoAttribute? BuildInfo { get; set; }
 
     /// <summary>

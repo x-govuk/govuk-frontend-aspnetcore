@@ -41,7 +41,6 @@ public class RestoreTests(PackageTestContext context)
 
         AssertBuildInfoForEveryTargetFramework(
             project,
-            enableSupport: true,
             assetsDirectory: "wwwroot/assets",
             javaScriptDirectory: "wwwroot",
             stylesheetDirectory: "wwwroot");
@@ -60,12 +59,7 @@ public class RestoreTests(PackageTestContext context)
         project.AssertDirectoryIsEmptyOrMissing("wwwroot");
         project.AssertDirectoryIsEmptyOrMissing("lib");
 
-        AssertBuildInfoForEveryTargetFramework(
-            project,
-            enableSupport: false,
-            assetsDirectory: null,
-            javaScriptDirectory: null,
-            stylesheetDirectory: null);
+        AssertNoBuildInfoForAnyTargetFramework(project);
     }
 
     [Fact]
@@ -156,7 +150,6 @@ public class RestoreTests(PackageTestContext context)
 
         AssertBuildInfoForEveryTargetFramework(
             project,
-            enableSupport: true,
             assetsDirectory: "wwwroot/govuk/assets",
             javaScriptDirectory: "wwwroot/govuk",
             stylesheetDirectory: "wwwroot/govuk");
@@ -238,7 +231,6 @@ public class RestoreTests(PackageTestContext context)
         // Support is still on, so the middleware is still added; it just has nothing to mark as immutable.
         AssertBuildInfoForEveryTargetFramework(
             project,
-            enableSupport: true,
             assetsDirectory: null,
             javaScriptDirectory: null,
             stylesheetDirectory: null);
@@ -267,12 +259,7 @@ public class RestoreTests(PackageTestContext context)
         project.AssertDirectoryIsEmptyOrMissing("wwwroot");
         project.AssertDirectoryIsEmptyOrMissing("lib");
 
-        AssertBuildInfoForEveryTargetFramework(
-            project,
-            enableSupport: false,
-            assetsDirectory: null,
-            javaScriptDirectory: null,
-            stylesheetDirectory: null);
+        AssertNoBuildInfoForAnyTargetFramework(project);
     }
 
     [Fact]
@@ -386,7 +373,6 @@ public class RestoreTests(PackageTestContext context)
 
         AssertBuildInfoForEveryTargetFramework(
             project,
-            enableSupport: true,
             assetsDirectory: "wwwroot/assets",
             javaScriptDirectory: "wwwroot",
             stylesheetDirectory: "wwwroot");
@@ -454,7 +440,6 @@ public class RestoreTests(PackageTestContext context)
 
     private static void AssertBuildInfoForEveryTargetFramework(
         FixtureProject project,
-        bool enableSupport,
         string? assetsDirectory,
         string? javaScriptDirectory,
         string? stylesheetDirectory)
@@ -463,10 +448,21 @@ public class RestoreTests(PackageTestContext context)
         {
             var buildInfo = GeneratedBuildInfo.Read(project, targetFramework);
 
-            Assert.Equal(enableSupport, buildInfo.EnableGovUkFrontendSupport);
             Assert.Equal(assetsDirectory, buildInfo.AssetsDirectory);
             Assert.Equal(javaScriptDirectory, buildInfo.JavaScriptDirectory);
             Assert.Equal(stylesheetDirectory, buildInfo.StylesheetDirectory);
+        }
+    }
+
+    /// <summary>
+    /// With support disabled there is nothing for the library to act on, so the targets emit no attribute
+    /// at all rather than one saying so.
+    /// </summary>
+    private static void AssertNoBuildInfoForAnyTargetFramework(FixtureProject project)
+    {
+        foreach (var targetFramework in project.TargetFrameworks)
+        {
+            Assert.Null(GeneratedBuildInfo.ReadOrDefault(project, targetFramework));
         }
     }
 }

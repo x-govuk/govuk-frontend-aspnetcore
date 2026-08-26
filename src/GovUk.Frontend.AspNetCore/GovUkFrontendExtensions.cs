@@ -149,7 +149,9 @@ public static class GovUkFrontendExtensions
 
         var options = app.ApplicationServices.GetRequiredService<IOptions<GovUkFrontendOptions>>().Value;
 
-        if (options.BuildInfo?.EnableGovUkFrontendSupport is true)
+        // The targets only emit the build info when the project asked for govuk-frontend support, so its
+        // absence means there is nothing here for the middleware to serve.
+        if (options.BuildInfo is not null)
         {
             app.UseMiddleware<VersionedAssetMiddleware>();
         }

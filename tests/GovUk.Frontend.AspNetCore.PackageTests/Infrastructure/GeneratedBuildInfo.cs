@@ -16,16 +16,13 @@ public sealed partial class GeneratedBuildInfo
     private GeneratedBuildInfo(string arguments, IReadOnlyList<string?> values)
     {
         RawArguments = arguments;
-        EnableGovUkFrontendSupport = values[0] == "true";
-        AssetsDirectory = values[1];
-        JavaScriptDirectory = values[2];
-        StylesheetDirectory = values[3];
+        AssetsDirectory = values[0];
+        JavaScriptDirectory = values[1];
+        StylesheetDirectory = values[2];
     }
 
     /// <summary>The argument list exactly as it appears in the generated source.</summary>
     public string RawArguments { get; }
-
-    public bool EnableGovUkFrontendSupport { get; }
 
     public string? AssetsDirectory { get; }
 
@@ -33,7 +30,19 @@ public sealed partial class GeneratedBuildInfo
 
     public string? StylesheetDirectory { get; }
 
-    public static GeneratedBuildInfo Read(FixtureProject project, string targetFramework)
+    /// <summary>
+    /// Reads the attribute the targets emitted, failing if they didn't emit one.
+    /// </summary>
+    public static GeneratedBuildInfo Read(FixtureProject project, string targetFramework) =>
+        ReadOrDefault(project, targetFramework) ??
+        throw new InvalidOperationException(
+            $"No GovUkFrontendBuildInfoAttribute was generated for '{targetFramework}'.");
+
+    /// <summary>
+    /// Reads the attribute the targets emitted, or <see langword="null"/> if they emitted none, which is
+    /// what a project with support disabled gets.
+    /// </summary>
+    public static GeneratedBuildInfo? ReadOrDefault(FixtureProject project, string targetFramework)
     {
         var objDirectory = Path.Combine(project.Directory, "obj", FixtureProject.Configuration, targetFramework);
 
@@ -52,17 +61,16 @@ public sealed partial class GeneratedBuildInfo
 
         if (!match.Success)
         {
-            throw new InvalidOperationException(
-                $"No GovUkFrontendBuildInfoAttribute found in '{assemblyInfoFiles[0]}'.{Environment.NewLine}{source}");
+            return null;
         }
 
         var arguments = match.Groups[1].Value;
         var values = ParseArguments(arguments);
 
-        if (values.Count != 4)
+        if (values.Count != 3)
         {
             throw new InvalidOperationException(
-                $"Expected 4 arguments to GovUkFrontendBuildInfoAttribute but found {values.Count}: {arguments}");
+                $"Expected 3 arguments to GovUkFrontendBuildInfoAttribute but found {values.Count}: {arguments}");
         }
 
         return new GeneratedBuildInfo(arguments, values);

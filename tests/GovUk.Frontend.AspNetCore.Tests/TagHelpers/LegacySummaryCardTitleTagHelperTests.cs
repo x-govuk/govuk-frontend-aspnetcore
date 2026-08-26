@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace GovUk.Frontend.AspNetCore.Tests.TagHelpers;
 
-public class ObsoleteSummaryCardTitleTagHelperTests : TagHelperTestBase<ObsoleteSummaryCardTitleTagHelper>
+public class LegacySummaryCardTitleTagHelperTests : TagHelperTestBase<LegacySummaryCardTitleTagHelper>
 {
     [Fact]
     public async Task ProcessAsync_DeprecatedTagName_SetsTitleOnContext()
@@ -26,7 +26,7 @@ public class ObsoleteSummaryCardTitleTagHelperTests : TagHelperTestBase<Obsolete
                 return Task.FromResult<TagHelperContent>(tagHelperContent);
             });
 
-        var tagHelper = new ObsoleteSummaryCardTitleTagHelper()
+        var tagHelper = new LegacySummaryCardTitleTagHelper()
         {
             HeadingLevel = headingLevel
         };

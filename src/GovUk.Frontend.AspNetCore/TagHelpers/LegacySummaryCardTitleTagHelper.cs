@@ -14,7 +14,7 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [Obsolete(
     "Use the <" + SummaryCardTitleTagHelper.ShortTagName + "> element instead.",
     DiagnosticId = DiagnosticIds.UseSummaryCardTitleElementInstead)]
-public class ObsoleteSummaryCardTitleTagHelper : SummaryCardTitleTagHelper
+public class LegacySummaryCardTitleTagHelper : SummaryCardTitleTagHelper
 {
     internal new const string ShortTagName = ShortTagNames.Title;
 }

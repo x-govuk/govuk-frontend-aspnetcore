@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
 namespace GovUk.Frontend.AspNetCore;
@@ -46,7 +47,10 @@ public static class GovUkFrontendExtensions
         services.TryAddSingleton<IComponentGenerator, DefaultComponentGenerator>();
         services.TryAddSingleton<IModelHelper, DefaultModelHelper>();
         services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptions>();
-        services.AddSingleton<IConfigureOptions<GovUkFrontendOptions>, ConfigureGovUkFrontendOptions>();
+        // Resolved through IHostEnvironment, which a bare service collection won't have; the configurator
+        // falls back to the entry assembly there.
+        services.AddSingleton<IConfigureOptions<GovUkFrontendOptions>>(
+            sp => new ConfigureGovUkFrontendOptions(sp.GetService<IHostEnvironment>()));
         services.AddTransient<PageTemplateHelper>();
         services.AddSingleton<ITagHelperInitializer<ButtonTagHelper>, ButtonTagHelperInitializer>();
         services.AddSingleton<ITagHelperInitializer<FileUploadTagHelper>, FileUploadTagHelperInitializer>();

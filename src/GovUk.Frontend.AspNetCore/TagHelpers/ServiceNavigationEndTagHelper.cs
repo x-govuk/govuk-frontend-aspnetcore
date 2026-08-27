@@ -13,7 +13,18 @@ public class ServiceNavigationEndTagHelper : TagHelper
     internal const string TagName = "govuk-service-navigation-end";
     internal const string ShortTagName = ShortTagNames.End;
 
+    private const string AlignAttributeName = "align";
+
     private static IReadOnlyCollection<string> AllTagNames => [TagName, ShortTagName];
+
+    /// <summary>
+    /// How the content is aligned within the service header container.
+    /// </summary>
+    /// <remarks>
+    /// By default the content is displayed underneath the navigation items.
+    /// </remarks>
+    [HtmlAttributeName(AlignAttributeName)]
+    public ServiceNavigationEndSlotAlign? Align { get; set; }
 
     /// <inheritdoc/>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -42,7 +53,7 @@ public class ServiceNavigationEndTagHelper : TagHelper
             throw ExceptionHelper.AttributesNotSupported();
         }
 
-        serviceNavigationContext.EndSlot = (content.Snapshot(), context.TagName);
+        serviceNavigationContext.EndSlot = (content.Snapshot(), Align, context.TagName);
 
         output.SuppressOutput();
     }

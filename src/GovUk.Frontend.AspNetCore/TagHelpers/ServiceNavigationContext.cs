@@ -6,7 +6,7 @@ internal class ServiceNavigationContext
 {
     public ServiceNavigationNavContext? Nav { get; set; }
     public (IHtmlContent Html, string TagName)? StartSlot { get; set; }
-    public (IHtmlContent Html, string TagName)? EndSlot { get; set; }
+    public (IHtmlContent Html, ServiceNavigationEndSlotAlign? Align, string TagName)? EndSlot { get; set; }
 
     /// <summary>
     /// Checks that <paramref name="tagName"/> is spelled the same way as the children specified so far.

@@ -86,7 +86,17 @@ public class ServiceNavigationTagHelper : TagHelper
             Slots = new ServiceNavigationOptionsSlots
             {
                 Start = serviceNavigationContext.StartSlot?.Html,
-                End = serviceNavigationContext.EndSlot?.Html,
+                End = serviceNavigationContext.EndSlot is { } endSlot
+                    ? new ServiceNavigationOptionsEndSlot
+                    {
+                        Html = endSlot.Html,
+                        Align = endSlot.Align switch
+                        {
+                            ServiceNavigationEndSlotAlign.Inline => "inline",
+                            _ => null
+                        }
+                    }
+                    : null,
                 NavigationStart = serviceNavigationContext.Nav?.NavigationStartSlot?.Html,
                 NavigationEnd = serviceNavigationContext.Nav?.NavigationEndSlot?.Html
             },

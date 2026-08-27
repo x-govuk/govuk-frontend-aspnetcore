@@ -2,6 +2,20 @@
 
 ## Unreleased — 5.0.0
 
+Targets GOV.UK Frontend v6.5.0.
+
+The content of `<govuk-service-navigation-end>` can be displayed in line with the navigation items, rather than underneath them, with the new `align` attribute:
+
+```razor
+<govuk-service-navigation service-name="My service">
+    <govuk-service-navigation-end align="Inline">
+        @* language navigation, account links etc. *@
+    </govuk-service-navigation-end>
+</govuk-service-navigation>
+```
+
+The language navigation and feedback components introduced in v6.5.0 do not have tag helpers yet.
+
 `_GovUkPageTemplate` no longer escapes its `<body>` and `<main>` elements, so tag helpers targeting them now run.
 
 The template wrote the attributes from the `BodyAttributes` and `MainAttributes` `ViewData` keys directly into the elements' attribute lists, which Razor only permits on an element that no tag helper targets — the elements had to be written as `<!body>` and `<!main>` to opt out. They're regular elements again and the attributes are applied by a tag helper.
@@ -314,6 +328,13 @@ A `string` assigned to an `Html` option is now HTML-encoded rather than emitted 
 Content that already came from Razor — anything assigned from a `TagHelperContent` or an `IHtmlContent` — is unaffected and still renders as markup.
 
 The `Text` and `Html` properties on `CharacterCountOptionsBeforeInput`, `CharacterCountOptionsAfterInput`, `FileUploadOptionsBeforeInput`, `FileUploadOptionsAfterInput`, `DateInputOptionsBeforeInputs` and `DateInputOptionsAfterInputs` are now `TemplateString?` rather than `string?`, matching every other component's before- and after-input options.
+
+`ServiceNavigationOptionsSlots.End` is now a `ServiceNavigationOptionsEndSlot?` rather than an `IHtmlContent?`, so that the slot can carry its alignment alongside its content:
+
+```diff
+-End = content
++End = new ServiceNavigationOptionsEndSlot { Html = content }
+```
 
 ## 4.4.0
 

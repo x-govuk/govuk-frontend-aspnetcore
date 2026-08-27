@@ -35,7 +35,7 @@ public class ServiceNavigationStartTagHelper : TagHelper
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, serviceNavigationContext.Nav.TagName!);
         }
 
-        if (serviceNavigationContext.EndSlot is var (_, endTagName))
+        if (serviceNavigationContext.EndSlot is { TagName: var endTagName })
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, endTagName);
         }

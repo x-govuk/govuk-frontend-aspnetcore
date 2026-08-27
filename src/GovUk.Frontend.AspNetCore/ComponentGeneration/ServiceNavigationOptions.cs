@@ -38,7 +38,13 @@ public record ServiceNavigationOptionsNavigationItem
 public record ServiceNavigationOptionsSlots
 {
     public IHtmlContent? Start { get; set; }
-    public IHtmlContent? End { get; set; }
+    public ServiceNavigationOptionsEndSlot? End { get; set; }
     public IHtmlContent? NavigationStart { get; set; }
     public IHtmlContent? NavigationEnd { get; set; }
+}
+
+public record ServiceNavigationOptionsEndSlot
+{
+    public IHtmlContent? Html { get; set; }
+    public string? Align { get; set; }
 }

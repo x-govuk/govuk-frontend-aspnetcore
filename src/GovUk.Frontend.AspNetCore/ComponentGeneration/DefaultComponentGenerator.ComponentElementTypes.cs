@@ -12,12 +12,14 @@ internal partial class DefaultComponentGenerator
         public const string Details = "details";
         public const string ErrorMessage = "p";
         public const string ErrorSummary = "div";
+        public const string Feedback = "div";
         public const string Fieldset = "fieldset";
         public const string Footer = "div";
         public const string FormGroup = "div";
         public const string GenericHeader = "div";
         public const string Header = "div";
         public const string InsetText = "div";
+        public const string LanguageNavigation = "nav";
         public const string NotificationBanner = "div";
         public const string Pagination = "nav";
         public const string Panel = "div";

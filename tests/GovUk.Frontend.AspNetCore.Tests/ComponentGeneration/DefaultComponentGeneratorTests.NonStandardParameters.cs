@@ -231,6 +231,43 @@ public partial class DefaultComponentGeneratorTests
     }
 
     [Fact]
+    public async Task Feedback_TitleAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new FeedbackOptions
+        {
+            TitleText = "Title",
+            TitleAttributes = new AttributeCollection { { "data-test", "title-attr" } }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateFeedbackAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("data-test=\"title-attr\"", html);
+    }
+
+    [Fact]
+    public async Task Feedback_BodyAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new FeedbackOptions
+        {
+            TitleText = "Title",
+            Text = "Body",
+            BodyAttributes = new AttributeCollection { { "data-test", "body-attr" } }
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateFeedbackAsync(options);
+        var html = result.GetHtml();
+
+        // Assert
+        Assert.Contains("data-test=\"body-attr\"", html);
+    }
+
+    [Fact]
     public async Task Fieldset_Legend_Attributes_IsIncludedInOutput()
     {
         // Arrange

@@ -66,6 +66,11 @@ public interface IComponentGenerator
     ValueTask<GovUkComponent> GenerateExitThisPageAsync(ExitThisPageOptions options);
 
     /// <summary>
+    /// Generates a feedback component.
+    /// </summary>
+    ValueTask<GovUkComponent> GenerateFeedbackAsync(FeedbackOptions options);
+
+    /// <summary>
     /// Generates a fieldset component.
     /// </summary>
     ValueTask<GovUkComponent> GenerateFieldsetAsync(FieldsetOptions options);
@@ -109,6 +114,11 @@ public interface IComponentGenerator
     /// Generates a label component.
     /// </summary>
     ValueTask<GovUkComponent> GenerateLabelAsync(LabelOptions options);
+
+    /// <summary>
+    /// Generates a language navigation component.
+    /// </summary>
+    ValueTask<GovUkComponent> GenerateLanguageNavigationAsync(LanguageNavigationOptions options);
 
     /// <summary>
     /// Generates a notification banner component.

@@ -14,7 +14,29 @@ The content of `<govuk-service-navigation-end>` can be displayed in line with th
 </govuk-service-navigation>
 ```
 
-The language navigation and feedback components introduced in v6.5.0 do not have tag helpers yet.
+The language navigation component introduced in v6.5.0 has tag helpers:
+
+```razor
+<govuk-language-navigation>
+    <language-navigation-item lang="en">English</language-navigation-item>
+    <language-navigation-item lang="cy" asp-page="/Index" asp-route-lang="cy" language-description-text="Newid yr iaith i'r Cymraeg">Cymraeg</language-navigation-item>
+</govuk-language-navigation>
+```
+
+An item without an `href` is the language the page is already in, so it renders as text rather than a link; `<govuk-language-navigation-item>` is the long name.
+
+So does the feedback component:
+
+```razor
+<govuk-feedback>
+    <feedback-title>Help us improve this service</feedback-title>
+    <feedback-body>
+        <p class="govuk-body">Tell us about your experience using this service.</p>
+    </feedback-body>
+</govuk-feedback>
+```
+
+`<govuk-feedback-title>` and `<govuk-feedback-body>` are the long names.
 
 `_GovUkPageTemplate` no longer escapes its `<body>` and `<main>` elements, so tag helpers targeting them now run.
 

@@ -98,6 +98,13 @@ public partial class DefaultComponentGeneratorTests
             (generator, options) => generator.GenerateExitThisPageAsync(options));
 
     [Theory]
+    [ComponentFixtureData("feedback", typeof(FeedbackOptions))]
+    public Task Feedback(ComponentTestCaseData<FeedbackOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateFeedbackAsync(options));
+
+    [Theory]
     [ComponentFixtureData("fieldset", typeof(FieldsetOptions))]
     public Task Fieldset(ComponentTestCaseData<FieldsetOptions> data) =>
         CheckComponentHtmlMatchesExpectedHtml(
@@ -159,6 +166,13 @@ public partial class DefaultComponentGeneratorTests
         CheckComponentHtmlMatchesExpectedHtml(
             data,
             (generator, options) => generator.GenerateLabelAsync(options));
+
+    [Theory]
+    [ComponentFixtureData("language-navigation", typeof(LanguageNavigationOptions))]
+    public Task LanguageNavigation(ComponentTestCaseData<LanguageNavigationOptions> data) =>
+        CheckComponentHtmlMatchesExpectedHtml(
+            data,
+            (generator, options) => generator.GenerateLanguageNavigationAsync(options));
 
     [Theory]
     [ComponentFixtureData("notification-banner", typeof(NotificationBannerOptions))]

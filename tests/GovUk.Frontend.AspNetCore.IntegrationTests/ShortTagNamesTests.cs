@@ -36,6 +36,8 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     [InlineData("PhaseBanner", "short", "long", ".govuk-phase-banner__content__tag")]
     [InlineData("Tabs", "short", "long", ".govuk-tabs__tab")]
     [InlineData("ErrorSummary", "short", "long", ".govuk-error-summary__list a")]
+    [InlineData("Feedback", "short", "long", ".govuk-feedback__title")]
+    [InlineData("LanguageNavigation", "short", "long", ".govuk-language-navigation__list-item")]
     [InlineData("Details", "short", "long", ".govuk-details__summary-text")]
     [InlineData("CookieBanner", "short", "long", ".govuk-cookie-banner__heading")]
     [InlineData("SummaryList", "short", "long", ".govuk-summary-card__title")]
@@ -139,6 +141,22 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
 
         Assert.Contains(
             "<table-row> cannot be used alongside <govuk-table-caption>; " +
+                "short tag names and govuk- prefixed tag names cannot be mixed.",
+            await response.Content.ReadAsStringAsync());
+    }
+
+    [Fact]
+    public async Task Feedback_MixingShortAndGovUkPrefixedTagNames_Throws()
+    {
+        // Act
+        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/FeedbackMixed");
+        var response = await fixture.HttpClient.SendAsync(request);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+
+        Assert.Contains(
+            "<feedback-body> cannot be used alongside <govuk-feedback-title>; " +
                 "short tag names and govuk- prefixed tag names cannot be mixed.",
             await response.Content.ReadAsStringAsync());
     }
@@ -255,6 +273,15 @@ public class ShortTagNamesTestsController : Controller
 
     [HttpGet("GenericHeader")]
     public IActionResult GetGenericHeader() => View("GenericHeader", new ShortTagNamesTestsModel());
+
+    [HttpGet("Feedback")]
+    public IActionResult GetFeedback() => View("Feedback", new ShortTagNamesTestsModel());
+
+    [HttpGet("FeedbackMixed")]
+    public IActionResult GetFeedbackMixed() => View("FeedbackMixed", new ShortTagNamesTestsModel());
+
+    [HttpGet("LanguageNavigation")]
+    public IActionResult GetLanguageNavigation() => View("LanguageNavigation", new ShortTagNamesTestsModel());
 
     [HttpGet("Footer")]
     public IActionResult GetFooter() => View("Footer", new ShortTagNamesTestsModel());

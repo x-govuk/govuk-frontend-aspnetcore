@@ -1,0 +1,18 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-language-navigation aria-label="Dewis iaith">
+        <language-navigation-item lang="en" href="/en" hreflang="en-GB" language-description-text="Change the language to English">English</language-navigation-item>
+        <language-navigation-item lang="cy" data-item="item">Cymraeg</language-navigation-item>
+    </govuk-language-navigation>
+</div>
+
+<div data-testid="long">
+    <govuk-language-navigation aria-label="Dewis iaith">
+        <govuk-language-navigation-item lang="en" href="/en" hreflang="en-GB" language-description-text="Change the language to English">English</govuk-language-navigation-item>
+        <govuk-language-navigation-item lang="cy" data-item="item">Cymraeg</govuk-language-navigation-item>
+    </govuk-language-navigation>
+</div>

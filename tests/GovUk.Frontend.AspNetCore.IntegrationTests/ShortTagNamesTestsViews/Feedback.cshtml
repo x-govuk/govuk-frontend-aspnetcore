@@ -1,0 +1,22 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* The same component written with the short tag names and with the govuk- prefixed ones;
+   the two must generate identical markup *@
+
+<div data-testid="short">
+    <govuk-feedback heading-level="3">
+        <feedback-title data-title="title">Help us improve this service</feedback-title>
+        <feedback-body data-body="body">
+            <p class="govuk-body">Tell us about your experience using this service.</p>
+        </feedback-body>
+    </govuk-feedback>
+</div>
+
+<div data-testid="long">
+    <govuk-feedback heading-level="3">
+        <govuk-feedback-title data-title="title">Help us improve this service</govuk-feedback-title>
+        <govuk-feedback-body data-body="body">
+            <p class="govuk-body">Tell us about your experience using this service.</p>
+        </govuk-feedback-body>
+    </govuk-feedback>
+</div>

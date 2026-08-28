@@ -56,6 +56,9 @@ public class ComponentLocalizationTests
         [GovUkFrontendResourceNames.FooterMetaVisuallyHiddenTitle] =
             g => g.GenerateFooterAsync(new FooterOptions { Meta = new FooterOptionsMeta() }),
 
+        [GovUkFrontendResourceNames.LanguageNavigationAriaLabel] =
+            g => g.GenerateLanguageNavigationAsync(new LanguageNavigationOptions()),
+
         [GovUkFrontendResourceNames.NotificationBannerTitleTextSuccess] =
             g => g.GenerateNotificationBannerAsync(new NotificationBannerOptions { Type = "success" }),
 

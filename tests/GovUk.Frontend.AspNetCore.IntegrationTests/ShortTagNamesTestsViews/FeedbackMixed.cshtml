@@ -1,0 +1,10 @@
+@model GovUk.Frontend.AspNetCore.IntegrationTests.ShortTagNamesTestsModel
+
+@* Mixing the short tag names with the govuk- prefixed ones must throw *@
+
+<govuk-feedback>
+    <govuk-feedback-title>Help us improve this service</govuk-feedback-title>
+    <feedback-body>
+        <p class="govuk-body">Tell us about your experience using this service.</p>
+    </feedback-body>
+</govuk-feedback>

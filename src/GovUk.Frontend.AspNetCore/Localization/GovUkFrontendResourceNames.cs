@@ -119,6 +119,11 @@ public static class GovUkFrontendResourceNames
     /// <summary>The footer meta section's visually hidden title. The default is <c>Support links</c>.</summary>
     public const string FooterMetaVisuallyHiddenTitle = "Footer.Meta.VisuallyHiddenTitle";
 
+    // Language navigation
+
+    /// <summary>The language navigation's <c>aria-label</c>. The default is <c>Language</c>.</summary>
+    public const string LanguageNavigationAriaLabel = "LanguageNavigation.AriaLabel";
+
     // Notification banner
 
     /// <summary>The notification banner's title when its type is <c>success</c>. The default is <c>Success</c>.</summary>

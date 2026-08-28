@@ -26,10 +26,13 @@ internal static class ShortTagNames
     public const string ErrorMessage = "error-message";
     public const string ErrorSummaryItem = "error-summary-item";
     public const string ErrorSummaryTitle = "error-summary-title";
+    public const string FeedbackBody = "feedback-body";
+    public const string FeedbackTitle = "feedback-title";
     public const string Heading = "heading";
     public const string Hint = "hint";
     public const string Key = "key";
     public const string Label = "label";
+    public const string LanguageNavigationItem = "language-navigation-item";
     public const string Legend = "legend";
     public const string Logo = "logo";
     public const string Message = "message";

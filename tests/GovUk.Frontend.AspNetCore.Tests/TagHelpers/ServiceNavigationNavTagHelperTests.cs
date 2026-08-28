@@ -110,7 +110,7 @@ public class ServiceNavigationNavTagHelperTests : TagHelperTestBase<ServiceNavig
 
         var serviceNavigationContext = new ServiceNavigationContext
         {
-            EndSlot = new(new TemplateString("End slot"), endTagName)
+            EndSlot = new(new TemplateString("End slot"), null, endTagName)
         };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);

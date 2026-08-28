@@ -102,7 +102,7 @@ public class ServiceNavigationNavTagHelper : TagHelper
             throw ExceptionHelper.OnlyOneElementIsPermittedIn(AllTagNames, [ServiceNavigationTagHelper.TagName]);
         }
 
-        if (serviceNavigationContext.EndSlot is var (_, endSlotTagName))
+        if (serviceNavigationContext.EndSlot is { TagName: var endSlotTagName })
         {
             throw ExceptionHelper.ChildElementMustBeSpecifiedBefore(context.TagName, endSlotTagName);
         }

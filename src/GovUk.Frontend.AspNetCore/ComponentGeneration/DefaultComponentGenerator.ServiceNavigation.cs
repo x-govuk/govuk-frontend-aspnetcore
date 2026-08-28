@@ -12,6 +12,8 @@ internal partial class DefaultComponentGenerator
         var menuButtonText = options.MenuButtonText
             .WithEmptyFallback(LocalizedText(GovUkFrontendResourceNames.ServiceNavigationMenuButtonText) ?? "Menu");
         var navigationId = options.NavigationId.WithEmptyFallback("navigation");
+        var endSlotHtml = options.Slots?.End?.Html;
+        var endSlotIsInline = options.Slots?.End?.Align == "inline";
 
         var innerContent = CreateInnerContent();
 
@@ -22,7 +24,9 @@ internal partial class DefaultComponentGenerator
         HtmlTag CreateInnerContent()
         {
             var widthContainerTag = new HtmlTag("div", attrs => attrs
-                .WithClasses("govuk-width-container"));
+                .WithClasses(
+                    "govuk-width-container",
+                    endSlotIsInline ? "govuk-service-navigation__inlining-container" : null));
 
             if (!(options.Slots?.Start).IsEmpty())
             {
@@ -72,9 +76,9 @@ internal partial class DefaultComponentGenerator
 
             widthContainerTag.InnerHtml.AppendHtml(serviceNavigationContainer);
 
-            if (!(options.Slots?.End).IsEmpty())
+            if (!endSlotHtml.IsEmpty())
             {
-                widthContainerTag.InnerHtml.AppendHtml(options.Slots.End);
+                widthContainerTag.InnerHtml.AppendHtml(endSlotHtml);
             }
 
             return widthContainerTag;
@@ -215,7 +219,7 @@ internal partial class DefaultComponentGenerator
         {
             if (!options.ServiceName.IsEmpty() ||
                 !(options.Slots?.Start).IsEmpty() ||
-                !(options.Slots?.End).IsEmpty())
+                !endSlotHtml.IsEmpty())
             {
                 var ariaLabel = TemplateString.Coalesce(
                     options.AriaLabel,

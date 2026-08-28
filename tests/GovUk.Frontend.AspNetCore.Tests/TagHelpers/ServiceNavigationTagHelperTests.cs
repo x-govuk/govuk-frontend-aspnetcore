@@ -60,7 +60,7 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
 
                 serviceNavigationContext.Nav.Items.Add(item);
 
-                serviceNavigationContext.EndSlot = new(new TemplateString(endSlotContent), ServiceNavigationEndTagHelper.TagName);
+                serviceNavigationContext.EndSlot = new(new TemplateString(endSlotContent), ServiceNavigationEndSlotAlign.Inline, ServiceNavigationEndTagHelper.TagName);
 
                 TagHelperContent content = new DefaultTagHelperContent();
                 return Task.FromResult(content);
@@ -93,7 +93,8 @@ public class ServiceNavigationTagHelperTests : TagHelperTestBase<ServiceNavigati
         Assert.Equal(navigationClassName, actualOptions.NavigationClasses);
         AssertContainsAttributes(navigationAttributes, actualOptions.NavigationAttributes);
         Assert.Equal(startSlotContent, actualOptions.Slots?.Start?.ToHtmlString());
-        Assert.Equal(endSlotContent, actualOptions.Slots?.End?.ToHtmlString());
+        Assert.Equal(endSlotContent, actualOptions.Slots?.End?.Html?.ToHtmlString());
+        Assert.Equal("inline", actualOptions.Slots?.End?.Align);
         Assert.Equal(navStartSlotContent, actualOptions.Slots?.NavigationStart?.ToHtmlString());
         Assert.Equal(navEndSlotContent, actualOptions.Slots?.NavigationEnd?.ToHtmlString());
         Assert.NotNull(actualOptions.Navigation);

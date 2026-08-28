@@ -33,6 +33,37 @@ public class ServiceNavigationEndTagHelperTests : TagHelperTestBase<ServiceNavig
 
         // Assert
         Assert.Equal(content, serviceNavigationContext.EndSlot?.Html.ToHtmlString());
+        Assert.Null(serviceNavigationContext.EndSlot?.Align);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_WithAlign_SetsAlignOnContext()
+    {
+        // Arrange
+        var serviceNavigationContext = new ServiceNavigationContext();
+
+        var context = CreateTagHelperContext(contexts: serviceNavigationContext);
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                TagHelperContent tagHelperContent = new DefaultTagHelperContent();
+                tagHelperContent.SetContent("Content");
+                return Task.FromResult(tagHelperContent);
+            });
+
+        var tagHelper = new ServiceNavigationEndTagHelper()
+        {
+            Align = ServiceNavigationEndSlotAlign.Inline
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        Assert.Equal(ServiceNavigationEndSlotAlign.Inline, serviceNavigationContext.EndSlot?.Align);
     }
 
     [Fact]
@@ -43,7 +74,7 @@ public class ServiceNavigationEndTagHelperTests : TagHelperTestBase<ServiceNavig
 
         var serviceNavigationContext = new ServiceNavigationContext
         {
-            EndSlot = new(new TemplateString("Existing end slot"), TagName)
+            EndSlot = new(new TemplateString("Existing end slot"), null, TagName)
         };
 
         var context = CreateTagHelperContext(contexts: serviceNavigationContext);

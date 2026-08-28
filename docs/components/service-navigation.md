@@ -111,3 +111,7 @@ The content is the HTML at the end of the service header container.
 
 Must be inside a `<govuk-service-navigation>` element.
 
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `align` | `GovUk.Frontend.AspNetCore.ServiceNavigationEndSlotAlign?` | How the content is aligned within the service header container. By default the content is displayed underneath the navigation items. |
+

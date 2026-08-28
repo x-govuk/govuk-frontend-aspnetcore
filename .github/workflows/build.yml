@@ -12,8 +12,10 @@ on:
       - LICENSE
       - "**.md"
   pull_request:
+    # ** so that a pull request based on another branch, whose name contains a
+    # slash, is matched too; * stops at the slash
     branches:
-      - "*"
+      - "**"
     paths-ignore:
       - docs/**
       - LICENSE

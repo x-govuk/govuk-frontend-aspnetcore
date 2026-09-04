@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.7.2" />
+    <PackageReference Include="AngleSharp" Version="1.7.3" />
     <PackageReference Include="xunit.v3" Version="4.0.0" />
   </ItemGroup>
 

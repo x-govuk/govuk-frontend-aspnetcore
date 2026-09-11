@@ -29,7 +29,8 @@ public class FormElementValidationTests(FormElementValidationTestsFixture fixtur
         await page.FillAsync("[name='DateInput.Year']", "2020");
 
         // Submit the form
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Submit" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify error summary is displayed
         var errorSummary = await page.QuerySelectorAsync(".govuk-error-summary");

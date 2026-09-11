@@ -27,7 +27,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='Date.Month']", month);
         await page.FillAsync("[name='Date.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped, including the invalid values
         await AssertFieldsForCompleteDate(page, day, month, year, expectDayToHaveError: true, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Date of birth must be a real date");
@@ -51,7 +52,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='CustomDate.Month']", month);
         await page.FillAsync("[name='CustomDate.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped, including the invalid values
         await AssertFieldsForCompleteDate(page, day, month, year, expectDayToHaveError: true, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Date of birth must be a real date");
@@ -75,7 +77,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='Date.Month']", month);
         await page.FillAsync("[name='Date.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForCompleteDate(page, day, month, year);
@@ -99,7 +102,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='CustomDate.Month']", month);
         await page.FillAsync("[name='CustomDate.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForCompleteDate(page, day, month, year);
@@ -123,7 +127,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='Date.Month']", month);
         await page.FillAsync("[name='Date.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForCompleteDate(page, day, month, year);
@@ -145,7 +150,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='MonthAndYear.Month']", month);
         await page.FillAsync("[name='MonthAndYear.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped, including the invalid values
         await AssertFieldsForMonthAndYearOnly(page, month, year, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Month of birth must be a real date");
@@ -167,7 +173,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='CustomMonthAndYear.Month']", month);
         await page.FillAsync("[name='CustomMonthAndYear.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped, including the invalid values
         await AssertFieldsForMonthAndYearOnly(page, month, year, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Month of birth must be a real date");
@@ -189,7 +196,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='MonthAndYear.Month']", month);
         await page.FillAsync("[name='MonthAndYear.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForMonthAndYearOnly(page, month, year);
@@ -211,7 +219,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='CustomMonthAndYear.Month']", month);
         await page.FillAsync("[name='CustomMonthAndYear.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForMonthAndYearOnly(page, month, year);
@@ -233,7 +242,8 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='MonthAndYear.Month']", month);
         await page.FillAsync("[name='MonthAndYear.Year']", year);
 
-        await page.RunAndWaitForNavigationAsync(() => page.Keyboard.PressAsync("Enter"));
+        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
+        await page.WaitForLoadStateAsync();
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForMonthAndYearOnly(page, month, year);

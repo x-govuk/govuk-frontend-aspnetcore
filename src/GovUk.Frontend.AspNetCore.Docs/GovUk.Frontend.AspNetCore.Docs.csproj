@@ -44,7 +44,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fluid.Core" Version="2.40.0" />
-    <PackageReference Include="PuppeteerSharp" Version="20.1.3" />
+    <PackageReference Include="PuppeteerSharp" Version="25.10.0" />
     <PackageReference Include="SoftCircuits.HtmlMonkey" Version="3.2.1" />
   </ItemGroup>
 

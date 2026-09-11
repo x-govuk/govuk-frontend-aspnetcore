@@ -12,7 +12,8 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(TagName, ParentTag = CookieBannerMessageActionsTagHelper.TagName, TagStructure = TagStructure.WithoutEndTag)]
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Obsolete(
-    "Use the <" + CookieBannerMessageActionButtonTagHelper.TagName + "> element instead.",
+    "Use the <" + CookieBannerMessageActionButtonTagHelper.TagName + "> or <" +
+        CookieBannerMessageActionButtonTagHelper.ShortTagName + "> element instead.",
     DiagnosticId = DiagnosticIds.UseCookieBannerMessageActionButtonElementInstead)]
 public class CookieBannerMessageActionTagHelper : CookieBannerMessageActionButtonTagHelper
 {

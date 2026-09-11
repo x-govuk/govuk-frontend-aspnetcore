@@ -12,7 +12,8 @@ namespace GovUk.Frontend.AspNetCore.TagHelpers;
 [HtmlTargetElement(ShortTagName, ParentTag = SummaryCardTagHelper.TagName)]
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Obsolete(
-    "Use the <" + SummaryCardTitleTagHelper.ShortTagName + "> element instead.",
+    "Use the <" + SummaryCardTitleTagHelper.TagName + "> or <" +
+        SummaryCardTitleTagHelper.ShortTagName + "> element instead.",
     DiagnosticId = DiagnosticIds.UseSummaryCardTitleElementInstead)]
 public class LegacySummaryCardTitleTagHelper : SummaryCardTitleTagHelper
 {

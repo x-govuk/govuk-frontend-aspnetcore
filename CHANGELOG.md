@@ -2,7 +2,7 @@
 
 ## Unreleased — 5.0.0
 
-Targets GOV.UK Frontend v6.5.0.
+Targets GOV.UK Frontend v6.5.1.
 
 The content of `<govuk-service-navigation-end>` can be displayed in line with the navigation items, rather than underneath them, with the new `align` attribute:
 

@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Playwright;
+using static Microsoft.Playwright.Assertions;
 
 namespace GovUk.Frontend.AspNetCore.IntegrationTests;
 
@@ -27,8 +28,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='Date.Month']", month);
         await page.FillAsync("[name='Date.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped, including the invalid values
         await AssertFieldsForCompleteDate(page, day, month, year, expectDayToHaveError: true, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Date of birth must be a real date");
@@ -52,8 +52,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='CustomDate.Month']", month);
         await page.FillAsync("[name='CustomDate.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped, including the invalid values
         await AssertFieldsForCompleteDate(page, day, month, year, expectDayToHaveError: true, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Date of birth must be a real date");
@@ -77,8 +76,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='Date.Month']", month);
         await page.FillAsync("[name='Date.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForCompleteDate(page, day, month, year);
@@ -102,8 +100,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='CustomDate.Month']", month);
         await page.FillAsync("[name='CustomDate.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForCompleteDate(page, day, month, year);
@@ -127,8 +124,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='Date.Month']", month);
         await page.FillAsync("[name='Date.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForCompleteDate(page, day, month, year);
@@ -150,8 +146,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='MonthAndYear.Month']", month);
         await page.FillAsync("[name='MonthAndYear.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped, including the invalid values
         await AssertFieldsForMonthAndYearOnly(page, month, year, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Month of birth must be a real date");
@@ -173,8 +168,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='CustomMonthAndYear.Month']", month);
         await page.FillAsync("[name='CustomMonthAndYear.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped, including the invalid values
         await AssertFieldsForMonthAndYearOnly(page, month, year, expectMonthToHaveError: true, expectYearToHaveError: false, expectedErrorMessage: "Month of birth must be a real date");
@@ -196,8 +190,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='MonthAndYear.Month']", month);
         await page.FillAsync("[name='MonthAndYear.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForMonthAndYearOnly(page, month, year);
@@ -219,8 +212,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='CustomMonthAndYear.Month']", month);
         await page.FillAsync("[name='CustomMonthAndYear.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForMonthAndYearOnly(page, month, year);
@@ -242,8 +234,7 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         await page.FillAsync("[name='MonthAndYear.Month']", month);
         await page.FillAsync("[name='MonthAndYear.Year']", year);
 
-        await page.GetByRole(AriaRole.Button, new() { Name = "Save" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Save");
 
         // Verify POSTed values have been round-tripped
         await AssertFieldsForMonthAndYearOnly(page, month, year);
@@ -259,13 +250,12 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         bool? expectMonthToHaveError = null,
         bool? expectYearToHaveError = null)
     {
-        var inputs = await page.QuerySelectorAllAsync("input[type='text']");
+        var inputs = page.Locator("input[type='text']");
+        await Expect(inputs).ToHaveCountAsync(3);
 
-        await Assert.CollectionAsync(
-            inputs,
-            input => AssertInput(input, expectedDay, expectDayToHaveError),
-            input => AssertInput(input, expectedMonth, expectMonthToHaveError),
-            input => AssertInput(input, expectedYear, expectYearToHaveError));
+        await AssertInput(inputs.Nth(0), expectedDay, expectDayToHaveError);
+        await AssertInput(inputs.Nth(1), expectedMonth, expectMonthToHaveError);
+        await AssertInput(inputs.Nth(2), expectedYear, expectYearToHaveError);
 
         if (expectedErrorMessage is not null)
         {
@@ -281,12 +271,11 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         bool? expectMonthToHaveError = null,
         bool? expectYearToHaveError = null)
     {
-        var inputs = await page.QuerySelectorAllAsync("input[type='text']");
+        var inputs = page.Locator("input[type='text']");
+        await Expect(inputs).ToHaveCountAsync(2);
 
-        await Assert.CollectionAsync(
-            inputs,
-            input => AssertInput(input, expectedMonth, expectMonthToHaveError),
-            input => AssertInput(input, expectedYear, expectYearToHaveError));
+        await AssertInput(inputs.Nth(0), expectedMonth, expectMonthToHaveError);
+        await AssertInput(inputs.Nth(1), expectedYear, expectYearToHaveError);
 
         if (expectedErrorMessage is not null)
         {
@@ -303,20 +292,17 @@ public class DateInputTests(DateInputTestsFixture fixture) : IClassFixture<DateI
         Assert.Equal(expectedErrorMessage, errorSummaryError);
     }
 
-    private static async Task AssertInput(IElementHandle input, string expectedValue, bool? expectError)
+    private static async Task AssertInput(ILocator input, string expectedValue, bool? expectError)
     {
-        var value = await input.GetAttributeAsync("value");
-        Assert.Equal(expectedValue, value);
-
-        var classes = await input.GetClassListAsync();
+        await Expect(input).ToHaveValueAsync(expectedValue);
 
         if (expectError is true)
         {
-            Assert.Contains("govuk-input--error", classes);
+            await Expect(input).ToContainClassAsync("govuk-input--error");
         }
         else if (expectError is false)
         {
-            Assert.DoesNotContain("govuk-input--error", classes);
+            await Expect(input).Not.ToContainClassAsync("govuk-input--error");
         }
     }
 }

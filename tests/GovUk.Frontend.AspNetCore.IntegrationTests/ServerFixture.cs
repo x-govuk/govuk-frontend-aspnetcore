@@ -66,6 +66,10 @@ public class ServerFixture : IAsyncLifetime
     {
         app.UseDeveloperExceptionPage();
 
+        // Registered after the developer exception page so it's the inner of the two and gets to
+        // handle expected exceptions first, keeping them out of the test output
+        app.UseMiddleware<ExpectedExceptionMiddleware>();
+
         app.UseGovUkFrontend();
 
         app.UseRouting();

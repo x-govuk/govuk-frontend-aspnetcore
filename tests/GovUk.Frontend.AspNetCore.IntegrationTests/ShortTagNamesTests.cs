@@ -69,8 +69,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     public async Task ServiceNavigation_MixingShortAndGovUkPrefixedTagNames_Throws()
     {
         // Act
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/ServiceNavigationMixed");
-        var response = await fixture.HttpClient.SendAsync(request);
+        var response = await fixture.HttpClient.GetExpectingExceptionAsync("/ShortTagNamesTests/ServiceNavigationMixed");
 
         // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
@@ -85,8 +84,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     public async Task Details_MixingShortAndGovUkPrefixedTagNames_Throws()
     {
         // Act
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/DetailsMixed");
-        var response = await fixture.HttpClient.SendAsync(request);
+        var response = await fixture.HttpClient.GetExpectingExceptionAsync("/ShortTagNamesTests/DetailsMixed");
 
         // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
@@ -101,8 +99,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     public async Task ErrorSummary_MixingShortAndGovUkPrefixedTagNames_Throws()
     {
         // Act
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/ErrorSummaryMixed");
-        var response = await fixture.HttpClient.SendAsync(request);
+        var response = await fixture.HttpClient.GetExpectingExceptionAsync("/ShortTagNamesTests/ErrorSummaryMixed");
 
         // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
@@ -117,8 +114,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     public async Task Pagination_MixingShortAndGovUkPrefixedTagNames_Throws()
     {
         // Act
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/PaginationMixed");
-        var response = await fixture.HttpClient.SendAsync(request);
+        var response = await fixture.HttpClient.GetExpectingExceptionAsync("/ShortTagNamesTests/PaginationMixed");
 
         // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
@@ -133,8 +129,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     public async Task Table_MixingShortAndGovUkPrefixedTagNames_Throws()
     {
         // Act
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/TableMixed");
-        var response = await fixture.HttpClient.SendAsync(request);
+        var response = await fixture.HttpClient.GetExpectingExceptionAsync("/ShortTagNamesTests/TableMixed");
 
         // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
@@ -149,8 +144,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     public async Task Feedback_MixingShortAndGovUkPrefixedTagNames_Throws()
     {
         // Act
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/FeedbackMixed");
-        var response = await fixture.HttpClient.SendAsync(request);
+        var response = await fixture.HttpClient.GetExpectingExceptionAsync("/ShortTagNamesTests/FeedbackMixed");
 
         // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
@@ -165,8 +159,7 @@ public class ShortTagNamesTests(ShortTagNamesTestsFixture fixture) : IClassFixtu
     public async Task Footer_MixingShortAndGovUkPrefixedTagNames_Throws()
     {
         // Act
-        var request = new HttpRequestMessage(HttpMethod.Get, "/ShortTagNamesTests/FooterMixed");
-        var response = await fixture.HttpClient.SendAsync(request);
+        var response = await fixture.HttpClient.GetExpectingExceptionAsync("/ShortTagNamesTests/FooterMixed");
 
         // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);

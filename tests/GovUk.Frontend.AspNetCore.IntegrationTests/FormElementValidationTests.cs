@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Playwright;
+using static Microsoft.Playwright.Assertions;
 
 namespace GovUk.Frontend.AspNetCore.IntegrationTests;
 
@@ -29,16 +30,13 @@ public class FormElementValidationTests(FormElementValidationTestsFixture fixtur
         await page.FillAsync("[name='DateInput.Year']", "2020");
 
         // Submit the form
-        await page.GetByRole(AriaRole.Button, new() { Name = "Submit" }).ClickAsync();
-        await page.WaitForLoadStateAsync();
+        await page.SubmitFormAsync("Submit");
 
         // Verify error summary is displayed
-        var errorSummary = await page.QuerySelectorAsync(".govuk-error-summary");
-        Assert.NotNull(errorSummary);
+        await Expect(page.Locator(".govuk-error-summary")).ToBeVisibleAsync();
 
         // Get all error summary links
-        var errorLinks = await page.QuerySelectorAllAsync(".govuk-error-summary__list a");
-        Assert.Equal(9, errorLinks.Count);
+        await Expect(page.Locator(".govuk-error-summary__list a")).ToHaveCountAsync(9);
 
         // Verify each form element has an error message and is linked from error summary
         await VerifyErrorForElement(page, "TextInput", "Enter valid text input");

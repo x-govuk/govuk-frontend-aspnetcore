@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.2
+
+Fixes an exception at startup when more than one application part references the package.
+The build info is now read from the application's own assembly only, rather than from every application part.
+
 ## 4.2.1
 
 Fixes including copied assets in static asset manifest generation.

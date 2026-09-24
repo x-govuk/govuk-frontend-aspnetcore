@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.3.1
+
+Fixes an exception at startup when more than one application part references the package.
+The build info is now read from the application's own assembly only, rather than from every application part.
+
 ## 4.3.0
 
 Targets GOV.UK Frontend v6.3.0.

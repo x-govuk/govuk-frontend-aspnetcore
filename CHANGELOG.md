@@ -367,6 +367,11 @@ The `Text` and `Html` properties on `CharacterCountOptionsBeforeInput`, `Charact
 +End = new ServiceNavigationOptionsEndSlot { Html = content }
 ```
 
+## 4.4.1
+
+Fixes an exception at startup when more than one application part references the package.
+The build info is now read from the application's own assembly only, rather than from every application part.
+
 ## 4.4.0
 
 Targets GOV.UK Frontend v6.4.0.
@@ -379,6 +384,11 @@ A `<govuk-checkboxes-fieldset-legend>`, `<govuk-date-input-fieldset-legend>` or 
 The root elements have also gained `fieldset-*`, `legend-*` and `legend-is-page-heading` attributes for the generated fieldset and legend, along with a `fieldset` attribute for when a fieldset is wanted but none of the other attributes or elements are used;
 in that case the legend's content is deduced from the `for` attribute's `ModelMetadata`. The existing fieldset elements continue to work as before.
 
+## 4.3.1
+
+Fixes an exception at startup when more than one application part references the package.
+The build info is now read from the application's own assembly only, rather than from every application part.
+
 ## 4.3.0
 
 Targets GOV.UK Frontend v6.3.0.
@@ -386,6 +396,11 @@ Targets GOV.UK Frontend v6.3.0.
 Added tag helpers for the generic header component.
 
 Added `GetJavascriptFileName()` and `GetStylesheetFileName()` methods to `PageTemplateHelper`.
+
+## 4.2.2
+
+Fixes an exception at startup when more than one application part references the package.
+The build info is now read from the application's own assembly only, rather than from every application part.
 
 ## 4.2.1
 

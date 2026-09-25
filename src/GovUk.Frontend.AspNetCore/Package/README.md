@@ -17,5 +17,3 @@ Below is an example that generates a text input component and a button:
 ```
 
 See the [full documentation](https://github.com/x-govuk/govuk-frontend-aspnetcore/blob/main/README.md) for installation and usage guides.
-
-An [X-GOVUK](https://x-govuk.org/) project.

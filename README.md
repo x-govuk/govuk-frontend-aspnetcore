@@ -20,8 +20,6 @@ Below is an example that generates a text input component and a button:
 <govuk-button>Submit</govuk-button>
 ```
 
-An [X-GOVUK](https://x-govuk.org/) project.
-
 ## Installation
 
 ### 1. Install NuGet package

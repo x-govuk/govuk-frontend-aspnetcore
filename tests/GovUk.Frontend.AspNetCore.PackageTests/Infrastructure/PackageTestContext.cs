@@ -69,8 +69,8 @@ public sealed class PackageTestContext : IDisposable
     /// extracted once and the machine's global cache is never touched.
     /// </summary>
     /// <remarks>
-    /// The package under test's extracted copy is removed when it's repacked, so a rebuild can't leave a
-    /// stale one behind for a version number that happens to repeat.
+    /// The package under test's extracted copy is removed when it's repacked; every pack of the same commit
+    /// has the same version number, so a rebuild would otherwise leave a stale one behind.
     /// </remarks>
     public string PackagesDirectory { get; }
 

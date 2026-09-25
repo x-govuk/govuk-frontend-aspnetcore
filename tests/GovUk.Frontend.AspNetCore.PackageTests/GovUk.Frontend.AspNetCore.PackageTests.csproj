@@ -32,10 +32,10 @@
   </ItemGroup>
 
   <!-- The tests build throwaway projects against a real nupkg, so one has to exist before they run.
-       MinVer gives every local pack a distinct version, hence the wipe. -->
+       Each commit packs a different version and the tests expect exactly one in the feed, hence the wipe. -->
   <Target Name="PackLibraryUnderTest" BeforeTargets="Build" Condition="'$(SkipPackLibraryUnderTest)' != 'true'">
-    <!-- The extracted copy goes too, so a repeated version number can't leave a stale package behind for
-         the fixture projects to restore. -->
+    <!-- The extracted copy goes too; every pack of the same commit has the same version number, so otherwise
+         the fixture projects would restore a stale package. -->
     <RemoveDir Directories="$(PackageTestFeed);$(PackageTestPackages)govuk.frontend.aspnetcore" />
 
     <MSBuild Projects="$(RepoRoot)src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj"

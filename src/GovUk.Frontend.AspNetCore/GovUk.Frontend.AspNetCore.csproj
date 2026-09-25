@@ -16,7 +16,6 @@
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <MinVerMinimumMajorMinor>5.0</MinVerMinimumMajorMinor>
     <MinVerDefaultPreReleaseIdentifiers>pre.0</MinVerDefaultPreReleaseIdentifiers>
-    <MinVerBuildMetadata Condition="'$(GITHUB_ACTIONS)' != 'true'">$([System.DateTimeOffset]::Now.ToUnixTimeSeconds())</MinVerBuildMetadata>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

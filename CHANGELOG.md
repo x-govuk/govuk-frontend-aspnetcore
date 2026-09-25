@@ -123,6 +123,9 @@ The old names still work but produce a deprecation warning with the diagnostic I
 
 1. **Serve static files.** Make sure your app calls `MapStaticAssets()` or `UseStaticFiles()` so the copied `govuk-frontend` files in `wwwroot` are reachable, and remove any use of `FrontendPackageHostingOptions`. If your project doesn't use `Microsoft.NET.Sdk.Web`, set `<EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>`.
 
+   > [!NOTE]
+   > Add `wwwroot/assets`, `wwwroot/govuk-frontend.min.css` and `wwwroot/govuk-frontend.min.js` to your `.gitignore` file.
+
 2. **Add an error message prefix to every date input**, either on the element or on the model:
 
    ```csharp

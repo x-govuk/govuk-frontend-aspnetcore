@@ -111,7 +111,10 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: GovUk.Frontend.AspNetCore.nupkg
-          path: packages/*.nupkg
+          # The release job's push picks up each .snupkg from alongside its .nupkg
+          path: |
+            packages/*.nupkg
+            packages/*.snupkg
 
   package_tests:
     name: "Package tests"

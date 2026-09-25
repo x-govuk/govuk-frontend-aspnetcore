@@ -68,6 +68,13 @@ jobs:
       - name: Format
         run: just format --verify-no-changes
 
+      # Before Build, so that Pack reuses the assemblies that were tested rather than recompiling them
+      # with a different version
+      - name: Assign package build metadata
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        run: |
+          echo "MINVERBUILDMETADATA=build.${{ github.run_id }}.${{ github.run_attempt}}" >> $GITHUB_ENV
+
       - name: Build
         run: just build --configuration Release --no-restore
 
@@ -78,11 +85,6 @@ jobs:
         run: |
           just unit-tests --configuration Release --no-build
           just integration-tests --configuration Release --no-build
-
-      - name: Assign package build metadata
-        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-        run: |
-          echo "MINVERBUILDMETADATA=build.${{ github.run_id }}.${{ github.run_attempt}}" >> $GITHUB_ENV
 
       - name: Update package README GitHub link
         run: |

@@ -81,6 +81,20 @@ Following the design system guidance, it shows the first page, the pages either 
 
 `<govuk-service-navigation-end align="Inline">` displays its content in line with the navigation items rather than underneath them.
 
+#### Localization
+
+The library's built-in content, such as "There is a problem", "Back" and the date input's validation messages, can now be translated through `IGovUkFrontendLocalizer`. The simplest setup uses `IStringLocalizer` with a resource file:
+
+```csharp
+builder.Services.AddGovUkFrontendLocalization<GovUkFrontendStrings>();
+
+// ...
+
+app.UseRequestLocalization("en-GB", "cy");
+```
+
+Resource files only need the content you're changing. Anything else falls back to the built-in English. The options records for the character count's counter and the file upload's multiple-files text gain `Zero`, `Two`, `Few` and `Many` alongside `One` and `Other`, so languages that use all six plural categories, such as Welsh, can be fully translated. See [Localization](docs/localization.md).
+
 #### Other additions
 
 - The cookie banner's action button and link can generate their `formaction`/`href` from `asp-` attributes, as `<govuk-button>` already could.

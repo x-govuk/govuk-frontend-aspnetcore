@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Encodings.Web;
 using GovUk.Frontend.AspNetCore.Localization;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -57,14 +59,34 @@ public class TitleTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
-
-        if (_optionsAccessor.Value.PrependErrorToTitle && containerErrorContext.ErrorSummaryHasBeenRendered)
+        if (!_optionsAccessor.Value.PrependErrorToTitle)
         {
-            var errorPrefix = ErrorPrefix ??
-                _localizer.GetString(GovUkFrontendResourceNames.TitleErrorPrefix) ??
-                DefaultErrorPrefix;
-            output.PreContent.Append(errorPrefix + " ");
+            return;
+        }
+
+        var pageErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
+
+        var errorPrefix = ErrorPrefix ??
+            _localizer.GetString(GovUkFrontendResourceNames.TitleErrorPrefix) ??
+            DefaultErrorPrefix;
+
+        // The <title> is usually processed before the error summary is rendered - _GovUkPageTemplate
+        // generates the summary in <main>, which comes after <head> - so whether there's a summary isn't known yet.
+        // Razor buffers the page's output, so defer the decision until the content is written.
+        output.PreContent.AppendHtml(new ErrorPrefixContent(pageErrorContext, errorPrefix + " "));
+    }
+
+    private sealed class ErrorPrefixContent(PageErrorContext pageErrorContext, string prefix) : IHtmlContent
+    {
+        public void WriteTo(TextWriter writer, HtmlEncoder encoder)
+        {
+            ArgumentNullException.ThrowIfNull(writer);
+            ArgumentNullException.ThrowIfNull(encoder);
+
+            if (pageErrorContext.ErrorSummaryHasBeenRendered)
+            {
+                encoder.Encode(writer, prefix);
+            }
         }
     }
 }

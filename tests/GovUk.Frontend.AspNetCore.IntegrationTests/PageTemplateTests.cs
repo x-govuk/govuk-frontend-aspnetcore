@@ -40,4 +40,50 @@ public class PageTemplateTests(EncodingsTestFixture fixture) : IClassFixture<Enc
         Assert.Equal(main, errorSummary.ParentElement);
         Assert.Equal(errorSummary, main.FirstElementChild);
     }
+
+    [Fact]
+    public async Task ComponentHasErrorOutsideOfAForm_PrependsErrorToTitle()
+    {
+        // Arrange
+        var request = new HttpRequestMessage(HttpMethod.Get, "/PageTemplate");
+
+        // Act
+        var response = await fixture.HttpClient.SendAsync(request);
+
+        // Assert
+        // The <title> is rendered before the <main> element that the error summary is prepended to,
+        // so the prefix can't depend on the summary having been rendered by the time the <title> is processed.
+        var doc = await AssertEx.GetHtmlDocument(response);
+        Assert.Equal("Error: Page template", doc.Title);
+    }
+
+    [Fact]
+    public async Task ErrorSummaryPrependedToForm_PrependsErrorToTitleOnce()
+    {
+        // Arrange
+        var request = new HttpRequestMessage(HttpMethod.Get, "/PageTemplateWithFormErrorSummary");
+
+        // Act
+        var response = await fixture.HttpClient.SendAsync(request);
+
+        // Assert
+        var doc = await AssertEx.GetHtmlDocument(response);
+        Assert.Single(doc.GetElementsByClassName("govuk-error-summary"));
+        Assert.Equal("Error: Page template", doc.Title);
+    }
+
+    [Fact]
+    public async Task NoErrors_DoesNotPrependErrorToTitle()
+    {
+        // Arrange
+        var request = new HttpRequestMessage(HttpMethod.Get, "/PageTemplateWithoutErrors");
+
+        // Act
+        var response = await fixture.HttpClient.SendAsync(request);
+
+        // Assert
+        var doc = await AssertEx.GetHtmlDocument(response);
+        Assert.Empty(doc.GetElementsByClassName("govuk-error-summary"));
+        Assert.Equal("Page template", doc.Title);
+    }
 }

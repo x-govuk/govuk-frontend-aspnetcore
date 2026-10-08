@@ -57,4 +57,35 @@ public class TitleTagHelperTests : TagHelperTestBase<TitleTagHelper>
             Assert.False(startsWithError);
         }
     }
+
+    [Fact]
+    public async Task ProcessAsync_ErrorSummaryRenderedAfterTitle_PrependsErrorToTitle()
+    {
+        // Arrange
+        var options = Options.Create(new GovUkFrontendOptions());
+
+        var context = CreateTagHelperContext(tagName: "title");
+
+        var output = CreateTagHelperOutput(tagName: "title",
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var viewContext = TestUtils.CreateViewContext();
+
+        var tagHelper = new TitleTagHelper(options, NullGovUkFrontendLocalizer.Instance)
+        {
+            ViewContext = viewContext
+        };
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+        viewContext.HttpContext.GetPageErrorContext().ErrorSummaryHasBeenRendered = true;
+
+        // Assert
+        var html = output.RenderToElement();
+        Assert.StartsWith("Error: ", html.InnerHtml);
+    }
 }

@@ -68,7 +68,7 @@ internal partial class DefaultComponentGenerator
                 {
                     Html = action.Html,
                     Text = action.Text,
-                    Type = action.Type ?? "button",
+                    Type = action.Type.WithEmptyFallback("button"),
                     Classes = new TemplateString("govuk-button--inverse").AppendCssClasses(action.Classes),
                     Href = action.Href,
                     Attributes = action.Attributes

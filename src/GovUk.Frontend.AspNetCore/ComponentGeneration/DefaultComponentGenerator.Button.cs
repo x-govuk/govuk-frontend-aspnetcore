@@ -19,7 +19,7 @@ internal partial class DefaultComponentGenerator
             var tag = new HtmlTag("a", attrs =>
             {
                 attrs
-                    .With("href", options.Href ?? "#")
+                    .With("href", options.Href.WithEmptyFallback("#"))
                     .With("role", "button")
                     .With("draggable", "false");
 
@@ -37,7 +37,7 @@ internal partial class DefaultComponentGenerator
             {
                 attrs
                     .With("value", options.Value)
-                    .With("type", options.Type ?? "submit");
+                    .With("type", options.Type.WithEmptyFallback("submit"));
 
                 AddButtonSpecificAttributes(attrs);
                 AddCommonButtonAttributes(attrs);
@@ -54,7 +54,7 @@ internal partial class DefaultComponentGenerator
             {
                 attrs
                     .With("value", options.Text)
-                    .With("type", options.Type ?? "submit");
+                    .With("type", options.Type.WithEmptyFallback("submit"));
 
                 AddButtonSpecificAttributes(attrs);
                 AddCommonButtonAttributes(attrs);

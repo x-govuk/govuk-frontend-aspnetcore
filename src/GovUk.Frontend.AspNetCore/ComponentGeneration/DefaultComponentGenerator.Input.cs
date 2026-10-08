@@ -121,7 +121,7 @@ internal partial class DefaultComponentGenerator
         {
             var input = new HtmlTag("input", attrs => attrs
                 .With("id", id)
-                .With("type", options.Type ?? "text")
+                .With("type", options.Type.WithEmptyFallback("text"))
                 .WithClasses(classNames)
                 .With("value", options.Value)
                 .With("aria-describedby", TemplateString.Join(" ", describedByParts))

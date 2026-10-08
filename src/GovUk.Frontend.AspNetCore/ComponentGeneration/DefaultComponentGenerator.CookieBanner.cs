@@ -15,7 +15,7 @@ internal partial class DefaultComponentGenerator
                 .WithClasses("govuk-cookie-banner", options.Classes)
                 .WithBoolean("data-nosnippet")
                 .With("role", "region")
-                .With("aria-label", options.AriaLabel ?? LocalizedText(GovUkFrontendResourceNames.CookieBannerAriaLabel) ?? "Cookie banner")
+                .With("aria-label", options.AriaLabel.WithEmptyFallback(LocalizedText(GovUkFrontendResourceNames.CookieBannerAriaLabel) ?? "Cookie banner"))
                 .WithBoolean("hidden", options.Hidden is true)
                 .With(options.Attributes);
         });
@@ -116,7 +116,7 @@ internal partial class DefaultComponentGenerator
                 var buttonOptions = new ButtonOptions
                 {
                     Text = action.Text,
-                    Type = action.Type ?? "button",
+                    Type = action.Type.WithEmptyFallback("button"),
                     Name = action.Name,
                     Value = action.Value,
                     Classes = action.Classes,

@@ -193,11 +193,19 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// Creates a new <see cref="TemplateString"/> from the specified unencoded <see cref="string"/>.
     /// </summary>
     /// <param name="value">The unencoded <see cref="string"/>.</param>
-    /// <returns>A new <see cref="TemplateString"/> with the contents of the specified <see cref="string"/>.</returns>
+    /// <returns>
+    /// A new <see cref="TemplateString"/> with the contents of the specified <see cref="string"/>,
+    /// or <see langword="null"/> if <paramref name="value"/> is <see langword="null"/>.
+    /// </returns>
+    /// <remarks>
+    /// <see langword="null"/> is preserved rather than converted to <see cref="Empty"/> so that an unset
+    /// value still falls through to its component's default.
+    /// </remarks>
 #pragma warning disable CA2225
-    public static implicit operator TemplateString(string? value)
+    [return: NotNullIfNotNull(nameof(value))]
+    public static implicit operator TemplateString?(string? value)
     {
-        return value is null ? Empty : new(value);
+        return value is null ? null : new(value);
     }
 #pragma warning restore CA2225
 
@@ -205,11 +213,15 @@ public sealed class TemplateString : IEquatable<TemplateString>, IHtmlContent
     /// Creates a <see cref="TemplateString"/> from <see cref="HtmlString"/>.
     /// </summary>
     /// <param name="content">The <see cref="IHtmlContent"/> to create the <see cref="TemplateString"/> from.</param>
-    /// <returns>A new <see cref="TemplateString"/> wrapping the specified <see cref="HtmlString"/>.</returns>
+    /// <returns>
+    /// A new <see cref="TemplateString"/> wrapping the specified <see cref="HtmlString"/>,
+    /// or <see langword="null"/> if <paramref name="content"/> is <see langword="null"/>.
+    /// </returns>
 #pragma warning disable CA2225
-    public static implicit operator TemplateString(HtmlString? content)
+    [return: NotNullIfNotNull(nameof(content))]
+    public static implicit operator TemplateString?(HtmlString? content)
     {
-        return content is null ? Empty : new(content);
+        return content is null ? null : new(content);
     }
 #pragma warning restore CA2225
 

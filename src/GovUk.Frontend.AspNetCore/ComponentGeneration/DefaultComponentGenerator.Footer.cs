@@ -51,7 +51,7 @@ internal partial class DefaultComponentGenerator
                     continue;
                 }
 
-                var width = nav.Width ?? "full";
+                var width = nav.Width.WithEmptyFallback("full");
                 var sectionTag = new HtmlTag("div", attrs => attrs
                     .WithClasses("govuk-footer__section", new TemplateString($"govuk-grid-column-{width}"))
                     .With(nav.Attributes));
@@ -113,9 +113,8 @@ internal partial class DefaultComponentGenerator
 
             if (meta is not null)
             {
-                var visuallyHiddenTitle = meta.VisuallyHiddenTitle ??
-                    LocalizedText(GovUkFrontendResourceNames.FooterMetaVisuallyHiddenTitle) ??
-                    "Support links";
+                var visuallyHiddenTitle = meta.VisuallyHiddenTitle.WithEmptyFallback(
+                    LocalizedText(GovUkFrontendResourceNames.FooterMetaVisuallyHiddenTitle) ?? "Support links");
                 var h2Tag = new HtmlTag("h2", attrs => attrs
                     .WithClasses("govuk-visually-hidden"));
                 h2Tag.InnerHtml.AppendHtml(visuallyHiddenTitle);

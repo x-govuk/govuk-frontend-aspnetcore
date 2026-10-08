@@ -8,9 +8,8 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var iconFallbackText = options.IconFallbackText ??
-            LocalizedText(GovUkFrontendResourceNames.WarningTextIconFallbackText) ??
-            "Warning";
+        var iconFallbackText = options.IconFallbackText.WithEmptyFallback(
+            LocalizedText(GovUkFrontendResourceNames.WarningTextIconFallbackText) ?? "Warning");
         var content = HtmlOrText(options.Html, options.Text);
 
         var outerTag = new HtmlTag("div", attrs => attrs

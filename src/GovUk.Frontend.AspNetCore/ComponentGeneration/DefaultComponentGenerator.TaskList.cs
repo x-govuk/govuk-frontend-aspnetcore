@@ -6,7 +6,7 @@ internal partial class DefaultComponentGenerator
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        var idPrefix = options.IdPrefix ?? "task-list";
+        var idPrefix = options.IdPrefix.WithEmptyFallback("task-list");
 
         var ulTag = new HtmlTag("ul", attrs => attrs
             .WithClasses("govuk-task-list", options.Classes)

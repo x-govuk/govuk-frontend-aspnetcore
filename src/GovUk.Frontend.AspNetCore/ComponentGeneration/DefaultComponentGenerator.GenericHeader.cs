@@ -16,7 +16,7 @@ internal partial class DefaultComponentGenerator
             .With(options.Attributes));
 
         var containerTag = new HtmlTag("div", attrs => attrs
-            .WithClasses($"{@namespace}-header__container", options.ContainerClasses ?? "govuk-width-container")
+            .WithClasses($"{@namespace}-header__container", options.ContainerClasses.WithEmptyFallback("govuk-width-container"))
             .With(options.ContainerAttributes));
 
         var logoDiv = new HtmlTag("div", attrs => attrs
@@ -24,7 +24,7 @@ internal partial class DefaultComponentGenerator
             .With(options.LogoAttributes));
 
         var logoLink = new HtmlTag("a", attrs => attrs
-            .With("href", options.Url ?? "/")
+            .With("href", options.Url.WithEmptyFallback("/"))
             .WithClasses($"{@namespace}-header__homepage-link")
             .With(options.LinkAttributes));
 

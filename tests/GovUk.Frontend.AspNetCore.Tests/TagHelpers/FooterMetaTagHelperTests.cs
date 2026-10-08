@@ -62,6 +62,34 @@ public class FooterMetaTagHelperTests : TagHelperTestBase<FooterMetaTagHelper>
     }
 
     [Fact]
+    public async Task ProcessAsync_NoVisuallyHiddenTitle_LeavesVisuallyHiddenTitleNull()
+    {
+        // Arrange
+        var footerContext = new FooterContext();
+
+        var context = CreateTagHelperContext(contexts: footerContext);
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                TagHelperContent tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult(tagHelperContent);
+            });
+
+        var tagHelper = new FooterMetaTagHelper();
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var footerMetaOptions = footerContext.Meta?.Options;
+        Assert.NotNull(footerMetaOptions);
+        Assert.Null(footerMetaOptions.VisuallyHiddenTitle);
+    }
+
+    [Fact]
     public async Task ProcessAsync_ParentAlreadyHasMeta_ThrowsInvalidOperationException()
     {
         // Arrange

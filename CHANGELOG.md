@@ -6,20 +6,7 @@
 
 - `[MaxWords]` and `MaxWordsValidator` threw an `ArgumentNullException` for a `null` value, so submitting an empty field failed the request instead of letting `[Required]` report the error. A `null` value is now considered valid.
 - The `<title>` now gets its "Error:" prefix when the error summary is generated in `_GovUkPageTemplate`'s `<main>` element, which is the default. Previously the prefix was only added when the error summary was rendered before the `<title>`, such as with `PrependToFormElements` or a `<govuk-error-summary>` in the view.
-- Several tag helpers ignored a component's default when an optional attribute was left out, because an unset `string` attribute became an empty `TemplateString` rather than `null`:
-  - `<govuk-footer>`'s meta section rendered an empty visually hidden heading rather than "Support links".
-  - `<govuk-footer-nav>` without `width` rendered the class `govuk-grid-column-` rather than `govuk-grid-column-full`.
-  - `<govuk-skip-link>` without `href` rendered no `href` rather than `#content`.
-  - `<govuk-header>` without `home-page-url` rendered a homepage link with no `href` rather than `//gov.uk`.
-  - `<govuk-cookie-banner>` and `<govuk-pagination>` rendered no `aria-label` rather than "Cookie banner" and "Pagination".
-  - `<govuk-button>` without `type` rendered no `type` rather than `submit`.
-  - Date input item elements (such as `<day>`) without `inputmode` rendered no `inputmode` rather than `numeric`.
-  - `<govuk-cookie-banner-message-action-button>` without `type` rendered no `type` rather than `button`.
-
-    > [!IMPORTANT]
-    > A cookie banner action button inside a `<form>` with no `type` attribute was previously submitting the form. It now renders `type="button"` and doesn't submit the form. Add `type="submit"` to keep the old behaviour.
-- The implicit conversions from `string` and `HtmlString` to `TemplateString` now return `null` for `null`, not `TemplateString.Empty`.
-- Components whose GOV.UK Frontend template treats an empty value as unset now do the same, for example a footer meta `VisuallyHiddenTitle` of `""` renders "Support links".
+- Several tag helpers ignored a component's default when an optional attribute was left out, because an unset `string` attribute became an empty `TemplateString` rather than `null`.
 
 ## 5.0.0
 

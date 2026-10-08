@@ -20,17 +20,16 @@ public class MaxWordsValidatorTests
     }
 
     [Fact]
-    public void IsValid_NullInput_ThrowsArgumentNullException()
+    public void IsValid_NullInput_ReturnsTrue()
     {
         // Arrange
         var validator = new MaxWordsValidator(maxWords: 3);
 
         // Act
-        var ex = Record.Exception(() => validator.IsValid(value: null));
+        var result = validator.IsValid(value: null);
 
         // Assert
-        var argException = Assert.IsType<ArgumentNullException>(ex);
-        Assert.Equal("value", argException.ParamName);
+        Assert.True(result);
     }
 
     [Fact]

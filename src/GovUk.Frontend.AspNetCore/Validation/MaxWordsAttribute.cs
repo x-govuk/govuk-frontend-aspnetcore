@@ -25,6 +25,11 @@ public sealed class MaxWordsAttribute(int words) : ValidationAttribute
             throw new InvalidOperationException("The maximum length must be a positive integer.");
         }
 
+        if (value is null)
+        {
+            return true;
+        }
+
         var validator = new MaxWordsValidator(Words);
         return validator.IsValid((string?)value);
     }

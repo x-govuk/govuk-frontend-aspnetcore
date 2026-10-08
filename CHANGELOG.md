@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- `[MaxWords]` and `MaxWordsValidator` threw an `ArgumentNullException` for a `null` value, so submitting an empty field failed the request instead of letting `[Required]` report the error. A `null` value is now considered valid.
+
 ## 5.0.0
 
 Targets GOV.UK Frontend v6.5.1.

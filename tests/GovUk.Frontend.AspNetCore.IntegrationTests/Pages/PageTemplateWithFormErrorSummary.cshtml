@@ -1,0 +1,11 @@
+@page
+@{
+    ViewData[GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants.ViewDataKeys.Title] = "Page template";
+}
+
+<form prepend-error-summary="true">
+    <govuk-input name="InputWithAnError">
+        <govuk-input-label>Input with an error</govuk-input-label>
+        <govuk-input-error-message>An error</govuk-input-error-message>
+    </govuk-input>
+</form>

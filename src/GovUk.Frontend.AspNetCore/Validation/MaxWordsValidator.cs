@@ -34,11 +34,16 @@ public class MaxWordsValidator
     /// Validates the specified value.
     /// </summary>
     /// <param name="value">The value to validate.</param>
+    /// <remarks>
+    /// A <see langword="null"/> value is considered valid.
+    /// </remarks>
     /// <returns>A value indicating whether validation was successful.</returns>
-    /// <exception cref="ArgumentNullException">The <paramref name="value"/> argument is null.</exception>
     public bool IsValid(string? value)
     {
-        ArgumentNullException.ThrowIfNull(value);
+        if (value is null)
+        {
+            return true;
+        }
 
         var wordCount = _pattern.Count(value);
         return wordCount <= MaxWords;

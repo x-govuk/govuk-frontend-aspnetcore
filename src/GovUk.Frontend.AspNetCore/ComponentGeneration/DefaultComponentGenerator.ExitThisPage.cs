@@ -15,7 +15,7 @@ internal partial class DefaultComponentGenerator
         {
             Html = buttonContent,
             Classes = "govuk-button--warning govuk-exit-this-page__button govuk-js-exit-this-page-button",
-            Href = options.RedirectUrl ?? "https://www.bbc.co.uk/weather",
+            Href = options.RedirectUrl.WithEmptyFallback("https://www.bbc.co.uk/weather"),
             Attributes = new AttributeCollection
             {
                 { "rel", "nofollow noreferrer" }

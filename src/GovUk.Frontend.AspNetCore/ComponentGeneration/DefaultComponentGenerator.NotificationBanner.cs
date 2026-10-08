@@ -13,7 +13,7 @@ internal partial class DefaultComponentGenerator
         var isSuccessBanner = type == "success";
         var typeClass = isSuccessBanner ? new TemplateString($"govuk-notification-banner--{type}") : null;
         var role = DetermineRole(options.Role, isSuccessBanner);
-        var titleId = options.TitleId ?? "govuk-notification-banner-title";
+        var titleId = options.TitleId.WithEmptyFallback("govuk-notification-banner-title");
         var titleHeadingLevel = options.TitleHeadingLevel ?? 2;
         var title = DetermineTitle(options.TitleHtml, options.TitleText);
 

@@ -216,4 +216,30 @@ public class TemplateStringTests
         // Assert
         Assert.Equal(htmlValue, result);
     }
+
+    [Fact]
+    public void ImplicitConversion_FromNullString_ReturnsNull()
+    {
+        // Arrange
+        string? value = null;
+
+        // Act
+        TemplateString? result = value;
+
+        // Assert
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void ImplicitConversion_FromNullHtmlString_ReturnsNull()
+    {
+        // Arrange
+        HtmlString? content = null;
+
+        // Act
+        TemplateString? result = content;
+
+        // Assert
+        Assert.Null(result);
+    }
 }

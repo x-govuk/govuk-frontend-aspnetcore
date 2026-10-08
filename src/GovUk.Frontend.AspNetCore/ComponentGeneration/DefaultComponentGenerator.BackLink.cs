@@ -9,7 +9,7 @@ internal partial class DefaultComponentGenerator
         ArgumentNullException.ThrowIfNull(options);
 
         var tag = new HtmlTag("a", attrs => attrs
-            .With("href", options.Href ?? "#")
+            .With("href", options.Href.WithEmptyFallback("#"))
             .WithClasses("govuk-back-link", options.Classes)
             .With(options.Attributes))
         {

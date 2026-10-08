@@ -7,7 +7,7 @@ internal partial class DefaultComponentGenerator
         ArgumentNullException.ThrowIfNull(options);
 
         var tag = new HtmlTag("a", attrs => attrs
-            .With("href", options.Href ?? "#content")
+            .With("href", options.Href.WithEmptyFallback("#content"))
             .WithClasses("govuk-skip-link", options.Classes)
             .With("data-module", "govuk-skip-link")
             .With(options.Attributes))

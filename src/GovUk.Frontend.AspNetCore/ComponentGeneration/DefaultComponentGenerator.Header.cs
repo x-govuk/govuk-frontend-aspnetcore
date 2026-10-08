@@ -27,7 +27,7 @@ internal partial class DefaultComponentGenerator
         return GenerateGenericHeaderAsync(new GenericHeaderOptions
         {
             Namespace = "govuk",
-            Url = options.HomePageUrl ?? "//gov.uk",
+            Url = options.HomePageUrl.WithEmptyFallback("//gov.uk"),
             LogoHtml = logoContent.Snapshot(),
             ContainerClasses = options.ContainerClasses,
             ContainerAttributes = options.ContainerAttributes,

@@ -14,7 +14,7 @@ internal partial class DefaultComponentGenerator
 
         var navTag = new HtmlTag("nav", attrs => attrs
             .WithClasses("govuk-pagination", blockLevel ? "govuk-pagination--block" : null, options.Classes)
-            .With("aria-label", options.LandmarkLabel ?? LocalizedText(GovUkFrontendResourceNames.PaginationLandmarkLabel) ?? "Pagination")
+            .With("aria-label", options.LandmarkLabel.WithEmptyFallback(LocalizedText(GovUkFrontendResourceNames.PaginationLandmarkLabel) ?? "Pagination"))
             .With(options.Attributes));
 
         // The space before the visually hidden suffix lives here rather than in the resource; leading

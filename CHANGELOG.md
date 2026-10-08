@@ -6,6 +6,7 @@
 
 - `[MaxWords]` and `MaxWordsValidator` threw an `ArgumentNullException` for a `null` value, so submitting an empty field failed the request instead of letting `[Required]` report the error. A `null` value is now considered valid.
 - The `<title>` now gets its "Error:" prefix when the error summary is generated in `_GovUkPageTemplate`'s `<main>` element, which is the default. Previously the prefix was only added when the error summary was rendered before the `<title>`, such as with `PrependToFormElements` or a `<govuk-error-summary>` in the view.
+- Several tag helpers ignored a component's default when an optional attribute was left out, because an unset `string` attribute became an empty `TemplateString` rather than `null`.
 
 ## 5.0.0
 

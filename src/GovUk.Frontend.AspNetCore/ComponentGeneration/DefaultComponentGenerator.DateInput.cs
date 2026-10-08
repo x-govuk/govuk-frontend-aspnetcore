@@ -171,7 +171,7 @@ internal partial class DefaultComponentGenerator
                 Name = inputName,
                 Value = inputValue,
                 Type = "text",
-                InputMode = item.InputMode ?? "numeric",
+                InputMode = item.InputMode.WithEmptyFallback("numeric"),
                 AutoComplete = item.AutoComplete,
                 Pattern = item.Pattern,
                 Attributes = item.Attributes

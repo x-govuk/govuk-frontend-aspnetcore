@@ -64,6 +64,11 @@ public class ServerFixture : IAsyncLifetime
 
     protected virtual void Configure(IApplicationBuilder app)
     {
+        // Registered before the developer exception page so the flag is already set by the time
+        // that page runs, rather than relying on how execution context flows back out of the
+        // pipeline it wraps
+        app.UseMiddleware<ExpectedExceptionMiddleware>();
+
         app.UseDeveloperExceptionPage();
 
         app.UseGovUkFrontend();
@@ -81,7 +86,9 @@ public class ServerFixture : IAsyncLifetime
         {
             webBuilder
                 .UseUrls(BaseUrl)
-                .ConfigureLogging(logging => logging.SetMinimumLevel(LogLevel.Warning))
+                .ConfigureLogging(logging => logging
+                    .SetMinimumLevel(LogLevel.Warning)
+                    .AddFilter(ExpectedExceptionMiddleware.ShouldLog))
                 .ConfigureServices((context, services) => ConfigureServices(services))
                 .Configure(Configure);
         })

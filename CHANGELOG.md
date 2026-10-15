@@ -90,7 +90,7 @@ Following the design system guidance, it shows the first page, the pages either 
 
 #### Inline service navigation end slot
 
-`<govuk-service-navigation-end align="Inline">` displays its content in line with the navigation items rather than underneath them.
+`<govuk-service-navigation-end align="ServiceNavigationEndSlotAlign.Inline">` displays its content in line with the navigation items rather than underneath them.
 
 #### Localization
 

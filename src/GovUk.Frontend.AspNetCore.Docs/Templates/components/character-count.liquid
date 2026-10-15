@@ -2,7 +2,19 @@
 
 [GOV.UK Design System character count component](https://design-system.service.gov.uk/components/character-count/)
 
-Check out the [max words validator](../validation/maxwords.md) for adding server-side validation when `max-words` is used.
+Check out the [character count validators](../validation/character-count.md) for adding server-side validation that counts the text the same way as the component.
+
+By default the limit is a number of characters, counted as JavaScript's `String.length` does. Set `count-type` to `Characters` to count the characters a user would perceive instead, so an emoji or an accented letter counts as one, or to `Words` to make `max-length` a number of words:
+
+```razor
+<govuk-character-count for="MoreDetail" max-length="150" count-type="Words">
+    <label>Can you provide more detail?</label>
+</govuk-character-count>
+```
+
+`Characters` and `Words` need a browser that supports `Intl.Segmenter`. In other browsers the count isn't shown, only the description of the limit.
+
+The `max-words` attribute is deprecated; use `max-length` with `count-type="Words"` instead.
 
 
 ## Tag helpers

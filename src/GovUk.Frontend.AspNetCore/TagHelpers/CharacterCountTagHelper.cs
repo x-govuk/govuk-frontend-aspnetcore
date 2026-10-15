@@ -33,6 +33,7 @@ public class CharacterCountTagHelper : TagHelper
 
     private const string AutoCompleteAttributeName = "autocomplete";
     private const string CountMessageAttributesPrefix = "count-message-";
+    private const string CountTypeAttributeName = "count-type";
     private const string DisabledAttributeName = "disabled";
     private const string ForAttributeName = "for";
     private const string FormGroupAttributesPrefix = "form-group-";
@@ -51,6 +52,7 @@ public class CharacterCountTagHelper : TagHelper
     private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
 
+    private CharacterCountType? _countType;
     private decimal? _threshold;
     private int? _maxLength;
     private int? _maxWords;
@@ -83,6 +85,24 @@ public class CharacterCountTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(DictionaryAttributePrefix = CountMessageAttributesPrefix)]
     public IDictionary<string, string?> CountMessageAttributes { get; set; } = new Dictionary<string, string?>();
+
+    /// <summary>
+    /// How the text entered is counted.
+    /// </summary>
+    /// <remarks>
+    /// <para>The default is <see cref="CharacterCountType.Length"/>, or <see cref="CharacterCountType.Words"/> when
+    /// <see cref="MaxWords"/> is specified.</para>
+    /// <para><see cref="CharacterCountType.Characters"/> and <see cref="CharacterCountType.Words"/> need a browser that
+    /// supports <c>Intl.Segmenter</c>; in other browsers, the textarea description is shown and the count is not.</para>
+    /// </remarks>
+    // Not nullable, so that Razor accepts an enum member's name on its own (count-type="Words"),
+    // but whether it was specified is tracked so the component's own default applies when it isn't.
+    [HtmlAttributeName(CountTypeAttributeName)]
+    public CharacterCountType CountType
+    {
+        get => _countType ?? (MaxWords.HasValue ? CharacterCountType.Words : CharacterCountType.Length);
+        set => _countType = value;
+    }
 
     /// <summary>
     /// Whether the <c>disabled</c> attribute should be added to the generated <c>textarea</c> element.
@@ -128,7 +148,8 @@ public class CharacterCountTagHelper : TagHelper
     public string? LabelClass { get; set; }
 
     /// <summary>
-    /// The maximum number of characters the generated <c>textarea</c> may contain.
+    /// The maximum number of characters the generated <c>textarea</c> may contain,
+    /// or the maximum number of words when <see cref="CountType"/> is <see cref="CharacterCountType.Words"/>.
     /// </summary>
     /// <remarks>
     /// Required unless <see cref="MaxWords"/> is specified.
@@ -154,7 +175,11 @@ public class CharacterCountTagHelper : TagHelper
     /// The maximum number of words the generated <c>textarea</c> may contain.
     /// </summary>
     /// <remarks>
-    /// Required unless <see cref="MaxLength"/> is specified.
+    /// <para>Required unless <see cref="MaxLength"/> is specified.</para>
+    /// <para>This is deprecated; specify <see cref="MaxLength"/> with a <see cref="CountType"/> of
+    /// <see cref="CharacterCountType.Words"/> instead. The two count words differently: <c>max-words</c> counts runs of
+    /// characters separated by whitespace, whereas <see cref="CharacterCountType.Words"/> uses <c>Intl.Segmenter</c>, so
+    /// punctuation on its own isn't counted as a word, and a hyphenated word counts as two.</para>
     /// </remarks>
     [HtmlAttributeName(MaxWordsLengthAttributeName)]
     public int? MaxWords
@@ -259,6 +284,12 @@ public class CharacterCountTagHelper : TagHelper
             throw new InvalidOperationException($"Only one of the '{MaxLengthAttributeName}' or '{MaxWordsLengthAttributeName}' attributes can be specified.");
         }
 
+        if (MaxWords.HasValue && _countType is not null and not CharacterCountType.Words)
+        {
+            throw new InvalidOperationException(
+                $"The '{CountTypeAttributeName}' attribute must be '{nameof(CharacterCountType.Words)}' when the '{MaxWordsLengthAttributeName}' attribute is specified.");
+        }
+
         var characterCountContext = context.GetContextItem<CharacterCountContext>();
 
         _ = await output.GetChildContentAsync();
@@ -327,6 +358,13 @@ public class CharacterCountTagHelper : TagHelper
             MaxLength = MaxLength,
             MaxWords = MaxWords,
             Threshold = Threshold,
+            CountType = _countType switch
+            {
+                CharacterCountType.Length => "length",
+                CharacterCountType.Characters => "characters",
+                CharacterCountType.Words => "words",
+                _ => null
+            },
             Label = labelOptions,
             Hint = hintOptions,
             ErrorMessage = errorMessageOptions,

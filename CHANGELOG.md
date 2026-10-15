@@ -1,5 +1,49 @@
 # Changelog
 
+## Unreleased
+
+Targets GOV.UK Frontend v6.6.0.
+
+### New features
+
+#### Character count `count-type`
+
+`<govuk-character-count>` has a `count-type` attribute for how the text is counted:
+
+- `Length` (the default) counts as JavaScript's `String.length` does, as before.
+- `Characters` counts the characters a user would perceive, so an emoji or an accented letter counts as one.
+- `Words` counts words, making `max-length` a number of words.
+
+```razor
+<govuk-character-count for="MoreDetail" max-length="150" count-type="Words">
+    <label>Can you provide more detail?</label>
+</govuk-character-count>
+```
+
+`Characters` and `Words` need a browser that supports `Intl.Segmenter`.
+
+#### Character count validation
+
+`[CharacterCount]` and `CharacterCountValidator` validate text against a character count's limit on the server, counting it the same way as the component for each `count-type`:
+
+```cs
+[CharacterCount(150, CountType = CharacterCountType.Words, ErrorMessage = "Job description must be 150 words or fewer")]
+public string? JobDescription { get; set; }
+```
+
+They count a line break as one character, as the browser does, though it's submitted as two.
+See [Character count validation](docs/validation/character-count.md).
+
+### Deprecations
+
+The character count's `max-words` attribute is deprecated, following GOV.UK Frontend; use `max-length` with `count-type="Words"` instead.
+The two count words differently: `max-words` counts runs of characters separated by whitespace, so "well-known" is one word, whereas `count-type="Words"` makes it two and doesn't count punctuation on its own.
+`[MaxWords]` and `MaxWordsValidator` continue to match `max-words`.
+
+### Fixes
+
+- `MaxWordsValidator` now treats the same characters as whitespace as the component's JavaScript does. Previously U+0085 separated words and U+FEFF didn't.
+
 ## 5.0.1
 
 Targets GOV.UK Frontend v6.5.1.

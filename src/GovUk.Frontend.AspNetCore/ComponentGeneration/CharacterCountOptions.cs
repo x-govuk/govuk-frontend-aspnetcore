@@ -16,6 +16,7 @@ public record CharacterCountOptions
     [JsonPropertyName("maxwords")]
     public int? MaxWords { get; set; }
     public decimal? Threshold { get; set; }
+    public string? CountType { get; set; }
     public LabelOptions? Label { get; set; }
     public HintOptions? Hint { get; set; }
     public ErrorMessageOptions? ErrorMessage { get; set; }

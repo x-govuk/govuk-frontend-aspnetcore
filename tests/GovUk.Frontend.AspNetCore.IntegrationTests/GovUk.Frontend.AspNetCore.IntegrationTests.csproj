@@ -15,6 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- The library's assets reach an app through its package, so tests that need govuk-frontend's JavaScript serve them from here -->
+    <AssemblyMetadata Include="GovUkFrontendLibrary" Value="$(GovUkFrontendLibrary)" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj" />
     <ProjectReference Include="..\GovUk.FrontEnd.AspNetCore.TestCommon\GovUk.FrontEnd.AspNetCore.TestCommon.csproj" />
   </ItemGroup>

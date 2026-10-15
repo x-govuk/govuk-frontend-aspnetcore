@@ -5,6 +5,24 @@ namespace GovUk.Frontend.AspNetCore.Tests.Validation;
 public class MaxWordsValidatorTests
 {
     [Theory]
+    [MemberData(nameof(CharacterCountValidatorTests.Counts), MemberType = typeof(CharacterCountValidatorTests))]
+    public void IsValid_ReturnsSameResultAsBrowser(string value, int expectedLength, int expectedCharacters, int expectedWords, int expectedMaxWords)
+    {
+        // Arrange
+        _ = (expectedLength, expectedCharacters, expectedWords);
+        var atLimit = new MaxWordsValidator(maxWords: Math.Max(expectedMaxWords, 1));
+        var underLimit = expectedMaxWords > 1 ? new MaxWordsValidator(maxWords: expectedMaxWords - 1) : null;
+
+        // Act
+        var atLimitResult = atLimit.IsValid(value);
+        var underLimitResult = underLimit?.IsValid(value);
+
+        // Assert
+        Assert.True(atLimitResult);
+        Assert.NotEqual(true, underLimitResult);
+    }
+
+    [Theory]
     [InlineData(0)]
     [InlineData(-1)]
     public void Ctor_InvalidMaxWords_ThrowsArgumentNullException(int maxWords)

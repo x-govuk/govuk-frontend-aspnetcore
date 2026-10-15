@@ -175,6 +175,10 @@ public class CharacterCountTagHelper : TagHelper
     /// punctuation on its own isn't counted as a word, and a hyphenated word counts as two.</para>
     /// </remarks>
     [HtmlAttributeName(MaxWordsLengthAttributeName)]
+    [Obsolete(
+        "Use the '" + MaxLengthAttributeName + "' attribute with a '" + CountTypeAttributeName + "' of '" +
+            nameof(CharacterCountType) + "." + nameof(CharacterCountType.Words) + "' instead.",
+        DiagnosticId = DiagnosticIds.UseCharacterCountWordsCountTypeInstead)]
     public int? MaxWords
     {
         get => _maxWords;
@@ -272,12 +276,12 @@ public class CharacterCountTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        if (MaxLength.HasValue && MaxWords.HasValue)
+        if (MaxLength.HasValue && _maxWords.HasValue)
         {
             throw new InvalidOperationException($"Only one of the '{MaxLengthAttributeName}' or '{MaxWordsLengthAttributeName}' attributes can be specified.");
         }
 
-        if (MaxWords.HasValue && CountType is not null and not CharacterCountType.Words)
+        if (_maxWords.HasValue && CountType is not null and not CharacterCountType.Words)
         {
             throw new InvalidOperationException(
                 $"The '{CountTypeAttributeName}' attribute must be '{nameof(CharacterCountType.Words)}' when the '{MaxWordsLengthAttributeName}' attribute is specified.");
@@ -349,7 +353,7 @@ public class CharacterCountTagHelper : TagHelper
             Rows = Rows,
             Value = value,
             MaxLength = MaxLength,
-            MaxWords = MaxWords,
+            MaxWords = _maxWords,
             Threshold = Threshold,
             CountType = CountType switch
             {

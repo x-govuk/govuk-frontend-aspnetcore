@@ -18,6 +18,10 @@
         <label>Words</label>
     </govuk-character-count>
 
+    @* Deliberately uses the deprecated max-words, to check MaxWordsValidator still matches it *@
+    @{
+#pragma warning disable GFA0008 // Type or member is obsolete
+    }
     <govuk-character-count for="MaxWords" max-words="@CharacterCountTestsModel.Limit">
         <label>MaxWords</label>
     </govuk-character-count>

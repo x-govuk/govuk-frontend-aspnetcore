@@ -1,3 +1,4 @@
+#pragma warning disable GFA0008 // Type or member is obsolete
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;

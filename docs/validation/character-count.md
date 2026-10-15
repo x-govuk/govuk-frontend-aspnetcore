@@ -5,9 +5,9 @@ The [character count component](../components/character-count.md) only tells use
 | Component | Validation attribute |
 | --- | --- |
 | `max-length="200"` | `[CharacterCount(200)]` |
-| `max-length="200" count-type="Length"` | `[CharacterCount(200)]` |
-| `max-length="200" count-type="Characters"` | `[CharacterCount(200, CountType = CharacterCountType.Characters)]` |
-| `max-length="150" count-type="Words"` | `[CharacterCount(150, CountType = CharacterCountType.Words)]` |
+| `max-length="200" count-type="CharacterCountType.Length"` | `[CharacterCount(200)]` |
+| `max-length="200" count-type="CharacterCountType.Characters"` | `[CharacterCount(200, CountType = CharacterCountType.Characters)]` |
+| `max-length="150" count-type="CharacterCountType.Words"` | `[CharacterCount(150, CountType = CharacterCountType.Words)]` |
 | `max-words="150"` (deprecated) | `[MaxWords(150)]` |
 
 The attributes are in the `GovUk.Frontend.AspNetCore.Validation` namespace.
@@ -28,7 +28,7 @@ public class MyModel
 ```
 
 ```razor
-<govuk-character-count for="JobDescription" max-length="150" count-type="Words">
+<govuk-character-count for="JobDescription" max-length="150" count-type="CharacterCountType.Words">
     <label>Job description</label>
 </govuk-character-count>
 ```

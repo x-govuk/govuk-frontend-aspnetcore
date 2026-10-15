@@ -52,7 +52,6 @@ public class CharacterCountTagHelper : TagHelper
     private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;
 
-    private CharacterCountType? _countType;
     private decimal? _threshold;
     private int? _maxLength;
     private int? _maxWords;
@@ -95,14 +94,8 @@ public class CharacterCountTagHelper : TagHelper
     /// <para><see cref="CharacterCountType.Characters"/> and <see cref="CharacterCountType.Words"/> need a browser that
     /// supports <c>Intl.Segmenter</c>; in other browsers, the textarea description is shown and the count is not.</para>
     /// </remarks>
-    // Not nullable, so that Razor accepts an enum member's name on its own (count-type="Words"),
-    // but whether it was specified is tracked so the component's own default applies when it isn't.
     [HtmlAttributeName(CountTypeAttributeName)]
-    public CharacterCountType CountType
-    {
-        get => _countType ?? (MaxWords.HasValue ? CharacterCountType.Words : CharacterCountType.Length);
-        set => _countType = value;
-    }
+    public CharacterCountType? CountType { get; set; }
 
     /// <summary>
     /// Whether the <c>disabled</c> attribute should be added to the generated <c>textarea</c> element.
@@ -284,7 +277,7 @@ public class CharacterCountTagHelper : TagHelper
             throw new InvalidOperationException($"Only one of the '{MaxLengthAttributeName}' or '{MaxWordsLengthAttributeName}' attributes can be specified.");
         }
 
-        if (MaxWords.HasValue && _countType is not null and not CharacterCountType.Words)
+        if (MaxWords.HasValue && CountType is not null and not CharacterCountType.Words)
         {
             throw new InvalidOperationException(
                 $"The '{CountTypeAttributeName}' attribute must be '{nameof(CharacterCountType.Words)}' when the '{MaxWordsLengthAttributeName}' attribute is specified.");
@@ -358,7 +351,7 @@ public class CharacterCountTagHelper : TagHelper
             MaxLength = MaxLength,
             MaxWords = MaxWords,
             Threshold = Threshold,
-            CountType = _countType switch
+            CountType = CountType switch
             {
                 CharacterCountType.Length => "length",
                 CharacterCountType.Characters => "characters",

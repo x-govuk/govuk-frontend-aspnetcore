@@ -10,17 +10,17 @@ Targets GOV.UK Frontend v6.6.0.
 
 `<govuk-character-count>` has a `count-type` attribute for how the text is counted:
 
-- `Length` (the default) counts as JavaScript's `String.length` does, as before.
-- `Characters` counts the characters a user would perceive, so an emoji or an accented letter counts as one.
-- `Words` counts words, making `max-length` a number of words.
+- `CharacterCountType.Length` (the default) counts as JavaScript's `String.length` does, as before.
+- `CharacterCountType.Characters` counts the characters a user would perceive, so an emoji or an accented letter counts as one.
+- `CharacterCountType.Words` counts words, making `max-length` a number of words.
 
 ```razor
-<govuk-character-count for="MoreDetail" max-length="150" count-type="Words">
+<govuk-character-count for="MoreDetail" max-length="150" count-type="CharacterCountType.Words">
     <label>Can you provide more detail?</label>
 </govuk-character-count>
 ```
 
-`Characters` and `Words` need a browser that supports `Intl.Segmenter`.
+`CharacterCountType.Characters` and `CharacterCountType.Words` need a browser that supports `Intl.Segmenter`.
 
 #### Character count validation
 
@@ -36,8 +36,8 @@ See [Character count validation](docs/validation/character-count.md).
 
 ### Deprecations
 
-The character count's `max-words` attribute is deprecated, following GOV.UK Frontend; use `max-length` with `count-type="Words"` instead.
-The two count words differently: `max-words` counts runs of characters separated by whitespace, so "well-known" is one word, whereas `count-type="Words"` makes it two and doesn't count punctuation on its own.
+The character count's `max-words` attribute is deprecated, following GOV.UK Frontend; use `max-length` with `count-type="CharacterCountType.Words"` instead.
+The two count words differently: `max-words` counts runs of characters separated by whitespace, so "well-known" is one word, whereas `count-type="CharacterCountType.Words"` makes it two and doesn't count punctuation on its own.
 `[MaxWords]` and `MaxWordsValidator` continue to match `max-words`.
 
 ### Fixes

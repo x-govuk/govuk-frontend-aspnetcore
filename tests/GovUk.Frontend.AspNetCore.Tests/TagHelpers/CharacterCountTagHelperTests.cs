@@ -191,14 +191,9 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
         var tagHelper = new CharacterCountTagHelper(componentGenerator, new Mock<IModelHelper>().Object)
         {
             Name = "my-name",
-            MaxLength = 42
+            MaxLength = 42,
+            CountType = countType
         };
-
-        if (countType is not null)
-        {
-            tagHelper.CountType = countType.Value;
-        }
-
         tagHelper.Init(context);
 
         // Act

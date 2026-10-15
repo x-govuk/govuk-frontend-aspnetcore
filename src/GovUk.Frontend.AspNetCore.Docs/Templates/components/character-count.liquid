@@ -14,7 +14,7 @@ By default the limit is a number of characters, counted as JavaScript's `String.
 
 `CharacterCountType.Characters` and `CharacterCountType.Words` need a browser that supports `Intl.Segmenter`. In other browsers the count isn't shown, only the description of the limit.
 
-The `max-words` attribute is deprecated; use `max-length` with `count-type="CharacterCountType.Words"` instead.
+The `max-words` attribute is deprecated, and using it gives a `GFA0008` warning; use `max-length` with `count-type="CharacterCountType.Words"` instead.
 
 
 ## Tag helpers

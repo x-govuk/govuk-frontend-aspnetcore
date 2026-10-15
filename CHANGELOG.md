@@ -36,7 +36,7 @@ See [Character count validation](docs/validation/character-count.md).
 
 ### Deprecations
 
-The character count's `max-words` attribute is deprecated, following GOV.UK Frontend; use `max-length` with `count-type="CharacterCountType.Words"` instead.
+The character count's `max-words` attribute is deprecated, following GOV.UK Frontend, and using it gives a `GFA0008` warning; use `max-length` with `count-type="CharacterCountType.Words"` instead. `max-words` still works for now.
 The two count words differently: `max-words` counts runs of characters separated by whitespace, so "well-known" is one word, whereas `count-type="CharacterCountType.Words"` makes it two and doesn't count punctuation on its own.
 `[MaxWords]` and `MaxWordsValidator` continue to match `max-words`.
 

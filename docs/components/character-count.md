@@ -15,7 +15,7 @@ By default the limit is a number of characters, counted as JavaScript's `String.
 
 `CharacterCountType.Characters` and `CharacterCountType.Words` need a browser that supports `Intl.Segmenter`. In other browsers the count isn't shown, only the description of the limit.
 
-The `max-words` attribute is deprecated; use `max-length` with `count-type="CharacterCountType.Words"` instead.
+The `max-words` attribute is deprecated, and using it gives a `GFA0008` warning; use `max-length` with `count-type="CharacterCountType.Words"` instead.
 
 
 ## Tag helpers
@@ -72,7 +72,6 @@ The `max-words` attribute is deprecated; use `max-length` with `count-type="Char
 | `ignore-modelstate-errors` | `bool?` | Whether the `Errors` for the `For` expression should be used to deduce an error message. When there are multiple errors in the `ModelErrorCollection` the first is used. |
 | `label-class` | `string` | Additional classes for the generated `label` element. |
 | `max-length` | `int?` | The maximum number of characters the generated `textarea` may contain, or the maximum number of words when `CountType` is `Words`. Required unless `MaxWords` is specified. |
-| `max-words` | `int?` | The maximum number of words the generated `textarea` may contain. Required unless `MaxLength` is specified. This is deprecated; specify `MaxLength` with a `CountType` of `Words` instead. The two count words differently: `max-words` counts runs of characters separated by whitespace, whereas `Words` uses `Intl.Segmenter`, so punctuation on its own isn't counted as a word, and a hyphenated word counts as two. |
 | `name` | `string` | The `name` attribute for the generated `textarea` element. Required unless `For` is specified. |
 | `readonly` | `bool?` | Whether the `readonly` attribute should be added to the generated `textarea` element. |
 | `rows` | `int?` | The `rows` attribute for the generated `textarea` element. The default is `5`. |

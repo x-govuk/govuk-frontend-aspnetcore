@@ -1,6 +1,6 @@
 # GOV.UK Frontend for ASP.NET Core
 
-[![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-6.5.1-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v6.5.1)
+[![GOV.UK Design System version](https://img.shields.io/badge/GOV.UK%20Design%20System-6.6.0-brightgreen)](https://github.com/alphagov/govuk-frontend/releases/tag/v6.6.0)
 [![Build](https://github.com/x-govuk/govuk-frontend-aspnetcore/actions/workflows/build.yml/badge.svg)](https://github.com/x-govuk/govuk-frontend-aspnetcore/actions/workflows/build.yml)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/GovUk.Frontend.AspNetCore)](https://www.nuget.org/packages/GovUk.Frontend.AspNetCore)
 
@@ -326,7 +326,7 @@ Files the build didn't copy are left alone, since they can change without the `g
 
 ## Validators
 
-- [Max words validator](docs/validation/maxwords.md)
+- [Character count validation](docs/validation/character-count.md)
 
 ## Localization
 

@@ -12,19 +12,22 @@ internal partial class DefaultComponentGenerator
 
         var id = options.Id ?? options.Name;
 
+        var countType = options.CountType ?? (options.MaxWords.HasValue ? "words" : null);
+        var countsWords = countType == "words";
+
         var hasNoLimit = !options.MaxWords.HasValue && !options.MaxLength.HasValue;
         var textareaDescriptionLength = options.MaxWords ?? options.MaxLength;
 
         // %{count} is substituted below (when there's a limit) or by the JavaScript (when there isn't),
         // so it has to survive localization verbatim.
-        var localizedTextareaDescriptionText = LocalizedText(options.MaxWords.HasValue
+        var localizedTextareaDescriptionText = LocalizedText(countsWords
             ? GovUkFrontendResourceNames.CharacterCountTextareaDescriptionTextWords
             : GovUkFrontendResourceNames.CharacterCountTextareaDescriptionTextCharacters);
 
         var specifiedTextareaDescriptionText = options.TextareaDescriptionText ?? localizedTextareaDescriptionText;
 
         var textareaDescriptionText = specifiedTextareaDescriptionText ??
-            $"You can enter up to %{{count}} {(options.MaxWords.HasValue ? "words" : "characters")}";
+            $"You can enter up to %{{count}} {(countsWords ? "words" : "characters")}";
 
         var textareaDescriptionTextNoLimit = !hasNoLimit && textareaDescriptionLength.HasValue
             ? textareaDescriptionText.Replace(
@@ -59,7 +62,7 @@ internal partial class DefaultComponentGenerator
             { "data-module", "govuk-character-count" }
         };
 
-        // Add maxlength/maxwords/threshold data attributes
+        // Add maxlength/maxwords/threshold/count-type data attributes
         if (options.MaxLength.HasValue)
         {
             formGroupAttributes.Set("data-maxlength", options.MaxLength.Value.ToString(CultureInfo.InvariantCulture));
@@ -73,6 +76,11 @@ internal partial class DefaultComponentGenerator
         if (options.Threshold.HasValue)
         {
             formGroupAttributes.Set("data-threshold", options.Threshold.Value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        if (!countType.IsEmpty())
+        {
+            formGroupAttributes.Set("data-count-type", countType);
         }
 
         if (hasNoLimit && specifiedTextareaDescriptionText is not null && !specifiedTextareaDescriptionText.IsEmpty())

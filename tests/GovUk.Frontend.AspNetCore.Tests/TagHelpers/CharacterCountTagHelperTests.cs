@@ -1,3 +1,4 @@
+#pragma warning disable GFA0008 // Type or member is obsolete
 using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.TagHelpers;
 using Microsoft.AspNetCore.Html;
@@ -170,7 +171,108 @@ public class CharacterCountTagHelperTests : TagHelperTestBase<CharacterCountTagH
         // Assert
         var actualOptions = getActualOptions();
         Assert.Equal(maxWords, actualOptions.MaxWords);
+        Assert.Null(actualOptions.CountType);
     }
+
+    [Theory]
+    [InlineData(null, null)]
+    [InlineData(CharacterCountType.Length, "length")]
+    [InlineData(CharacterCountType.Characters, "characters")]
+    [InlineData(CharacterCountType.Words, "words")]
+    public async Task ProcessAsync_WithCountType_InvokesComponentGeneratorWithExpectedOptions(
+        CharacterCountType? countType,
+        string? expectedCountType)
+    {
+        // Arrange
+        var context = CreateTagHelperContext();
+        var output = CreateCharacterCountTagHelperOutput(context);
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CharacterCountOptions>(nameof(IComponentGenerator.GenerateCharacterCountAsync));
+
+        var tagHelper = new CharacterCountTagHelper(componentGenerator, new Mock<IModelHelper>().Object)
+        {
+            Name = "my-name",
+            MaxLength = 42,
+            CountType = countType
+        };
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.Equal(42, actualOptions.MaxLength);
+        Assert.Equal(expectedCountType, actualOptions.CountType);
+    }
+
+    [Fact]
+    public async Task ProcessAsync_WithMaxWordsAndWordsCountType_InvokesComponentGeneratorWithExpectedOptions()
+    {
+        // Arrange
+        var context = CreateTagHelperContext();
+        var output = CreateCharacterCountTagHelperOutput(context);
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<CharacterCountOptions>(nameof(IComponentGenerator.GenerateCharacterCountAsync));
+
+        var tagHelper = new CharacterCountTagHelper(componentGenerator, new Mock<IModelHelper>().Object)
+        {
+            Name = "my-name",
+            MaxWords = 42,
+            CountType = CharacterCountType.Words
+        };
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.Equal(42, actualOptions.MaxWords);
+        Assert.Equal("words", actualOptions.CountType);
+    }
+
+    [Theory]
+    [InlineData(CharacterCountType.Length)]
+    [InlineData(CharacterCountType.Characters)]
+    public async Task ProcessAsync_WithMaxWordsAndNonWordsCountType_ThrowsInvalidOperationException(CharacterCountType countType)
+    {
+        // Arrange
+        var context = CreateTagHelperContext();
+        var output = CreateCharacterCountTagHelperOutput(context);
+
+        var (componentGenerator, _) = CreateComponentGenerator<CharacterCountOptions>(nameof(IComponentGenerator.GenerateCharacterCountAsync));
+
+        var tagHelper = new CharacterCountTagHelper(componentGenerator, new Mock<IModelHelper>().Object)
+        {
+            Name = "my-name",
+            MaxWords = 42,
+            CountType = countType
+        };
+        tagHelper.Init(context);
+
+        // Act
+        var ex = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        var invalidOperationException = Assert.IsType<InvalidOperationException>(ex);
+        Assert.Equal("The 'count-type' attribute must be 'Words' when the 'max-words' attribute is specified.", invalidOperationException.Message);
+    }
+
+    private TagHelperOutput CreateCharacterCountTagHelperOutput(TagHelperContext context) =>
+        CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var characterCountContext = context.GetContextItem<CharacterCountContext>();
+
+                characterCountContext.SetLabel(
+                    isPageHeading: false,
+                    attributes: [],
+                    new HtmlString("The label"),
+                    CharacterCountLabelTagHelper.TagName);
+
+                return Task.FromResult<TagHelperContent>(new DefaultTagHelperContent());
+            });
 
     [Fact]
     public async Task ProcessAsync_WithErrorMessage_GeneratesOptionsWithErrorMessageAndAddsErrorClasses()

@@ -1,0 +1,30 @@
+@using GovUk.Frontend.AspNetCore.IntegrationTests
+@model CharacterCountTestsModel
+
+<form method="post">
+    <govuk-character-count for="ShortLength" max-length="@CharacterCountTestsModel.ShortLimit">
+        <label>ShortLength</label>
+    </govuk-character-count>
+
+    <govuk-character-count for="Length" max-length="@CharacterCountTestsModel.Limit">
+        <label>Length</label>
+    </govuk-character-count>
+
+    <govuk-character-count for="Characters" max-length="@CharacterCountTestsModel.Limit" count-type="CharacterCountType.Characters">
+        <label>Characters</label>
+    </govuk-character-count>
+
+    <govuk-character-count for="Words" max-length="@CharacterCountTestsModel.Limit" count-type="CharacterCountType.Words">
+        <label>Words</label>
+    </govuk-character-count>
+
+    @* Deliberately uses the deprecated max-words, to check MaxWordsValidator still matches it *@
+    @{
+#pragma warning disable GFA0008 // Type or member is obsolete
+    }
+    <govuk-character-count for="MaxWords" max-words="@CharacterCountTestsModel.Limit">
+        <label>MaxWords</label>
+    </govuk-character-count>
+
+    <govuk-button type="submit">Save</govuk-button>
+</form>

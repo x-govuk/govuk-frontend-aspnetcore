@@ -51,8 +51,8 @@ public class TextInputTagHelper : TagHelper
     private const string TypeAttributeName = "type";
     private const string ValueAttributeName = "value";
 
-    private static readonly HashSet<Type> _numberModelTypes = new()
-    {
+    private static readonly HashSet<Type> _numberModelTypes =
+    [
         typeof(byte),
         typeof(sbyte),
         typeof(short),
@@ -61,7 +61,7 @@ public class TextInputTagHelper : TagHelper
         typeof(uint),
         typeof(long),
         typeof(ulong)
-    };
+    ];
 
     private readonly IComponentGenerator _componentGenerator;
     private readonly IModelHelper _modelHelper;

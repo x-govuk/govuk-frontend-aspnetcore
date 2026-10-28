@@ -178,7 +178,7 @@ internal class HtmlTag : IHtmlContent, IEnumerable
         {
             Attributes.Set(
                 "class",
-                Attributes["class"].AppendCssClasses(classes.Where(c => c is not null).ToArray()!));
+                Attributes["class"].AppendCssClasses([.. classes.Where(c => c is not null)]!));
 
             return this;
         }

@@ -19,7 +19,8 @@ internal class PageErrorContext
     }
 
     public IReadOnlyCollection<ErrorSummaryOptionsErrorItem> GetErrorSummaryItems() =>
-        _errors
+    [
+        .. _errors
             .Select(i => new ErrorSummaryOptionsErrorItem
             {
                 Href = i.Href,
@@ -28,5 +29,5 @@ internal class PageErrorContext
                 Attributes = null,
                 ItemAttributes = null
             })
-            .ToArray();
+    ];
 }

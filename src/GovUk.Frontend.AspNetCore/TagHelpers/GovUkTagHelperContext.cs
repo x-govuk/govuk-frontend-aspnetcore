@@ -22,6 +22,6 @@ internal sealed class GovUkTagHelperContext
     {
         ArgumentNullException.ThrowIfNull(tagName);
 
-        return new GovUkTagHelperContext(TagNames.Prepend(tagName).ToArray());
+        return new GovUkTagHelperContext([.. TagNames.Prepend(tagName)]);
     }
 }

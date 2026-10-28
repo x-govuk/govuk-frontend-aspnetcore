@@ -9,7 +9,7 @@ internal class PaginationContext
     private string? _nextTagName;
     private string? _previousTagName;
 
-    public IReadOnlyCollection<object> Items => _items.Select(i => i.Item).ToArray();
+    public IReadOnlyCollection<object> Items => [.. _items.Select(i => i.Item)];
 
     public PaginationOptionsNext? Next { get; private set; }
 

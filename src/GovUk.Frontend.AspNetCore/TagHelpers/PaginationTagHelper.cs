@@ -128,7 +128,7 @@ public class PaginationTagHelper : TagHelper
         }
         else
         {
-            items = paginationContext.Items.OfType<PaginationOptionsItem>().ToArray();
+            items = [.. paginationContext.Items.OfType<PaginationOptionsItem>()];
             previous = paginationContext.Previous;
             next = paginationContext.Next;
         }

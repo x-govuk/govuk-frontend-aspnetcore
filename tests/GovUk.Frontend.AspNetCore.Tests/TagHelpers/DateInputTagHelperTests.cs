@@ -1262,12 +1262,6 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             item => Assert.Equal("Month", item.Label?.ToHtmlString()));
     }
 
-    [Fact(Skip = "Skipped until we figure out how to do this")]
-    public Task ProcessAsync_WithNameAndItemTypesInMetadata_CreatesCorrectItems()
-    {
-        throw new NotImplementedException();
-    }
-
     [Fact]
     public async Task ProcessAsync_WithModelExpressionAndDefaultItemTypesOnConverter_CreatesCorrectItems()
     {
@@ -1304,10 +1298,52 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
             item => Assert.Equal("Month", item.Label?.ToHtmlString()));
     }
 
-    [Fact(Skip = "Skipped until we figure out how to do this")]
-    public Task ProcessAsync_WithNameAndDefaultItemTypesOnConverter_CreatesCorrectItems()
+    [Fact]
+    public async Task ProcessAsync_WithValueAndDefaultItemTypesOnConverter_CreatesCorrectItems()
     {
-        throw new NotImplementedException();
+        // Arrange
+        var viewContext = CreateViewContext();
+        var id = "dateinput-id";
+        var namePrefix = "dateinput";
+        var value = new CustomDayAndMonthType(25, 5);
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput();
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(
+            componentGenerator,
+            CreateOptions(options => options.RegisterDateInputModelConverter(typeof(CustomDayAndMonthType), new CustomDayAndMonthTypeConverter())))
+        {
+            ErrorMessagePrefix = "Your date",
+            Id = id,
+            NamePrefix = namePrefix,
+            Value = value,
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        await tagHelper.ProcessAsync(context, output);
+
+        // Assert
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.Items);
+        Assert.Collection(
+            actualOptions.Items,
+            item =>
+            {
+                Assert.Equal("Day", item.Label?.ToHtmlString());
+                Assert.Equal(value.Day.ToString(), item.Value);
+            },
+            item =>
+            {
+                Assert.Equal("Month", item.Label?.ToHtmlString());
+                Assert.Equal(value.Month.ToString(), item.Value);
+            });
     }
 
     [Fact]

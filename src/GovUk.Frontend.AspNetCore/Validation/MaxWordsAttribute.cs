@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace GovUk.Frontend.AspNetCore.Validation;
 
@@ -19,6 +20,14 @@ public sealed class MaxWordsAttribute(int words) : ValidationAttribute
     /// Gets the maximum allowable number of words.
     /// </summary>
     public int Words { get; } = words;
+
+    /// <summary>
+    /// Formats the error message, with <paramref name="name"/> as <c>{0}</c> and <see cref="Words"/> as <c>{1}</c>.
+    /// </summary>
+    /// <param name="name">The name of the field in error.</param>
+    /// <returns>The formatted error message.</returns>
+    public override string FormatErrorMessage(string name) =>
+        string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Words);
 
     /// <inheritdoc/>
     public override bool IsValid(object? value)

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace GovUk.Frontend.AspNetCore.Validation;
 
@@ -28,6 +29,14 @@ public sealed class CharacterCountAttribute(int maxLength) : ValidationAttribute
     /// The default is <see cref="CharacterCountType.Length"/>.
     /// </remarks>
     public CharacterCountType CountType { get; set; } = CharacterCountType.Length;
+
+    /// <summary>
+    /// Formats the error message, with <paramref name="name"/> as <c>{0}</c> and <see cref="MaxLength"/> as <c>{1}</c>.
+    /// </summary>
+    /// <param name="name">The name of the field in error.</param>
+    /// <returns>The formatted error message.</returns>
+    public override string FormatErrorMessage(string name) =>
+        string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, MaxLength);
 
     /// <inheritdoc/>
     public override bool IsValid(object? value)

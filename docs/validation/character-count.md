@@ -33,6 +33,19 @@ public class MyModel
 </govuk-character-count>
 ```
 
+### Error messages
+
+An `ErrorMessage` can use `{0}` for the field's display name and `{1}` for the limit:
+
+```cs
+[CharacterCount(150, CountType = CharacterCountType.Words, ErrorMessage = "{0} must be {1} words or fewer")]
+public string? JobDescription { get; set; }
+```
+
+With [`AddDataAnnotationsLocalization()`](https://learn.microsoft.com/aspnet/core/fundamentals/localization/make-content-localizable#dataannotations-localization), `ErrorMessage` is used as the resource name for MVC and Razor Pages, as it is for the built-in attributes. The same two placeholders are available to the localized message.
+
+This needs `AddGovUkFrontend()`. If you register your own `IValidationAttributeAdapterProvider`, do it before calling `AddGovUkFrontend()`; one registered afterwards replaces the library's and these attributes won't be localized.
+
 ### How text is counted
 
 - **`Length`** counts as JavaScript's `String.length` does, in UTF-16 code units, so some emoji count as two or more. A line break counts as one, as it does in the browser, even though it's submitted as two characters (`\r\n`).

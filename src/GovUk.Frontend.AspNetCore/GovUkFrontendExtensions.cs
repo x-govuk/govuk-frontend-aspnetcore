@@ -2,9 +2,11 @@ using GovUk.Frontend.AspNetCore.ComponentGeneration;
 using GovUk.Frontend.AspNetCore.Localization;
 using GovUk.Frontend.AspNetCore.ModelBinding;
 using GovUk.Frontend.AspNetCore.TagHelpers;
+using GovUk.Frontend.AspNetCore.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -65,10 +67,34 @@ public static class GovUkFrontendExtensions
         services.AddSingleton<ITagHelperInitializer<FileUploadTagHelper>, FileUploadTagHelperInitializer>();
         services.AddHttpContextAccessor();
         services.AddSingleton<VersionedAssetMiddleware>();
+        AddValidationAttributeAdapterProvider(services);
 
         services.Configure(setupAction);
 
         return services;
+    }
+
+    // MVC only ever TryAdds its provider, so this works whether it's called before or after MVC is set up.
+    // An existing registration is wrapped rather than replaced so an application's own provider keeps working.
+    private static void AddValidationAttributeAdapterProvider(IServiceCollection services)
+    {
+        var existing = services.LastOrDefault(d => d.ServiceType == typeof(IValidationAttributeAdapterProvider) && !d.IsKeyedService);
+
+        if (existing is not null)
+        {
+            services.Remove(existing);
+        }
+
+        Func<IServiceProvider, IValidationAttributeAdapterProvider> createInner = existing switch
+        {
+            { ImplementationInstance: IValidationAttributeAdapterProvider instance } => _ => instance,
+            { ImplementationFactory: { } factory } => sp => (IValidationAttributeAdapterProvider)factory(sp),
+            { ImplementationType: { } type } => sp => (IValidationAttributeAdapterProvider)ActivatorUtilities.CreateInstance(sp, type),
+            _ => _ => new ValidationAttributeAdapterProvider()
+        };
+
+        services.AddSingleton<IValidationAttributeAdapterProvider>(
+            sp => new GovUkFrontendValidationAttributeAdapterProvider(createInner(sp)));
     }
 
     /// <summary>

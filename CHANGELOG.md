@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### New features
+
+#### Localized character count validation messages
+
+`[CharacterCount]` and `[MaxWords]` error messages are now localized by `AddDataAnnotationsLocalization()` in MVC and Razor Pages, as they are for the built-in attributes.
+
+Their messages can also use `{1}` for the limit, alongside `{0}` for the field's display name:
+
+```cs
+[CharacterCount(150, CountType = CharacterCountType.Words, ErrorMessage = "{0} must be {1} words or fewer")]
+```
+
 ## 5.1.0
 
 Targets GOV.UK Frontend v6.6.0.

@@ -188,34 +188,18 @@ public class PaginationTagHelper : TagHelper
         var currentPage = CurrentPage!.Value;
         var totalPages = TotalPages!.Value;
 
-        // As per the guidance, show the first page, page before current, current, page after current and last page.
-        // Show a Previous link if this is not page 1, show a Next link if this is not the last page.
-        var pageNumbers = new[] { 1, currentPage - 1, currentPage, currentPage + 1, totalPages }
-            .Where(p => p >= 1 && p <= totalPages)
-            .Distinct()
-            .Order()
+        var items = PaginationPageNumbers.Get(currentPage, totalPages)
+            .Select(pageNumber => pageNumber is int number ?
+                new PaginationOptionsItem
+                {
+                    Href = GeneratePageHref!(number),
+                    Number = number.ToString(CultureInfo.CurrentCulture),
+                    Current = number == currentPage
+                } :
+                new PaginationOptionsItem { Ellipsis = true })
             .ToArray();
 
-        var items = new List<PaginationOptionsItem>();
-
-        for (var i = 0; i < pageNumbers.Length; i++)
-        {
-            var pageNumber = pageNumbers[i];
-
-            // Wherever pages have been skipped, show an ellipsis in their place
-            if (i > 0 && pageNumber > pageNumbers[i - 1] + 1)
-            {
-                items.Add(new PaginationOptionsItem { Ellipsis = true });
-            }
-
-            items.Add(new PaginationOptionsItem
-            {
-                Href = GeneratePageHref!(pageNumber),
-                Number = pageNumber.ToString(CultureInfo.CurrentCulture),
-                Current = pageNumber == currentPage
-            });
-        }
-
+        // Show a Previous link if this is not page 1, show a Next link if this is not the last page.
         var previous = currentPage > 1 ?
             new PaginationOptionsPrevious { Href = GeneratePageHref!(currentPage - 1) } :
             null;

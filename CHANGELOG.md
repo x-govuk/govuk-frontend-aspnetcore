@@ -51,6 +51,10 @@ Their messages can also use `{1}` for the limit, alongside `{0}` for the field's
 [CharacterCount(150, CountType = CharacterCountType.Words, ErrorMessage = "{0} must be {1} words or fewer")]
 ```
 
+### Fixes
+
+- `<govuk-pagination>` with generated items now shows a skipped page instead of an ellipsis when the ellipsis would replace only that one page, as in the [guidance's examples](https://design-system.service.gov.uk/components/pagination/). For example, page 4 of 100 is now `1 2 3 [4] 5 … 100` rather than `1 … 3 [4] 5 … 100`.
+
 ## 5.1.0
 
 Targets GOV.UK Frontend v6.6.0.

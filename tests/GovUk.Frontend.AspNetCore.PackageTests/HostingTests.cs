@@ -36,26 +36,19 @@ public partial class HostingTests(DefaultConfigurationAppFixture fixture, Packag
     }
 
     /// <summary>
-    /// On .NET 9 and later the page template resolves its URLs through the static asset collection that
-    /// <c>MapStaticAssets</c> builds from the static web assets manifest, so this is also what proves the
-    /// restored files were added to <c>@(Content)</c> early enough to be in that manifest.
+    /// The page template resolves its URLs through the static asset collection that <c>MapStaticAssets</c>
+    /// builds from the static web assets manifest, so this is also what proves the restored files were
+    /// added to <c>@(Content)</c> early enough to be in that manifest.
     /// </summary>
     [Theory]
     [MemberData(nameof(TargetFrameworks))]
-    public async Task ThePageTemplateUsesFingerprintedUrlsOnlyWhereTheFrameworkSupportsThem(string targetFramework)
+    public async Task ThePageTemplateUsesFingerprintedUrls(string targetFramework)
     {
         await using var app = await fixture.StartAsync(targetFramework);
 
         var page = await HostedPage.GetAsync(app);
 
-        if (targetFramework == "net8.0")
-        {
-            Assert.Equal($"/govuk-frontend.min.css?v={context.GovUkFrontendVersion}", page.Stylesheet);
-        }
-        else
-        {
-            Assert.Matches(@"^/govuk-frontend\.min\.[a-z0-9]+\.css$", page.Stylesheet);
-        }
+        Assert.Matches(@"^/govuk-frontend\.min\.[a-z0-9]+\.css$", page.Stylesheet);
     }
 
     [Theory]

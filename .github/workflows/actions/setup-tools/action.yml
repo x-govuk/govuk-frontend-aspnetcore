@@ -12,9 +12,8 @@ runs:
     - uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-          8.0.416
-          9.0.314
           10.0.100
+          11.0.100
 
     - run: just install-tools
       shell: bash

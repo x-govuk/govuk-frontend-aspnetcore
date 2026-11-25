@@ -35,7 +35,7 @@ public class ServiceNavigationNavEndTagHelper : TagHelper
             content = output.Content;
         }
 
-        if (output.Attributes.Any())
+        if (output.Attributes.Count > 0)
         {
             throw ExceptionHelper.AttributesNotSupported();
         }

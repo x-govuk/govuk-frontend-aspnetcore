@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Breaking changes
+
+#### .NET 8 and .NET 9 are no longer supported
+
+The library now targets .NET 10 only. .NET 8 and .NET 9 reached end of support on 10 November 2026.
+
+Apps on .NET 11 use the .NET 10 build.
+
 ### New features
 
 #### Localized character count validation messages

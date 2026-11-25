@@ -8,7 +8,7 @@ This file provides guidance to coding agents working with code in this repositor
 
 ## Commands
 
-Tasks are defined in the `justfile` (tool versions in `mise.toml`; .NET 8, 9 and 10 SDKs are all needed because the library and tests multi-target `net8.0;net9.0;net10.0`).
+Tasks are defined in the `justfile` (tool versions in `mise.toml`). The library and tests target `net10.0` (`LibTfms` in `Directory.Build.props`); `global.json` pins the .NET 11 SDK, and the .NET 10 SDK is also needed for its runtime. The package tests build consumer apps for both `net10.0` and `net11.0`.
 
 ```sh
 just install-tools          # dotnet tool restore (libman, needed by the first build)

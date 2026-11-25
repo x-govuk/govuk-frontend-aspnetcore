@@ -102,10 +102,19 @@ public class RestoreTests(PackageTestContext context)
         project.AssertFileExists("wwwroot/govuk-frontend.min.js");
         project.AssertFileExists("wwwroot/govuk-frontend.min.css");
 
-        // The whole npm package, not just the built bundles.
-        project.AssertFileExists("lib/govuk-frontend/govuk-frontend.min.js");
-        project.AssertFileExists("lib/govuk-frontend/assets/images/favicon.ico");
-        project.AssertFileExists("lib/govuk-frontend/index.scss");
+        // The whole npm package, not just the built bundles, laid out under dist/govuk/ as npm has it.
+        project.AssertFileExists("lib/govuk-frontend/dist/govuk/govuk-frontend.min.js");
+        project.AssertFileExists("lib/govuk-frontend/dist/govuk/assets/images/favicon.ico");
+        project.AssertFileExists("lib/govuk-frontend/dist/govuk/index.scss");
+        project.AssertFileExists("lib/govuk-frontend/dist/govuk/index.import.scss");
+
+        // The root forwards to dist/govuk/, so that `@use "govuk-frontend"` resolves too.
+        Assert.Equal(
+            "@forward \"dist/govuk\";",
+            (await File.ReadAllTextAsync(project.PathTo("lib/govuk-frontend/index.scss"))).Trim());
+        Assert.Equal(
+            "@import \"dist/govuk/index.import\";",
+            (await File.ReadAllTextAsync(project.PathTo("lib/govuk-frontend/index.import.scss"))).Trim());
 
         // The Sass support module, which is generated at pack time rather than coming from npm.
         project.AssertFileExists("lib/govuk-frontend-aspnetcore/index.scss");
@@ -114,6 +123,34 @@ public class RestoreTests(PackageTestContext context)
         Assert.Contains(
             context.GovUkFrontendVersion,
             await File.ReadAllTextAsync(project.PathTo("lib/govuk-frontend-aspnetcore/_constants.scss")));
+    }
+
+    /// <summary>
+    /// Earlier versions copied the contents of dist/govuk/ straight into the package directory. Those
+    /// index files have to be replaced, since alongside an _index.scss they'd make the import ambiguous.
+    /// </summary>
+    [Fact]
+    public async Task WithNpmPackagePreviouslyRestoredToFlatLayout_ReplacesTheRootIndexFiles()
+    {
+        var project = FixtureProject.CreateWebApp(
+            context,
+            nameof(WithNpmPackagePreviouslyRestoredToFlatLayout_ReplacesTheRootIndexFiles),
+            new Dictionary<string, string>() { ["RestoreGovUkFrontendNpmPackage"] = "true" });
+
+        Directory.CreateDirectory(project.PathTo("lib/govuk-frontend"));
+        await File.WriteAllTextAsync(project.PathTo("lib/govuk-frontend/index.scss"), "@forward \"base\";\n");
+        await File.WriteAllTextAsync(project.PathTo("lib/govuk-frontend/index.import.scss"), "@import \"base\";\n");
+
+        var result = await project.BuildAsync();
+
+        result.AssertSucceeded();
+
+        Assert.Equal(
+            "@forward \"dist/govuk\";",
+            (await File.ReadAllTextAsync(project.PathTo("lib/govuk-frontend/index.scss"))).Trim());
+        Assert.Equal(
+            "@import \"dist/govuk/index.import\";",
+            (await File.ReadAllTextAsync(project.PathTo("lib/govuk-frontend/index.import.scss"))).Trim());
     }
 
     [Fact]
@@ -140,7 +177,7 @@ public class RestoreTests(PackageTestContext context)
         project.AssertFileExists("wwwroot/govuk/assets/images/favicon.ico");
         project.AssertFileExists("wwwroot/govuk/govuk-frontend.min.js");
         project.AssertFileExists("wwwroot/govuk/govuk-frontend.min.css");
-        project.AssertFileExists("vendor/npm/govuk-frontend.min.js");
+        project.AssertFileExists("vendor/npm/dist/govuk/govuk-frontend.min.js");
         project.AssertFileExists("vendor/support/index.scss");
 
         project.AssertFileDoesNotExist("wwwroot/govuk-frontend.min.js");
@@ -368,7 +405,7 @@ public class RestoreTests(PackageTestContext context)
 
         result.AssertSucceeded();
 
-        project.AssertFileExists("lib/govuk-frontend/govuk-frontend.min.js");
+        project.AssertFileExists("lib/govuk-frontend/dist/govuk/govuk-frontend.min.js");
         project.AssertFileExists("vendor/support/index.scss");
 
         AssertBuildInfoForEveryTargetFramework(
@@ -394,7 +431,7 @@ public class RestoreTests(PackageTestContext context)
 
         result.AssertSucceeded();
 
-        project.AssertFileExists("lib/govuk-frontend/govuk-frontend.min.js");
+        project.AssertFileExists("lib/govuk-frontend/dist/govuk/govuk-frontend.min.js");
         project.AssertFileExists("vendor/support/index.scss");
     }
 

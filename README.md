@@ -268,6 +268,8 @@ Setting `GovUkFrontendSupportPackageDirectory` turns `RestoreGovUkFrontendSuppor
 
 If you want the entire `govuk-frontend` NPM package to be available e.g. so you can reference SASS files from your own stylesheet,
 set `RestoreGovUkFrontendNpmPackage` to `true` (and optionally override `GovUkFrontendNpmPackageDirectory`).
+The files are laid out as they are in the npm package, under `dist/govuk/`. With the parent directory (`lib` by default) as a Sass load path,
+both `@use "govuk-frontend"` and `@use "govuk-frontend/dist/govuk"` work, as do packages that import `govuk-frontend` themselves.
 See [the SASS sample](samples/Samples.Sass) for a full example of how to set up your project with SASS integration.
 
 > [!IMPORTANT]

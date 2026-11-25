@@ -121,6 +121,10 @@
     <Content Include="Package\content\support\**"
              Pack="true"
              PackagePath="content\support\$(RecursiveDir)" />
+
+    <Content Include="Package\content\govuk-frontend-root\**"
+             Pack="true"
+             PackagePath="content\govuk-frontend-root\$(RecursiveDir)" />
   </ItemGroup>
 
 </Project>

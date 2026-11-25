@@ -184,12 +184,23 @@
 
   <Target Name="_RestoreNpmPackage"
           Condition="'$(_ShouldRestoreNpmPackage)' == 'true' And '$(_CanCopyGovUkFrontendFiles)' == 'true'">
+    <!-- The files go under dist\govuk\, as they are in the npm package, so that Sass written against
+         npm (e.g. `@use "govuk-frontend/dist/govuk/..."` in a third-party package) resolves against the
+         parent directory as a load path. The root files forward to dist\govuk\ so that the shorter
+         `@use "govuk-frontend"` keeps working; they're named index rather than _index so that they
+         replace the index files left at the root by the flat layout earlier versions copied, which
+         would otherwise make the import ambiguous. -->
     <ItemGroup>
       <_PackageFiles Include="$(_GovUkFrontendNpmContentDirectory)**\*" />
+      <_PackageRootFiles Include="$(_GovUkFrontendPackageContentDirectory)govuk-frontend-root\*" />
     </ItemGroup>
 
     <Copy SourceFiles="@(_PackageFiles)"
-          DestinationFolder="$(GovUkFrontendNpmPackageDirectory)\%(RecursiveDir)"
+          DestinationFolder="$(GovUkFrontendNpmPackageDirectory)\dist\govuk\%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="@(_PackageRootFiles)"
+          DestinationFolder="$(GovUkFrontendNpmPackageDirectory)"
           SkipUnchangedFiles="true" />
 
     <ItemGroup>

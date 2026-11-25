@@ -10,6 +10,22 @@ The library now targets .NET 10 only. .NET 8 and .NET 9 reached end of support o
 
 Apps on .NET 11 use the .NET 10 build.
 
+#### The restored npm package uses the npm package's layout
+
+> [!NOTE]
+> This change only applies if you have enabled `RestoreGovUkFrontendNpmPackage` in your project file.
+
+`RestoreGovUkFrontendNpmPackage` used to copy the contents of the package's `dist/govuk/` directory straight into `GovUkFrontendNpmPackageDirectory`.
+They now go into `dist/govuk/` inside it, as in the npm package, so Sass packages that import `govuk-frontend/dist/govuk/...`,
+such as `@govuk-one-login/service-header`, resolve against the `lib` load path without any extra configuration.
+
+`@use "govuk-frontend"` and `@import "govuk-frontend"` still work: the root of `GovUkFrontendNpmPackageDirectory` now contains `index.scss` and `index.import.scss` files that forward to `dist/govuk/`.
+
+Anything that references a file below the root directly needs `dist/govuk/` adding to its path, e.g. `@use "govuk-frontend/components/button"` becomes `@use "govuk-frontend/dist/govuk/components/button"`.
+If you've set `GovUkFrontendNpmPackageDirectory` to `lib/govuk-frontend/dist/govuk` to get this layout, remove it.
+
+The files from the old layout aren't removed, so delete `GovUkFrontendNpmPackageDirectory` (`lib/govuk-frontend` by default) before building.
+
 ### New features
 
 #### Localized character count validation messages

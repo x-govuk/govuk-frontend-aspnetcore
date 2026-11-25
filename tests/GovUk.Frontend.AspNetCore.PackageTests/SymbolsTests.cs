@@ -23,7 +23,8 @@ public partial class SymbolsTests(PackageTestContext context)
 
     private string SymbolPackagePath => Path.ChangeExtension(PackagePath, ".snupkg");
 
-    public static TheoryData<string> TargetFrameworks => [.. FixtureProject.AllTargetFrameworks];
+    /// <summary>The frameworks the library is packed for, which can differ from the ones fixtures are built for.</summary>
+    public static TheoryData<string> TargetFrameworks => ["net10.0"];
 
     [Fact]
     public void SymbolPackage_IsPackedAlongsideThePackage()

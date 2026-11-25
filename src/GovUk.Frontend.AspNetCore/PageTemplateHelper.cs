@@ -1,13 +1,11 @@
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
-#if NET9_0_OR_GREATER
-using Microsoft.AspNetCore.Components;
-#endif
 
 namespace GovUk.Frontend.AspNetCore;
 
@@ -280,12 +278,10 @@ public class PageTemplateHelper
 
         path = "/" + path.TrimStart('/');
 
-#if NET9_0_OR_GREATER
         if (ResourceCollectionUtilities.TryResolveFromAssetCollection(httpContext, path, out var resolvedUrl))
         {
             return resolvedUrl;
         }
-#endif
 
         return GetVersionedUrl(httpContext.Request.PathBase + path);
     }
@@ -344,7 +340,6 @@ public class PageTemplateHelper
         return $"'sha256-{Convert.ToBase64String(hash)}'";
     }
 
-#if NET9_0_OR_GREATER
 #nullable disable
     // Copy of https://github.com/dotnet/aspnetcore/blob/v9.0.0/src/Mvc/Mvc.TagHelpers/src/ResourceCollectionUtilities.cs
     // but tweaked to pass an HttpContext instead of a ViewContext
@@ -402,5 +397,4 @@ public class PageTemplateHelper
         }
     }
 #nullable enable
-#endif
 }

@@ -14,8 +14,11 @@ public sealed class FixtureProject
     /// </summary>
     public const string Configuration = "Debug";
 
-    /// <summary>Every fixture is built for all the frameworks the library targets.</summary>
-    public static readonly string[] AllTargetFrameworks = ["net8.0", "net9.0", "net10.0"];
+    /// <summary>
+    /// Every fixture is built for all the frameworks consumers are supported on. That includes frameworks
+    /// newer than the ones the library targets, which get the newest library build.
+    /// </summary>
+    public static readonly string[] AllTargetFrameworks = ["net10.0", "net11.0"];
 
     private readonly PackageTestContext _context;
 

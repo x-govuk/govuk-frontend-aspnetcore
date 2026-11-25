@@ -8,7 +8,7 @@ install-tools:
 # Install Playwright
 install-playwright:
   @dotnet build tests/GovUk.Frontend.AspNetCore.IntegrationTests -c Release -v quiet --nologo
-  @./tests/GovUk.Frontend.AspNetCore.IntegrationTests/bin/Release/net8.0/playwright.ps1 install chromium
+  @./tests/GovUk.Frontend.AspNetCore.IntegrationTests/bin/Release/net10.0/playwright.ps1 install chromium
 
 # Restore dependencies
 restore *ARGS:

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="10.0.8" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit.v3" Version="4.0.0" />
   </ItemGroup>
@@ -16,18 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj" />
     <ProjectReference Include="..\GovUk.FrontEnd.AspNetCore.TestCommon\GovUk.FrontEnd.AspNetCore.TestCommon.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="8.0.27" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="9.0.16" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="10.0.8" />
   </ItemGroup>
 
   <ItemGroup>

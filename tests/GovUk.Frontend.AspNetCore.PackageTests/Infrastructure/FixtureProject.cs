@@ -61,6 +61,25 @@ public sealed class FixtureProject
         IReadOnlyList<string>? targetFrameworks = null) =>
         Create(context, name, "Microsoft.NET.Sdk", "ClassLib", properties, directoryBuildProperties, targetFrameworks);
 
+    /// <summary>
+    /// Creates a class library of tests that references the xUnit assertions package, with the sources in
+    /// <c>Fixtures/XunitTests</c>.
+    /// </summary>
+    /// <inheritdoc cref="CreateWebApp" />
+    public static FixtureProject CreateXunitTestLibrary(
+        PackageTestContext context,
+        string name,
+        IReadOnlyDictionary<string, string>? properties = null) =>
+        Create(
+            context,
+            name,
+            "Microsoft.NET.Sdk",
+            "XunitTests",
+            properties,
+            directoryBuildProperties: null,
+            targetFrameworks: null,
+            additionalPackageIds: [PackageTestContext.XunitPackageId]);
+
     private static FixtureProject Create(
         PackageTestContext context,
         string name,
@@ -68,7 +87,8 @@ public sealed class FixtureProject
         string fixtureName,
         IReadOnlyDictionary<string, string>? properties,
         IReadOnlyDictionary<string, string>? directoryBuildProperties,
-        IReadOnlyList<string>? targetFrameworks)
+        IReadOnlyList<string>? targetFrameworks,
+        IReadOnlyList<string>? additionalPackageIds = null)
     {
         targetFrameworks ??= AllTargetFrameworks;
 
@@ -78,7 +98,7 @@ public sealed class FixtureProject
         var project = new FixtureProject(context, name, directory, targetFrameworks);
 
         project.WriteSandboxFiles(directoryBuildProperties);
-        project.WriteProjectFile(sdk, properties);
+        project.WriteProjectFile(sdk, properties, additionalPackageIds ?? []);
         CopyDirectory(Path.Combine(context.FixturesDirectory, fixtureName), directory);
 
         return project;
@@ -202,9 +222,13 @@ public sealed class FixtureProject
         return rendered.ToString();
     }
 
-    private void WriteProjectFile(string sdk, IReadOnlyDictionary<string, string>? properties)
+    private void WriteProjectFile(string sdk, IReadOnlyDictionary<string, string>? properties, IReadOnlyList<string> additionalPackageIds)
     {
         var scenarioProperties = RenderProperties(properties, "    ");
+
+        // Every package from this repo has the same version.
+        var additionalPackageReferences = string.Concat(additionalPackageIds.Select(id =>
+            $"    <PackageReference Include=\"{id}\" Version=\"{_context.PackageVersion}\" />\n"));
 
         // The scenario's properties go in the project body, where a consumer would put them; passing them
         // as global properties on the command line evaluates differently.
@@ -223,7 +247,7 @@ public sealed class FixtureProject
 
               <ItemGroup>
                 <PackageReference Include="GovUk.Frontend.AspNetCore" Version="{_context.PackageVersion}" />
-              </ItemGroup>
+            {additionalPackageReferences}  </ItemGroup>
 
             </Project>
 
@@ -266,6 +290,7 @@ public sealed class FixtureProject
                 </packageSource>
                 <packageSource key="package-under-test">
                   <package pattern="GovUk.Frontend.AspNetCore" />
+                  <package pattern="GovUk.Frontend.AspNetCore.*" />
                 </packageSource>
               </packageSourceMapping>
             </configuration>

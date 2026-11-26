@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.Testing.Tests" />
+    <!-- The xUnit package formats lookup failures from their parts; it is pinned to this exact version. -->
+    <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.Testing.Xunit.v3" />
   </ItemGroup>
 
   <ItemGroup>

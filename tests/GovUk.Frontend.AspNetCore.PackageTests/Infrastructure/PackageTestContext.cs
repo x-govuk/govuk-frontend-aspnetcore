@@ -17,6 +17,10 @@ public sealed class PackageTestContext : IDisposable
 
     public const string LibraryPackageId = "GovUk.Frontend.AspNetCore";
     public const string TestingPackageId = "GovUk.Frontend.AspNetCore.Testing";
+    public const string XunitPackageId = "GovUk.Frontend.AspNetCore.Testing.Xunit.v3";
+
+    /// <summary>The packages that ship alongside the library, in lockstep with it.</summary>
+    public static readonly string[] TestingPackageIds = [TestingPackageId, XunitPackageId];
 
     private bool _disposed;
 
@@ -26,7 +30,7 @@ public sealed class PackageTestContext : IDisposable
         PackageFeed = GetAssemblyMetadata("PackageTestFeed");
 
         PackageVersion = FindPackageVersion(PackageFeed, LibraryPackageId);
-        TestingPackageVersion = FindPackageVersion(PackageFeed, TestingPackageId);
+        TestingPackageVersions = TestingPackageIds.ToDictionary(id => id, id => FindPackageVersion(PackageFeed, id));
         GovUkFrontendVersion = ReadGovUkFrontendVersion(RepoRoot);
         FixturesDirectory = Path.Combine(AppContext.BaseDirectory, "Fixtures");
 
@@ -48,8 +52,11 @@ public sealed class PackageTestContext : IDisposable
     /// <summary>The version of the freshly packed package under test.</summary>
     public string PackageVersion { get; }
 
-    /// <summary>The version of the freshly packed testing package, which should match <see cref="PackageVersion"/>.</summary>
-    public string TestingPackageVersion { get; }
+    /// <summary>
+    /// The versions of the freshly packed testing packages, by package ID, which should all match
+    /// <see cref="PackageVersion"/>.
+    /// </summary>
+    public IReadOnlyDictionary<string, string> TestingPackageVersions { get; }
 
     /// <summary>The version of govuk-frontend the package ships, i.e. the value of the <c>v</c> query parameter.</summary>
     public string GovUkFrontendVersion { get; }
@@ -94,7 +101,7 @@ public sealed class PackageTestContext : IDisposable
     private static string FindPackageVersion(string feed, string packageId)
     {
         // A version starts with a digit, which is what tells GovUk.Frontend.AspNetCore.5.3.0.nupkg apart from
-        // GovUk.Frontend.AspNetCore.Testing.5.3.0.nupkg.
+        // GovUk.Frontend.AspNetCore.Testing.5.3.0.nupkg (and that from GovUk.Frontend.AspNetCore.Testing.Xunit.v3.5.3.0.nupkg).
         var versions = Directory.Exists(feed)
             ? Directory.GetFiles(feed, $"{packageId}.*.nupkg")
                 .Select(path => Path.GetFileNameWithoutExtension(path)[(packageId.Length + 1)..])

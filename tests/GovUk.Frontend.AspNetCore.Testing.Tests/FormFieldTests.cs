@@ -353,6 +353,67 @@ public class FormFieldTests
         Assert.Equal("3", date.Month!.Value);
         Assert.Equal("2020", date.Year!.Value);
         Assert.Null(date.Value);
+        Assert.Equal((3, 2020), date.MonthAndYear);
+        Assert.Null(date.DayAndMonth);
+    }
+
+    [Theory]
+    [InlineData("3", "2020", 3, 2020)]
+    [InlineData(" Mar ", "2020", 3, 2020)]
+    [InlineData("december", "1999", 12, 1999)]
+    public async Task DateInput_MonthAndYear_RealMonthAndYear(string month, string year, int expectedMonth, int expectedYear)
+    {
+        var date = await RenderPartialDateAsync(("Month", month), ("Year", year));
+
+        Assert.Equal((expectedMonth, expectedYear), date.MonthAndYear);
+    }
+
+    [Theory]
+    [InlineData("13", "2020")]
+    [InlineData("0", "2020")]
+    [InlineData("Marc", "2020")]
+    [InlineData("3", "")]
+    [InlineData("3", "0")]
+    public async Task DateInput_MonthAndYear_NotARealMonthAndYear_IsNull(string month, string year)
+    {
+        var date = await RenderPartialDateAsync(("Month", month), ("Year", year));
+
+        Assert.Null(date.MonthAndYear);
+    }
+
+    [Theory]
+    [InlineData("27", "3", 27, 3)]
+    [InlineData("29", "Feb", 29, 2)]
+    [InlineData(" 1 ", "january", 1, 1)]
+    public async Task DateInput_DayAndMonth_RealDayAndMonth(string day, string month, int expectedDay, int expectedMonth)
+    {
+        var date = await RenderPartialDateAsync(("Day", day), ("Month", month));
+
+        Assert.Equal((expectedDay, expectedMonth), date.DayAndMonth);
+        Assert.Null(date.MonthAndYear);
+        Assert.Null(date.Value);
+    }
+
+    [Theory]
+    [InlineData("30", "2")]
+    [InlineData("31", "4")]
+    [InlineData("0", "1")]
+    [InlineData("1", "13")]
+    [InlineData("", "1")]
+    public async Task DateInput_DayAndMonth_NotARealDayAndMonth_IsNull(string day, string month)
+    {
+        var date = await RenderPartialDateAsync(("Day", day), ("Month", month));
+
+        Assert.Null(date.DayAndMonth);
+    }
+
+    [Fact]
+    public async Task DateInput_DayMonthAndYear_HasNoPartialValues()
+    {
+        var date = await RenderDateAsync("27", "3", "2007");
+
+        Assert.Null(date.MonthAndYear);
+        Assert.Null(date.DayAndMonth);
     }
 
     [Fact]
@@ -690,6 +751,20 @@ public class FormFieldTests
                 new DateInputOptionsItem { Name = "month", Value = month },
                 new DateInputOptionsItem { Name = "year", Value = year }
             ]
+        }));
+
+        return doc.GetDateInputByLegend("Date");
+    }
+
+    private static async Task<DateInput> RenderPartialDateAsync(params (string Part, string Value)[] items)
+    {
+        var doc = await Render.DocumentAsync(g => g.GenerateDateInputAsync(new DateInputOptions
+        {
+            Id = "date",
+            Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Date" } },
+            Items = items
+                .Select(i => new DateInputOptionsItem { Name = $"Date.{i.Part}", Label = new HtmlString(i.Part), Value = i.Value })
+                .ToList()
         }));
 
         return doc.GetDateInputByLegend("Date");

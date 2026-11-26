@@ -57,45 +57,73 @@ public sealed class DateInput : FormField
     /// </para>
     /// <para>
     /// Use <see cref="DateInputItem.Value"/> on <see cref="Day"/>, <see cref="Month"/> and <see cref="Year"/> to read
-    /// values that aren't a date.
+    /// values that aren't a date. Use <see cref="MonthAndYear"/> or <see cref="DayAndMonth"/> for a date input
+    /// without a day or a year.
     /// </para>
     /// </remarks>
-    public DateOnly? Value
+    public DateOnly? Value =>
+        TryParseDay(Day, out var day) && TryParseMonth(Month, out var month) && TryParseYear(Year, out var year) &&
+        day <= DateTime.DaysInMonth(year, month) ?
+            new DateOnly(year, month, day) :
+            null;
+
+    /// <summary>
+    /// Gets the month and year entered, or <see langword="null"/> if the date input doesn't have exactly a month and a
+    /// year input or their values aren't a real month and year.
+    /// </summary>
+    /// <remarks>
+    /// This is the value of a date input bound to a <c>(int, int)</c> with
+    /// <c>[DateInput(DateInputItemTypes.MonthAndYear)]</c>. The month can be a number or a month name, as for
+    /// <see cref="Value"/>.
+    /// </remarks>
+    public (int Month, int Year)? MonthAndYear =>
+        Day is null && TryParseMonth(Month, out var month) && TryParseYear(Year, out var year) ?
+            (month, year) :
+            null;
+
+    /// <summary>
+    /// Gets the day and month entered, or <see langword="null"/> if the date input doesn't have exactly a day and a
+    /// month input or their values aren't a real day and month.
+    /// </summary>
+    /// <remarks>
+    /// This is the value of a date input bound to a <c>(int, int)</c> with
+    /// <c>[DateInput(DateInputItemTypes.DayAndMonth)]</c>. 29 February is a real day and month. The month can be a
+    /// number or a month name, as for <see cref="Value"/>.
+    /// </remarks>
+    public (int Day, int Month)? DayAndMonth =>
+        Year is null && TryParseDay(Day, out var day) && TryParseMonth(Month, out var month) &&
+        day <= DateTime.DaysInMonth(2000, month) ?  // 2000 is a leap year
+            (day, month) :
+            null;
+
+    private static bool TryParseDay(DateInputItem? item, out int value) =>
+        TryParseNumber(item, out value) && value is >= 1 and <= 31;
+
+    private static bool TryParseMonth(DateInputItem? item, out int value)
     {
-        get
+        if (TryParseNumber(item, out value))
         {
-            if (TryParse(Day, out var day) && TryParseMonth(Month, out var month) && TryParse(Year, out var year) &&
-                year is >= 1 and <= 9999 && month is >= 1 and <= 12 && day >= 1 && day <= DateTime.DaysInMonth(year, month))
-            {
-                return new DateOnly(year, month, day);
-            }
-
-            return null;
-
-            static bool TryParse(DateInputItem? item, out int value)
-            {
-                value = 0;
-                return item is not null &&
-                    int.TryParse(item.Value.Trim(), NumberStyles.None, CultureInfo.InvariantCulture, out value);
-            }
-
-            static bool TryParseMonth(DateInputItem? item, out int value)
-            {
-                if (TryParse(item, out value))
-                {
-                    return true;
-                }
-
-                if (item is null)
-                {
-                    return false;
-                }
-
-                var name = item.Value.Trim();
-                value = Array.FindIndex(MonthNames, names => names.Contains(name, StringComparer.OrdinalIgnoreCase)) + 1;
-                return value != 0;
-            }
+            return value is >= 1 and <= 12;
         }
+
+        if (item is null)
+        {
+            return false;
+        }
+
+        var name = item.Value.Trim();
+        value = Array.FindIndex(MonthNames, names => names.Contains(name, StringComparer.OrdinalIgnoreCase)) + 1;
+        return value != 0;
+    }
+
+    private static bool TryParseYear(DateInputItem? item, out int value) =>
+        TryParseNumber(item, out value) && value is >= 1 and <= 9999;
+
+    private static bool TryParseNumber(DateInputItem? item, out int value)
+    {
+        value = 0;
+        return item is not null &&
+            int.TryParse(item.Value.Trim(), NumberStyles.None, CultureInfo.InvariantCulture, out value);
     }
 
     // The month names DateInputModelBinder accepts when GovUkFrontendOptions.AcceptMonthNamesInDateInputs is true (the default).

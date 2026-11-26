@@ -20,6 +20,10 @@ namespace GovUk.Frontend.AspNetCore.Testing;
 /// <c>false</c>, enums use their names, other values are formatted with the invariant culture and collections add a
 /// value for each item. <see langword="null"/> values are left out.
 /// </para>
+/// <para>
+/// A <c>(int, int)</c> for a month and year or a day and month date input is rejected, since it doesn't say which
+/// parts it holds. Add those fields by name instead, e.g. <c>Add("Issued.Month", "3").Add("Issued.Year", "2020")</c>.
+/// </para>
 /// </remarks>
 public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
 {
@@ -359,6 +363,12 @@ public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
                 yield return new($"{name}.Month", date.Month.ToString(CultureInfo.InvariantCulture));
                 yield return new($"{name}.Year", date.Year.ToString(CultureInfo.InvariantCulture));
                 break;
+
+            case ValueTuple<int, int>:
+                throw new ArgumentException(
+                    $"A (int, int) value for '{name}' doesn't say whether it's a day and month or a month and year. " +
+                    $"Add the '{name}.Day', '{name}.Month' or '{name}.Year' fields separately.",
+                    nameof(value));
 
             case bool b:
                 yield return new(name, b ? "true" : "false");

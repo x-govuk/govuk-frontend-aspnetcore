@@ -301,6 +301,7 @@ Files the build didn't copy are left alone, since they can change without the `g
 - [Details](docs/components/details.md)
 - [Error message](docs/components/error-message.md)
 - [Error summary](docs/components/error-summary.md)
+- [Exit this page](docs/components/exit-this-page.md)
 - [Feedback](docs/components/feedback.md)
 - [Fieldset](docs/components/fieldset.md)
 - [File upload](docs/components/file-upload.md)

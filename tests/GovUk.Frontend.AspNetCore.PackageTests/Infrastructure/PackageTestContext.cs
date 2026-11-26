@@ -15,6 +15,9 @@ public sealed class PackageTestContext : IDisposable
 {
     private const string KeepSandboxVariableName = "GOVUK_PACKAGE_TESTS_KEEP_SANDBOX";
 
+    public const string LibraryPackageId = "GovUk.Frontend.AspNetCore";
+    public const string TestingPackageId = "GovUk.Frontend.AspNetCore.Testing";
+
     private bool _disposed;
 
     public PackageTestContext()
@@ -22,18 +25,8 @@ public sealed class PackageTestContext : IDisposable
         RepoRoot = GetAssemblyMetadata("RepoRoot");
         PackageFeed = GetAssemblyMetadata("PackageTestFeed");
 
-        var packages = Directory.Exists(PackageFeed)
-            ? Directory.GetFiles(PackageFeed, "GovUk.Frontend.AspNetCore.*.nupkg")
-            : [];
-
-        if (packages.Length != 1)
-        {
-            throw new InvalidOperationException(
-                $"Expected exactly one GovUk.Frontend.AspNetCore package in '{PackageFeed}' but found {packages.Length}. " +
-                "Build this project to pack the library under test.");
-        }
-
-        PackageVersion = Path.GetFileNameWithoutExtension(packages[0])["GovUk.Frontend.AspNetCore.".Length..];
+        PackageVersion = FindPackageVersion(PackageFeed, LibraryPackageId);
+        TestingPackageVersion = FindPackageVersion(PackageFeed, TestingPackageId);
         GovUkFrontendVersion = ReadGovUkFrontendVersion(RepoRoot);
         FixturesDirectory = Path.Combine(AppContext.BaseDirectory, "Fixtures");
 
@@ -54,6 +47,9 @@ public sealed class PackageTestContext : IDisposable
 
     /// <summary>The version of the freshly packed package under test.</summary>
     public string PackageVersion { get; }
+
+    /// <summary>The version of the freshly packed testing package, which should match <see cref="PackageVersion"/>.</summary>
+    public string TestingPackageVersion { get; }
 
     /// <summary>The version of govuk-frontend the package ships, i.e. the value of the <c>v</c> query parameter.</summary>
     public string GovUkFrontendVersion { get; }
@@ -89,6 +85,31 @@ public sealed class PackageTestContext : IDisposable
         }
 
         TryDeleteDirectory(SandboxDirectory);
+    }
+
+    /// <summary>Gets the path to the packed <c>.nupkg</c> for <paramref name="packageId"/> in the feed.</summary>
+    public string GetPackagePath(string packageId, string version) =>
+        Path.Combine(PackageFeed, $"{packageId}.{version}.nupkg");
+
+    private static string FindPackageVersion(string feed, string packageId)
+    {
+        // A version starts with a digit, which is what tells GovUk.Frontend.AspNetCore.5.3.0.nupkg apart from
+        // GovUk.Frontend.AspNetCore.Testing.5.3.0.nupkg.
+        var versions = Directory.Exists(feed)
+            ? Directory.GetFiles(feed, $"{packageId}.*.nupkg")
+                .Select(path => Path.GetFileNameWithoutExtension(path)[(packageId.Length + 1)..])
+                .Where(version => char.IsAsciiDigit(version[0]))
+                .ToArray()
+            : [];
+
+        if (versions.Length != 1)
+        {
+            throw new InvalidOperationException(
+                $"Expected exactly one {packageId} package in '{feed}' but found {versions.Length}. " +
+                "Build this project to pack the packages under test.");
+        }
+
+        return versions[0];
     }
 
     private static string GetAssemblyMetadata(string key) =>

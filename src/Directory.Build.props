@@ -1,0 +1,50 @@
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <!-- Settings shared by every project that ships as a package. The docs app lives under src/ too but
+       isn't one. -->
+  <PropertyGroup>
+    <IsShippingProject Condition="'$(IsShippingProject)' == '' and '$(MSBuildProjectName)' != 'GovUk.Frontend.AspNetCore.Docs'">true</IsShippingProject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsShippingProject)' == 'true'">
+    <Authors>James Gunn</Authors>
+    <Copyright>Copyright © James Gunn</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/x-govuk/govuk-frontend-aspnetcore</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/x-govuk/govuk-frontend-aspnetcore</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <!-- Every package gets the same version, from the same tags. The testing packages depend on the markup a
+         given version of the library renders, so they're versioned in lockstep with it; see
+         Directory.Build.targets for the matching dependency range. -->
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+    <MinVerMinimumMajorMinor>5.0</MinVerMinimumMajorMinor>
+    <MinVerDefaultPreReleaseIdentifiers>pre.0</MinVerDefaultPreReleaseIdentifiers>
+
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- The PDBs are what carry the Source Link data; without these they never leave the build machine. -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AnalysisMode>All</AnalysisMode>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsShippingProject)' == 'true'">
+    <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="" Visible="false" />
+
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MinVer" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

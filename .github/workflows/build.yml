@@ -48,6 +48,7 @@ jobs:
       - name: Test
         run: |
           just unit-tests --configuration Debug --no-build
+          just testing-tests --configuration Debug --no-build
           just integration-tests --configuration Debug --no-build
 
   build_release:
@@ -84,27 +85,32 @@ jobs:
       - name: Test
         run: |
           just unit-tests --configuration Release --no-build
+          just testing-tests --configuration Release --no-build
           just integration-tests --configuration Release --no-build
 
-      - name: Update package README GitHub link
+      - name: Update package README GitHub links
         run: |
           if [[ "${{ github.ref }}" == "refs/tags/v"* ]]; then
             REF="${{ github.ref_name }}"
           else
             REF="${{ github.sha }}"
           fi
-          README_PATH="src/GovUk.Frontend.AspNetCore/Package/README.md"
           ORIGINAL_URL="https://github.com/${{ github.repository }}/blob/main/"
           NEW_URL="https://github.com/${{ github.repository }}/blob/${REF}/"
 
-          if ! grep -q "$ORIGINAL_URL" "$README_PATH"; then
-            echo "::error::Expected URL pattern '$ORIGINAL_URL' not found in $README_PATH"
-            exit 1
-          fi
+          for README_PATH in \
+            src/GovUk.Frontend.AspNetCore/Package/README.md \
+            src/GovUk.Frontend.AspNetCore.Testing/README.md
+          do
+            if ! grep -q "$ORIGINAL_URL" "$README_PATH"; then
+              echo "::error::Expected URL pattern '$ORIGINAL_URL' not found in $README_PATH"
+              exit 1
+            fi
 
-          sed -i "s|${ORIGINAL_URL}|${NEW_URL}|g" "$README_PATH"
+            sed -i "s|${ORIGINAL_URL}|${NEW_URL}|g" "$README_PATH"
 
-          echo "Updated README link to reference: ${REF}"
+            echo "Updated $README_PATH links to reference: ${REF}"
+          done
 
       - name: Pack
         run: just pack --configuration Release
@@ -112,7 +118,7 @@ jobs:
       - name: Publish package artifact
         uses: actions/upload-artifact@v7
         with:
-          name: GovUk.Frontend.AspNetCore.nupkg
+          name: packages
           # The release job's push picks up each .snupkg from alongside its .nupkg
           path: |
             packages/*.nupkg
@@ -216,7 +222,7 @@ jobs:
       - name: Download package artifact
         uses: actions/download-artifact@v8
         with:
-          name: GovUk.Frontend.AspNetCore.nupkg
+          name: packages
 
       - name: NuGet login
         uses: NuGet/login@v1

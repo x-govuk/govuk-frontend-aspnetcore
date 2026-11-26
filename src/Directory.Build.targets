@@ -1,0 +1,19 @@
+<Project>
+  <!-- A shipping package depends on the exact version of each package it references from this repo, e.g.
+       GovUk.Frontend.AspNetCore.Testing 5.3.0 depends on GovUk.Frontend.AspNetCore [5.3.0]. The testing
+       helpers read the markup that one version of the library renders, so a looser range would let a
+       consumer upgrade one without the other; with this, NuGet warns (NU1608) instead.
+
+       Metadata on the ProjectReference itself is ignored: pack reads the version from project.assets.json
+       into _ProjectReferencesWithVersions, so the range has to be rewritten there. That's a NuGet
+       implementation detail, which is why the package tests check the packed nuspec. -->
+  <Target Name="PinProjectReferenceVersions"
+          AfterTargets="_GetProjectReferenceVersions"
+          Condition="'$(IsShippingProject)' == 'true'">
+    <ItemGroup>
+      <_ProjectReferencesWithVersions Condition="'%(_ProjectReferencesWithVersions.ProjectVersion)' != ''">
+        <ProjectVersion>[%(_ProjectReferencesWithVersions.ProjectVersion)]</ProjectVersion>
+      </_ProjectReferencesWithVersions>
+    </ItemGroup>
+  </Target>
+</Project>

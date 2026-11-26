@@ -126,6 +126,27 @@ Expected: a text input labelled "Email"
 Found:    fields labelled "Email address" (text input), "Date of birth" (date input)
 ```
 
+A `FormSubmission` posts a form, either straight to an endpoint or starting from a form on a page.
+Values are added and replaced by name and formatted as model binding reads them back, so a `DateOnly` becomes the `.Day`, `.Month` and `.Year` fields of a date input:
+
+```cs
+var submission = new FormSubmission("/apply/name")
+{
+    { "Name", "Sarah Philips" },
+    { "DateOfBirth", new DateOnly(2000, 3, 27) },
+    { "Nationality", ["british", "irish"] },
+};
+await submission.AddAntiforgeryTokenAsync(client);
+
+using var response = await client.SubmitAsync(submission);
+```
+
+`doc.GetForm("Continue").CreateSubmission()` starts from a form's current values, including its hidden inputs and antiforgery token, and submits it as that button would, with its name, value and any `formaction`; `doc.AllForms` lists every form.
+The page itself isn't changed. Files can be added with `AddFile()`, and the submission is then sent as `multipart/form-data`.
+
+`AddAntiforgeryTokenAsync()` and `client.GetAntiforgeryTokenAsync(url)` request a page and read its antiforgery token; the client must keep cookies, as `WebApplicationFactory`'s does.
+`response.FollowRedirectAsync(client)` follows a redirect as a browser does, `response.GetRedirectLocation()` gives the resolved `Location`, and `client.SubmitAsync(submission, followRedirects: true)` follows every redirect.
+
 The package needs C# 14, the default for .NET 10.
 
 ### Fixes

@@ -1,0 +1,61 @@
+﻿@page
+@model GovUk.Frontend.AspNetCore.Testing.Tests.Pages.ApplyModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Apply</title></head>
+<body>
+<form method="post" enctype="@(Model.Multipart ? "multipart/form-data" : "application/x-www-form-urlencoded")">
+    <input type="hidden" name="Reference" value="ABC123">
+
+    <govuk-input for="Name" />
+
+    <govuk-date-input for="DateOfBirth" error-message-prefix="Date of birth">
+        <govuk-date-input-fieldset>
+            <govuk-date-input-fieldset-legend />
+        </govuk-date-input-fieldset>
+    </govuk-date-input>
+
+    <govuk-checkboxes for="Nationality">
+        <govuk-checkboxes-fieldset>
+            <govuk-checkboxes-fieldset-legend />
+            <govuk-checkboxes-item value="british">British</govuk-checkboxes-item>
+            <govuk-checkboxes-item value="irish">Irish</govuk-checkboxes-item>
+        </govuk-checkboxes-fieldset>
+    </govuk-checkboxes>
+
+    <govuk-radios for="Contact">
+        <govuk-radios-fieldset>
+            <govuk-radios-fieldset-legend />
+            <govuk-radios-item value="Email">Email</govuk-radios-item>
+            <govuk-radios-item value="Phone">Phone</govuk-radios-item>
+        </govuk-radios-fieldset>
+    </govuk-radios>
+
+    <govuk-select for="Country">
+        <govuk-select-item value="england">England</govuk-select-item>
+        <govuk-select-item value="wales">Wales</govuk-select-item>
+    </govuk-select>
+
+    <govuk-file-upload for="Upload" />
+
+    <govuk-input for="Notes" disabled="true" />
+
+    <govuk-button-group>
+        <govuk-button name="Action" value="continue">Continue</govuk-button>
+        <govuk-button formaction="/Apply?handler=Draft" class="govuk-button--secondary">Save as draft</govuk-button>
+    </govuk-button-group>
+</form>
+
+<form method="get" action="/Search?ignored=1">
+    <govuk-input name="q" id="q" value="teachers">
+        <govuk-input-label>Search</govuk-input-label>
+    </govuk-input>
+    <govuk-button>Search</govuk-button>
+</form>
+
+<form method="post" action="/SignOut">
+    <govuk-button class="govuk-button--secondary">Sign out</govuk-button>
+</form>
+</body>
+</html>

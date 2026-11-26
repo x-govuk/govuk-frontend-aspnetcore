@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(LibTfms)</TargetFrameworks>
+    <!-- For extension members -->
+    <LangVersion>14.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>GovUk.Frontend.AspNetCore.Testing.Xunit</RootNamespace>
+    <PackageId>GovUk.Frontend.AspNetCore.Testing.Xunit.v3</PackageId>
+    <PackageTags>aspnetcore, testing, xunit, gds, gov.uk, x-govuk</PackageTags>
+    <Description>xUnit v3 assertions for testing ASP.NET Core apps built with GovUk.Frontend.AspNetCore.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <!-- Adds a global using for the assertions' namespace, so Assert.ErrorSummaryContains(...) etc. are found
+         wherever Assert is. -->
+    <None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The assertions library alone: no dependency on the xUnit runner. -->
+    <PackageReference Include="xunit.v3.assert" Version="3.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GovUk.Frontend.AspNetCore.Testing\GovUk.Frontend.AspNetCore.Testing.csproj" />
+  </ItemGroup>
+
+</Project>

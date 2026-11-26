@@ -19,6 +19,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\GovUk.Frontend.AspNetCore.Testing\GovUk.Frontend.AspNetCore.Testing.csproj" />
+    <ProjectReference Include="..\..\src\GovUk.Frontend.AspNetCore.Testing.Xunit.v3\GovUk.Frontend.AspNetCore.Testing.Xunit.v3.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The package adds this through buildTransitive, which a ProjectReference doesn't import -->
+    <Using Include="GovUk.Frontend.AspNetCore.Testing.Xunit" />
   </ItemGroup>
 
 </Project>

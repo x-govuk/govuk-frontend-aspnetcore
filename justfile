@@ -56,6 +56,7 @@ pack *ARGS:
   @rm -rf packages
   @dotnet pack src/GovUk.Frontend.AspNetCore/ {{ARGS}}
   @dotnet pack src/GovUk.Frontend.AspNetCore.Testing/ {{ARGS}}
+  @dotnet pack src/GovUk.Frontend.AspNetCore.Testing.Xunit.v3/ {{ARGS}}
 
 # Run the docs app
 docs *ARGS:

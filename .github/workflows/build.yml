@@ -100,7 +100,8 @@ jobs:
 
           for README_PATH in \
             src/GovUk.Frontend.AspNetCore/Package/README.md \
-            src/GovUk.Frontend.AspNetCore.Testing/README.md
+            src/GovUk.Frontend.AspNetCore.Testing/README.md \
+            src/GovUk.Frontend.AspNetCore.Testing.Xunit.v3/README.md
           do
             if ! grep -q "$ORIGINAL_URL" "$README_PATH"; then
               echo "::error::Expected URL pattern '$ORIGINAL_URL' not found in $README_PATH"
@@ -135,6 +136,12 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           path: packages/GovUk.Frontend.AspNetCore.Testing.[0-9]*.nupkg
+          archive: false
+
+      - name: Publish GovUk.Frontend.AspNetCore.Testing.Xunit.v3 package
+        uses: actions/upload-artifact@v7
+        with:
+          path: packages/GovUk.Frontend.AspNetCore.Testing.Xunit.v3.[0-9]*.nupkg
           archive: false
 
   package_tests:

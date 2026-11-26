@@ -1,0 +1,8 @@
+<Project>
+  <!-- The assertions are extension members on xUnit's Assert, so they're only found where their namespace is
+       imported. Remove this item in a project to opt out:
+       <Using Remove="GovUk.Frontend.AspNetCore.Testing.Xunit" /> -->
+  <ItemGroup>
+    <Using Include="GovUk.Frontend.AspNetCore.Testing.Xunit" />
+  </ItemGroup>
+</Project>

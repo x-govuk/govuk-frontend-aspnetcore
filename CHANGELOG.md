@@ -149,6 +149,38 @@ The page itself isn't changed. Files can be added with `AddFile()`, and the subm
 
 The package needs C# 14, the default for .NET 10.
 
+#### xUnit assertions package
+
+A new `GovUk.Frontend.AspNetCore.Testing.Xunit.v3` package adds assertions to xUnit v3's `Assert`.
+It depends on `xunit.v3.assert` (not the runner) and on exactly the same version of `GovUk.Frontend.AspNetCore.Testing`, and adds a global using for its `GovUk.Frontend.AspNetCore.Testing.Xunit` namespace.
+
+```cs
+var doc = await Assert.HtmlResponseAsync(response);
+
+Assert.ErrorSummaryContains(doc, "Enter your name");
+Assert.FieldHasError(doc, "Date of birth", "Date of birth must include a year");
+Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
+```
+
+- `HtmlResponseAsync(response, expectedStatusCode)` checks the status code and content type and returns the parsed document.
+- `RedirectsTo(response, expectedLocation)` checks a redirect's `Location`, resolving a relative location against the request.
+- `ErrorSummaryContains`, `ErrorSummaryIs` (exactly these errors, in order) and `NoErrorSummary`.
+- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by its label or legend.
+- `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order.
+- `NotificationBannerContains` and `SuccessNotificationBannerContains`, matching a whole line of the banner's content.
+
+Each takes a document or an element to search within, such as a summary card's `Element`, and returns what it matched where that's useful.
+Failures use xUnit's format and include the HTML that was checked:
+
+```
+Assert.FieldHasError() Failure: Error message differs
+Field:    Text input: Email address
+Expected: "Enter an email address"
+Actual:   "Enter an email address in the correct format"
+```
+
+On C# versions before 14, call the assertions on `GovUkAssert` instead, e.g. `GovUkAssert.ErrorSummaryContains(doc, "…")`.
+
 ### Fixes
 
 - `<govuk-pagination>` with generated items now shows a skipped page instead of an ellipsis when the ellipsis would replace only that one page, as in the [guidance's examples](https://design-system.service.gov.uk/components/pagination/). For example, page 4 of 100 is now `1 2 3 [4] 5 … 100` rather than `1 … 3 [4] 5 … 100`.

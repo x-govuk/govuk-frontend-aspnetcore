@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(LibTfms)</TargetFrameworks>
+    <!-- xunit.v3 hosts the tests itself -->
+    <OutputType>Exe</OutputType>
+    <LangVersion>14.0</LangVersion>
+
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\GovUk.Frontend.AspNetCore.Testing\GovUk.Frontend.AspNetCore.Testing.csproj" />
+  </ItemGroup>
+
+</Project>

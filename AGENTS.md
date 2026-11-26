@@ -15,10 +15,11 @@ just install-tools          # dotnet tool restore (libman, needed by the first b
 just build
 just format                 # dotnet format; CI runs `just format --verify-no-changes`
 just unit-tests             # tests/GovUk.Frontend.AspNetCore.Tests
+just testing-tests          # tests/GovUk.Frontend.AspNetCore.Testing.Tests
 just integration-tests      # Playwright browser tests; run `just install-playwright` once first
 just package-tests          # packs the library and builds throwaway projects against the .nupkg
 just test                   # all three
-just pack                   # outputs to ./packages
+just pack                   # packs every shipping project to ./packages
 just docs                   # run the docs app; `just publish-docs` regenerates docs/
 just build-samples          # packs, then builds samples/Samples.sln against the package
 ```
@@ -62,6 +63,10 @@ The build downloads `govuk-frontend@$(GovUkFrontendVersion)` into `lib/govuk-fro
 ### Packaging and the consumer build
 
 `Package/` is the package layout. `Package/buildTransitive/GovUk.Frontend.AspNetCore.targets` is what copies assets into consuming projects (controlled by `EnableGovUkFrontendSupport`, `RestoreGovUkFrontendAssets`, etc.). Its properties are derived in the `.targets` file, not a `.props`, because NuGet imports props before the consumer's project body is evaluated; keep that ordering when editing it. The library's own SCSS (`govuk-frontend.scss`) is compiled by AspNetCore.SassCompiler and packed as `content/govuk-frontend.min.css`. `PackageTests` is the place to test changes to this MSBuild logic. The version comes from git tags via MinVer (`v`-prefixed).
+
+### Testing packages
+
+`GovUk.Frontend.AspNetCore.Testing` (issue #626) ships helpers for testing apps built with the library. Every shipping project under `src/` gets its package metadata, MinVer settings and analyzers from `src/Directory.Build.props` (the docs app is excluded), so all packages share one version. `src/Directory.Build.targets` pins each `ProjectReference` dependency to that exact version (`[x.y.z]`), because the helpers depend on the markup that version renders; `PackagingTests` in `PackageTests` checks the packed nuspec. A new shipping project needs adding to `just pack`, the README link step in CI and the `PackLibraryUnderTest` target.
 
 ### Docs
 

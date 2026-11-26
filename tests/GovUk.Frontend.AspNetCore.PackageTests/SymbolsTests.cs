@@ -19,7 +19,7 @@ public partial class SymbolsTests(PackageTestContext context)
     private static readonly Guid SourceLinkKind = new("CC110556-A091-4D38-9FEC-25AB9A351A6A");
     private static readonly Guid EmbeddedSourceKind = new("0E8A571B-6926-466E-B4AD-8AB04611F5FE");
 
-    private string PackagePath => Path.Combine(context.PackageFeed, $"GovUk.Frontend.AspNetCore.{context.PackageVersion}.nupkg");
+    private string PackagePath => context.GetPackagePath(PackageTestContext.LibraryPackageId, context.PackageVersion);
 
     private string SymbolPackagePath => Path.ChangeExtension(PackagePath, ".snupkg");
 

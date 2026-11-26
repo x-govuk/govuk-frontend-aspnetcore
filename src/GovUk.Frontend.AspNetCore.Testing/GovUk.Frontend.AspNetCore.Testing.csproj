@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(LibTfms)</TargetFrameworks>
+    <!-- For extension members -->
+    <LangVersion>14.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>GovUk.Frontend.AspNetCore.Testing</PackageId>
+    <PackageTags>aspnetcore, testing, gds, gov.uk, x-govuk</PackageTags>
+    <Description>Helpers for testing ASP.NET Core apps built with GovUk.Frontend.AspNetCore.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.Testing.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.10.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj" />
+  </ItemGroup>
+
+</Project>

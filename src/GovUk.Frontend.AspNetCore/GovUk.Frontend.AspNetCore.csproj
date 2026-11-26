@@ -2,33 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(LibTfms)</TargetFrameworks>
-    <Copyright>Copyright © James Gunn</Copyright>
     <PackageId>GovUk.Frontend.AspNetCore</PackageId>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/x-govuk/govuk-frontend-aspnetcore</PackageProjectUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageIcon>icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/x-govuk/govuk-frontend-aspnetcore</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
     <PackageTags>aspnetcore, taghelpers, gds, gov.uk, x-govuk</PackageTags>
     <Description>ASP.NET Core integration for the GOV.UK Design system.</Description>
-    <Authors>James Gunn</Authors>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
-    <MinVerMinimumMajorMinor>5.0</MinVerMinimumMajorMinor>
-    <MinVerDefaultPreReleaseIdentifiers>pre.0</MinVerDefaultPreReleaseIdentifiers>
-    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <!-- The PDBs are what carry the Source Link data; without these they never leave the build machine. -->
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <WarningsAsErrors>$(WarningsAsErrors);RS0030</WarningsAsErrors>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageCopyToOutput>false</PackageCopyToOutput>
-    <AnalysisMode>All</AnalysisMode>
     <NoWarn>$(NoWarn);CA1859</NoWarn>
     <SassCompilerEnableWatcher>false</SassCompilerEnableWatcher>
   </PropertyGroup>
@@ -94,14 +75,6 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="AspNetCore.SassCompiler" Version="1.103.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="5.6.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="MinVer" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

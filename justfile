@@ -29,11 +29,15 @@ _clear-samples-package-cache:
   @dotnet pwsh -f Remove-CachedPackages.ps1
 
 # Run the tests
-test *ARGS: (unit-tests ARGS) (integration-tests ARGS) (package-tests ARGS)
+test *ARGS: (unit-tests ARGS) (testing-tests ARGS) (integration-tests ARGS) (package-tests ARGS)
 
 # Run the unit tests
 unit-tests *ARGS:
   @dotnet test --project tests/GovUk.Frontend.AspNetCore.Tests/GovUk.Frontend.AspNetCore.Tests.csproj {{ARGS}}
+
+# Run the tests for the testing packages
+testing-tests *ARGS:
+  @dotnet test --project tests/GovUk.Frontend.AspNetCore.Testing.Tests/GovUk.Frontend.AspNetCore.Testing.Tests.csproj {{ARGS}}
 
 # Run the integration tests
 integration-tests *ARGS:
@@ -47,10 +51,11 @@ package-tests *ARGS:
 format *ARGS:
   @dotnet format {{ARGS}}
 
-# Package the library
+# Package the library and the testing packages
 pack *ARGS:
   @rm -rf packages
   @dotnet pack src/GovUk.Frontend.AspNetCore/ {{ARGS}}
+  @dotnet pack src/GovUk.Frontend.AspNetCore.Testing/ {{ARGS}}
 
 # Run the docs app
 docs *ARGS:

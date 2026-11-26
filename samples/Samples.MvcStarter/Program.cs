@@ -18,12 +18,19 @@ builder.Services.AddGovUkFrontend(options =>
     };
 });
 
+builder.Services.Configure<GovUkFrontendErrorPageOptions>(options =>
+{
+    // Keep the developer exception page in development.
+    options.HandleExceptions = !builder.Environment.IsDevelopment();
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseGovUkFrontendErrorPages();
+
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

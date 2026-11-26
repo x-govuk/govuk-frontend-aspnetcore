@@ -59,6 +59,9 @@ Three rules govern the values:
 - **`DateInput.ErrorMessage.*` values must contain exactly one `{0}`**, which is replaced with the
   name of the field in error. A malformed value throws from inside the model binder.
 
+The [error pages](error-pages.md) use names named after the page rather than a component:
+`PageNotFoundPage.*` and `ProblemWithTheServicePage.*`.
+
 ## Client-side content
 
 Some content is rendered by the govuk-frontend JavaScript rather than by the server — the accordion's

@@ -330,6 +330,13 @@ Files the build didn't copy are left alone, since they can change without the `g
 
 - [Character count validation](docs/validation/character-count.md)
 
+## Error pages
+
+`app.UseGovUkFrontendErrorPages()` renders the GOV.UK
+[Page not found](https://design-system.service.gov.uk/patterns/page-not-found-pages/) and
+[There is a problem with the service](https://design-system.service.gov.uk/patterns/problem-with-the-service-pages/) pages.
+See [Error pages](docs/error-pages.md).
+
 ## Localization
 
 The content the library renders — `Error`, `There is a problem`, `Back`, the date input validation

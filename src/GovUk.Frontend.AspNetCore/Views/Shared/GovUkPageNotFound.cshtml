@@ -1,0 +1,33 @@
+﻿@using GovUk.Frontend.AspNetCore
+@using GovUk.Frontend.AspNetCore.Localization
+@using Microsoft.AspNetCore.Html
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@using Microsoft.Extensions.Options
+@using static GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants
+@model GovUkErrorPageModel
+@inject IGovUkFrontendLocalizer Localizer
+@inject IOptions<GovUkFrontendErrorPageOptions> ErrorPageOptions
+@inject ICompositeViewEngine ViewEngine
+@{
+    // An application's Views/_ViewStart.cshtml applies to this view too, so its layout is kept unless the options say otherwise.
+    Layout = ErrorPageOptions.Value.Layout ?? (string.IsNullOrEmpty(Layout) ? "_GovUkPageTemplate" : Layout);
+    ViewData[ViewDataKeys.MainClasses] ??= "govuk-main-wrapper--l";
+
+    string Localized(string name, string fallback) => Localizer.GetString(name) is { Length: > 0 } value ? value : fallback;
+
+    var heading = Localized(GovUkFrontendResourceNames.PageNotFoundPageHeading, "Page not found");
+    ViewData[ViewDataKeys.Title] ??= heading;
+
+    var contentPartialName = "_" + GovUkErrorPageModel.ViewNames.PageNotFound + "Content";
+}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@heading</h1>
+        <p class="govuk-body">@Localized(GovUkFrontendResourceNames.PageNotFoundPageTypedAddressText, "If you typed the web address, check it is correct.")</p>
+        <p class="govuk-body">@Localized(GovUkFrontendResourceNames.PageNotFoundPagePastedAddressText, "If you pasted the web address, check you copied the entire address.")</p>
+        @if (ViewEngine.FindView(ViewContext, contentPartialName, isMainPage: false).Success)
+        {
+            @await Html.PartialAsync(contentPartialName)
+        }
+    </div>
+</div>

@@ -200,7 +200,7 @@ await Expect(page.GetSummaryListRowByKey("Name").Value).ToHaveTextAsync("Sarah P
 - Locators, on `IPage` and on `ILocator` to search within it:
   - `ErrorSummary`, `NotificationBanner`, `BackLink` and `GetButtonByText`.
   - `GetSummaryListRowByKey` and `GetSummaryCardByTitle`, with a row's `Key`, `Value`, `ChangeLink` and `GetActionByText`.
-  - `GetFieldByLabelOrLegend` for a field of any kind, and `GetTextInputByLabel`, `GetTextareaByLabel`, `GetCharacterCountByLabel`, `GetSelectByLabel`, `GetPasswordInputByLabel`, `GetFileUploadByLabel`, `GetDateInputByLegend` (with `Day`, `Month` and `Year`), `GetRadiosByLegend` and `GetCheckboxesByLegend` (with `GetItemByLabel`). Every field has a `Label`, `Hint` and `ErrorMessage`.
+  - `GetFieldByLabelOrLegend` for a field of any kind, and `GetTextInputByLabel`, `GetTextareaByLabel`, `GetCharacterCountByLabel`, `GetSelectByLabel`, `GetPasswordInputByLabel`, `GetFileUploadByLabel`, `GetDateInputByLegend` (with `Day`, `Month` and `Year`, and `FillAsync`, `FillMonthAndYearAsync` and `FillDayAndMonthAsync`), `GetRadiosByLegend` and `GetCheckboxesByLegend` (with `GetItemByLabel`). Every field has a `Label`, `Hint` and `ErrorMessage`.
 - Actions: `FillDateInputByLegendAsync`, `CheckRadioByLabelAsync`, `CheckCheckboxByLabelAsync`, `UncheckCheckboxByLabelAsync`, `SelectOptionByTextAsync`, and `SubmitFormByButtonTextAsync`/`SubmitFormAsync`, which wait for the response to the form's navigation.
 - Assertions on Playwright's `ILocatorAssertions`: `ToHaveErrorMessageAsync`, which ignores the visually hidden `Error:` prefix, and `ToHaveErrorSummaryErrorsAsync`. Both use Playwright's own matchers, so they retry and work with `.Not`, and add a line to the failure message that says which component was checked.
 

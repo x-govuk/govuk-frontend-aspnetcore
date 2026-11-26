@@ -57,6 +57,61 @@ public class ActionTests(BrowserApp app)
     }
 
     [Fact]
+    public async Task DateInputFillAsync_PartialDates_FillsAndSubmitsThem()
+    {
+        var page = await GotoAsync("/Fields");
+
+        await page.GetDateInputByLegend("When was your passport issued?").FillMonthAndYearAsync(11, 2021);
+        await page.GetDateInputByLegend("When is your birthday?").FillDayAndMonthAsync(29, 2);
+        await page.SubmitFormByButtonTextAsync("Continue");
+
+        // The page re-renders what was bound, so these values went through model binding
+        var issued = page.GetDateInputByLegend("When was your passport issued?");
+        await Expect(issued.Month).ToHaveValueAsync("11");
+        await Expect(issued.Year).ToHaveValueAsync("2021");
+        var birthday = page.GetDateInputByLegend("When is your birthday?");
+        await Expect(birthday.Day).ToHaveValueAsync("29");
+        await Expect(birthday.Month).ToHaveValueAsync("2");
+        await Expect(page.ErrorSummary.Locator).ToHaveCountAsync(0);
+    }
+
+    [Fact]
+    public async Task DateInputFillAsync_WithDate_LeavesOutPartsTheDateInputDoesNotHave()
+    {
+        var page = await GotoAsync("/Fields");
+
+        var issued = page.GetDateInputByLegend("When was your passport issued?");
+        await issued.FillAsync(new DateOnly(2021, 11, 5));
+
+        await Expect(issued.Month).ToHaveValueAsync("11");
+        await Expect(issued.Year).ToHaveValueAsync("2021");
+    }
+
+    [Fact]
+    public async Task DateInputFillAsync_WithPartTheDateInputDoesNotHave_FailsWithoutFillingAnything()
+    {
+        var page = await GotoAsync("/Fields");
+
+        var birthday = page.GetDateInputByLegend("When is your birthday?");
+        var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => birthday.FillAsync("1", "2", "2020"));
+
+        Assert.Equal("Can't fill in the year of the date input because it doesn't have a year input.", ex.Message);
+        await Expect(birthday.Day).ToHaveValueAsync("27");
+        await Expect(birthday.Month).ToHaveValueAsync("3");
+    }
+
+    [Fact]
+    public async Task DateInputFillMonthAndYearAsync_OnDayAndMonthInput_Fails()
+    {
+        var page = await GotoAsync("/Fields");
+
+        var ex = await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            page.GetDateInputByLegend("When is your birthday?").FillMonthAndYearAsync(3, 2020));
+
+        Assert.Equal("Can't fill in the year of the date input because it doesn't have a year input.", ex.Message);
+    }
+
+    [Fact]
     public async Task FillDateInputByLegendAsync_WhenThereIsNoSuchDateInput_Fails()
     {
         var page = await GotoAsync("/Fields");

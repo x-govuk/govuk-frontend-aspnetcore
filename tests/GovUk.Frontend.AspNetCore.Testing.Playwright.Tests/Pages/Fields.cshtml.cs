@@ -39,6 +39,16 @@ public class FieldsModel : PageModel
     public DateOnly? DateOfBirth { get; set; }
 
     [BindProperty]
+    [Display(Name = "When was your passport issued?")]
+    [DateInput(DateInputItemTypes.MonthAndYear, ErrorMessagePrefix = "Passport issue date")]
+    public (int, int)? PassportIssued { get; set; }
+
+    [BindProperty]
+    [Display(Name = "When is your birthday?")]
+    [DateInput(DateInputItemTypes.DayAndMonth, ErrorMessagePrefix = "Birthday")]
+    public (int, int)? Birthday { get; set; }
+
+    [BindProperty]
     [Display(Name = "How would you like to be contacted?")]
     public string? Contact { get; set; }
 
@@ -57,6 +67,8 @@ public class FieldsModel : PageModel
         JobDescription = "Teacher";
         Country = "wales";
         DateOfBirth = new DateOnly(2000, 3, 27);
+        PassportIssued = (6, 2018);
+        Birthday = (27, 3);
         Contact = "email";
         Email = "sarah@example.com";
         Nationality = ["british", "irish"];

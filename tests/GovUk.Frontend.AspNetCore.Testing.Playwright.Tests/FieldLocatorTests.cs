@@ -110,6 +110,32 @@ public class FieldLocatorTests(BrowserApp app)
     }
 
     [Fact]
+    public async Task GetDateInputByLegend_MonthAndYear_LocatesItsParts()
+    {
+        var page = await GotoAsync("/Fields");
+
+        var field = page.GetDateInputByLegend("When was your passport issued?");
+
+        await Expect(field.Inputs).ToHaveCountAsync(2);
+        await Expect(field.Day).ToHaveCountAsync(0);
+        await Expect(field.Month).ToHaveValueAsync("6");
+        await Expect(field.Year).ToHaveValueAsync("2018");
+    }
+
+    [Fact]
+    public async Task GetDateInputByLegend_DayAndMonth_LocatesItsParts()
+    {
+        var page = await GotoAsync("/Fields");
+
+        var field = page.GetDateInputByLegend("When is your birthday?");
+
+        await Expect(field.Inputs).ToHaveCountAsync(2);
+        await Expect(field.Day).ToHaveValueAsync("27");
+        await Expect(field.Month).ToHaveValueAsync("3");
+        await Expect(field.Year).ToHaveCountAsync(0);
+    }
+
+    [Fact]
     public async Task GetRadiosByLegend_LocatesItsParts()
     {
         var page = await GotoAsync("/Fields?errors=true");

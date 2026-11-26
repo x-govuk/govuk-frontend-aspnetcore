@@ -221,33 +221,73 @@ public sealed class DateInputLocator : FieldLocator
     /// Fills in the date input with <paramref name="date"/>, leaving out any part the date input doesn't have, e.g.
     /// the day of a month and year input.
     /// </summary>
+    /// <remarks>
+    /// For a month and year or a day and month input, <see cref="FillMonthAndYearAsync"/> and
+    /// <see cref="FillDayAndMonthAsync"/> don't need a made-up day or year.
+    /// </remarks>
     public Task FillAsync(DateOnly date) =>
-        FillAsync(
-            date.Day.ToString(CultureInfo.InvariantCulture),
-            date.Month.ToString(CultureInfo.InvariantCulture),
-            date.Year.ToString(CultureInfo.InvariantCulture));
+        FillPartsAsync(Format(date.Day), Format(date.Month), Format(date.Year), skipMissingParts: true);
+
+    /// <summary>
+    /// Fills in the month and year of a month and year date input, e.g. one bound to a <c>(int, int)</c> with
+    /// <c>[DateInput(DateInputItemTypes.MonthAndYear)]</c>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The date input doesn't have a month or a year input.</exception>
+    public Task FillMonthAndYearAsync(int month, int year) =>
+        FillPartsAsync(day: null, Format(month), Format(year), skipMissingParts: false);
+
+    /// <summary>
+    /// Fills in the day and month of a day and month date input, e.g. one bound to a <c>(int, int)</c> with
+    /// <c>[DateInput(DateInputItemTypes.DayAndMonth)]</c>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The date input doesn't have a day or a month input.</exception>
+    public Task FillDayAndMonthAsync(int day, int month) =>
+        FillPartsAsync(Format(day), Format(month), year: null, skipMissingParts: false);
 
     /// <summary>
     /// Fills in each part of the date input as given, for values that aren't a valid date, e.g. to check validation.
-    /// A part that's <see langword="null"/> is left as it is, as is any part the date input doesn't have.
+    /// A part that's <see langword="null"/> is left as it is.
     /// </summary>
-    public async Task FillAsync(string? day, string? month, string? year)
+    /// <exception cref="InvalidOperationException">
+    /// A value is given for a part the date input doesn't have, e.g. a year for a day and month input.
+    /// </exception>
+    public Task FillAsync(string? day, string? month, string? year) =>
+        FillPartsAsync(day, month, year, skipMissingParts: false);
+
+    private async Task FillPartsAsync(string? day, string? month, string? year, bool skipMissingParts)
     {
         // Wait for the date input itself, so that a missing one fails rather than filling nothing.
         await Inputs.First.WaitForAsync().ConfigureAwait(false);
 
-        await FillPartAsync(Day, day).ConfigureAwait(false);
-        await FillPartAsync(Month, month).ConfigureAwait(false);
-        await FillPartAsync(Year, year).ConfigureAwait(false);
+        (ILocator Locator, string Name, string? Value)[] parts = [(Day, "day", day), (Month, "month", month), (Year, "year", year)];
+        var toFill = new List<(ILocator Locator, string Value)>();
 
-        static async Task FillPartAsync(ILocator part, string? value)
+        // Check every part before filling any, so that a missing part doesn't leave the others half filled in.
+        foreach (var (locator, name, value) in parts)
         {
-            if (value is not null && await part.CountAsync().ConfigureAwait(false) > 0)
+            if (value is null)
             {
-                await part.FillAsync(value).ConfigureAwait(false);
+                continue;
+            }
+
+            if (await locator.CountAsync().ConfigureAwait(false) > 0)
+            {
+                toFill.Add((locator, value));
+            }
+            else if (!skipMissingParts)
+            {
+                throw new InvalidOperationException(
+                    $"Can't fill in the {name} of the date input because it doesn't have a {name} input.");
             }
         }
+
+        foreach (var (locator, value) in toFill)
+        {
+            await locator.FillAsync(value).ConfigureAwait(false);
+        }
     }
+
+    private static string Format(int value) => value.ToString(CultureInfo.InvariantCulture);
 }
 
 /// <summary>

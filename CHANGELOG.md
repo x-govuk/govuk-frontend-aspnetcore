@@ -28,6 +28,19 @@ The files from the old layout aren't removed, so delete `GovUkFrontendNpmPackage
 
 ### New features
 
+#### Error pages
+
+`app.UseGovUkFrontendErrorPages()` renders the GOV.UK
+[Page not found](https://design-system.service.gov.uk/patterns/page-not-found-pages/) page for `404` responses and the
+[There is a problem with the service](https://design-system.service.gov.uk/patterns/problem-with-the-service-pages/) page for unhandled exceptions.
+
+The pages are only rendered for requests that accept HTML. They use your app's layout, can be extended with partial views or replaced,
+and are localized through `IGovUkFrontendLocalizer`. Configure them with `GovUkFrontendErrorPageOptions`.
+
+Controllers and Razor Pages can return the same pages for other responses, such as a `403`, with
+`this.GovUkPageNotFound()` and `this.GovUkProblemWithTheService(statusCode)`.
+See [Error pages](docs/error-pages.md).
+
 #### Localized character count validation messages
 
 `[CharacterCount]` and `[MaxWords]` error messages are now localized by `AddDataAnnotationsLocalization()` in MVC and Razor Pages, as they are for the built-in attributes.

@@ -97,6 +97,36 @@ public static class GovUkFrontendResourceNames
     /// <summary>The error summary's title. The default is <c>There is a problem</c>.</summary>
     public const string ErrorSummaryTitleText = "ErrorSummary.TitleText";
 
+    // Error pages
+
+    /// <summary>
+    /// The page not found page's title and heading. The default is <c>Page not found</c>.
+    /// </summary>
+    public const string PageNotFoundPageHeading = "PageNotFoundPage.Heading";
+
+    /// <summary>
+    /// The page not found page's advice for people who typed the address.
+    /// The default is <c>If you typed the web address, check it is correct.</c>
+    /// </summary>
+    public const string PageNotFoundPageTypedAddressText = "PageNotFoundPage.TypedAddressText";
+
+    /// <summary>
+    /// The page not found page's advice for people who pasted the address.
+    /// The default is <c>If you pasted the web address, check you copied the entire address.</c>
+    /// </summary>
+    public const string PageNotFoundPagePastedAddressText = "PageNotFoundPage.PastedAddressText";
+
+    /// <summary>
+    /// The problem with the service page's title and heading.
+    /// The default is <c>Sorry, there is a problem with the service</c>.
+    /// </summary>
+    public const string ProblemWithTheServicePageHeading = "ProblemWithTheServicePage.Heading";
+
+    /// <summary>
+    /// The problem with the service page's advice. The default is <c>Try again later.</c>
+    /// </summary>
+    public const string ProblemWithTheServicePageTryAgainText = "ProblemWithTheServicePage.TryAgainText";
+
     // Exit this page
 
     /// <summary>The exit this page button's text. The default is <c>Exit this page</c>.</summary>

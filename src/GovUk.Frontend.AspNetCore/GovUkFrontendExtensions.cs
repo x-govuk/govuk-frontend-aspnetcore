@@ -189,6 +189,53 @@ public static class GovUkFrontendExtensions
         return app;
     }
 
+    /// <summary>
+    /// Adds middleware to the request pipeline that renders the GOV.UK &quot;Page not found&quot; and
+    /// &quot;Sorry, there is a problem with the service&quot; pages.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The pages are only rendered for requests that accept HTML and aren't for an <c>[ApiController]</c>; other
+    /// requests are left as they are. Configure the behavior with <see cref="GovUkFrontendErrorPageOptions"/>.
+    /// </para>
+    /// <para>
+    /// The middleware only sees the <c>404</c> responses and exceptions of the middleware and endpoints that come
+    /// after it, so call this early in the pipeline. It can go before or after <c>UseRouting()</c>: the matched
+    /// endpoint, which is used to recognize API controllers, is read once the rest of the pipeline has run.
+    /// </para>
+    /// <para>
+    /// The pages are Razor views, so this needs MVC's view services, which <c>AddControllersWithViews()</c>,
+    /// <c>AddRazorPages()</c> and <c>AddMvc()</c> all add.
+    /// </para>
+    /// </remarks>
+    /// <param name="app">The <see cref="IApplicationBuilder"/>.</param>
+    /// <returns>The <see cref="IApplicationBuilder"/> so that additional calls can be chained.</returns>
+    public static IApplicationBuilder UseGovUkFrontendErrorPages(this IApplicationBuilder app)
+    {
+        ArgumentNullException.ThrowIfNull(app);
+
+        if (!ErrorPages.CanRenderViews(app.ApplicationServices))
+        {
+            throw new InvalidOperationException(
+                $"{nameof(UseGovUkFrontendErrorPages)} requires MVC's view services. " +
+                "Call AddControllersWithViews(), AddRazorPages() or AddMvc() when configuring services.");
+        }
+
+        var options = app.ApplicationServices.GetRequiredService<IOptions<GovUkFrontendErrorPageOptions>>().Value;
+
+        if (options.HandleExceptions)
+        {
+            app.UseExceptionHandler(new ExceptionHandlerOptions { ExceptionHandler = ErrorPages.HandleExceptionAsync });
+        }
+
+        if (options.HandlePageNotFound)
+        {
+            app.UseStatusCodePages(ErrorPages.HandlePageNotFoundAsync);
+        }
+
+        return app;
+    }
+
     private class ConfigureMvcOptions : IConfigureOptions<MvcOptions>
     {
         private readonly IOptions<GovUkFrontendOptions> _optionsAccessor;

@@ -278,7 +278,14 @@ public class ComponentLocalizationTests
         GovUkFrontendResourceNames.DateInputErrorMessageMissingDayAndMonth,
         GovUkFrontendResourceNames.DateInputErrorMessageMissingDayAndYear,
         GovUkFrontendResourceNames.DateInputErrorMessageMissingMonthAndYear,
-        GovUkFrontendResourceNames.DateInputErrorMessageInvalidDate
+        GovUkFrontendResourceNames.DateInputErrorMessageInvalidDate,
+
+        // Covered by ErrorPagesTests.Localizer_ProvidesContentForName_ContentIsRendered
+        GovUkFrontendResourceNames.PageNotFoundPageHeading,
+        GovUkFrontendResourceNames.PageNotFoundPageTypedAddressText,
+        GovUkFrontendResourceNames.PageNotFoundPagePastedAddressText,
+        GovUkFrontendResourceNames.ProblemWithTheServicePageHeading,
+        GovUkFrontendResourceNames.ProblemWithTheServicePageTryAgainText
     ];
 
     [Fact]

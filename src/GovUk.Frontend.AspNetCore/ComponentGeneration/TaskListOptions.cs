@@ -18,6 +18,9 @@ public record TaskListOptionsItem
     public TaskListOptionsItemStatus? Status { get; set; }
     public TemplateString? Href { get; set; }
     public TemplateString? Classes { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record TaskListOptionsItemTitle
@@ -25,12 +28,18 @@ public record TaskListOptionsItemTitle
     public string? Text { get; set; }
     public IHtmlContent? Html { get; set; }
     public TemplateString? Classes { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record TaskListOptionsItemHint
 {
     public string? Text { get; set; }
     public IHtmlContent? Html { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }
 
 public record TaskListOptionsItemStatus
@@ -39,4 +48,7 @@ public record TaskListOptionsItemStatus
     public string? Text { get; set; }
     public IHtmlContent? Html { get; set; }
     public TemplateString? Classes { get; set; }
+
+    [NonStandardParameter]
+    public AttributeCollection? Attributes { get; set; }
 }

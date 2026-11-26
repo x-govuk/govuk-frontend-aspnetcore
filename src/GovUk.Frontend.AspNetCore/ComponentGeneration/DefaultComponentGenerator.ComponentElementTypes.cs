@@ -31,6 +31,7 @@ internal partial class DefaultComponentGenerator
         public const string Table = "table";
         public const string Tabs = "div";
         public const string Tag = "strong";
+        public const string TaskList = "ul";
         public const string WarningText = "div";
     }
 }

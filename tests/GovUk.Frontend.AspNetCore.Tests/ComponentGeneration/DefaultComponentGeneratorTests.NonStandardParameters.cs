@@ -1277,4 +1277,149 @@ public partial class DefaultComponentGeneratorTests
         // Assert
         Assert.Contains("Contents &amp; more", html, StringComparison.Ordinal);
     }
+
+    [Fact]
+    public async Task TaskList_ItemAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new TaskListOptions
+        {
+            Items =
+            [
+                new TaskListOptionsItem
+                {
+                    Title = new TaskListOptionsItemTitle { Text = "Task" },
+                    Attributes = new AttributeCollection { { "data-test", "item-attr" } }
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateTaskListAsync(options);
+        var element = HtmlHelper.ParseHtmlElement(result.GetHtml());
+
+        // Assert
+        var item = element.QuerySelector(".govuk-task-list__item");
+        Assert.NotNull(item);
+        Assert.Equal("item-attr", item.GetAttribute("data-test"));
+    }
+
+    [Fact]
+    public async Task TaskList_ItemTitleAttributes_WithHref_IsIncludedOnLink()
+    {
+        // Arrange
+        var options = new TaskListOptions
+        {
+            Items =
+            [
+                new TaskListOptionsItem
+                {
+                    Title = new TaskListOptionsItemTitle
+                    {
+                        Text = "Task",
+                        Attributes = new AttributeCollection { { "data-test", "title-attr" } }
+                    },
+                    Href = "/task"
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateTaskListAsync(options);
+        var element = HtmlHelper.ParseHtmlElement(result.GetHtml());
+
+        // Assert
+        var link = element.QuerySelector("a.govuk-task-list__link");
+        Assert.NotNull(link);
+        Assert.Equal("title-attr", link.GetAttribute("data-test"));
+    }
+
+    [Fact]
+    public async Task TaskList_ItemTitleAttributes_WithoutHref_IsIncludedOnDiv()
+    {
+        // Arrange
+        var options = new TaskListOptions
+        {
+            Items =
+            [
+                new TaskListOptionsItem
+                {
+                    Title = new TaskListOptionsItemTitle
+                    {
+                        Text = "Task",
+                        Attributes = new AttributeCollection { { "data-test", "title-attr" } }
+                    }
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateTaskListAsync(options);
+        var element = HtmlHelper.ParseHtmlElement(result.GetHtml());
+
+        // Assert
+        var title = element.QuerySelector(".govuk-task-list__name-and-hint > div:first-child");
+        Assert.NotNull(title);
+        Assert.Equal("title-attr", title.GetAttribute("data-test"));
+    }
+
+    [Fact]
+    public async Task TaskList_ItemHintAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new TaskListOptions
+        {
+            Items =
+            [
+                new TaskListOptionsItem
+                {
+                    Title = new TaskListOptionsItemTitle { Text = "Task" },
+                    Hint = new TaskListOptionsItemHint
+                    {
+                        Text = "Hint",
+                        Attributes = new AttributeCollection { { "data-test", "hint-attr" } }
+                    }
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateTaskListAsync(options);
+        var element = HtmlHelper.ParseHtmlElement(result.GetHtml());
+
+        // Assert
+        var hint = element.QuerySelector(".govuk-task-list__hint");
+        Assert.NotNull(hint);
+        Assert.Equal("hint-attr", hint.GetAttribute("data-test"));
+    }
+
+    [Fact]
+    public async Task TaskList_ItemStatusAttributes_IsIncludedInOutput()
+    {
+        // Arrange
+        var options = new TaskListOptions
+        {
+            Items =
+            [
+                new TaskListOptionsItem
+                {
+                    Title = new TaskListOptionsItemTitle { Text = "Task" },
+                    Status = new TaskListOptionsItemStatus
+                    {
+                        Text = "Completed",
+                        Attributes = new AttributeCollection { { "data-test", "status-attr" } }
+                    }
+                }
+            ]
+        };
+
+        // Act
+        var result = await _componentGenerator.GenerateTaskListAsync(options);
+        var element = HtmlHelper.ParseHtmlElement(result.GetHtml());
+
+        // Assert
+        var status = element.QuerySelector(".govuk-task-list__status");
+        Assert.NotNull(status);
+        Assert.Equal("status-attr", status.GetAttribute("data-test"));
+    }
 }

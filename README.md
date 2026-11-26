@@ -323,6 +323,7 @@ Files the build didn't copy are left alone, since they can change without the `g
 - [Table](docs/components/table.md)
 - [Tabs](docs/components/tabs.md)
 - [Tag](docs/components/tag.md)
+- [Task list](docs/components/task-list.md)
 - [Textarea](docs/components/textarea.md)
 - [Text input](docs/components/text-input.md)
 - [Warning text](docs/components/warning-text.md)

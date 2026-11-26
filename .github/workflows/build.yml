@@ -124,6 +124,19 @@ jobs:
             packages/*.nupkg
             packages/*.snupkg
 
+      # Unzipped, one artifact per package (named after the file). Each glob must match exactly one file.
+      - name: Publish GovUk.Frontend.AspNetCore package
+        uses: actions/upload-artifact@v7
+        with:
+          path: packages/GovUk.Frontend.AspNetCore.[0-9]*.nupkg
+          archive: false
+
+      - name: Publish GovUk.Frontend.AspNetCore.Testing package
+        uses: actions/upload-artifact@v7
+        with:
+          path: packages/GovUk.Frontend.AspNetCore.Testing.[0-9]*.nupkg
+          archive: false
+
   package_tests:
     name: "Package tests"
     runs-on: ubuntu-latest

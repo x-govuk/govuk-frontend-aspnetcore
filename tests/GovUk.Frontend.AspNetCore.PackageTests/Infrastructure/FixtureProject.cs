@@ -80,6 +80,25 @@ public sealed class FixtureProject
             targetFrameworks: null,
             additionalPackageIds: [PackageTestContext.XunitPackageId]);
 
+    /// <summary>
+    /// Creates a class library that references the Playwright package, with the sources in
+    /// <c>Fixtures/PlaywrightTests</c>.
+    /// </summary>
+    /// <inheritdoc cref="CreateWebApp" />
+    public static FixtureProject CreatePlaywrightTestLibrary(
+        PackageTestContext context,
+        string name,
+        IReadOnlyDictionary<string, string>? properties = null) =>
+        Create(
+            context,
+            name,
+            "Microsoft.NET.Sdk",
+            "PlaywrightTests",
+            properties,
+            directoryBuildProperties: null,
+            targetFrameworks: null,
+            additionalPackageIds: [PackageTestContext.PlaywrightPackageId]);
+
     private static FixtureProject Create(
         PackageTestContext context,
         string name,

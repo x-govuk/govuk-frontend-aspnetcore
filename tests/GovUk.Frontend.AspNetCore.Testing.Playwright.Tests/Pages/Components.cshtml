@@ -1,0 +1,64 @@
+﻿@page
+@{
+    ViewData[GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants.ViewDataKeys.Title] = "Components";
+}
+
+@section BeforeContent {
+    <govuk-back-link href="/Fields">Back</govuk-back-link>
+}
+
+<govuk-error-summary>
+    <govuk-error-summary-description>Check the following</govuk-error-summary-description>
+    <govuk-error-summary-item href="#name">Enter your full name</govuk-error-summary-item>
+    <govuk-error-summary-item href="#email">Enter an email address</govuk-error-summary-item>
+</govuk-error-summary>
+
+<govuk-notification-banner type="GovUk.Frontend.AspNetCore.NotificationBannerType.Success">
+    <p class="govuk-notification-banner__heading">Application submitted</p>
+    <p class="govuk-body">We've sent you an email.</p>
+</govuk-notification-banner>
+
+<govuk-summary-list>
+    <govuk-summary-list-row>
+        <govuk-summary-list-row-key>Name</govuk-summary-list-row-key>
+        <govuk-summary-list-row-value>Sarah Philips</govuk-summary-list-row-value>
+        <govuk-summary-list-row-actions>
+            <govuk-summary-list-row-action href="/Fields#name" visually-hidden-text="name">Change</govuk-summary-list-row-action>
+        </govuk-summary-list-row-actions>
+    </govuk-summary-list-row>
+    <govuk-summary-list-row>
+        <govuk-summary-list-row-key>Name of school</govuk-summary-list-row-key>
+        <govuk-summary-list-row-value>Hillside</govuk-summary-list-row-value>
+        <govuk-summary-list-row-actions>
+            <govuk-summary-list-row-action href="/Fields#school" visually-hidden-text="name of school">Change</govuk-summary-list-row-action>
+            <govuk-summary-list-row-action href="/Fields#remove" visually-hidden-text="name of school">Remove</govuk-summary-list-row-action>
+        </govuk-summary-list-row-actions>
+    </govuk-summary-list-row>
+</govuk-summary-list>
+
+<govuk-summary-card>
+    <govuk-summary-card-title>University of Bristol</govuk-summary-card-title>
+    <govuk-summary-card-actions>
+        <govuk-summary-card-action href="#" visually-hidden-text="of University of Bristol">Delete choice</govuk-summary-card-action>
+    </govuk-summary-card-actions>
+    <govuk-summary-list>
+        <govuk-summary-list-row>
+            <govuk-summary-list-row-key>Course</govuk-summary-list-row-key>
+            <govuk-summary-list-row-value>English (3DMD)</govuk-summary-list-row-value>
+        </govuk-summary-list-row>
+    </govuk-summary-list>
+</govuk-summary-card>
+
+<govuk-summary-card>
+    <govuk-summary-card-title>University of Gloucestershire</govuk-summary-card-title>
+    <govuk-summary-list>
+        <govuk-summary-list-row>
+            <govuk-summary-list-row-key>Course</govuk-summary-list-row-key>
+            <govuk-summary-list-row-value>History (V1X1)</govuk-summary-list-row-value>
+        </govuk-summary-list-row>
+    </govuk-summary-list>
+</govuk-summary-card>
+
+<govuk-button>Save and continue</govuk-button>
+<govuk-button-link href="/Fields">Start now</govuk-button-link>
+<button class="not-govuk">Save and continue</button>

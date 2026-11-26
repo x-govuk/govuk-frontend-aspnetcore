@@ -74,6 +74,27 @@ public class PackagingTests(PackageTestContext context)
         Assert.NotNull(package.GetEntry($"buildTransitive/{PackageTestContext.XunitPackageId}.props"));
     }
 
+    [Fact]
+    public void PlaywrightPackage_DependsOnPlaywrightOnly()
+    {
+        // Not the library: browser tests may run against a deployed app, and nothing in the package needs ASP.NET Core.
+        var dependencyIds = ReadNuspec(PackageTestContext.PlaywrightPackageId).Descendants()
+            .Where(e => e.Name.LocalName == "dependency")
+            .Select(e => e.Attribute("id")!.Value)
+            .Distinct()
+            .Order(StringComparer.Ordinal);
+
+        Assert.Equal(["Microsoft.Playwright"], dependencyIds);
+    }
+
+    [Fact]
+    public void PlaywrightPackage_HasBuildTransitiveProps()
+    {
+        using var package = OpenPackage(PackageTestContext.PlaywrightPackageId);
+
+        Assert.NotNull(package.GetEntry($"buildTransitive/{PackageTestContext.PlaywrightPackageId}.props"));
+    }
+
     [Theory]
     [MemberData(nameof(PackageIds))]
     public void Package_HasReadmeAndIcon(string packageId)

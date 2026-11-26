@@ -181,6 +181,31 @@ Actual:   "Enter an email address in the correct format"
 
 On C# versions before 14, call the assertions on `GovUkAssert` instead, e.g. `GovUkAssert.ErrorSummaryContains(doc, "…")`.
 
+#### Playwright package
+
+A new `GovUk.Frontend.AspNetCore.Testing.Playwright` package adds locators, actions and assertions for testing in a browser with Playwright.
+It depends on `Microsoft.Playwright` only, so it can test a deployed app, and adds a global using for its `GovUk.Frontend.AspNetCore.Testing.Playwright` namespace.
+
+```cs
+await page.GetTextInputByLabel("Full name").Input.FillAsync("Sarah Philips");
+await page.FillDateInputByLegendAsync("Date of birth", new DateOnly(2000, 3, 27));
+await page.CheckRadioByLabelAsync("How would you like to be contacted?", "Email");
+await page.SubmitFormByButtonTextAsync("Continue");
+
+await Expect(page.ErrorSummary.Items).ToHaveErrorSummaryErrorsAsync(["Enter an email address"]);
+await Expect(page.GetFieldByLabelOrLegend("Email address").ErrorMessage).ToHaveErrorMessageAsync("Enter an email address");
+await Expect(page.GetSummaryListRowByKey("Name").Value).ToHaveTextAsync("Sarah Philips");
+```
+
+- Locators, on `IPage` and on `ILocator` to search within it:
+  - `ErrorSummary`, `NotificationBanner`, `BackLink` and `GetButtonByText`.
+  - `GetSummaryListRowByKey` and `GetSummaryCardByTitle`, with a row's `Key`, `Value`, `ChangeLink` and `GetActionByText`.
+  - `GetFieldByLabelOrLegend` for a field of any kind, and `GetTextInputByLabel`, `GetTextareaByLabel`, `GetCharacterCountByLabel`, `GetSelectByLabel`, `GetPasswordInputByLabel`, `GetFileUploadByLabel`, `GetDateInputByLegend` (with `Day`, `Month` and `Year`), `GetRadiosByLegend` and `GetCheckboxesByLegend` (with `GetItemByLabel`). Every field has a `Label`, `Hint` and `ErrorMessage`.
+- Actions: `FillDateInputByLegendAsync`, `CheckRadioByLabelAsync`, `CheckCheckboxByLabelAsync`, `UncheckCheckboxByLabelAsync`, `SelectOptionByTextAsync`, and `SubmitFormByButtonTextAsync`/`SubmitFormAsync`, which wait for the response to the form's navigation.
+- Assertions on Playwright's `ILocatorAssertions`: `ToHaveErrorMessageAsync`, which ignores the visually hidden `Error:` prefix, and `ToHaveErrorSummaryErrorsAsync`. Both use Playwright's own matchers, so they retry and work with `.Not`, and add a line to the failure message that says which component was checked.
+
+Everything else is checked with Playwright's own matchers on these locators, e.g. `Expect(row.Value).ToHaveTextAsync("…")`.
+
 ### Fixes
 
 - `<govuk-pagination>` with generated items now shows a skipped page instead of an ellipsis when the ellipsis would replace only that one page, as in the [guidance's examples](https://design-system.service.gov.uk/components/pagination/). For example, page 4 of 100 is now `1 2 3 [4] 5 … 100` rather than `1 … 3 [4] 5 … 100`.

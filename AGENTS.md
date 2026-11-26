@@ -16,9 +16,10 @@ just build
 just format                 # dotnet format; CI runs `just format --verify-no-changes`
 just unit-tests             # tests/GovUk.Frontend.AspNetCore.Tests
 just testing-tests          # tests/GovUk.Frontend.AspNetCore.Testing.Tests
+just testing-playwright-tests  # tests/GovUk.Frontend.AspNetCore.Testing.Playwright.Tests (browser); run `just install-playwright` once first
 just integration-tests      # Playwright browser tests; run `just install-playwright` once first
 just package-tests          # packs the library and builds throwaway projects against the .nupkg
-just test                   # all three
+just test                   # all of them
 just pack                   # packs every shipping project to ./packages
 just docs                   # run the docs app; `just publish-docs` regenerates docs/
 just build-samples          # packs, then builds samples/Samples.sln against the package

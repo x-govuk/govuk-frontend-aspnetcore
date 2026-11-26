@@ -1,0 +1,35 @@
+# Task list
+
+[GOV.UK Design System task list component](https://design-system.service.gov.uk/components/task-list/)
+
+
+## Tag helpers
+
+Each task's title links to its `href`, which you can also generate with the `asp-*` attributes (see [Links](../links.md)).
+Leave the link out for a task the user can't start yet.
+
+To show a task's status as a tag, put a `<govuk-tag>` inside the status element.
+
+### Example
+{{ tag_helper_example(
+  "Examples/TaskList/TaskListExample",
+  "task-list-example.png",
+  "Task list example") }}
+
+### Example with long tag names
+{{ tag_helper_example(
+  "Examples/TaskList/TaskListWithLongTagNamesExample",
+  "task-list-with-long-tag-names-example.png",
+  "Task list with long tag names example") }}
+
+### API
+
+{{ tag_helper_api("TaskListTagHelper") }}
+
+{{ tag_helper_api("TaskListItemTagHelper") }}
+
+{{ tag_helper_api("TaskListItemTitleTagHelper") }}
+
+{{ tag_helper_api("TaskListItemHintTagHelper") }}
+
+{{ tag_helper_api("TaskListItemStatusTagHelper") }}

@@ -28,6 +28,7 @@ The following tag helpers support generating the `href` attribute using these at
 - `<govuk-pagination-previous>`
 - `<govuk-service-navigation-nav-item>`
 - `<govuk-summary-list-row-action>`
+- `<govuk-task-list-item>`
 
 ### Example - MVC action
 

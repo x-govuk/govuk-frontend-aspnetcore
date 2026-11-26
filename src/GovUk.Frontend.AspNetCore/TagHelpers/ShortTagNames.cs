@@ -58,6 +58,7 @@ internal static class ShortTagNames
     public const string RowActions = "row-actions";
     public const string SelectItem = "select-item";
     public const string Start = "start";
+    public const string Status = "status";
     public const string Suffix = "suffix";
     public const string Summary = "summary";
     public const string Text = "text";
@@ -68,6 +69,8 @@ internal static class ShortTagNames
     public const string TableRow = "table-row";
     public const string TabsItem = "tabs-item";
     public const string Tag = "tag";
+    public const string TaskListItem = "task-list-item";
+    public const string TaskTitle = "task-title";
 
     // The deprecated short name for the summary card's title, replaced by CardTitle
     public const string Title = "title";

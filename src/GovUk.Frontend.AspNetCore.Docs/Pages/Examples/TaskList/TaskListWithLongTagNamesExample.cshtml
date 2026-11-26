@@ -1,0 +1,21 @@
+﻿@page
+
+<example>
+    <govuk-task-list>
+        <govuk-task-list-item asp-controller="Home" asp-action="Index">
+            <govuk-task-list-item-title>Company Directors</govuk-task-list-item-title>
+            <govuk-task-list-item-status>Completed</govuk-task-list-item-status>
+        </govuk-task-list-item>
+        <govuk-task-list-item href="#">
+            <govuk-task-list-item-title>Financial history</govuk-task-list-item-title>
+            <govuk-task-list-item-hint>Include 5 years of the company’s relevant financial information</govuk-task-list-item-hint>
+            <govuk-task-list-item-status>
+                <govuk-tag class="govuk-tag--blue">Incomplete</govuk-tag>
+            </govuk-task-list-item-status>
+        </govuk-task-list-item>
+        <govuk-task-list-item>
+            <govuk-task-list-item-title>Submit application</govuk-task-list-item-title>
+            <govuk-task-list-item-status class="govuk-task-list__status--cannot-start-yet">Cannot start yet</govuk-task-list-item-status>
+        </govuk-task-list-item>
+    </govuk-task-list>
+</example>

@@ -51,6 +51,29 @@ A new `<govuk-exit-this-page>` tag helper generates the [exit this page componen
 
 The content, if any, replaces the button's default text. See the [exit this page docs](docs/components/exit-this-page.md) for the full API.
 
+#### Task list tag helpers
+
+New tag helpers generate the [task list component](https://design-system.service.gov.uk/components/task-list/):
+
+```razor
+<govuk-task-list>
+    <task-list-item asp-page="./CompanyDirectors">
+        <task-title>Company Directors</task-title>
+        <status>Completed</status>
+    </task-list-item>
+    <task-list-item asp-page="./FinancialHistory">
+        <task-title>Financial history</task-title>
+        <hint>Include 5 years of the company’s relevant financial information</hint>
+        <status><govuk-tag class="govuk-tag--blue">Incomplete</govuk-tag></status>
+    </task-list-item>
+</govuk-task-list>
+```
+
+Attributes on each element are passed through to the generated HTML: an item's go on its `<li>`, a title's on its link (or its `<div>` if the task has no link), and a hint's or status's on its `<div>`.
+`TaskListOptions` has new `Attributes` properties on its item, title, hint and status options to support this.
+
+See [the task list docs](docs/components/task-list.md) for more.
+
 #### Localized character count validation messages
 
 `[CharacterCount]` and `[MaxWords]` error messages are now localized by `AddDataAnnotationsLocalization()` in MVC and Razor Pages, as they are for the built-in attributes.

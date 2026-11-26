@@ -42,6 +42,8 @@ internal partial class DefaultComponentGenerator
                 {
                     attrs.WithClasses(item.Classes);
                 }
+
+                attrs.With(item.Attributes);
             });
 
             var nameAndHintDiv = new HtmlTag("div", attrs => attrs
@@ -54,7 +56,8 @@ internal partial class DefaultComponentGenerator
                 var aTag = new HtmlTag("a", attrs => attrs
                     .WithClasses("govuk-link", "govuk-task-list__link", item.Title?.Classes)
                     .With("href", item.Href)
-                    .With("aria-describedby", ariaDescribedBy));
+                    .With("aria-describedby", ariaDescribedBy)
+                    .With(item.Title?.Attributes));
 
                 aTag.InnerHtml.AppendHtml(HtmlOrText(item.Title?.Html, item.Title?.Text));
                 nameAndHintDiv.InnerHtml.AppendHtml(aTag);
@@ -67,6 +70,8 @@ internal partial class DefaultComponentGenerator
                     {
                         attrs.WithClasses(item.Title.Classes);
                     }
+
+                    attrs.With(item.Title?.Attributes);
                 });
 
                 divTag.InnerHtml.AppendHtml(HtmlOrText(item.Title?.Html, item.Title?.Text));
@@ -77,7 +82,8 @@ internal partial class DefaultComponentGenerator
             {
                 var hintDiv = new HtmlTag("div", attrs => attrs
                     .With("id", hintId)
-                    .WithClasses("govuk-task-list__hint"));
+                    .WithClasses("govuk-task-list__hint")
+                    .With(item.Hint.Attributes));
 
                 hintDiv.InnerHtml.AppendHtml(HtmlOrText(item.Hint.Html, item.Hint.Text));
                 nameAndHintDiv.InnerHtml.AppendHtml(hintDiv);
@@ -87,7 +93,8 @@ internal partial class DefaultComponentGenerator
 
             var statusDiv = new HtmlTag("div", attrs => attrs
                 .With("id", statusId)
-                .WithClasses("govuk-task-list__status", item.Status?.Classes));
+                .WithClasses("govuk-task-list__status", item.Status?.Classes)
+                .With(item.Status?.Attributes));
 
             if (item.Status?.Tag is not null)
             {

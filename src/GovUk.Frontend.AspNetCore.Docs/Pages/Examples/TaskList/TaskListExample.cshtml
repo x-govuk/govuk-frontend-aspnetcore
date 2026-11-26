@@ -1,0 +1,33 @@
+﻿@page
+
+<example>
+    <govuk-task-list>
+        <task-list-item href="#">
+            <task-title>Company Directors</task-title>
+            <status>Completed</status>
+        </task-list-item>
+        <task-list-item href="#">
+            <task-title>Registered company details</task-title>
+            <status>
+                <govuk-tag class="govuk-tag--blue">Incomplete</govuk-tag>
+            </status>
+        </task-list-item>
+        <task-list-item href="#">
+            <task-title>Financial history</task-title>
+            <hint>Include 5 years of the company’s relevant financial information</hint>
+            <status>
+                <govuk-tag class="govuk-tag--blue">Incomplete</govuk-tag>
+            </status>
+        </task-list-item>
+        <task-list-item href="#">
+            <task-title>Business plan</task-title>
+            <status>
+                <govuk-tag class="govuk-tag--light-blue">In progress</govuk-tag>
+            </status>
+        </task-list-item>
+        <task-list-item>
+            <task-title>Submit application</task-title>
+            <status class="govuk-task-list__status--cannot-start-yet">Cannot start yet</status>
+        </task-list-item>
+    </govuk-task-list>
+</example>

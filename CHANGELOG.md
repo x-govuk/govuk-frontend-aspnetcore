@@ -118,6 +118,7 @@ Assert.Equal("email", doc.GetRadiosByLegend("How would you like to be contacted?
 
 There are lookups for text inputs, textareas, character counts, selects, password inputs, file uploads, date inputs, radios and checkboxes, and `GetFieldByLabelOrLegend()` for a field of any kind.
 Radios and checkboxes give their items' labels, hints, checked state and conditional reveals.
+Date inputs without a day or a year give their value through `MonthAndYear` or `DayAndMonth`.
 When a field isn't found, the exception lists the labels and legends on the page:
 
 ```

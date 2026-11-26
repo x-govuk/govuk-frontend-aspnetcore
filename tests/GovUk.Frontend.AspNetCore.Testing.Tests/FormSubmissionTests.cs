@@ -73,6 +73,29 @@ public class FormSubmissionTests
     }
 
     [Fact]
+    public void Add_PartialDateTuple_Throws()
+    {
+        var submission = new FormSubmission("/apply");
+
+        var ex = Assert.Throws<ArgumentException>(() => submission.Add("Issued", (3, 2020)));
+
+        Assert.StartsWith(
+            "A (int, int) value for 'Issued' doesn't say whether it's a day and month or a month and year. " +
+            "Add the 'Issued.Day', 'Issued.Month' or 'Issued.Year' fields separately.",
+            ex.Message);
+        Assert.Empty(submission.Values);
+    }
+
+    [Fact]
+    public void Set_PartialDateTuple_Throws()
+    {
+        var submission = new FormSubmission("/apply") { { "Issued.Month", "3" } };
+
+        Assert.Throws<ArgumentException>(() => submission.Set("Issued", (3, 2020)));
+        Assert.Equal(["3"], submission.GetValuesFor("Issued.Month"));
+    }
+
+    [Fact]
     public void Set_ReplacesValuesInPlace()
     {
         var submission = new FormSubmission("/apply")

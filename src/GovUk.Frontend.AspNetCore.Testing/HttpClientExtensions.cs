@@ -65,14 +65,16 @@ public static class HttpClientExtensions
         /// <c>WebApplicationFactory.CreateClient()</c> do.
         /// </remarks>
         /// <param name="url">The page to request.</param>
-        /// <param name="fieldName">The name of the antiforgery field.</param>
+        /// <param name="fieldName">
+        /// The name of the antiforgery field; <see cref="FormSubmission.DefaultAntiforgeryFieldName"/> if not given.
+        /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="InvalidOperationException">
         /// The request failed, the response isn't HTML, or the page doesn't have exactly one distinct token.
         /// </exception>
         public Task<string> GetAntiforgeryTokenAsync(
             string url,
-            string fieldName = FormSubmission.DefaultAntiforgeryFieldName,
+            string? fieldName = null,
             CancellationToken cancellationToken = default) =>
             client.GetAntiforgeryTokenAsync(
                 new Uri(url ?? throw new ArgumentNullException(nameof(url)), UriKind.RelativeOrAbsolute),
@@ -87,19 +89,21 @@ public static class HttpClientExtensions
         /// <c>WebApplicationFactory.CreateClient()</c> do.
         /// </remarks>
         /// <param name="url">The page to request.</param>
-        /// <param name="fieldName">The name of the antiforgery field.</param>
+        /// <param name="fieldName">
+        /// The name of the antiforgery field; <see cref="FormSubmission.DefaultAntiforgeryFieldName"/> if not given.
+        /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="InvalidOperationException">
         /// The request failed, the response isn't HTML, or the page doesn't have exactly one distinct token.
         /// </exception>
         public async Task<string> GetAntiforgeryTokenAsync(
             Uri url,
-            string fieldName = FormSubmission.DefaultAntiforgeryFieldName,
+            string? fieldName = null,
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(client);
             ArgumentNullException.ThrowIfNull(url);
-            ArgumentNullException.ThrowIfNull(fieldName);
+            fieldName ??= FormSubmission.DefaultAntiforgeryFieldName;
 
             using var response = await client.GetAsync(url, cancellationToken).ConfigureAwait(false);
 

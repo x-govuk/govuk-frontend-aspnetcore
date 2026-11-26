@@ -30,7 +30,7 @@ public sealed class Form
     /// </summary>
     /// <remarks>
     /// Fields in the form can be found by calling the lookup members on this element, e.g.
-    /// <c>form.Element.GetTextInput("Email address")</c>.
+    /// <c>form.Element.GetTextInputByLabel("Email address")</c>.
     /// </remarks>
     public IHtmlFormElement Element { get; }
 
@@ -55,33 +55,30 @@ public sealed class Form
     /// button is used, as when Enter is pressed in a field.
     /// </para>
     /// <para>
+    /// To submit with a particular button, find the form by that button, e.g.
+    /// <c>doc.GetFormByButtonText("Save as draft").CreateSubmission()</c>, or call
+    /// <see cref="FormButton.CreateSubmission"/> on the button, e.g.
+    /// <c>form.GetButtonByText("Save as draft").CreateSubmission()</c>.
+    /// </para>
+    /// <para>
     /// Values follow the rules a browser uses: unchecked radios and checkboxes and disabled fields are left out, and
     /// the antiforgery token and other hidden inputs are included. File uploads are left out; add files with
     /// <see cref="FormSubmission.AddFile(string, byte[], string, string?)"/>.
     /// </para>
     /// </remarks>
-    public FormSubmission CreateSubmission() => CreateSubmission(Button ?? (Buttons.Count > 0 ? Buttons[0] : null));
+    public FormSubmission CreateSubmission() => CreateSubmissionCore(Button ?? (Buttons.Count > 0 ? Buttons[0] : null));
 
     /// <summary>
-    /// Creates a submission of the form's current values, as if the button with the text <paramref name="buttonText"/>
-    /// was clicked.
+    /// Gets the submit button whose text is <paramref name="text"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">The form has no such button, or more than one.</exception>
-    public FormSubmission CreateSubmission(string buttonText)
-    {
-        ArgumentNullException.ThrowIfNull(buttonText);
+    public FormButton GetButtonByText(string text) => FindButtonByText(text, required: true)!;
 
-        var button = Lookup.Single(
-            Element,
-            Buttons,
-            b => b.Text == buttonText,
-            b => b.Text,
-            _buttonSubject,
-            $"a submit button with the text {LookupFailure.Quote(buttonText)}",
-            required: true)!;
-
-        return CreateSubmission(button);
-    }
+    /// <summary>
+    /// Gets the submit button whose text is <paramref name="text"/>, or <see langword="null"/> if there isn't one.
+    /// </summary>
+    /// <exception cref="ComponentLookupException">The form has more than one such button.</exception>
+    public FormButton? FindButtonByText(string text) => FindButtonByText(text, required: false);
 
     /// <inheritdoc/>
     public override string ToString() => $"Form: {string.Join(", ", Buttons.Select(b => LookupFailure.Quote(b.Text)))}";
@@ -89,7 +86,21 @@ public sealed class Form
     internal static IReadOnlyList<FormButton> GetButtons(IHtmlFormElement form) =>
         form.Elements.OfType<IHtmlElement>().Where(FormButton.IsSubmitButton).Select(b => new FormButton(b, form)).ToArray();
 
-    private FormSubmission CreateSubmission(FormButton? button)
+    private FormButton? FindButtonByText(string text, bool required)
+    {
+        ArgumentNullException.ThrowIfNull(text);
+
+        return Lookup.Single(
+            Element,
+            Buttons,
+            b => b.Text == text,
+            b => b.Text,
+            _buttonSubject,
+            $"a submit button with the text {LookupFailure.Quote(text)}",
+            required);
+    }
+
+    private FormSubmission CreateSubmissionCore(FormButton? button)
     {
         var request = (button is null ? Element.GetSubmission() : Element.GetSubmission(button.Element)) ?? throw new InvalidOperationException(
             "The form can't be submitted: its method is 'dialog'.");
@@ -114,7 +125,7 @@ public sealed class Form
         }
         else if (mediaType.MediaType.Equals("multipart/form-data", StringComparison.OrdinalIgnoreCase))
         {
-            post.Multipart = true;
+            post.IsMultipart = true;
             AddMultipart(post, HeaderUtilities.RemoveQuotes(mediaType.Boundary).ToString(), body);
         }
         else
@@ -175,7 +186,7 @@ public sealed class FormButton
     internal FormButton(IHtmlElement element, IHtmlFormElement form)
     {
         Element = element;
-        Form = form;
+        FormElement = form;
         Text = element is IHtmlInputElement input ? input.Value : TextExtraction.GetText(element);
     }
 
@@ -184,7 +195,7 @@ public sealed class FormButton
     /// </summary>
     public IHtmlElement Element { get; }
 
-    internal IHtmlFormElement Form { get; }
+    internal IHtmlFormElement FormElement { get; }
 
     /// <summary>
     /// Gets the button's text.
@@ -200,6 +211,14 @@ public sealed class FormButton
     /// Gets the button's <c>value</c>, or <see langword="null"/> if it doesn't have one.
     /// </summary>
     public string? Value => Element.GetAttribute("value");
+
+    /// <summary>
+    /// Creates a submission of the form's current values, as if this button was clicked.
+    /// </summary>
+    /// <remarks>
+    /// See <see cref="Form.CreateSubmission()"/>, which this calls for a form found by this button.
+    /// </remarks>
+    public FormSubmission CreateSubmission() => new Form(FormElement, this).CreateSubmission();
 
     /// <inheritdoc/>
     public override string ToString() => Text;

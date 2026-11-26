@@ -40,23 +40,23 @@ public sealed class SummaryList
     /// Gets the row with the key <paramref name="key"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">
-    /// There is no row with the key <paramref name="key"/>, or there's more than one; use <see cref="GetRowsWithKey"/> for
+    /// There is no row with the key <paramref name="key"/>, or there's more than one; use <see cref="GetRowsByKey"/> for
     /// lists with duplicate keys.
     /// </exception>
-    public SummaryListRow GetRow(string key) => FindRow(key, required: true)!;
+    public SummaryListRow GetRowByKey(string key) => FindRowByKey(key, required: true)!;
 
     /// <summary>
     /// Gets the row with the key <paramref name="key"/>, or <see langword="null"/> if there isn't one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one row with the key <paramref name="key"/>.</exception>
-    public SummaryListRow? FindRow(string key) => FindRow(key, required: false);
+    public SummaryListRow? FindRowByKey(string key) => FindRowByKey(key, required: false);
 
     /// <summary>
     /// Gets every row with the key <paramref name="key"/>.
     /// </summary>
-    public IReadOnlyList<SummaryListRow> GetRowsWithKey(string key) => Rows.Where(r => r.Key == key).ToArray();
+    public IReadOnlyList<SummaryListRow> GetRowsByKey(string key) => Rows.Where(r => r.Key == key).ToArray();
 
-    private SummaryListRow? FindRow(string key, bool required)
+    private SummaryListRow? FindRowByKey(string key, bool required)
     {
         ArgumentNullException.ThrowIfNull(key);
 
@@ -124,21 +124,21 @@ public sealed class SummaryListRow
     /// Gets the action whose visible text is <c>Change</c>, or <see langword="null"/> if there isn't one.
     /// </summary>
     /// <remarks>
-    /// Use <see cref="GetAction"/> for an action with other text, such as a localized one.
+    /// Use <see cref="GetActionByText"/> for an action with other text, such as a localized one.
     /// </remarks>
-    public SummaryListAction? ChangeLink => FindAction("Change");
+    public SummaryListAction? ChangeLink => FindActionByText("Change");
 
     /// <summary>
     /// Gets the action whose visible text is <paramref name="text"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">There is no such action, or there's more than one.</exception>
-    public SummaryListAction GetAction(string text) => SummaryListAction.Find(Element, Actions, text, required: true)!;
+    public SummaryListAction GetActionByText(string text) => SummaryListAction.Find(Element, Actions, text, required: true)!;
 
     /// <summary>
     /// Gets the action whose visible text is <paramref name="text"/>, or <see langword="null"/> if there isn't one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one such action.</exception>
-    public SummaryListAction? FindAction(string text) => SummaryListAction.Find(Element, Actions, text, required: false);
+    public SummaryListAction? FindActionByText(string text) => SummaryListAction.Find(Element, Actions, text, required: false);
 
     /// <inheritdoc/>
     public override string ToString() => $"{Key}: {Value}";
@@ -250,14 +250,14 @@ public sealed class SummaryCard
     /// Gets the card action whose visible text is <paramref name="text"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">There is no such action, or there's more than one.</exception>
-    public SummaryListAction GetAction(string text) => SummaryListAction.Find(Element, Actions, text, required: true)!;
+    public SummaryListAction GetActionByText(string text) => SummaryListAction.Find(Element, Actions, text, required: true)!;
 
     /// <summary>
     /// Gets the card action whose visible text is <paramref name="text"/>, or <see langword="null"/> if there isn't
     /// one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one such action.</exception>
-    public SummaryListAction? FindAction(string text) => SummaryListAction.Find(Element, Actions, text, required: false);
+    public SummaryListAction? FindActionByText(string text) => SummaryListAction.Find(Element, Actions, text, required: false);
 
     /// <summary>
     /// Gets the row with the key <paramref name="key"/> in the card's summary list.
@@ -265,8 +265,8 @@ public sealed class SummaryCard
     /// <exception cref="ComponentLookupException">
     /// There is no row with the key <paramref name="key"/>, or there's more than one.
     /// </exception>
-    public SummaryListRow GetRow(string key) =>
-        SummaryList?.GetRow(key) ?? throw new ComponentLookupException(new LookupFailure(
+    public SummaryListRow GetRowByKey(string key) =>
+        SummaryList?.GetRowByKey(key) ?? throw new ComponentLookupException(new LookupFailure(
             "Summary list row not found.",
             $"a row with the key {LookupFailure.Quote(key)}",
             $"summary card {LookupFailure.Quote(Title)} has no summary list",
@@ -277,7 +277,7 @@ public sealed class SummaryCard
     /// there isn't one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one row with the key <paramref name="key"/>.</exception>
-    public SummaryListRow? FindRow(string key) => SummaryList?.FindRow(key);
+    public SummaryListRow? FindRowByKey(string key) => SummaryList?.FindRowByKey(key);
 
     /// <inheritdoc/>
     public override string ToString() => $"Summary card: {Title}";

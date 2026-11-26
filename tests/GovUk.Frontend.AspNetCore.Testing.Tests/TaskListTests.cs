@@ -14,34 +14,34 @@ public class TaskListTests
         Assert.NotNull(taskList);
         Assert.Equal(["Company Directors", "Financial history", "Payment"], taskList.Items.Select(i => i.Name));
 
-        var directors = taskList.GetItem("Company Directors");
+        var directors = taskList.GetItemByName("Company Directors");
         Assert.Equal("Completed", directors.Status);
         Assert.Null(directors.StatusTag);
         Assert.Null(directors.Hint);
         Assert.Equal("/directors", directors.Href);
 
-        var history = doc.GetTaskListItem("Financial history");
+        var history = doc.GetTaskListItemByName("Financial history");
         Assert.Equal("Include 5 years of the company’s relevant financial information", history.Hint);
         Assert.Equal("Incomplete", history.Status);
         Assert.Equal("Incomplete", history.StatusTag!.Text);
         Assert.Equal("blue", history.StatusTag.Colour);
 
-        var payment = taskList.GetItem("Payment");
+        var payment = taskList.GetItemByName("Payment");
         Assert.Null(payment.Href);
         Assert.Equal("Cannot start yet", payment.Status);
     }
 
     [Fact]
-    public async Task GetItem_NotFound_ThrowsWithNames()
+    public async Task GetItemByName_NotFound_ThrowsWithNames()
     {
         var doc = await RenderTaskListAsync();
 
-        var ex = Assert.Throws<ComponentLookupException>(() => doc.TaskList!.GetItem("Declaration"));
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.TaskList!.GetItemByName("Declaration"));
 
         Assert.Equal("Task list item not found.", ex.Failure.Summary);
         Assert.Equal("a task named \"Declaration\"", ex.Failure.Expected);
         Assert.Equal("tasks with the names \"Company Directors\", \"Financial history\", \"Payment\"", ex.Failure.Found);
-        Assert.Null(doc.FindTaskListItem("Declaration"));
+        Assert.Null(doc.FindTaskListItemByName("Declaration"));
     }
 
     private static Task<IHtmlDocument> RenderTaskListAsync() =>

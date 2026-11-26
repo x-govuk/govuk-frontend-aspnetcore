@@ -16,34 +16,34 @@ public static partial class ComponentQueryExtensions
         /// Gets the field of any kind whose label or legend is <paramref name="label"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such field, or there's more than one.</exception>
-        public FormField GetField(string label) => FieldLookup.Find<FormField>(node, label, FieldKind.Field, required: true)!;
+        public FormField GetFieldByLabelOrLegend(string label) => FieldLookup.Find<FormField>(node, label, FieldKind.Field, required: true)!;
 
         /// <summary>
         /// Gets the field of any kind whose label or legend is <paramref name="label"/>, or <see langword="null"/> if
         /// there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such field.</exception>
-        public FormField? FindField(string label) => FieldLookup.Find<FormField>(node, label, FieldKind.Field, required: false);
+        public FormField? FindFieldByLabelOrLegend(string label) => FieldLookup.Find<FormField>(node, label, FieldKind.Field, required: false);
 
         /// <summary>
         /// Gets the text input labelled <paramref name="label"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such text input, or there's more than one.</exception>
-        public TextInput GetTextInput(string label) =>
+        public TextInput GetTextInputByLabel(string label) =>
             FieldLookup.Find<TextInput>(node, label, FieldKind.TextInput, required: true)!;
 
         /// <summary>
         /// Gets the text input labelled <paramref name="label"/>, or <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such text input.</exception>
-        public TextInput? FindTextInput(string label) =>
+        public TextInput? FindTextInputByLabel(string label) =>
             FieldLookup.Find<TextInput>(node, label, FieldKind.TextInput, required: false);
 
         /// <summary>
         /// Gets the textarea labelled <paramref name="label"/>, including a character count's.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such textarea, or there's more than one.</exception>
-        public Textarea GetTextarea(string label) =>
+        public Textarea GetTextareaByLabel(string label) =>
             FieldLookup.Find<Textarea>(node, label, FieldKind.Textarea, required: true)!;
 
         /// <summary>
@@ -51,101 +51,101 @@ public static partial class ComponentQueryExtensions
         /// <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such textarea.</exception>
-        public Textarea? FindTextarea(string label) =>
+        public Textarea? FindTextareaByLabel(string label) =>
             FieldLookup.Find<Textarea>(node, label, FieldKind.Textarea, required: false);
 
         /// <summary>
         /// Gets the character count labelled <paramref name="label"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such character count, or there's more than one.</exception>
-        public CharacterCount GetCharacterCount(string label) =>
+        public CharacterCount GetCharacterCountByLabel(string label) =>
             FieldLookup.Find<CharacterCount>(node, label, FieldKind.CharacterCount, required: true)!;
 
         /// <summary>
         /// Gets the character count labelled <paramref name="label"/>, or <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such character count.</exception>
-        public CharacterCount? FindCharacterCount(string label) =>
+        public CharacterCount? FindCharacterCountByLabel(string label) =>
             FieldLookup.Find<CharacterCount>(node, label, FieldKind.CharacterCount, required: false);
 
         /// <summary>
         /// Gets the select labelled <paramref name="label"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such select, or there's more than one.</exception>
-        public Select GetSelect(string label) => FieldLookup.Find<Select>(node, label, FieldKind.Select, required: true)!;
+        public Select GetSelectByLabel(string label) => FieldLookup.Find<Select>(node, label, FieldKind.Select, required: true)!;
 
         /// <summary>
         /// Gets the select labelled <paramref name="label"/>, or <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such select.</exception>
-        public Select? FindSelect(string label) => FieldLookup.Find<Select>(node, label, FieldKind.Select, required: false);
+        public Select? FindSelectByLabel(string label) => FieldLookup.Find<Select>(node, label, FieldKind.Select, required: false);
 
         /// <summary>
         /// Gets the password input labelled <paramref name="label"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such password input, or there's more than one.</exception>
-        public PasswordInput GetPasswordInput(string label) =>
+        public PasswordInput GetPasswordInputByLabel(string label) =>
             FieldLookup.Find<PasswordInput>(node, label, FieldKind.PasswordInput, required: true)!;
 
         /// <summary>
         /// Gets the password input labelled <paramref name="label"/>, or <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such password input.</exception>
-        public PasswordInput? FindPasswordInput(string label) =>
+        public PasswordInput? FindPasswordInputByLabel(string label) =>
             FieldLookup.Find<PasswordInput>(node, label, FieldKind.PasswordInput, required: false);
 
         /// <summary>
         /// Gets the file upload labelled <paramref name="label"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such file upload, or there's more than one.</exception>
-        public FileUpload GetFileUpload(string label) =>
+        public FileUpload GetFileUploadByLabel(string label) =>
             FieldLookup.Find<FileUpload>(node, label, FieldKind.FileUpload, required: true)!;
 
         /// <summary>
         /// Gets the file upload labelled <paramref name="label"/>, or <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such file upload.</exception>
-        public FileUpload? FindFileUpload(string label) =>
+        public FileUpload? FindFileUploadByLabel(string label) =>
             FieldLookup.Find<FileUpload>(node, label, FieldKind.FileUpload, required: false);
 
         /// <summary>
         /// Gets the date input whose legend is <paramref name="legend"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such date input, or there's more than one.</exception>
-        public DateInput GetDateInput(string legend) =>
+        public DateInput GetDateInputByLegend(string legend) =>
             FieldLookup.Find<DateInput>(node, legend, FieldKind.DateInput, required: true)!;
 
         /// <summary>
         /// Gets the date input whose legend is <paramref name="legend"/>, or <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such date input.</exception>
-        public DateInput? FindDateInput(string legend) =>
+        public DateInput? FindDateInputByLegend(string legend) =>
             FieldLookup.Find<DateInput>(node, legend, FieldKind.DateInput, required: false);
 
         /// <summary>
         /// Gets the radios whose legend is <paramref name="legend"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There are no such radios, or there's more than one set.</exception>
-        public Radios GetRadios(string legend) => FieldLookup.Find<Radios>(node, legend, FieldKind.Radios, required: true)!;
+        public Radios GetRadiosByLegend(string legend) => FieldLookup.Find<Radios>(node, legend, FieldKind.Radios, required: true)!;
 
         /// <summary>
         /// Gets the radios whose legend is <paramref name="legend"/>, or <see langword="null"/> if there aren't any.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such set of radios.</exception>
-        public Radios? FindRadios(string legend) => FieldLookup.Find<Radios>(node, legend, FieldKind.Radios, required: false);
+        public Radios? FindRadiosByLegend(string legend) => FieldLookup.Find<Radios>(node, legend, FieldKind.Radios, required: false);
 
         /// <summary>
         /// Gets the checkboxes whose legend is <paramref name="legend"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There are no such checkboxes, or there's more than one set.</exception>
-        public Checkboxes GetCheckboxes(string legend) =>
+        public Checkboxes GetCheckboxesByLegend(string legend) =>
             FieldLookup.Find<Checkboxes>(node, legend, FieldKind.Checkboxes, required: true)!;
 
         /// <summary>
         /// Gets the checkboxes whose legend is <paramref name="legend"/>, or <see langword="null"/> if there aren't any.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such set of checkboxes.</exception>
-        public Checkboxes? FindCheckboxes(string legend) =>
+        public Checkboxes? FindCheckboxesByLegend(string legend) =>
             FieldLookup.Find<Checkboxes>(node, legend, FieldKind.Checkboxes, required: false);
     }
 }
@@ -163,20 +163,20 @@ internal static class FieldLookup
         return node.QuerySelectorAll(Selector).Select(Create).OfType<FormField>().ToArray();
     }
 
-    public static T? Find<T>(IParentNode node, string label, FieldKind kind, bool required)
+    public static T? Find<T>(IParentNode node, string text, FieldKind kind, bool required)
         where T : FormField
     {
-        ArgumentNullException.ThrowIfNull(label);
+        ArgumentNullException.ThrowIfNull(text);
 
         var fields = All(node);
-        var matches = fields.OfType<T>().Where(f => f.Label == label).ToArray();
+        var matches = fields.OfType<T>().Where(f => f.Label == text).ToArray();
 
         if (matches.Length == 1)
         {
             return matches[0];
         }
 
-        var expected = $"{kind.Expected} labelled {LookupFailure.Quote(label)}";
+        var expected = $"{kind.Expected} {kind.MatchedBy} {LookupFailure.Quote(text)}";
 
         if (matches.Length == 0)
         {
@@ -195,7 +195,7 @@ internal static class FieldLookup
         throw new ComponentLookupException(new LookupFailure(
             $"More than one {kind.Countable} found.",
             expected,
-            $"{matches.Length} {kind.CountablePlural} labelled {LookupFailure.Quote(label)}",
+            $"{matches.Length} {kind.CountablePlural} {kind.MatchedBy} {LookupFailure.Quote(text)}",
             LookupFailure.FormatHtml((INode)node)));
     }
 
@@ -250,21 +250,25 @@ internal static class FieldLookup
 /// <param name="Countable">One of them, e.g. <c>set of radios</c>.</param>
 /// <param name="CountablePlural">More than one of them, e.g. <c>sets of radios</c>.</param>
 /// <param name="Expected">What's looked for, e.g. <c>radios</c> or <c>a text input</c>.</param>
-internal sealed record FieldKind(string Name, string Countable, string CountablePlural, string Expected)
+/// <param name="MatchedBy">How the text looked for is matched, e.g. <c>labelled</c> or <c>with the legend</c>.</param>
+internal sealed record FieldKind(string Name, string Countable, string CountablePlural, string Expected, string MatchedBy)
 {
-    public static readonly FieldKind Field = new("field", "fields");
-    public static readonly FieldKind TextInput = new("text input", "text inputs");
-    public static readonly FieldKind Textarea = new("textarea", "textareas");
-    public static readonly FieldKind CharacterCount = new("character count", "character counts");
-    public static readonly FieldKind Select = new("select", "selects");
-    public static readonly FieldKind PasswordInput = new("password input", "password inputs");
-    public static readonly FieldKind FileUpload = new("file upload", "file uploads");
-    public static readonly FieldKind DateInput = new("date input", "date inputs");
-    public static readonly FieldKind Radios = new("radios", "set of radios", "sets of radios", "radios");
-    public static readonly FieldKind Checkboxes = new("checkboxes", "set of checkboxes", "sets of checkboxes", "checkboxes");
+    private const string Labelled = "labelled";
+    private const string WithTheLegend = "with the legend";
 
-    private FieldKind(string name, string plural)
-        : this(name, name, plural, $"a {name}")
+    public static FieldKind Field { get; } = new("field", "fields", "with the label or legend");
+    public static FieldKind TextInput { get; } = new("text input", "text inputs", Labelled);
+    public static FieldKind Textarea { get; } = new("textarea", "textareas", Labelled);
+    public static FieldKind CharacterCount { get; } = new("character count", "character counts", Labelled);
+    public static FieldKind Select { get; } = new("select", "selects", Labelled);
+    public static FieldKind PasswordInput { get; } = new("password input", "password inputs", Labelled);
+    public static FieldKind FileUpload { get; } = new("file upload", "file uploads", Labelled);
+    public static FieldKind DateInput { get; } = new("date input", "date inputs", WithTheLegend);
+    public static FieldKind Radios { get; } = new("radios", "set of radios", "sets of radios", "radios", WithTheLegend);
+    public static FieldKind Checkboxes { get; } = new("checkboxes", "set of checkboxes", "sets of checkboxes", "checkboxes", WithTheLegend);
+
+    private FieldKind(string name, string plural, string matchedBy)
+        : this(name, name, plural, $"a {name}", matchedBy)
     {
     }
 }

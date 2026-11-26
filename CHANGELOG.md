@@ -95,7 +95,7 @@ It's versioned in lockstep with `GovUk.Frontend.AspNetCore` and depends on exact
 var doc = await response.GetHtmlDocumentAsync();
 
 Assert.Equal(["Enter your name"], doc.ErrorSummary!.Items.Select(i => i.Text));
-Assert.Equal("sarah@example.com", doc.GetSummaryCard("Director 1").GetRow("Email address").Value);
+Assert.Equal("sarah@example.com", doc.GetSummaryCardByTitle("Director 1").GetRowByKey("Email address").Value);
 ```
 
 When a lookup fails, the exception says what was looked for, what was on the page and the HTML that was searched:
@@ -109,14 +109,14 @@ Found:    rows with the keys "Name", "Phone"
 Form fields are found by their label, or by their legend for date inputs, radios and checkboxes. Each field has its hint, its error message (without the visually hidden `Error:` prefix) and its current value:
 
 ```cs
-var email = doc.GetTextInput("Email address");
+var email = doc.GetTextInputByLabel("Email address");
 Assert.Equal("Enter an email address", email.ErrorMessage);
 
-Assert.Equal(new DateOnly(2000, 3, 27), doc.GetDateInput("Date of birth").Value);
-Assert.Equal("email", doc.GetRadios("How would you like to be contacted?").Value);
+Assert.Equal(new DateOnly(2000, 3, 27), doc.GetDateInputByLegend("Date of birth").Value);
+Assert.Equal("email", doc.GetRadiosByLegend("How would you like to be contacted?").Value);
 ```
 
-There are lookups for text inputs, textareas, character counts, selects, password inputs, file uploads, date inputs, radios and checkboxes, and `GetField()` for a field of any kind.
+There are lookups for text inputs, textareas, character counts, selects, password inputs, file uploads, date inputs, radios and checkboxes, and `GetFieldByLabelOrLegend()` for a field of any kind.
 Radios and checkboxes give their items' labels, hints, checked state and conditional reveals.
 When a field isn't found, the exception lists the labels and legends on the page:
 
@@ -141,7 +141,7 @@ await submission.AddAntiforgeryTokenAsync(client);
 using var response = await client.SubmitAsync(submission);
 ```
 
-`doc.GetForm("Continue").CreateSubmission()` starts from a form's current values, including its hidden inputs and antiforgery token, and submits it as that button would, with its name, value and any `formaction`; `doc.AllForms` lists every form.
+`doc.GetFormByButtonText("Continue").CreateSubmission()` starts from a form's current values, including its hidden inputs and antiforgery token, and submits it as that button would, with its name, value and any `formaction`; a button's own `CreateSubmission()` does the same, e.g. `form.GetButtonByText("Save as draft").CreateSubmission()`. `doc.AllForms` lists every form.
 The page itself isn't changed. Files can be added with `AddFile()`, and the submission is then sent as `multipart/form-data`.
 
 `AddAntiforgeryTokenAsync()` and `client.GetAntiforgeryTokenAsync(url)` request a page and read its antiforgery token; the client must keep cookies, as `WebApplicationFactory`'s does.

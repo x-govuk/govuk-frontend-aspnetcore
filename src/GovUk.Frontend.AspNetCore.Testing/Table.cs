@@ -66,16 +66,16 @@ public sealed class Table
     /// Gets the row whose first cell's text is <paramref name="firstCellText"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">There is no such row, or there's more than one.</exception>
-    public TableRow GetRow(string firstCellText) => FindRow(firstCellText, required: true)!;
+    public TableRow GetRowByFirstCellText(string firstCellText) => FindRowByFirstCellText(firstCellText, required: true)!;
 
     /// <summary>
     /// Gets the row whose first cell's text is <paramref name="firstCellText"/>, or <see langword="null"/> if there
     /// isn't one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one such row.</exception>
-    public TableRow? FindRow(string firstCellText) => FindRow(firstCellText, required: false);
+    public TableRow? FindRowByFirstCellText(string firstCellText) => FindRowByFirstCellText(firstCellText, required: false);
 
-    private TableRow? FindRow(string firstCellText, bool required)
+    private TableRow? FindRowByFirstCellText(string firstCellText, bool required)
     {
         ArgumentNullException.ThrowIfNull(firstCellText);
 
@@ -162,7 +162,7 @@ public sealed class TableRow
     /// The table has no column with the header <paramref name="header"/>, more than one, or this row has no cell in
     /// that column.
     /// </exception>
-    public TableCell this[string header] => GetCell(header);
+    public TableCell this[string header] => GetCellByHeader(header);
 
     /// <summary>
     /// Gets the cell in the column whose header is <paramref name="header"/>.
@@ -171,7 +171,7 @@ public sealed class TableRow
     /// The table has no column with the header <paramref name="header"/>, more than one, or this row has no cell in
     /// that column.
     /// </exception>
-    public TableCell GetCell(string header)
+    public TableCell GetCellByHeader(string header)
     {
         var columnIndex = _table.GetColumnIndex(header);
 

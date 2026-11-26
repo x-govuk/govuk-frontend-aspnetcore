@@ -43,7 +43,7 @@ public sealed class Select : FormField
     /// <remarks>
     /// When no option is marked as <c>selected</c>, this is the first one that isn't disabled.
     /// </remarks>
-    public SelectItem? SelectedItem => Items.LastOrDefault(i => i.Selected);
+    public SelectItem? SelectedItem => Items.LastOrDefault(i => i.IsSelected);
 
     /// <summary>
     /// Gets the value of the <see cref="SelectedItem"/>, or <see langword="null"/> if there are no options.
@@ -54,15 +54,15 @@ public sealed class Select : FormField
     /// Gets the option whose text is <paramref name="text"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">There is no such option, or there's more than one.</exception>
-    public SelectItem GetItem(string text) => FindItem(text, required: true)!;
+    public SelectItem GetItemByText(string text) => FindItemByText(text, required: true)!;
 
     /// <summary>
     /// Gets the option whose text is <paramref name="text"/>, or <see langword="null"/> if there isn't one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one such option.</exception>
-    public SelectItem? FindItem(string text) => FindItem(text, required: false);
+    public SelectItem? FindItemByText(string text) => FindItemByText(text, required: false);
 
-    private SelectItem? FindItem(string text, bool required)
+    private SelectItem? FindItemByText(string text, bool required)
     {
         ArgumentNullException.ThrowIfNull(text);
 
@@ -111,12 +111,12 @@ public sealed class SelectItem
     /// <remarks>
     /// When no option is marked as <c>selected</c>, the first one that isn't disabled is.
     /// </remarks>
-    public bool Selected => Element.IsSelected;
+    public bool IsSelected => Element.IsSelected;
 
     /// <summary>
     /// Gets whether the option is disabled.
     /// </summary>
-    public bool Disabled => Element.IsDisabled;
+    public bool IsDisabled => Element.IsDisabled;
 
     /// <inheritdoc/>
     public override string ToString() => Text;

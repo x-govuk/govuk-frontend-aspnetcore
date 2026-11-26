@@ -24,7 +24,7 @@ public static partial class ComponentQueryExtensions
         /// <see cref="Form.CreateSubmission()"/> submits the form with that button.
         /// </remarks>
         /// <exception cref="ComponentLookupException">There is no such button, or there's more than one.</exception>
-        public Form GetForm(string buttonText) => FindForm(node, buttonText, required: true)!;
+        public Form GetFormByButtonText(string buttonText) => FindFormByButtonText(node, buttonText, required: true)!;
 
         /// <summary>
         /// Gets the form with a submit button whose text is <paramref name="buttonText"/>, or <see langword="null"/> if
@@ -34,10 +34,10 @@ public static partial class ComponentQueryExtensions
         /// <see cref="Form.CreateSubmission()"/> submits the form with that button.
         /// </remarks>
         /// <exception cref="ComponentLookupException">There's more than one such button.</exception>
-        public Form? FindForm(string buttonText) => FindForm(node, buttonText, required: false);
+        public Form? FindFormByButtonText(string buttonText) => FindFormByButtonText(node, buttonText, required: false);
     }
 
-    private static Form? FindForm(IParentNode node, string buttonText, bool required)
+    private static Form? FindFormByButtonText(IParentNode node, string buttonText, bool required)
     {
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(buttonText);
@@ -55,6 +55,6 @@ public static partial class ComponentQueryExtensions
             $"a form with the button {LookupFailure.Quote(buttonText)}",
             required);
 
-        return match is null ? null : new Form(match.Form, match);
+        return match is null ? null : new Form(match.FormElement, match);
     }
 }

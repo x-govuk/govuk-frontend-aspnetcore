@@ -21,7 +21,7 @@
          given version of the library renders, so they're versioned in lockstep with it; see
          Directory.Build.targets for the matching dependency range. -->
     <MinVerTagPrefix>v</MinVerTagPrefix>
-    <MinVerMinimumMajorMinor>5.0</MinVerMinimumMajorMinor>
+    <MinVerMinimumMajorMinor>6.0</MinVerMinimumMajorMinor>
     <MinVerDefaultPreReleaseIdentifiers>pre.0</MinVerDefaultPreReleaseIdentifiers>
 
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>

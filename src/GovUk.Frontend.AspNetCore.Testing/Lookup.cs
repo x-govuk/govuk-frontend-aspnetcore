@@ -73,6 +73,6 @@ internal static class Lookup
     public static IElement? Child(IElement? parent, string className) =>
         parent?.Children.FirstOrDefault(c => c.ClassList.Contains(className));
 
-    private static string Capitalize(string value) =>
+    internal static string Capitalize(string value) =>
         value.Length == 0 ? value : string.Concat(char.ToUpperInvariant(value[0]).ToString(), value.AsSpan(1));
 }

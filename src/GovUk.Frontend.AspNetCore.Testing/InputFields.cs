@@ -105,7 +105,7 @@ public sealed class FileUpload : FormField
     /// <summary>
     /// Gets whether more than one file can be chosen.
     /// </summary>
-    public bool Multiple => Input.HasAttribute("multiple");
+    public bool AllowsMultiple => Input.HasAttribute("multiple");
 
     /// <summary>
     /// Gets the input's <c>accept</c> attribute, e.g. <c>.pdf,.jpg</c>, or <see langword="null"/> if it doesn't have one.

@@ -20,35 +20,35 @@ public class TagHelperFieldTests(TestApp app) : IClassFixture<TestApp>
             doc.Fields.Select(f => f.Label));
         Assert.All(doc.Fields, f => Assert.Null(f.ErrorMessage));
 
-        var name = doc.GetTextInput("Full name");
+        var name = doc.GetTextInputByLabel("Full name");
         Assert.Equal("Sarah Philips", name.Value);
         Assert.Equal("Name", name.Name);
         Assert.Equal("As it appears on your passport", name.Hint);
 
-        Assert.Equal("Some detail", doc.GetTextarea("Can you provide more detail?").Value);
+        Assert.Equal("Some detail", doc.GetTextareaByLabel("Can you provide more detail?").Value);
 
-        var job = doc.GetCharacterCount("Describe your job");
+        var job = doc.GetCharacterCountByLabel("Describe your job");
         Assert.Equal("Teacher", job.Value);
         Assert.Equal(200, job.MaxLength);
         Assert.Null(job.Hint);
 
-        Assert.Equal("wales", doc.GetSelect("Country").Value);
-        Assert.Equal("hunter2", doc.GetPasswordInput("Password").Value);
-        Assert.Equal("Upload", doc.GetFileUpload("Upload a file").Name);
+        Assert.Equal("wales", doc.GetSelectByLabel("Country").Value);
+        Assert.Equal("hunter2", doc.GetPasswordInputByLabel("Password").Value);
+        Assert.Equal("Upload", doc.GetFileUploadByLabel("Upload a file").Name);
 
-        var dob = doc.GetDateInput("Date of birth");
+        var dob = doc.GetDateInputByLegend("Date of birth");
         Assert.Equal(new DateOnly(2000, 3, 27), dob.Value);
         Assert.Equal("For example, 27 3 2007", dob.Hint);
         Assert.Equal(["DateOfBirth.Day", "DateOfBirth.Month", "DateOfBirth.Year"], dob.Items.Select(i => i.Name));
         Assert.Equal([DateInputPart.Day, DateInputPart.Month, DateInputPart.Year], dob.Items.Select(i => i.Part));
 
-        var contact = doc.GetRadios("How would you like to be contacted?");
+        var contact = doc.GetRadiosByLegend("How would you like to be contacted?");
         Assert.Equal("email", contact.Value);
         Assert.Equal(["Email", "Phone"], contact.Items.Select(i => i.Label));
-        Assert.Equal("We'll text you", contact.GetItem("Phone").Hint);
-        Assert.Equal("sarah@example.com", contact.GetItem("Email").ConditionalElement!.GetTextInput("Email address").Value);
+        Assert.Equal("We'll text you", contact.GetItemByLabel("Phone").Hint);
+        Assert.Equal("sarah@example.com", contact.GetItemByLabel("Email").ConditionalElement!.GetTextInputByLabel("Email address").Value);
 
-        Assert.Equal(["british", "irish"], doc.GetCheckboxes("What is your nationality?").Values);
+        Assert.Equal(["british", "irish"], doc.GetCheckboxesByLegend("What is your nationality?").Values);
     }
 
     [Fact]
@@ -65,10 +65,10 @@ public class TagHelperFieldTests(TestApp app) : IClassFixture<TestApp>
             doc.Fields.Select(f => f.ErrorMessage));
 
         // An error doesn't stop the label, hint or value being read.
-        Assert.Equal("As it appears on your passport", doc.GetField("Full name").Hint);
-        Assert.Equal("For example, 27 3 2007", doc.GetField("Date of birth").Hint);
-        Assert.Equal("Sarah Philips", doc.GetTextInput("Full name").Value);
-        Assert.Equal("email", doc.GetRadios("How would you like to be contacted?").Value);
+        Assert.Equal("As it appears on your passport", doc.GetFieldByLabelOrLegend("Full name").Hint);
+        Assert.Equal("For example, 27 3 2007", doc.GetFieldByLabelOrLegend("Date of birth").Hint);
+        Assert.Equal("Sarah Philips", doc.GetTextInputByLabel("Full name").Value);
+        Assert.Equal("email", doc.GetRadiosByLegend("How would you like to be contacted?").Value);
     }
 
     private async Task<IHtmlDocument> GetAsync(string url)

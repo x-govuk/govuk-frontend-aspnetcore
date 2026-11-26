@@ -26,7 +26,7 @@ public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
     /// <summary>
     /// The name of the field that holds the antiforgery token in ASP.NET Core's default configuration.
     /// </summary>
-    public const string DefaultAntiforgeryFieldName = "__RequestVerificationToken";
+    public static string DefaultAntiforgeryFieldName => "__RequestVerificationToken";
 
     private readonly List<KeyValuePair<string, string>> _values = [];
     private readonly List<FormSubmissionFile> _files = [];
@@ -82,7 +82,7 @@ public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
     /// This is always <see langword="true"/> when there are files, and is <see langword="true"/> for a submission
     /// created from a form with <c>enctype="multipart/form-data"</c>.
     /// </remarks>
-    public bool Multipart
+    public bool IsMultipart
     {
         get => field || _files.Count > 0;
         set;
@@ -257,7 +257,9 @@ public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
     /// form's token.
     /// </remarks>
     /// <param name="client">The client to request the page with, and to submit with afterwards.</param>
-    /// <param name="fieldName">The name of the antiforgery field.</param>
+    /// <param name="fieldName">
+    /// The name of the antiforgery field; <see cref="DefaultAntiforgeryFieldName"/> if not given.
+    /// </param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>This submission.</returns>
     /// <exception cref="InvalidOperationException">
@@ -265,10 +267,12 @@ public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
     /// </exception>
     public async Task<FormSubmission> AddAntiforgeryTokenAsync(
         HttpClient client,
-        string fieldName = DefaultAntiforgeryFieldName,
+        string? fieldName = null,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(client);
+
+        fieldName ??= DefaultAntiforgeryFieldName;
 
         var token = await client.GetAntiforgeryTokenAsync(Url, fieldName, cancellationToken).ConfigureAwait(false);
 
@@ -285,7 +289,7 @@ public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
             return null;
         }
 
-        if (!Multipart)
+        if (!IsMultipart)
         {
             return new FormUrlEncodedContent(_values);
         }

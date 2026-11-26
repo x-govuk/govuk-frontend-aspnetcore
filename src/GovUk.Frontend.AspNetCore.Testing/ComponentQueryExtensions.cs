@@ -111,55 +111,55 @@ public static partial class ComponentQueryExtensions
         /// Gets the summary card with the title <paramref name="title"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such summary card, or there's more than one.</exception>
-        public SummaryCard GetSummaryCard(string title) => FindSummaryCard(node, title, required: true)!;
+        public SummaryCard GetSummaryCardByTitle(string title) => FindSummaryCardByTitle(node, title, required: true)!;
 
         /// <summary>
         /// Gets the summary card with the title <paramref name="title"/>, or <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such summary card.</exception>
-        public SummaryCard? FindSummaryCard(string title) => FindSummaryCard(node, title, required: false);
+        public SummaryCard? FindSummaryCardByTitle(string title) => FindSummaryCardByTitle(node, title, required: false);
 
         /// <summary>
         /// Gets the row with the key <paramref name="key"/>, searching every summary list.
         /// </summary>
         /// <remarks>
-        /// To find a row in a particular summary card, use <see cref="GetSummaryCard"/> and then
-        /// <see cref="SummaryCard.GetRow"/>.
+        /// To find a row in a particular summary card, use <see cref="GetSummaryCardByTitle"/> and then
+        /// <see cref="SummaryCard.GetRowByKey"/>.
         /// </remarks>
         /// <exception cref="ComponentLookupException">There is no such row, or there's more than one.</exception>
-        public SummaryListRow GetSummaryListRow(string key) => FindSummaryListRow(node, key, required: true)!;
+        public SummaryListRow GetSummaryListRowByKey(string key) => FindSummaryListRowByKey(node, key, required: true)!;
 
         /// <summary>
         /// Gets the row with the key <paramref name="key"/>, searching every summary list, or <see langword="null"/>
         /// if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such row.</exception>
-        public SummaryListRow? FindSummaryListRow(string key) => FindSummaryListRow(node, key, required: false);
+        public SummaryListRow? FindSummaryListRowByKey(string key) => FindSummaryListRowByKey(node, key, required: false);
 
         /// <summary>
         /// Gets the table with the caption <paramref name="caption"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such table, or there's more than one.</exception>
-        public Table GetTable(string caption) => FindTable(node, caption, required: true)!;
+        public Table GetTableByCaption(string caption) => FindTableByCaption(node, caption, required: true)!;
 
         /// <summary>
         /// Gets the table with the caption <paramref name="caption"/>, or <see langword="null"/> if there isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such table.</exception>
-        public Table? FindTable(string caption) => FindTable(node, caption, required: false);
+        public Table? FindTableByCaption(string caption) => FindTableByCaption(node, caption, required: false);
 
         /// <summary>
         /// Gets the task named <paramref name="name"/>, searching every task list.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such task, or there's more than one.</exception>
-        public TaskListItem GetTaskListItem(string name) => FindTaskListItem(node, name, required: true)!;
+        public TaskListItem GetTaskListItemByName(string name) => FindTaskListItemByName(node, name, required: true)!;
 
         /// <summary>
         /// Gets the task named <paramref name="name"/>, searching every task list, or <see langword="null"/> if there
         /// isn't one.
         /// </summary>
         /// <exception cref="ComponentLookupException">There's more than one such task.</exception>
-        public TaskListItem? FindTaskListItem(string name) => FindTaskListItem(node, name, required: false);
+        public TaskListItem? FindTaskListItemByName(string name) => FindTaskListItemByName(node, name, required: false);
 
         /// <summary>
         /// Gets the value of the hidden input named <paramref name="name"/>.
@@ -186,7 +186,7 @@ public static partial class ComponentQueryExtensions
         where T : class =>
         Lookup.SingleOrNone((INode)node, All(node, selector, create), subject);
 
-    private static SummaryCard? FindSummaryCard(IParentNode node, string title, bool required)
+    private static SummaryCard? FindSummaryCardByTitle(IParentNode node, string title, bool required)
     {
         ArgumentNullException.ThrowIfNull(title);
 
@@ -200,7 +200,7 @@ public static partial class ComponentQueryExtensions
             required);
     }
 
-    private static SummaryListRow? FindSummaryListRow(IParentNode node, string key, bool required)
+    private static SummaryListRow? FindSummaryListRowByKey(IParentNode node, string key, bool required)
     {
         ArgumentNullException.ThrowIfNull(key);
 
@@ -214,7 +214,7 @@ public static partial class ComponentQueryExtensions
             required);
     }
 
-    private static Table? FindTable(IParentNode node, string caption, bool required)
+    private static Table? FindTableByCaption(IParentNode node, string caption, bool required)
     {
         ArgumentNullException.ThrowIfNull(caption);
 
@@ -228,7 +228,7 @@ public static partial class ComponentQueryExtensions
             required);
     }
 
-    private static TaskListItem? FindTaskListItem(IParentNode node, string name, bool required)
+    private static TaskListItem? FindTaskListItemByName(IParentNode node, string name, bool required)
     {
         ArgumentNullException.ThrowIfNull(name);
 

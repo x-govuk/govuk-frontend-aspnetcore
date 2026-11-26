@@ -31,15 +31,15 @@ public sealed class TaskList
     /// Gets the task named <paramref name="name"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">There is no such task, or there's more than one.</exception>
-    public TaskListItem GetItem(string name) => FindItem(name, required: true)!;
+    public TaskListItem GetItemByName(string name) => FindItemByName(name, required: true)!;
 
     /// <summary>
     /// Gets the task named <paramref name="name"/>, or <see langword="null"/> if there isn't one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one such task.</exception>
-    public TaskListItem? FindItem(string name) => FindItem(name, required: false);
+    public TaskListItem? FindItemByName(string name) => FindItemByName(name, required: false);
 
-    private TaskListItem? FindItem(string name, bool required)
+    private TaskListItem? FindItemByName(string name, bool required)
     {
         ArgumentNullException.ThrowIfNull(name);
 

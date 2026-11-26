@@ -112,11 +112,11 @@ public class SubmissionTests(TestApp app) : IClassFixture<TestApp>
         using var client = app.CreateClientWithCookies();
         var doc = await GetAsync(client, "/Apply");
 
-        var submission = doc.GetForm("Continue").CreateSubmission();
+        var submission = doc.GetFormByButtonText("Continue").CreateSubmission();
 
         Assert.Equal(HttpMethod.Post, submission.Method);
         Assert.Equal("http://localhost/Apply", submission.Url.ToString());
-        Assert.False(submission.Multipart);
+        Assert.False(submission.IsMultipart);
         Assert.Equal(
             [
                 "Reference", "Name", "DateOfBirth.Day", "DateOfBirth.Month", "DateOfBirth.Year", "Nationality", "Contact",
@@ -140,7 +140,7 @@ public class SubmissionTests(TestApp app) : IClassFixture<TestApp>
         Assert.Equal("continue", json.GetProperty("action").GetString());
 
         // The page is unchanged.
-        Assert.Equal("Sarah Philips", doc.GetTextInput("Full name").Value);
+        Assert.Equal("Sarah Philips", doc.GetTextInputByLabel("Full name").Value);
     }
 
     [Fact]
@@ -149,7 +149,7 @@ public class SubmissionTests(TestApp app) : IClassFixture<TestApp>
         using var client = app.CreateClientWithCookies();
         var doc = await GetAsync(client, "/Apply");
 
-        var form = doc.GetForm("Save as draft");
+        var form = doc.GetFormByButtonText("Save as draft");
         Assert.Equal("Save as draft", form.Button!.Text);
         Assert.Equal(["Continue", "Save as draft"], form.Buttons.Select(b => b.Text));
 
@@ -162,23 +162,27 @@ public class SubmissionTests(TestApp app) : IClassFixture<TestApp>
     }
 
     [Fact]
-    public async Task CreateSubmission_ByButtonText_UsesThatButton()
+    public async Task FormButton_CreateSubmission_UsesThatButton()
     {
         using var client = app.CreateClientWithCookies();
         var doc = await GetAsync(client, "/Apply");
+        var form = doc.GetFormByButtonText("Continue");
 
-        var submission = doc.GetForm("Continue").CreateSubmission("Save as draft");
+        var submission = form.GetButtonByText("Save as draft").CreateSubmission();
 
         Assert.Equal("http://localhost/Apply?handler=Draft", submission.Url.ToString());
+        Assert.Equal(["Sarah Philips"], submission.GetValuesFor("Name"));
     }
 
     [Fact]
-    public async Task CreateSubmission_UnknownButtonText_ListsButtons()
+    public async Task GetButtonByText_UnknownText_ListsButtons()
     {
         using var client = app.CreateClient();
         var doc = await GetAsync(client, "/Apply");
+        var form = doc.GetFormByButtonText("Continue");
 
-        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetForm("Continue").CreateSubmission("Submit"));
+        Assert.Null(form.FindButtonByText("Submit"));
+        var ex = Assert.Throws<ComponentLookupException>(() => form.GetButtonByText("Submit"));
 
         Assert.Equal("Submit button not found.", ex.Failure.Summary);
         Assert.Equal("a submit button with the text \"Submit\"", ex.Failure.Expected);
@@ -192,9 +196,9 @@ public class SubmissionTests(TestApp app) : IClassFixture<TestApp>
         using var client = app.CreateClientWithCookies();
         var doc = await GetAsync(client, "/Apply?multipart=true");
 
-        var submission = doc.GetForm("Continue").CreateSubmission();
+        var submission = doc.GetFormByButtonText("Continue").CreateSubmission();
 
-        Assert.True(submission.Multipart);
+        Assert.True(submission.IsMultipart);
         Assert.DoesNotContain(submission.Values, v => v.Key == "Upload");
         Assert.Equal(["Sarah Philips"], submission.GetValuesFor("Name"));
 
@@ -214,7 +218,7 @@ public class SubmissionTests(TestApp app) : IClassFixture<TestApp>
         using var client = app.CreateClient();
         var doc = await GetAsync(client, "/Apply");
 
-        var submission = doc.GetForm("Search").CreateSubmission();
+        var submission = doc.GetFormByButtonText("Search").CreateSubmission();
 
         Assert.Equal(HttpMethod.Get, submission.Method);
         Assert.Equal("http://localhost/Search", submission.Url.ToString());
@@ -226,13 +230,13 @@ public class SubmissionTests(TestApp app) : IClassFixture<TestApp>
     }
 
     [Fact]
-    public async Task GetForm_NotFound_ListsButtons()
+    public async Task GetFormByButtonText_NotFound_ListsButtons()
     {
         using var client = app.CreateClient();
         var doc = await GetAsync(client, "/Apply");
 
-        Assert.Null(doc.FindForm("Submit"));
-        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetForm("Submit"));
+        Assert.Null(doc.FindFormByButtonText("Submit"));
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFormByButtonText("Submit"));
 
         Assert.Equal(
             """
@@ -262,15 +266,15 @@ public class SubmissionTests(TestApp app) : IClassFixture<TestApp>
     }
 
     [Fact]
-    public async Task GetForm_ScopedToElement_SearchesOnlyThatElement()
+    public async Task GetFormByButtonText_ScopedToElement_SearchesOnlyThatElement()
     {
         using var client = app.CreateClient();
         var doc = await GetAsync(client, "/Apply");
 
-        var form = doc.GetForm("Sign out");
+        var form = doc.GetFormByButtonText("Sign out");
 
-        Assert.Null(form.Element.FindForm("Continue"));
-        Assert.Same(form.Element, doc.Body!.GetForm("Sign out").Element);
+        Assert.Null(form.Element.FindFormByButtonText("Continue"));
+        Assert.Same(form.Element, doc.Body!.GetFormByButtonText("Sign out").Element);
     }
 
     [Theory]

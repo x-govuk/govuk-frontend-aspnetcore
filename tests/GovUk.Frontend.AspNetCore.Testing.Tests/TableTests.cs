@@ -22,11 +22,11 @@ public class TableTests
         Assert.False(first.Cells[1].IsHeader);
         Assert.Equal("£109.80 per week", first["Amount"].Text);
 
-        Assert.Equal("£109.80 per week", table.GetRow("Next 33 weeks").GetCell("Amount").Text);
+        Assert.Equal("£109.80 per week", table.GetRowByFirstCellText("Next 33 weeks").GetCellByHeader("Amount").Text);
     }
 
     [Fact]
-    public async Task GetCell_UnknownHeader_ThrowsWithHeaders()
+    public async Task GetCellByHeader_UnknownHeader_ThrowsWithHeaders()
     {
         var doc = await RenderTableAsync();
         var row = doc.Tables.Single().Rows[0];
@@ -40,7 +40,7 @@ public class TableTests
     }
 
     [Fact]
-    public async Task GetCell_WithColSpan_MatchesColumnsByPosition()
+    public async Task GetCellByHeader_WithColSpan_MatchesColumnsByPosition()
     {
         var doc = await Render.DocumentAsync(g => g.GenerateTableAsync(new TableOptions
         {
@@ -59,23 +59,23 @@ public class TableTests
     }
 
     [Fact]
-    public async Task GetTable_ByCaption()
+    public async Task GetTableByCaption_ByCaption()
     {
         var doc = await RenderTableAsync();
 
-        Assert.Equal(["Date", "Amount"], doc.GetTable("Dates and amounts").Headers);
-        Assert.Null(doc.FindTable("Other"));
+        Assert.Equal(["Date", "Amount"], doc.GetTableByCaption("Dates and amounts").Headers);
+        Assert.Null(doc.FindTableByCaption("Other"));
 
-        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetTable("Other"));
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetTableByCaption("Other"));
         Assert.Equal("tables with the captions \"Dates and amounts\"", ex.Failure.Found);
     }
 
     [Fact]
-    public async Task GetRow_NotFound_ThrowsWithFirstCells()
+    public async Task GetRowByFirstCellText_NotFound_ThrowsWithFirstCells()
     {
         var doc = await RenderTableAsync();
 
-        var ex = Assert.Throws<ComponentLookupException>(() => doc.Tables.Single().GetRow("Last week"));
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.Tables.Single().GetRowByFirstCellText("Last week"));
 
         Assert.Equal("Table row not found.", ex.Failure.Summary);
         Assert.Equal("rows with the first cells \"First 6 weeks\", \"Next 33 weeks\"", ex.Failure.Found);

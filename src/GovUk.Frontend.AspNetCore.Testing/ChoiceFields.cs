@@ -32,7 +32,7 @@ public sealed class Radios : FormField
     /// <summary>
     /// Gets the radio that's checked, or <see langword="null"/> if none is.
     /// </summary>
-    public RadiosItem? CheckedItem => Items.LastOrDefault(i => i.Checked);
+    public RadiosItem? CheckedItem => Items.LastOrDefault(i => i.IsChecked);
 
     /// <summary>
     /// Gets the value of the <see cref="CheckedItem"/>, or <see langword="null"/> if none is checked.
@@ -43,13 +43,13 @@ public sealed class Radios : FormField
     /// Gets the radio labelled <paramref name="label"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">There is no such radio, or there's more than one.</exception>
-    public RadiosItem GetItem(string label) => ChoiceItem.Find(Element, Items, label, _itemSubject, "a radio", required: true)!;
+    public RadiosItem GetItemByLabel(string label) => ChoiceItem.Find(Element, Items, label, _itemSubject, "a radio", required: true)!;
 
     /// <summary>
     /// Gets the radio labelled <paramref name="label"/>, or <see langword="null"/> if there isn't one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one such radio.</exception>
-    public RadiosItem? FindItem(string label) =>
+    public RadiosItem? FindItemByLabel(string label) =>
         ChoiceItem.Find(Element, Items, label, _itemSubject, "a radio", required: false);
 
     internal override string Kind => "radios";
@@ -84,7 +84,7 @@ public sealed class Checkboxes : FormField
     /// <summary>
     /// Gets the checkboxes that are checked, in order.
     /// </summary>
-    public IReadOnlyList<CheckboxesItem> CheckedItems => Items.Where(i => i.Checked).ToArray();
+    public IReadOnlyList<CheckboxesItem> CheckedItems => Items.Where(i => i.IsChecked).ToArray();
 
     /// <summary>
     /// Gets the values of the <see cref="CheckedItems"/>, in order.
@@ -95,14 +95,14 @@ public sealed class Checkboxes : FormField
     /// Gets the checkbox labelled <paramref name="label"/>.
     /// </summary>
     /// <exception cref="ComponentLookupException">There is no such checkbox, or there's more than one.</exception>
-    public CheckboxesItem GetItem(string label) =>
+    public CheckboxesItem GetItemByLabel(string label) =>
         ChoiceItem.Find(Element, Items, label, _itemSubject, "a checkbox", required: true)!;
 
     /// <summary>
     /// Gets the checkbox labelled <paramref name="label"/>, or <see langword="null"/> if there isn't one.
     /// </summary>
     /// <exception cref="ComponentLookupException">There's more than one such checkbox.</exception>
-    public CheckboxesItem? FindItem(string label) =>
+    public CheckboxesItem? FindItemByLabel(string label) =>
         ChoiceItem.Find(Element, Items, label, _itemSubject, "a checkbox", required: false);
 
     internal override string Kind => "checkboxes";
@@ -162,24 +162,24 @@ public abstract class ChoiceItem
     /// <summary>
     /// Gets whether the input is checked.
     /// </summary>
-    public bool Checked => Input.IsChecked;
+    public bool IsChecked => Input.IsChecked;
 
     /// <summary>
     /// Gets whether the input is disabled.
     /// </summary>
-    public bool Disabled => Input.IsDisabled;
+    public bool IsDisabled => Input.IsDisabled;
 
     /// <summary>
     /// Gets the element that's revealed when the input is checked, or <see langword="null"/> if there isn't one.
     /// </summary>
     /// <remarks>
     /// Fields inside it can be found by calling the lookup members on this element, e.g.
-    /// <c>item.ConditionalElement.GetTextInput("Email address")</c>.
+    /// <c>item.ConditionalElement.GetTextInputByLabel("Email address")</c>.
     /// </remarks>
     public IElement? ConditionalElement { get; }
 
     /// <inheritdoc/>
-    public override string ToString() => $"{(Checked ? "[x]" : "[ ]")} {Label}";
+    public override string ToString() => $"{(IsChecked ? "[x]" : "[ ]")} {Label}";
 
     internal static IEnumerable<(IHtmlInputElement Input, IElement Item)> GetInputs(IElement root, string componentClass) =>
         root.Children
@@ -228,5 +228,5 @@ public sealed class CheckboxesItem : ChoiceItem
     /// <summary>
     /// Gets whether checking this checkbox unchecks the others, as for a <c>None</c> option.
     /// </summary>
-    public bool Exclusive => Input.GetAttribute("data-behaviour") == "exclusive";
+    public bool IsExclusive => Input.GetAttribute("data-behaviour") == "exclusive";
 }

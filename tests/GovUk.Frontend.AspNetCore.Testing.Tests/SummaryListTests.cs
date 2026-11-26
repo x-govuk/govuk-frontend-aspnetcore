@@ -20,7 +20,7 @@ public class SummaryListTests
 
         Assert.Equal(["Name", "Address", "Contact details"], list.Rows.Select(r => r.Key));
 
-        var name = list.GetRow("Name");
+        var name = list.GetRowByKey("Name");
         Assert.Equal("Sarah Philips", name.Value);
         Assert.Equal(["Sarah Philips"], name.ValueLines);
         var change = Assert.Single(name.Actions);
@@ -29,26 +29,26 @@ public class SummaryListTests
         Assert.Equal("/name", change.Href);
         Assert.Same(change.Element, name.ChangeLink!.Element);
 
-        var address = list.GetRow("Address");
+        var address = list.GetRowByKey("Address");
         Assert.Equal("72 Guild Street London SE23 6FH", address.Value);
         Assert.Equal(["72 Guild Street", "London", "SE23 6FH"], address.ValueLines);
         Assert.Empty(address.Actions);
         Assert.Null(address.ChangeLink);
 
-        var contact = list.GetRow("Contact details");
+        var contact = list.GetRowByKey("Contact details");
         Assert.Equal(["07700 900457", "sarah@example.com"], contact.ValueLines);
         Assert.Equal(["Change", "Remove"], contact.Actions.Select(a => a.Text));
-        Assert.Equal("/contact/remove", contact.GetAction("Remove").Href);
-        Assert.Null(contact.FindAction("Delete"));
+        Assert.Equal("/contact/remove", contact.GetActionByText("Remove").Href);
+        Assert.Null(contact.FindActionByText("Delete"));
     }
 
     [Fact]
-    public async Task GetRow_NotFound_ThrowsWithKeysOnTheList()
+    public async Task GetRowByKey_NotFound_ThrowsWithKeysOnTheList()
     {
         var doc = await RenderListAsync(Row("Name", "Sarah Philips"), Row("Phone", "07700 900457"));
         var list = doc.SummaryLists.Single();
 
-        var ex = Assert.Throws<ComponentLookupException>(() => list.GetRow("Email address"));
+        var ex = Assert.Throws<ComponentLookupException>(() => list.GetRowByKey("Email address"));
 
         Assert.Equal("Summary list row not found.", ex.Failure.Summary);
         Assert.Equal("a row with the key \"Email address\"", ex.Failure.Expected);
@@ -67,11 +67,11 @@ public class SummaryListTests
     }
 
     [Fact]
-    public async Task FindRow_NotFound_ReturnsNull()
+    public async Task FindRowByKey_NotFound_ReturnsNull()
     {
         var doc = await RenderListAsync(Row("Name", "Sarah Philips"));
 
-        Assert.Null(doc.SummaryLists.Single().FindRow("Email address"));
+        Assert.Null(doc.SummaryLists.Single().FindRowByKey("Email address"));
     }
 
     [Fact]
@@ -80,22 +80,22 @@ public class SummaryListTests
         var doc = await RenderListAsync(Row("Director", "Sarah Philips"), Row("Director", "Ben Jones"));
         var list = doc.SummaryLists.Single();
 
-        var ex = Assert.Throws<ComponentLookupException>(() => list.GetRow("Director"));
+        var ex = Assert.Throws<ComponentLookupException>(() => list.GetRowByKey("Director"));
         Assert.Equal("More than one summary list row found.", ex.Failure.Summary);
         Assert.Equal("2 rows", ex.Failure.Found);
 
-        Assert.Throws<ComponentLookupException>(() => list.FindRow("Director"));
+        Assert.Throws<ComponentLookupException>(() => list.FindRowByKey("Director"));
 
-        Assert.Equal(["Sarah Philips", "Ben Jones"], list.GetRowsWithKey("Director").Select(r => r.Value));
+        Assert.Equal(["Sarah Philips", "Ben Jones"], list.GetRowsByKey("Director").Select(r => r.Value));
     }
 
     [Fact]
-    public async Task GetAction_NotFound_ThrowsWithActionsOnTheRow()
+    public async Task GetActionByText_NotFound_ThrowsWithActionsOnTheRow()
     {
         var doc = await RenderListAsync(Row("Name", "Sarah Philips", Action("Change", "/name", "name")));
-        var row = doc.GetSummaryListRow("Name");
+        var row = doc.GetSummaryListRowByKey("Name");
 
-        var ex = Assert.Throws<ComponentLookupException>(() => row.GetAction("Remove"));
+        var ex = Assert.Throws<ComponentLookupException>(() => row.GetActionByText("Remove"));
 
         Assert.Equal("Summary list action not found.", ex.Failure.Summary);
         Assert.Equal("an action with the text \"Remove\"", ex.Failure.Expected);
@@ -138,28 +138,28 @@ public class SummaryListTests
         Assert.Equal(["Director 1", "Director 2"], doc.SummaryCards.Select(c => c.Title));
         Assert.Equal(2, doc.SummaryLists.Count);
 
-        var first = doc.GetSummaryCard("Director 1");
+        var first = doc.GetSummaryCardByTitle("Director 1");
         var delete = Assert.Single(first.Actions);
         Assert.Equal("Delete director", delete.Text);
         Assert.Equal("(Director 1)", delete.VisuallyHiddenText);
 
-        var name = first.GetRow("Name");
+        var name = first.GetRowByKey("Name");
         Assert.Equal("Sarah Philips", name.Value);
         Assert.Equal("name (Director 1)", name.ChangeLink!.VisuallyHiddenText);
         Assert.Equal("Director 1", first.SummaryList!.Card!.Title);
 
-        var second = doc.GetSummaryCard("Director 2");
+        var second = doc.GetSummaryCardByTitle("Director 2");
         Assert.Equal(["Delete director", "Withdraw"], second.Actions.Select(a => a.Text));
-        Assert.Equal("/directors/2/withdraw", second.GetAction("Withdraw").Href);
-        Assert.Equal("Ben Jones", second.GetRow("Name").Value);
+        Assert.Equal("/directors/2/withdraw", second.GetActionByText("Withdraw").Href);
+        Assert.Equal("Ben Jones", second.GetRowByKey("Name").Value);
 
         // The same key in two cards is ambiguous across the page but not within a card.
-        Assert.Throws<ComponentLookupException>(() => doc.GetSummaryListRow("Name"));
-        Assert.Equal("Ben Jones", second.Element.GetSummaryListRow("Name").Value);
+        Assert.Throws<ComponentLookupException>(() => doc.GetSummaryListRowByKey("Name"));
+        Assert.Equal("Ben Jones", second.Element.GetSummaryListRowByKey("Name").Value);
     }
 
     [Fact]
-    public async Task GetSummaryCard_NotFound_ThrowsWithTitlesOnThePage()
+    public async Task GetSummaryCardByTitle_NotFound_ThrowsWithTitlesOnThePage()
     {
         var doc = await Render.DocumentAsync(g => g.GenerateSummaryListAsync(new SummaryListOptions
         {
@@ -167,7 +167,7 @@ public class SummaryListTests
             Rows = [Row("Name", "Sarah Philips")]
         }));
 
-        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetSummaryCard("Director 2"));
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetSummaryCardByTitle("Director 2"));
 
         Assert.Equal(
             """
@@ -176,7 +176,7 @@ public class SummaryListTests
             Found:    summary cards with the titles "Director 1"
             """,
             ex.Message);
-        Assert.Null(doc.FindSummaryCard("Director 2"));
+        Assert.Null(doc.FindSummaryCardByTitle("Director 2"));
     }
 
     [Fact]
@@ -189,15 +189,15 @@ public class SummaryListTests
     }
 
     [Fact]
-    public void GetSummaryListRow_NoSummaryLists_ThrowsWithNoRows()
+    public void GetSummaryListRowByKey_NoSummaryLists_ThrowsWithNoRows()
     {
         var doc = Render.Document("<p>Nothing here</p>");
 
-        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetSummaryListRow("Name"));
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetSummaryListRowByKey("Name"));
 
         Assert.Equal("no rows", ex.Failure.Found);
         Assert.Null(ex.Failure.Html);
-        Assert.Null(doc.FindSummaryListRow("Name"));
+        Assert.Null(doc.FindSummaryListRowByKey("Name"));
     }
 
     private static Task<IHtmlDocument> RenderListAsync(params SummaryListOptionsRow[] rows) =>

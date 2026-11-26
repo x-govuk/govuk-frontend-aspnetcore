@@ -153,7 +153,7 @@ public class FormSubmissionTests
 
         using var request = submission.ToRequest();
 
-        Assert.True(submission.Multipart);
+        Assert.True(submission.IsMultipart);
         Assert.Equal("multipart/form-data", request.Content!.Headers.ContentType!.MediaType);
         var body = await request.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
         Assert.Contains("name=Upload; filename=hello.txt", body, StringComparison.Ordinal);

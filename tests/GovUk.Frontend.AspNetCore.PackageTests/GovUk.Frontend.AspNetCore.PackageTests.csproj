@@ -22,6 +22,9 @@
 
   <!-- Deliberately no ProjectReference to the library: these tests must only ever see it through the
        package, since the packed layout is half of what's under test. -->
+  <ItemGroup>
+    <LibraryUnderTest Include="$(RepoRoot)src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj" />
+  </ItemGroup>
 
   <!-- The fixture sources are copied into generated projects at test time; they're data here, not part
        of this assembly. -->
@@ -38,9 +41,19 @@
          the fixture projects would restore a stale package. -->
     <RemoveDir Directories="$(PackageTestFeed);$(PackageTestPackages)govuk.frontend.aspnetcore" />
 
-    <MSBuild Projects="$(RepoRoot)src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj"
+    <!-- Build and pack are separate calls so that only one project instance ever builds the library.
+         Properties passed here are global properties, so a Pack call with PackageOutputPath set is a
+         different instance from the one the solution build uses; if both build, they race on the same
+         bin/ and obj/ files and the build fails intermittently with "The process cannot access the
+         file ... deps.json because it is being used by another process"
+         (https://github.com/dotnet/sdk/issues/52477). The Build call passes no properties, so it shares
+         this project's global properties and therefore the solution's instance of the library (or
+         waits for it); the Pack call then only packages what that built. -->
+    <MSBuild Projects="@(LibraryUnderTest)" Targets="Build" />
+
+    <MSBuild Projects="@(LibraryUnderTest)"
              Targets="Pack"
-             Properties="Configuration=$(Configuration);PackageOutputPath=$(PackageTestFeed)" />
+             Properties="Configuration=$(Configuration);NoBuild=true;PackageOutputPath=$(PackageTestFeed)" />
   </Target>
 
   <ItemGroup>

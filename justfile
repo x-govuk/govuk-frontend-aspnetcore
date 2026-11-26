@@ -29,7 +29,7 @@ _clear-samples-package-cache:
   @dotnet pwsh -f Remove-CachedPackages.ps1
 
 # Run the tests
-test *ARGS: (unit-tests ARGS) (testing-tests ARGS) (integration-tests ARGS) (package-tests ARGS)
+test *ARGS: (unit-tests ARGS) (testing-tests ARGS) (testing-playwright-tests ARGS) (integration-tests ARGS) (package-tests ARGS)
 
 # Run the unit tests
 unit-tests *ARGS:
@@ -38,6 +38,10 @@ unit-tests *ARGS:
 # Run the tests for the testing packages
 testing-tests *ARGS:
   @dotnet test --project tests/GovUk.Frontend.AspNetCore.Testing.Tests/GovUk.Frontend.AspNetCore.Testing.Tests.csproj {{ARGS}}
+
+# Run the tests for the Playwright testing package; run `just install-playwright` once first
+testing-playwright-tests *ARGS:
+  @dotnet test --project tests/GovUk.Frontend.AspNetCore.Testing.Playwright.Tests/GovUk.Frontend.AspNetCore.Testing.Playwright.Tests.csproj {{ARGS}}
 
 # Run the integration tests
 integration-tests *ARGS:
@@ -57,6 +61,7 @@ pack *ARGS:
   @dotnet pack src/GovUk.Frontend.AspNetCore/ {{ARGS}}
   @dotnet pack src/GovUk.Frontend.AspNetCore.Testing/ {{ARGS}}
   @dotnet pack src/GovUk.Frontend.AspNetCore.Testing.Xunit.v3/ {{ARGS}}
+  @dotnet pack src/GovUk.Frontend.AspNetCore.Testing.Playwright/ {{ARGS}}
 
 # Run the docs app
 docs *ARGS:

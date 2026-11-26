@@ -18,9 +18,10 @@ public sealed class PackageTestContext : IDisposable
     public const string LibraryPackageId = "GovUk.Frontend.AspNetCore";
     public const string TestingPackageId = "GovUk.Frontend.AspNetCore.Testing";
     public const string XunitPackageId = "GovUk.Frontend.AspNetCore.Testing.Xunit.v3";
+    public const string PlaywrightPackageId = "GovUk.Frontend.AspNetCore.Testing.Playwright";
 
     /// <summary>The packages that ship alongside the library, in lockstep with it.</summary>
-    public static readonly string[] TestingPackageIds = [TestingPackageId, XunitPackageId];
+    public static readonly string[] TestingPackageIds = [TestingPackageId, XunitPackageId, PlaywrightPackageId];
 
     private bool _disposed;
 

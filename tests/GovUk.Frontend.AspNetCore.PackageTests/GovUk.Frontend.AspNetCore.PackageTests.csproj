@@ -26,6 +26,7 @@
     <LibraryUnderTest Include="$(RepoRoot)src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj" />
     <LibraryUnderTest Include="$(RepoRoot)src\GovUk.Frontend.AspNetCore.Testing\GovUk.Frontend.AspNetCore.Testing.csproj" />
     <LibraryUnderTest Include="$(RepoRoot)src\GovUk.Frontend.AspNetCore.Testing.Xunit.v3\GovUk.Frontend.AspNetCore.Testing.Xunit.v3.csproj" />
+    <LibraryUnderTest Include="$(RepoRoot)src\GovUk.Frontend.AspNetCore.Testing.Playwright\GovUk.Frontend.AspNetCore.Testing.Playwright.csproj" />
   </ItemGroup>
 
   <!-- The fixture sources are copied into generated projects at test time; they're data here, not part
@@ -42,7 +43,7 @@
   <Target Name="PackLibraryUnderTest" BeforeTargets="Build" Condition="'$(SkipPackLibraryUnderTest)' != 'true'">
     <!-- The extracted copy goes too; every pack of the same commit has the same version number, so otherwise
          the fixture projects would restore a stale package. -->
-    <RemoveDir Directories="$(PackageTestFeed);$(PackageTestPackages)govuk.frontend.aspnetcore;$(PackageTestPackages)govuk.frontend.aspnetcore.testing;$(PackageTestPackages)govuk.frontend.aspnetcore.testing.xunit.v3" />
+    <RemoveDir Directories="$(PackageTestFeed);$(PackageTestPackages)govuk.frontend.aspnetcore;$(PackageTestPackages)govuk.frontend.aspnetcore.testing;$(PackageTestPackages)govuk.frontend.aspnetcore.testing.xunit.v3;$(PackageTestPackages)govuk.frontend.aspnetcore.testing.playwright" />
 
     <!-- Build and pack are separate calls so that only one project instance ever builds the library.
          Properties passed here are global properties, so a Pack call with PackageOutputPath set is a

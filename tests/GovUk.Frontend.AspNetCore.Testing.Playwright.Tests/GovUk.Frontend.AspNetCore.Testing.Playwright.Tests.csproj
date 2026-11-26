@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(LibTfms)</TargetFrameworks>
+    <!-- xunit.v3 hosts the tests itself -->
+    <OutputType>Exe</OutputType>
+    <LangVersion>14.0</LangVersion>
+
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The pages render the library's components with its page template, and need govuk-frontend's JavaScript and
+         CSS, which an app gets from the package rather than a project reference, so they're served from here -->
+    <AssemblyMetadata Include="GovUkFrontendLibrary" Value="$(GovUkFrontendLibrary)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\GovUk.Frontend.AspNetCore\GovUk.Frontend.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\GovUk.Frontend.AspNetCore.Testing.Playwright\GovUk.Frontend.AspNetCore.Testing.Playwright.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The package adds this through buildTransitive, which a ProjectReference doesn't import -->
+    <Using Include="GovUk.Frontend.AspNetCore.Testing.Playwright" />
+    <Using Include="Microsoft.Playwright" />
+    <Using Include="Microsoft.Playwright.Assertions" Static="true" />
+  </ItemGroup>
+
+</Project>

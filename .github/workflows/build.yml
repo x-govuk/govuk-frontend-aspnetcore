@@ -49,6 +49,7 @@ jobs:
         run: |
           just unit-tests --configuration Debug --no-build
           just testing-tests --configuration Debug --no-build
+          just testing-playwright-tests --configuration Debug --no-build
           just integration-tests --configuration Debug --no-build
 
   build_release:
@@ -86,6 +87,7 @@ jobs:
         run: |
           just unit-tests --configuration Release --no-build
           just testing-tests --configuration Release --no-build
+          just testing-playwright-tests --configuration Release --no-build
           just integration-tests --configuration Release --no-build
 
       - name: Update package README GitHub links
@@ -101,7 +103,8 @@ jobs:
           for README_PATH in \
             src/GovUk.Frontend.AspNetCore/Package/README.md \
             src/GovUk.Frontend.AspNetCore.Testing/README.md \
-            src/GovUk.Frontend.AspNetCore.Testing.Xunit.v3/README.md
+            src/GovUk.Frontend.AspNetCore.Testing.Xunit.v3/README.md \
+            src/GovUk.Frontend.AspNetCore.Testing.Playwright/README.md
           do
             if ! grep -q "$ORIGINAL_URL" "$README_PATH"; then
               echo "::error::Expected URL pattern '$ORIGINAL_URL' not found in $README_PATH"
@@ -142,6 +145,12 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           path: packages/GovUk.Frontend.AspNetCore.Testing.Xunit.v3.[0-9]*.nupkg
+          archive: false
+
+      - name: Publish GovUk.Frontend.AspNetCore.Testing.Playwright package
+        uses: actions/upload-artifact@v7
+        with:
+          path: packages/GovUk.Frontend.AspNetCore.Testing.Playwright.[0-9]*.nupkg
           archive: false
 
   package_tests:

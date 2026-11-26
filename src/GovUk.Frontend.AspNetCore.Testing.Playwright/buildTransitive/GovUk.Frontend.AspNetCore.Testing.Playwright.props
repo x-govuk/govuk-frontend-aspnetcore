@@ -1,0 +1,9 @@
+<Project>
+  <!-- The locators, actions and assertions are extension members on Playwright's IPage, ILocator and
+       ILocatorAssertions, so they're only found where their namespace is imported. Remove this item in a project to
+       opt out:
+       <Using Remove="GovUk.Frontend.AspNetCore.Testing.Playwright" /> -->
+  <ItemGroup>
+    <Using Include="GovUk.Frontend.AspNetCore.Testing.Playwright" />
+  </ItemGroup>
+</Project>

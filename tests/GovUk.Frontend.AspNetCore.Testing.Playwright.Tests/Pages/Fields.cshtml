@@ -1,0 +1,70 @@
+﻿@page
+@model GovUk.Frontend.AspNetCore.Testing.Playwright.Tests.Pages.FieldsModel
+@{
+    ViewData[GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants.ViewDataKeys.Title] = "Fields";
+}
+
+<form method="post" novalidate>
+    <govuk-input for="Name">
+        <govuk-input-hint>As it appears on your passport</govuk-input-hint>
+    </govuk-input>
+
+    <govuk-textarea for="Detail" />
+
+    <govuk-character-count for="JobDescription" max-length="200" />
+
+    <govuk-select for="Country">
+        <govuk-select-item value="england">England</govuk-select-item>
+        <govuk-select-item value="wales">Wales</govuk-select-item>
+    </govuk-select>
+
+    <govuk-password-input for="Password" />
+
+    <govuk-file-upload for="Upload" />
+
+    <govuk-date-input for="DateOfBirth" error-message-prefix="Date of birth">
+        <govuk-date-input-fieldset>
+            <govuk-date-input-fieldset-legend />
+            <govuk-date-input-hint>For example, 27 3 2007</govuk-date-input-hint>
+        </govuk-date-input-fieldset>
+    </govuk-date-input>
+
+    <govuk-date-input for="PassportIssued">
+        <govuk-date-input-fieldset>
+            <govuk-date-input-fieldset-legend />
+        </govuk-date-input-fieldset>
+    </govuk-date-input>
+
+    <govuk-date-input for="Birthday">
+        <govuk-date-input-fieldset>
+            <govuk-date-input-fieldset-legend />
+        </govuk-date-input-fieldset>
+    </govuk-date-input>
+
+    <govuk-radios for="Contact">
+        <govuk-radios-fieldset>
+            <govuk-radios-fieldset-legend />
+            <govuk-radios-item value="email">
+                Email
+                <govuk-radios-item-conditional>
+                    <govuk-input for="Email" />
+                </govuk-radios-item-conditional>
+            </govuk-radios-item>
+            <govuk-radios-item value="phone">
+                Phone
+                <govuk-radios-item-hint>We'll text you</govuk-radios-item-hint>
+            </govuk-radios-item>
+        </govuk-radios-fieldset>
+    </govuk-radios>
+
+    <govuk-checkboxes for="Nationality">
+        <govuk-checkboxes-fieldset>
+            <govuk-checkboxes-fieldset-legend />
+            <govuk-checkboxes-item value="british">British</govuk-checkboxes-item>
+            <govuk-checkboxes-item value="irish">Irish</govuk-checkboxes-item>
+            <govuk-checkboxes-item value="other">Citizen of another country</govuk-checkboxes-item>
+        </govuk-checkboxes-fieldset>
+    </govuk-checkboxes>
+
+    <govuk-button>Continue</govuk-button>
+</form>

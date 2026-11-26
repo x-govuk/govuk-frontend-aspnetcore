@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(LibTfms)</TargetFrameworks>
+    <!-- For extension members -->
+    <LangVersion>14.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>GovUk.Frontend.AspNetCore.Testing.Playwright</PackageId>
+    <PackageTags>aspnetcore, testing, playwright, gds, gov.uk, x-govuk</PackageTags>
+    <Description>Playwright locators, actions and assertions for testing apps built with GovUk.Frontend.AspNetCore in a browser.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <!-- Adds a global using for the extensions' namespace, so page.ErrorSummary etc. are found wherever IPage is. -->
+    <None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="GovUk.Frontend.AspNetCore.Testing.Playwright.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Deliberately no reference to the library or to GovUk.Frontend.AspNetCore.Testing: browser tests may run
+         against a deployed app, and nothing here needs ASP.NET Core. The version still moves in lockstep through
+         MinVer. -->
+    <PackageReference Include="Microsoft.Playwright" Version="1.62.0" />
+  </ItemGroup>
+
+</Project>

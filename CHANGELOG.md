@@ -84,6 +84,30 @@ Their messages can also use `{1}` for the limit, alongside `{0}` for the field's
 [CharacterCount(150, CountType = CharacterCountType.Words, ErrorMessage = "{0} must be {1} words or fewer")]
 ```
 
+#### Testing package
+
+A new `GovUk.Frontend.AspNetCore.Testing` package reads the components on a rendered page, for testing apps built with this library.
+It's versioned in lockstep with `GovUk.Frontend.AspNetCore` and depends on exactly the same version.
+
+`GetHtmlDocumentAsync()` parses an `HttpResponseMessage` with [AngleSharp](https://anglesharp.github.io/), and extension members on a document or element return models of the error summary, summary lists and cards, notification banners, tables, task lists, tags, the panel, the back link, pagination and hidden inputs:
+
+```cs
+var doc = await response.GetHtmlDocumentAsync();
+
+Assert.Equal(["Enter your name"], doc.ErrorSummary!.Items.Select(i => i.Text));
+Assert.Equal("sarah@example.com", doc.GetSummaryCard("Director 1").GetRow("Email address").Value);
+```
+
+When a lookup fails, the exception says what was looked for, what was on the page and the HTML that was searched:
+
+```
+Summary list row not found.
+Expected: a row with the key "Email address"
+Found:    rows with the keys "Name", "Phone"
+```
+
+The package needs C# 14, the default for .NET 10.
+
 ### Fixes
 
 - `<govuk-pagination>` with generated items now shows a skipped page instead of an ellipsis when the ellipsis would replace only that one page, as in the [guidance's examples](https://design-system.service.gov.uk/components/pagination/). For example, page 4 of 100 is now `1 2 3 [4] 5 … 100` rather than `1 … 3 [4] 5 … 100`.

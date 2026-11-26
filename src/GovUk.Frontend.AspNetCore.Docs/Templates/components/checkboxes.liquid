@@ -35,6 +35,25 @@
   "checkboxes-with-none-example.png",
   "Checkboxes with 'none' option example") }}
 
+### Example with items generated from an enum
+
+When `for` is bound to a collection of an enum type (e.g. `Country[]` or `List<Country>`) and no items are specified, an item is generated for each member of the enum.
+The label comes from the member's `[Display(Name)]` (or its name), the hint from `[Display(Description)]`, and items are ordered by `[Display(Order)]`.
+Names and descriptions are localized in the same way as MVC localizes `[Display(Name)]` with `AddDataAnnotationsLocalization()`.
+The item's value is the member's numeric value, as with `Html.GetEnumSelectList()`. Use `exclude-values` to leave members out.
+
+`for` can also be bound to a single `[Flags]` enum (or nullable `[Flags]` enum). An item is generated for each member that is a single bit;
+the zero member (e.g. `None`) and members that combine other members are left out. An item is checked when the model has all of its member's bits set.
+When the form is submitted, MVC's model binding combines the checked values into a single value of the enum; no custom model binder is needed.
+
+To customize some of the items, add `generate-items="true"` and specify those items. An item whose `value` is a member's name or numeric value replaces that member's generated item,
+using the generated label and hint if it doesn't have its own. Dividers and other items go before the next item that matches a member, or at the end.
+
+{{ tag_helper_example(
+  "Examples/Checkboxes/CheckboxesFromEnumExample",
+  "checkboxes-from-enum-example.png",
+  "Checkboxes with items generated from an enum example") }}
+
 ### Example with error message
 {{ tag_helper_example(
   "Examples/Checkboxes/CheckboxesWithErrorExample",

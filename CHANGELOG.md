@@ -74,6 +74,36 @@ Attributes on each element are passed through to the generated HTML: an item's g
 
 See [the task list docs](docs/components/task-list.md) for more.
 
+#### Radios and checkboxes items generated from enums
+
+When `<govuk-radios for="...">` is bound to an enum or nullable enum, or `<govuk-checkboxes for="...">` is bound to a collection of an enum type,
+and no items are specified, an item is now generated for each member of the enum.
+The label comes from the member's `[Display(Name)]` (or its name), the hint from `[Display(Description)]`, and items are ordered by `[Display(Order)]`;
+names and descriptions are localized as MVC localizes `[Display(Name)]` with `AddDataAnnotationsLocalization()`.
+The item's value is the member's numeric value, as with `Html.GetEnumSelectList()`, and it's checked when the model (or the submitted value) matches it.
+
+`<govuk-checkboxes for="...">` can also be bound to a single `[Flags]` enum (or nullable `[Flags]` enum).
+An item is generated for each member that is a single bit (the zero member and combinations of members are left out),
+and it's checked when the model has all of its member's bits set.
+When the form is submitted, MVC's model binding combines the checked values into a single value of the enum.
+
+```cshtml
+<govuk-radios for="Country" exclude-values="[Country.Unknown]" />
+```
+
+`exclude-values` leaves members out.
+To customize some items, add `generate-items="true"` and specify those items: an item whose `value` is a member's name or numeric value replaces that member's generated item,
+using the generated label and hint if it doesn't have its own, and dividers and other items go before the next item that matches a member.
+
+```cshtml
+<govuk-checkboxes for="Countries" generate-items="true">
+    <divider>or</divider>
+    <checkboxes-item value="None" behavior="CheckboxesItemBehavior.Exclusive" />
+</govuk-checkboxes>
+```
+
+Components that specify items and don't set `generate-items` are unchanged.
+
 #### Localized character count validation messages
 
 `[CharacterCount]` and `[MaxWords]` error messages are now localized by `AddDataAnnotationsLocalization()` in MVC and Razor Pages, as they are for the built-in attributes.

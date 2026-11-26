@@ -37,9 +37,11 @@ public class RadiosTagHelper : TagHelper
     internal const string TagName = "govuk-radios";
 
     private const string AttributesPrefix = "radios-";
+    private const string ExcludeValuesAttributeName = "exclude-values";
     private const string FieldsetAttributeName = FormGroupFieldsetHelper.FieldsetAttributeName;
     private const string FieldsetAttributesPrefix = FormGroupFieldsetHelper.FieldsetAttributesPrefix;
     private const string ForAttributeName = "for";
+    private const string GenerateItemsAttributeName = "generate-items";
     private const string IdPrefixAttributeName = "id-prefix";
     private const string IgnoreModelStateErrorsAttributeName = "ignore-modelstate-errors";
     private const string LegendAttributesPrefix = FormGroupFieldsetHelper.LegendAttributesPrefix;
@@ -92,6 +94,38 @@ public class RadiosTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeName(ForAttributeName)]
     public ModelExpression? For { get; set; }
+
+    /// <summary>
+    /// Members of the enum that <see cref="For"/> is bound to that shouldn't have items generated for them.
+    /// </summary>
+    /// <remarks>
+    /// Only applies when items are generated; see <see cref="GenerateItems"/>.
+    /// </remarks>
+    [HtmlAttributeName(ExcludeValuesAttributeName)]
+    public IEnumerable<Enum>? ExcludeValues { get; set; }
+
+    /// <summary>
+    /// Whether to generate an item for each member of the enum that <see cref="For"/> is bound to.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// <see cref="For"/> must be bound to an enum or nullable enum.
+    /// Each item's label comes from the member's <c>[Display(Name)]</c> (or its name), its hint from
+    /// <c>[Display(Description)]</c>, and items are ordered by <c>[Display(Order)]</c>.
+    /// Each item's value is the member's numeric value.
+    /// </para>
+    /// <para>
+    /// A <c>&lt;govuk-radios-item&gt;</c> element whose <c>value</c> is a member's name or numeric value replaces that
+    /// member's generated item; if it has no content or hint, the generated ones are used.
+    /// Any other item or divider goes before the next item that matches a member, or at the end.
+    /// </para>
+    /// <para>
+    /// The default is <c>true</c> when <see cref="For"/> is bound to an enum or nullable enum and no items are specified,
+    /// otherwise <c>false</c>.
+    /// </para>
+    /// </remarks>
+    [HtmlAttributeName(GenerateItemsAttributeName)]
+    public bool? GenerateItems { get; set; }
 
     /// <summary>
     /// The prefix to use when generating IDs for the hint, error message and items.
@@ -219,7 +253,7 @@ public class RadiosTagHelper : TagHelper
             Hint = hintOptions,
             ErrorMessage = errorMessageOptions,
             FormGroup = formGroupOptions,
-            Items = radiosContext.Items,
+            Items = GetItems(radiosContext),
             Value = value,
             Classes = classes,
             Attributes = attributes
@@ -234,6 +268,48 @@ public class RadiosTagHelper : TagHelper
             var containerErrorContext = ViewContext!.HttpContext.GetPageErrorContext();
             containerErrorContext.AddError(errorContent, href: "#" + idPrefix);
         }
+    }
+
+    private IReadOnlyCollection<RadiosOptionsItem> GetItems(RadiosContext radiosContext)
+    {
+        var enumBinding = EnumItemsHelper.GetRadiosEnumBinding(For);
+
+        if (!(GenerateItems ?? (enumBinding is not null && radiosContext.Items.Count == 0)))
+        {
+            return radiosContext.Items;
+        }
+
+        if (enumBinding is null)
+        {
+            throw new InvalidOperationException(
+                $"The '{GenerateItemsAttributeName}' attribute requires the '{ForAttributeName}' attribute to be bound to an enum or nullable enum.");
+        }
+
+        var members = EnumItemsHelper.GetMembers(enumBinding, ExcludeValues, ViewContext!.HttpContext?.RequestServices);
+        var isChecked = EnumItemsHelper.CreateIsChecked(
+            enumBinding,
+            EnumItemsHelper.GetCurrentValues(
+                ViewContext!,
+                _modelHelper.GetFullHtmlFieldName(ViewContext!, For!.Name),
+                For.Model));
+
+        return EnumItemsHelper.Merge(
+            members,
+            radiosContext.Items,
+            getValue: item => item.Value is { } value && value.TryGetText(out var text) ? text : null,
+            isDivider: item => item.Divider is not null,
+            createItem: member => new RadiosOptionsItem
+            {
+                Text = member.DisplayName,
+                Value = member.NumericValue,
+                Hint = member.Description is { } description ? new HintOptions { Text = description } : null,
+                Checked = isChecked(member)
+            },
+            fillDefaults: (item, member) => item with
+            {
+                Text = item.Html.IsEmpty() && item.Text.IsEmpty() ? member.DisplayName : item.Text,
+                Hint = item.Hint ?? (member.Description is { } description ? new HintOptions { Text = description } : null)
+            });
     }
 
     private string ResolveIdPrefix()

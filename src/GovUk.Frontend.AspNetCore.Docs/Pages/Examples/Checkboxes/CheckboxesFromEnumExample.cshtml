@@ -1,0 +1,17 @@
+﻿@page
+@model CheckboxesFromEnumExampleModel
+
+<example>
+    <govuk-checkboxes for="CountriesTravellingTo" generate-items="true">
+        <legend is-page-heading="true" class="govuk-fieldset__legend--l">
+            Will you be travelling to any of these countries?
+        </legend>
+
+        <hint>
+            Select all countries that apply
+        </hint>
+
+        <divider>or</divider>
+        <checkboxes-item value="None" behavior="CheckboxesItemBehavior.Exclusive" />
+    </govuk-checkboxes>
+</example>

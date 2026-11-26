@@ -41,6 +41,16 @@ Controllers and Razor Pages can return the same pages for other responses, such 
 `this.GovUkPageNotFound()` and `this.GovUkProblemWithTheService(statusCode)`.
 See [Error pages](docs/error-pages.md).
 
+#### Exit this page tag helper
+
+A new `<govuk-exit-this-page>` tag helper generates the [exit this page component](https://design-system.service.gov.uk/components/exit-this-page/).
+
+```razor
+<govuk-exit-this-page redirect-url="https://www.bbc.co.uk/weather" />
+```
+
+The content, if any, replaces the button's default text. See the [exit this page docs](docs/components/exit-this-page.md) for the full API.
+
 #### Localized character count validation messages
 
 `[CharacterCount]` and `[MaxWords]` error messages are now localized by `AddDataAnnotationsLocalization()` in MVC and Razor Pages, as they are for the built-in attributes.

@@ -12,6 +12,7 @@ internal partial class DefaultComponentGenerator
         public const string Details = "details";
         public const string ErrorMessage = "p";
         public const string ErrorSummary = "div";
+        public const string ExitThisPage = "div";
         public const string Feedback = "div";
         public const string Fieldset = "fieldset";
         public const string Footer = "div";

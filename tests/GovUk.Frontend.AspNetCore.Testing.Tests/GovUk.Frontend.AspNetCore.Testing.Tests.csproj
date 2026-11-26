@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFrameworks>$(LibTfms)</TargetFrameworks>
@@ -8,9 +8,12 @@
 
     <IsPackable>false</IsPackable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Hosts Razor Pages in TestApp/, so tests run over the markup the tag helpers render -->
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="10.0.14" />
     <PackageReference Include="xunit.v3" Version="4.0.0" />
   </ItemGroup>
 

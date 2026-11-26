@@ -17,7 +17,7 @@ namespace GovUk.Frontend.AspNetCore.Testing;
 /// <see langword="null"/> instead.
 /// </para>
 /// </remarks>
-public static class ComponentQueryExtensions
+public static partial class ComponentQueryExtensions
 {
     private static readonly Lookup.Subject _errorSummarySubject = new("error summary", "error summaries");
     private static readonly Lookup.Subject _notificationBannerSubject = new("notification banner", "notification banners", "titles");

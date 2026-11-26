@@ -106,6 +106,26 @@ Expected: a row with the key "Email address"
 Found:    rows with the keys "Name", "Phone"
 ```
 
+Form fields are found by their label, or by their legend for date inputs, radios and checkboxes. Each field has its hint, its error message (without the visually hidden `Error:` prefix) and its current value:
+
+```cs
+var email = doc.GetTextInput("Email address");
+Assert.Equal("Enter an email address", email.ErrorMessage);
+
+Assert.Equal(new DateOnly(2000, 3, 27), doc.GetDateInput("Date of birth").Value);
+Assert.Equal("email", doc.GetRadios("How would you like to be contacted?").Value);
+```
+
+There are lookups for text inputs, textareas, character counts, selects, password inputs, file uploads, date inputs, radios and checkboxes, and `GetField()` for a field of any kind.
+Radios and checkboxes give their items' labels, hints, checked state and conditional reveals.
+When a field isn't found, the exception lists the labels and legends on the page:
+
+```
+Text input not found.
+Expected: a text input labelled "Email"
+Found:    fields labelled "Email address" (text input), "Date of birth" (date input)
+```
+
 The package needs C# 14, the default for .NET 10.
 
 ### Fixes

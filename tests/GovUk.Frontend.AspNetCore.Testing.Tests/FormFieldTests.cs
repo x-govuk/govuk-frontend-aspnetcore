@@ -304,6 +304,10 @@ public class FormFieldTests
     [InlineData("27", "3", "2007", 2007, 3, 27)]
     [InlineData("01", "02", "2024", 2024, 2, 1)]
     [InlineData(" 29 ", "2", "2024", 2024, 2, 29)]
+    [InlineData("27", "Mar", "2007", 2007, 3, 27)]
+    [InlineData("27", "march", "2007", 2007, 3, 27)]
+    [InlineData("1", " SEPTEMBER ", "2024", 2024, 9, 1)]
+    [InlineData("31", "May", "2024", 2024, 5, 31)]
     public async Task DateInput_Value_RealDate(string day, string month, string year, int expectedYear, int expectedMonth, int expectedDay)
     {
         var date = await RenderDateAsync(day, month, year);
@@ -316,6 +320,9 @@ public class FormFieldTests
     [InlineData("31", "4", "2024")]
     [InlineData("x", "1", "2024")]
     [InlineData("1", "13", "2024")]
+    [InlineData("1", "Marc", "2024")]
+    [InlineData("1", "Sept", "2024")]
+    [InlineData("30", "Feb", "2024")]
     [InlineData("1", "1", "")]
     [InlineData("-1", "1", "2024")]
     [InlineData("1", "1", "0")]

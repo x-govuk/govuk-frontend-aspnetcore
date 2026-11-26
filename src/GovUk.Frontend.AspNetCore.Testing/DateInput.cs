@@ -51,14 +51,20 @@ public sealed class DateInput : FormField
     /// aren't a real date.
     /// </summary>
     /// <remarks>
+    /// <para>
+    /// The month can be a number or, as model binding accepts by default, a full or abbreviated English month name,
+    /// e.g. <c>3</c>, <c>Mar</c> or <c>March</c>.
+    /// </para>
+    /// <para>
     /// Use <see cref="DateInputItem.Value"/> on <see cref="Day"/>, <see cref="Month"/> and <see cref="Year"/> to read
     /// values that aren't a date.
+    /// </para>
     /// </remarks>
     public DateOnly? Value
     {
         get
         {
-            if (TryParse(Day, out var day) && TryParse(Month, out var month) && TryParse(Year, out var year) &&
+            if (TryParse(Day, out var day) && TryParseMonth(Month, out var month) && TryParse(Year, out var year) &&
                 year is >= 1 and <= 9999 && month is >= 1 and <= 12 && day >= 1 && day <= DateTime.DaysInMonth(year, month))
             {
                 return new DateOnly(year, month, day);
@@ -72,8 +78,42 @@ public sealed class DateInput : FormField
                 return item is not null &&
                     int.TryParse(item.Value.Trim(), NumberStyles.None, CultureInfo.InvariantCulture, out value);
             }
+
+            static bool TryParseMonth(DateInputItem? item, out int value)
+            {
+                if (TryParse(item, out value))
+                {
+                    return true;
+                }
+
+                if (item is null)
+                {
+                    return false;
+                }
+
+                var name = item.Value.Trim();
+                value = Array.FindIndex(MonthNames, names => names.Contains(name, StringComparer.OrdinalIgnoreCase)) + 1;
+                return value != 0;
+            }
         }
     }
+
+    // The month names DateInputModelBinder accepts when GovUkFrontendOptions.AcceptMonthNamesInDateInputs is true (the default).
+    private static readonly string[][] MonthNames =
+    [
+        ["jan", "january"],
+        ["feb", "february"],
+        ["mar", "march"],
+        ["apr", "april"],
+        ["may"],
+        ["jun", "june"],
+        ["jul", "july"],
+        ["aug", "august"],
+        ["sep", "september"],
+        ["oct", "october"],
+        ["nov", "november"],
+        ["dec", "december"]
+    ];
 
     internal override string Kind => "date input";
 }

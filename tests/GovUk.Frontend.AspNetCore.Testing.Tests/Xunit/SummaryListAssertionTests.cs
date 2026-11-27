@@ -153,6 +153,14 @@ public class SummaryListAssertionTests
         Assert.SummaryListHasRows(doc.GetSummaryCardByTitle("Director 2").Element, ("Name", "Ben Jones"));
     }
 
+    [Fact]
+    public async Task SummaryListHasRow_ScopeIsTheList_ChecksItsRows()
+    {
+        var doc = await RenderListAsync(Row("Name", "Sarah Philips"));
+
+        Assert.SummaryListHasRow(doc.SummaryLists.Single().Element, "Name", "Sarah Philips");
+    }
+
     private static Task<IHtmlDocument> RenderListAsync(params SummaryListOptionsRow[] rows) =>
         Render.DocumentAsync(g => g.GenerateSummaryListAsync(new SummaryListOptions { Rows = rows }));
 

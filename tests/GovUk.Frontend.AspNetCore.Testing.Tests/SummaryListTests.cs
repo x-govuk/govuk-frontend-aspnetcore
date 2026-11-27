@@ -200,6 +200,16 @@ public class SummaryListTests
         Assert.Null(doc.FindSummaryListRowByKey("Name"));
     }
 
+    [Fact]
+    public async Task GetSummaryListRowByKey_ScopeIsTheList_FindsItsRows()
+    {
+        var doc = await RenderListAsync(Row("Name", "Sarah Philips"));
+        var listElement = doc.SummaryLists.Single().Element;
+
+        Assert.Same(listElement, Assert.Single(listElement.SummaryLists).Element);
+        Assert.Equal("Sarah Philips", listElement.GetSummaryListRowByKey("Name").Value);
+    }
+
     private static Task<IHtmlDocument> RenderListAsync(params SummaryListOptionsRow[] rows) =>
         Render.DocumentAsync(g => g.GenerateSummaryListAsync(new SummaryListOptions { Rows = rows }));
 

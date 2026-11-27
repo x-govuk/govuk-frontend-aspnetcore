@@ -42,7 +42,7 @@ public static partial class ComponentQueryExtensions
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(buttonText);
 
-        var buttons = node.QuerySelectorAll("form").OfType<IHtmlFormElement>()
+        var buttons = Lookup.QueryAll(node, "form").OfType<IHtmlFormElement>()
             .SelectMany(Form.GetButtons)
             .ToArray();
 

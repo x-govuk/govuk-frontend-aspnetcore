@@ -98,6 +98,8 @@ Assert.Equal(["Enter your name"], doc.ErrorSummary!.Items.Select(i => i.Text));
 Assert.Equal("sarah@example.com", doc.GetSummaryCardByTitle("Director 1").GetRowByKey("Email address").Value);
 ```
 
+An element includes itself when it's the component being looked for, so a summary list's rows can be found from its `<dl>` element as well as from an element that contains it.
+
 When a lookup fails, the exception says what was looked for, what was on the page and the HTML that was searched:
 
 ```

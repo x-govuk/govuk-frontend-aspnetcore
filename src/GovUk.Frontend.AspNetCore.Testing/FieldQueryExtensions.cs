@@ -183,7 +183,7 @@ internal static class FieldLookup
     {
         ArgumentNullException.ThrowIfNull(node);
 
-        return node.QuerySelectorAll(Selector).Select(Create).OfType<FormField>().ToArray();
+        return Lookup.QueryAll(node, Selector).Select(Create).OfType<FormField>().ToArray();
     }
 
     public static T? Find<T>(IParentNode node, string text, FieldKind kind, bool required)

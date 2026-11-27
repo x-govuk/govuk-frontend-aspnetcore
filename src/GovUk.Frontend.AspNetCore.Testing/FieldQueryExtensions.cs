@@ -34,7 +34,7 @@ public static partial class ComponentQueryExtensions
         /// <c>EmailUpdates</c> for checkboxes whose items have names of their own.
         /// </remarks>
         /// <exception cref="ComponentLookupException">There is no such field, or there's more than one.</exception>
-        public FormField GetFieldByName(string name) => FieldLookup.FindByName(node, name, required: true)!;
+        public FormField GetFieldByName(string name) => FieldLookup.FindByName<FormField>(node, name, required: true)!;
 
         /// <summary>
         /// Gets the field of any kind that has the name <paramref name="name"/>, or <see langword="null"/> if there
@@ -46,7 +46,36 @@ public static partial class ComponentQueryExtensions
         /// <c>EmailUpdates</c> for checkboxes whose items have names of their own.
         /// </remarks>
         /// <exception cref="ComponentLookupException">There's more than one such field.</exception>
-        public FormField? FindFieldByName(string name) => FieldLookup.FindByName(node, name, required: false);
+        public FormField? FindFieldByName(string name) => FieldLookup.FindByName<FormField>(node, name, required: false);
+
+        /// <summary>
+        /// Gets the field of the kind <typeparamref name="T"/> that has the name <paramref name="name"/>, e.g.
+        /// <c>GetFieldByName&lt;Radios&gt;("Colour")</c>.
+        /// </summary>
+        /// <remarks>
+        /// A field is found by any of its <see cref="FormField.Names"/>, as <see cref="GetFieldByName(IParentNode, string)"/>
+        /// finds it; fields of other kinds aren't matched, so a field with the name that isn't a <typeparamref name="T"/>
+        /// isn't found.
+        /// </remarks>
+        /// <typeparam name="T">The kind of field, e.g. <see cref="TextInput"/> or <see cref="Radios"/>.</typeparam>
+        /// <exception cref="ComponentLookupException">There is no such field, or there's more than one.</exception>
+        public T GetFieldByName<T>(string name)
+            where T : FormField =>
+            FieldLookup.FindByName<T>(node, name, required: true)!;
+
+        /// <summary>
+        /// Gets the field of the kind <typeparamref name="T"/> that has the name <paramref name="name"/>, or
+        /// <see langword="null"/> if there isn't one.
+        /// </summary>
+        /// <remarks>
+        /// A field is found by any of its <see cref="FormField.Names"/>, as <see cref="FindFieldByName(IParentNode, string)"/>
+        /// finds it; fields of other kinds aren't matched.
+        /// </remarks>
+        /// <typeparam name="T">The kind of field, e.g. <see cref="TextInput"/> or <see cref="Radios"/>.</typeparam>
+        /// <exception cref="ComponentLookupException">There's more than one such field.</exception>
+        public T? FindFieldByName<T>(string name)
+            where T : FormField =>
+            FieldLookup.FindByName<T>(node, name, required: false);
 
         /// <summary>
         /// Gets the text input labelled <paramref name="label"/>.
@@ -202,16 +231,17 @@ internal static class FieldLookup
             required);
     }
 
-    public static FormField? FindByName(IParentNode node, string name, bool required)
+    public static T? FindByName<T>(IParentNode node, string name, bool required)
+        where T : FormField
     {
         ArgumentNullException.ThrowIfNull(name);
 
         // A field without a single name, such as checkboxes whose items have names of their own, is described by all
         // its names.
-        return Find<FormField>(
+        return Find<T>(
             node,
             name,
-            FieldKind.FieldByName,
+            FieldKind.ByName<T>(),
             f => f.Names.Contains(name, StringComparer.Ordinal),
             f => f.Name is { } single ? LookupFailure.Quote(single)
                 : f.Names.Count > 0 ? LookupFailure.QuoteAll(f.Names)
@@ -323,9 +353,10 @@ internal sealed record FieldKind(string Name, string Countable, string Countable
 {
     private const string Labelled = "labelled";
     private const string WithTheLegend = "with the legend";
+    private const string Named = "named";
 
     public static FieldKind Field { get; } = new("field", "fields", "with the label or legend");
-    public static FieldKind FieldByName { get; } = new("field", "fields", "named");
+    public static FieldKind FieldByName { get; } = new("field", "fields", Named);
     public static FieldKind TextInput { get; } = new("text input", "text inputs", Labelled);
     public static FieldKind Textarea { get; } = new("textarea", "textareas", Labelled);
     public static FieldKind CharacterCount { get; } = new("character count", "character counts", Labelled);
@@ -335,6 +366,29 @@ internal sealed record FieldKind(string Name, string Countable, string Countable
     public static FieldKind DateInput { get; } = new("date input", "date inputs", WithTheLegend);
     public static FieldKind Radios { get; } = new("radios", "set of radios", "sets of radios", "radios", WithTheLegend);
     public static FieldKind Checkboxes { get; } = new("checkboxes", "set of checkboxes", "sets of checkboxes", "checkboxes", WithTheLegend);
+
+    /// <summary>
+    /// Gets the kind for a lookup by name of fields of the type <typeparamref name="T"/>, e.g. <c>a radios named</c>.
+    /// </summary>
+    public static FieldKind ByName<T>()
+        where T : FormField
+    {
+        var kind = typeof(T) switch
+        {
+            var t when t == typeof(Testing.TextInput) => TextInput,
+            var t when t == typeof(Testing.Textarea) => Textarea,
+            var t when t == typeof(Testing.CharacterCount) => CharacterCount,
+            var t when t == typeof(Testing.Select) => Select,
+            var t when t == typeof(Testing.PasswordInput) => PasswordInput,
+            var t when t == typeof(Testing.FileUpload) => FileUpload,
+            var t when t == typeof(Testing.DateInput) => DateInput,
+            var t when t == typeof(Testing.Radios) => Radios,
+            var t when t == typeof(Testing.Checkboxes) => Checkboxes,
+            _ => null
+        };
+
+        return kind is null ? FieldByName : kind with { MatchedBy = Named };
+    }
 
     private FieldKind(string name, string plural, string matchedBy)
         : this(name, name, plural, $"a {name}", matchedBy)

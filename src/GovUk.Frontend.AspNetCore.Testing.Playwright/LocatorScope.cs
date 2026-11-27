@@ -62,6 +62,29 @@ internal static class Selectors
         "xpath=ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-form-group ')][1]";
 
     /// <summary>
+    /// Formats <paramref name="value"/> as an XPath string literal, with its whitespace collapsed as XPath's
+    /// <c>normalize-space()</c> does.
+    /// </summary>
+    public static string XPathLiteral(string value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+
+        var text = string.Join(" ", value.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+
+        if (!text.Contains('\'', StringComparison.Ordinal))
+        {
+            return $"'{text}'";
+        }
+
+        if (!text.Contains('"', StringComparison.Ordinal))
+        {
+            return $"\"{text}\"";
+        }
+
+        return $"concat('{text.Replace("'", "', \"'\", '", StringComparison.Ordinal)}')";
+    }
+
+    /// <summary>
     /// Formats <paramref name="value"/> as a quoted CSS attribute value, e.g. for <c>[name="..."]</c>.
     /// </summary>
     public static string AttributeValue(string value)

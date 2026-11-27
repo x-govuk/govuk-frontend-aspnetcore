@@ -1,0 +1,87 @@
+﻿@page
+@{
+    ViewData[GovUk.Frontend.AspNetCore.Views.GovUkPageTemplateConstants.ViewDataKeys.Title] = "More components";
+}
+
+@section BeforeContent {
+    <govuk-breadcrumbs>
+        <govuk-breadcrumbs-item href="/">Home</govuk-breadcrumbs-item>
+        <govuk-breadcrumbs-item href="/Components">Components</govuk-breadcrumbs-item>
+        <govuk-breadcrumbs-item>More components</govuk-breadcrumbs-item>
+    </govuk-breadcrumbs>
+}
+
+<govuk-notification-banner>
+    <p class="govuk-notification-banner__heading">You have 7 days left to send your application. <a class="govuk-notification-banner__link" href="/Fields">View application</a>.</p>
+</govuk-notification-banner>
+
+<govuk-panel>
+    <govuk-panel-title>Application complete</govuk-panel-title>
+    <govuk-panel-body>Your reference number<br><strong>HDJ2123F</strong></govuk-panel-body>
+</govuk-panel>
+
+<govuk-warning-text icon-fallback-text="Warning">You can be fined up to £5,000 if you do not register.</govuk-warning-text>
+
+<govuk-inset-text>It can take up to 8 weeks to register a lasting power of attorney.</govuk-inset-text>
+
+<govuk-details>
+    <govuk-details-summary>Help with nationality</govuk-details-summary>
+    <govuk-details-text>We need to know your nationality so we can work out which elections you're entitled to vote in.</govuk-details-text>
+</govuk-details>
+
+<govuk-accordion id="accordion">
+    <govuk-accordion-item>
+        <govuk-accordion-item-heading>Writing well for the web</govuk-accordion-item-heading>
+        <govuk-accordion-item-summary>Understanding how people read</govuk-accordion-item-summary>
+        <govuk-accordion-item-content>This is the content for Writing well for the web.</govuk-accordion-item-content>
+    </govuk-accordion-item>
+    <govuk-accordion-item>
+        <govuk-accordion-item-heading>Writing well for specialists</govuk-accordion-item-heading>
+        <govuk-accordion-item-content>This is the content for Writing well for specialists.</govuk-accordion-item-content>
+    </govuk-accordion-item>
+</govuk-accordion>
+
+<govuk-tabs title="Contents">
+    <govuk-tabs-item id="past-day" label="Past day">3 cases in the past day</govuk-tabs-item>
+    <govuk-tabs-item id="past-week" label="Past week">24 cases in the past week</govuk-tabs-item>
+</govuk-tabs>
+
+<govuk-table>
+    <govuk-table-caption>Dates and amounts</govuk-table-caption>
+    <govuk-table-head>
+        <govuk-table-head-cell>Date</govuk-table-head-cell>
+        <govuk-table-head-cell>Amount</govuk-table-head-cell>
+    </govuk-table-head>
+    <govuk-table-row>
+        <govuk-table-cell>First 6 weeks</govuk-table-cell>
+        <govuk-table-cell>£109.80 per week</govuk-table-cell>
+    </govuk-table-row>
+    <govuk-table-row>
+        <govuk-table-cell>Next 33 weeks</govuk-table-cell>
+        <govuk-table-cell>£109.80 per week</govuk-table-cell>
+    </govuk-table-row>
+    <govuk-table-row>
+        <govuk-table-cell>Total estimated pay</govuk-table-cell>
+        <govuk-table-cell>£4,282.20</govuk-table-cell>
+    </govuk-table-row>
+</govuk-table>
+
+<govuk-task-list>
+    <govuk-task-list-item href="/Fields">
+        <govuk-task-list-item-title>Company Directors</govuk-task-list-item-title>
+        <govuk-task-list-item-status>Completed</govuk-task-list-item-status>
+    </govuk-task-list-item>
+    <govuk-task-list-item>
+        <govuk-task-list-item-title>Financial history</govuk-task-list-item-title>
+        <govuk-task-list-item-hint>Include 5 years of the company's relevant financial information</govuk-task-list-item-hint>
+        <govuk-task-list-item-status><govuk-tag class="govuk-tag--blue">Incomplete</govuk-tag></govuk-task-list-item-status>
+    </govuk-task-list-item>
+</govuk-task-list>
+
+<govuk-pagination>
+    <govuk-pagination-previous href="/MoreComponents?page=1" />
+    <govuk-pagination-item href="/MoreComponents?page=1">1</govuk-pagination-item>
+    <govuk-pagination-item href="/MoreComponents?page=2" current="true">2</govuk-pagination-item>
+    <govuk-pagination-item href="/MoreComponents?page=3">3</govuk-pagination-item>
+    <govuk-pagination-next href="/MoreComponents?page=3" />
+</govuk-pagination>

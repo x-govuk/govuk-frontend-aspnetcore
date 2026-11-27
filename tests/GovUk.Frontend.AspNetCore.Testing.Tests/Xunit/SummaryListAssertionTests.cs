@@ -42,6 +42,50 @@ public class SummaryListAssertionTests
         AssertFailure.StackTraceStartsIn(nameof(SummaryListHasRow_DifferentValue_FailsWithKeyAndHtml), ex);
     }
 
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public async Task SummaryListHasRow_NoValueExpected_PassesForARowWithNoValue(string? expectedValue)
+    {
+        var doc = await RenderListAsync(Row("Name", "Sarah Philips"), Row("Middle name", ""));
+
+        var row = Assert.SummaryListHasRow(doc, "Middle name", expectedValue);
+
+        Assert.Equal("Middle name", row.Key);
+    }
+
+    [Fact]
+    public async Task SummaryListHasRow_NoValueExpectedButRowHasOne_FailsWithNoValue()
+    {
+        var doc = await RenderListAsync(Row("Name", "Sarah Philips"));
+
+        AssertFailure.Throws(
+            """
+            Assert.SummaryListHasRow() Failure: Value differs
+            Key:      "Name"
+            Expected: no value
+            Actual:   "Sarah Philips"
+            """,
+            () => Assert.SummaryListHasRow(doc, "Name", null),
+            htmlOf: doc.GetSummaryListRowByKey("Name").Element);
+    }
+
+    [Fact]
+    public async Task SummaryListHasRow_ValueExpectedButRowHasNone_FailsWithNoValue()
+    {
+        var doc = await RenderListAsync(Row("Middle name", ""));
+
+        AssertFailure.Throws(
+            """
+            Assert.SummaryListHasRow() Failure: Value differs
+            Key:      "Middle name"
+            Expected: "Ann"
+            Actual:   no value
+            """,
+            () => Assert.SummaryListHasRow(doc, "Middle name", "Ann"),
+            htmlOf: doc.GetSummaryListRowByKey("Middle name").Element);
+    }
+
     [Fact]
     public async Task SummaryListHasRow_RowNotFound_FailsWithKeys()
     {
@@ -99,6 +143,31 @@ public class SummaryListAssertionTests
             htmlOf: doc.SummaryLists[0].Element);
 
         AssertFailure.StackTraceStartsIn(nameof(SummaryListHasRows_RowsDiffer_FailsWithRowsAndHtml), ex);
+    }
+
+    [Fact]
+    public async Task SummaryListHasRows_NullValue_MatchesARowWithNoValue()
+    {
+        var doc = await RenderListAsync(Row("Name", "Sarah Philips"), Row("Middle name", ""));
+
+        Assert.SummaryListHasRows(doc, ("Name", "Sarah Philips"), ("Middle name", null));
+    }
+
+    [Fact]
+    public async Task SummaryListHasRows_RowsDifferWithNoValue_FailsWithNoValue()
+    {
+        var doc = await RenderListAsync(Row("Name", "Sarah Philips"), Row("Middle name", ""));
+
+        AssertFailure.Throws(
+            """
+            Assert.SummaryListHasRows() Failure: Rows differ
+            Expected: "Name": "Sarah Philips"
+                      "Middle name": "Ann"
+            Actual:   "Name": "Sarah Philips"
+                      "Middle name": no value
+            """,
+            () => Assert.SummaryListHasRows(doc, ("Name", "Sarah Philips"), ("Middle name", "Ann")),
+            htmlOf: doc.SummaryLists[0].Element);
     }
 
     [Fact]

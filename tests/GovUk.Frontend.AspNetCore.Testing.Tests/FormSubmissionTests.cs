@@ -63,6 +63,37 @@ public class FormSubmissionTests
     }
 
     [Fact]
+    public void Add_UnsupportedValue_Throws()
+    {
+        var submission = new FormSubmission("/apply");
+
+        var ex = Assert.Throws<ArgumentException>(() => submission.Add("Upload", (new object(), "passport.jpg")));
+
+        Assert.StartsWith(
+            "Don't know how to submit a System.ValueTuple`2[System.Object,System.String] for 'Upload'. Add it as a string instead.",
+            ex.Message);
+        Assert.Empty(submission.Values);
+    }
+
+    [Fact]
+    public void Set_UnsupportedValue_Throws()
+    {
+        var submission = new FormSubmission("/apply") { { "Name", "Sarah" } };
+
+        Assert.Throws<ArgumentException>(() => submission.Set("Name", new object()));
+
+        Assert.Equal("Sarah", Assert.Single(submission.GetValuesFor("Name")));
+    }
+
+    [Fact]
+    public void Add_Char_AddsIt()
+    {
+        var submission = new FormSubmission("/apply").Add("Initial", 'S');
+
+        Assert.Equal("S", Assert.Single(submission.GetValuesFor("Initial")));
+    }
+
+    [Fact]
     public void Add_NestedCollection_Throws()
     {
         var submission = new FormSubmission("/apply");

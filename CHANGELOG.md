@@ -146,6 +146,8 @@ await submission.AddAntiforgeryTokenAsync(client);
 using var response = await client.SubmitAsync(submission);
 ```
 
+A value that can't be formatted that way, e.g. a tuple or an object without `IFormattable`, throws rather than being posted as its `ToString()`.
+
 `doc.GetFormByButtonText("Continue").CreateSubmission()` starts from a form's current values, including its hidden inputs and antiforgery token, and submits it as that button would, with its name, value and any `formaction`; a button's own `CreateSubmission()` does the same, e.g. `form.GetButtonByText("Save as draft").CreateSubmission()`. `doc.AllForms` lists every form.
 The page itself isn't changed. Files can be added with `AddFile()`, from a byte array, a `Stream` or an `HttpContent`, and the submission is then sent as `multipart/form-data`.
 

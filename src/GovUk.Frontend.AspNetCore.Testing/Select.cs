@@ -30,7 +30,7 @@ public sealed class Select : FormField
     /// <summary>
     /// Gets the select's <c>name</c>.
     /// </summary>
-    public string? Name => SelectElement.GetAttribute("name");
+    public override string? Name => SelectElement.GetAttribute("name");
 
     /// <summary>
     /// Gets the options, in order.

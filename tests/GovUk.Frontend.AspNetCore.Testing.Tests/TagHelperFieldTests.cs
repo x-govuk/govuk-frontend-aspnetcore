@@ -71,6 +71,22 @@ public class TagHelperFieldTests(TestApp app) : IClassFixture<TestApp>
         Assert.Equal("email", doc.GetRadiosByLegend("How would you like to be contacted?").Value);
     }
 
+    [Fact]
+    public async Task Fields_HaveNamesFromTheModel()
+    {
+        var doc = await GetAsync("/Fields?errors=true");
+
+        Assert.Equal(
+            ["Name", "Detail", "JobDescription", "Country", "Password", "Upload", "DateOfBirth", "Contact", "Email", "Nationality"],
+            doc.Fields.Select(f => f.Name));
+
+        // Each field is found by the name its model state error is keyed by.
+        foreach (var field in doc.Fields)
+        {
+            Assert.Same(field.Element, doc.GetFieldByName(field.Name!).Element);
+        }
+    }
+
     private async Task<IHtmlDocument> GetAsync(string url)
     {
         using var client = app.CreateClient();

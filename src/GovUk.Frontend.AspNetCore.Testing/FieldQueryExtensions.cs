@@ -26,6 +26,27 @@ public static partial class ComponentQueryExtensions
         public FormField? FindFieldByLabelOrLegend(string label) => FieldLookup.Find<FormField>(node, label, FieldKind.Field, required: false);
 
         /// <summary>
+        /// Gets the field of any kind whose <see cref="FormField.Name"/> is <paramref name="name"/>.
+        /// </summary>
+        /// <remarks>
+        /// A date input's name is the prefix of its inputs' names, e.g. <c>DateOfBirth</c>, and radios and
+        /// checkboxes are found by the name their inputs share.
+        /// </remarks>
+        /// <exception cref="ComponentLookupException">There is no such field, or there's more than one.</exception>
+        public FormField GetFieldByName(string name) => FieldLookup.FindByName(node, name, required: true)!;
+
+        /// <summary>
+        /// Gets the field of any kind whose <see cref="FormField.Name"/> is <paramref name="name"/>, or
+        /// <see langword="null"/> if there isn't one.
+        /// </summary>
+        /// <remarks>
+        /// A date input's name is the prefix of its inputs' names, e.g. <c>DateOfBirth</c>, and radios and
+        /// checkboxes are found by the name their inputs share.
+        /// </remarks>
+        /// <exception cref="ComponentLookupException">There's more than one such field.</exception>
+        public FormField? FindFieldByName(string name) => FieldLookup.FindByName(node, name, required: false);
+
+        /// <summary>
         /// Gets the text input labelled <paramref name="label"/>.
         /// </summary>
         /// <exception cref="ComponentLookupException">There is no such text input, or there's more than one.</exception>
@@ -168,8 +189,28 @@ internal static class FieldLookup
     {
         ArgumentNullException.ThrowIfNull(text);
 
+        return Find<T>(node, text, kind, f => f.Label, "labelled", "unlabelled", required);
+    }
+
+    public static FormField? FindByName(IParentNode node, string name, bool required)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+
+        return Find<FormField>(node, name, FieldKind.FieldByName, f => f.Name, "named", "unnamed", required);
+    }
+
+    private static T? Find<T>(
+        IParentNode node,
+        string text,
+        FieldKind kind,
+        Func<FormField, string?> getText,
+        string describedAs,
+        string describedAsWithout,
+        bool required)
+        where T : FormField
+    {
         var fields = All(node);
-        var matches = fields.OfType<T>().Where(f => f.Label == text).ToArray();
+        var matches = fields.OfType<T>().Where(f => getText(f) == text).ToArray();
 
         if (matches.Length == 1)
         {
@@ -188,7 +229,7 @@ internal static class FieldLookup
             throw new ComponentLookupException(new LookupFailure(
                 $"{Lookup.Capitalize(kind.Name)} not found.",
                 expected,
-                DescribeFields(fields),
+                DescribeFields(fields, getText, describedAs, describedAsWithout),
                 LookupFailure.FormatHtml((INode)node)));
         }
 
@@ -202,11 +243,15 @@ internal static class FieldLookup
     /// <summary>
     /// Describes the fields that were found, e.g. <c>fields labelled "Name" (text input), "Colour" (radios)</c>.
     /// </summary>
-    private static string DescribeFields(IReadOnlyList<FormField> fields) =>
+    private static string DescribeFields(
+        IReadOnlyList<FormField> fields,
+        Func<FormField, string?> getText,
+        string describedAs,
+        string describedAsWithout) =>
         fields.Count == 0
             ? "no fields"
-            : "fields labelled " + string.Join(", ", fields.Select(f =>
-                f.Label is null ? $"unlabelled {f.Kind}" : $"{LookupFailure.Quote(f.Label)} ({f.Kind})"));
+            : $"fields {describedAs} " + string.Join(", ", fields.Select(f =>
+                getText(f) is { } text ? $"{LookupFailure.Quote(text)} ({f.Kind})" : $"{describedAsWithout} {f.Kind}"));
 
     private static FormField? Create(IElement element)
     {
@@ -257,6 +302,7 @@ internal sealed record FieldKind(string Name, string Countable, string Countable
     private const string WithTheLegend = "with the legend";
 
     public static FieldKind Field { get; } = new("field", "fields", "with the label or legend");
+    public static FieldKind FieldByName { get; } = new("field", "fields", "named");
     public static FieldKind TextInput { get; } = new("text input", "text inputs", Labelled);
     public static FieldKind Textarea { get; } = new("textarea", "textareas", Labelled);
     public static FieldKind CharacterCount { get; } = new("character count", "character counts", Labelled);

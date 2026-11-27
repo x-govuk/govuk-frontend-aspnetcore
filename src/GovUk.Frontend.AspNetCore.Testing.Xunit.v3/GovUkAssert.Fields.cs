@@ -33,6 +33,28 @@ public static partial class GovUkAssert
 
             var field = Failure.Lookup(nameof(FieldHasError), () => node.GetFieldByLabelOrLegend(labelOrLegend));
 
+            return FieldHasError(field, expectedError);
+        }
+
+        /// <summary>
+        /// Verifies that a field shows an error message.
+        /// </summary>
+        /// <remarks>
+        /// Use this with a field found some other way than by its label or legend, e.g. by its name with
+        /// <see cref="ComponentQueryExtensions.GetFieldByName"/>:
+        /// <c>Assert.FieldHasError(doc.GetFieldByName("Email"), "Enter an email address")</c>.
+        /// The error message is compared without its visually hidden <c>Error:</c> prefix.
+        /// </remarks>
+        /// <param name="field">The field.</param>
+        /// <param name="expectedError">The error message, e.g. <c>Enter an email address</c>.</param>
+        /// <returns>The field.</returns>
+        /// <exception cref="GovUkAssertException">The field's error message isn't <paramref name="expectedError"/>.</exception>
+        [StackTraceHidden]
+        public static FormField FieldHasError(FormField field, string expectedError)
+        {
+            ArgumentNullException.ThrowIfNull(field);
+            ArgumentNullException.ThrowIfNull(expectedError);
+
             if (field.ErrorMessage != expectedError)
             {
                 throw Failure.Create(
@@ -71,6 +93,24 @@ public static partial class GovUkAssert
             ArgumentNullException.ThrowIfNull(labelOrLegend);
 
             var field = Failure.Lookup(nameof(FieldHasNoError), () => node.GetFieldByLabelOrLegend(labelOrLegend));
+
+            return FieldHasNoError(field);
+        }
+
+        /// <summary>
+        /// Verifies that a field doesn't show an error message.
+        /// </summary>
+        /// <remarks>
+        /// Use this with a field found some other way than by its label or legend, e.g. by its name with
+        /// <see cref="ComponentQueryExtensions.GetFieldByName"/>: <c>Assert.FieldHasNoError(doc.GetFieldByName("Email"))</c>.
+        /// </remarks>
+        /// <param name="field">The field.</param>
+        /// <returns>The field.</returns>
+        /// <exception cref="GovUkAssertException">The field has an error message.</exception>
+        [StackTraceHidden]
+        public static FormField FieldHasNoError(FormField field)
+        {
+            ArgumentNullException.ThrowIfNull(field);
 
             if (field.ErrorMessage is not null)
             {

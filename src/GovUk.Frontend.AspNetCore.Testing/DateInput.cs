@@ -31,6 +31,9 @@ public sealed class DateInput : FormField
     /// </summary>
     public IReadOnlyList<DateInputItem> Items { get; }
 
+    /// <inheritdoc/>
+    public override string? Name => GetSharedName(Items.Select(i => i.NamePrefix));
+
     /// <summary>
     /// Gets the day input, or <see langword="null"/> if there isn't one.
     /// </summary>
@@ -198,6 +201,21 @@ public sealed class DateInputItem
     /// Gets the input's <c>name</c>, e.g. <c>DateOfBirth.Day</c>.
     /// </summary>
     public string? Name => Input.GetAttribute("name");
+
+    /// <summary>
+    /// Gets the input's <see cref="Name"/> without the part of the date it's for, e.g. <c>DateOfBirth</c> for
+    /// <c>DateOfBirth.Day</c>, or <see langword="null"/> if the name doesn't end with one.
+    /// </summary>
+    internal string? NamePrefix
+    {
+        get
+        {
+            var name = Name;
+            var separator = name?.LastIndexOfAny(['.', '-']) ?? -1;
+
+            return separator > 0 && GetPart(name) is not null ? name![..separator] : null;
+        }
+    }
 
     /// <summary>
     /// Gets which part of the date the input is for.

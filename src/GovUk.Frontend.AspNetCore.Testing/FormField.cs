@@ -47,6 +47,24 @@ public abstract class FormField
     public string? Label { get; }
 
     /// <summary>
+    /// Gets the name the field is submitted with, or <see langword="null"/> if it doesn't have one.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This is the <c>name</c> of the field's input, textarea or select. For radios and checkboxes it's the
+    /// <c>name</c> their inputs share.
+    /// </para>
+    /// <para>
+    /// For a date input it's the prefix of its inputs' names, e.g. <c>DateOfBirth</c> for <c>DateOfBirth.Day</c>,
+    /// <c>DateOfBirth.Month</c> and <c>DateOfBirth.Year</c>, which is the name model binding binds the date to.
+    /// </para>
+    /// <para>
+    /// It's <see langword="null"/> for radios, checkboxes and date inputs whose inputs don't share a name.
+    /// </para>
+    /// </remarks>
+    public abstract string? Name { get; }
+
+    /// <summary>
     /// Gets the field's hint element, or <see langword="null"/> if it doesn't have a hint.
     /// </summary>
     public IElement? HintElement { get; }
@@ -103,6 +121,27 @@ public abstract class FormField
         return parent is not null && parent.LocalName == "fieldset" && parent.ParentElement == formGroup
             ? (parent, parent)
             : (null, formGroup);
+    }
+
+    /// <summary>
+    /// Gets the name that every one of <paramref name="names"/> is, or <see langword="null"/> if there are none or
+    /// they differ.
+    /// </summary>
+    internal static string? GetSharedName(IEnumerable<string?> names)
+    {
+        string? shared = null;
+
+        foreach (var name in names)
+        {
+            if (string.IsNullOrEmpty(name) || (shared is not null && shared != name))
+            {
+                return null;
+            }
+
+            shared = name;
+        }
+
+        return shared;
     }
 
     internal static IElement? GetLegend(IElement? fieldset) => fieldset?.Children.FirstOrDefault(c => c.LocalName == "legend");

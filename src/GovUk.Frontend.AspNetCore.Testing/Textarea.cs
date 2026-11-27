@@ -28,7 +28,7 @@ public class Textarea : FormField
     /// <summary>
     /// Gets the textarea's <c>name</c>.
     /// </summary>
-    public string? Name => TextareaElement.GetAttribute("name");
+    public override string? Name => TextareaElement.GetAttribute("name");
 
     /// <summary>
     /// Gets the textarea's current value.

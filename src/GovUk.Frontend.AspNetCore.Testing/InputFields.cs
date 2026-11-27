@@ -26,7 +26,7 @@ public sealed class TextInput : FormField
     /// <summary>
     /// Gets the input's <c>name</c>.
     /// </summary>
-    public string? Name => Input.GetAttribute("name");
+    public override string? Name => Input.GetAttribute("name");
 
     /// <summary>
     /// Gets the input's <c>type</c>, e.g. <c>text</c> or <c>email</c>.
@@ -71,7 +71,7 @@ public sealed class PasswordInput : FormField
     /// <summary>
     /// Gets the input's <c>name</c>.
     /// </summary>
-    public string? Name => Input.GetAttribute("name");
+    public override string? Name => Input.GetAttribute("name");
 
     /// <summary>
     /// Gets the input's current value.
@@ -100,7 +100,7 @@ public sealed class FileUpload : FormField
     /// <summary>
     /// Gets the input's <c>name</c>.
     /// </summary>
-    public string? Name => Input.GetAttribute("name");
+    public override string? Name => Input.GetAttribute("name");
 
     /// <summary>
     /// Gets whether more than one file can be chosen.

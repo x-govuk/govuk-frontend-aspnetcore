@@ -640,6 +640,94 @@ public class FormFieldTests
     }
 
     [Fact]
+    public async Task GetFieldByName_FindsAnyKindByName()
+    {
+        var doc = await RenderFormAsync();
+
+        Assert.IsType<TextInput>(doc.GetFieldByName("Name"));
+        Assert.IsType<DateInput>(doc.GetFieldByName("dob"));
+        Assert.IsType<Radios>(doc.GetFieldByName("Colour"));
+        Assert.Null(doc.FindFieldByName("Email"));
+        Assert.Null(doc.FindFieldByName("dob-day"));
+        Assert.Equal(["Name", "dob", "Colour"], doc.Fields.Select(f => f.Name));
+    }
+
+    [Fact]
+    public async Task GetFieldByName_NotFound_ListsNamesOnThePage()
+    {
+        var doc = await RenderFormAsync();
+
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName("Email"));
+
+        Assert.Equal(
+            """
+            Field not found.
+            Expected: a field named "Email"
+            Found:    fields named "Name" (text input), "dob" (date input), "Colour" (radios)
+            """,
+            ex.Message);
+    }
+
+    [Fact]
+    public async Task GetFieldByName_Duplicate_Throws()
+    {
+        var doc = Render.Document(
+            "<form id=\"one\">" + await InputHtmlAsync("name", "First name") + "</form>" +
+            "<form id=\"two\">" + await InputHtmlAsync("name", "Second name") + "</form>");
+
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName("name"));
+        Assert.Equal("More than one field found.", ex.Failure.Summary);
+        Assert.Equal("2 fields named \"name\"", ex.Failure.Found);
+
+        Assert.Equal("Second name", doc.GetElementById("two")!.GetFieldByName("name").Label);
+    }
+
+    [Fact]
+    public async Task Name_DateInputWithNamesBoundToAModel_IsTheirPrefix()
+    {
+        var date = await RenderPartialDateAsync(("Month", ""), ("Year", ""));
+
+        Assert.Equal("Date", date.Name);
+    }
+
+    [Fact]
+    public async Task Name_DateInputWithoutAPrefix_IsNull()
+    {
+        var doc = await Render.DocumentAsync(g => g.GenerateDateInputAsync(new DateInputOptions
+        {
+            Id = "date",
+            Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Date" } }
+        }));
+
+        var date = doc.GetDateInputByLegend("Date");
+
+        Assert.Equal(["day", "month", "year"], date.Items.Select(i => i.Name));
+        Assert.Null(date.Name);
+    }
+
+    [Fact]
+    public async Task Name_ChoicesWithDifferentNames_IsNull()
+    {
+        var doc = await Render.DocumentAsync(g => g.GenerateCheckboxesAsync(new CheckboxesOptions
+        {
+            Name = "Options",
+            Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Options" } },
+            Items =
+            [
+                new CheckboxesOptionsItem { Value = "a", Text = "A" },
+                new CheckboxesOptionsItem { Value = "b", Text = "B", Name = "Other" }
+            ]
+        }));
+
+        var checkboxes = doc.GetCheckboxesByLegend("Options");
+
+        Assert.Null(checkboxes.Name);
+
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName("Options"));
+        Assert.Equal("fields named unnamed checkboxes", ex.Failure.Found);
+    }
+
+    [Fact]
     public async Task GetTextInputByLabel_WrongKind_ListsKindsOfFields()
     {
         var doc = await RenderFormAsync();

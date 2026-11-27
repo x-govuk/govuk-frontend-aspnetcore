@@ -117,6 +117,7 @@ Assert.Equal("email", doc.GetRadiosByLegend("How would you like to be contacted?
 ```
 
 There are lookups for text inputs, textareas, character counts, selects, password inputs, file uploads, date inputs, radios and checkboxes, and `GetFieldByLabelOrLegend()` for a field of any kind.
+`GetFieldByName()` finds a field of any kind by the name it's submitted with, which is the name model state errors are keyed by; a date input's name is the prefix of its inputs' names, e.g. `DateOfBirth`.
 Radios and checkboxes give their items' labels, hints, checked state and conditional reveals.
 Date inputs without a day or a year give their value through `MonthAndYear` or `DayAndMonth`.
 When a field isn't found, the exception lists the labels and legends on the page:
@@ -166,7 +167,7 @@ Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
 - `HtmlResponseAsync(response, expectedStatusCode)` checks the status code and content type and returns the parsed document.
 - `RedirectsTo(response, expectedLocation)` checks a redirect's `Location`, resolving a relative location against the request.
 - `ErrorSummaryContains`, `ErrorSummaryIs` (exactly these errors, in order) and `NoErrorSummary`.
-- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by its label or legend.
+- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by its label or legend, or for a field found some other way, e.g. `Assert.FieldHasError(doc.GetFieldByName("Email"), "Enter an email address")`.
 - `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order.
 - `NotificationBannerContains` and `SuccessNotificationBannerContains`, matching a whole line of the banner's content.
 

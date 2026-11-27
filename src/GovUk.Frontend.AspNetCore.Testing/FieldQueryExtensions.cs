@@ -26,22 +26,24 @@ public static partial class ComponentQueryExtensions
         public FormField? FindFieldByLabelOrLegend(string label) => FieldLookup.Find<FormField>(node, label, FieldKind.Field, required: false);
 
         /// <summary>
-        /// Gets the field of any kind whose <see cref="FormField.Name"/> is <paramref name="name"/>.
+        /// Gets the field of any kind that has the name <paramref name="name"/>.
         /// </summary>
         /// <remarks>
-        /// A date input's name is the prefix of its inputs' names, e.g. <c>DateOfBirth</c>, and radios and
-        /// checkboxes are found by the name their inputs share.
+        /// A field is found by any of its <see cref="FormField.Names"/>: the name it's submitted with, which for a date
+        /// input is the prefix of its inputs' names, e.g. <c>DateOfBirth</c>, or the name of any of its inputs, e.g.
+        /// <c>EmailUpdates</c> for checkboxes whose items have names of their own.
         /// </remarks>
         /// <exception cref="ComponentLookupException">There is no such field, or there's more than one.</exception>
         public FormField GetFieldByName(string name) => FieldLookup.FindByName(node, name, required: true)!;
 
         /// <summary>
-        /// Gets the field of any kind whose <see cref="FormField.Name"/> is <paramref name="name"/>, or
-        /// <see langword="null"/> if there isn't one.
+        /// Gets the field of any kind that has the name <paramref name="name"/>, or <see langword="null"/> if there
+        /// isn't one.
         /// </summary>
         /// <remarks>
-        /// A date input's name is the prefix of its inputs' names, e.g. <c>DateOfBirth</c>, and radios and
-        /// checkboxes are found by the name their inputs share.
+        /// A field is found by any of its <see cref="FormField.Names"/>: the name it's submitted with, which for a date
+        /// input is the prefix of its inputs' names, e.g. <c>DateOfBirth</c>, or the name of any of its inputs, e.g.
+        /// <c>EmailUpdates</c> for checkboxes whose items have names of their own.
         /// </remarks>
         /// <exception cref="ComponentLookupException">There's more than one such field.</exception>
         public FormField? FindFieldByName(string name) => FieldLookup.FindByName(node, name, required: false);
@@ -189,28 +191,49 @@ internal static class FieldLookup
     {
         ArgumentNullException.ThrowIfNull(text);
 
-        return Find<T>(node, text, kind, f => f.Label, "labelled", "unlabelled", required);
+        return Find<T>(
+            node,
+            text,
+            kind,
+            f => f.Label == text,
+            f => f.Label is { } label ? LookupFailure.Quote(label) : null,
+            "labelled",
+            "unlabelled",
+            required);
     }
 
     public static FormField? FindByName(IParentNode node, string name, bool required)
     {
         ArgumentNullException.ThrowIfNull(name);
 
-        return Find<FormField>(node, name, FieldKind.FieldByName, f => f.Name, "named", "unnamed", required);
+        // A field without a single name, such as checkboxes whose items have names of their own, is described by all
+        // its names.
+        return Find<FormField>(
+            node,
+            name,
+            FieldKind.FieldByName,
+            f => f.Names.Contains(name, StringComparer.Ordinal),
+            f => f.Name is { } single ? LookupFailure.Quote(single)
+                : f.Names.Count > 0 ? LookupFailure.QuoteAll(f.Names)
+                : null,
+            "named",
+            "unnamed",
+            required);
     }
 
     private static T? Find<T>(
         IParentNode node,
         string text,
         FieldKind kind,
-        Func<FormField, string?> getText,
+        Func<FormField, bool> isMatch,
+        Func<FormField, string?> describe,
         string describedAs,
         string describedAsWithout,
         bool required)
         where T : FormField
     {
         var fields = All(node);
-        var matches = fields.OfType<T>().Where(f => getText(f) == text).ToArray();
+        var matches = fields.OfType<T>().Where(f => isMatch(f)).ToArray();
 
         if (matches.Length == 1)
         {
@@ -229,7 +252,7 @@ internal static class FieldLookup
             throw new ComponentLookupException(new LookupFailure(
                 $"{Lookup.Capitalize(kind.Name)} not found.",
                 expected,
-                DescribeFields(fields, getText, describedAs, describedAsWithout),
+                DescribeFields(fields, describe, describedAs, describedAsWithout),
                 LookupFailure.FormatHtml((INode)node)));
         }
 
@@ -245,13 +268,13 @@ internal static class FieldLookup
     /// </summary>
     private static string DescribeFields(
         IReadOnlyList<FormField> fields,
-        Func<FormField, string?> getText,
+        Func<FormField, string?> describe,
         string describedAs,
         string describedAsWithout) =>
         fields.Count == 0
             ? "no fields"
             : $"fields {describedAs} " + string.Join(", ", fields.Select(f =>
-                getText(f) is { } text ? $"{LookupFailure.Quote(text)} ({f.Kind})" : $"{describedAsWithout} {f.Kind}"));
+                describe(f) is { } text ? $"{text} ({f.Kind})" : $"{describedAsWithout} {f.Kind}"));
 
     private static FormField? Create(IElement element)
     {

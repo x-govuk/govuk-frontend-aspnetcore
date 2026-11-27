@@ -47,7 +47,7 @@ public abstract class FormField
     public string? Label { get; }
 
     /// <summary>
-    /// Gets the name the field is submitted with, or <see langword="null"/> if it doesn't have one.
+    /// Gets the name the field is submitted with, or <see langword="null"/> if its inputs don't share one.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -59,10 +59,25 @@ public abstract class FormField
     /// <c>DateOfBirth.Month</c> and <c>DateOfBirth.Year</c>, which is the name model binding binds the date to.
     /// </para>
     /// <para>
-    /// It's <see langword="null"/> for radios, checkboxes and date inputs whose inputs don't share a name.
+    /// Radios, checkboxes and date inputs whose inputs have names of their own, e.g. checkboxes named
+    /// <c>EmailUpdates</c> and <c>SmsUpdates</c>, don't have a single name; use <see cref="Names"/> for those.
     /// </para>
     /// </remarks>
     public abstract string? Name { get; }
+
+    /// <summary>
+    /// Gets every name the field can be found by with
+    /// <see cref="ComponentQueryExtensions.GetFieldByName"/>: its <see cref="Name"/>, if it has one, then the
+    /// names of its inputs, without duplicates.
+    /// </summary>
+    /// <remarks>
+    /// For a text input, textarea, character count, select, password input or file upload this is just its
+    /// <see cref="Name"/>. For checkboxes named <c>EmailUpdates</c> and <c>SmsUpdates</c> it's both names, and for
+    /// a date input it's e.g. <c>DateOfBirth</c>, <c>DateOfBirth.Day</c>, <c>DateOfBirth.Month</c> and
+    /// <c>DateOfBirth.Year</c>. Fields inside conditional reveals are fields of their own, so their names aren't
+    /// included.
+    /// </remarks>
+    public virtual IReadOnlyList<string> Names => Name is { Length: > 0 } name ? [name] : [];
 
     /// <summary>
     /// Gets the field's hint element, or <see langword="null"/> if it doesn't have a hint.
@@ -143,6 +158,13 @@ public abstract class FormField
 
         return shared;
     }
+
+    /// <summary>
+    /// Gets <paramref name="name"/>, if there is one, then <paramref name="inputNames"/>, leaving out empty names and
+    /// duplicates.
+    /// </summary>
+    private protected static IReadOnlyList<string> GetNames(string? name, IEnumerable<string?> inputNames) =>
+        inputNames.Prepend(name).OfType<string>().Where(n => n.Length > 0).Distinct(StringComparer.Ordinal).ToArray();
 
     internal static IElement? GetLegend(IElement? fieldset) => fieldset?.Children.FirstOrDefault(c => c.LocalName == "legend");
 }

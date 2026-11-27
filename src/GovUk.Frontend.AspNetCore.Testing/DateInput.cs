@@ -34,6 +34,9 @@ public sealed class DateInput : FormField
     /// <inheritdoc/>
     public override string? Name => GetSharedName(Items.Select(i => i.NamePrefix));
 
+    /// <inheritdoc/>
+    public override IReadOnlyList<string> Names => GetNames(Name, Items.Select(i => i.Name));
+
     /// <summary>
     /// Gets the day input, or <see langword="null"/> if there isn't one.
     /// </summary>

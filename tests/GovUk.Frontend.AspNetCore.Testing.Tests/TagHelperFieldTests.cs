@@ -87,6 +87,23 @@ public class TagHelperFieldTests(TestApp app) : IClassFixture<TestApp>
         }
     }
 
+    [Fact]
+    public async Task Fields_WithItemNames_AreFoundByEachName()
+    {
+        var doc = await GetAsync("/ItemNames");
+
+        var updates = doc.GetCheckboxesByLegend("How would you like to get updates?");
+        Assert.Null(updates.Name);
+        Assert.Equal(["EmailUpdates", "SmsUpdates"], updates.Names);
+        Assert.Same(updates.Element, doc.GetFieldByName("EmailUpdates").Element);
+        Assert.Same(updates.Element, doc.GetFieldByName("SmsUpdates").Element);
+
+        var birth = doc.GetDateInputByLegend("Date of birth");
+        Assert.Null(birth.Name);
+        Assert.Equal(["BirthDay", "BirthMonth", "BirthYear"], birth.Names);
+        Assert.Same(birth.Element, doc.GetFieldByName("BirthYear").Element);
+    }
+
     private async Task<IHtmlDocument> GetAsync(string url)
     {
         using var client = app.CreateClient();

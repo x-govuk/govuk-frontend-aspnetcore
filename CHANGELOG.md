@@ -118,6 +118,7 @@ Assert.Equal("email", doc.GetRadiosByLegend("How would you like to be contacted?
 
 There are lookups for text inputs, textareas, character counts, selects, password inputs, file uploads, date inputs, radios and checkboxes, and `GetFieldByLabelOrLegend()` for a field of any kind.
 `GetFieldByName()` finds a field of any kind by the name it's submitted with, which is the name model state errors are keyed by; a date input's name is the prefix of its inputs' names, e.g. `DateOfBirth`.
+Radios, checkboxes and date inputs whose inputs have names of their own, e.g. checkboxes named `EmailUpdates` and `SmsUpdates`, are found by any of those names, and `FormField.Names` lists every name a field is found by.
 Radios and checkboxes give their items' labels, hints, checked state and conditional reveals.
 Date inputs without a day or a year give their value through `MonthAndYear` or `DayAndMonth`.
 When a field isn't found, the exception lists the labels and legends on the page:

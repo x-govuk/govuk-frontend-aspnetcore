@@ -142,6 +142,17 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
     }
 
     [Fact]
+    public async Task FieldHasError_FieldFoundByAnItemName_ReturnsField()
+    {
+        using var client = app.CreateClient();
+        using var response = await client.GetAsync(new Uri("/ItemNames", UriKind.Relative), TestContext.Current.CancellationToken);
+        var doc = await Assert.HtmlResponseAsync(response, cancellationToken: TestContext.Current.CancellationToken);
+
+        Assert.IsType<Checkboxes>(Assert.FieldHasError(doc.GetFieldByName("SmsUpdates"), "Select how you would like to get updates"));
+        Assert.IsType<DateInput>(Assert.FieldHasError(doc.GetFieldByName("BirthDay"), "Enter your date of birth"));
+    }
+
+    [Fact]
     public async Task FieldHasError_Field_DifferentError_FailsWithFieldAndHtml()
     {
         var doc = await RenderAsync(emailError: "Enter an email address in the correct format");

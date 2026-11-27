@@ -648,8 +648,11 @@ public class FormFieldTests
         Assert.IsType<DateInput>(doc.GetFieldByName("dob"));
         Assert.IsType<Radios>(doc.GetFieldByName("Colour"));
         Assert.Null(doc.FindFieldByName("Email"));
-        Assert.Null(doc.FindFieldByName("dob-day"));
         Assert.Equal(["Name", "dob", "Colour"], doc.Fields.Select(f => f.Name));
+
+        // A date input is also found by the names of its inputs.
+        Assert.IsType<DateInput>(doc.GetFieldByName("dob-day"));
+        Assert.Equal(["dob", "dob-day", "dob-month", "dob-year"], doc.GetDateInputByLegend("Date of birth").Names);
     }
 
     [Fact]
@@ -706,25 +709,160 @@ public class FormFieldTests
     }
 
     [Fact]
-    public async Task Name_ChoicesWithDifferentNames_IsNull()
+    public async Task GetFieldByName_CheckboxesWithItemNames_FoundByEachName()
     {
         var doc = await Render.DocumentAsync(g => g.GenerateCheckboxesAsync(new CheckboxesOptions
         {
-            Name = "Options",
-            Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Options" } },
+            IdPrefix = "updates",
+            Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Updates" } },
             Items =
             [
-                new CheckboxesOptionsItem { Value = "a", Text = "A" },
-                new CheckboxesOptionsItem { Value = "b", Text = "B", Name = "Other" }
+                new CheckboxesOptionsItem { Name = "EmailUpdates", Value = "true", Text = "Email" },
+                new CheckboxesOptionsItem { Name = "SmsUpdates", Value = "true", Text = "Text message" }
             ]
         }));
 
-        var checkboxes = doc.GetCheckboxesByLegend("Options");
+        var checkboxes = doc.GetCheckboxesByLegend("Updates");
 
         Assert.Null(checkboxes.Name);
+        Assert.Equal(["EmailUpdates", "SmsUpdates"], checkboxes.Names);
+        Assert.Same(checkboxes.Element, doc.GetFieldByName("EmailUpdates").Element);
+        Assert.Same(checkboxes.Element, doc.GetFieldByName("SmsUpdates").Element);
 
-        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName("Options"));
-        Assert.Equal("fields named unnamed checkboxes", ex.Failure.Found);
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName("PostUpdates"));
+        Assert.Equal("fields named \"EmailUpdates\", \"SmsUpdates\" (checkboxes)", ex.Failure.Found);
+    }
+
+    [Fact]
+    public async Task GetFieldByName_RadiosWithItemNames_FoundByEachName()
+    {
+        var doc = await Render.DocumentAsync(g => g.GenerateRadiosAsync(new RadiosOptions
+        {
+            IdPrefix = "plan",
+            Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Plan" } },
+            Items =
+            [
+                new RadiosOptionsItem { Name = "MonthlyPlan", Value = "monthly", Text = "Monthly" },
+                new RadiosOptionsItem { Name = "AnnualPlan", Value = "annual", Text = "Annual" }
+            ]
+        }));
+
+        var radios = doc.GetRadiosByLegend("Plan");
+
+        Assert.Null(radios.Name);
+        Assert.Equal(["MonthlyPlan", "AnnualPlan"], radios.Names);
+        Assert.Same(radios.Element, doc.GetFieldByName("MonthlyPlan").Element);
+        Assert.Same(radios.Element, doc.GetFieldByName("AnnualPlan").Element);
+    }
+
+    [Fact]
+    public async Task GetFieldByName_ChoicesWithAnItemOverridingTheName_FoundByEitherName()
+    {
+        var doc = await Render.DocumentAsync(
+            g => g.GenerateRadiosAsync(new RadiosOptions
+            {
+                Name = "Contact",
+                Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Contact" } },
+                Items =
+                [
+                    new RadiosOptionsItem { Value = "email", Text = "Email" },
+                    new RadiosOptionsItem { Value = "phone", Text = "Phone" },
+                    new RadiosOptionsItem { Name = "NoContact", Value = "true", Text = "Do not contact me" }
+                ]
+            }),
+            g => g.GenerateCheckboxesAsync(new CheckboxesOptions
+            {
+                Name = "Options",
+                Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Options" } },
+                Items =
+                [
+                    new CheckboxesOptionsItem { Value = "a", Text = "A" },
+                    new CheckboxesOptionsItem { Value = "b", Text = "B", Name = "Other" }
+                ]
+            }));
+
+        var radios = doc.GetRadiosByLegend("Contact");
+        Assert.Null(radios.Name);
+        Assert.Equal(["Contact", "NoContact"], radios.Names);
+        Assert.Same(radios.Element, doc.GetFieldByName("Contact").Element);
+        Assert.Same(radios.Element, doc.GetFieldByName("NoContact").Element);
+
+        var checkboxes = doc.GetCheckboxesByLegend("Options");
+        Assert.Null(checkboxes.Name);
+        Assert.Equal(["Options", "Other"], checkboxes.Names);
+        Assert.Same(checkboxes.Element, doc.GetFieldByName("Options").Element);
+        Assert.Same(checkboxes.Element, doc.GetFieldByName("Other").Element);
+    }
+
+    [Fact]
+    public async Task GetFieldByName_ConditionalReveal_IsAFieldOfItsOwn()
+    {
+        var emailHtml = await InputHtmlAsync("Email", "Email address");
+
+        var doc = await Render.DocumentAsync(g => g.GenerateRadiosAsync(new RadiosOptions
+        {
+            Name = "Contact",
+            Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Contact" } },
+            Items =
+            [
+                new RadiosOptionsItem
+                {
+                    Value = "email",
+                    Text = "Email",
+                    Conditional = new RadiosOptionsItemConditional { Html = new HtmlString(emailHtml) }
+                }
+            ]
+        }));
+
+        Assert.Equal(["Contact"], doc.GetRadiosByLegend("Contact").Names);
+        Assert.IsType<TextInput>(doc.GetFieldByName("Email"));
+    }
+
+    [Fact]
+    public async Task GetFieldByName_DateInputWithItemNames_FoundByEachName()
+    {
+        var doc = await Render.DocumentAsync(g => g.GenerateDateInputAsync(new DateInputOptions
+        {
+            Id = "birth",
+            Fieldset = new FieldsetOptions { Legend = new FieldsetOptionsLegend { Text = "Date of birth" } },
+            Items =
+            [
+                new DateInputOptionsItem { Name = "BirthDay", Label = new HtmlString("Day") },
+                new DateInputOptionsItem { Name = "BirthMonth", Label = new HtmlString("Month") },
+                new DateInputOptionsItem { Name = "BirthYear", Label = new HtmlString("Year") }
+            ]
+        }));
+
+        var date = doc.GetDateInputByLegend("Date of birth");
+
+        Assert.Null(date.Name);
+        Assert.Equal(["BirthDay", "BirthMonth", "BirthYear"], date.Names);
+        Assert.Same(date.Element, doc.GetFieldByName("BirthMonth").Element);
+
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName("Birth"));
+        Assert.Equal("fields named \"BirthDay\", \"BirthMonth\", \"BirthYear\" (date input)", ex.Failure.Found);
+    }
+
+    [Fact]
+    public async Task Names_SingleInputField_IsItsName()
+    {
+        var doc = await RenderFormAsync();
+
+        Assert.Equal(["Name"], doc.GetTextInputByLabel("Full name").Names);
+    }
+
+    [Fact]
+    public void Names_Unnamed_IsEmpty()
+    {
+        var doc = Render.Document("<div class=\"govuk-form-group\"><label for=\"x\">X</label><input class=\"govuk-input\" id=\"x\"></div>");
+
+        var input = doc.GetTextInputByLabel("X");
+
+        Assert.Null(input.Name);
+        Assert.Empty(input.Names);
+
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName("x"));
+        Assert.Equal("fields named unnamed text input", ex.Failure.Found);
     }
 
     [Fact]

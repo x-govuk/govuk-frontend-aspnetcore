@@ -55,6 +55,9 @@ public sealed class Radios : FormField
     /// <inheritdoc/>
     public override string? Name => GetSharedName(Items.Select(i => i.Name));
 
+    /// <inheritdoc/>
+    public override IReadOnlyList<string> Names => GetNames(Name, Items.Select(i => i.Name));
+
     internal override string Kind => "radios";
 }
 
@@ -110,6 +113,9 @@ public sealed class Checkboxes : FormField
 
     /// <inheritdoc/>
     public override string? Name => GetSharedName(Items.Select(i => i.Name));
+
+    /// <inheritdoc/>
+    public override IReadOnlyList<string> Names => GetNames(Name, Items.Select(i => i.Name));
 
     internal override string Kind => "checkboxes";
 }

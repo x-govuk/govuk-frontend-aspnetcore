@@ -184,6 +184,41 @@ public class FormSubmissionTests
     }
 
     [Fact]
+    public void AddFile_HttpContent_UsesItsContentType()
+    {
+        using var content = new StringContent("hello", Encoding.UTF8, "text/plain");
+
+        var submission = new FormSubmission("/apply").AddFile("Upload", content, "hello.txt");
+
+        var file = Assert.Single(submission.Files);
+        Assert.Equal("Upload", file.Name);
+        Assert.Equal("hello.txt", file.FileName);
+        Assert.Equal("text/plain", file.ContentType);
+        Assert.Equal("hello"u8.ToArray(), file.Content.ToArray());
+        Assert.True(submission.IsMultipart);
+    }
+
+    [Fact]
+    public void AddFile_HttpContentWithContentType_UsesTheGivenContentType()
+    {
+        using var content = new StringContent("hello", Encoding.UTF8, "text/plain");
+
+        var submission = new FormSubmission("/apply").AddFile("Upload", content, "hello.csv", "text/csv");
+
+        Assert.Equal("text/csv", Assert.Single(submission.Files).ContentType);
+    }
+
+    [Fact]
+    public void AddFile_HttpContentWithoutContentType_IsOctetStream()
+    {
+        using var content = new ByteArrayContent([1, 2, 3]);
+
+        var submission = new FormSubmission("/apply").AddFile("Upload", content, "data.bin");
+
+        Assert.Equal("application/octet-stream", Assert.Single(submission.Files).ContentType);
+    }
+
+    [Fact]
     public void ToRequest_Get_PutsValuesInQueryString()
     {
         var submission = new FormSubmission("/search?page=2#results", HttpMethod.Get) { { "q", "head teacher" }, { "type", ["a", "b"] } };

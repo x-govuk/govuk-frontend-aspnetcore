@@ -253,6 +253,27 @@ public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
     }
 
     /// <summary>
+    /// Adds a file for the file upload named <paramref name="name"/>, reading its content from
+    /// <paramref name="content"/>. The submission is then sent as <c>multipart/form-data</c>.
+    /// </summary>
+    /// <param name="name">The file upload's name.</param>
+    /// <param name="content">The file's content, which is read now.</param>
+    /// <param name="fileName">The file's name, e.g. <c>passport.jpg</c>.</param>
+    /// <param name="contentType">
+    /// The file's content type; the <c>Content-Type</c> of <paramref name="content"/> if not given, or
+    /// <c>application/octet-stream</c> if it has none.
+    /// </param>
+    /// <returns>This submission.</returns>
+    public FormSubmission AddFile(string name, HttpContent content, string fileName, string? contentType = null)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+
+        using var stream = content.ReadAsStream();
+
+        return AddFile(name, stream, fileName, contentType ?? content.Headers.ContentType?.MediaType);
+    }
+
+    /// <summary>
     /// Requests <see cref="Url"/> and sets the antiforgery token from the page it returns.
     /// </summary>
     /// <remarks>

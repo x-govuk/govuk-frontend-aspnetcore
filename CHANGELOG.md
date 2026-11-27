@@ -99,6 +99,7 @@ Assert.Equal("sarah@example.com", doc.GetSummaryCardByTitle("Director 1").GetRow
 ```
 
 An element includes itself when it's the component being looked for, so a summary list's rows can be found from its `<dl>` element as well as from an element that contains it.
+A summary list row has its `Key`, its `Value` as text and as `ValueLines`, its `ValueElement` for checking links or other markup in the value, and its `Actions`.
 
 When a lookup fails, the exception says what was looked for, what was on the page and the HTML that was searched:
 

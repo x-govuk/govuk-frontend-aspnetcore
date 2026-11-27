@@ -85,8 +85,8 @@ public sealed class SummaryListRow
 
         Key = TextExtraction.GetText(Lookup.Child(element, "govuk-summary-list__key"));
 
-        var value = Lookup.Child(element, "govuk-summary-list__value");
-        ValueLines = value is null ? [] : TextExtraction.GetLines(value);
+        ValueElement = Lookup.Child(element, "govuk-summary-list__value");
+        ValueLines = ValueElement is null ? [] : TextExtraction.GetLines(ValueElement);
         Value = string.Join(" ", ValueLines);
 
         Actions = Lookup.Child(element, "govuk-summary-list__actions")?.QuerySelectorAll("a")
@@ -103,6 +103,15 @@ public sealed class SummaryListRow
     /// Gets the key, e.g. <c>Name</c>.
     /// </summary>
     public string Key { get; }
+
+    /// <summary>
+    /// Gets the value's element, the row's <c>&lt;dd class="govuk-summary-list__value"&gt;</c>, or
+    /// <see langword="null"/> if it doesn't have one.
+    /// </summary>
+    /// <remarks>
+    /// Use this to check what's in the value beyond its text, e.g. a link: <c>row.ValueElement?.QuerySelector("a")</c>.
+    /// </remarks>
+    public IElement? ValueElement { get; }
 
     /// <summary>
     /// Gets the value as a single line of text.

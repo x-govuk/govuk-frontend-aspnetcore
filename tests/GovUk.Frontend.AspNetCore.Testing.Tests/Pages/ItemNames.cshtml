@@ -1,0 +1,29 @@
+﻿@page
+@* Fields whose inputs have their own names, set with name="…" on each item rather than on the field. *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Item names</title></head>
+<body>
+<form method="post">
+    <govuk-checkboxes id-prefix="updates">
+        <govuk-checkboxes-fieldset>
+            <govuk-checkboxes-fieldset-legend>How would you like to get updates?</govuk-checkboxes-fieldset-legend>
+            <govuk-checkboxes-error-message>Select how you would like to get updates</govuk-checkboxes-error-message>
+            <govuk-checkboxes-item name="EmailUpdates" value="true">Email</govuk-checkboxes-item>
+            <govuk-checkboxes-item name="SmsUpdates" value="true">Text message</govuk-checkboxes-item>
+        </govuk-checkboxes-fieldset>
+    </govuk-checkboxes>
+
+    <govuk-date-input id="birth" error-message-prefix="Date of birth">
+        <govuk-date-input-fieldset>
+            <govuk-date-input-fieldset-legend>Date of birth</govuk-date-input-fieldset-legend>
+            <govuk-date-input-error-message error-items="GovUk.Frontend.AspNetCore.DateInputItemTypes.All">Enter your date of birth</govuk-date-input-error-message>
+            <govuk-date-input-day name="BirthDay" />
+            <govuk-date-input-month name="BirthMonth" />
+            <govuk-date-input-year name="BirthYear" />
+        </govuk-date-input-fieldset>
+    </govuk-date-input>
+</form>
+</body>
+</html>

@@ -52,6 +52,12 @@ public sealed class Radios : FormField
     public RadiosItem? FindItemByLabel(string label) =>
         ChoiceItem.Find(Element, Items, label, _itemSubject, "a radio", required: false);
 
+    /// <inheritdoc/>
+    public override string? Name => GetSharedName(Items.Select(i => i.Name));
+
+    /// <inheritdoc/>
+    public override IReadOnlyList<string> Names => GetNames(Name, Items.Select(i => i.Name));
+
     internal override string Kind => "radios";
 }
 
@@ -104,6 +110,12 @@ public sealed class Checkboxes : FormField
     /// <exception cref="ComponentLookupException">There's more than one such checkbox.</exception>
     public CheckboxesItem? FindItemByLabel(string label) =>
         ChoiceItem.Find(Element, Items, label, _itemSubject, "a checkbox", required: false);
+
+    /// <inheritdoc/>
+    public override string? Name => GetSharedName(Items.Select(i => i.Name));
+
+    /// <inheritdoc/>
+    public override IReadOnlyList<string> Names => GetNames(Name, Items.Select(i => i.Name));
 
     internal override string Kind => "checkboxes";
 }

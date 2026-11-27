@@ -60,11 +60,16 @@ internal static class Failure
     /// <summary>
     /// Creates the exception for an assertion that failed because a lookup in the core package failed.
     /// </summary>
-    public static GovUkAssertException FromLookup(string assertion, LookupFailure failure) =>
+    /// <param name="assertion">The assertion's name, without <c>Assert.</c>.</param>
+    /// <param name="failure">The lookup's failure.</param>
+    /// <param name="hint">A suggestion for fixing the failure, or <see langword="null"/> to leave it out.</param>
+    public static GovUkAssertException FromLookup(string assertion, LookupFailure failure, string? hint = null) =>
         Create(
             assertion,
             failure.Summary.TrimEnd('.'),
-            [("Expected", failure.Expected), ("Actual", failure.Found)],
+            hint is null
+                ? [("Expected", failure.Expected), ("Actual", failure.Found)]
+                : [("Expected", failure.Expected), ("Actual", failure.Found), ("Hint", hint)],
             failure.Html);
 
     /// <summary>

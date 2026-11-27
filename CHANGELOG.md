@@ -117,6 +117,8 @@ Assert.Equal("email", doc.GetRadiosByLegend("How would you like to be contacted?
 ```
 
 There are lookups for text inputs, textareas, character counts, selects, password inputs, file uploads, date inputs, radios and checkboxes, and `GetFieldByLabelOrLegend()` for a field of any kind.
+`GetFieldByName()` finds a field of any kind by the name it's submitted with, which is the name model state errors are keyed by; a date input's name is the prefix of its inputs' names, e.g. `DateOfBirth`.
+Radios, checkboxes and date inputs whose inputs have names of their own, e.g. checkboxes named `EmailUpdates` and `SmsUpdates`, are found by any of those names, and `FormField.Names` lists every name a field is found by.
 Radios and checkboxes give their items' labels, hints, checked state and conditional reveals.
 Date inputs without a day or a year give their value through `MonthAndYear` or `DayAndMonth`.
 When a field isn't found, the exception lists the labels and legends on the page:
@@ -159,14 +161,15 @@ It depends on `xunit.v3.assert` (not the runner) and on exactly the same version
 var doc = await Assert.HtmlResponseAsync(response);
 
 Assert.ErrorSummaryContains(doc, "Enter your name");
-Assert.FieldHasError(doc, "Date of birth", "Date of birth must include a year");
+Assert.FieldHasError(doc, "DateOfBirth", "Date of birth must include a year");
 Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
 ```
 
 - `HtmlResponseAsync(response, expectedStatusCode)` checks the status code and content type and returns the parsed document.
 - `RedirectsTo(response, expectedLocation)` checks a redirect's `Location`, resolving a relative location against the request.
 - `ErrorSummaryContains`, `ErrorSummaryIs` (exactly these errors, in order) and `NoErrorSummary`.
-- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by its label or legend.
+- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by the name it's submitted with, as `GetFieldByName()` finds it, which is the name its model state error is keyed by.
+  They also take a `FormField` found some other way, e.g. `Assert.FieldHasError(doc.GetFieldByLabelOrLegend("Email address"), "Enter an email address")`, and when a field isn't found by name but there's one with that label, the failure says so.
 - `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order.
 - `NotificationBannerContains` and `SuccessNotificationBannerContains`, matching a whole line of the banner's content.
 

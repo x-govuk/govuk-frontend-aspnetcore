@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageId>GovUk.Frontend.AspNetCore.Testing.Playwright</PackageId>
     <PackageTags>aspnetcore, testing, playwright, gds, gov.uk, x-govuk</PackageTags>
-    <Description>Playwright locators, actions and assertions for testing apps built with GovUk.Frontend.AspNetCore in a browser.</Description>
+    <Description>Playwright locators, actions and assertions for testing apps that use the GOV.UK Design system.</Description>
   </PropertyGroup>
 
   <ItemGroup>

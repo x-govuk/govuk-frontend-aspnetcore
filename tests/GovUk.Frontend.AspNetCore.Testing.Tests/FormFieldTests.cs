@@ -686,6 +686,43 @@ public class FormFieldTests
     }
 
     [Fact]
+    public async Task GetFieldByNameOfKind_FindsTheFieldAsThatKind()
+    {
+        var doc = await RenderFormAsync();
+
+        TextInput name = doc.GetFieldByName<TextInput>("Name");
+        DateInput dob = doc.GetFieldByName<DateInput>("dob-day");
+        Radios colour = doc.GetFieldByName<Radios>("Colour");
+
+        Assert.Equal("Full name", name.Label);
+        Assert.Equal("Date of birth", dob.Label);
+        Assert.Same(doc.GetFieldByName("Colour").Element, colour.Element);
+        Assert.Same(doc.GetFieldByName("Name").Element, doc.GetFieldByName<FormField>("Name").Element);
+    }
+
+    [Fact]
+    public async Task GetFieldByNameOfKind_FieldOfAnotherKind_FailsWithTheKindsOnThePage()
+    {
+        var doc = await RenderFormAsync();
+
+        var ex = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName<Radios>("Name"));
+
+        Assert.Equal(
+            """
+            Radios not found.
+            Expected: radios named "Name"
+            Found:    fields named "Name" (text input), "dob" (date input), "Colour" (radios)
+            """,
+            ex.Message);
+
+        var textInputEx = Assert.Throws<ComponentLookupException>(() => doc.GetFieldByName<TextInput>("Colour"));
+        Assert.Equal("a text input named \"Colour\"", textInputEx.Failure.Expected);
+
+        Assert.Null(doc.FindFieldByName<Radios>("Name"));
+        Assert.Null(doc.FindFieldByName<TextInput>("Email"));
+    }
+
+    [Fact]
     public async Task Name_DateInputWithNamesBoundToAModel_IsTheirPrefix()
     {
         var date = await RenderPartialDateAsync(("Month", ""), ("Year", ""));

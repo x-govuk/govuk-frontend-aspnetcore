@@ -17,8 +17,10 @@ namespace GovUk.Frontend.AspNetCore.Testing;
 /// <para>
 /// Values are formatted as ASP.NET Core model binding reads them back: a <see cref="DateOnly"/> becomes the
 /// <c>.Day</c>, <c>.Month</c> and <c>.Year</c> fields of a date input, <see cref="bool"/>s are <c>true</c> or
-/// <c>false</c>, enums use their names, other values are formatted with the invariant culture and collections add a
-/// value for each item. <see langword="null"/> values are left out.
+/// <c>false</c>, enums use their names, numbers, <see cref="Guid"/>s and other <see cref="IFormattable"/> values are
+/// formatted with the invariant culture and collections add a value for each item. <see langword="null"/> values are
+/// left out. Any other value is rejected rather than posted as its <see cref="object.ToString"/>, which is rarely what
+/// a form would send; add it as a string instead.
 /// </para>
 /// <para>
 /// A <c>(int, int)</c> for a month and year or a day and month date input is rejected, since it doesn't say which
@@ -407,8 +409,9 @@ public sealed class FormSubmission : IEnumerable<KeyValuePair<string, string>>
                 break;
 
             default:
-                yield return new(name, value.ToString() ?? "");
-                break;
+                throw new ArgumentException(
+                    $"Don't know how to submit a {value.GetType()} for '{name}'. Add it as a string instead.",
+                    nameof(value));
         }
     }
 

@@ -43,6 +43,30 @@ public class SummaryListTests
     }
 
     [Fact]
+    public async Task ValueElement_IsTheValuesElement()
+    {
+        var doc = await RenderListAsync(Row("Passport", new HtmlString("<a href=\"/files/passport.jpg\" class=\"govuk-link\">passport.jpg</a>")));
+
+        var row = doc.GetSummaryListRowByKey("Passport");
+
+        Assert.NotNull(row.ValueElement);
+        Assert.True(row.ValueElement.ClassList.Contains("govuk-summary-list__value"));
+        Assert.Equal("/files/passport.jpg", row.ValueElement.QuerySelector("a")?.GetAttribute("href"));
+    }
+
+    [Fact]
+    public void ValueElement_RowWithoutValue_IsNull()
+    {
+        var doc = Render.Document(
+            "<dl class=\"govuk-summary-list\"><div class=\"govuk-summary-list__row\"><dt class=\"govuk-summary-list__key\">Name</dt></div></dl>");
+
+        var row = doc.GetSummaryListRowByKey("Name");
+
+        Assert.Null(row.ValueElement);
+        Assert.Equal("", row.Value);
+    }
+
+    [Fact]
     public async Task GetRowByKey_NotFound_ThrowsWithKeysOnTheList()
     {
         var doc = await RenderListAsync(Row("Name", "Sarah Philips"), Row("Phone", "07700 900457"));

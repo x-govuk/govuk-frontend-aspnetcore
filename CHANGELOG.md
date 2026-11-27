@@ -172,7 +172,7 @@ Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
 - `ErrorSummaryContains`, `ErrorSummaryIs` (exactly these errors, in order) and `NoErrorSummary`.
 - `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by the name it's submitted with, as `GetFieldByName()` finds it, which is the name its model state error is keyed by.
   They also take a `FormField` found some other way, e.g. `Assert.FieldHasError(doc.GetFieldByLabelOrLegend("Email address"), "Enter an email address")`, and when a field isn't found by name but there's one with that label, the failure says so.
-- `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order.
+- `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order. A `null` expected value is a row with no value.
 - `NotificationBannerContains` and `SuccessNotificationBannerContains`, matching a whole line of the banner's content.
 
 Each takes a document or an element to search within, such as a summary card's `Element`, and returns what it matched where that's useful.

@@ -20,27 +20,28 @@ public static partial class GovUkAssert
         /// </remarks>
         /// <param name="node">The document, or an element to search within.</param>
         /// <param name="key">The row's key, e.g. <c>Email address</c>.</param>
-        /// <param name="expectedValue">The row's value.</param>
+        /// <param name="expectedValue">
+        /// The row's value, or <see langword="null"/> or an empty string if the row has no value.
+        /// </param>
         /// <returns>The row.</returns>
         /// <exception cref="GovUkAssertException">
         /// There's no row with the key <paramref name="key"/>, there's more than one, or its value isn't
         /// <paramref name="expectedValue"/>.
         /// </exception>
         [StackTraceHidden]
-        public static SummaryListRow SummaryListHasRow(IParentNode node, string key, string expectedValue)
+        public static SummaryListRow SummaryListHasRow(IParentNode node, string key, string? expectedValue)
         {
             ArgumentNullException.ThrowIfNull(node);
             ArgumentNullException.ThrowIfNull(key);
-            ArgumentNullException.ThrowIfNull(expectedValue);
 
             var row = Failure.Lookup(nameof(SummaryListHasRow), () => node.GetSummaryListRowByKey(key));
 
-            if (row.Value != expectedValue)
+            if (row.Value != (expectedValue ?? ""))
             {
                 throw Failure.Create(
                     nameof(SummaryListHasRow),
                     "Value differs",
-                    [("Key", Failure.Quote(key)), ("Expected", Failure.Quote(expectedValue)), ("Actual", Failure.Quote(row.Value))],
+                    [("Key", Failure.Quote(key)), ("Expected", FormatValue(expectedValue)), ("Actual", FormatValue(row.Value))],
                     row.Element);
             }
 
@@ -56,20 +57,20 @@ public static partial class GovUkAssert
         /// <see cref="SummaryListRow.Value"/>, which has its lines joined with spaces.
         /// </remarks>
         /// <param name="node">The document, or an element to search within.</param>
-        /// <param name="expectedRows">The rows' keys and values, in order.</param>
+        /// <param name="expectedRows">
+        /// The rows' keys and values, in order; a <see langword="null"/> or empty value is a row with no value.
+        /// </param>
         /// <returns>The summary list.</returns>
         /// <exception cref="GovUkAssertException">
         /// There's no summary list, there's more than one, or its rows differ from <paramref name="expectedRows"/>.
         /// </exception>
         [StackTraceHidden]
-        public static SummaryList SummaryListHasRows(IParentNode node, params (string Key, string Value)[] expectedRows)
+        public static SummaryList SummaryListHasRows(IParentNode node, params (string Key, string? Value)[] expectedRows)
         {
             ArgumentNullException.ThrowIfNull(node);
             ArgumentNullException.ThrowIfNull(expectedRows);
 
-            var lists = node is IElement element && element.Matches(SummaryList.Selector)
-                ? [new SummaryList(element)]
-                : node.SummaryLists;
+            var lists = node.SummaryLists;
 
             if (lists.Count == 0)
             {
@@ -96,12 +97,12 @@ public static partial class GovUkAssert
             var list = lists[0];
             var actualRows = list.Rows.Select(r => (r.Key, r.Value)).ToArray();
 
-            if (!actualRows.SequenceEqual(expectedRows))
+            if (!actualRows.SequenceEqual(expectedRows.Select(r => (r.Key, r.Value ?? ""))))
             {
                 throw Failure.Create(
                     nameof(SummaryListHasRows),
                     "Rows differ",
-                    [("Expected", FormatRows(expectedRows)), ("Actual", FormatRows(actualRows))],
+                    [("Expected", FormatRows(expectedRows)), ("Actual", FormatRows([.. actualRows]))],
                     list.Element);
             }
 
@@ -109,8 +110,10 @@ public static partial class GovUkAssert
         }
     }
 
-    private static string FormatRows(IReadOnlyCollection<(string Key, string Value)> rows) =>
+    private static string FormatRows(IReadOnlyCollection<(string Key, string? Value)> rows) =>
         rows.Count == 0
             ? "no rows"
-            : string.Join("\n", rows.Select(r => $"{Failure.Quote(r.Key)}: {Failure.Quote(r.Value)}"));
+            : string.Join("\n", rows.Select(r => $"{Failure.Quote(r.Key)}: {FormatValue(r.Value)}"));
+
+    private static string FormatValue(string? value) => string.IsNullOrEmpty(value) ? "no value" : Failure.Quote(value);
 }

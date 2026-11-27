@@ -89,7 +89,7 @@ Their messages can also use `{1}` for the limit, alongside `{0}` for the field's
 A new `GovUk.Frontend.AspNetCore.Testing` package reads the components on a rendered page, for testing apps built with this library.
 It's versioned in lockstep with `GovUk.Frontend.AspNetCore` and depends on exactly the same version.
 
-`GetHtmlDocumentAsync()` parses an `HttpResponseMessage` with [AngleSharp](https://anglesharp.github.io/), and extension members on a document or element return models of the error summary, summary lists and cards, notification banners, tables, task lists, tags, the panel, the back link, pagination and hidden inputs:
+`GetHtmlDocumentAsync()` parses an `HttpResponseMessage` with [AngleSharp](https://anglesharp.github.io/), and extension members on a document or element return models of the error summary, summary lists and cards, notification banners, tables, task lists, tags, the panel, the back link, pagination, hidden inputs, buttons, details, warning text, inset text, breadcrumbs, accordions and tabs:
 
 ```cs
 var doc = await response.GetHtmlDocumentAsync();
@@ -100,6 +100,7 @@ Assert.Equal("sarah@example.com", doc.GetSummaryCardByTitle("Director 1").GetRow
 
 An element includes itself when it's the component being looked for, so a summary list's rows can be found from its `<dl>` element as well as from an element that contains it.
 A summary list row has its `Key`, its `Value` as text and as `ValueLines`, its `ValueElement` for checking links or other markup in the value, and its `Actions`.
+Buttons, including links styled as buttons, are found with `GetButtonByText()` and give their `Href`, `Variant` (e.g. `secondary` or `warning`) and whether they're a start button or disabled. Details components are found with `GetDetailsBySummary()`, accordion sections with `GetSectionByHeading()` and tabs with `GetTabByLabel()`, each with their content's text. Warning text leaves out its icon and the visually hidden text read in its place.
 
 When a lookup fails, the exception says what was looked for, what was on the page and the HTML that was searched:
 

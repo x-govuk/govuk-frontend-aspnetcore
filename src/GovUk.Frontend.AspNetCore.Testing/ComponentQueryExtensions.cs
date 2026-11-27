@@ -25,6 +25,7 @@ public static partial class ComponentQueryExtensions
     private static readonly Lookup.Subject _backLinkSubject = new("back link", "back links");
     private static readonly Lookup.Subject _paginationSubject = new("pagination", "pagination components");
     private static readonly Lookup.Subject _taskListSubject = new("task list", "task lists");
+    private static readonly Lookup.Subject _breadcrumbsSubject = new("breadcrumbs component", "breadcrumbs components");
 
     extension(IParentNode node)
     {
@@ -106,6 +107,88 @@ public static partial class ComponentQueryExtensions
         /// Gets every hidden input.
         /// </summary>
         public IReadOnlyList<HiddenInput> HiddenInputs => All(node, HiddenInput.Selector, e => new HiddenInput(e));
+
+        /// <summary>
+        /// Gets every button, including links styled as buttons, whether or not they're in a form.
+        /// </summary>
+        public IReadOnlyList<Button> Buttons => All(node, Button.Selector, e => new Button(e));
+
+        /// <summary>
+        /// Gets every details component. (Named so as not to read as a single component.)
+        /// </summary>
+        public IReadOnlyList<Details> AllDetails => All(node, Details.Selector, e => new Details(e));
+
+        /// <summary>
+        /// Gets every warning text component.
+        /// </summary>
+        public IReadOnlyList<WarningText> WarningTexts => All(node, WarningText.Selector, e => new WarningText(e));
+
+        /// <summary>
+        /// Gets every inset text component.
+        /// </summary>
+        public IReadOnlyList<InsetText> InsetTexts => All(node, InsetText.Selector, e => new InsetText(e));
+
+        /// <summary>
+        /// Gets the breadcrumbs component, or <see langword="null"/> if there isn't one.
+        /// </summary>
+        /// <exception cref="ComponentLookupException">There's more than one breadcrumbs component.</exception>
+        public Breadcrumbs? Breadcrumbs =>
+            SingleOrNone(node, Breadcrumbs.Selector, e => new Breadcrumbs(e), _breadcrumbsSubject);
+
+        /// <summary>
+        /// Gets the accordion, or <see langword="null"/> if there isn't one.
+        /// </summary>
+        /// <exception cref="ComponentLookupException">
+        /// There's more than one accordion; use <c>Accordions</c> instead.
+        /// </exception>
+        public Accordion? Accordion => SingleOrNone(node, Accordion.Selector, e => new Accordion(e), Accordion.Subject);
+
+        /// <summary>
+        /// Gets every accordion.
+        /// </summary>
+        public IReadOnlyList<Accordion> Accordions => All(node, Accordion.Selector, e => new Accordion(e));
+
+        /// <summary>
+        /// Gets the tabs component, or <see langword="null"/> if there isn't one.
+        /// </summary>
+        /// <exception cref="ComponentLookupException">
+        /// There's more than one tabs component; use <c>AllTabs</c> instead.
+        /// </exception>
+        public Tabs? Tabs => SingleOrNone(node, Tabs.Selector, e => new Tabs(e), Tabs.Subject);
+
+        /// <summary>
+        /// Gets every tabs component.
+        /// </summary>
+        public IReadOnlyList<Tabs> AllTabs => All(node, Tabs.Selector, e => new Tabs(e));
+
+        /// <summary>
+        /// Gets the button whose text is <paramref name="text"/>, including links styled as buttons.
+        /// </summary>
+        /// <remarks>
+        /// To submit a form with one of its buttons, use <see cref="Form.GetButtonByText"/> instead.
+        /// </remarks>
+        /// <exception cref="ComponentLookupException">There is no such button, or there's more than one.</exception>
+        public Button GetButtonByText(string text) => FindButtonByText(node, text, required: true)!;
+
+        /// <summary>
+        /// Gets the button whose text is <paramref name="text"/>, including links styled as buttons, or
+        /// <see langword="null"/> if there isn't one.
+        /// </summary>
+        /// <exception cref="ComponentLookupException">There's more than one such button.</exception>
+        public Button? FindButtonByText(string text) => FindButtonByText(node, text, required: false);
+
+        /// <summary>
+        /// Gets the details component whose summary is <paramref name="summary"/>.
+        /// </summary>
+        /// <exception cref="ComponentLookupException">There is no such details component, or there's more than one.</exception>
+        public Details GetDetailsBySummary(string summary) => FindDetailsBySummary(node, summary, required: true)!;
+
+        /// <summary>
+        /// Gets the details component whose summary is <paramref name="summary"/>, or <see langword="null"/> if there
+        /// isn't one.
+        /// </summary>
+        /// <exception cref="ComponentLookupException">There's more than one such details component.</exception>
+        public Details? FindDetailsBySummary(string summary) => FindDetailsBySummary(node, summary, required: false);
 
         /// <summary>
         /// Gets the summary card with the title <paramref name="title"/>.
@@ -239,6 +322,34 @@ public static partial class ComponentQueryExtensions
             i => i.Name,
             TaskList.ItemSubject,
             $"a task named {LookupFailure.Quote(name)}",
+            required);
+    }
+
+    private static Button? FindButtonByText(IParentNode node, string text, bool required)
+    {
+        ArgumentNullException.ThrowIfNull(text);
+
+        return Lookup.Single(
+            (INode)node,
+            node.Buttons,
+            b => b.Text == text,
+            b => b.Text,
+            Button.Subject,
+            $"a button with the text {LookupFailure.Quote(text)}",
+            required);
+    }
+
+    private static Details? FindDetailsBySummary(IParentNode node, string summary, bool required)
+    {
+        ArgumentNullException.ThrowIfNull(summary);
+
+        return Lookup.Single(
+            (INode)node,
+            node.AllDetails,
+            d => d.Summary == summary,
+            d => d.Summary,
+            Details.Subject,
+            $"a details component with the summary {LookupFailure.Quote(summary)}",
             required);
     }
 

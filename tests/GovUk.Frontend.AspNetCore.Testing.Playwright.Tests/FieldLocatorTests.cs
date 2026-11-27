@@ -269,6 +269,20 @@ public class FieldLocatorTests(BrowserApp app)
         await Expect(nationality.GetItemByValue("other").Label).ToHaveTextAsync("Citizen of another country");
     }
 
+    [Fact]
+    public async Task GetFieldByName_ChoicesWithoutAFieldset_AreFound()
+    {
+        var page = await GotoAsync("/MoreComponents");
+
+        var colour = page.GetFieldByName<RadiosLocator>("Colour");
+        await Expect(colour.Items).ToHaveCountAsync(2);
+        await colour.GetItemByValue("blue").Input.CheckAsync();
+        await Expect(colour.GetItemByLabel("Blue").Input).ToBeCheckedAsync();
+
+        await Expect(page.GetFieldByName<CheckboxesLocator>("Extras").GetItemByValue("sugar").Label).ToHaveTextAsync("Sugar");
+        await Expect(page.GetFieldByName("Colour").Locator).ToHaveCountAsync(1);
+    }
+
     private async Task<IPage> GotoAsync(string url)
     {
         var page = await app.NewPageAsync();

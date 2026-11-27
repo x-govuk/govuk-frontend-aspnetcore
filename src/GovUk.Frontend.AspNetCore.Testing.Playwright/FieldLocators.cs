@@ -188,13 +188,13 @@ public sealed class FileUploadLocator : FieldLocator
 /// </remarks>
 public sealed class DateInputLocator : FieldLocator
 {
-    internal DateInputLocator(ILocator fieldset)
-        : base(fieldset.Locator(Selectors.ClosestFormGroup))
+    internal DateInputLocator(ILocator dateInput)
+        : base(dateInput.Locator(Selectors.ClosestFormGroup))
     {
-        Inputs = fieldset.Locator(":scope > .govuk-date-input .govuk-date-input__input");
-        Day = Inputs.And(fieldset.Page.Locator("[name$='day' i]"));
-        Month = Inputs.And(fieldset.Page.Locator("[name$='month' i]"));
-        Year = Inputs.And(fieldset.Page.Locator("[name$='year' i]"));
+        Inputs = dateInput.Locator(".govuk-date-input__input");
+        Day = Inputs.And(dateInput.Page.Locator("[name$='day' i]"));
+        Month = Inputs.And(dateInput.Page.Locator("[name$='month' i]"));
+        Year = Inputs.And(dateInput.Page.Locator("[name$='year' i]"));
     }
 
     /// <summary>
@@ -295,10 +295,10 @@ public sealed class DateInputLocator : FieldLocator
 /// </summary>
 public sealed class RadiosLocator : FieldLocator
 {
-    internal RadiosLocator(ILocator fieldset)
-        : base(fieldset.Locator(Selectors.ClosestFormGroup))
+    internal RadiosLocator(ILocator radios)
+        : base(radios.Locator(Selectors.ClosestFormGroup))
     {
-        Items = fieldset.Locator(":scope > .govuk-radios > .govuk-radios__item");
+        Items = radios.Locator(":scope > .govuk-radios__item");
     }
 
     /// <summary>
@@ -323,10 +323,10 @@ public sealed class RadiosLocator : FieldLocator
 /// </summary>
 public sealed class CheckboxesLocator : FieldLocator
 {
-    internal CheckboxesLocator(ILocator fieldset)
-        : base(fieldset.Locator(Selectors.ClosestFormGroup))
+    internal CheckboxesLocator(ILocator checkboxes)
+        : base(checkboxes.Locator(Selectors.ClosestFormGroup))
     {
-        Items = fieldset.Locator(":scope > .govuk-checkboxes > .govuk-checkboxes__item");
+        Items = checkboxes.Locator(":scope > .govuk-checkboxes__item");
     }
 
     /// <summary>

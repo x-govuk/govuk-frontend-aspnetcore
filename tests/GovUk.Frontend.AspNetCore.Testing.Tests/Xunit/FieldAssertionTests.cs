@@ -10,22 +10,30 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
     {
         var doc = await RenderAsync(emailError: "Enter an email address");
 
-        var field = Assert.FieldHasError(doc, "Email address", "Enter an email address");
+        var field = Assert.FieldHasError(doc, "Email", "Enter an email address");
 
         Assert.IsType<TextInput>(field);
+        Assert.Equal("Email address", field.Label);
     }
 
     [Fact]
-    public async Task FieldHasError_FieldsBoundWithFor_FindsEachKindByLabelOrLegend()
+    public async Task FieldHasError_FieldsBoundWithFor_FindsEachKindByName()
     {
-        using var client = app.CreateClient();
-        using var response = await client.GetAsync(new Uri("/Fields?errors=true", UriKind.Relative), TestContext.Current.CancellationToken);
-        var doc = await Assert.HtmlResponseAsync(response, cancellationToken: TestContext.Current.CancellationToken);
+        var doc = await GetAsync("/Fields?errors=true");
 
-        foreach (var field in doc.Fields.Where(f => f.Label is not null))
+        foreach (var field in doc.Fields)
         {
-            Assert.Same(field.Element, Assert.FieldHasError(doc, field.Label!, field.ErrorMessage!).Element);
+            Assert.Same(field.Element, Assert.FieldHasError(doc, field.Name!, field.ErrorMessage!).Element);
         }
+    }
+
+    [Fact]
+    public async Task FieldHasError_ItemName_FindsTheField()
+    {
+        var doc = await GetAsync("/ItemNames");
+
+        Assert.IsType<Checkboxes>(Assert.FieldHasError(doc, "SmsUpdates", "Select how you would like to get updates"));
+        Assert.IsType<DateInput>(Assert.FieldHasError(doc, "BirthDay", "Enter your date of birth"));
     }
 
     [Fact]
@@ -40,8 +48,8 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
             Expected: "Enter an email address"
             Actual:   "Enter an email address in the correct format"
             """,
-            () => Assert.FieldHasError(doc, "Email address", "Enter an email address"),
-            htmlOf: doc.GetTextInputByLabel("Email address").Element);
+            () => Assert.FieldHasError(doc, "Email", "Enter an email address"),
+            htmlOf: doc.GetFieldByName("Email").Element);
 
         AssertFailure.StackTraceStartsIn(nameof(FieldHasError_DifferentError_FailsWithFieldAndHtml), ex);
     }
@@ -58,172 +66,39 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
             Expected: "Enter an email address"
             Actual:   no error message
             """,
-            () => Assert.FieldHasError(doc, "Email address", "Enter an email address"),
-            htmlOf: doc.GetTextInputByLabel("Email address").Element);
+            () => Assert.FieldHasError(doc, "Email", "Enter an email address"),
+            htmlOf: doc.GetFieldByName("Email").Element);
     }
 
     [Fact]
-    public async Task FieldHasError_FieldNotFound_FailsWithFieldsOnThePage()
+    public async Task FieldHasError_FieldNotFound_FailsWithNamesOnThePage()
     {
         var doc = await RenderAsync();
 
         var ex = AssertFailure.Throws(
             """
             Assert.FieldHasError() Failure: Field not found
-            Expected: a field with the label or legend "Email"
-            Actual:   fields labelled "Full name" (text input), "Email address" (text input)
-            """,
-            () => Assert.FieldHasError(doc, "Email", "Enter an email address"));
-
-        AssertFailure.StackTraceStartsIn(nameof(FieldHasError_FieldNotFound_FailsWithFieldsOnThePage), ex);
-    }
-
-    [Fact]
-    public async Task FieldHasNoError_NoError_ReturnsField()
-    {
-        var doc = await RenderAsync();
-
-        var field = Assert.FieldHasNoError(doc, "Email address");
-
-        Assert.Equal("Email address", field.Label);
-    }
-
-    [Fact]
-    public async Task FieldHasNoError_Error_FailsWithFieldAndHtml()
-    {
-        var doc = await RenderAsync(emailError: "Enter an email address");
-
-        AssertFailure.Throws(
-            """
-            Assert.FieldHasNoError() Failure: Field has an error
-            Field:    Text input: Email address
-            Expected: no error message
-            Actual:   "Enter an email address"
-            """,
-            () => Assert.FieldHasNoError(doc, "Email address"),
-            htmlOf: doc.GetTextInputByLabel("Email address").Element);
-    }
-
-    [Fact]
-    public async Task FieldHasNoError_FieldNotFound_Fails()
-    {
-        var doc = await RenderAsync();
-
-        AssertFailure.Throws(
-            """
-            Assert.FieldHasNoError() Failure: Field not found
-            Expected: a field with the label or legend "Email"
-            Actual:   fields labelled "Full name" (text input), "Email address" (text input)
-            """,
-            () => Assert.FieldHasNoError(doc, "Email"));
-    }
-
-    [Fact]
-    public async Task FieldWithNameHasError_ErrorMatches_ReturnsField()
-    {
-        var doc = await RenderAsync(emailError: "Enter an email address");
-
-        var field = Assert.FieldWithNameHasError(doc, "Email", "Enter an email address");
-
-        Assert.Equal("Email address", field.Label);
-    }
-
-    [Fact]
-    public async Task FieldWithNameHasError_FieldsBoundWithFor_FindsEachKindByName()
-    {
-        using var client = app.CreateClient();
-        using var response = await client.GetAsync(new Uri("/Fields?errors=true", UriKind.Relative), TestContext.Current.CancellationToken);
-        var doc = await Assert.HtmlResponseAsync(response, cancellationToken: TestContext.Current.CancellationToken);
-
-        foreach (var field in doc.Fields)
-        {
-            Assert.Same(field.Element, Assert.FieldWithNameHasError(doc, field.Name!, field.ErrorMessage!).Element);
-        }
-    }
-
-    [Fact]
-    public async Task FieldWithNameHasError_ItemName_FindsTheField()
-    {
-        using var client = app.CreateClient();
-        using var response = await client.GetAsync(new Uri("/ItemNames", UriKind.Relative), TestContext.Current.CancellationToken);
-        var doc = await Assert.HtmlResponseAsync(response, cancellationToken: TestContext.Current.CancellationToken);
-
-        Assert.IsType<Checkboxes>(Assert.FieldWithNameHasError(doc, "SmsUpdates", "Select how you would like to get updates"));
-        Assert.IsType<DateInput>(Assert.FieldWithNameHasError(doc, "BirthDay", "Enter your date of birth"));
-    }
-
-    [Fact]
-    public async Task FieldWithNameHasError_DifferentError_FailsWithFieldAndHtml()
-    {
-        var doc = await RenderAsync(emailError: "Enter an email address in the correct format");
-
-        var ex = AssertFailure.Throws(
-            """
-            Assert.FieldWithNameHasError() Failure: Error message differs
-            Field:    Text input: Email address
-            Expected: "Enter an email address"
-            Actual:   "Enter an email address in the correct format"
-            """,
-            () => Assert.FieldWithNameHasError(doc, "Email", "Enter an email address"),
-            htmlOf: doc.GetFieldByName("Email").Element);
-
-        AssertFailure.StackTraceStartsIn(nameof(FieldWithNameHasError_DifferentError_FailsWithFieldAndHtml), ex);
-    }
-
-    [Fact]
-    public async Task FieldWithNameHasError_FieldNotFound_FailsWithNamesOnThePage()
-    {
-        var doc = await RenderAsync();
-
-        var ex = AssertFailure.Throws(
-            """
-            Assert.FieldWithNameHasError() Failure: Field not found
-            Expected: a field named "EmailAddress"
+            Expected: a field named "Phone"
             Actual:   fields named "Name" (text input), "Email" (text input)
             """,
-            () => Assert.FieldWithNameHasError(doc, "EmailAddress", "Enter an email address"));
+            () => Assert.FieldHasError(doc, "Phone", "Enter a phone number"));
 
-        AssertFailure.StackTraceStartsIn(nameof(FieldWithNameHasError_FieldNotFound_FailsWithNamesOnThePage), ex);
+        AssertFailure.StackTraceStartsIn(nameof(FieldHasError_FieldNotFound_FailsWithNamesOnThePage), ex);
     }
 
     [Fact]
-    public async Task FieldWithNameHasNoError_NoError_ReturnsField()
-    {
-        var doc = await RenderAsync();
-
-        var field = Assert.FieldWithNameHasNoError(doc, "Email");
-
-        Assert.Equal("Email address", field.Label);
-    }
-
-    [Fact]
-    public async Task FieldWithNameHasNoError_Error_FailsWithFieldAndHtml()
+    public async Task FieldHasError_LabelInsteadOfName_FailsWithHint()
     {
         var doc = await RenderAsync(emailError: "Enter an email address");
 
         AssertFailure.Throws(
             """
-            Assert.FieldWithNameHasNoError() Failure: Field has an error
-            Field:    Text input: Email address
-            Expected: no error message
-            Actual:   "Enter an email address"
-            """,
-            () => Assert.FieldWithNameHasNoError(doc, "Email"),
-            htmlOf: doc.GetFieldByName("Email").Element);
-    }
-
-    [Fact]
-    public async Task FieldWithNameHasNoError_FieldNotFound_Fails()
-    {
-        var doc = await RenderAsync();
-
-        AssertFailure.Throws(
-            """
-            Assert.FieldWithNameHasNoError() Failure: Field not found
-            Expected: a field named "EmailAddress"
+            Assert.FieldHasError() Failure: Field not found
+            Expected: a field named "Email address"
             Actual:   fields named "Name" (text input), "Email" (text input)
+            Hint:     there's a field labelled "Email address"; use FieldByLabelHasError to find it by its label or legend
             """,
-            () => Assert.FieldWithNameHasNoError(doc, "EmailAddress"));
+            () => Assert.FieldHasError(doc, "Email address", "Enter an email address"));
     }
 
     [Fact]
@@ -243,6 +118,47 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
             htmlOf: field.Element);
 
         AssertFailure.StackTraceStartsIn(nameof(FieldHasError_Field_DifferentError_FailsWithFieldAndHtml), ex);
+    }
+
+    [Fact]
+    public async Task FieldHasNoError_NoError_ReturnsField()
+    {
+        var doc = await RenderAsync();
+
+        var field = Assert.FieldHasNoError(doc, "Email");
+
+        Assert.Equal("Email address", field.Label);
+    }
+
+    [Fact]
+    public async Task FieldHasNoError_Error_FailsWithFieldAndHtml()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address");
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldHasNoError() Failure: Field has an error
+            Field:    Text input: Email address
+            Expected: no error message
+            Actual:   "Enter an email address"
+            """,
+            () => Assert.FieldHasNoError(doc, "Email"),
+            htmlOf: doc.GetFieldByName("Email").Element);
+    }
+
+    [Fact]
+    public async Task FieldHasNoError_LabelInsteadOfName_FailsWithHint()
+    {
+        var doc = await RenderAsync();
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldHasNoError() Failure: Field not found
+            Expected: a field named "Email address"
+            Actual:   fields named "Name" (text input), "Email" (text input)
+            Hint:     there's a field labelled "Email address"; use FieldByLabelHasNoError to find it by its label or legend
+            """,
+            () => Assert.FieldHasNoError(doc, "Email address"));
     }
 
     [Fact]
@@ -269,6 +185,125 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
             """,
             () => Assert.FieldHasNoError(field),
             htmlOf: field.Element);
+    }
+
+    [Fact]
+    public async Task FieldByLabelHasError_ErrorMatches_ReturnsField()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address");
+
+        var field = Assert.FieldByLabelHasError(doc, "Email address", "Enter an email address");
+
+        Assert.IsType<TextInput>(field);
+    }
+
+    [Fact]
+    public async Task FieldByLabelHasError_FieldsBoundWithFor_FindsEachKindByLabelOrLegend()
+    {
+        var doc = await GetAsync("/Fields?errors=true");
+
+        foreach (var field in doc.Fields.Where(f => f.Label is not null))
+        {
+            Assert.Same(field.Element, Assert.FieldByLabelHasError(doc, field.Label!, field.ErrorMessage!).Element);
+        }
+    }
+
+    [Fact]
+    public async Task FieldByLabelHasError_DifferentError_FailsWithFieldAndHtml()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address in the correct format");
+
+        var ex = AssertFailure.Throws(
+            """
+            Assert.FieldByLabelHasError() Failure: Error message differs
+            Field:    Text input: Email address
+            Expected: "Enter an email address"
+            Actual:   "Enter an email address in the correct format"
+            """,
+            () => Assert.FieldByLabelHasError(doc, "Email address", "Enter an email address"),
+            htmlOf: doc.GetTextInputByLabel("Email address").Element);
+
+        AssertFailure.StackTraceStartsIn(nameof(FieldByLabelHasError_DifferentError_FailsWithFieldAndHtml), ex);
+    }
+
+    [Fact]
+    public async Task FieldByLabelHasError_FieldNotFound_FailsWithFieldsOnThePage()
+    {
+        var doc = await RenderAsync();
+
+        var ex = AssertFailure.Throws(
+            """
+            Assert.FieldByLabelHasError() Failure: Field not found
+            Expected: a field with the label or legend "Phone"
+            Actual:   fields labelled "Full name" (text input), "Email address" (text input)
+            """,
+            () => Assert.FieldByLabelHasError(doc, "Phone", "Enter a phone number"));
+
+        AssertFailure.StackTraceStartsIn(nameof(FieldByLabelHasError_FieldNotFound_FailsWithFieldsOnThePage), ex);
+    }
+
+    [Fact]
+    public async Task FieldByLabelHasError_NameInsteadOfLabel_FailsWithHint()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address");
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldByLabelHasError() Failure: Field not found
+            Expected: a field with the label or legend "Email"
+            Actual:   fields labelled "Full name" (text input), "Email address" (text input)
+            Hint:     there's a field named "Email"; use FieldHasError to find it by its name
+            """,
+            () => Assert.FieldByLabelHasError(doc, "Email", "Enter an email address"));
+    }
+
+    [Fact]
+    public async Task FieldByLabelHasNoError_NoError_ReturnsField()
+    {
+        var doc = await RenderAsync();
+
+        var field = Assert.FieldByLabelHasNoError(doc, "Email address");
+
+        Assert.Equal("Email", field.Name);
+    }
+
+    [Fact]
+    public async Task FieldByLabelHasNoError_Error_FailsWithFieldAndHtml()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address");
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldByLabelHasNoError() Failure: Field has an error
+            Field:    Text input: Email address
+            Expected: no error message
+            Actual:   "Enter an email address"
+            """,
+            () => Assert.FieldByLabelHasNoError(doc, "Email address"),
+            htmlOf: doc.GetTextInputByLabel("Email address").Element);
+    }
+
+    [Fact]
+    public async Task FieldByLabelHasNoError_NameInsteadOfLabel_FailsWithHint()
+    {
+        var doc = await RenderAsync();
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldByLabelHasNoError() Failure: Field not found
+            Expected: a field with the label or legend "Email"
+            Actual:   fields labelled "Full name" (text input), "Email address" (text input)
+            Hint:     there's a field named "Email"; use FieldHasNoError to find it by its name
+            """,
+            () => Assert.FieldByLabelHasNoError(doc, "Email"));
+    }
+
+    private async Task<IHtmlDocument> GetAsync(string url)
+    {
+        using var client = app.CreateClient();
+        using var response = await client.GetAsync(new Uri(url, UriKind.Relative), TestContext.Current.CancellationToken);
+
+        return await Assert.HtmlResponseAsync(response, cancellationToken: TestContext.Current.CancellationToken);
     }
 
     private static Task<IHtmlDocument> RenderAsync(string? emailError = null) =>

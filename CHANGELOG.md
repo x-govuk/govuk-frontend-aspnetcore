@@ -161,15 +161,16 @@ It depends on `xunit.v3.assert` (not the runner) and on exactly the same version
 var doc = await Assert.HtmlResponseAsync(response);
 
 Assert.ErrorSummaryContains(doc, "Enter your name");
-Assert.FieldHasError(doc, "Date of birth", "Date of birth must include a year");
+Assert.FieldHasError(doc, "DateOfBirth", "Date of birth must include a year");
 Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
 ```
 
 - `HtmlResponseAsync(response, expectedStatusCode)` checks the status code and content type and returns the parsed document.
 - `RedirectsTo(response, expectedLocation)` checks a redirect's `Location`, resolving a relative location against the request.
 - `ErrorSummaryContains`, `ErrorSummaryIs` (exactly these errors, in order) and `NoErrorSummary`.
-- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by its label or legend, or for a `FormField` found some other way.
-- `FieldWithNameHasError` and `FieldWithNameHasNoError`, for a field found by its name, as `GetFieldByName()` finds it, e.g. `Assert.FieldWithNameHasError(doc, "Email", "Enter an email address")`.
+- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by the name it's submitted with, as `GetFieldByName()` finds it, which is the name its model state error is keyed by. They also take a `FormField` found some other way.
+- `FieldByLabelHasError` and `FieldByLabelHasNoError`, for a field found by its label or legend instead.
+  When a field isn't found by name but there's one with that label, or the other way round, the failure suggests the other assertion.
 - `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order.
 - `NotificationBannerContains` and `SuccessNotificationBannerContains`, matching a whole line of the banner's content.
 

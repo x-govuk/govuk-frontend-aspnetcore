@@ -8,8 +8,7 @@ The assertions are added to xUnit's `Assert` class, and their failure messages s
 var doc = await Assert.HtmlResponseAsync(response);
 
 Assert.ErrorSummaryContains(doc, "Enter your name");
-Assert.FieldHasError(doc, "Full name", "Enter your name");
-Assert.FieldWithNameHasError(doc, "Name", "Enter your name");
+Assert.FieldHasError(doc, "Name", "Enter your name");
 ```
 
 ```
@@ -17,6 +16,8 @@ Assert.ErrorSummaryContains() Failure: Error not found
 Expected: "Enter your name"
 Actual:   ["Enter an email address"]
 ```
+
+`FieldHasError` finds the field by the name it's submitted with, which is the name its model state error is keyed by. Use `FieldByLabelHasError` to find it by its label or legend instead.
 
 Calling them as `Assert.X(...)` needs C# 14, the default for `net10.0`. On older language versions, call them on `GovUkAssert` instead, e.g. `GovUkAssert.ErrorSummaryContains(doc, "…")`.
 

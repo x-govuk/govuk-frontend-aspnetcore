@@ -210,6 +210,7 @@ Everything else is checked with Playwright's own matchers on these locators, e.g
 ### Fixes
 
 - `<govuk-pagination>` with generated items now shows a skipped page instead of an ellipsis when the ellipsis would replace only that one page, as in the [guidance's examples](https://design-system.service.gov.uk/components/pagination/). For example, page 4 of 100 is now `1 2 3 [4] 5 … 100` rather than `1 … 3 [4] 5 … 100`.
+- `<govuk-date-input>` with neither `for` nor `name-prefix`, e.g. with a `name` on each item, no longer throws when it has an error message without `error-items`. All its items are shown with an error, as when the error doesn't come from model binding.
 
 ## 5.1.0
 

@@ -17,7 +17,7 @@ Expected: "Enter your name"
 Actual:   ["Enter an email address"]
 ```
 
-`FieldHasError` finds the field by the name it's submitted with, which is the name its model state error is keyed by. Use `FieldByLabelHasError` to find it by its label or legend instead.
+`FieldHasError` finds the field by the name it's submitted with, which is the name its model state error is keyed by. To find it by its label or legend instead, pass the field: `Assert.FieldHasError(doc.GetFieldByLabelOrLegend("Full name"), "Enter your name")`.
 
 Calling them as `Assert.X(...)` needs C# 14, the default for `net10.0`. On older language versions, call them on `GovUkAssert` instead, e.g. `GovUkAssert.ErrorSummaryContains(doc, "…")`.
 

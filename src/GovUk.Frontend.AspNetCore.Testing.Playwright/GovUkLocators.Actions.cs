@@ -40,6 +40,24 @@ public static partial class GovUkLocators
             page.GetSelectByLabel(label).SelectOptionByTextAsync(optionText);
 
         /// <summary>
+        /// Fills in the text input, password input, textarea or character count labelled <paramref name="label"/>,
+        /// whichever kind it is.
+        /// </summary>
+        /// <param name="label">The field's label.</param>
+        /// <param name="value">The value to fill in.</param>
+        public Task FillFieldByLabelAsync(string label, string value) =>
+            GetControl(LocatorScope.For(page), label, FillableControlSelector).FillAsync(value);
+
+        /// <summary>
+        /// Fills in the text input, password input, textarea or character count named <paramref name="name"/>,
+        /// whichever kind it is.
+        /// </summary>
+        /// <param name="name">The field's name, e.g. <c>Email</c>.</param>
+        /// <param name="value">The value to fill in.</param>
+        public Task FillFieldByNameAsync(string name, string value) =>
+            GetNamedControl(LocatorScope.For(page), name, FillableControlSelector).FillAsync(value);
+
+        /// <summary>
         /// Submits a form by clicking the GOV.UK button whose text is <paramref name="buttonText"/>, and waits for the
         /// response to the navigation it starts.
         /// </summary>

@@ -32,6 +32,22 @@ public class ActionTests(BrowserApp app)
     }
 
     [Fact]
+    public async Task FillFieldByLabelAndName_FillTextLikeFieldsOfAnyKind()
+    {
+        var page = await GotoAsync("/Fields");
+
+        await page.FillFieldByLabelAsync("Full name", "Ana Lopez");
+        await page.FillFieldByLabelAsync("Describe your job", "Nurse");
+        await page.FillFieldByNameAsync("Detail", "More detail");
+        await page.FillFieldByNameAsync("Password", "secret");
+
+        await Expect(page.GetTextInputByLabel("Full name").Input).ToHaveValueAsync("Ana Lopez");
+        await Expect(page.GetCharacterCountByLabel("Describe your job").Textarea).ToHaveValueAsync("Nurse");
+        await Expect(page.GetTextareaByLabel("Can you provide more detail?").Textarea).ToHaveValueAsync("More detail");
+        await Expect(page.GetPasswordInputByLabel("Password").Input).ToHaveValueAsync("secret");
+    }
+
+    [Fact]
     public async Task SubmitFormByButtonTextAsync_ThenWebAssertions_SeeTheNewPage()
     {
         var page = await GotoAsync("/Fields");

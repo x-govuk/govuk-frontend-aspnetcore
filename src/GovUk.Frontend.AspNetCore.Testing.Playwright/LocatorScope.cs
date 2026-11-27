@@ -62,6 +62,16 @@ internal static class Selectors
         "xpath=ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-form-group ')][1]";
 
     /// <summary>
+    /// Formats <paramref name="value"/> as a quoted CSS attribute value, e.g. for <c>[name="..."]</c>.
+    /// </summary>
+    public static string AttributeValue(string value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+
+        return $"\"{value.Replace("\\", "\\\\", StringComparison.Ordinal).Replace("\"", "\\\"", StringComparison.Ordinal)}\"";
+    }
+
+    /// <summary>
     /// Matches text that is exactly <paramref name="text"/>, allowing for differences in whitespace.
     /// </summary>
     public static Regex ExactText(string text) => new($"^\\s*{Words(text)}\\s*$");

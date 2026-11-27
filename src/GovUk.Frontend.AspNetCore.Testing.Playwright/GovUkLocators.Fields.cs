@@ -73,19 +73,19 @@ public static partial class GovUkLocators
         /// Gets the date input whose legend is <paramref name="legend"/>.
         /// </summary>
         public DateInputLocator GetDateInputByLegend(string legend) =>
-            new(GetFieldset(LocatorScope.For(page), legend, DateInputSelector));
+            new(GetFieldset(LocatorScope.For(page), legend, DateInputSelector).Locator(DateInputSelector));
 
         /// <summary>
         /// Gets the radios whose legend is <paramref name="legend"/>.
         /// </summary>
         public RadiosLocator GetRadiosByLegend(string legend) =>
-            new(GetFieldset(LocatorScope.For(page), legend, RadiosSelector));
+            new(GetFieldset(LocatorScope.For(page), legend, RadiosSelector).Locator(RadiosSelector));
 
         /// <summary>
         /// Gets the checkboxes whose legend is <paramref name="legend"/>.
         /// </summary>
         public CheckboxesLocator GetCheckboxesByLegend(string legend) =>
-            new(GetFieldset(LocatorScope.For(page), legend, CheckboxesSelector));
+            new(GetFieldset(LocatorScope.For(page), legend, CheckboxesSelector).Locator(CheckboxesSelector));
 
         /// <summary>
         /// Locates the field of any kind that has the name <paramref name="name"/>.
@@ -166,19 +166,19 @@ public static partial class GovUkLocators
         /// Gets the date input within this locator whose legend is <paramref name="legend"/>.
         /// </summary>
         public DateInputLocator GetDateInputByLegend(string legend) =>
-            new(GetFieldset(LocatorScope.For(locator), legend, DateInputSelector));
+            new(GetFieldset(LocatorScope.For(locator), legend, DateInputSelector).Locator(DateInputSelector));
 
         /// <summary>
         /// Gets the radios within this locator whose legend is <paramref name="legend"/>.
         /// </summary>
         public RadiosLocator GetRadiosByLegend(string legend) =>
-            new(GetFieldset(LocatorScope.For(locator), legend, RadiosSelector));
+            new(GetFieldset(LocatorScope.For(locator), legend, RadiosSelector).Locator(RadiosSelector));
 
         /// <summary>
         /// Gets the checkboxes within this locator whose legend is <paramref name="legend"/>.
         /// </summary>
         public CheckboxesLocator GetCheckboxesByLegend(string legend) =>
-            new(GetFieldset(LocatorScope.For(locator), legend, CheckboxesSelector));
+            new(GetFieldset(LocatorScope.For(locator), legend, CheckboxesSelector).Locator(CheckboxesSelector));
 
         /// <summary>
         /// Locates the field of any kind that has the name <paramref name="name"/>.
@@ -222,11 +222,11 @@ public static partial class GovUkLocators
     private static FieldLocator GetFieldByName(LocatorScope scope, string name)
     {
         var control = GetNamedControl(scope, name, LabelledControlSelector);
-        var fieldset = GetNamedDateInput(scope, name)
+        var container = GetNamedDateInput(scope, name)
             .Or(GetNamedChoices(scope, name, "govuk-radios"))
             .Or(GetNamedChoices(scope, name, "govuk-checkboxes"));
 
-        return new FieldLocator(control.Or(fieldset).Locator(Selectors.ClosestFormGroup));
+        return new FieldLocator(control.Or(container).Locator(Selectors.ClosestFormGroup));
     }
 
     private static TLocator GetFieldByName<TLocator>(LocatorScope scope, string name)
@@ -269,20 +269,21 @@ public static partial class GovUkLocators
             .Concat(_datePartNames.SelectMany(part => new[] { $"{name}.{part}", $"{name}-{part}" }))
             .Select(n => $"[name={Selectors.AttributeValue(n)} i]");
 
-        return scope.Locator("fieldset").Filter(new()
+        return scope.Locator(".govuk-date-input").Filter(new()
         {
-            Has = scope.Page.Locator($"{DateInputSelector} .govuk-date-input__input:is({string.Join(", ", names)})")
+            Has = scope.Page.Locator($".govuk-date-input__input:is({string.Join(", ", names)})")
         });
     }
 
-    // Radios and checkboxes are named by their items' inputs, which may have names of their own.
+    // Radios and checkboxes are named by their items' inputs, which may have names of their own. They may not be in a
+    // fieldset, so they're found by their own container.
     private static ILocator GetNamedChoices(LocatorScope scope, string name, string block)
     {
         ArgumentNullException.ThrowIfNull(name);
 
-        return scope.Locator("fieldset").Filter(new()
+        return scope.Locator($".{block}").Filter(new()
         {
-            Has = scope.Page.Locator($":scope > .{block} > .{block}__item > .{block}__input[name={Selectors.AttributeValue(name)}]")
+            Has = scope.Page.Locator($":scope > .{block}__item > .{block}__input[name={Selectors.AttributeValue(name)}]")
         });
     }
 

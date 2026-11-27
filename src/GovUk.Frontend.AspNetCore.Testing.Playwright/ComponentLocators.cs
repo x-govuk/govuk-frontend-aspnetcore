@@ -61,6 +61,13 @@ public sealed class NotificationBannerLocator
     }
 
     /// <summary>
+    /// Locates the link in the banner's content whose text is <paramref name="text"/>.
+    /// </summary>
+    /// <param name="text">The link's text, e.g. <c>View your application</c>.</param>
+    public ILocator GetLinkByText(string text) =>
+        Content.Locator("a").Filter(new() { HasTextRegex = Selectors.ExactText(text) });
+
+    /// <summary>
     /// Gets the notification banner's root element. A success banner has the
     /// <c>govuk-notification-banner--success</c> class.
     /// </summary>

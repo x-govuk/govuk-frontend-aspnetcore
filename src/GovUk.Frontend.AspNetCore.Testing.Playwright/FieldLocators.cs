@@ -310,6 +310,12 @@ public sealed class RadiosLocator : FieldLocator
     /// Gets the radio item labelled <paramref name="label"/>.
     /// </summary>
     public ChoiceItemLocator GetItemByLabel(string label) => ChoiceItemLocator.Create(Items, label, "govuk-radios");
+
+    /// <summary>
+    /// Locates the item whose input has the value <paramref name="value"/>, e.g. <c>email</c>.
+    /// </summary>
+    /// <param name="value">The item's value.</param>
+    public ChoiceItemLocator GetItemByValue(string value) => ChoiceItemLocator.CreateByValue(Items, value, "govuk-radios");
 }
 
 /// <summary>
@@ -333,6 +339,13 @@ public sealed class CheckboxesLocator : FieldLocator
     /// </summary>
     public ChoiceItemLocator GetItemByLabel(string label) =>
         ChoiceItemLocator.Create(Items, label, "govuk-checkboxes");
+
+    /// <summary>
+    /// Locates the item whose input has the value <paramref name="value"/>, e.g. <c>british</c>.
+    /// </summary>
+    /// <param name="value">The item's value.</param>
+    public ChoiceItemLocator GetItemByValue(string value) =>
+        ChoiceItemLocator.CreateByValue(Items, value, "govuk-checkboxes");
 }
 
 /// <summary>
@@ -378,4 +391,10 @@ public sealed class ChoiceItemLocator
 
     internal static ChoiceItemLocator Create(ILocator items, string label, string block) =>
         new(items.Filter(new() { Has = items.Page.GetByLabel(label, new() { Exact = true }) }), block);
+
+    internal static ChoiceItemLocator CreateByValue(ILocator items, string value, string block) =>
+        new(items.Filter(new()
+        {
+            Has = items.Page.Locator($":scope > .{block}__input[value={Selectors.AttributeValue(value)}]")
+        }), block);
 }

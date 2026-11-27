@@ -20,6 +20,11 @@ public static partial class GovUkLocators
     private const string RadiosSelector = ":scope > .govuk-radios";
     private const string CheckboxesSelector = ":scope > .govuk-checkboxes";
 
+    private static readonly string[] _datePartNames = ["day", "month", "year"];
+
+    private const string FillableControlSelector =
+        "input.govuk-input:not(.govuk-date-input__input), textarea.govuk-textarea";
+
     extension(IPage page)
     {
         /// <summary>
@@ -81,6 +86,36 @@ public static partial class GovUkLocators
         /// </summary>
         public CheckboxesLocator GetCheckboxesByLegend(string legend) =>
             new(GetFieldset(LocatorScope.For(page), legend, CheckboxesSelector));
+
+        /// <summary>
+        /// Locates the field of any kind that has the name <paramref name="name"/>.
+        /// </summary>
+        /// <remarks>
+        /// A field is found by the name it's submitted with, which for a date input is the prefix of its inputs' names,
+        /// e.g. <c>DateOfBirth</c> for <c>DateOfBirth.Day</c> or <c>dob</c> for <c>dob-day</c>, or by the name of any of
+        /// its inputs, e.g. <c>EmailUpdates</c> for checkboxes whose items have names of their own.
+        /// </remarks>
+        /// <param name="name">The field's name, e.g. <c>Email</c>.</param>
+        public FieldLocator GetFieldByName(string name) => GetFieldByName(LocatorScope.For(page), name);
+
+        /// <summary>
+        /// Locates the field of the kind <typeparamref name="TLocator"/> that has the name <paramref name="name"/>, e.g.
+        /// <c>GetFieldByName&lt;RadiosLocator&gt;("Contact")</c>.
+        /// </summary>
+        /// <remarks>
+        /// A field is found by name as <c>GetFieldByName(string)</c> finds it; fields of other kinds aren't matched.
+        /// </remarks>
+        /// <typeparam name="TLocator">
+        /// The kind of field: <see cref="FieldLocator"/> for any kind, or one of <see cref="TextInputLocator"/>,
+        /// <see cref="TextareaLocator"/>, <see cref="CharacterCountLocator"/>, <see cref="SelectLocator"/>,
+        /// <see cref="PasswordInputLocator"/>, <see cref="FileUploadLocator"/>, <see cref="DateInputLocator"/>,
+        /// <see cref="RadiosLocator"/> or <see cref="CheckboxesLocator"/>.
+        /// </typeparam>
+        /// <param name="name">The field's name, e.g. <c>Email</c>.</param>
+        /// <exception cref="ArgumentException"><typeparamref name="TLocator"/> isn't one of those kinds.</exception>
+        public TLocator GetFieldByName<TLocator>(string name)
+            where TLocator : FieldLocator =>
+            GetFieldByName<TLocator>(LocatorScope.For(page), name);
     }
 
     extension(ILocator locator)
@@ -144,6 +179,36 @@ public static partial class GovUkLocators
         /// </summary>
         public CheckboxesLocator GetCheckboxesByLegend(string legend) =>
             new(GetFieldset(LocatorScope.For(locator), legend, CheckboxesSelector));
+
+        /// <summary>
+        /// Locates the field of any kind that has the name <paramref name="name"/>.
+        /// </summary>
+        /// <remarks>
+        /// A field is found by the name it's submitted with, which for a date input is the prefix of its inputs' names,
+        /// e.g. <c>DateOfBirth</c> for <c>DateOfBirth.Day</c> or <c>dob</c> for <c>dob-day</c>, or by the name of any of
+        /// its inputs, e.g. <c>EmailUpdates</c> for checkboxes whose items have names of their own.
+        /// </remarks>
+        /// <param name="name">The field's name, e.g. <c>Email</c>.</param>
+        public FieldLocator GetFieldByName(string name) => GetFieldByName(LocatorScope.For(locator), name);
+
+        /// <summary>
+        /// Locates the field of the kind <typeparamref name="TLocator"/> that has the name <paramref name="name"/>, e.g.
+        /// <c>GetFieldByName&lt;RadiosLocator&gt;("Contact")</c>.
+        /// </summary>
+        /// <remarks>
+        /// A field is found by name as <c>GetFieldByName(string)</c> finds it; fields of other kinds aren't matched.
+        /// </remarks>
+        /// <typeparam name="TLocator">
+        /// The kind of field: <see cref="FieldLocator"/> for any kind, or one of <see cref="TextInputLocator"/>,
+        /// <see cref="TextareaLocator"/>, <see cref="CharacterCountLocator"/>, <see cref="SelectLocator"/>,
+        /// <see cref="PasswordInputLocator"/>, <see cref="FileUploadLocator"/>, <see cref="DateInputLocator"/>,
+        /// <see cref="RadiosLocator"/> or <see cref="CheckboxesLocator"/>.
+        /// </typeparam>
+        /// <param name="name">The field's name, e.g. <c>Email</c>.</param>
+        /// <exception cref="ArgumentException"><typeparamref name="TLocator"/> isn't one of those kinds.</exception>
+        public TLocator GetFieldByName<TLocator>(string name)
+            where TLocator : FieldLocator =>
+            GetFieldByName<TLocator>(LocatorScope.For(locator), name);
     }
 
     private static FieldLocator GetFieldByLabelOrLegend(LocatorScope scope, string labelOrLegend)
@@ -152,6 +217,73 @@ public static partial class GovUkLocators
         var fieldset = GetFieldset(scope, labelOrLegend, $"{DateInputSelector}, {RadiosSelector}, {CheckboxesSelector}");
 
         return new FieldLocator(control.Or(fieldset).Locator(Selectors.ClosestFormGroup));
+    }
+
+    private static FieldLocator GetFieldByName(LocatorScope scope, string name)
+    {
+        var control = GetNamedControl(scope, name, LabelledControlSelector);
+        var fieldset = GetNamedDateInput(scope, name)
+            .Or(GetNamedChoices(scope, name, "govuk-radios"))
+            .Or(GetNamedChoices(scope, name, "govuk-checkboxes"));
+
+        return new FieldLocator(control.Or(fieldset).Locator(Selectors.ClosestFormGroup));
+    }
+
+    private static TLocator GetFieldByName<TLocator>(LocatorScope scope, string name)
+        where TLocator : FieldLocator
+    {
+        ArgumentNullException.ThrowIfNull(name);
+
+        var type = typeof(TLocator);
+
+        FieldLocator field =
+            type == typeof(FieldLocator) ? GetFieldByName(scope, name)
+            : type == typeof(TextInputLocator) ? new TextInputLocator(GetNamedControl(scope, name, TextInputSelector))
+            : type == typeof(TextareaLocator) ? new TextareaLocator(GetNamedControl(scope, name, TextareaSelector))
+            : type == typeof(CharacterCountLocator) ? new CharacterCountLocator(GetNamedControl(scope, name, CharacterCountSelector))
+            : type == typeof(SelectLocator) ? new SelectLocator(GetNamedControl(scope, name, SelectSelector))
+            : type == typeof(PasswordInputLocator) ? new PasswordInputLocator(GetNamedControl(scope, name, PasswordInputSelector))
+            : type == typeof(FileUploadLocator) ? new FileUploadLocator(GetNamedControl(scope, name, FileUploadSelector))
+            : type == typeof(DateInputLocator) ? new DateInputLocator(GetNamedDateInput(scope, name))
+            : type == typeof(RadiosLocator) ? new RadiosLocator(GetNamedChoices(scope, name, "govuk-radios"))
+            : type == typeof(CheckboxesLocator) ? new CheckboxesLocator(GetNamedChoices(scope, name, "govuk-checkboxes"))
+            : throw new ArgumentException($"Fields can't be located as {type.Name}.", nameof(TLocator));
+
+        return (TLocator)field;
+    }
+
+    private static ILocator GetNamedControl(LocatorScope scope, string name, string selector)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+
+        return scope.Locator(selector).And(scope.Locator($"[name={Selectors.AttributeValue(name)}]"));
+    }
+
+    // A date input is named by the prefix of its inputs' names, e.g. DateOfBirth for DateOfBirth.Day, or by an input's
+    // own name.
+    private static ILocator GetNamedDateInput(LocatorScope scope, string name)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+
+        var names = new[] { name }
+            .Concat(_datePartNames.SelectMany(part => new[] { $"{name}.{part}", $"{name}-{part}" }))
+            .Select(n => $"[name={Selectors.AttributeValue(n)} i]");
+
+        return scope.Locator("fieldset").Filter(new()
+        {
+            Has = scope.Page.Locator($"{DateInputSelector} .govuk-date-input__input:is({string.Join(", ", names)})")
+        });
+    }
+
+    // Radios and checkboxes are named by their items' inputs, which may have names of their own.
+    private static ILocator GetNamedChoices(LocatorScope scope, string name, string block)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+
+        return scope.Locator("fieldset").Filter(new()
+        {
+            Has = scope.Page.Locator($":scope > .{block} > .{block}__item > .{block}__input[name={Selectors.AttributeValue(name)}]")
+        });
     }
 
     /// <summary>

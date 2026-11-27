@@ -209,6 +209,66 @@ public class FieldLocatorTests(BrowserApp app)
         await Expect(page.GetRadiosByLegend("How would you like to be contacted?").ErrorMessage).ToHaveCountAsync(0);
     }
 
+    [Theory]
+    [InlineData("Name", "Full name")]
+    [InlineData("Detail", "Can you provide more detail?")]
+    [InlineData("JobDescription", "Describe your job")]
+    [InlineData("Country", "Country")]
+    [InlineData("Password", "Password")]
+    [InlineData("Upload", "Upload a file")]
+    [InlineData("DateOfBirth", "Date of birth")]
+    [InlineData("DateOfBirth.Day", "Date of birth")]
+    [InlineData("Contact", "How would you like to be contacted?")]
+    [InlineData("Email", "Email address")]
+    [InlineData("Nationality", "What is your nationality?")]
+    public async Task GetFieldByName_FindsAnyKindOfField(string name, string expectedLabel)
+    {
+        var page = await GotoAsync("/Fields");
+
+        await Expect(page.GetFieldByName(name).Label).ToHaveTextAsync(expectedLabel);
+    }
+
+    [Fact]
+    public async Task GetFieldByNameOfKind_LocatesThatKindOfField()
+    {
+        var page = await GotoAsync("/Fields?errors=true");
+
+        await Expect(page.GetFieldByName<TextInputLocator>("Name").Input).ToHaveValueAsync("Sarah Philips");
+        await Expect(page.GetFieldByName<TextareaLocator>("Detail").Textarea).ToHaveValueAsync("Some detail");
+        await Expect(page.GetFieldByName<CharacterCountLocator>("JobDescription").Status).ToHaveTextAsync("You have 193 characters remaining");
+        await Expect(page.GetFieldByName<SelectLocator>("Country").Select).ToHaveValueAsync("wales");
+        await Expect(page.GetFieldByName<DateInputLocator>("DateOfBirth").Day).ToHaveCountAsync(1);
+        await Expect(page.GetFieldByName<RadiosLocator>("Contact").GetItemByValue("email").Input).ToBeCheckedAsync();
+        await Expect(page.GetFieldByName<CheckboxesLocator>("Nationality").Items).ToHaveCountAsync(3);
+        await Expect(page.GetFieldByName<FieldLocator>("Name").ErrorMessage).ToHaveErrorMessageAsync("Enter your full name");
+    }
+
+    [Fact]
+    public async Task GetFieldByNameOfKind_DoesNotFindOtherKindsOfField()
+    {
+        var page = await GotoAsync("/Fields");
+
+        await Expect(page.GetFieldByName<RadiosLocator>("Name").Locator).ToHaveCountAsync(0);
+        await Expect(page.GetFieldByName<TextInputLocator>("Contact").Input).ToHaveCountAsync(0);
+        await Expect(page.GetFieldByName<TextInputLocator>("DateOfBirth").Input).ToHaveCountAsync(0);
+        await Expect(page.GetFieldByName("Missing").Locator).ToHaveCountAsync(0);
+    }
+
+    [Fact]
+    public async Task GetItemByValue_LocatesTheItemWithThatValue()
+    {
+        var page = await GotoAsync("/Fields?errors=true");
+
+        var contact = page.GetRadiosByLegend("How would you like to be contacted?");
+        await Expect(contact.GetItemByValue("email").Label).ToHaveTextAsync("Email");
+        await Expect(contact.GetItemByValue("email").ConditionalContent).ToBeVisibleAsync();
+        await Expect(contact.GetItemByValue("phone").Hint).ToHaveTextAsync("We'll text you");
+        await Expect(contact.GetItemByValue("post").Locator).ToHaveCountAsync(0);
+
+        var nationality = page.GetCheckboxesByLegend("What is your nationality?");
+        await Expect(nationality.GetItemByValue("other").Label).ToHaveTextAsync("Citizen of another country");
+    }
+
     private async Task<IPage> GotoAsync(string url)
     {
         var page = await app.NewPageAsync();

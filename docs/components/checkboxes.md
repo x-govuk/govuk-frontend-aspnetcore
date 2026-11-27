@@ -118,6 +118,38 @@
 ```
 
 
+### Example with items generated from an enum
+
+When `for` is bound to a collection of an enum type (e.g. `Country[]` or `List<Country>`) and no items are specified, an item is generated for each member of the enum.
+The label comes from the member's `[Display(Name)]` (or its name), the hint from `[Display(Description)]`, and items are ordered by `[Display(Order)]`.
+Names and descriptions are localized in the same way as MVC localizes `[Display(Name)]` with `AddDataAnnotationsLocalization()`.
+The item's value is the member's numeric value, as with `Html.GetEnumSelectList()`. Use `exclude-values` to leave members out.
+
+`for` can also be bound to a single `[Flags]` enum (or nullable `[Flags]` enum). An item is generated for each member that is a single bit;
+the zero member (e.g. `None`) and members that combine other members are left out. An item is checked when the model has all of its member's bits set.
+When the form is submitted, MVC's model binding combines the checked values into a single value of the enum; no custom model binder is needed.
+
+To customize some of the items, add `generate-items="true"` and specify those items. An item whose `value` is a member's name or numeric value replaces that member's generated item,
+using the generated label and hint if it doesn't have its own. Dividers and other items go before the next item that matches a member, or at the end.
+
+<img alt="Checkboxes with items generated from an enum example" src="../images/checkboxes-from-enum-example.png" />
+
+```razor
+<govuk-checkboxes for="CountriesTravellingTo" generate-items="true">
+    <legend is-page-heading="true" class="govuk-fieldset__legend--l">
+        Will you be travelling to any of these countries?
+    </legend>
+
+    <hint>
+        Select all countries that apply
+    </hint>
+
+    <divider>or</divider>
+    <checkboxes-item value="None" behavior="CheckboxesItemBehavior.Exclusive" />
+</govuk-checkboxes>
+```
+
+
 ### Example with error message
 <img alt="Checkboxes with error message example" src="../images/checkboxes-with-error-example.png" />
 
@@ -199,9 +231,11 @@
 | --- | --- | --- |
 | `checkboxes-*` |  | Additional attributes for the container element that wraps the items. |
 | `described-by` | `string` | One or more element IDs to add to the `aria-describedby` attribute of the generated elements. |
+| `exclude-values` | `IEnumerable<System.Enum>` | Members of the enum that `For` is bound to that shouldn't have items generated for them. Only applies when items are generated; see `GenerateItems`. |
 | `fieldset` | `bool` | Whether a `fieldset` should be generated to wrap the component. A `fieldset` is generated automatically when a `govuk-checkboxes-fieldset` element or a `govuk-checkboxes-fieldset-legend` element is used, or when any `fieldset-*`, `legend-*` or `legend-is-page-heading` attribute is specified; this attribute is only required when a `fieldset` is wanted but none of those are used.  The legend's content is deduced from the `For` expression's metadata. |
 | `fieldset-*` |  | Additional attributes for the generated `fieldset` element. |
 | `for` | `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` | An expression to be evaluated against the current model. |
+| `generate-items` | `bool?` | Whether to generate an item for each member of the enum that `For` is bound to. `For` must be bound to a collection of an enum type, or to a single `[Flags]` enum (or nullable `[Flags]` enum). Each item's label comes from the member's `[Display(Name)]` (or its name), its hint from `[Display(Description)]`, and items are ordered by `[Display(Order)]`. Each item's value is the member's numeric value.   For a `[Flags]` enum, items are generated only for members that are a single bit; the zero member and combinations of other members are left out. An item is checked when the model has all of its member's bits set. When the form is submitted, MVC's model binding combines the checked values into a single value of the enum.   A `<govuk-checkboxes-item>` element whose `value` is a member's name or numeric value replaces that member's generated item; if it has no content or hint, the generated ones are used. Any other item or divider goes before the next item that matches a member, or at the end.   The default is `true` when `For` is bound to a collection of an enum type or a `[Flags]` enum and no items are specified, otherwise `false`. |
 | `id-prefix` | `string` | The prefix to use when generating IDs for the hint, error message and items. Required unless `For` or `Name` is specified. |
 | `ignore-modelstate-errors` | `bool?` | Whether the `Errors` for the `For` expression should be used to deduce an error message. |
 | `legend-*` |  | Additional attributes for the generated `fieldset`'s `legend` element. These are combined with any attributes specified on a `govuk-checkboxes-fieldset-legend` element; where both specify the same attribute the one on the element wins, except for `class`, where the two values are combined. |

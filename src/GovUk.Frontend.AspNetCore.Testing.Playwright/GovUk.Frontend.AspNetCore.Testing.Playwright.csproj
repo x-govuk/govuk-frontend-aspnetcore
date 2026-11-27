@@ -24,7 +24,7 @@
     <!-- Deliberately no reference to the library or to GovUk.Frontend.AspNetCore.Testing: browser tests may run
          against a deployed app, and nothing here needs ASP.NET Core. The version still moves in lockstep through
          MinVer. -->
-    <PackageReference Include="Microsoft.Playwright" Version="1.62.0" />
+    <PackageReference Include="Microsoft.Playwright" Version="1.65.1" />
   </ItemGroup>
 
 </Project>

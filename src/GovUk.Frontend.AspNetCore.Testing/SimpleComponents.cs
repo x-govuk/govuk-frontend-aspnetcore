@@ -139,3 +139,73 @@ public sealed class HiddenInput
     /// <inheritdoc/>
     public override string ToString() => $"{Name}={Value}";
 }
+
+/// <summary>
+/// A warning text component.
+/// </summary>
+public sealed class WarningText
+{
+    internal const string Selector = ".govuk-warning-text";
+
+    internal WarningText(IElement element)
+    {
+        Element = element;
+
+        var text = Lookup.Child(element, "govuk-warning-text__text");
+        Text = TextExtraction.GetText(text);
+        IconFallbackText = text is null ? null : TextExtraction.GetVisuallyHiddenText(text);
+    }
+
+    /// <summary>
+    /// Gets the component's root element.
+    /// </summary>
+    public IElement Element { get; }
+
+    /// <summary>
+    /// Gets the warning, e.g. <c>You can be fined up to £5,000 if you do not register.</c>, without the icon or the
+    /// visually hidden text read out in its place.
+    /// </summary>
+    public string Text { get; }
+
+    /// <summary>
+    /// Gets the visually hidden text read out in place of the icon, e.g. <c>Warning</c>, or <see langword="null"/> if
+    /// there isn't any.
+    /// </summary>
+    public string? IconFallbackText { get; }
+
+    /// <inheritdoc/>
+    public override string ToString() => $"Warning text: {Text}";
+}
+
+/// <summary>
+/// An inset text component.
+/// </summary>
+public sealed class InsetText
+{
+    internal const string Selector = ".govuk-inset-text";
+
+    internal InsetText(IElement element)
+    {
+        Element = element;
+        TextLines = TextExtraction.GetLines(element);
+        Text = string.Join(" ", TextLines);
+    }
+
+    /// <summary>
+    /// Gets the component's element.
+    /// </summary>
+    public IElement Element { get; }
+
+    /// <summary>
+    /// Gets the component's text as a single line.
+    /// </summary>
+    public string Text { get; }
+
+    /// <summary>
+    /// Gets the lines of the component's text, as split by line breaks and block-level elements.
+    /// </summary>
+    public IReadOnlyList<string> TextLines { get; }
+
+    /// <inheritdoc/>
+    public override string ToString() => $"Inset text: {Text}";
+}

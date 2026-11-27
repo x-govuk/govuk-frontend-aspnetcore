@@ -1073,6 +1073,55 @@ public class DateInputTagHelperTests : TagHelperTestBase<DateInputTagHelper>
     }
 
     [Fact]
+    public async Task ProcessAsync_ErrorItemsNotSpecifiedAndNoForOrNamePrefix_AllItemsHaveErrors()
+    {
+        // Arrange
+        var viewContext = CreateViewContext();
+
+        var context = CreateTagHelperContext();
+
+        var output = CreateTagHelperOutput(
+            getChildContentAsync: (useCachedResult, encoder) =>
+            {
+                var dateInputContext = context.GetContextItem<DateInputContext>();
+
+                dateInputContext.SetErrorMessage(
+                    errorFields: null,
+                    visuallyHiddenText: null,
+                    attributes: [],
+                    html: new TemplateString("Error"),
+                    tagName: DateInputErrorMessageTagHelper.TagName);
+
+                var tagHelperContent = new DefaultTagHelperContent();
+                return Task.FromResult<TagHelperContent>(tagHelperContent);
+            });
+
+        var (componentGenerator, getActualOptions) = CreateComponentGenerator<DateInputOptions>(nameof(IComponentGenerator.GenerateDateInputAsync));
+
+        var tagHelper = new DateInputTagHelper(componentGenerator, CreateOptions())
+        {
+            ErrorMessagePrefix = "Your date",
+            Id = "dateinput-id",
+            ViewContext = viewContext
+        };
+
+        tagHelper.Init(context);
+
+        // Act
+        var exception = await Record.ExceptionAsync(() => tagHelper.ProcessAsync(context, output));
+
+        // Assert
+        Assert.Null(exception);
+        var actualOptions = getActualOptions();
+        Assert.NotNull(actualOptions.Items);
+        Assert.Collection(
+            actualOptions.Items,
+            day => AssertItemHasExpectedError(day, true),
+            month => AssertItemHasExpectedError(month, true),
+            year => AssertItemHasExpectedError(year, true));
+    }
+
+    [Fact]
     public async Task ProcessAsync_ErrorItemsSpecifiedAndErrorsFromModelBinder_UsesSpecifiedErrorItems()
     {
         // Arrange

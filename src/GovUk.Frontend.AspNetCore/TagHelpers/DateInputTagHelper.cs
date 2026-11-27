@@ -548,7 +548,11 @@ public class DateInputTagHelper : TagHelper
             modelName = _modelHelper.GetFullHtmlFieldName(ViewContext, For.Name);
         }
 
-        Debug.Assert(modelName is not null);
+        if (modelName is null)
+        {
+            // Without a model name there's no model state entry to infer the items with errors from.
+            return DateInputItemTypes.All;
+        }
 
         var invalidDateException = ViewContext!.ModelState[modelName]?.Errors.FirstOrDefault(e => e.Exception is DateInputParseException)
             ?.Exception as DateInputParseException;

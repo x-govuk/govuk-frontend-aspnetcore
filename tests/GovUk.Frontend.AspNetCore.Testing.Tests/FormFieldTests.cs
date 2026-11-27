@@ -866,6 +866,15 @@ public class FormFieldTests
     }
 
     [Fact]
+    public void Fields_ScopeIsTheField_IncludesIt()
+    {
+        var doc = Render.Document("<div class=\"govuk-form-group\"><label for=\"x\">X</label><input class=\"govuk-input\" id=\"x\" name=\"X\"></div>");
+        var input = doc.GetFieldByName("X");
+
+        Assert.Same(input.Element, Assert.Single(input.Element.Fields).Element);
+    }
+
+    [Fact]
     public async Task GetTextInputByLabel_WrongKind_ListsKindsOfFields()
     {
         var doc = await RenderFormAsync();

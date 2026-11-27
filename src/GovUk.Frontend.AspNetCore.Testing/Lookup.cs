@@ -65,7 +65,19 @@ internal static class Lookup
         Single(scope, candidates, _ => true, _ => "", subject, $"at most one {subject.Singular}", required: false);
 
     public static IReadOnlyList<T> All<T>(IParentNode scope, string selector, Func<IElement, T> create) =>
-        scope.QuerySelectorAll(selector).Select(create).ToArray();
+        QueryAll(scope, selector).Select(create).ToArray();
+
+    /// <summary>
+    /// Gets the elements in <paramref name="scope"/> that match <paramref name="selector"/>, including
+    /// <paramref name="scope"/> itself when it's an element that matches, so that a component can be looked up in
+    /// its own element, e.g. a summary list's rows in its <c>&lt;dl&gt;</c>.
+    /// </summary>
+    public static IEnumerable<IElement> QueryAll(IParentNode scope, string selector)
+    {
+        var descendants = scope.QuerySelectorAll(selector);
+
+        return scope is IElement element && element.Matches(selector) ? descendants.Prepend(element) : descendants;
+    }
 
     public static IReadOnlyList<T> Children<T>(IElement? parent, string className, Func<IElement, T> create) =>
         parent is null ? [] : parent.Children.Where(c => c.ClassList.Contains(className)).Select(create).ToArray();

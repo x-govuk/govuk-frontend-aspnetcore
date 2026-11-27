@@ -119,17 +119,17 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
     }
 
     [Fact]
-    public async Task FieldHasError_FieldFoundByName_ReturnsField()
+    public async Task FieldWithNameHasError_ErrorMatches_ReturnsField()
     {
         var doc = await RenderAsync(emailError: "Enter an email address");
 
-        var field = Assert.FieldHasError(doc.GetFieldByName("Email"), "Enter an email address");
+        var field = Assert.FieldWithNameHasError(doc, "Email", "Enter an email address");
 
         Assert.Equal("Email address", field.Label);
     }
 
     [Fact]
-    public async Task FieldHasError_FieldsBoundWithFor_FindsEachKindByName()
+    public async Task FieldWithNameHasError_FieldsBoundWithFor_FindsEachKindByName()
     {
         using var client = app.CreateClient();
         using var response = await client.GetAsync(new Uri("/Fields?errors=true", UriKind.Relative), TestContext.Current.CancellationToken);
@@ -137,26 +137,100 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
 
         foreach (var field in doc.Fields)
         {
-            Assert.Same(field.Element, Assert.FieldHasError(doc.GetFieldByName(field.Name!), field.ErrorMessage!).Element);
+            Assert.Same(field.Element, Assert.FieldWithNameHasError(doc, field.Name!, field.ErrorMessage!).Element);
         }
     }
 
     [Fact]
-    public async Task FieldHasError_FieldFoundByAnItemName_ReturnsField()
+    public async Task FieldWithNameHasError_ItemName_FindsTheField()
     {
         using var client = app.CreateClient();
         using var response = await client.GetAsync(new Uri("/ItemNames", UriKind.Relative), TestContext.Current.CancellationToken);
         var doc = await Assert.HtmlResponseAsync(response, cancellationToken: TestContext.Current.CancellationToken);
 
-        Assert.IsType<Checkboxes>(Assert.FieldHasError(doc.GetFieldByName("SmsUpdates"), "Select how you would like to get updates"));
-        Assert.IsType<DateInput>(Assert.FieldHasError(doc.GetFieldByName("BirthDay"), "Enter your date of birth"));
+        Assert.IsType<Checkboxes>(Assert.FieldWithNameHasError(doc, "SmsUpdates", "Select how you would like to get updates"));
+        Assert.IsType<DateInput>(Assert.FieldWithNameHasError(doc, "BirthDay", "Enter your date of birth"));
+    }
+
+    [Fact]
+    public async Task FieldWithNameHasError_DifferentError_FailsWithFieldAndHtml()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address in the correct format");
+
+        var ex = AssertFailure.Throws(
+            """
+            Assert.FieldWithNameHasError() Failure: Error message differs
+            Field:    Text input: Email address
+            Expected: "Enter an email address"
+            Actual:   "Enter an email address in the correct format"
+            """,
+            () => Assert.FieldWithNameHasError(doc, "Email", "Enter an email address"),
+            htmlOf: doc.GetFieldByName("Email").Element);
+
+        AssertFailure.StackTraceStartsIn(nameof(FieldWithNameHasError_DifferentError_FailsWithFieldAndHtml), ex);
+    }
+
+    [Fact]
+    public async Task FieldWithNameHasError_FieldNotFound_FailsWithNamesOnThePage()
+    {
+        var doc = await RenderAsync();
+
+        var ex = AssertFailure.Throws(
+            """
+            Assert.FieldWithNameHasError() Failure: Field not found
+            Expected: a field named "EmailAddress"
+            Actual:   fields named "Name" (text input), "Email" (text input)
+            """,
+            () => Assert.FieldWithNameHasError(doc, "EmailAddress", "Enter an email address"));
+
+        AssertFailure.StackTraceStartsIn(nameof(FieldWithNameHasError_FieldNotFound_FailsWithNamesOnThePage), ex);
+    }
+
+    [Fact]
+    public async Task FieldWithNameHasNoError_NoError_ReturnsField()
+    {
+        var doc = await RenderAsync();
+
+        var field = Assert.FieldWithNameHasNoError(doc, "Email");
+
+        Assert.Equal("Email address", field.Label);
+    }
+
+    [Fact]
+    public async Task FieldWithNameHasNoError_Error_FailsWithFieldAndHtml()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address");
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldWithNameHasNoError() Failure: Field has an error
+            Field:    Text input: Email address
+            Expected: no error message
+            Actual:   "Enter an email address"
+            """,
+            () => Assert.FieldWithNameHasNoError(doc, "Email"),
+            htmlOf: doc.GetFieldByName("Email").Element);
+    }
+
+    [Fact]
+    public async Task FieldWithNameHasNoError_FieldNotFound_Fails()
+    {
+        var doc = await RenderAsync();
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldWithNameHasNoError() Failure: Field not found
+            Expected: a field named "EmailAddress"
+            Actual:   fields named "Name" (text input), "Email" (text input)
+            """,
+            () => Assert.FieldWithNameHasNoError(doc, "EmailAddress"));
     }
 
     [Fact]
     public async Task FieldHasError_Field_DifferentError_FailsWithFieldAndHtml()
     {
         var doc = await RenderAsync(emailError: "Enter an email address in the correct format");
-        var field = doc.GetFieldByName("Email");
+        var field = doc.Fields[1];
 
         var ex = AssertFailure.Throws(
             """
@@ -175,7 +249,7 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
     public async Task FieldHasNoError_Field_NoError_ReturnsField()
     {
         var doc = await RenderAsync();
-        var field = doc.GetFieldByName("Email");
+        var field = doc.Fields[1];
 
         Assert.Same(field, Assert.FieldHasNoError(field));
     }
@@ -184,7 +258,7 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
     public async Task FieldHasNoError_Field_Error_Fails()
     {
         var doc = await RenderAsync(emailError: "Enter an email address");
-        var field = doc.GetFieldByName("Email");
+        var field = doc.Fields[1];
 
         AssertFailure.Throws(
             """

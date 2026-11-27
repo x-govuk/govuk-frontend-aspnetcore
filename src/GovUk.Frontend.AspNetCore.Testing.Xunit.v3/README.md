@@ -9,7 +9,7 @@ var doc = await Assert.HtmlResponseAsync(response);
 
 Assert.ErrorSummaryContains(doc, "Enter your name");
 Assert.FieldHasError(doc, "Full name", "Enter your name");
-Assert.FieldHasError(doc.GetFieldByName("Name"), "Enter your name");
+Assert.FieldWithNameHasError(doc, "Name", "Enter your name");
 ```
 
 ```

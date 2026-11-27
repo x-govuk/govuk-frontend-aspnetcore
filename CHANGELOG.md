@@ -168,7 +168,8 @@ Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
 - `HtmlResponseAsync(response, expectedStatusCode)` checks the status code and content type and returns the parsed document.
 - `RedirectsTo(response, expectedLocation)` checks a redirect's `Location`, resolving a relative location against the request.
 - `ErrorSummaryContains`, `ErrorSummaryIs` (exactly these errors, in order) and `NoErrorSummary`.
-- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by its label or legend, or for a field found some other way, e.g. `Assert.FieldHasError(doc.GetFieldByName("Email"), "Enter an email address")`.
+- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by its label or legend, or for a `FormField` found some other way.
+- `FieldWithNameHasError` and `FieldWithNameHasNoError`, for a field found by its name, as `GetFieldByName()` finds it, e.g. `Assert.FieldWithNameHasError(doc, "Email", "Enter an email address")`.
 - `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order.
 - `NotificationBannerContains` and `SuccessNotificationBannerContains`, matching a whole line of the banner's content.
 

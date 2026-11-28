@@ -1,0 +1,38 @@
+﻿@page "/contact"
+@model ContactModel
+@{
+    ViewData["Title"] = "How would you like to be contacted?";
+}
+
+@section BeforeContent {
+    <govuk-back-link href="@Model.BackLink" />
+}
+
+<form method="post">
+    <govuk-radios for="ContactMethod">
+        <legend is-page-heading="true" class="govuk-fieldset__legend--l">How would you like to be contacted?</legend>
+        <hint>We’ll tell you when your card is ready to collect.</hint>
+
+        <radios-item value="@ContactMethod.Email">
+            Email
+            <conditional>
+                <govuk-input for="Email" type="email" autocomplete="email" spellcheck="false" class="govuk-!-width-one-half">
+                    <label>Email address</label>
+                </govuk-input>
+            </conditional>
+        </radios-item>
+
+        <radios-item value="@ContactMethod.Phone">
+            Phone
+            <conditional>
+                <govuk-input for="PhoneNumber" type="tel" autocomplete="tel" class="govuk-!-width-one-third">
+                    <label>Phone number</label>
+                </govuk-input>
+            </conditional>
+        </radios-item>
+
+        <radios-item value="@ContactMethod.Post">Post</radios-item>
+    </govuk-radios>
+
+    <govuk-button type="submit">Continue</govuk-button>
+</form>

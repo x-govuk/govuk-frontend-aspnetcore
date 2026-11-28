@@ -1,0 +1,18 @@
+﻿@page "/date-of-birth"
+@model DateOfBirthModel
+@{
+    ViewData["Title"] = "What is your date of birth?";
+}
+
+@section BeforeContent {
+    <govuk-back-link href="@Model.BackLink" />
+}
+
+<form method="post">
+    <govuk-date-input for="DateOfBirth">
+        <legend is-page-heading="true" class="govuk-fieldset__legend--l">What is your date of birth?</legend>
+        <hint>For example, 27 3 2007</hint>
+    </govuk-date-input>
+
+    <govuk-button type="submit">Continue</govuk-button>
+</form>

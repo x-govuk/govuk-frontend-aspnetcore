@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_GovUkPageTemplate";
+    ViewData["ServiceName"] = "Apply for a library card";
+    ViewData["ServiceUrl"] = "/";
+}
+
+@section BeforeContent {
+    @await RenderSectionAsync("BeforeContent", required: false)
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        @RenderBody()
+    </div>
+</div>

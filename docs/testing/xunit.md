@@ -43,7 +43,8 @@ public class ApplyTests(WebApplicationFactory<Program> factory) : IClassFixture<
     [Fact]
     public async Task DateOfBirth_Valid_RedirectsToCheckAnswers()
     {
-        var client = factory.CreateClient();
+        // Don't follow redirects automatically, so the test can check where the post goes
+        var client = factory.CreateClient(new() { AllowAutoRedirect = false });
 
         var submission = new FormSubmission("/apply/date-of-birth") { { "DateOfBirth", new DateOnly(2000, 3, 27) } };
         await submission.AddAntiforgeryTokenAsync(client);
@@ -69,7 +70,7 @@ Most return what they matched, so you can check more about it.
 | Assertion | Checks |
 | --- | --- |
 | `HtmlResponseAsync(response, expectedStatusCode)` | The status code (`200 OK` by default) and that the response is HTML. Returns the parsed document. |
-| `RedirectsTo(response, expectedLocation)` | That the response redirects to `expectedLocation`. A relative location is resolved against the request, as the `Location` header is. |
+| `RedirectsTo(response, expectedLocation)` | That the response redirects to `expectedLocation`. A relative location is resolved against the request, as the `Location` header is. The client mustn't follow redirects itself: create it with `factory.CreateClient(new() { AllowAutoRedirect = false })`. |
 
 ### Error summary
 

@@ -193,9 +193,11 @@ submission.AddFile("Evidence", File.ReadAllBytes("passport.pdf"), "passport.pdf"
 
 ### Redirects
 
-`WebApplicationFactory`'s clients don't follow redirects by default, so a test can check where a successful post goes:
+`WebApplicationFactory`'s clients follow redirects by default. To check where a successful post goes, create the client with `AllowAutoRedirect` turned off:
 
 ```cs
+var client = factory.CreateClient(new() { AllowAutoRedirect = false });
+
 using var response = await client.SubmitAsync(submission);
 
 Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);

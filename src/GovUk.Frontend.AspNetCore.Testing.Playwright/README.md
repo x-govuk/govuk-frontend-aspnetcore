@@ -23,4 +23,4 @@ The package adds a global using for `GovUk.Frontend.AspNetCore.Testing.Playwrigh
 This package is versioned in lockstep with GovUk.Frontend.AspNetCore, since the locators find the markup that version renders.
 Upgrade the packages together.
 
-See the [full documentation](https://github.com/x-govuk/govuk-frontend-aspnetcore/blob/main/README.md) for installation and usage guides.
+See the [Playwright docs](https://github.com/x-govuk/govuk-frontend-aspnetcore/blob/main/docs/testing/playwright.md) for every locator, action and assertion.

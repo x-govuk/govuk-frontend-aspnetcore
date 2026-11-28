@@ -26,4 +26,4 @@ The package adds a global using for `GovUk.Frontend.AspNetCore.Testing.Xunit`. T
 This package is versioned in lockstep with GovUk.Frontend.AspNetCore and GovUk.Frontend.AspNetCore.Testing and depends on exactly the same version, since the assertions read the markup that version renders.
 Upgrade all the packages together.
 
-See the [full documentation](https://github.com/x-govuk/govuk-frontend-aspnetcore/blob/main/README.md) for installation and usage guides.
+See the [xUnit assertions docs](https://github.com/x-govuk/govuk-frontend-aspnetcore/blob/main/docs/testing/xunit.md) for every assertion.

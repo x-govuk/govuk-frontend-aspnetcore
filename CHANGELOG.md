@@ -84,140 +84,15 @@ Their messages can also use `{1}` for the limit, alongside `{0}` for the field's
 [CharacterCount(150, CountType = CharacterCountType.Words, ErrorMessage = "{0} must be {1} words or fewer")]
 ```
 
-#### Testing package
+#### Testing packages
 
-A new `GovUk.Frontend.AspNetCore.Testing` package reads the components on a rendered page, for testing apps built with this library.
-It's versioned in lockstep with `GovUk.Frontend.AspNetCore` and depends on exactly the same version.
+New packages help test apps built with this library:
 
-`GetHtmlDocumentAsync()` parses an `HttpResponseMessage` with [AngleSharp](https://anglesharp.github.io/), and extension members on a document or element return models of the error summary, summary lists and cards, notification banners, tables, task lists, tags, the panel, the back link, pagination, hidden inputs, buttons, details, warning text, inset text, breadcrumbs, accordions and tabs:
+- `GovUk.Frontend.AspNetCore.Testing` reads the components on a rendered page and submits forms over HTTP, with any test framework.
+- `GovUk.Frontend.AspNetCore.Testing.Xunit.v3` adds assertions to xUnit v3's `Assert`.
+- `GovUk.Frontend.AspNetCore.Testing.Playwright` adds locators, actions and assertions for testing in a browser with Playwright.
 
-```cs
-var doc = await response.GetHtmlDocumentAsync();
-
-Assert.Equal(["Enter your name"], doc.ErrorSummary!.Items.Select(i => i.Text));
-Assert.Equal("sarah@example.com", doc.GetSummaryCardByTitle("Director 1").GetRowByKey("Email address").Value);
-```
-
-An element includes itself when it's the component being looked for, so a summary list's rows can be found from its `<dl>` element as well as from an element that contains it.
-A summary list row has its `Key`, its `Value` as text and as `ValueLines`, its `ValueElement` for checking links or other markup in the value, and its `Actions`.
-Buttons, including links styled as buttons, are found with `GetButtonByText()` and give their `Href`, `Variant` (e.g. `secondary` or `warning`) and whether they're a start button or disabled. Details components are found with `GetDetailsBySummary()`, accordion sections with `GetSectionByHeading()` and tabs with `GetTabByLabel()`, each with their content's text. Warning text leaves out its icon and the visually hidden text read in its place.
-
-When a lookup fails, the exception says what was looked for, what was on the page and the HTML that was searched:
-
-```
-Summary list row not found.
-Expected: a row with the key "Email address"
-Found:    rows with the keys "Name", "Phone"
-```
-
-Form fields are found by their label, or by their legend for date inputs, radios and checkboxes. Each field has its hint, its error message (without the visually hidden `Error:` prefix) and its current value:
-
-```cs
-var email = doc.GetTextInputByLabel("Email address");
-Assert.Equal("Enter an email address", email.ErrorMessage);
-
-Assert.Equal(new DateOnly(2000, 3, 27), doc.GetDateInputByLegend("Date of birth").Value);
-Assert.Equal("email", doc.GetRadiosByLegend("How would you like to be contacted?").Value);
-```
-
-There are lookups for text inputs, textareas, character counts, selects, password inputs, file uploads, date inputs, radios and checkboxes, and `GetFieldByLabelOrLegend()` for a field of any kind.
-`GetFieldByName()` finds a field of any kind by the name it's submitted with, which is the name model state errors are keyed by; a date input's name is the prefix of its inputs' names, e.g. `DateOfBirth`.
-`GetFieldByName<T>()` finds a field of a particular kind by name, e.g. `doc.GetFieldByName<Radios>("Colour").Value`.
-Radios, checkboxes and date inputs whose inputs have names of their own, e.g. checkboxes named `EmailUpdates` and `SmsUpdates`, are found by any of those names, and `FormField.Names` lists every name a field is found by.
-Radios and checkboxes give their items' labels, hints, checked state and conditional reveals.
-Date inputs without a day or a year give their value through `MonthAndYear` or `DayAndMonth`.
-When a field isn't found, the exception lists the labels and legends on the page:
-
-```
-Text input not found.
-Expected: a text input labelled "Email"
-Found:    fields labelled "Email address" (text input), "Date of birth" (date input)
-```
-
-A `FormSubmission` posts a form, either straight to an endpoint or starting from a form on a page.
-Values are added and replaced by name and formatted as model binding reads them back, so a `DateOnly` becomes the `.Day`, `.Month` and `.Year` fields of a date input:
-
-```cs
-var submission = new FormSubmission("/apply/name")
-{
-    { "Name", "Sarah Philips" },
-    { "DateOfBirth", new DateOnly(2000, 3, 27) },
-    { "Nationality", ["british", "irish"] },
-};
-await submission.AddAntiforgeryTokenAsync(client);
-
-using var response = await client.SubmitAsync(submission);
-```
-
-A value that can't be formatted that way, e.g. a tuple or an object without `IFormattable`, throws rather than being posted as its `ToString()`.
-
-`doc.GetFormByButtonText("Continue").CreateSubmission()` starts from a form's current values, including its hidden inputs and antiforgery token, and submits it as that button would, with its name, value and any `formaction`; a button's own `CreateSubmission()` does the same, e.g. `form.GetButtonByText("Save as draft").CreateSubmission()`. `doc.AllForms` lists every form.
-The page itself isn't changed. Files can be added with `AddFile()`, from a byte array, a `Stream` or an `HttpContent`, and the submission is then sent as `multipart/form-data`.
-
-`AddAntiforgeryTokenAsync()` and `client.GetAntiforgeryTokenAsync(url)` request a page and read its antiforgery token; the client must keep cookies, as `WebApplicationFactory`'s does.
-`response.FollowRedirectAsync(client)` follows a redirect as a browser does, `response.GetRedirectLocation()` gives the resolved `Location`, and `client.SubmitAsync(submission, followRedirects: true)` follows every redirect.
-
-The package needs C# 14, the default for .NET 10.
-
-#### xUnit assertions package
-
-A new `GovUk.Frontend.AspNetCore.Testing.Xunit.v3` package adds assertions to xUnit v3's `Assert`.
-It depends on `xunit.v3.assert` (not the runner) and on exactly the same version of `GovUk.Frontend.AspNetCore.Testing`, and adds a global using for its `GovUk.Frontend.AspNetCore.Testing.Xunit` namespace.
-
-```cs
-var doc = await Assert.HtmlResponseAsync(response);
-
-Assert.ErrorSummaryContains(doc, "Enter your name");
-Assert.FieldHasError(doc, "DateOfBirth", "Date of birth must include a year");
-Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
-```
-
-- `HtmlResponseAsync(response, expectedStatusCode)` checks the status code and content type and returns the parsed document.
-- `RedirectsTo(response, expectedLocation)` checks a redirect's `Location`, resolving a relative location against the request.
-- `ErrorSummaryContains`, `ErrorSummaryIs` (exactly these errors, in order) and `NoErrorSummary`.
-- `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by the name it's submitted with, as `GetFieldByName()` finds it, which is the name its model state error is keyed by.
-  They also take a `FormField` found some other way, e.g. `Assert.FieldHasError(doc.GetFieldByLabelOrLegend("Email address"), "Enter an email address")`, and when a field isn't found by name but there's one with that label, the failure says so.
-- `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order. A `null` expected value is a row with no value.
-- `NotificationBannerContains` and `SuccessNotificationBannerContains`, matching a whole line of the banner's content.
-
-Each takes a document or an element to search within, such as a summary card's `Element`, and returns what it matched where that's useful.
-Failures use xUnit's format and include the HTML that was checked:
-
-```
-Assert.FieldHasError() Failure: Error message differs
-Field:    Text input: Email address
-Expected: "Enter an email address"
-Actual:   "Enter an email address in the correct format"
-```
-
-On C# versions before 14, call the assertions on `GovUkAssert` instead, e.g. `GovUkAssert.ErrorSummaryContains(doc, "…")`.
-
-#### Playwright package
-
-A new `GovUk.Frontend.AspNetCore.Testing.Playwright` package adds locators, actions and assertions for testing in a browser with Playwright.
-It depends on `Microsoft.Playwright` only, so it can test a deployed app, and adds a global using for its `GovUk.Frontend.AspNetCore.Testing.Playwright` namespace.
-
-```cs
-await page.GetTextInputByLabel("Full name").Input.FillAsync("Sarah Philips");
-await page.FillDateInputByLegendAsync("Date of birth", new DateOnly(2000, 3, 27));
-await page.CheckRadioByLabelAsync("How would you like to be contacted?", "Email");
-await page.SubmitFormByButtonTextAsync("Continue");
-
-await Expect(page.ErrorSummary.Items).ToHaveErrorSummaryErrorsAsync(["Enter an email address"]);
-await Expect(page.GetFieldByLabelOrLegend("Email address").ErrorMessage).ToHaveErrorMessageAsync("Enter an email address");
-await Expect(page.GetSummaryListRowByKey("Name").Value).ToHaveTextAsync("Sarah Philips");
-```
-
-- Locators, on `IPage` and on `ILocator` to search within it:
-  - `ErrorSummary`, `NotificationBanner`, `BackLink` and `GetButtonByText`.
-  - `GetSummaryListRowByKey` and `GetSummaryCardByTitle`, with a row's `Key`, `Value`, `ChangeLink` and `GetActionByText`.
-  - `Pagination` (with `Previous`, `Next`, `Current` and `GetLinkByNumber`), `Breadcrumbs` (with `Current` and `GetLinkByText`), `Panel`, `WarningText`, `InsetText`, `Table` and `GetTableByCaption` (with `GetRowByFirstCellText` and a row's `GetCellByHeader`), `GetTagByText`, `GetDetailsBySummary` (with `OpenAsync`), `GetAccordionSectionByHeading` (with `ExpandAsync`), `GetTabByLabel` (with its `Panel` and `SelectAsync`) and `GetTaskListItemByName`, and a notification banner's `GetLinkByText`.
-  - `GetFieldByLabelOrLegend` for a field of any kind, and `GetTextInputByLabel`, `GetTextareaByLabel`, `GetCharacterCountByLabel`, `GetSelectByLabel`, `GetPasswordInputByLabel`, `GetFileUploadByLabel`, `GetDateInputByLegend` (with `Day`, `Month` and `Year`, and `FillAsync`, `FillMonthAndYearAsync` and `FillDayAndMonthAsync`), `GetRadiosByLegend` and `GetCheckboxesByLegend` (with `GetItemByLabel` and `GetItemByValue`). Every field has a `Label`, `Hint` and `ErrorMessage`.
-  - `GetFieldByName` for a field of any kind and `GetFieldByName<TLocator>` for a particular kind, e.g. `GetFieldByName<RadiosLocator>("Contact")`, by the name it's submitted with; a date input's name is the prefix of its inputs' names, e.g. `DateOfBirth`. Radios and checkboxes are found whether or not they're in a fieldset.
-- Actions: `FillFieldByLabelAsync` and `FillFieldByNameAsync`, for a text input, password input, textarea or character count of whichever kind, `FillDateInputByLegendAsync`, `CheckRadioByLabelAsync`, `CheckCheckboxByLabelAsync`, `UncheckCheckboxByLabelAsync`, `SelectOptionByTextAsync`, and `SubmitFormByButtonTextAsync`/`SubmitFormAsync`, which wait for the response to the form's navigation.
-- Assertions on Playwright's `ILocatorAssertions`: `ToHaveErrorMessageAsync`, which ignores the visually hidden `Error:` prefix, and `ToHaveErrorSummaryErrorsAsync`. Both use Playwright's own matchers, so they retry and work with `.Not`, and add a line to the failure message that says which component was checked.
-
-Everything else is checked with Playwright's own matchers on these locators, e.g. `Expect(row.Value).ToHaveTextAsync("…")`.
+They're versioned in lockstep with `GovUk.Frontend.AspNetCore`. See [Testing](docs/testing/README.md).
 
 ### Fixes
 

@@ -345,6 +345,16 @@ The content the library renders — `Error`, `There is a problem`, `Back`, the d
 messages and so on — can be translated by registering an `IGovUkFrontendLocalizer`. See
 [Localization](docs/localization.md).
 
+## Testing
+
+Packages for testing apps built with this library find components the way a user would and say what was on the page when they're not found:
+
+- `GovUk.Frontend.AspNetCore.Testing` reads rendered pages and submits forms over HTTP, with any test framework.
+- `GovUk.Frontend.AspNetCore.Testing.Xunit.v3` adds assertions to xUnit v3's `Assert`.
+- `GovUk.Frontend.AspNetCore.Testing.Playwright` adds locators, actions and assertions for testing in a browser.
+
+See [Testing](docs/testing/README.md).
+
 
 ## Contributing
 

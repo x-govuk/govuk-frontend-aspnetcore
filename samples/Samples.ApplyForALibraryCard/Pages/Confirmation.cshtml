@@ -1,0 +1,14 @@
+﻿@page "/confirmation"
+@model ConfirmationModel
+@{
+    ViewData["Title"] = "Application complete";
+}
+
+<govuk-panel>
+    <panel-title>Application complete</panel-title>
+    <panel-body>
+        Your reference number<br><strong>@Model.Reference</strong>
+    </panel-body>
+</govuk-panel>
+
+<p class="govuk-body">We’ll contact you when your library card is ready to collect.</p>

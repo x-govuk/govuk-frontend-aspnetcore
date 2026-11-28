@@ -23,6 +23,11 @@ build *ARGS:
 build-samples *ARGS: (_clear-samples-package-cache) (pack '-c Release')
   @dotnet build {{ARGS}}
 
+# Run the samples' tests; run `just build-samples` first, and `just install-playwright` once for the browser tests
+[working-directory: 'samples']
+test-samples *ARGS:
+  @dotnet test {{ARGS}}
+
 [private]
 [working-directory: 'samples']
 _clear-samples-package-cache:

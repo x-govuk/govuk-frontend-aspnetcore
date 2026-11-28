@@ -1,0 +1,54 @@
+﻿@page "/check-answers"
+@model CheckAnswersModel
+@{
+    ViewData["Title"] = "Check your answers before sending your application";
+    var application = Model.Application;
+}
+
+@section BeforeContent {
+    <govuk-back-link href="/contact" />
+}
+
+<h1 class="govuk-heading-l">Check your answers before sending your application</h1>
+
+<govuk-summary-list>
+    <row>
+        <key>Full name</key>
+        <value>@application.FullName</value>
+        <row-actions>
+            <action href="/name?change=true" visually-hidden-text="full name">Change</action>
+        </row-actions>
+    </row>
+    <row>
+        <key>Date of birth</key>
+        <value>@Application.FormatDate(application.DateOfBirth!.Value)</value>
+        <row-actions>
+            <action href="/date-of-birth?change=true" visually-hidden-text="date of birth">Change</action>
+        </row-actions>
+    </row>
+    <row>
+        <key>Contact by</key>
+        <value>
+            @application.ContactMethod
+            @if (application.Email is not null)
+            {
+                <br>@application.Email
+            }
+            @if (application.PhoneNumber is not null)
+            {
+                <br>@application.PhoneNumber
+            }
+        </value>
+        <row-actions>
+            <action href="/contact?change=true" visually-hidden-text="how you would like to be contacted">Change</action>
+        </row-actions>
+    </row>
+</govuk-summary-list>
+
+<h2 class="govuk-heading-m">Now send your application</h2>
+
+<p class="govuk-body">By sending this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+
+<form method="post">
+    <govuk-button type="submit">Accept and send</govuk-button>
+</form>

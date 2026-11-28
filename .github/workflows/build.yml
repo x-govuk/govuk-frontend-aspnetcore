@@ -188,6 +188,12 @@ jobs:
       - name: Build samples
         run: just build-samples --configuration Release
 
+      - name: Install Playwright
+        run: just install-playwright
+
+      - name: Test samples
+        run: just test-samples --configuration Release --no-build
+
   docs:
     name: "Check docs"
     runs-on: ubuntu-latest

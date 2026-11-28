@@ -1,0 +1,17 @@
+﻿@page "/name"
+@model NameModel
+@{
+    ViewData["Title"] = "What is your full name?";
+}
+
+@section BeforeContent {
+    <govuk-back-link href="@Model.BackLink" />
+}
+
+<form method="post">
+    <govuk-input for="FullName" autocomplete="name" spellcheck="false">
+        <label is-page-heading="true" class="govuk-label--l">What is your full name?</label>
+    </govuk-input>
+
+    <govuk-button type="submit">Continue</govuk-button>
+</form>

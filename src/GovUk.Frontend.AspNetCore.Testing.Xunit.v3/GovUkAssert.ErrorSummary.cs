@@ -94,10 +94,12 @@ public static partial class GovUkAssert
         }
     }
 
-    private static ErrorSummary GetErrorSummary(string assertion, IParentNode node, string expected) =>
+    private static ErrorSummary GetErrorSummary(string assertion, IParentNode node, string expected, string? hint = null) =>
         Failure.Lookup(assertion, () => node.ErrorSummary) ?? throw Failure.Create(
             assertion,
             "Error summary not found",
-            [("Expected", expected), ("Actual", "no error summary")],
+            hint is null
+                ? [("Expected", expected), ("Actual", "no error summary")]
+                : [("Expected", expected), ("Actual", "no error summary"), ("Hint", hint)],
             node as INode);
 }

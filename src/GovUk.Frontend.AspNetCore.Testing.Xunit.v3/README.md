@@ -7,17 +7,20 @@ The assertions are added to xUnit's `Assert` class, and their failure messages s
 ```cs
 var doc = await Assert.HtmlResponseAsync(response);
 
-Assert.ErrorSummaryContains(doc, "Enter your name");
 Assert.FieldHasError(doc, "Name", "Enter your name");
 ```
 
 ```
-Assert.ErrorSummaryContains() Failure: Error not found
-Expected: "Enter your name"
+Assert.FieldHasError() Failure: Error not in error summary
+Field:    Text input: Full name
+Expected: an error summary containing "Enter your name"
 Actual:   ["Enter an email address"]
+Hint:     if the error shouldn't be in the error summary, pass inErrorSummary: false to FieldHasError
 ```
 
 `FieldHasError` finds the field by the name it's submitted with, which is the name its model state error is keyed by. To find it by its label or legend instead, pass the field: `Assert.FieldHasError(doc.GetFieldByLabelOrLegend("Full name"), "Enter your name")`.
+
+As well as the field's error message, `FieldHasError` checks that the page's error summary lists the error with a link to the field. Pass `inErrorSummary: false` to skip that, e.g. for a page without an error summary.
 
 Calling them as `Assert.X(...)` needs C# 14, the default for `net10.0`. On older language versions, call them on `GovUkAssert` instead, e.g. `GovUkAssert.ErrorSummaryContains(doc, "…")`.
 

@@ -167,7 +167,6 @@ It depends on `xunit.v3.assert` (not the runner) and on exactly the same version
 ```cs
 var doc = await Assert.HtmlResponseAsync(response);
 
-Assert.ErrorSummaryContains(doc, "Enter your name");
 Assert.FieldHasError(doc, "DateOfBirth", "Date of birth must include a year");
 Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
 ```
@@ -177,6 +176,7 @@ Assert.SummaryListHasRow(doc, "Email address", "sarah@example.com");
 - `ErrorSummaryContains`, `ErrorSummaryIs` (exactly these errors, in order) and `NoErrorSummary`.
 - `FieldHasError` and `FieldHasNoError`, for a field of any kind, found by the name it's submitted with, as `GetFieldByName()` finds it, which is the name its model state error is keyed by.
   They also take a `FormField` found some other way, e.g. `Assert.FieldHasError(doc.GetFieldByLabelOrLegend("Email address"), "Enter an email address")`, and when a field isn't found by name but there's one with that label, the failure says so.
+  `FieldHasError` also checks that the page's error summary lists the error with a link to an element in the field; pass `inErrorSummary: false` to skip that.
 - `SummaryListHasRow(doc, key, expectedValue)`, and `SummaryListHasRows` for exactly these rows, in order. A `null` expected value is a row with no value.
 - `NotificationBannerContains` and `SuccessNotificationBannerContains`, matching a whole line of the banner's content.
 
@@ -204,7 +204,7 @@ await page.CheckRadioByLabelAsync("How would you like to be contacted?", "Email"
 await page.SubmitFormByButtonTextAsync("Continue");
 
 await Expect(page.ErrorSummary.Items).ToHaveErrorSummaryErrorsAsync(["Enter an email address"]);
-await Expect(page.GetFieldByLabelOrLegend("Email address").ErrorMessage).ToHaveErrorMessageAsync("Enter an email address");
+await page.GetFieldByName("Email").ExpectErrorAsync("Enter an email address");
 await Expect(page.GetSummaryListRowByKey("Name").Value).ToHaveTextAsync("Sarah Philips");
 ```
 
@@ -216,6 +216,7 @@ await Expect(page.GetSummaryListRowByKey("Name").Value).ToHaveTextAsync("Sarah P
   - `GetFieldByName` for a field of any kind and `GetFieldByName<TLocator>` for a particular kind, e.g. `GetFieldByName<RadiosLocator>("Contact")`, by the name it's submitted with; a date input's name is the prefix of its inputs' names, e.g. `DateOfBirth`. Radios and checkboxes are found whether or not they're in a fieldset.
 - Actions: `FillFieldByLabelAsync` and `FillFieldByNameAsync`, for a text input, password input, textarea or character count of whichever kind, `FillDateInputByLegendAsync`, `CheckRadioByLabelAsync`, `CheckCheckboxByLabelAsync`, `UncheckCheckboxByLabelAsync`, `SelectOptionByTextAsync`, and `SubmitFormByButtonTextAsync`/`SubmitFormAsync`, which wait for the response to the form's navigation.
 - Assertions on Playwright's `ILocatorAssertions`: `ToHaveErrorMessageAsync`, which ignores the visually hidden `Error:` prefix, and `ToHaveErrorSummaryErrorsAsync`. Both use Playwright's own matchers, so they retry and work with `.Not`, and add a line to the failure message that says which component was checked.
+- `ExpectErrorAsync` on a field locator, which checks the field's error message and that the page's error summary lists it with a link to an element in the field. Pass `inErrorSummary: false` to check only the error message.
 
 Everything else is checked with Playwright's own matchers on these locators, e.g. `Expect(row.Value).ToHaveTextAsync("…")`.
 

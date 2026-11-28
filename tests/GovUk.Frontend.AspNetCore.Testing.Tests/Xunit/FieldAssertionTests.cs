@@ -121,6 +121,149 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
     }
 
     [Fact]
+    public async Task FieldHasError_ScopedToAnElement_FindsTheErrorSummaryOutsideIt()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address");
+        var scope = doc.GetFieldByName("Email").Element;
+
+        Assert.FieldHasError(scope, "Email", "Enter an email address");
+    }
+
+    [Fact]
+    public async Task FieldHasError_NoErrorSummary_FailsWithHint()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address", summaryErrors: []);
+
+        var ex = AssertFailure.Throws(
+            """
+            Assert.FieldHasError() Failure: Error summary not found
+            Expected: an error summary containing "Enter an email address"
+            Actual:   no error summary
+            Hint:     if the error shouldn't be in the error summary, pass inErrorSummary: false to FieldHasError
+            """,
+            () => Assert.FieldHasError(doc, "Email", "Enter an email address"));
+
+        AssertFailure.StackTraceStartsIn(nameof(FieldHasError_NoErrorSummary_FailsWithHint), ex);
+    }
+
+    [Fact]
+    public async Task FieldHasError_ErrorNotInErrorSummary_FailsWithErrorsAndHint()
+    {
+        var doc = await RenderAsync(
+            emailError: "Enter an email address",
+            summaryErrors: [new ErrorSummaryOptionsErrorItem { Text = "Enter your full name", Href = "#name" }]);
+
+        var ex = AssertFailure.Throws(
+            """
+            Assert.FieldHasError() Failure: Error not in error summary
+            Field:    Text input: Email address
+            Expected: an error summary containing "Enter an email address"
+            Actual:   ["Enter your full name"]
+            Hint:     if the error shouldn't be in the error summary, pass inErrorSummary: false to FieldHasError
+            """,
+            () => Assert.FieldHasError(doc, "Email", "Enter an email address"),
+            htmlOf: doc.ErrorSummary!.Element);
+
+        AssertFailure.StackTraceStartsIn(nameof(FieldHasError_ErrorNotInErrorSummary_FailsWithErrorsAndHint), ex);
+    }
+
+    [Fact]
+    public async Task FieldHasError_ErrorSummaryLinksToAnotherField_Fails()
+    {
+        var doc = await RenderAsync(
+            emailError: "Enter an email address",
+            summaryErrors: [new ErrorSummaryOptionsErrorItem { Text = "Enter an email address", Href = "#name" }]);
+
+        var ex = AssertFailure.Throws(
+            """
+            Assert.FieldHasError() Failure: Error summary item doesn't link to the field
+            Field:    Text input: Email address
+            Expected: "Enter an email address" linking to an element in the field
+            Actual:   a link to "#name"
+            """,
+            () => Assert.FieldHasError(doc, "Email", "Enter an email address"),
+            htmlOf: doc.ErrorSummary!.Element);
+
+        AssertFailure.StackTraceStartsIn(nameof(FieldHasError_ErrorSummaryLinksToAnotherField_Fails), ex);
+    }
+
+    [Theory]
+    [InlineData("#missing")]
+    [InlineData("/elsewhere#email")]
+    public async Task FieldHasError_ErrorSummaryLinkDoesNotResolveToTheField_Fails(string href)
+    {
+        var doc = await RenderAsync(
+            emailError: "Enter an email address",
+            summaryErrors: [new ErrorSummaryOptionsErrorItem { Text = "Enter an email address", Href = href }]);
+
+        AssertFailure.Throws(
+            $"""
+            Assert.FieldHasError() Failure: Error summary item doesn't link to the field
+            Field:    Text input: Email address
+            Expected: "Enter an email address" linking to an element in the field
+            Actual:   a link to "{href}"
+            """,
+            () => Assert.FieldHasError(doc, "Email", "Enter an email address"),
+            htmlOf: doc.ErrorSummary!.Element);
+    }
+
+    [Fact]
+    public async Task FieldHasError_ErrorSummaryItemWithoutLink_Fails()
+    {
+        var doc = await RenderAsync(
+            emailError: "Enter an email address",
+            summaryErrors: [new ErrorSummaryOptionsErrorItem { Text = "Enter an email address" }]);
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldHasError() Failure: Error summary item doesn't link to the field
+            Field:    Text input: Email address
+            Expected: "Enter an email address" linking to an element in the field
+            Actual:   no link
+            """,
+            () => Assert.FieldHasError(doc, "Email", "Enter an email address"),
+            htmlOf: doc.ErrorSummary!.Element);
+    }
+
+    [Fact]
+    public async Task FieldHasError_SameErrorForTwoFields_PassesWhenOneItemLinksToTheField()
+    {
+        var doc = await RenderAsync(
+            emailError: "Enter an email address",
+            summaryErrors:
+            [
+                new ErrorSummaryOptionsErrorItem { Text = "Enter an email address", Href = "#name" },
+                new ErrorSummaryOptionsErrorItem { Text = "Enter an email address", Href = "#email" },
+            ]);
+
+        Assert.FieldHasError(doc, "Email", "Enter an email address");
+    }
+
+    [Fact]
+    public async Task FieldHasError_NotInErrorSummary_PassesWithoutErrorSummary()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address", summaryErrors: []);
+
+        Assert.FieldHasError(doc, "Email", "Enter an email address", inErrorSummary: false);
+        Assert.FieldHasError(doc.GetFieldByName("Email"), "Enter an email address", inErrorSummary: false);
+    }
+
+    [Fact]
+    public async Task FieldHasError_Field_ErrorNotInErrorSummary_Fails()
+    {
+        var doc = await RenderAsync(emailError: "Enter an email address", summaryErrors: []);
+
+        AssertFailure.Throws(
+            """
+            Assert.FieldHasError() Failure: Error summary not found
+            Expected: an error summary containing "Enter an email address"
+            Actual:   no error summary
+            Hint:     if the error shouldn't be in the error summary, pass inErrorSummary: false to FieldHasError
+            """,
+            () => Assert.FieldHasError(doc.GetFieldByName("Email"), "Enter an email address"));
+    }
+
+    [Fact]
     public async Task FieldHasNoError_NoError_ReturnsField()
     {
         var doc = await RenderAsync();
@@ -206,8 +349,22 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
         return await Assert.HtmlResponseAsync(response, cancellationToken: TestContext.Current.CancellationToken);
     }
 
-    private static Task<IHtmlDocument> RenderAsync(string? emailError = null) =>
-        Render.DocumentAsync(
+    /// <summary>
+    /// Renders a name and an email field. When <paramref name="emailError"/> is set, an error summary lists
+    /// <paramref name="summaryErrors"/>, which defaults to the email error linking to the email input; pass an empty
+    /// array to leave out the error summary.
+    /// </summary>
+    private static Task<IHtmlDocument> RenderAsync(string? emailError = null, ErrorSummaryOptionsErrorItem[]? summaryErrors = null)
+    {
+        summaryErrors ??= emailError is null ? [] : [new ErrorSummaryOptionsErrorItem { Text = emailError, Href = "#email" }];
+
+        Func<DefaultComponentGenerator, ValueTask<GovUkComponent>>[] summary = summaryErrors.Length == 0
+            ? []
+            : [g => g.GenerateErrorSummaryAsync(new ErrorSummaryOptions { TitleText = "There is a problem", ErrorList = summaryErrors })];
+
+        return Render.DocumentAsync(
+        [
+            .. summary,
             g => g.GenerateInputAsync(new InputOptions
             {
                 Id = "name",
@@ -220,5 +377,7 @@ public class FieldAssertionTests(TestApp app) : IClassFixture<TestApp>
                 Name = "Email",
                 Label = new LabelOptions { Text = "Email address" },
                 ErrorMessage = emailError is null ? null : new ErrorMessageOptions { Text = emailError }
-            }));
+            })
+        ]);
+    }
 }

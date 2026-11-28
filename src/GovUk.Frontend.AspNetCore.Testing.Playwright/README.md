@@ -11,12 +11,14 @@ await page.CheckRadioByLabelAsync("How would you like to be contacted?", "Email"
 await page.SubmitFormByButtonTextAsync("Continue");
 
 await Expect(page.ErrorSummary.Items).ToHaveErrorSummaryErrorsAsync(["Enter an email address"]);
-await Expect(page.GetFieldByLabelOrLegend("Email address").ErrorMessage).ToHaveErrorMessageAsync("Enter an email address");
+await page.GetFieldByName("Email").ExpectErrorAsync("Enter an email address");
 await Expect(page.GetSummaryListRowByKey("Name").Value).ToHaveTextAsync("Sarah Philips");
 ```
 
 Each locator is precise enough for Playwright's own matchers to give useful failure messages.
 `ToHaveErrorMessageAsync` ignores the visually hidden `Error:` before a field's error message, and it and `ToHaveErrorSummaryErrorsAsync` add a line to Playwright's failure message that says which component was checked.
+
+`ExpectErrorAsync` checks a field's error message as `ToHaveErrorMessageAsync` does, and that the page's error summary lists the error with a link to the field. Pass `inErrorSummary: false` to check only the error message, e.g. for a page without an error summary.
 
 The package adds a global using for `GovUk.Frontend.AspNetCore.Testing.Playwright`. To opt out, add `<Using Remove="GovUk.Frontend.AspNetCore.Testing.Playwright" />` to an `ItemGroup` in your project file.
 

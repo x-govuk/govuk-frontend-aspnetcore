@@ -14,7 +14,8 @@ namespace GovUk.Frontend.AspNetCore.Testing.Playwright;
 /// </para>
 /// <para>
 /// <see cref="ErrorMessage"/>'s text starts with visually hidden text (<c>Error:</c> by default), so check it with
-/// <see cref="GovUkLocatorAssertions.ToHaveErrorMessageAsync"/> rather than <c>ToHaveTextAsync</c>.
+/// <see cref="GovUkLocatorAssertions.ToHaveErrorMessageAsync"/> rather than <c>ToHaveTextAsync</c>, or check it and
+/// the error summary together with <see cref="GovUkLocatorAssertions.ExpectErrorAsync"/>.
 /// </para>
 /// </remarks>
 public class FieldLocator
